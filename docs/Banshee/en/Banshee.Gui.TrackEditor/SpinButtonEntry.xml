@@ -1,0 +1,40 @@
+<Type Name="SpinButtonEntry" FullName="Banshee.Gui.TrackEditor.SpinButtonEntry">
+  <TypeSignature Language="C#" Value="public class SpinButtonEntry : Gtk.SpinButton, Banshee.Gui.TrackEditor.IEditorField" />
+  <AssemblyInfo>
+    <AssemblyName>Banshee.ThickClient</AssemblyName>
+    <AssemblyVersion>1.3.1.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>Gtk.SpinButton</BaseTypeName>
+  </Base>
+  <Interfaces>
+    <Interface>
+      <InterfaceName>Banshee.Gui.TrackEditor.IEditorField</InterfaceName>
+    </Interface>
+  </Interfaces>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public SpinButtonEntry (double min, double max, double step);" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.3.1.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="min" Type="System.Double" />
+        <Parameter Name="max" Type="System.Double" />
+        <Parameter Name="step" Type="System.Double" />
+      </Parameters>
+      <Docs>
+        <param name="min">To be added.</param>
+        <param name="max">To be added.</param>
+        <param name="step">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

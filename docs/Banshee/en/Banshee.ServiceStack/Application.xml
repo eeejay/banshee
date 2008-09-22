@@ -3,6 +3,7 @@
   <AssemblyInfo>
     <AssemblyName>Banshee.Services</AssemblyName>
     <AssemblyVersion>0.90.1.25404</AssemblyVersion>
+    <AssemblyVersion>1.3.1.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -25,77 +26,71 @@
     
     
     
-    <Member MemberName="IdleHandler">
-      <MemberSignature Language="C#" Value="public static Banshee.ServiceStack.IdleImplementationHandler IdleHandler { set; get; };" />
+    <Member MemberName="ActiveClient"><MemberSignature Language="C#" Value="public static Banshee.ServiceStack.Client ActiveClient { get; }" /><MemberType>Property</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>Banshee.ServiceStack.Client</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="ClientAdded"><MemberSignature Language="C#" Value="public static event Action&lt;Banshee.ServiceStack.Client&gt; ClientAdded;" /><MemberType>Event</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.Action&lt;Banshee.ServiceStack.Client&gt;</ReturnType></ReturnValue><Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="ClientStarted"><MemberSignature Language="C#" Value="public static event Action&lt;Banshee.ServiceStack.Client&gt; ClientStarted;" /><MemberType>Event</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.Action&lt;Banshee.ServiceStack.Client&gt;</ReturnType></ReturnValue><Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="DisplayVersion"><MemberSignature Language="C#" Value="public static string DisplayVersion { get; }" /><MemberType>Property</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.String</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="IconName"><MemberSignature Language="C#" Value="public static string IconName { get; }" /><MemberType>Property</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.String</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="IdleHandler">
+      <MemberSignature Language="C#" Value="public static Banshee.ServiceStack.IdleImplementationHandler IdleHandler { set; get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>Banshee.ServiceStack.IdleImplementationHandler</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="IdleTimeoutRemove">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="IdleTimeoutRemove">
       <MemberSignature Language="C#" Value="public static bool IdleTimeoutRemove (uint id);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
       <Parameters><Parameter Name="id" Type="System.UInt32" /></Parameters>
       <Docs><param name="id">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="IdleTimeoutRemoveHandler">
-      <MemberSignature Language="C#" Value="public static Banshee.ServiceStack.IdleTimeoutRemoveImplementationHandler IdleTimeoutRemoveHandler { set; get; };" />
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="IdleTimeoutRemoveHandler">
+      <MemberSignature Language="C#" Value="public static Banshee.ServiceStack.IdleTimeoutRemoveImplementationHandler IdleTimeoutRemoveHandler { set; get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>Banshee.ServiceStack.IdleTimeoutRemoveImplementationHandler</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="InternalName">
-      <MemberSignature Language="C#" Value="public static string InternalName { get; };" />
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="Initialize"><MemberSignature Language="C#" Value="public static void Initialize ();" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters /><Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="InternalName">
+      <MemberSignature Language="C#" Value="public static string InternalName { get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="Invoke">
-      <MemberSignature Language="C#" Value="public static void Invoke (Banshee.ServiceStack.InvokeHandler handler);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="handler" Type="Banshee.ServiceStack.InvokeHandler" /></Parameters>
-      <Docs><param name="handler">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="Invoke"><MemberSignature Language="C#" Value="public static void Invoke (EventHandler handler);" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters><Parameter Name="handler" Type="System.EventHandler" /></Parameters><Docs><param name="handler">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="Run">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="Invoke"><MemberSignature Language="C#" Value="public static void Invoke (Banshee.Base.InvokeHandler handler);" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters><Parameter Name="handler" Type="Banshee.Base.InvokeHandler" /></Parameters><Docs><param name="handler">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="PopClient"><MemberSignature Language="C#" Value="public static Banshee.ServiceStack.Client PopClient ();" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>Banshee.ServiceStack.Client</ReturnType></ReturnValue><Parameters /><Docs><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member><Member MemberName="PushClient"><MemberSignature Language="C#" Value="public static void PushClient (Banshee.ServiceStack.Client client);" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters><Parameter Name="client" Type="Banshee.ServiceStack.Client" /></Parameters><Docs><param name="client">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="Run">
       <MemberSignature Language="C#" Value="public static void Run ();" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters />
       <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="RunIdle">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="RunIdle">
       <MemberSignature Language="C#" Value="public static uint RunIdle (Banshee.ServiceStack.IdleHandler handler);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.UInt32</ReturnType></ReturnValue>
       <Parameters><Parameter Name="handler" Type="Banshee.ServiceStack.IdleHandler" /></Parameters>
       <Docs><param name="handler">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="RunTimeout">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="RunTimeout">
       <MemberSignature Language="C#" Value="public static uint RunTimeout (uint milliseconds, Banshee.ServiceStack.TimeoutHandler handler);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.UInt32</ReturnType></ReturnValue>
       <Parameters><Parameter Name="milliseconds" Type="System.UInt32" /><Parameter Name="handler" Type="Banshee.ServiceStack.TimeoutHandler" /></Parameters>
       <Docs><param name="milliseconds">To be added.</param><param name="handler">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="Shutdown">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="Shutdown">
       <MemberSignature Language="C#" Value="public static void Shutdown ();" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters />
       <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="ShutdownPromptHandler">
-      <MemberSignature Language="C#" Value="public static Banshee.ServiceStack.ShutdownRequestHandler ShutdownPromptHandler { set; get; };" />
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="ShutdownPromptHandler">
+      <MemberSignature Language="C#" Value="public static Banshee.ServiceStack.ShutdownRequestHandler ShutdownPromptHandler { set; get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>Banshee.ServiceStack.ShutdownRequestHandler</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="ShutdownRequested">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="ShutdownRequested">
       <MemberSignature Language="C#" Value="public static event Banshee.ServiceStack.ShutdownRequestHandler ShutdownRequested;" />
       <MemberType>Event</MemberType>
       <ReturnValue><ReturnType>Banshee.ServiceStack.ShutdownRequestHandler</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="TimeoutHandler">
-      <MemberSignature Language="C#" Value="public static Banshee.ServiceStack.TimeoutImplementationHandler TimeoutHandler { set; get; };" />
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="ShuttingDown"><MemberSignature Language="C#" Value="public static bool ShuttingDown { get; }" /><MemberType>Property</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="TimeoutHandler">
+      <MemberSignature Language="C#" Value="public static Banshee.ServiceStack.TimeoutImplementationHandler TimeoutHandler { set; get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>Banshee.ServiceStack.TimeoutImplementationHandler</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="Version">
-      <MemberSignature Language="C#" Value="public static string Version { get; };" />
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="Version">
+      <MemberSignature Language="C#" Value="public static string Version { get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member>
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member>
   </Members>
 </Type>

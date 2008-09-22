@@ -10,24 +10,42 @@
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
-    
-    
     <Member MemberName="GetSelectedTracks">
       <MemberSignature Language="C#" Value="public System.Collections.Generic.IEnumerable&lt;Banshee.Collection.TrackInfo&gt; GetSelectedTracks ();" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Collections.Generic.IEnumerable&lt;Banshee.Collection.TrackInfo&gt;</ReturnType></ReturnValue>
+      <ReturnValue>
+        <ReturnType>System.Collections.Generic.IEnumerable&lt;Banshee.Collection.TrackInfo&gt;</ReturnType>
+      </ReturnValue>
       <Parameters />
-      <Docs><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="TrackModel">
+      <Docs>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="TrackModel">
       <MemberSignature Language="C#" Value="public Banshee.Collection.Database.TrackListDatabaseModel TrackModel { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>Banshee.Collection.Database.TrackListDatabaseModel</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="TrackSelectionProxy">
+      <ReturnValue>
+        <ReturnType>Banshee.Collection.Database.TrackListDatabaseModel</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="TrackSelectionProxy">
       <MemberSignature Language="C#" Value="public Hyena.Collections.SelectionProxy TrackSelectionProxy { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>Hyena.Collections.SelectionProxy</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>Hyena.Collections.SelectionProxy</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
   </Members>
 </Type>

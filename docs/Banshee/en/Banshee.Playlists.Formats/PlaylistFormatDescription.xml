@@ -3,6 +3,7 @@
   <AssemblyInfo>
     <AssemblyName>Banshee.Services</AssemblyName>
     <AssemblyVersion>0.90.1.25404</AssemblyVersion>
+    <AssemblyVersion>1.3.1.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -17,31 +18,26 @@
     
     
     
-    <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public PlaylistFormatDescription (Type type, Banshee.Playlists.Formats.PlaylistFormatMagicHandler magic_handler, string name, string extension);" />
-      <MemberType>Constructor</MemberType>
-      <Parameters><Parameter Name="type" Type="System.Type" /><Parameter Name="magic_handler" Type="Banshee.Playlists.Formats.PlaylistFormatMagicHandler" /><Parameter Name="name" Type="System.String" /><Parameter Name="extension" Type="System.String" /></Parameters>
-      <Docs><param name="type">To be added.</param><param name="magic_handler">To be added.</param><param name="name">To be added.</param><param name="extension">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="FileExtension">
-      <MemberSignature Language="C#" Value="public string FileExtension { get; };" />
+    <Member MemberName=".ctor"><MemberSignature Language="C#" Value="public PlaylistFormatDescription (Type type, Banshee.Playlists.Formats.PlaylistFormatMagicHandler magic_handler, string name, string extension, string[] mimetypes);" /><MemberType>Constructor</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><Parameters><Parameter Name="type" Type="System.Type" /><Parameter Name="magic_handler" Type="Banshee.Playlists.Formats.PlaylistFormatMagicHandler" /><Parameter Name="name" Type="System.String" /><Parameter Name="extension" Type="System.String" /><Parameter Name="mimetypes" Type="System.String[]" /></Parameters><Docs><param name="type">To be added.</param><param name="magic_handler">To be added.</param><param name="name">To be added.</param><param name="extension">To be added.</param><param name="mimetypes">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="FileExtension">
+      <MemberSignature Language="C#" Value="public string FileExtension { get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="FormatName">
-      <MemberSignature Language="C#" Value="public string FormatName { get; };" />
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="FormatName">
+      <MemberSignature Language="C#" Value="public string FormatName { get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="MagicHandler">
-      <MemberSignature Language="C#" Value="public Banshee.Playlists.Formats.PlaylistFormatMagicHandler MagicHandler { get; };" />
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="MagicHandler">
+      <MemberSignature Language="C#" Value="public Banshee.Playlists.Formats.PlaylistFormatMagicHandler MagicHandler { get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>Banshee.Playlists.Formats.PlaylistFormatMagicHandler</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="Type">
-      <MemberSignature Language="C#" Value="public Type Type { get; };" />
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="MimeTypes"><MemberSignature Language="C#" Value="public string[] MimeTypes { get; }" /><MemberType>Property</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.String[]</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="Type">
+      <MemberSignature Language="C#" Value="public Type Type { get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.Type</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member>
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member>
   </Members>
 </Type>

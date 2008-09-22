@@ -3,6 +3,7 @@
   <AssemblyInfo>
     <AssemblyName>Banshee.Services</AssemblyName>
     <AssemblyVersion>0.90.1.25404</AssemblyVersion>
+    <AssemblyVersion>1.3.1.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>Banshee.Sources.DatabaseSource</BaseTypeName>
@@ -25,74 +26,48 @@
     
     
     
-    <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public AbstractPlaylistSource (string generic_name, string name);" />
-      <MemberType>Constructor</MemberType>
-      <Parameters><Parameter Name="generic_name" Type="System.String" /><Parameter Name="name" Type="System.String" /></Parameters>
-      <Docs><param name="generic_name">To be added.</param><param name="name">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public AbstractPlaylistSource (string generic_name, string name, Nullable&lt;int&gt; dbid, int sortColumn, int sortType);" />
-      <MemberType>Constructor</MemberType>
-      <Parameters><Parameter Name="generic_name" Type="System.String" /><Parameter Name="name" Type="System.String" /><Parameter Name="dbid" Type="System.Nullable&lt;System.Int32&gt;" /><Parameter Name="sortColumn" Type="System.Int32" /><Parameter Name="sortType" Type="System.Int32" /></Parameters>
-      <Docs><param name="generic_name">To be added.</param><param name="name">To be added.</param><param name="dbid">To be added.</param><param name="sortColumn">To be added.</param><param name="sortType">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="Create">
+    <Member MemberName=".ctor"><MemberSignature Language="C#" Value="public AbstractPlaylistSource (string generic_name, string name, Banshee.Sources.PrimarySource parent);" /><MemberType>Constructor</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><Parameters><Parameter Name="generic_name" Type="System.String" /><Parameter Name="name" Type="System.String" /><Parameter Name="parent" Type="Banshee.Sources.PrimarySource" /></Parameters><Docs><param name="generic_name">To be added.</param><param name="name">To be added.</param><param name="parent">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName=".ctor"><MemberSignature Language="C#" Value="public AbstractPlaylistSource (string generic_name, string name, int dbid, int sortColumn, int sortType, Banshee.Sources.PrimarySource parent, bool is_temp);" /><MemberType>Constructor</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><Parameters><Parameter Name="generic_name" Type="System.String" /><Parameter Name="name" Type="System.String" /><Parameter Name="dbid" Type="System.Int32" /><Parameter Name="sortColumn" Type="System.Int32" /><Parameter Name="sortType" Type="System.Int32" /><Parameter Name="parent" Type="Banshee.Sources.PrimarySource" /><Parameter Name="is_temp" Type="System.Boolean" /></Parameters><Docs><param name="generic_name">To be added.</param><param name="name">To be added.</param><param name="dbid">To be added.</param><param name="sortColumn">To be added.</param><param name="sortType">To be added.</param><param name="parent">To be added.</param><param name="is_temp">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="CachesJoinTableEntries"><MemberSignature Language="C#" Value="protected virtual bool CachesJoinTableEntries { get; }" /><MemberType>Property</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="CanUnmap"><MemberSignature Language="C#" Value="public virtual bool CanUnmap { get; }" /><MemberType>Property</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="ConfirmBeforeUnmap"><MemberSignature Language="C#" Value="public bool ConfirmBeforeUnmap { get; }" /><MemberType>Property</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="CountRemovedCommand"><MemberSignature Language="C#" Value="protected Hyena.Data.Sqlite.HyenaSqliteCommand CountRemovedCommand { get; }" /><MemberType>Property</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>Hyena.Data.Sqlite.HyenaSqliteCommand</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="CountUpdatedCommand"><MemberSignature Language="C#" Value="protected Hyena.Data.Sqlite.HyenaSqliteCommand CountUpdatedCommand { get; }" /><MemberType>Property</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>Hyena.Data.Sqlite.HyenaSqliteCommand</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="Create">
       <MemberSignature Language="C#" Value="protected abstract void Create ();" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters />
       <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="dbid">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="dbid">
       <MemberSignature Language="C#" Value="protected Nullable&lt;int&gt; dbid;" />
       <MemberType>Field</MemberType>
       <ReturnValue><ReturnType>System.Nullable&lt;System.Int32&gt;</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="DbId">
-      <MemberSignature Language="C#" Value="public Nullable&lt;int&gt; DbId { protected set; get; };" />
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="DbId">
+      <MemberSignature Language="C#" Value="public Nullable&lt;int&gt; DbId { protected set; get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.Nullable&lt;System.Int32&gt;</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="IconName">
-      <MemberSignature Language="C#" Value="protected abstract string IconName { get; };" />
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="IsTemporary"><MemberSignature Language="C#" Value="public bool IsTemporary { set; get; }" /><MemberType>Property</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="JoinPrimaryKey"><MemberSignature Language="C#" Value="protected virtual string JoinPrimaryKey { get; }" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.String</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="last_added"><MemberSignature Language="C#" Value="protected DateTime last_added;" /><MemberType>Field</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.DateTime</ReturnType></ReturnValue><Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="last_removed"><MemberSignature Language="C#" Value="protected DateTime last_removed;" /><MemberType>Field</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.DateTime</ReturnType></ReturnValue><Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="last_updated"><MemberSignature Language="C#" Value="protected DateTime last_updated;" /><MemberType>Field</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.DateTime</ReturnType></ReturnValue><Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="primary_source_id"><MemberSignature Language="C#" Value="protected int primary_source_id;" /><MemberType>Field</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue><Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="PrimarySource"><MemberSignature Language="C#" Value="public Banshee.Sources.PrimarySource PrimarySource { set; get; }" /><MemberType>Property</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>Banshee.Sources.PrimarySource</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="PrimarySourceId"><MemberSignature Language="C#" Value="public int PrimarySourceId { get; }" /><MemberType>Property</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="SourcePrimaryKey">
+      <MemberSignature Language="C#" Value="protected abstract string SourcePrimaryKey { get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="JoinPrimaryKey"><MemberSignature Language="C#" Value="protected virtual string JoinPrimaryKey { get; };" /><MemberType>Property</MemberType><ReturnValue><ReturnType>System.String</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="NotifyUpdated"><MemberSignature Language="C#" Value="public void NotifyUpdated ();" /><MemberType>Method</MemberType><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters /><Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="Save">
-      <MemberSignature Language="C#" Value="public virtual void Save ();" />
-      <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
-      <Parameters />
-      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="SourcePrimaryKey">
-      <MemberSignature Language="C#" Value="protected abstract string SourcePrimaryKey { get; };" />
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="SourceTable">
+      <MemberSignature Language="C#" Value="protected abstract string SourceTable { get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="SourceTable">
-      <MemberSignature Language="C#" Value="protected abstract string SourceTable { get; };" />
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="TrackCondition">
+      <MemberSignature Language="C#" Value="protected virtual string TrackCondition { get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="TrackCondition">
-      <MemberSignature Language="C#" Value="protected virtual string TrackCondition { get; };" />
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="TrackJoinTable">
+      <MemberSignature Language="C#" Value="protected abstract string TrackJoinTable { get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="TrackJoin">
-      <MemberSignature Language="C#" Value="protected virtual string TrackJoin { get; };" />
-      <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="TrackJoinTable">
-      <MemberSignature Language="C#" Value="protected abstract string TrackJoinTable { get; };" />
-      <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="Update">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="Update">
       <MemberSignature Language="C#" Value="protected abstract void Update ();" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters />
       <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member>
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member>
   </Members>
 </Type>

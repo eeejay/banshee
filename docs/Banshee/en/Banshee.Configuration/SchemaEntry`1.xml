@@ -1,8 +1,9 @@
 <Type Name="SchemaEntry&lt;T&gt;" FullName="Banshee.Configuration.SchemaEntry&lt;T&gt;">
-  <TypeSignature Language="C#" Value="public struct SchemaEntry&lt;T&gt;" />
+  <TypeSignature Language="C#" Value="public struct SchemaEntry&lt;T&gt; : IEquatable&lt;Banshee.Configuration.SchemaEntry&lt;T&gt;&gt;" />
   <AssemblyInfo>
     <AssemblyName>Banshee.Core</AssemblyName>
     <AssemblyVersion>0.90.1.25775</AssemblyVersion>
+    <AssemblyVersion>1.3.1.0</AssemblyVersion>
   </AssemblyInfo>
   <TypeParameters>
     <TypeParameter>T</TypeParameter>
@@ -10,7 +11,11 @@
   <Base>
     <BaseTypeName>System.ValueType</BaseTypeName>
   </Base>
-  <Interfaces />
+  <Interfaces>
+    <Interface>
+      <InterfaceName>System.IEquatable&lt;Banshee.Configuration.SchemaEntry&lt;T&gt;&gt;</InterfaceName>
+    </Interface>
+  </Interfaces>
   <Docs>
     <typeparam name="T">To be added.</typeparam>
     <summary>To be added.</summary>
@@ -31,54 +36,54 @@
       <MemberType>Constructor</MemberType>
       <Parameters><Parameter Name="namespace" Type="System.String" /><Parameter Name="key" Type="System.String" /><Parameter Name="defaultValue" Type="T" /><Parameter Name="shortDescription" Type="System.String" /><Parameter Name="longDescription" Type="System.String" /></Parameters>
       <Docs><param name="namespace">To be added.</param><param name="key">To be added.</param><param name="defaultValue">To be added.</param><param name="shortDescription">To be added.</param><param name="longDescription">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="DefaultValue">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="DefaultValue">
       <MemberSignature Language="C#" Value="public readonly T DefaultValue;" />
       <MemberType>Field</MemberType>
       <ReturnValue><ReturnType>T</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="Get">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="Equals"><MemberSignature Language="C#" Value="public bool Equals (Banshee.Configuration.SchemaEntry&lt;T&gt; entry);" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue><Parameters><Parameter Name="entry" Type="Banshee.Configuration.SchemaEntry&lt;T&gt;" /></Parameters><Docs><param name="entry">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member><Member MemberName="Get">
       <MemberSignature Language="C#" Value="public T Get ();" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>T</ReturnType></ReturnValue>
       <Parameters />
       <Docs><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="Get">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="Get">
       <MemberSignature Language="C#" Value="public T Get (T fallback);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>T</ReturnType></ReturnValue>
       <Parameters><Parameter Name="fallback" Type="T" /></Parameters>
       <Docs><param name="fallback">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="Key">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="Key">
       <MemberSignature Language="C#" Value="public readonly string Key;" />
       <MemberType>Field</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="LongDescription">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="LongDescription">
       <MemberSignature Language="C#" Value="public readonly string LongDescription;" />
       <MemberType>Field</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="Namespace">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="Namespace">
       <MemberSignature Language="C#" Value="public readonly string Namespace;" />
       <MemberType>Field</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="Set">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="Set">
       <MemberSignature Language="C#" Value="public void Set (T value);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters><Parameter Name="value" Type="T" /></Parameters>
       <Docs><param name="value">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="ShortDescription">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="ShortDescription">
       <MemberSignature Language="C#" Value="public readonly string ShortDescription;" />
       <MemberType>Field</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="Zero">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="Zero">
       <MemberSignature Language="C#" Value="public static Banshee.Configuration.SchemaEntry&lt;T&gt; Zero;" />
       <MemberType>Field</MemberType>
       <ReturnValue><ReturnType>Banshee.Configuration.SchemaEntry&lt;T&gt;</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member>
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member>
   </Members>
 </Type>

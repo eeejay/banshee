@@ -13,17 +13,25 @@
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
-    
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public PlayerEngineStateArgs ();" />
       <MemberType>Constructor</MemberType>
       <Parameters />
-      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="State">
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="State">
       <MemberSignature Language="C#" Value="public Banshee.MediaEngine.PlayerEngineState State;" />
       <MemberType>Field</MemberType>
-      <ReturnValue><ReturnType>Banshee.MediaEngine.PlayerEngineState</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>Banshee.MediaEngine.PlayerEngineState</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
   </Members>
 </Type>

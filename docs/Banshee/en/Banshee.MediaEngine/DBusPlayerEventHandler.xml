@@ -1,0 +1,25 @@
+<Type Name="DBusPlayerEventHandler" FullName="Banshee.MediaEngine.DBusPlayerEventHandler">
+  <TypeSignature Language="C#" Value="public delegate void DBusPlayerEventHandler(string evnt, string message, double bufferingPercent);" />
+  <AssemblyInfo>
+    <AssemblyName>Banshee.Services</AssemblyName>
+    <AssemblyVersion>1.3.1.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Delegate</BaseTypeName>
+  </Base>
+  <Parameters>
+    <Parameter Name="evnt" Type="System.String" />
+    <Parameter Name="message" Type="System.String" />
+    <Parameter Name="bufferingPercent" Type="System.Double" />
+  </Parameters>
+  <ReturnValue>
+    <ReturnType>System.Void</ReturnType>
+  </ReturnValue>
+  <Docs>
+    <param name="evnt">To be added.</param>
+    <param name="message">To be added.</param>
+    <param name="bufferingPercent">To be added.</param>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+</Type>

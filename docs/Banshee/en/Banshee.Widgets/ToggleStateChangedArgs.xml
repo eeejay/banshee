@@ -13,17 +13,25 @@
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
-    
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public ToggleStateChangedArgs ();" />
       <MemberType>Constructor</MemberType>
       <Parameters />
-      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="ToggleState">
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ToggleState">
       <MemberSignature Language="C#" Value="public Type ToggleState;" />
       <MemberType>Field</MemberType>
-      <ReturnValue><ReturnType>System.Type</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>System.Type</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
   </Members>
 </Type>

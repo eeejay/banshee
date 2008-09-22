@@ -1,0 +1,18 @@
+<Type Name="DelegateJob+JobDelegate" FullName="Banshee.Kernel.DelegateJob+JobDelegate">
+  <TypeSignature Language="C#" Value="public delegate void DelegateJob.JobDelegate();" />
+  <AssemblyInfo>
+    <AssemblyName>Banshee.Core</AssemblyName>
+    <AssemblyVersion>1.3.1.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Delegate</BaseTypeName>
+  </Base>
+  <Parameters />
+  <ReturnValue>
+    <ReturnType>System.Void</ReturnType>
+  </ReturnValue>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+</Type>

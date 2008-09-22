@@ -3,6 +3,7 @@
   <AssemblyInfo>
     <AssemblyName>Banshee.Services</AssemblyName>
     <AssemblyVersion>0.90.1.25404</AssemblyVersion>
+    <AssemblyVersion>1.3.1.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>Banshee.Sources.PrimarySource</BaseTypeName>
@@ -14,16 +15,11 @@
   </Docs>
   <Members>
     
-    <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public LibrarySource ();" />
-      <MemberType>Constructor</MemberType>
-      <Parameters />
-      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="ErrorSource">
-      <MemberSignature Language="C#" Value="public Banshee.Sources.ErrorSource ErrorSource { get; };" />
+    
+  <Member MemberName=".ctor"><MemberSignature Language="C#" Value="public LibrarySource (string label, string name, int order);" /><MemberType>Constructor</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><Parameters><Parameter Name="label" Type="System.String" /><Parameter Name="name" Type="System.String" /><Parameter Name="order" Type="System.Int32" /></Parameters><Docs><param name="label">To be added.</param><param name="name">To be added.</param><param name="order">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="AttributesCondition"><MemberSignature Language="C#" Value="public string AttributesCondition { get; }" /><MemberType>Property</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.String</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="ErrorSource">
+      <MemberSignature Language="C#" Value="public Banshee.Sources.ErrorSource ErrorSource { get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>Banshee.Sources.ErrorSource</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member>
-  </Members>
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="GetTrackIdForUri"><MemberSignature Language="C#" Value="public static int GetTrackIdForUri (string uri);" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue><Parameters><Parameter Name="uri" Type="System.String" /></Parameters><Docs><param name="uri">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member><Member MemberName="MediaTypes"><MemberSignature Language="C#" Value="protected Banshee.Collection.TrackMediaAttributes MediaTypes { set; get; }" /><MemberType>Property</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>Banshee.Collection.TrackMediaAttributes</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="NotMediaTypes"><MemberSignature Language="C#" Value="protected Banshee.Collection.TrackMediaAttributes NotMediaTypes { set; get; }" /><MemberType>Property</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>Banshee.Collection.TrackMediaAttributes</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="SyncCondition"><MemberSignature Language="C#" Value="public string SyncCondition { protected set; get; }" /><MemberType>Property</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.String</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member></Members>
 </Type>

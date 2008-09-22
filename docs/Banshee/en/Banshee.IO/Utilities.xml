@@ -3,6 +3,7 @@
   <AssemblyInfo>
     <AssemblyName>Banshee.Core</AssemblyName>
     <AssemblyVersion>0.90.1.25775</AssemblyVersion>
+    <AssemblyVersion>1.3.1.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -13,12 +14,12 @@
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
-    <Member MemberName="DeleteFileTrimmingParentDirectories">
+    
+  <Member MemberName="DeleteFileTrimmingParentDirectories">
       <MemberSignature Language="C#" Value="public static void DeleteFileTrimmingParentDirectories (Banshee.Base.SafeUri uri);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters><Parameter Name="uri" Type="Banshee.Base.SafeUri" /></Parameters>
       <Docs><param name="uri">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member>
-  </Members>
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="TrimEmptyDirectories"><MemberSignature Language="C#" Value="public static void TrimEmptyDirectories (Banshee.Base.SafeUri uri);" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters><Parameter Name="uri" Type="Banshee.Base.SafeUri" /></Parameters><Docs><param name="uri">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member></Members>
 </Type>

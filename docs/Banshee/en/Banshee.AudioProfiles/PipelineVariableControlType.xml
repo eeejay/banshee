@@ -12,29 +12,45 @@
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
-    
-    
-    
     <Member MemberName="Check">
       <MemberSignature Language="C#" Value="Check" />
       <MemberType>Field</MemberType>
-      <ReturnValue><ReturnType>Banshee.AudioProfiles.PipelineVariableControlType</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary></Docs>
-    </Member><Member MemberName="Combo">
+      <ReturnValue>
+        <ReturnType>Banshee.AudioProfiles.PipelineVariableControlType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Combo">
       <MemberSignature Language="C#" Value="Combo" />
       <MemberType>Field</MemberType>
-      <ReturnValue><ReturnType>Banshee.AudioProfiles.PipelineVariableControlType</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary></Docs>
-    </Member><Member MemberName="Slider">
+      <ReturnValue>
+        <ReturnType>Banshee.AudioProfiles.PipelineVariableControlType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Slider">
       <MemberSignature Language="C#" Value="Slider" />
       <MemberType>Field</MemberType>
-      <ReturnValue><ReturnType>Banshee.AudioProfiles.PipelineVariableControlType</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary></Docs>
-    </Member><Member MemberName="Text">
+      <ReturnValue>
+        <ReturnType>Banshee.AudioProfiles.PipelineVariableControlType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Text">
       <MemberSignature Language="C#" Value="Text" />
       <MemberType>Field</MemberType>
-      <ReturnValue><ReturnType>Banshee.AudioProfiles.PipelineVariableControlType</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary></Docs>
+      <ReturnValue>
+        <ReturnType>Banshee.AudioProfiles.PipelineVariableControlType</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
     </Member>
   </Members>
 </Type>

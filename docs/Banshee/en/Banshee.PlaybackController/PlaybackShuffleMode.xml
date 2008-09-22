@@ -3,6 +3,7 @@
   <AssemblyInfo>
     <AssemblyName>Banshee.Services</AssemblyName>
     <AssemblyVersion>0.90.1.25404</AssemblyVersion>
+    <AssemblyVersion>1.3.1.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Enum</BaseTypeName>
@@ -13,16 +14,11 @@
   </Docs>
   <Members>
     
-    <Member MemberName="Linear">
+    
+  <Member MemberName="Album"><MemberSignature Language="C#" Value="Album" /><MemberType>Field</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>Banshee.PlaybackController.PlaybackShuffleMode</ReturnType></ReturnValue><Docs><summary>To be added.</summary></Docs></Member><Member MemberName="Artist"><MemberSignature Language="C#" Value="Artist" /><MemberType>Field</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>Banshee.PlaybackController.PlaybackShuffleMode</ReturnType></ReturnValue><Docs><summary>To be added.</summary></Docs></Member><Member MemberName="Linear">
       <MemberSignature Language="C#" Value="Linear" />
       <MemberType>Field</MemberType>
       <ReturnValue><ReturnType>Banshee.PlaybackController.PlaybackShuffleMode</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary></Docs>
-    </Member><Member MemberName="Shuffle">
-      <MemberSignature Language="C#" Value="Shuffle" />
-      <MemberType>Field</MemberType>
-      <ReturnValue><ReturnType>Banshee.PlaybackController.PlaybackShuffleMode</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary></Docs>
-    </Member>
-  </Members>
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="Song"><MemberSignature Language="C#" Value="Song" /><MemberType>Field</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>Banshee.PlaybackController.PlaybackShuffleMode</ReturnType></ReturnValue><Docs><summary>To be added.</summary></Docs></Member></Members>
 </Type>

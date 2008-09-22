@@ -1,0 +1,55 @@
+<Type Name="WidgetFactory" FullName="Banshee.Preferences.Gui.WidgetFactory">
+  <TypeSignature Language="C#" Value="public static class WidgetFactory" />
+  <AssemblyInfo>
+    <AssemblyName>Banshee.ThickClient</AssemblyName>
+    <AssemblyVersion>1.3.1.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName="GetMnemonicWidget">
+      <MemberSignature Language="C#" Value="public static Gtk.Widget GetMnemonicWidget (Banshee.Preferences.PreferenceBase preference);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.3.1.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Gtk.Widget</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="preference" Type="Banshee.Preferences.PreferenceBase" />
+      </Parameters>
+      <Docs>
+        <param name="preference">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetWidget">
+      <MemberSignature Language="C#" Value="public static Gtk.Widget GetWidget (Banshee.Preferences.PreferenceBase preference);" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.3.1.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Gtk.Widget</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="preference" Type="Banshee.Preferences.PreferenceBase" />
+      </Parameters>
+      <Docs>
+        <param name="preference">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

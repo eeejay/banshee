@@ -3,6 +3,7 @@
   <AssemblyInfo>
     <AssemblyName>Banshee.Core</AssemblyName>
     <AssemblyVersion>0.90.1.25775</AssemblyVersion>
+    <AssemblyVersion>1.3.1.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -28,56 +29,56 @@
       <MemberType>Field</MemberType>
       <ReturnValue><ReturnType>Banshee.Configuration.SchemaEntry&lt;System.Boolean&gt;</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="FilePattern">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="FilePattern">
       <MemberSignature Language="C#" Value="public static readonly Banshee.Configuration.SchemaEntry&lt;string&gt; FilePattern;" />
       <MemberType>Field</MemberType>
       <ReturnValue><ReturnType>Banshee.Configuration.SchemaEntry&lt;System.String&gt;</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="FolderPattern">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="FolderPattern">
       <MemberSignature Language="C#" Value="public static readonly Banshee.Configuration.SchemaEntry&lt;string&gt; FolderPattern;" />
       <MemberType>Field</MemberType>
       <ReturnValue><ReturnType>Banshee.Configuration.SchemaEntry&lt;System.String&gt;</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="Location">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="Location">
       <MemberSignature Language="C#" Value="public static readonly Banshee.Configuration.SchemaEntry&lt;string&gt; Location;" />
       <MemberType>Field</MemberType>
       <ReturnValue><ReturnType>Banshee.Configuration.SchemaEntry&lt;System.String&gt;</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="MoveOnInfoSave">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="MoveOnInfoSave">
       <MemberSignature Language="C#" Value="public static readonly Banshee.Configuration.SchemaEntry&lt;bool&gt; MoveOnInfoSave;" />
       <MemberType>Field</MemberType>
       <ReturnValue><ReturnType>Banshee.Configuration.SchemaEntry&lt;System.Boolean&gt;</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="PlaylistSortCriteria">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="PlaylistSortCriteria">
       <MemberSignature Language="C#" Value="public static readonly Banshee.Configuration.SchemaEntry&lt;int&gt; PlaylistSortCriteria;" />
       <MemberType>Field</MemberType>
       <ReturnValue><ReturnType>Banshee.Configuration.SchemaEntry&lt;System.Int32&gt;</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="PlaylistSortOrder">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="PlaylistSortOrder">
       <MemberSignature Language="C#" Value="public static readonly Banshee.Configuration.SchemaEntry&lt;int&gt; PlaylistSortOrder;" />
       <MemberType>Field</MemberType>
       <ReturnValue><ReturnType>Banshee.Configuration.SchemaEntry&lt;System.Int32&gt;</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="SortColumn">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="SortColumn">
       <MemberSignature Language="C#" Value="public static readonly Banshee.Configuration.SchemaEntry&lt;int&gt; SortColumn;" />
       <MemberType>Field</MemberType>
       <ReturnValue><ReturnType>Banshee.Configuration.SchemaEntry&lt;System.Int32&gt;</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="SortType">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="SortType">
       <MemberSignature Language="C#" Value="public static readonly Banshee.Configuration.SchemaEntry&lt;int&gt; SortType;" />
       <MemberType>Field</MemberType>
       <ReturnValue><ReturnType>Banshee.Configuration.SchemaEntry&lt;System.Int32&gt;</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="SourceExpanded">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="SourceExpanded">
       <MemberSignature Language="C#" Value="public static readonly Banshee.Configuration.SchemaEntry&lt;bool&gt; SourceExpanded;" />
       <MemberType>Field</MemberType>
       <ReturnValue><ReturnType>Banshee.Configuration.SchemaEntry&lt;System.Boolean&gt;</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="WriteMetadata">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="WriteMetadata">
       <MemberSignature Language="C#" Value="public static readonly Banshee.Configuration.SchemaEntry&lt;bool&gt; WriteMetadata;" />
       <MemberType>Field</MemberType>
       <ReturnValue><ReturnType>Banshee.Configuration.SchemaEntry&lt;System.Boolean&gt;</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member>
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member>
   </Members>
 </Type>

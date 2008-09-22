@@ -3,6 +3,7 @@
   <AssemblyInfo>
     <AssemblyName>Banshee.Services</AssemblyName>
     <AssemblyVersion>0.90.1.25404</AssemblyVersion>
+    <AssemblyVersion>1.3.1.0</AssemblyVersion>
   </AssemblyInfo>
   <Interfaces>
     <Interface>
@@ -22,20 +23,20 @@
     
     
     <Member MemberName="ActiveSource">
-      <MemberSignature Language="C#" Value="public Banshee.Sources.ISource ActiveSource { set; get; };" />
+      <MemberSignature Language="C#" Value="public Banshee.Sources.ISource ActiveSource { set; get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>Banshee.Sources.ISource</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="DefaultSource">
-      <MemberSignature Language="C#" Value="public Banshee.Sources.ISource DefaultSource { get; };" />
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="DefaultSource">
+      <MemberSignature Language="C#" Value="public Banshee.Sources.ISource DefaultSource { get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>Banshee.Sources.ISource</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="Sources">
-      <MemberSignature Language="C#" Value="public string[] Sources { get; };" />
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="Sources">
+      <MemberSignature Language="C#" Value="public string[] Sources { get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.String[]</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member>
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member>
   </Members>
 </Type>

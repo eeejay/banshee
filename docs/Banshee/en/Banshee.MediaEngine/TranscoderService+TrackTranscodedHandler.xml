@@ -1,0 +1,23 @@
+<Type Name="TranscoderService+TrackTranscodedHandler" FullName="Banshee.MediaEngine.TranscoderService+TrackTranscodedHandler">
+  <TypeSignature Language="C#" Value="public delegate void TranscoderService.TrackTranscodedHandler(TrackInfo track, SafeUri uri);" />
+  <AssemblyInfo>
+    <AssemblyName>Banshee.Services</AssemblyName>
+    <AssemblyVersion>1.3.1.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Delegate</BaseTypeName>
+  </Base>
+  <Parameters>
+    <Parameter Name="track" Type="Banshee.Collection.TrackInfo" />
+    <Parameter Name="uri" Type="Banshee.Base.SafeUri" />
+  </Parameters>
+  <ReturnValue>
+    <ReturnType>System.Void</ReturnType>
+  </ReturnValue>
+  <Docs>
+    <param name="track">To be added.</param>
+    <param name="uri">To be added.</param>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+</Type>

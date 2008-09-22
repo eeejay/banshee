@@ -1,0 +1,28 @@
+<Type Name="IVisualizationDataSource" FullName="Banshee.MediaEngine.IVisualizationDataSource">
+  <TypeSignature Language="C#" Value="public interface IVisualizationDataSource" />
+  <AssemblyInfo>
+    <AssemblyName>Banshee.Services</AssemblyName>
+    <AssemblyVersion>1.3.1.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName="DataAvailable">
+      <MemberSignature Language="C#" Value="public event Banshee.MediaEngine.VisualizationDataHandler DataAvailable;" />
+      <MemberType>Event</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.3.1.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Banshee.MediaEngine.VisualizationDataHandler</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

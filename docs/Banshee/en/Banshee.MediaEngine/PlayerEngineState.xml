@@ -12,41 +12,65 @@
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
-    
-    
-    
-    
-    
     <Member MemberName="Contacting">
       <MemberSignature Language="C#" Value="Contacting" />
       <MemberType>Field</MemberType>
-      <ReturnValue><ReturnType>Banshee.MediaEngine.PlayerEngineState</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary></Docs>
-    </Member><Member MemberName="Idle">
+      <ReturnValue>
+        <ReturnType>Banshee.MediaEngine.PlayerEngineState</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Idle">
       <MemberSignature Language="C#" Value="Idle" />
       <MemberType>Field</MemberType>
-      <ReturnValue><ReturnType>Banshee.MediaEngine.PlayerEngineState</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary></Docs>
-    </Member><Member MemberName="Initalized">
+      <ReturnValue>
+        <ReturnType>Banshee.MediaEngine.PlayerEngineState</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Initalized">
       <MemberSignature Language="C#" Value="Initalized" />
       <MemberType>Field</MemberType>
-      <ReturnValue><ReturnType>Banshee.MediaEngine.PlayerEngineState</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary></Docs>
-    </Member><Member MemberName="Loaded">
+      <ReturnValue>
+        <ReturnType>Banshee.MediaEngine.PlayerEngineState</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Loaded">
       <MemberSignature Language="C#" Value="Loaded" />
       <MemberType>Field</MemberType>
-      <ReturnValue><ReturnType>Banshee.MediaEngine.PlayerEngineState</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary></Docs>
-    </Member><Member MemberName="Paused">
+      <ReturnValue>
+        <ReturnType>Banshee.MediaEngine.PlayerEngineState</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Paused">
       <MemberSignature Language="C#" Value="Paused" />
       <MemberType>Field</MemberType>
-      <ReturnValue><ReturnType>Banshee.MediaEngine.PlayerEngineState</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary></Docs>
-    </Member><Member MemberName="Playing">
+      <ReturnValue>
+        <ReturnType>Banshee.MediaEngine.PlayerEngineState</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Playing">
       <MemberSignature Language="C#" Value="Playing" />
       <MemberType>Field</MemberType>
-      <ReturnValue><ReturnType>Banshee.MediaEngine.PlayerEngineState</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary></Docs>
+      <ReturnValue>
+        <ReturnType>Banshee.MediaEngine.PlayerEngineState</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
     </Member>
   </Members>
 </Type>

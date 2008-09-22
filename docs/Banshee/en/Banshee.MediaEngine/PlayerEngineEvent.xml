@@ -12,59 +12,95 @@
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
-    
-    
-    
-    
-    
-    
-    
-    
     <Member MemberName="Buffering">
       <MemberSignature Language="C#" Value="Buffering" />
       <MemberType>Field</MemberType>
-      <ReturnValue><ReturnType>Banshee.MediaEngine.PlayerEngineEvent</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary></Docs>
-    </Member><Member MemberName="EndOfStream">
+      <ReturnValue>
+        <ReturnType>Banshee.MediaEngine.PlayerEngineEvent</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="EndOfStream">
       <MemberSignature Language="C#" Value="EndOfStream" />
       <MemberType>Field</MemberType>
-      <ReturnValue><ReturnType>Banshee.MediaEngine.PlayerEngineEvent</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary></Docs>
-    </Member><Member MemberName="Error">
+      <ReturnValue>
+        <ReturnType>Banshee.MediaEngine.PlayerEngineEvent</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Error">
       <MemberSignature Language="C#" Value="Error" />
       <MemberType>Field</MemberType>
-      <ReturnValue><ReturnType>Banshee.MediaEngine.PlayerEngineEvent</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary></Docs>
-    </Member><Member MemberName="Iterate">
+      <ReturnValue>
+        <ReturnType>Banshee.MediaEngine.PlayerEngineEvent</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Iterate">
       <MemberSignature Language="C#" Value="Iterate" />
       <MemberType>Field</MemberType>
-      <ReturnValue><ReturnType>Banshee.MediaEngine.PlayerEngineEvent</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary></Docs>
-    </Member><Member MemberName="Metadata">
+      <ReturnValue>
+        <ReturnType>Banshee.MediaEngine.PlayerEngineEvent</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Metadata">
       <MemberSignature Language="C#" Value="Metadata" />
       <MemberType>Field</MemberType>
-      <ReturnValue><ReturnType>Banshee.MediaEngine.PlayerEngineEvent</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary></Docs>
-    </Member><Member MemberName="Seek">
+      <ReturnValue>
+        <ReturnType>Banshee.MediaEngine.PlayerEngineEvent</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Seek">
       <MemberSignature Language="C#" Value="Seek" />
       <MemberType>Field</MemberType>
-      <ReturnValue><ReturnType>Banshee.MediaEngine.PlayerEngineEvent</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary></Docs>
-    </Member><Member MemberName="StartOfStream">
+      <ReturnValue>
+        <ReturnType>Banshee.MediaEngine.PlayerEngineEvent</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="StartOfStream">
       <MemberSignature Language="C#" Value="StartOfStream" />
       <MemberType>Field</MemberType>
-      <ReturnValue><ReturnType>Banshee.MediaEngine.PlayerEngineEvent</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary></Docs>
-    </Member><Member MemberName="TrackInfoUpdated">
+      <ReturnValue>
+        <ReturnType>Banshee.MediaEngine.PlayerEngineEvent</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="TrackInfoUpdated">
       <MemberSignature Language="C#" Value="TrackInfoUpdated" />
       <MemberType>Field</MemberType>
-      <ReturnValue><ReturnType>Banshee.MediaEngine.PlayerEngineEvent</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary></Docs>
-    </Member><Member MemberName="Volume">
+      <ReturnValue>
+        <ReturnType>Banshee.MediaEngine.PlayerEngineEvent</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Volume">
       <MemberSignature Language="C#" Value="Volume" />
       <MemberType>Field</MemberType>
-      <ReturnValue><ReturnType>Banshee.MediaEngine.PlayerEngineEvent</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary></Docs>
+      <ReturnValue>
+        <ReturnType>Banshee.MediaEngine.PlayerEngineEvent</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+      </Docs>
     </Member>
   </Members>
 </Type>

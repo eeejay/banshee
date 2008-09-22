@@ -3,6 +3,7 @@
   <AssemblyInfo>
     <AssemblyName>Banshee.Services</AssemblyName>
     <AssemblyVersion>0.90.1.25404</AssemblyVersion>
+    <AssemblyVersion>1.3.1.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>Banshee.Collection.TrackInfo</BaseTypeName>
@@ -13,181 +14,50 @@
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
-    <Member MemberName=".ctor">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public DatabaseTrackInfo ();" />
       <MemberType>Constructor</MemberType>
       <Parameters />
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="AlbumId">
-      <MemberSignature Language="C#" Value="public int AlbumId { set; get; };" />
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName=".ctor"><MemberSignature Language="C#" Value="public DatabaseTrackInfo (Banshee.Collection.Database.DatabaseTrackInfo original);" /><MemberType>Constructor</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><Parameters><Parameter Name="original" Type="Banshee.Collection.Database.DatabaseTrackInfo" /></Parameters><Docs><param name="original">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="Album"><MemberSignature Language="C#" Value="public Banshee.Collection.Database.DatabaseAlbumInfo Album { get; }" /><MemberType>Property</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>Banshee.Collection.Database.DatabaseAlbumInfo</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="AlbumId">
+      <MemberSignature Language="C#" Value="public int AlbumId { set; get; }" />
       <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Int32</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="ArtistId">
-      <MemberSignature Language="C#" Value="public int ArtistId { set; get; };" />
+      <ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><Attributes><Attribute><AttributeName>Hyena.Data.Sqlite.DatabaseColumn("AlbumID")</AttributeName></Attribute></Attributes></Member><Member MemberName="Artist"><MemberSignature Language="C#" Value="public Banshee.Collection.Database.DatabaseArtistInfo Artist { get; }" /><MemberType>Property</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>Banshee.Collection.Database.DatabaseArtistInfo</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="ArtistId">
+      <MemberSignature Language="C#" Value="public int ArtistId { set; get; }" />
       <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Int32</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="ContainsUri">
-      <MemberSignature Language="C#" Value="public static bool ContainsUri (Banshee.Base.SafeUri uri);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Boolean</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="uri" Type="Banshee.Base.SafeUri" />
-      </Parameters>
-      <Docs>
-        <param name="uri">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="CopyToLibrary">
-      <MemberSignature Language="C#" Value="public Banshee.Base.SafeUri CopyToLibrary ();" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>Banshee.Base.SafeUri</ReturnType>
-      </ReturnValue>
-      <Parameters />
-      <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="DateUpdated">
-      <MemberSignature Language="C#" Value="public DateTime DateUpdated { set; get; };" />
+      <ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><Attributes><Attribute><AttributeName>Hyena.Data.Sqlite.DatabaseColumn("ArtistID")</AttributeName></Attribute></Attributes></Member><Member MemberName="ContainsUri"><MemberSignature Language="C#" Value="public static bool ContainsUri (string relative_path, int[] primary_sources);" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue><Parameters><Parameter Name="relative_path" Type="System.String" /><Parameter Name="primary_sources" Type="System.Int32[]" /></Parameters><Docs><param name="relative_path">To be added.</param><param name="primary_sources">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member><Member MemberName="ContainsUri"><MemberSignature Language="C#" Value="public static bool ContainsUri (Banshee.Base.SafeUri uri, string relative_path, int[] primary_sources);" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue><Parameters><Parameter Name="uri" Type="Banshee.Base.SafeUri" /><Parameter Name="relative_path" Type="System.String" /><Parameter Name="primary_sources" Type="System.Int32[]" /></Parameters><Docs><param name="uri">To be added.</param><param name="relative_path">To be added.</param><param name="primary_sources">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member><Member MemberName="CopyToLibraryIfAppropriate"><MemberSignature Language="C#" Value="public void CopyToLibraryIfAppropriate (bool force_copy);" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters><Parameter Name="force_copy" Type="System.Boolean" /></Parameters><Docs><param name="force_copy">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="DateUpdated">
+      <MemberSignature Language="C#" Value="public DateTime DateUpdated { set; get; }" />
       <MemberType>Property</MemberType>
-      <Attributes>
-        <Attribute>
-          <AttributeName>Hyena.Data.Sqlite.DatabaseColumn("DateUpdatedStamp")</AttributeName>
-        </Attribute>
-      </Attributes>
-      <ReturnValue>
-        <ReturnType>System.DateTime</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="DbId">
-      <MemberSignature Language="C#" Value="public int DbId { get; };" />
+      <Attributes><Attribute><AttributeName>Hyena.Data.Sqlite.DatabaseColumn("DateUpdatedStamp")</AttributeName></Attribute></Attributes>
+      <ReturnValue><ReturnType>System.DateTime</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="ExternalId"><MemberSignature Language="C#" Value="public long ExternalId { set; get; }" /><MemberType>Property</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><Attributes><Attribute><AttributeName>Hyena.Data.Sqlite.DatabaseColumn("ExternalID")</AttributeName></Attribute></Attributes><ReturnValue><ReturnType>System.Int64</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="GetTrackIdForUri"><MemberSignature Language="C#" Value="public static int GetTrackIdForUri (string relative_path, int[] primary_sources);" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue><Parameters><Parameter Name="relative_path" Type="System.String" /><Parameter Name="primary_sources" Type="System.Int32[]" /></Parameters><Docs><param name="relative_path">To be added.</param><param name="primary_sources">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member><Member MemberName="GetTrackIdForUri"><MemberSignature Language="C#" Value="public static int GetTrackIdForUri (Banshee.Base.SafeUri uri, string relative_path, int[] primary_sources);" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue><Parameters><Parameter Name="uri" Type="Banshee.Base.SafeUri" /><Parameter Name="relative_path" Type="System.String" /><Parameter Name="primary_sources" Type="System.Int32[]" /></Parameters><Docs><param name="uri">To be added.</param><param name="relative_path">To be added.</param><param name="primary_sources">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member><Member MemberName="GetTrackIdForUri"><MemberSignature Language="C#" Value="public static int GetTrackIdForUri (string uri, string relative_path, int[] primary_sources);" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue><Parameters><Parameter Name="uri" Type="System.String" /><Parameter Name="relative_path" Type="System.String" /><Parameter Name="primary_sources" Type="System.Int32[]" /></Parameters><Docs><param name="uri">To be added.</param><param name="relative_path">To be added.</param><param name="primary_sources">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member><Member MemberName="NotifySaved"><MemberSignature Language="C#" Value="public static bool NotifySaved { set; get; }" /><MemberType>Property</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="playback_error"><MemberSignature Language="C#" Value="protected Banshee.Streaming.StreamPlaybackError playback_error;" /><MemberType>Field</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><Attributes><Attribute><AttributeName>Hyena.Data.Sqlite.DatabaseColumn("LastStreamError")</AttributeName></Attribute></Attributes><ReturnValue><ReturnType>Banshee.Streaming.StreamPlaybackError</ReturnType></ReturnValue><Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="PrimarySource"><MemberSignature Language="C#" Value="public Banshee.Sources.PrimarySource PrimarySource { set; get; }" /><MemberType>Property</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>Banshee.Sources.PrimarySource</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="PrimarySourceId"><MemberSignature Language="C#" Value="public int PrimarySourceId { set; get; }" /><MemberType>Property</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><Attributes><Attribute><AttributeName>Hyena.Data.Sqlite.DatabaseColumn("PrimarySourceID")</AttributeName></Attribute></Attributes><ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="Provider">
+      <MemberSignature Language="C#" Value="public static Banshee.Collection.Database.DatabaseTrackModelProvider&lt;Banshee.Collection.Database.DatabaseTrackInfo&gt; Provider { get; }" />
       <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Int32</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="MusicBrainzID">
-      <MemberSignature Language="C#" Value="public string MusicBrainzID { set; get; };" />
+      <ReturnValue><ReturnType>Banshee.Collection.Database.DatabaseTrackModelProvider&lt;Banshee.Collection.Database.DatabaseTrackInfo&gt;</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="ProviderRefresh"><MemberSignature Language="C#" Value="protected virtual bool ProviderRefresh ();" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue><Parameters /><Docs><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member><Member MemberName="ProviderSave"><MemberSignature Language="C#" Value="protected virtual void ProviderSave ();" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters /><Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="rating"><MemberSignature Language="C#" Value="protected int rating;" /><MemberType>Field</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><Attributes><Attribute><AttributeName>Hyena.Data.Sqlite.DatabaseColumn("Rating")</AttributeName></Attribute></Attributes><ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue><Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="Refresh"><MemberSignature Language="C#" Value="public void Refresh ();" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters /><Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="Save"><MemberSignature Language="C#" Value="public void Save (bool notify, Hyena.Query.QueryField[] fields_changed);" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters><Parameter Name="notify" Type="System.Boolean" /><Parameter Name="fields_changed" Type="Hyena.Query.QueryField[]"><Attributes><Attribute><AttributeName>System.ParamArray</AttributeName></Attribute></Attributes></Parameter></Parameters><Docs><param name="notify">To be added.</param><param name="fields_changed">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="SavedRating"><MemberSignature Language="C#" Value="public int SavedRating { set; get; }" /><MemberType>Property</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="TagSetID">
+      <MemberSignature Language="C#" Value="public int TagSetID { set; get; }" />
       <MemberType>Property</MemberType>
-      <Attributes>
-        <Attribute>
-          <AttributeName>Hyena.Data.Sqlite.DatabaseColumn</AttributeName>
-        </Attribute>
-      </Attributes>
-      <ReturnValue>
-        <ReturnType>System.String</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="Provider">
-      <MemberSignature Language="C#" Value="public static Banshee.Database.BansheeModelProvider&lt;Banshee.Collection.Database.DatabaseTrackInfo&gt; Provider { get; };" />
-      <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>Banshee.Database.BansheeModelProvider&lt;Banshee.Collection.Database.DatabaseTrackInfo&gt;</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="Save">
-      <MemberSignature Language="C#" Value="public void Save (bool notify);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="notify" Type="System.Boolean" />
-      </Parameters>
-      <Docs>
-        <param name="notify">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="Source">
-      <MemberSignature Language="C#" Value="public Banshee.Sources.PrimarySource Source { set; get; };" />
-      <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>Banshee.Sources.PrimarySource</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="SourceId">
-      <MemberSignature Language="C#" Value="public int SourceId { get; };" />
-      <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Int32</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="TagSetID">
-      <MemberSignature Language="C#" Value="public int TagSetID { set; get; };" />
-      <MemberType>Property</MemberType>
-      <Attributes>
-        <Attribute>
-          <AttributeName>Hyena.Data.Sqlite.DatabaseColumn</AttributeName>
-        </Attribute>
-      </Attributes>
-      <ReturnValue>
-        <ReturnType>System.Int32</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-  </Members>
+      <Attributes><Attribute><AttributeName>Hyena.Data.Sqlite.DatabaseColumn</AttributeName></Attribute></Attributes>
+      <ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="TitleLowered"><MemberSignature Language="C#" Value="protected string TitleLowered { get; }" /><MemberType>Property</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><Attributes><Attribute><AttributeName>Hyena.Data.Sqlite.DatabaseColumn(Select=false)</AttributeName></Attribute></Attributes><ReturnValue><ReturnType>System.String</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="TrackEqual"><MemberSignature Language="C#" Value="public static bool TrackEqual (Banshee.Collection.Database.DatabaseTrackInfo a, Banshee.Collection.Database.DatabaseTrackInfo b);" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue><Parameters><Parameter Name="a" Type="Banshee.Collection.Database.DatabaseTrackInfo" /><Parameter Name="b" Type="Banshee.Collection.Database.DatabaseTrackInfo" /></Parameters><Docs><param name="a">To be added.</param><param name="b">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member><Member MemberName="TrackId"><MemberSignature Language="C#" Value="public int TrackId { protected set; get; }" /><MemberType>Property</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><Attributes><Attribute><AttributeName>Hyena.Data.Sqlite.DatabaseColumn("TrackID", Constraints=Hyena.Data.Sqlite.DatabaseColumnConstraints.PrimaryKey)</AttributeName></Attribute></Attributes><ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="UriField"><MemberSignature Language="C#" Value="protected string UriField { set; get; }" /><MemberType>Property</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><Attributes><Attribute><AttributeName>Hyena.Data.Sqlite.DatabaseColumn("Uri")</AttributeName></Attribute></Attributes><ReturnValue><ReturnType>System.String</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="UriType"><MemberSignature Language="C#" Value="protected Banshee.Collection.Database.TrackUriType UriType { set; get; }" /><MemberType>Property</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><Attributes><Attribute><AttributeName>Hyena.Data.Sqlite.DatabaseColumn("UriType")</AttributeName></Attribute></Attributes><ReturnValue><ReturnType>Banshee.Collection.Database.TrackUriType</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member></Members>
 </Type>

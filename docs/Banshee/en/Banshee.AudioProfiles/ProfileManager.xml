@@ -20,112 +20,224 @@
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public ProfileManager ();" />
       <MemberType>Constructor</MemberType>
       <Parameters />
-      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="Add">
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Add">
       <MemberSignature Language="C#" Value="public void Add (Banshee.AudioProfiles.Profile profile);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="profile" Type="Banshee.AudioProfiles.Profile" /></Parameters>
-      <Docs><param name="profile">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="AvailableProfileCount">
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="profile" Type="Banshee.AudioProfiles.Profile" />
+      </Parameters>
+      <Docs>
+        <param name="profile">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="AvailableProfileCount">
       <MemberSignature Language="C#" Value="public int AvailableProfileCount { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="Banshee.ServiceStack.IService.ServiceName">
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Banshee.ServiceStack.IService.ServiceName">
       <MemberSignature Language="C#" Value="string Banshee.ServiceStack.IService.ServiceName { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="GetAvailableProfiles">
+      <ReturnValue>
+        <ReturnType>System.String</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetAvailableProfiles">
       <MemberSignature Language="C#" Value="public System.Collections.Generic.IEnumerable&lt;Banshee.AudioProfiles.Profile&gt; GetAvailableProfiles ();" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Collections.Generic.IEnumerable&lt;Banshee.AudioProfiles.Profile&gt;</ReturnType></ReturnValue>
+      <ReturnValue>
+        <ReturnType>System.Collections.Generic.IEnumerable&lt;Banshee.AudioProfiles.Profile&gt;</ReturnType>
+      </ReturnValue>
       <Parameters />
-      <Docs><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="GetConfiguredActiveProfile">
+      <Docs>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetConfiguredActiveProfile">
       <MemberSignature Language="C#" Value="public Banshee.AudioProfiles.Profile GetConfiguredActiveProfile (string id);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>Banshee.AudioProfiles.Profile</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="id" Type="System.String" /></Parameters>
-      <Docs><param name="id">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="GetConfiguredActiveProfile">
+      <ReturnValue>
+        <ReturnType>Banshee.AudioProfiles.Profile</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="id" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="id">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetConfiguredActiveProfile">
       <MemberSignature Language="C#" Value="public Banshee.AudioProfiles.Profile GetConfiguredActiveProfile (string id, string[] mimetypes);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>Banshee.AudioProfiles.Profile</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="id" Type="System.String" /><Parameter Name="mimetypes" Type="System.String[]" /></Parameters>
-      <Docs><param name="id">To be added.</param><param name="mimetypes">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="GetEnumerator">
+      <ReturnValue>
+        <ReturnType>Banshee.AudioProfiles.Profile</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="id" Type="System.String" />
+        <Parameter Name="mimetypes" Type="System.String[]" />
+      </Parameters>
+      <Docs>
+        <param name="id">To be added.</param>
+        <param name="mimetypes">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetEnumerator">
       <MemberSignature Language="C#" Value="public System.Collections.Generic.IEnumerator&lt;Banshee.AudioProfiles.Profile&gt; GetEnumerator ();" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Collections.Generic.IEnumerator&lt;Banshee.AudioProfiles.Profile&gt;</ReturnType></ReturnValue>
+      <ReturnValue>
+        <ReturnType>System.Collections.Generic.IEnumerator&lt;Banshee.AudioProfiles.Profile&gt;</ReturnType>
+      </ReturnValue>
       <Parameters />
-      <Docs><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="GetPresetPipelineVariableById">
+      <Docs>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetPresetPipelineVariableById">
       <MemberSignature Language="C#" Value="public Banshee.AudioProfiles.PipelineVariable GetPresetPipelineVariableById (string id);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>Banshee.AudioProfiles.PipelineVariable</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="id" Type="System.String" /></Parameters>
-      <Docs><param name="id">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="GetProfileForMimeType">
+      <ReturnValue>
+        <ReturnType>Banshee.AudioProfiles.PipelineVariable</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="id" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="id">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetProfileForMimeType">
       <MemberSignature Language="C#" Value="public Banshee.AudioProfiles.Profile GetProfileForMimeType (string mimetype);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>Banshee.AudioProfiles.Profile</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="mimetype" Type="System.String" /></Parameters>
-      <Docs><param name="mimetype">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="OnTestProfile">
+      <ReturnValue>
+        <ReturnType>Banshee.AudioProfiles.Profile</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="mimetype" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="mimetype">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="OnTestProfile">
       <MemberSignature Language="C#" Value="protected virtual bool OnTestProfile (Banshee.AudioProfiles.Profile profile);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="profile" Type="Banshee.AudioProfiles.Profile" /></Parameters>
-      <Docs><param name="profile">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="ProfileCount">
+      <ReturnValue>
+        <ReturnType>System.Boolean</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="profile" Type="Banshee.AudioProfiles.Profile" />
+      </Parameters>
+      <Docs>
+        <param name="profile">To be added.</param>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ProfileCount">
       <MemberSignature Language="C#" Value="public int ProfileCount { get; };" />
       <MemberType>Property</MemberType>
-      <ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="Remove">
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Remove">
       <MemberSignature Language="C#" Value="public void Remove (Banshee.AudioProfiles.Profile profile);" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="profile" Type="Banshee.AudioProfiles.Profile" /></Parameters>
-      <Docs><param name="profile">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="System.Collections.IEnumerable.GetEnumerator">
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="profile" Type="Banshee.AudioProfiles.Profile" />
+      </Parameters>
+      <Docs>
+        <param name="profile">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="System.Collections.IEnumerable.GetEnumerator">
       <MemberSignature Language="C#" Value="System.Collections.IEnumerator IEnumerable.GetEnumerator ();" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Collections.IEnumerator</ReturnType></ReturnValue>
+      <ReturnValue>
+        <ReturnType>System.Collections.IEnumerator</ReturnType>
+      </ReturnValue>
       <Parameters />
-      <Docs><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="TestAll">
+      <Docs>
+        <summary>To be added.</summary>
+        <returns>To be added.</returns>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="TestAll">
       <MemberSignature Language="C#" Value="public void TestAll ();" />
       <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
       <Parameters />
-      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="TestProfile">
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="TestProfile">
       <MemberSignature Language="C#" Value="public event Banshee.AudioProfiles.TestProfileHandler TestProfile;" />
       <MemberType>Event</MemberType>
-      <ReturnValue><ReturnType>Banshee.AudioProfiles.TestProfileHandler</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <ReturnValue>
+        <ReturnType>Banshee.AudioProfiles.TestProfileHandler</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
   </Members>
 </Type>

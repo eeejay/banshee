@@ -1,0 +1,23 @@
+<Type Name="AudioCdRipperErrorHandler" FullName="Banshee.MediaEngine.AudioCdRipperErrorHandler">
+  <TypeSignature Language="C#" Value="public delegate void AudioCdRipperErrorHandler(object o, AudioCdRipperErrorArgs args);" />
+  <AssemblyInfo>
+    <AssemblyName>Banshee.Services</AssemblyName>
+    <AssemblyVersion>1.3.1.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Delegate</BaseTypeName>
+  </Base>
+  <Parameters>
+    <Parameter Name="o" Type="System.Object" />
+    <Parameter Name="args" Type="Banshee.MediaEngine.AudioCdRipperErrorArgs" />
+  </Parameters>
+  <ReturnValue>
+    <ReturnType>System.Void</ReturnType>
+  </ReturnValue>
+  <Docs>
+    <param name="o">To be added.</param>
+    <param name="args">To be added.</param>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+</Type>

@@ -1,0 +1,52 @@
+<Type Name="DatabaseQueryFilterModel&lt;T&gt;" FullName="Banshee.Collection.Database.DatabaseQueryFilterModel&lt;T&gt;">
+  <TypeSignature Language="C#" Value="public class DatabaseQueryFilterModel&lt;T&gt; : Banshee.Collection.Database.DatabaseFilterListModel&lt;Banshee.Collection.Database.QueryFilterInfo&lt;T&gt;,Banshee.Collection.Database.QueryFilterInfo&lt;T&gt;&gt;" />
+  <AssemblyInfo>
+    <AssemblyName>Banshee.Services</AssemblyName>
+    <AssemblyVersion>1.3.1.0</AssemblyVersion>
+  </AssemblyInfo>
+  <TypeParameters>
+    <TypeParameter>T</TypeParameter>
+  </TypeParameters>
+  <Base>
+    <BaseTypeName>Banshee.Collection.Database.DatabaseFilterListModel&lt;Banshee.Collection.Database.QueryFilterInfo&lt;T&gt;,Banshee.Collection.Database.QueryFilterInfo&lt;T&gt;&gt;</BaseTypeName>
+    <BaseTypeArguments>
+      <BaseTypeArgument TypeParamName="T">Banshee.Collection.Database.QueryFilterInfo&lt;T&gt;</BaseTypeArgument>
+      <BaseTypeArgument TypeParamName="U">Banshee.Collection.Database.QueryFilterInfo&lt;T&gt;</BaseTypeArgument>
+    </BaseTypeArguments>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <typeparam name="T">To be added.</typeparam>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public DatabaseQueryFilterModel (Banshee.Sources.DatabaseSource source, Banshee.Collection.Database.DatabaseTrackListModel trackModel, Hyena.Data.Sqlite.HyenaSqliteConnection connection, string select_all_fmt, string uuid, Hyena.Query.QueryField field, string filter_column);" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.3.1.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="source" Type="Banshee.Sources.DatabaseSource" />
+        <Parameter Name="trackModel" Type="Banshee.Collection.Database.DatabaseTrackListModel" />
+        <Parameter Name="connection" Type="Hyena.Data.Sqlite.HyenaSqliteConnection" />
+        <Parameter Name="select_all_fmt" Type="System.String" />
+        <Parameter Name="uuid" Type="System.String" />
+        <Parameter Name="field" Type="Hyena.Query.QueryField" />
+        <Parameter Name="filter_column" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="source">To be added.</param>
+        <param name="trackModel">To be added.</param>
+        <param name="connection">To be added.</param>
+        <param name="select_all_fmt">To be added.</param>
+        <param name="uuid">To be added.</param>
+        <param name="field">To be added.</param>
+        <param name="filter_column">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

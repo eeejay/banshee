@@ -1,0 +1,23 @@
+<Type Name="DatabaseImportResultHandler" FullName="Banshee.Collection.Database.DatabaseImportResultHandler">
+  <TypeSignature Language="C#" Value="public delegate void DatabaseImportResultHandler(object o, DatabaseImportResultArgs args);" />
+  <AssemblyInfo>
+    <AssemblyName>Banshee.Services</AssemblyName>
+    <AssemblyVersion>1.3.1.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Delegate</BaseTypeName>
+  </Base>
+  <Parameters>
+    <Parameter Name="o" Type="System.Object" />
+    <Parameter Name="args" Type="Banshee.Collection.Database.DatabaseImportResultArgs" />
+  </Parameters>
+  <ReturnValue>
+    <ReturnType>System.Void</ReturnType>
+  </ReturnValue>
+  <Docs>
+    <param name="o">To be added.</param>
+    <param name="args">To be added.</param>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+</Type>

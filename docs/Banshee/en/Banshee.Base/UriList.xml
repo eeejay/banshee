@@ -3,6 +3,7 @@
   <AssemblyInfo>
     <AssemblyName>Banshee.Core</AssemblyName>
     <AssemblyVersion>0.90.1.25775</AssemblyVersion>
+    <AssemblyVersion>1.3.1.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Collections.Generic.List&lt;Banshee.Base.SafeUri&gt;</BaseTypeName>
@@ -22,22 +23,22 @@
       <MemberType>Constructor</MemberType>
       <Parameters><Parameter Name="data" Type="System.String" /></Parameters>
       <Docs><param name="data">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName=".ctor">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public UriList (string[] uris);" />
       <MemberType>Constructor</MemberType>
       <Parameters><Parameter Name="uris" Type="System.String[]" /></Parameters>
       <Docs><param name="uris">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="LocalPaths">
-      <MemberSignature Language="C#" Value="public string[] LocalPaths { get; };" />
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="LocalPaths">
+      <MemberSignature Language="C#" Value="public string[] LocalPaths { get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.String[]</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="PathToFileUri">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="PathToFileUri">
       <MemberSignature Language="C#" Value="public static Banshee.Base.SafeUri PathToFileUri (string path);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>Banshee.Base.SafeUri</ReturnType></ReturnValue>
       <Parameters><Parameter Name="path" Type="System.String" /></Parameters>
       <Docs><param name="path">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    </Member>
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member>
   </Members>
 </Type>

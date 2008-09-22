@@ -1,12 +1,13 @@
 <Type Name="ImportManager" FullName="Banshee.Collection.ImportManager">
-  <TypeSignature Language="C#" Value="public class ImportManager" />
+  <TypeSignature Language="C#" Value="public class ImportManager : Hyena.Collections.QueuePipeline&lt;string&gt;" />
   <AssemblyInfo>
     <AssemblyName>Banshee.Services</AssemblyName>
     <AssemblyVersion>0.90.1.25404</AssemblyVersion>
+    <AssemblyVersion>1.3.1.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
-    <BaseTypeName>System.Object</BaseTypeName>
-  </Base>
+    <BaseTypeName>Hyena.Collections.QueuePipeline&lt;System.String&gt;</BaseTypeName>
+  <BaseTypeArguments><BaseTypeArgument TypeParamName="T">System.String</BaseTypeArgument></BaseTypeArguments></Base>
   <Interfaces />
   <Docs>
     <summary>To be added.</summary>
@@ -25,77 +26,42 @@
     
     
     
-    <Member MemberName=".ctor">
+    
+  <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public ImportManager ();" />
       <MemberType>Constructor</MemberType>
       <Parameters />
       <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="CancelMessage">
-      <MemberSignature Language="C#" Value="public string CancelMessage { set; get; };" />
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="CancelMessage">
+      <MemberSignature Language="C#" Value="public string CancelMessage { set; get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="ImportFinished">
-      <MemberSignature Language="C#" Value="public event EventHandler ImportFinished;" />
-      <MemberType>Event</MemberType>
-      <ReturnValue><ReturnType>System.EventHandler</ReturnType></ReturnValue>
-      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="ImportRequested">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="Enqueue"><MemberSignature Language="C#" Value="public virtual void Enqueue (Banshee.Base.UriList uris);" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters><Parameter Name="uris" Type="Banshee.Base.UriList" /></Parameters><Docs><param name="uris">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="Enqueue"><MemberSignature Language="C#" Value="public void Enqueue (string[] paths);" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters><Parameter Name="paths" Type="System.String[]" /></Parameters><Docs><param name="paths">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="ImportRequested">
       <MemberSignature Language="C#" Value="public event Banshee.Collection.ImportEventHandler ImportRequested;" />
       <MemberType>Event</MemberType>
       <ReturnValue><ReturnType>Banshee.Collection.ImportEventHandler</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="IncrementProcessedCount">
-      <MemberSignature Language="C#" Value="protected void IncrementProcessedCount (string message);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="message" Type="System.String" /></Parameters>
-      <Docs><param name="message">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="IsImportInProgress">
-      <MemberSignature Language="C#" Value="public bool IsImportInProgress { get; };" />
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="IsImportInProgress">
+      <MemberSignature Language="C#" Value="public bool IsImportInProgress { get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="OnImportFinished">
-      <MemberSignature Language="C#" Value="protected virtual void OnImportFinished ();" />
-      <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
-      <Parameters />
-      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="OnImportRequested">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="KeepUserJobHidden"><MemberSignature Language="C#" Value="public bool KeepUserJobHidden { set; get; }" /><MemberType>Property</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="OnImportRequested">
       <MemberSignature Language="C#" Value="protected virtual void OnImportRequested (string path);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters><Parameter Name="path" Type="System.String" /></Parameters>
       <Docs><param name="path">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="ProgressMessage">
-      <MemberSignature Language="C#" Value="public string ProgressMessage { set; get; };" />
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="ProgressMessage">
+      <MemberSignature Language="C#" Value="public string ProgressMessage { set; get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="QueueSource">
-      <MemberSignature Language="C#" Value="public void QueueSource (Banshee.Base.UriList uris);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="uris" Type="Banshee.Base.UriList" /></Parameters>
-      <Docs><param name="uris">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="QueueSource">
-      <MemberSignature Language="C#" Value="public void QueueSource (string source);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="source" Type="System.String" /></Parameters>
-      <Docs><param name="source">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="QueueSource">
-      <MemberSignature Language="C#" Value="public void QueueSource (string[] paths);" />
-      <MemberType>Method</MemberType>
-      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
-      <Parameters><Parameter Name="paths" Type="System.String[]" /></Parameters>
-      <Docs><param name="paths">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="Title">
-      <MemberSignature Language="C#" Value="public string Title { set; get; };" />
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="Threaded"><MemberSignature Language="C#" Value="public bool Threaded { set; }" /><MemberType>Property</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="Title">
+      <MemberSignature Language="C#" Value="public string Title { set; get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member>
-  </Members>
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="TotalCount"><MemberSignature Language="C#" Value="protected int TotalCount { get; }" /><MemberType>Property</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member><Member MemberName="UpdateProgress"><MemberSignature Language="C#" Value="protected void UpdateProgress (string message);" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters><Parameter Name="message" Type="System.String" /></Parameters><Docs><param name="message">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member></Members>
 </Type>

@@ -3,6 +3,7 @@
   <AssemblyInfo>
     <AssemblyName>Banshee.ThickClient</AssemblyName>
     <AssemblyVersion>0.90.1.25406</AssemblyVersion>
+    <AssemblyVersion>1.3.1.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>Gtk.Window</BaseTypeName>
@@ -13,179 +14,65 @@
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
-    <Member MemberName=".ctor">
-      <MemberSignature Language="C#" Value="public BaseClientWindow (string title);" />
-      <MemberType>Constructor</MemberType>
-      <Parameters>
-        <Parameter Name="title" Type="System.String" />
-      </Parameters>
-      <Docs>
-        <param name="title">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="ActionService">
-      <MemberSignature Language="C#" Value="protected Banshee.Gui.InterfaceActionService ActionService { get; };" />
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  <Member MemberName=".ctor"><MemberSignature Language="C#" Value="public BaseClientWindow (string title, string configNameSpace, int defaultWidth, int defaultHeight);" /><MemberType>Constructor</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><Parameters><Parameter Name="title" Type="System.String" /><Parameter Name="configNameSpace" Type="System.String" /><Parameter Name="defaultWidth" Type="System.Int32" /><Parameter Name="defaultHeight" Type="System.Int32" /></Parameters><Docs><param name="title">To be added.</param><param name="configNameSpace">To be added.</param><param name="defaultWidth">To be added.</param><param name="defaultHeight">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="ActionService">
+      <MemberSignature Language="C#" Value="protected Banshee.Gui.InterfaceActionService ActionService { get; }" />
       <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>Banshee.Gui.InterfaceActionService</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="ConfigureWindow">
+      <ReturnValue><ReturnType>Banshee.Gui.InterfaceActionService</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="ConfigureWindow">
       <MemberSignature Language="C#" Value="protected virtual void ConfigureWindow ();" />
       <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters />
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="ElementsService">
-      <MemberSignature Language="C#" Value="protected Banshee.Gui.GtkElementsService ElementsService { get; };" />
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="ConnectEvents"><MemberSignature Language="C#" Value="protected virtual void ConnectEvents ();" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters /><Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="ElementsService">
+      <MemberSignature Language="C#" Value="protected Banshee.Gui.GtkElementsService ElementsService { get; }" />
       <MemberType>Property</MemberType>
-      <ReturnValue>
-        <ReturnType>Banshee.Gui.GtkElementsService</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="HeightSchema">
-      <MemberSignature Language="C#" Value="public static readonly Banshee.Configuration.SchemaEntry&lt;int&gt; HeightSchema;" />
-      <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>Banshee.Configuration.SchemaEntry&lt;System.Int32&gt;</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="Initialize">
+      <ReturnValue><ReturnType>Banshee.Gui.GtkElementsService</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="Initialize">
       <MemberSignature Language="C#" Value="protected abstract void Initialize ();" />
       <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters />
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="MaximizedSchema">
-      <MemberSignature Language="C#" Value="public static readonly Banshee.Configuration.SchemaEntry&lt;bool&gt; MaximizedSchema;" />
-      <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>Banshee.Configuration.SchemaEntry&lt;System.Boolean&gt;</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="OnTitleChanged">
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="OnTitleChanged">
       <MemberSignature Language="C#" Value="protected virtual void OnTitleChanged ();" />
       <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters />
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="ResizeMoveWindow">
-      <MemberSignature Language="C#" Value="protected virtual void ResizeMoveWindow ();" />
-      <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters />
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="TitleChanged">
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="OnToolbarExposeEvent"><MemberSignature Language="C#" Value="protected void OnToolbarExposeEvent (object o, Gtk.ExposeEventArgs args);" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters><Parameter Name="o" Type="System.Object" /><Parameter Name="args" Type="Gtk.ExposeEventArgs" /></Parameters><Docs><param name="o">To be added.</param><param name="args">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="TitleChanged">
       <MemberSignature Language="C#" Value="public event EventHandler TitleChanged;" />
       <MemberType>Event</MemberType>
-      <ReturnValue>
-        <ReturnType>System.EventHandler</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="ToggleVisibility">
+      <ReturnValue><ReturnType>System.EventHandler</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="ToggleVisibility">
       <MemberSignature Language="C#" Value="public void ToggleVisibility ();" />
       <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters />
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="UpdateTitle">
-      <MemberSignature Language="C#" Value="protected abstract void UpdateTitle ();" />
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="UpdateTitle">
+      <MemberSignature Language="C#" Value="protected virtual void UpdateTitle ();" />
       <MemberType>Method</MemberType>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters />
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="WidthSchema">
-      <MemberSignature Language="C#" Value="public static readonly Banshee.Configuration.SchemaEntry&lt;int&gt; WidthSchema;" />
-      <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>Banshee.Configuration.SchemaEntry&lt;System.Int32&gt;</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="XPosSchema">
-      <MemberSignature Language="C#" Value="public static readonly Banshee.Configuration.SchemaEntry&lt;int&gt; XPosSchema;" />
-      <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>Banshee.Configuration.SchemaEntry&lt;System.Int32&gt;</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="YPosSchema">
-      <MemberSignature Language="C#" Value="public static readonly Banshee.Configuration.SchemaEntry&lt;int&gt; YPosSchema;" />
-      <MemberType>Field</MemberType>
-      <ReturnValue>
-        <ReturnType>Banshee.Configuration.SchemaEntry&lt;System.Int32&gt;</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-  </Members>
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="ViewContainer"><MemberSignature Language="C#" Value="public virtual Gtk.Box ViewContainer { get; }" /><MemberType>Property</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>Gtk.Box</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member></Members>
 </Type>

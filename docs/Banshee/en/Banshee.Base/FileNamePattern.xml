@@ -3,6 +3,7 @@
   <AssemblyInfo>
     <AssemblyName>Banshee.Core</AssemblyName>
     <AssemblyVersion>0.90.1.25775</AssemblyVersion>
+    <AssemblyVersion>1.3.1.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -32,77 +33,77 @@
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters><Parameter Name="token" Type="System.String" /><Parameter Name="name" Type="System.String" /><Parameter Name="handler" Type="Banshee.Base.FileNamePattern+ExpandTokenHandler" /></Parameters>
       <Docs><param name="token">To be added.</param><param name="name">To be added.</param><param name="handler">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="BuildFull">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="BuildFull"><MemberSignature Language="C#" Value="public static string BuildFull (Banshee.Collection.TrackInfo track);" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.String</ReturnType></ReturnValue><Parameters><Parameter Name="track" Type="Banshee.Collection.TrackInfo" /></Parameters><Docs><param name="track">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member><Member MemberName="BuildFull">
       <MemberSignature Language="C#" Value="public static string BuildFull (Banshee.Collection.ITrackInfo track, string ext);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
       <Parameters><Parameter Name="track" Type="Banshee.Collection.ITrackInfo" /><Parameter Name="ext" Type="System.String" /></Parameters>
       <Docs><param name="track">To be added.</param><param name="ext">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="CreateFolderFilePattern">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="CreateFolderFilePattern">
       <MemberSignature Language="C#" Value="public static string CreateFolderFilePattern (string folder, string file);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
       <Parameters><Parameter Name="folder" Type="System.String" /><Parameter Name="file" Type="System.String" /></Parameters>
       <Docs><param name="folder">To be added.</param><param name="file">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="CreateFromTrackInfo">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="CreateFromTrackInfo">
       <MemberSignature Language="C#" Value="public static string CreateFromTrackInfo (Banshee.Collection.ITrackInfo track);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
       <Parameters><Parameter Name="track" Type="Banshee.Collection.ITrackInfo" /></Parameters>
       <Docs><param name="track">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="CreateFromTrackInfo">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="CreateFromTrackInfo">
       <MemberSignature Language="C#" Value="public static string CreateFromTrackInfo (string pattern, Banshee.Collection.ITrackInfo track);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
       <Parameters><Parameter Name="pattern" Type="System.String" /><Parameter Name="track" Type="Banshee.Collection.ITrackInfo" /></Parameters>
       <Docs><param name="pattern">To be added.</param><param name="track">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="CreatePatternDescription">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="CreatePatternDescription">
       <MemberSignature Language="C#" Value="public static string CreatePatternDescription (string pattern);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
       <Parameters><Parameter Name="pattern" Type="System.String" /></Parameters>
       <Docs><param name="pattern">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="DefaultFile">
-      <MemberSignature Language="C#" Value="public static string DefaultFile { get; };" />
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="DefaultFile">
+      <MemberSignature Language="C#" Value="public static string DefaultFile { get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="DefaultFolder">
-      <MemberSignature Language="C#" Value="public static string DefaultFolder { get; };" />
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="DefaultFolder">
+      <MemberSignature Language="C#" Value="public static string DefaultFolder { get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="DefaultPattern">
-      <MemberSignature Language="C#" Value="public static string DefaultPattern { get; };" />
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="DefaultPattern">
+      <MemberSignature Language="C#" Value="public static string DefaultPattern { get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="Escape">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="Escape">
       <MemberSignature Language="C#" Value="public static string Escape (string input);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
       <Parameters><Parameter Name="input" Type="System.String" /></Parameters>
       <Docs><param name="input">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="Filter">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="Filter">
       <MemberSignature Language="C#" Value="public static Banshee.Base.FileNamePattern.FilterHandler Filter;" />
       <MemberType>Field</MemberType>
       <ReturnValue><ReturnType>Banshee.Base.FileNamePattern+FilterHandler</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="PatternConversions">
-      <MemberSignature Language="C#" Value="public static System.Collections.Generic.IEnumerable&lt;Banshee.Base.FileNamePattern.Conversion&gt; PatternConversions { get; };" />
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="PatternConversions">
+      <MemberSignature Language="C#" Value="public static System.Collections.Generic.IEnumerable&lt;Banshee.Base.FileNamePattern.Conversion&gt; PatternConversions { get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.Collections.Generic.IEnumerable&lt;Banshee.Base.FileNamePattern+Conversion&gt;</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="SuggestedFiles">
-      <MemberSignature Language="C#" Value="public static string[] SuggestedFiles { get; };" />
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="SuggestedFiles">
+      <MemberSignature Language="C#" Value="public static string[] SuggestedFiles { get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.String[]</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="SuggestedFolders">
-      <MemberSignature Language="C#" Value="public static string[] SuggestedFolders { get; };" />
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="SuggestedFolders">
+      <MemberSignature Language="C#" Value="public static string[] SuggestedFolders { get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.String[]</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member>
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member>
   </Members>
 </Type>

@@ -1,0 +1,43 @@
+<Type Name="DatabaseTrackModelProvider&lt;T&gt;" FullName="Banshee.Collection.Database.DatabaseTrackModelProvider&lt;T&gt;">
+  <TypeSignature Language="C#" Value="public class DatabaseTrackModelProvider&lt;T&gt; : Banshee.Database.BansheeModelProvider&lt;T&gt;, Banshee.Collection.Database.IDatabaseTrackModelProvider" />
+  <AssemblyInfo>
+    <AssemblyName>Banshee.Services</AssemblyName>
+    <AssemblyVersion>1.3.1.0</AssemblyVersion>
+  </AssemblyInfo>
+  <TypeParameters>
+    <TypeParameter>T</TypeParameter>
+  </TypeParameters>
+  <Base>
+    <BaseTypeName>Banshee.Database.BansheeModelProvider&lt;T&gt;</BaseTypeName>
+    <BaseTypeArguments>
+      <BaseTypeArgument TypeParamName="T">T</BaseTypeArgument>
+    </BaseTypeArguments>
+  </Base>
+  <Interfaces>
+    <Interface>
+      <InterfaceName>Banshee.Collection.Database.IDatabaseTrackModelProvider</InterfaceName>
+    </Interface>
+  </Interfaces>
+  <Docs>
+    <typeparam name="T">To be added.</typeparam>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public DatabaseTrackModelProvider (Banshee.Database.BansheeDbConnection connection);" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.3.1.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="connection" Type="Banshee.Database.BansheeDbConnection" />
+      </Parameters>
+      <Docs>
+        <param name="connection">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

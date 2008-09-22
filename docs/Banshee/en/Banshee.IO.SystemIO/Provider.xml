@@ -3,6 +3,7 @@
   <AssemblyInfo>
     <AssemblyName>Banshee.Core</AssemblyName>
     <AssemblyVersion>0.90.1.25775</AssemblyVersion>
+    <AssemblyVersion>1.3.1.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -25,21 +26,21 @@
       <MemberType>Constructor</MemberType>
       <Parameters />
       <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="DemuxVfsProvider">
-      <MemberSignature Language="C#" Value="public Type DemuxVfsProvider { get; };" />
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="DemuxVfsProvider">
+      <MemberSignature Language="C#" Value="public Type DemuxVfsProvider { get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.Type</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="DirectoryProvider">
-      <MemberSignature Language="C#" Value="public Type DirectoryProvider { get; };" />
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="DirectoryProvider">
+      <MemberSignature Language="C#" Value="public Type DirectoryProvider { get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.Type</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName="FileProvider">
-      <MemberSignature Language="C#" Value="public Type FileProvider { get; };" />
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="FileProvider">
+      <MemberSignature Language="C#" Value="public Type FileProvider { get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.Type</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    </Member>
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member>
   </Members>
 </Type>

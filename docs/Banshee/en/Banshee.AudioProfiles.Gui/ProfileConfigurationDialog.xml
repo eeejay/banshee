@@ -16,8 +16,14 @@
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public ProfileConfigurationDialog (Banshee.AudioProfiles.Profile profile);" />
       <MemberType>Constructor</MemberType>
-      <Parameters><Parameter Name="profile" Type="Banshee.AudioProfiles.Profile" /></Parameters>
-      <Docs><param name="profile">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <Parameters>
+        <Parameter Name="profile" Type="Banshee.AudioProfiles.Profile" />
+      </Parameters>
+      <Docs>
+        <param name="profile">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
   </Members>
 </Type>

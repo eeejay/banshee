@@ -1,0 +1,23 @@
+<Type Name="DurationStatusFormatHandler" FullName="Banshee.Sources.DurationStatusFormatHandler">
+  <TypeSignature Language="C#" Value="public delegate void DurationStatusFormatHandler(StringBuilder builder, TimeSpan span);" />
+  <AssemblyInfo>
+    <AssemblyName>Banshee.Services</AssemblyName>
+    <AssemblyVersion>1.3.1.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Delegate</BaseTypeName>
+  </Base>
+  <Parameters>
+    <Parameter Name="builder" Type="System.Text.StringBuilder" />
+    <Parameter Name="span" Type="System.TimeSpan" />
+  </Parameters>
+  <ReturnValue>
+    <ReturnType>System.Void</ReturnType>
+  </ReturnValue>
+  <Docs>
+    <param name="builder">To be added.</param>
+    <param name="span">To be added.</param>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+</Type>

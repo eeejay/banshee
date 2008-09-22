@@ -13,17 +13,32 @@
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
-    
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public FadingAlignment ();" />
       <MemberType>Constructor</MemberType>
       <Parameters />
-      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    </Member><Member MemberName=".ctor">
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public FadingAlignment (float xalign, float yalign, float xpadding, float ypadding);" />
       <MemberType>Constructor</MemberType>
-      <Parameters><Parameter Name="xalign" Type="System.Single" /><Parameter Name="yalign" Type="System.Single" /><Parameter Name="xpadding" Type="System.Single" /><Parameter Name="ypadding" Type="System.Single" /></Parameters>
-      <Docs><param name="xalign">To be added.</param><param name="yalign">To be added.</param><param name="xpadding">To be added.</param><param name="ypadding">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+      <Parameters>
+        <Parameter Name="xalign" Type="System.Single" />
+        <Parameter Name="yalign" Type="System.Single" />
+        <Parameter Name="xpadding" Type="System.Single" />
+        <Parameter Name="ypadding" Type="System.Single" />
+      </Parameters>
+      <Docs>
+        <param name="xalign">To be added.</param>
+        <param name="yalign">To be added.</param>
+        <param name="xpadding">To be added.</param>
+        <param name="ypadding">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
     </Member>
   </Members>
 </Type>

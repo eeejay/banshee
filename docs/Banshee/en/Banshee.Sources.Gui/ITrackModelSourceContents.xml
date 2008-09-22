@@ -1,0 +1,33 @@
+<Type Name="ITrackModelSourceContents" FullName="Banshee.Sources.Gui.ITrackModelSourceContents">
+  <TypeSignature Language="C#" Value="public interface ITrackModelSourceContents : Banshee.Sources.Gui.ISourceContents" />
+  <AssemblyInfo>
+    <AssemblyName>Banshee.ThickClient</AssemblyName>
+    <AssemblyVersion>1.3.1.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Interfaces>
+    <Interface>
+      <InterfaceName>Banshee.Sources.Gui.ISourceContents</InterfaceName>
+    </Interface>
+  </Interfaces>
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName="TrackView">
+      <MemberSignature Language="C#" Value="public Hyena.Data.Gui.IListView&lt;Banshee.Collection.TrackInfo&gt; TrackView { get; }" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.3.1.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Hyena.Data.Gui.IListView&lt;Banshee.Collection.TrackInfo&gt;</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <value>To be added.</value>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

@@ -1,0 +1,54 @@
+<Type Name="QueryFilterView&lt;T&gt;" FullName="Banshee.Collection.Gui.QueryFilterView&lt;T&gt;">
+  <TypeSignature Language="C#" Value="public class QueryFilterView&lt;T&gt; : Banshee.Collection.Gui.TrackFilterListView&lt;Banshee.Collection.Database.QueryFilterInfo&lt;string&gt;&gt;" />
+  <AssemblyInfo>
+    <AssemblyName>Banshee.ThickClient</AssemblyName>
+    <AssemblyVersion>1.3.1.0</AssemblyVersion>
+  </AssemblyInfo>
+  <TypeParameters>
+    <TypeParameter>T</TypeParameter>
+  </TypeParameters>
+  <Base>
+    <BaseTypeName>Banshee.Collection.Gui.TrackFilterListView&lt;Banshee.Collection.Database.QueryFilterInfo&lt;System.String&gt;&gt;</BaseTypeName>
+    <BaseTypeArguments>
+      <BaseTypeArgument TypeParamName="T">Banshee.Collection.Database.QueryFilterInfo&lt;System.String&gt;</BaseTypeArgument>
+    </BaseTypeArguments>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <typeparam name="T">To be added.</typeparam>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public QueryFilterView (Hyena.Data.Gui.Column column);" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.3.1.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="column" Type="Hyena.Data.Gui.Column" />
+      </Parameters>
+      <Docs>
+        <param name="column">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public QueryFilterView (string blank);" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.3.1.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="blank" Type="System.String" />
+      </Parameters>
+      <Docs>
+        <param name="blank">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>
