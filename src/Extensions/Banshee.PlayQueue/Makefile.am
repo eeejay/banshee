@@ -4,6 +4,7 @@ LINK = $(REF_EXTENSION_PLAYQUEUE)
 INSTALL_DIR = $(EXTENSIONS_INSTALL_DIR)
 
 SOURCES =  \
+	Banshee.PlayQueue/IPlayQueue.cs \
 	Banshee.PlayQueue/PlayQueueActions.cs \
 	Banshee.PlayQueue/PlayQueueSource.cs 
 

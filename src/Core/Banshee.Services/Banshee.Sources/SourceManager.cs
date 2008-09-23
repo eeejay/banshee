@@ -49,7 +49,7 @@ namespace Banshee.Sources
         public int Position;
     }
     
-    public class SourceManager : /*ISourceManager,*/ IInitializeService, IRequiredService, IDisposable
+    public class SourceManager : /*ISourceManager,*/ IInitializeService, IRequiredService, IDBusExportable, IDisposable
     {
         private List<Source> sources = new List<Source>();
         private Dictionary<string, Source> extension_sources = new Dictionary<string, Source> ();
@@ -165,8 +165,11 @@ namespace Banshee.Sources
             } else if (source is VideoLibrarySource) {
                 video_library = source as VideoLibrarySource;
             }
-
-            // ServiceManager.DBusServiceManager.RegisterObject(source);
+            
+            IDBusExportable exportable = source as IDBusExportable;
+            if (exportable != null) {
+                ServiceManager.DBusServiceManager.RegisterObject (exportable);
+            }
             
             List<Source> children = new List<Source> (source.Children);
             foreach(Source child_source in children) {
@@ -201,6 +204,11 @@ namespace Banshee.Sources
 
             foreach(Source child_source in source.Children) {
                 RemoveSource (child_source, recursivelyDispose);
+            }
+            
+            IDBusExportable exportable = source as IDBusExportable;
+            if (exportable != null) {
+                ServiceManager.DBusServiceManager.UnregisterObject (exportable);
             }
 
             if (recursivelyDispose) {
@@ -348,11 +356,11 @@ namespace Banshee.Sources
         
         /*string [] ISourceManager.Sources {
             get { return DBusServiceManager.MakeObjectPathArray<Source>(sources); }
-        }
+        }*/
         
         IDBusExportable IDBusExportable.Parent {
             get { return null; }
-        }*/
+        }
         
         string Banshee.ServiceStack.IService.ServiceName {
             get { return "SourceManager"; }

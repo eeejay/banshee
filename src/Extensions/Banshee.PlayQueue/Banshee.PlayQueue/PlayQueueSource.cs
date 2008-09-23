@@ -46,7 +46,7 @@ using Banshee.Gui;
 
 namespace Banshee.PlayQueue
 {
-    public class PlayQueueSource : PlaylistSource, IBasicPlaybackController, IDisposable
+    public class PlayQueueSource : PlaylistSource, IBasicPlaybackController, IPlayQueue, IDBusExportable, IDisposable
     {
         private static string special_playlist_name = "Play Queue";//typeof (PlayQueueSource).ToString ();
 
@@ -101,6 +101,30 @@ namespace Banshee.PlayQueue
             Reload ();
             SetAsPlaybackSourceUnlessPlaying ();
         }
+        
+#region IPlayQueue, IDBusExportable
+
+        public void EnqueueUri (string uri)
+        {
+            int track_id = LibrarySource.GetTrackIdForUri (uri);
+            if (track_id > 0) {
+                HyenaSqliteCommand insert_command = new HyenaSqliteCommand (String.Format (
+                    @"INSERT INTO CorePlaylistEntries (PlaylistID, TrackID) VALUES ({0}, ?)", DbId));
+                ServiceManager.DbConnection.Execute (insert_command, track_id);
+                Reload ();
+                NotifyUser ();
+            }
+        }
+        
+        IDBusExportable IDBusExportable.Parent {
+            get { return ServiceManager.SourceManager; }
+        }
+        
+        string IService.ServiceName {
+            get { return "PlayQueue"; }
+        }
+
+#endregion
         
         private void SetAsPlaybackSourceUnlessPlaying ()
         {
