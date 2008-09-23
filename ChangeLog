@@ -1,5 +1,22 @@
 2008-09-23  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Libraries/Mtp/Mtp/Folder.cs:
+	* src/Libraries/Mtp/Mtp/Album.cs:
+	* src/Libraries/Mtp/Mtp/Track.cs: Patch from Salah Coronya adding support
+	for libmtp >= 0.3.0 (aka libmtp8).  Modified by myself to #if/else the
+	patch out if building against older versions of libmtp - so still
+	compatible with libmtp >= 0.2.0 (BGO #542117).
+
+	* src/Libraries/Mtp/Makefile.am: Set the define appropriately based on the
+	version of libmtp we're building against.
+
+	* build/m4/banshee/dap-mtp.m4: Allow libmtp >= 0.30.
+
+	* build/build.rules.mk: Pass the BUILD_DEFINES variable to the actual
+	build command, so assemblies can define things to #if around.
+
+2008-09-23  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Metadata.FileSystem/FileSystemQueryJob.cs:
 	Log a message when we ignore cover art in folders b/c too many files in
 	the folder.

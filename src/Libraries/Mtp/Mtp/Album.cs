@@ -119,7 +119,11 @@ namespace Mtp
 
         protected override int Create ()
         {
+#if LIBMTP8
+            return LIBMTP_Create_New_Album (Device.Handle, ref album);
+#else
             return LIBMTP_Create_New_Album (Device.Handle, ref album, 0);
+#endif
         }
 
         protected override int Update ()
@@ -159,8 +163,13 @@ namespace Mtp
 		[DllImport("libmtp.dll")]
 		internal static extern IntPtr LIBMTP_Get_Album (MtpDeviceHandle handle, uint albumId); // LIBMTP_album_t*
 
+#if LIBMTP8
+		[DllImport("libmtp.dll")]
+		internal static extern int LIBMTP_Create_New_Album (MtpDeviceHandle handle, ref AlbumStruct album);
+#else
 		[DllImport("libmtp.dll")]
 		internal static extern int LIBMTP_Create_New_Album (MtpDeviceHandle handle, ref AlbumStruct album, uint parentId);
+#endif
 
 		[DllImport("libmtp.dll")]
 		internal static extern int LIBMTP_Update_Album (MtpDeviceHandle handle, ref AlbumStruct album);
@@ -170,6 +179,10 @@ namespace Mtp
     internal struct AlbumStruct
     {
         public uint album_id;
+#if LIBMTP8
+        public uint parent_id;
+        public uint storage_id;
+#endif
 
         [MarshalAs(UnmanagedType.LPStr)]
         public string name;

@@ -134,6 +134,13 @@ namespace Mtp
 			set { trackStruct.usecount = value; }
 		}
 
+#if LIBMTP8
+		public string Composer {
+			get { return trackStruct.composer; }
+			set { trackStruct.composer = value; }
+		}
+#endif
+
 		public Track (string filename, ulong filesize) : this (new TrackStruct (), null)
 		{
 			this.trackStruct.filename = filename;
@@ -209,7 +216,11 @@ namespace Mtp
 
 		internal static void SendTrack (MtpDeviceHandle handle, string path, ref TrackStruct metadata, ProgressFunction callback, IntPtr data, uint parent)
 		{
+#if LIBMTP8
+			if (LIBMTP_Send_Track_From_File (handle, path, ref metadata, callback, data) != 0)
+#else
 			if (LIBMTP_Send_Track_From_File (handle, path, ref metadata, callback, data, parent) != 0)
+#endif
 			{
 				LibMtpException.CheckErrorStack (handle);
 				throw new LibMtpException (ErrorCode.General, "Could not upload the track");
@@ -240,8 +251,13 @@ namespace Mtp
 		[DllImport("libmtp.dll")]
 		private static extern int LIBMTP_Get_Track_To_File (MtpDeviceHandle handle, uint trackId, string path, ProgressFunction callback, IntPtr data);
 
+#if LIBMTP8
+		[DllImport("libmtp.dll")]
+		private static extern int LIBMTP_Send_Track_From_File (MtpDeviceHandle handle, string path, ref TrackStruct track, ProgressFunction callback, IntPtr data);
+#else
 		[DllImport("libmtp.dll")]
 		private static extern int LIBMTP_Send_Track_From_File (MtpDeviceHandle handle, string path, ref TrackStruct track, ProgressFunction callback, IntPtr data, uint parentHandle);
+#endif
 
 		[DllImport("libmtp.dll")]
 	    private static extern int LIBMTP_Update_Track_Metadata (MtpDeviceHandle handle, ref TrackStruct metadata);
@@ -258,9 +274,15 @@ namespace Mtp
 	{
 		public uint item_id;
 		public uint parent_id;
-		
+#if LIBMTP8
+		public uint storage_id;
+#endif
+
 		[MarshalAs(UnmanagedType.LPStr)] public string title;
 		[MarshalAs(UnmanagedType.LPStr)] public string artist;
+#if LIBMTP8
+		[MarshalAs(UnmanagedType.LPStr)] public string composer;
+#endif
 		[MarshalAs(UnmanagedType.LPStr)] public string genre;
 		[MarshalAs(UnmanagedType.LPStr)] public string album;
 		[MarshalAs(UnmanagedType.LPStr)] public string date;

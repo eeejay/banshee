@@ -2,6 +2,10 @@ ASSEMBLY = Mtp
 TARGET = library
 LINK = $(REF_MTP)
 
+if LIBMTP_EIGHT
+BUILD_DEFINES = "-define:LIBMTP8"
+endif
+
 SOURCES =  \
 	Mtp/AbstractTrackList.cs \
 	Mtp/Album.cs \

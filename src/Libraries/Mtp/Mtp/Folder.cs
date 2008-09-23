@@ -215,6 +215,9 @@ namespace Mtp
 	{
 		public uint folder_id;
 		public uint parent_id;
+#if LIBMTP8
+		public uint storage_id;
+#endif
 		[MarshalAs(UnmanagedType.LPStr)] public string name;
 		public IntPtr sibling; // LIBMTP_folder_t*
 		public IntPtr child;   // LIBMTP_folder_t*
