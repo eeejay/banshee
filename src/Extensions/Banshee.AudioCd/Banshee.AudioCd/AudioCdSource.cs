@@ -239,7 +239,7 @@ namespace Banshee.AudioCd
                 track.CanPlay = false;
             }
             
-            OnUpdated ();
+            disc_model.NotifyUpdated ();
         }
         
         internal void UnlockAllTracks ()
@@ -248,13 +248,13 @@ namespace Banshee.AudioCd
                 track.CanPlay = true;
             }
             
-            OnUpdated ();
+            disc_model.NotifyUpdated ();
         }
         
         internal void UnlockTrack (AudioCdTrackInfo track)
         {
             track.CanPlay = true;
-            OnUpdated ();
+            disc_model.NotifyUpdated ();
         }
 
 #region Source Overrides

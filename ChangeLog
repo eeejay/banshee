@@ -1,3 +1,22 @@
+2008-09-23  Aaron Bockover  <abock@gnome.org>
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdDiscModel.cs:
+	Add a method for raising the reloaded event, NotifyUpdated
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:
+	Call NotifyUpdated on the model, not OnUpdated on the source; fixes the 
+	redrawing when locking/unlocking tracks for playback during the rip 
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdRipper.cs: Do not 
+	show the rip speed factor (e.g. 15x) until it has settled to an appropriate
+	value, somewhere between 1x and 200x
+
+	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/AudioCdRipper.cs: Load
+	either the Vorbis or FLAC audio profiles if there is no configured rip
+	profile and set the active profile in this case; this fixes the bug where
+	ripping a CD is not possible unless the user first chooses/changes the
+	ripping profile in the preferences dialog (BGO #528621)
+
 2008-09-22  Aaron Bockover  <abock@gnome.org>
 
 	Banshee 1.3.1 Released

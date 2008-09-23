@@ -229,8 +229,10 @@ namespace Banshee.AudioCd
                 last_speed_poll_factor = factor > 1 ? factor : 0;
             }
             
-            user_job.Status = last_speed_poll_factor > 1 ? String.Format ("{0} ({1:0.0}x)", 
-                status, last_speed_poll_factor) : status;
+            // Make sure the speed factor is between 1 and 200 to allow it to ramp and settle
+            user_job.Status = last_speed_poll_factor > 1 && last_speed_poll_factor <= 200 
+                ? String.Format ("{0} ({1:0.0}x)", status, last_speed_poll_factor) 
+                : status;
         }
         
         private void OnError (object o, AudioCdRipperErrorArgs args)

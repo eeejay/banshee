@@ -76,6 +76,11 @@ namespace Banshee.AudioCd
             disc_title = Catalog.GetString ("Audio CD");
         }
         
+        public void NotifyUpdated ()
+        {
+            OnReloaded ();
+        }
+        
         public void LoadModelFromDisc ()
         {
             Clear ();
