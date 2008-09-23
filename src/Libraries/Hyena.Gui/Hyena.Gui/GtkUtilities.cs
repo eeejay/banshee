@@ -125,7 +125,10 @@ namespace Hyena.Gui
         public static void AdaptGtkRcStyle (Widget adaptee, GLib.GType adapter, string widgetPath, string classPath)
         {
             Style style = Gtk.Rc.GetStyleByPaths (adaptee.Settings, widgetPath, classPath, adapter);
-
+            if (style == null) {
+                return;
+            }
+            
             foreach (StateType state in Enum.GetValues (typeof (StateType))) {
                 adaptee.ModifyBase (state, style.Base (state));
                 adaptee.ModifyBg (state, style.Background (state));

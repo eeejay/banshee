@@ -1,5 +1,10 @@
 2008-09-23  Aaron Bockover  <abock@gnome.org>
 
+	* src/Libraries/Hyena.Gui/Hyena.Gui/GtkUtilities.cs: Do nothing if the
+	theme is null
+
+2008-09-23  Aaron Bockover  <abock@gnome.org>
+
 	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Windowing.cs:
 	Removed the old Style override that didn't even work and caused theme
 	change breakage
