@@ -79,6 +79,9 @@ namespace Banshee.Metadata.FileSystem
                 // Ignore directories with tons of songs in them; this lookup is only intended for when the
                 // music file is in a directory specific to its album.
                 if (++items_in_directory > max_acceptable_items) {
+                    if (best_file != null) {
+                        Log.Debug ("Ignoring image file in folder because too many files in folder", directory);
+                    }
                     return;
                 }
                 
