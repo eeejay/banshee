@@ -53,8 +53,18 @@ namespace Hyena.Data.Gui
             get { return theme; }
         }
         
+        private bool changing_style = false;
+        
         protected override void OnStyleSet (Style old_style)
         {
+            if (changing_style) {
+                return;
+            }
+            
+            changing_style = true;
+            GtkUtilities.AdaptGtkRcStyle (this, typeof (TreeView));
+            changing_style = false;
+            
             base.OnStyleSet (old_style);
             RecomputeRowHeight = true;
             theme = new GtkTheme (this);

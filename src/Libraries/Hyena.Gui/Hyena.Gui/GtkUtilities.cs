@@ -115,6 +115,25 @@ namespace Hyena.Gui
             return color;
         }
         
+        public static void AdaptGtkRcStyle (Widget adaptee, Type adapter) 
+        {
+            GLib.GType type = (GLib.GType)adapter;
+            string path = String.Format ("*.{0}", type);
+            AdaptGtkRcStyle (adaptee, type, path, path);
+        }
+        
+        public static void AdaptGtkRcStyle (Widget adaptee, GLib.GType adapter, string widgetPath, string classPath)
+        {
+            Style style = Gtk.Rc.GetStyleByPaths (adaptee.Settings, widgetPath, classPath, adapter);
+
+            foreach (StateType state in Enum.GetValues (typeof (StateType))) {
+                adaptee.ModifyBase (state, style.Base (state));
+                adaptee.ModifyBg (state, style.Background (state));
+                adaptee.ModifyFg (state, style.Foreground (state));
+                adaptee.ModifyText (state, style.Text (state));
+            }
+        }
+        
         public static T StyleGetProperty<T> (Widget widget, string property, T default_value)
         {
             object result = widget.StyleGetProperty (property);

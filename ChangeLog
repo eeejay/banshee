@@ -1,5 +1,18 @@
 2008-09-23  Aaron Bockover  <abock@gnome.org>
 
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Windowing.cs:
+	Removed the old Style override that didn't even work and caused theme
+	change breakage
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Rendering.cs:
+	Use the new and working AdaptGtkRcStyle utility 
+
+	* src/Libraries/Hyena.Gui/Hyena.Gui/GtkUtilities.cs: Implement
+	AdaptGtkRcStyle utility to look up colors through GtkRc and adapt 
+	them to a given widget
+
+2008-09-23  Aaron Bockover  <abock@gnome.org>
+
 	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
 	Implement IPlayQueue
 
