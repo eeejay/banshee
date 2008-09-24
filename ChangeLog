@@ -1,3 +1,14 @@
+2008-09-23  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapSync.cs: Update the sensitivities of
+	the library sync prefs when the Manual Sync pref changes, and raise
+	Updated when that happens too so that the Sync action is immediately
+	hidden/shown (BGO #552654).
+
+	* src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/WidgetFactory.cs:
+	Fix listening to changes on the Preference and setting the sensitivity and
+	visibility of the widgets.
+
 2008-09-23  Aaron Bockover  <abock@gnome.org>
 
 	* src/Libraries/Hyena.Gui/Hyena.Gui/GtkUtilities.cs: Do nothing if the

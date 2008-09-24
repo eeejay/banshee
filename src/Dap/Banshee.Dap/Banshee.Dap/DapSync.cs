@@ -54,6 +54,7 @@ namespace Banshee.Dap
         private SchemaEntry<bool> manually_manage, auto_sync;
         private Section dap_prefs_section;
         private PreferenceBase manually_manage_pref;//, auto_sync_pref;
+        private SchemaPreference<bool> auto_sync_pref;
         private List<Section> pref_sections = new List<Section> ();
         private RateLimiter sync_limiter;
 
@@ -93,6 +94,7 @@ namespace Banshee.Dap
             sync_limiter = new RateLimiter (RateLimitedSync);
             BuildPreferences ();
             BuildSyncLists ();
+            UpdateSensitivities ();
         }
 
         public void Dispose ()
@@ -109,8 +111,7 @@ namespace Banshee.Dap
 
         private void BuildPreferences ()
         {
-            conf_ns = String.Format ("{0}.{1}", dap.ParentConfigurationId, "sync");
-            
+            conf_ns = "sync";
             manually_manage = dap.CreateSchema<bool> (conf_ns, "enabled", true,
                 Catalog.GetString ("Manually manage this device"),
                 Catalog.GetString ("Manually managing your device means you can drag and drop items onto the device, and manually remove them.")
@@ -127,7 +128,9 @@ namespace Banshee.Dap
             manually_manage_pref = dap_prefs_section.Add (manually_manage);
             manually_manage_pref.ShowDescription = true;
             manually_manage_pref.ShowLabel = false;
-            SchemaPreference<bool> auto_sync_pref = dap_prefs_section.Add (auto_sync);
+            manually_manage_pref.ValueChanged += OnManuallyManageChanged;
+            
+            auto_sync_pref = dap_prefs_section.Add (auto_sync);
             auto_sync_pref.ValueChanged += OnAutoSyncChanged;
             
             //manually_manage_pref.Changed += OnEnabledChanged;
@@ -160,18 +163,21 @@ namespace Banshee.Dap
             dap.TracksDeleted += OnDapChanged;
         }
 
-        /*private void OnEnabledChanged (Root pref)
+        private void OnManuallyManageChanged (Root preference)
         {
-            Console.WriteLine ("got manual mng changed, Enabled = {0}", Enabled);
-            auto_sync_pref.Sensitive = Enabled;
-            foreach (Section section in pref_sections) {
-                if (section != dap_prefs_section) {
-                    section.Sensitive = Enabled;
-                 }
-             }
+            UpdateSensitivities ();
             OnUpdated ();
-        }*/
+        }
 
+        private void UpdateSensitivities ()
+        {
+            bool sync_enabled = Enabled;
+            auto_sync_pref.Sensitive = sync_enabled;
+            foreach (DapLibrarySync lib_sync in library_syncs) {
+                lib_sync.PrefsSection.Sensitive = sync_enabled;
+            }
+        }
+        
         private void OnAutoSyncChanged (Root preference)
         {
             if (AutoSync) {

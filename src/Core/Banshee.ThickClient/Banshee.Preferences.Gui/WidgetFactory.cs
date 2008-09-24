@@ -41,11 +41,11 @@ namespace Banshee.Preferences.Gui
             if (preference == null) {
                 return null;
             }
+
+            Widget widget = preference.DisplayWidget as Widget;
+            //OnPreferenceChanged (preference);
             
-            Widget display_widget = preference.DisplayWidget as Widget;
-            OnPreferenceChanged (preference);
-            
-            return display_widget ?? GetWidget (preference, preference.GetType ().GetProperty ("Value").PropertyType);
+            return widget ?? GetWidget (preference, preference.GetType ().GetProperty ("Value").PropertyType);
         }
         
         private static Widget GetWidget (PreferenceBase preference, Type type)
@@ -58,15 +58,20 @@ namespace Banshee.Preferences.Gui
             }
 
             if (widget != null) {
-                preference.Changed += OnPreferenceChanged;
-                //widget.Destroyed += OnWidgetDestroyed;
-            }
+                preference.Changed += delegate (Root pref) {
+                    widget.Sensitive = pref.Sensitive;
+                    widget.Visible = pref.Visible;
+                };
 
-            if (preference.ShowDescription) {
-                VBox box = new VBox ();
-                box.PackStart (widget, false, false, 0);
-                new DescriptionLabel (preference.Description).PackInto (box, false);
-                widget = box;
+                widget.Sensitive = preference.Sensitive;
+                widget.Visible = preference.Visible;
+
+                if (preference.ShowDescription) {
+                    VBox box = new VBox ();
+                    box.PackStart (widget, false, false, 0);
+                    new DescriptionLabel (preference.Description).PackInto (box, false);
+                    widget = box;
+                }
             }
             
             return widget;
@@ -79,19 +84,6 @@ namespace Banshee.Preferences.Gui
             }
             
             return preference.MnemonicWidget as Widget;
-        }
-
-        /*private static void OnWidgetDestroyed (object sender, EventArgs args)
-        {
-        }*/
-
-        private static void OnPreferenceChanged (Root preference)
-        {
-            Widget widget = preference.DisplayWidget as Widget;
-            if (widget != null) {
-                widget.Sensitive = preference.Sensitive;
-                widget.Visible = preference.Visible;
-            }
         }
         
         private class PreferenceCheckButton : CheckButton
