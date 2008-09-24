@@ -1,5 +1,10 @@
 2008-09-24  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Libraries/Hyena/Hyena/StringUtil.cs: Use the invariant culture to
+	avoid invalid gconf keys (BGO #548144).
+
+2008-09-24  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/FullscreenWindow.cs:
 	* src/Clients/Nereid/Nereid/PlayerInterface.cs: Make F11 work to
 	fullscreen/unfullscreen Banshee too (BGO #553440).

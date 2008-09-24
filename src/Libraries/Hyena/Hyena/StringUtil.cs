@@ -80,7 +80,7 @@ namespace Hyena
                     continue;
                 }
 
-                undercase.Append (tokens[i].ToLower ());
+                undercase.Append (tokens[i].ToLower (System.Globalization.CultureInfo.InvariantCulture));
                 if (i < tokens.Length - 2) {
                     undercase.Append (underscore);
                 }
