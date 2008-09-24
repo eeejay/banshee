@@ -1,5 +1,10 @@
 2008-09-24  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs:
+	Fix another NRE.
+
+2008-09-24  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
 	Fix NRE (BGO #553665) when editing audio cd tracks.
 

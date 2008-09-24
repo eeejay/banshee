@@ -549,7 +549,10 @@ namespace Banshee.Gui.TrackEditor
 
                 // Finally, notify the affected primary sources
                 foreach (int id in primary_sources) {
-                    PrimarySource.GetById (id).NotifyTracksChanged ();
+                    PrimarySource psrc = PrimarySource.GetById (id);
+                    if (psrc != null) {
+                        psrc.NotifyTracksChanged ();
+                    }
                 }
             } finally {
                 DatabaseTrackInfo.NotifySaved = true;
