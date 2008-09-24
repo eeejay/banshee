@@ -74,7 +74,12 @@ namespace Banshee.Gui
         
         public void ToggleVisibility ()
         {
-            if (Visible && IsActive) {
+            SetVisible (!(Visible && IsActive));
+        }
+
+        public void SetVisible (bool visible)
+        {
+            if (!visible) {
                 window_controller.Save ();
                 Visible = false;
             } else {

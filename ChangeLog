@@ -1,3 +1,13 @@
+2008-09-24  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/BaseClientWindow.cs: Add a
+	SetVisible method to allow explicitly setting the state, as opposed to
+	relying on the Toggle logic, which breaks alt-f4 closing because
+	apparently the window !IsActive when that's pressed (BNC #257350).
+
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:
+	Call SetVisible (false) explicitly from the CloseWindow method.
+
 2008-09-23  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Dap/Banshee.Dap/Banshee.Dap/DapSync.cs: Update the sensitivities of

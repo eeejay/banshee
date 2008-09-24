@@ -309,7 +309,7 @@ namespace Banshee.NotificationArea
             } catch {
             }
 
-            elements_service.PrimaryWindow.ToggleVisibility ();
+            elements_service.PrimaryWindow.SetVisible (false);
         }
 
         private void ToggleNotifications (object o, EventArgs args)
