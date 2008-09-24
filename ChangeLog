@@ -1,3 +1,8 @@
+2008-09-24  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	Fix NRE (BGO #553665) when editing audio cd tracks.
+
 2008-09-24  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
 	* src/Extensions/Banshee.Sample/Banshee.Sample/SampleSource.cs: Update
