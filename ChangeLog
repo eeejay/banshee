@@ -1,5 +1,11 @@
 2008-09-24  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/FullscreenWindow.cs:
+	* src/Clients/Nereid/Nereid/PlayerInterface.cs: Make F11 work to
+	fullscreen/unfullscreen Banshee too (BGO #553440).
+
+2008-09-24  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs: Instead of
 	calling QueueSync after every added or deleted track call it only in
 	OnTracksAdded/Deleted and when not syncing.  Should fix bug with 'Syncing

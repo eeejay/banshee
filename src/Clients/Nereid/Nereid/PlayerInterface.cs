@@ -470,6 +470,9 @@ namespace Nereid
                 case Gdk.Key.F3: case Gdk.Key.slash:
                     focus_search = true;
                     break;
+                case Gdk.Key.F11:
+                    ActionService.ViewActions["FullScreenAction"].Activate ();
+                    break;
             }
 
             if (focus_search && !view_container.SearchEntry.HasFocus && !source_view.EditingRow) {

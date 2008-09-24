@@ -75,6 +75,7 @@ namespace Banshee.NowPlaying
             uint slow_seek = player.Length > 0 ? (uint)(player.Length * 0.05) : fixed_seek; // 5% or fixed
             
             switch (evnt.Key) {
+                case Gdk.Key.F11:
                 case Gdk.Key.Escape:
                     Unfullscreen ();
                     Hide ();
