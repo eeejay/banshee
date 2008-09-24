@@ -1,5 +1,10 @@
 2008-09-24  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Backends/Banshee.Hal/Banshee.HalBackend/DeviceMediaCapabilities.cs:
+	Catch exceptions thrown by managed dbus (BGO #551311).
+
+2008-09-24  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Dap/Banshee.Dap/Banshee.Dap/DapSync.cs: Call OnUpdated when the
 	auto-sync pref changes too.
 

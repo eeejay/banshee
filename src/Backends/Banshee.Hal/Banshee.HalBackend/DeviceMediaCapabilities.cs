@@ -46,11 +46,7 @@ namespace Banshee.HalBackend
         public int CoverArtSize {
             get {
                 if (cover_art_size == null) {
-                    if (device.PropertyExists ("portable_audio_player.cover_art_size")) {
-                        cover_art_size = device.GetPropertyInteger ("portable_audio_player.cover_art_size");
-                    } else {
-                        cover_art_size = -1;
-                    }
+                    cover_art_size = SafelyGetInt ("portable_audio_player.cover_art_size", -1);
                 }
                 return cover_art_size.Value;
             }
@@ -60,11 +56,7 @@ namespace Banshee.HalBackend
         public int FolderDepth {
             get {
                 if (folder_depth == null) {
-                    if (device.PropertyExists ("portable_audio_player.folder_depth")) {
-                        folder_depth = device.GetPropertyInteger ("portable_audio_player.folder_depth");
-                    } else {
-                        folder_depth = -1;
-                    }
+                    folder_depth = SafelyGetInt ("portable_audio_player.folder_depth", -1);
                 }
                 return folder_depth.Value;
             }
@@ -74,11 +66,7 @@ namespace Banshee.HalBackend
         public string [] AudioFolders {
             get {
                 if (audio_folders == null) {
-                    if (device.PropertyExists ("portable_audio_player.audio_folders")) {
-                        audio_folders = device.GetPropertyStringList ("portable_audio_player.audio_folders");
-                    } else {
-                        audio_folders = new string [0];
-                    }
+                    audio_folders = SafelyGetStringList ("portable_audio_player.audio_folders");
                 }
                 return audio_folders;
             }
@@ -88,9 +76,7 @@ namespace Banshee.HalBackend
         public string CoverArtFileName {
             get {
                 if (cover_art_file_name == null) {
-                    if (device.PropertyExists ("portable_audio_player.cover_art_file_name")) {
-                        cover_art_file_name = device["portable_audio_player.cover_art_file_name"];
-                    }
+                    cover_art_file_name = SafelyGetString ("portable_audio_player.cover_art_file_name");
                 }
                 return cover_art_file_name;
             }
@@ -100,9 +86,7 @@ namespace Banshee.HalBackend
         public string CoverArtFileType {
             get {
                 if (cover_art_file_type == null) {
-                    if (device.PropertyExists ("portable_audio_player.cover_art_file_type")) {
-                        cover_art_file_name = device["portable_audio_player.cover_art_file_type"];
-                    }
+                    cover_art_file_name = SafelyGetString ("portable_audio_player.cover_art_file_type");
                 }
                 return cover_art_file_type;
             }
@@ -112,11 +96,7 @@ namespace Banshee.HalBackend
         public string [] PlaylistFormats {
             get {
                 if (playlist_formats == null) {
-                    if (device.PropertyExists ("portable_audio_player.playlist_format")) {
-                        playlist_formats = device.GetPropertyStringList ("portable_audio_player.playlist_format");
-                    } else {
-                        playlist_formats = new string [0];
-                    }
+                    playlist_formats = SafelyGetStringList ("portable_audio_player.playlist_format");
                 }
                 return playlist_formats;
             }
@@ -126,9 +106,7 @@ namespace Banshee.HalBackend
         public string PlaylistPath {
             get {
                 if (playlist_path == null) {
-                    if (device.PropertyExists ("portable_audio_player.playlist_path")) {
-                        playlist_path = device["portable_audio_player.playlist_path"];
-                    }
+                    playlist_path = SafelyGetString ("portable_audio_player.playlist_path");
                 }
                 return playlist_path;
             }
@@ -138,14 +116,40 @@ namespace Banshee.HalBackend
         public string [] PlaybackMimeTypes {
             get {
                 if (playback_formats == null) {
-                    if (device.PropertyExists ("portable_audio_player.output_formats")) {
-                        playback_formats = device.GetPropertyStringList ("portable_audio_player.output_formats");
-                    } else {
-                        playback_formats = new string [0];
-                    }
+                    playback_formats = SafelyGetStringList ("portable_audio_player.output_formats");
                 }
                 return playback_formats;
             }
+        }
+
+        private string SafelyGetString (string name)
+        {
+            try {
+                if (device.PropertyExists (name)) {
+                    return device[name];
+                }
+            } catch {}
+            return null;
+        }
+
+        private string[] SafelyGetStringList (string name)
+        {
+            try {
+                if (device.PropertyExists (name)) {
+                    return device.GetPropertyStringList (name);
+                }
+            } catch {}
+            return new string [0];
+        }
+
+        private int SafelyGetInt (string name, int def)
+        {
+            try {
+                if (device.PropertyExists (name)) {
+                    return device.GetPropertyInteger (name);
+                }
+            } catch {}
+            return def;
         }
 
         public bool IsType (string type)
