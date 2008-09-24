@@ -1,3 +1,8 @@
+2008-09-24  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
+	* src/Extensions/Banshee.Sample/Banshee.Sample/SampleSource.cs: Update
+	the sample extension so that it compiles again (BGO #551860).
+
 2008-09-24  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Backends/Banshee.Hal/Banshee.HalBackend/DeviceMediaCapabilities.cs:
