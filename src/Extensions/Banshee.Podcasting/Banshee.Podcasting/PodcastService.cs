@@ -189,6 +189,21 @@ namespace Banshee.Podcasting
 
                 DatabaseConfigurationClient.Client.Set<int> ("Podcast", "Version", 3);
             }
+
+            if (DatabaseConfigurationClient.Client.Get<int> ("Podcast", "Version", 0) < 4) {
+                ReplaceNewlines ("CoreTracks", "Title");
+                ReplaceNewlines ("CoreTracks", "TitleLowered");
+                ReplaceNewlines ("PodcastItems", "Title");
+                ReplaceNewlines ("PodcastItems", "Description");
+                DatabaseConfigurationClient.Client.Set<int> ("Podcast", "Version", 4);
+            }
+        }
+
+        private void ReplaceNewlines (string table, string column)
+        {
+            string cmd = String.Format ("UPDATE {0} SET {1}=replace({1}, ?, ?)", table, column);
+            ServiceManager.DbConnection.Execute (cmd, "\n", String.Empty);
+            ServiceManager.DbConnection.Execute (cmd, "\r\n", String.Empty);
         }
         
         public void Initialize ()

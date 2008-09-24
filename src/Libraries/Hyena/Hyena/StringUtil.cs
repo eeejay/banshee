@@ -118,6 +118,14 @@ namespace Hyena
             return builder.ToString ();
         }
 
+        public static string RemoveNewlines (string input)
+        {
+            if (input != null) {
+                return input.Replace ("\r\n", String.Empty).Replace ("\n", String.Empty);
+            }
+            return null;
+        }
+
         public static string DoubleToTenthsPrecision (double num)
         {
             return DoubleToTenthsPrecision (num, false);

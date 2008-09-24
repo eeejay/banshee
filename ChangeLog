@@ -1,5 +1,18 @@
 2008-09-24  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting/PodcastService.cs:
+	Run UPDATE queries against CoreTracks and PodcastItems to remove any
+	newlines.
+
+	* src/Libraries/Hyena/Hyena/Tests/StringUtilTests.cs:
+	* src/Libraries/Hyena/Hyena/StringUtil.cs: Add and test new method for
+	removing all newlines from a string.
+
+	* src/Libraries/Migo/Migo.Syndication/Feed.cs: Remove newlines from title
+	and description when setting them (BGO #550008).
+
+2008-09-24  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs:
 	Fix another NRE.
 

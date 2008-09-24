@@ -147,13 +147,13 @@ namespace Migo.Syndication
         [DatabaseColumn]
         public string Title {
             get { return title ?? Catalog.GetString ("Unknown Podcast"); }
-            set { title = value; }
+            set { title = StringUtil.RemoveNewlines (value); }
         }
         
         [DatabaseColumn]
         public string Description { 
             get { return description; }
-            set { description = value; }
+            set { description = StringUtil.RemoveNewlines (value); }
         }
 
         [DatabaseColumn]

@@ -119,6 +119,20 @@ namespace Hyena.Tests
             Assert.AreEqual (2,     StringUtil.DoubleToPluralInt (1.8));
             Assert.AreEqual (22,    StringUtil.DoubleToPluralInt (21.3));
         }
+
+        [Test]
+        public void RemovesNewlines ()
+        {
+            Assert.AreEqual ("foobar", StringUtil.RemoveNewlines (@"foo
+bar"));
+            Assert.AreEqual ("foobar baz", StringUtil.RemoveNewlines (@"foo
+bar 
+baz"));
+            Assert.AreEqual ("haswindows newline andunix", StringUtil.RemoveNewlines (@"has
+windows
+ newline 
+andunix"));
+        }
     }
 }
 
