@@ -188,11 +188,10 @@ namespace Nereid
         
         public void ClearFooter ()
         {
+            footer.Hide ();
             foreach (Widget child in footer.Children) {
                 footer.Remove (child);
             }
-            
-            footer.Hide ();
         }
         
         public HBox Header {

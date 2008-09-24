@@ -1,5 +1,16 @@
 2008-09-24  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Clients/Nereid/Nereid/PlayerInterface.cs:
+	* src/Clients/Nereid/Nereid/ViewContainer.cs: Change the order of some
+	hides so that the footer widget is hidden before changing the main source
+	contents widget.
+
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/RoundedFrame.cs: Fix bug with
+	SizeRequest handler that caused the DapInfoBar and the Recommendations
+	pane to not show up.
+
+2008-09-24  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui/BaseClientWindow.cs: Add a
 	SetVisible method to allow explicitly setting the state, as opposed to
 	relying on the Toggle logic, which breaks alt-f4 closing because
