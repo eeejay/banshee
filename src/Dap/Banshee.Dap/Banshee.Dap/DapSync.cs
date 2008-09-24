@@ -180,6 +180,7 @@ namespace Banshee.Dap
         
         private void OnAutoSyncChanged (Root preference)
         {
+            OnUpdated ();
             if (AutoSync) {
                 Sync ();
             }

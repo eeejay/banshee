@@ -1,5 +1,10 @@
 2008-09-24  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapSync.cs: Call OnUpdated when the
+	auto-sync pref changes too.
+
+2008-09-24  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Libraries/Hyena/Hyena/StringUtil.cs: Use the invariant culture to
 	avoid invalid gconf keys (BGO #548144).
 
