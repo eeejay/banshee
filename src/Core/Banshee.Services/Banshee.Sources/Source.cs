@@ -153,6 +153,11 @@ namespace Banshee.Sources
         {
             return false;
         }
+
+        public virtual bool AcceptsUserInputFromSource (Source source)
+        {
+            return AcceptsInputFromSource (source);
+        }
         
         public virtual void MergeSourceInput (Source source, SourceMergeType mergeType)
         {

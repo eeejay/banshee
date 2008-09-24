@@ -121,7 +121,7 @@ namespace Banshee.Dap
 
         public override bool AcceptsInputFromSource (Source source)
         {
-            return (source is DatabaseSource) && this != source.Parent && CanAddTracks;
+            return (source is DatabaseSource) && this != source.Parent && !IsReadOnly;
         }
 
         private bool syncing = false;

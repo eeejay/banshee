@@ -531,8 +531,9 @@ namespace Banshee.Sources
         
         public override bool AddAllTracks (Source source)
         {
-            if (!AcceptsInputFromSource (source) || source.Count == 0)
+            if (!AcceptsInputFromSource (source) || source.Count == 0) {
                 return false;
+            }
             
             DatabaseTrackListModel model = (source as ITrackModelSource).TrackModel as DatabaseTrackListModel;
             CachedList<DatabaseTrackInfo> cached_list = CachedList<DatabaseTrackInfo>.CreateFromModel (model);
@@ -602,19 +603,20 @@ namespace Banshee.Sources
                     finished = true;
                     add_track_job = null;
                 } else {
-                    add_track_job.Status = String.Empty;
                     if (add_track_job.Completed % 10 == 0)
                         notify = true;
                 }
             }
 
+            if (finished) {
+                is_adding = false;
+            }
+
             if (notify || finished) {
-                Banshee.Base.ThreadAssist.ProxyToMain (delegate {
-                    OnTracksAdded ();
-    
-                if (finished)
-                    OnUserNotifyUpdated ();
-                });
+                OnTracksAdded ();
+                if (finished) {
+                    Banshee.Base.ThreadAssist.ProxyToMain (OnUserNotifyUpdated);
+                }
             }
         }
 

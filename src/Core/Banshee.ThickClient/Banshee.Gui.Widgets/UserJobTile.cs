@@ -169,7 +169,8 @@ namespace Banshee.Gui.Widgets
             }
             title = new_title;
         }
-        
+
+        private bool never_had_status = true;
         private void UpdateFromJob ()
         {
             ThreadAssist.AssertInMainThread ();
@@ -184,11 +185,14 @@ namespace Banshee.Gui.Widgets
             }
             
             if (status != job.Status) {
-                if (String.IsNullOrEmpty (job.Status)) {
+                // If we've ever had the status in this job, don't hide it b/c that'll make
+                // the tile change width, possibly repeatedly and annoyingly
+                if (String.IsNullOrEmpty (job.Status) && never_had_status) {
                     status_label.Hide ();
                 } else {
-                    status_label.Markup = String.Format ("<small>{0}</small>", GLib.Markup.EscapeText (job.Status));
-                    TooltipSetter.Set (tooltips, status_label, job.Status);
+                    never_had_status = false;
+                    status_label.Markup = String.Format ("<small>{0}</small>", GLib.Markup.EscapeText (job.Status ?? String.Empty));
+                    TooltipSetter.Set (tooltips, status_label, job.Status ?? String.Empty);
                     status_label.Show ();
                 }
                 status = job.Status;

@@ -96,7 +96,7 @@ namespace Banshee.Sources.Gui
 
             ShowNewPlaylistUnder (parent_source, active_source);
 
-            if (!drop_source.AcceptsInputFromSource (active_source)) {
+            if (!drop_source.AcceptsUserInputFromSource (active_source)) {
                 Gdk.Drag.Status (context, 0, time);
                 return true;
             }
@@ -125,7 +125,7 @@ namespace Banshee.Sources.Gui
             }
 
             NewPlaylistSource.SetParentSource (parent);
-            if (!NewPlaylistSource.AcceptsInputFromSource (active)) {
+            if (!NewPlaylistSource.AcceptsUserInputFromSource (active)) {
                 NewPlaylistSource.SetParentSource (new_playlist_parent);
                 return;
             }

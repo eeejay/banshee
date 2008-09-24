@@ -305,7 +305,7 @@ namespace Banshee.Collection.Database
         [DatabaseColumn ("Uri")]
         protected string UriField {
             get {
-                if (uri_fields_dirty) {
+                if (uri_fields_dirty && Uri != null) {
                     PrimarySource.UriToFields (Uri, out uri_type, out uri_field);
                     uri_fields_dirty = false;
                 }
@@ -322,7 +322,7 @@ namespace Banshee.Collection.Database
         [DatabaseColumn ("UriType")]
         protected TrackUriType UriType {
             get {
-                if (uri_fields_dirty) {
+                if (uri_fields_dirty && Uri != null) {
                     PrimarySource.UriToFields (Uri, out uri_type, out uri_field);
                     uri_fields_dirty = false;
                 }

@@ -200,7 +200,6 @@ namespace Banshee.Dap
                 }
 
                 if (to_add.Count > 0) {
-                    Log.DebugFormat ("adding {0} items to {1}", to_add.Count, library.Name);
                     sync.Dap.AddAllTracks (to_add);
                 }
 

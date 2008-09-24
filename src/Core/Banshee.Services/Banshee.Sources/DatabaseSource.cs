@@ -276,6 +276,11 @@ namespace Banshee.Sources
         {
             return CanAddTracks && source != this;
         }
+
+        public override bool AcceptsUserInputFromSource (Source source)
+        {
+            return base.AcceptsUserInputFromSource (source) && CanAddTracks;
+        }
                 
         public override bool HasViewableTrackProperties {
             get { return true; }

@@ -380,6 +380,22 @@ namespace Banshee.Dap.Ipod
 
 #region Syncing
 
+        protected override void OnTracksAdded ()
+        {
+            if (!IsAdding && tracks_to_add.Count > 0 && !Sync.Syncing) {
+                QueueSync ();
+            }
+            base.OnTracksAdded ();
+        }
+
+        protected override void OnTracksDeleted ()
+        {
+            if (!IsDeleting && tracks_to_remove.Count > 0 && !Sync.Syncing) {
+                QueueSync ();
+            }
+            base.OnTracksDeleted ();
+        }
+        
         private Queue<IpodTrackInfo> tracks_to_add = new Queue<IpodTrackInfo> ();
         private Queue<IpodTrackInfo> tracks_to_remove = new Queue<IpodTrackInfo> ();
         
@@ -414,7 +430,6 @@ namespace Banshee.Dap.Ipod
                 IpodTrackInfo ipod_track = tracks_map[track.TrackId];
                 if (ipod_track != null) {
                     tracks_to_remove.Enqueue (ipod_track);
-                    QueueSync ();
                 }
             }
         }
@@ -432,8 +447,6 @@ namespace Banshee.Dap.Ipod
                 ipod_track.Save (false);
             
                 tracks_to_add.Enqueue (ipod_track);
-                
-                QueueSync ();
             }
         }
 
@@ -452,7 +465,7 @@ namespace Banshee.Dap.Ipod
                     Application.IdleTimeoutRemove (sync_timeout_id);
                 }
                 
-                sync_timeout_id = Application.RunTimeout (1000, PerformSync);
+                sync_timeout_id = Application.RunTimeout (150, PerformSync);
             }
         }
         
