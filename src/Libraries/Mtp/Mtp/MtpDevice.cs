@@ -243,7 +243,9 @@ namespace Mtp
 				throw new ArgumentNullException("track");
 
             folder = folder ?? MusicFolder;
-            track.trackStruct.parent_id = folder.FolderId;
+            if (folder != null) {
+                track.trackStruct.parent_id = folder.FolderId;
+            }
 			
 			// We send the trackstruct by ref so that when the file_id gets filled in, our copy is updated
 			Track.SendTrack (Handle, path, ref track.trackStruct, callback, IntPtr.Zero, folder.FolderId);

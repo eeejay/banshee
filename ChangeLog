@@ -1,5 +1,9 @@
 2008-09-25  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Libraries/Mtp/Mtp/MtpDevice.cs: Prevent NRE (BGO #552428).
+
+2008-09-25  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.Podcasting/Makefile.am:
 	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.csproj:
 	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellYesNo.cs:
