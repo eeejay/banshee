@@ -405,9 +405,9 @@ namespace Banshee.Dap.Ipod
         private Thread sync_thread;
         private AutoResetEvent sync_thread_wait;
         private bool sync_thread_dispose = false;
-        
+
         public override bool IsReadOnly {
-            get { return ipod_device.IsReadOnly; }
+            get { return ipod_device.IsReadOnly || !database_supported; }
         }
         
         public override void Import ()
@@ -452,7 +452,7 @@ namespace Banshee.Dap.Ipod
 
         public override void SyncPlaylists ()
         {
-            if (Monitor.TryEnter (sync_mutex)) {
+            if (!IsReadOnly && Monitor.TryEnter (sync_mutex)) {
                 PerformSync ();
                 Monitor.Exit (sync_mutex);
             }

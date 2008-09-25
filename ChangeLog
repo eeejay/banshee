@@ -1,3 +1,9 @@
+2008-09-25  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs: Don't sync on
+	eject if the device IsReadOnly, and consider the device to be readonly if
+	the database isn't supported.
+
 2008-09-24  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting/PodcastService.cs:
