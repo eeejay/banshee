@@ -92,9 +92,14 @@ namespace Banshee.Podcasting.Gui
                         PodcastItems.PubDate {0}", ascDesc);
                     break;
 
-                case "DownloadStatus":
+                case "IsNew":
                     sort_query = String.Format (@"
-                        PodcastEnclosures.DownloadStatus {0}", ascDesc);
+                        -PodcastItems.IsRead {0}, PodcastItems.PubDate DESC", ascDesc);
+                    break;
+
+                case "IsDownloaded":
+                    sort_query = String.Format (@"
+                        PodcastEnclosures.LocalPath IS NOT NULL {0}, PodcastItems.PubDate DESC", ascDesc);
                     break;
             }
 

@@ -15,6 +15,7 @@ SOURCES =  \
 	Banshee.Podcasting.Gui/ColumnCellPodcastStatusIndicator.cs \
 	Banshee.Podcasting.Gui/ColumnCellPublished.cs \
 	Banshee.Podcasting.Gui/ColumnCellUnheard.cs \
+	Banshee.Podcasting.Gui/ColumnCellYesNo.cs \
 	Banshee.Podcasting.Gui/DownloadManager/DownloadManagerInterface.cs \
 	Banshee.Podcasting.Gui/DownloadManager/DownloadUserJob.cs \
 	Banshee.Podcasting.Gui/DownloadStatusFilterView.cs \

@@ -1,3 +1,19 @@
+2008-09-25  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.Podcasting/Makefile.am:
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.csproj:
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellYesNo.cs:
+	New cell for bools that renders yes/no.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastSource.cs:
+	Get rid of old combined status column, and add downloaded and new columns
+	that are sortable.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastTrackListModel.cs:
+	Implement sorting for IsNew/IsDownloaded.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ColumnCellText.cs: Whitespace.
+
 2008-09-25  Marek Habersack  <mhabersack@novell.com>
 
 	* src/Libraries/Migo/Migo.Syndication/MigoModelProvider.cs: newer

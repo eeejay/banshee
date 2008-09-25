@@ -125,20 +125,27 @@ namespace Banshee.Podcasting.Gui
                           <visible>true</visible>
                       </column>
                       <column>
-                          <visible>true</visible>
-                          <title>Published</title>
-                          <renderer type=""Banshee.Podcasting.Gui.ColumnCellPublished"" property=""PublishedDate"" />
-                          <sort-key>PublishedDate</sort-key>
+                          <visible>false</visible>
+                          <title>{2}</title>
+                          <renderer type=""Banshee.Podcasting.Gui.ColumnCellYesNo"" property=""IsNew"" />
+                          <sort-key>IsNew</sort-key>
+                      </column>
+                      <column>
+                          <visible>false</visible>
+                          <title>{3}</title>
+                          <renderer type=""Banshee.Podcasting.Gui.ColumnCellYesNo"" property=""IsDownloaded"" />
+                          <sort-key>IsDownloaded</sort-key>
                       </column>
                       <column>
                           <visible>true</visible>
-                          <title>Status</title>
-                          <renderer type=""Hyena.Data.Gui.ColumnCellText"" property=""StatusText"" />
+                          <title>{1}</title>
+                          <renderer type=""Banshee.Podcasting.Gui.ColumnCellPublished"" property=""PublishedDate"" />
+                          <sort-key>PublishedDate</sort-key>
                       </column>
                       <sort-column direction=""desc"">published_date</sort-column>
                     </column-controller>
                 ",
-                Catalog.GetString ("Podcast")
+                Catalog.GetString ("Podcast"), Catalog.GetString ("Published"), Catalog.GetString ("New"), Catalog.GetString ("Downloaded")
             ));
         }
         

@@ -146,7 +146,6 @@ namespace Hyena.Data.Gui
             return row_height + 8;
         }
 
-
         #region ISizeRequestCell implementation 
         
         public void GetWidthRange (Pango.Layout layout, out int min, out int max)
