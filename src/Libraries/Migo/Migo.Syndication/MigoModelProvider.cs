@@ -37,7 +37,7 @@ namespace Migo.Syndication
 {
     // Caches all results retrieved from the database, such that any subsequent retrieval will
     // return the same instance.
-    public class MigoModelProvider<T> : SqliteModelProvider<T> where T : ICacheableItem, MigoItem<T>, new()
+    public class MigoModelProvider<T> : SqliteModelProvider<T> where T : MigoItem<T>, ICacheableItem, new()
     {
         private Dictionary<long, T> full_cache = new Dictionary<long, T> ();
         

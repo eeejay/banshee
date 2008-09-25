@@ -1,3 +1,10 @@
+2008-09-25  Marek Habersack  <mhabersack@novell.com>
+
+	* src/Libraries/Migo/Migo.Syndication/MigoModelProvider.cs: newer
+	versions of gmcs enforce ordering of 'where' constraints from less
+	concrete to more concrete types (i.e. interface constraints must
+	go last).
+
 2008-09-25  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs: Don't sync on
