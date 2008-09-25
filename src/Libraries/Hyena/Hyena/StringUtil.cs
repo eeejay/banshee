@@ -126,6 +126,16 @@ namespace Hyena
             return null;
         }
 
+        private static Regex tags = new Regex ("<[^>]+>", RegexOptions.Compiled | RegexOptions.Multiline);
+        public static string RemoveHtml (string input)
+        {
+            if (input == null) {
+                return input;
+            }
+
+            return tags.Replace (input, String.Empty);
+        }
+
         public static string DoubleToTenthsPrecision (double num)
         {
             return DoubleToTenthsPrecision (num, false);

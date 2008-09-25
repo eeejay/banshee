@@ -81,14 +81,6 @@ namespace Banshee.Podcasting
             download_manager_iface.Initialize ();    
     
             feeds_manager = new FeedsManager (ServiceManager.DbConnection, download_manager, Path.Combine (Banshee.Base.Paths.CachedLibraryLocation, "Podcasts"));
-            
-            feeds_manager.FeedManager.ItemAdded += OnItemAdded;
-            feeds_manager.FeedManager.ItemChanged += OnItemChanged;
-            feeds_manager.FeedManager.ItemRemoved += OnItemRemoved;
-            feeds_manager.FeedManager.FeedsChanged += OnFeedsChanged;
-
-            ServiceManager.PlayerEngine.ConnectEvent (OnPlayerEvent, PlayerEvent.StateChange);
-            ServiceManager.Get<DBusCommandService> ().ArgumentPushed += OnCommandLineArgument;
 
             InitializeInterface ();
         }
@@ -190,20 +182,32 @@ namespace Banshee.Podcasting
                 DatabaseConfigurationClient.Client.Set<int> ("Podcast", "Version", 3);
             }
 
-            if (DatabaseConfigurationClient.Client.Get<int> ("Podcast", "Version", 0) < 4) {
+            // Intentionally skpping 4 here because this needs to get run again for anybody who ran it
+            // before it was fixed, but only once if you never ran it
+            if (DatabaseConfigurationClient.Client.Get<int> ("Podcast", "Version", 0) < 5) {
                 ReplaceNewlines ("CoreTracks", "Title");
                 ReplaceNewlines ("CoreTracks", "TitleLowered");
                 ReplaceNewlines ("PodcastItems", "Title");
                 ReplaceNewlines ("PodcastItems", "Description");
-                DatabaseConfigurationClient.Client.Set<int> ("Podcast", "Version", 4);
+                DatabaseConfigurationClient.Client.Set<int> ("Podcast", "Version", 5);
+            }
+
+            // Initialize the new StrippedDescription field
+            if (DatabaseConfigurationClient.Client.Get<int> ("Podcast", "Version", 0) < 6) {
+                foreach (FeedItem item in FeedItem.Provider.FetchAll ()) {
+                    item.UpdateStrippedDescription ();
+                    item.Save ();
+                }
+                DatabaseConfigurationClient.Client.Set<int> ("Podcast", "Version", 6);
             }
         }
 
         private void ReplaceNewlines (string table, string column)
         {
             string cmd = String.Format ("UPDATE {0} SET {1}=replace({1}, ?, ?)", table, column);
-            ServiceManager.DbConnection.Execute (cmd, "\n", String.Empty);
             ServiceManager.DbConnection.Execute (cmd, "\r\n", String.Empty);
+            ServiceManager.DbConnection.Execute (cmd, "\n", String.Empty);
+            ServiceManager.DbConnection.Execute (cmd, "\r", String.Empty);
         }
         
         public void Initialize ()
@@ -214,6 +218,14 @@ namespace Banshee.Podcasting
         {
             // Migrate data from 0.13.2 podcast tables, if they exist
             MigrateLegacyIfNeeded ();
+
+            feeds_manager.FeedManager.ItemAdded += OnItemAdded;
+            feeds_manager.FeedManager.ItemChanged += OnItemChanged;
+            feeds_manager.FeedManager.ItemRemoved += OnItemRemoved;
+            feeds_manager.FeedManager.FeedsChanged += OnFeedsChanged;
+
+            ServiceManager.PlayerEngine.ConnectEvent (OnPlayerEvent, PlayerEvent.StateChange);
+            ServiceManager.Get<DBusCommandService> ().ArgumentPushed += OnCommandLineArgument;
             
             Banshee.Kernel.Scheduler.Schedule (new Banshee.Kernel.DelegateJob (delegate {
                 DateTime now = DateTime.Now;

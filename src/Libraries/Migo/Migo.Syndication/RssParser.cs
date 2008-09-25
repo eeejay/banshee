@@ -33,6 +33,8 @@ using System.Xml;
 using System.Text;
 using System.Collections.Generic;
 
+using Hyena;
+
 namespace Migo.Syndication
 {
     public class RssParser
@@ -89,8 +91,8 @@ namespace Migo.Syndication
         public Feed UpdateFeed (Feed feed)
         {
             try {
-                feed.Title            = GetXmlNodeText (doc, "/rss/channel/title");
-                feed.Description      = GetXmlNodeText (doc, "/rss/channel/description");
+                feed.Title            = StringUtil.RemoveNewlines (GetXmlNodeText (doc, "/rss/channel/title"));
+                feed.Description      = StringUtil.RemoveNewlines (GetXmlNodeText (doc, "/rss/channel/description"));
                 feed.Copyright        = GetXmlNodeText (doc, "/rss/channel/copyright");
                 feed.ImageUrl         = GetXmlNodeText (doc, "/rss/channel/itunes:image/@href");
                 if (String.IsNullOrEmpty (feed.ImageUrl)) {
@@ -144,8 +146,9 @@ namespace Migo.Syndication
         {
             try {
                 FeedItem item = new FeedItem ();
-                item.Description = GetXmlNodeText (node, "description");                        
-                item.Title = GetXmlNodeText (node, "title");                        
+                item.Description = StringUtil.RemoveNewlines (GetXmlNodeText (node, "description"));
+                item.UpdateStrippedDescription ();
+                item.Title = StringUtil.RemoveNewlines (GetXmlNodeText (node, "title"));
             
                 if (String.IsNullOrEmpty (item.Description) && String.IsNullOrEmpty (item.Title)) {
                     throw new FormatException ("node:  Either 'title' or 'description' node must exist.");

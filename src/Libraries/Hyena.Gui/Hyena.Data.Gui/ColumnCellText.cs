@@ -88,7 +88,9 @@ namespace Hyena.Data.Gui
             }
             
             context.Layout.GetPixelSize (out text_width, out text_height);
-            
+
+            context.Context.Rectangle (0, 0, cellWidth, cellHeight);
+            context.Context.Clip ();
             context.Context.MoveTo (Spacing, ((int)cellHeight - text_height) / 2);
             Cairo.Color color = context.Theme.Colors.GetWidgetColor (
                 context.TextAsForeground ? GtkColorClass.Foreground : GtkColorClass.Text, state);
@@ -96,6 +98,7 @@ namespace Hyena.Data.Gui
             context.Context.Color = color;
 
             PangoCairoHelper.ShowLayout (context.Context, context.Layout);
+            context.Context.ResetClip ();
         }
         
         protected virtual string GetText (object obj)

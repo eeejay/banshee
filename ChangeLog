@@ -1,5 +1,47 @@
 2008-09-25  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	This patch adds a Description column to podcasts.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting/PodcastService.cs:
+	Fix newline removing migration (remove \r\n first then \n), and add a new
+	migration to initialize the new Item.StrippedDescription property.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastSource.cs:
+	Add a Description column that is stripped of HTML and newlines and
+	HtmlDecoded (BGO #503481).
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastTrackInfo.cs:
+	Add a Description property, proxying the item.StrippedDescription.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastTrackListModel.cs:
+	Handle sorting by description.
+
+	* src/Libraries/Hyena/Hyena/Tests/StringUtilTests.cs: Test the new
+	RemoveHtml method.
+
+	* src/Libraries/Hyena/Hyena/StringUtil.cs: Add RemoveHtml method, very
+	simple, removes anything that looks like a tag, eg <*>.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ColumnHeaderCellText.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ColumnCellText.cs: Move the
+	clipping to the ColumnCellText itself so that all text columns get
+	properly clipped (was an issue for very long descriptions).
+
+	* src/Libraries/Migo/Migo.csproj: Reference System.Web.
+
+	* src/Libraries/Migo/Migo.Syndication/FeedItem.cs: Add StrippedDescription
+	property and UpdateStrippedDescription that handles removing the HTML and
+	HtmlDecoding.
+
+	* src/Libraries/Migo/Migo.Syndication/RssParser.cs: Call
+	StringUtil.RemoveNewlines here when setting item and feed
+	title/descriptions.
+
+	* src/Libraries/Migo/Migo.Syndication/Feed.cs: The RemoveNewlines call is
+	now done in RssParser.
+
+2008-09-25  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Libraries/Mtp/Mtp/MtpDevice.cs: Prevent NRE (BGO #552428).
 
 2008-09-25  Gabriel Burt  <gabriel.burt@gmail.com>

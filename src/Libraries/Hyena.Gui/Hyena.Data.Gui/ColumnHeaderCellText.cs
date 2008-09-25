@@ -63,10 +63,7 @@ namespace Hyena.Data.Gui
 
             double textWidth = arrow_alloc.X - Spacing;
             if (textWidth > 0) {
-                context.Context.Rectangle (0, 0, textWidth, cellHeight);
-                context.Context.Clip ();
                 base.Render (context, state, textWidth, cellHeight);
-                context.Context.ResetClip ();
             }
 
             SortType sort_type = ((ISortableColumn)data_handler ()).SortType;

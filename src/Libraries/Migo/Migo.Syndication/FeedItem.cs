@@ -66,6 +66,7 @@ namespace Migo.Syndication
         private string author;
         private string comments;
         private string description;
+        private string stripped_description;
         private FeedEnclosure enclosure;
         private string guid;
         private bool isRead;
@@ -119,7 +120,15 @@ namespace Migo.Syndication
         [DatabaseColumn]
         public string Description {
             get { return description; }
-            set { description = value; }
+            set {
+                description = value;
+            }
+        }
+
+        [DatabaseColumn]
+        public string StrippedDescription {
+            get { return stripped_description; }
+            set { stripped_description = value; }
         }
         
         [DatabaseColumn("Guid", Index = "PodcastItemsGuidIndex")]
@@ -216,6 +225,14 @@ namespace Migo.Syndication
         }
 
 #region Public Methods
+
+        public void UpdateStrippedDescription ()
+        {
+            StrippedDescription = Hyena.StringUtil.RemoveHtml (Description);
+            if (StrippedDescription != null) {
+                StrippedDescription = System.Web.HttpUtility.HtmlDecode (StrippedDescription);
+            }
+        }
 
         public void Save ()
         {

@@ -123,6 +123,8 @@ namespace Hyena.Tests
         [Test]
         public void RemovesNewlines ()
         {
+            Assert.AreEqual ("", StringUtil.RemoveNewlines (""));
+            Assert.AreEqual (null, StringUtil.RemoveNewlines (null));
             Assert.AreEqual ("foobar", StringUtil.RemoveNewlines (@"foo
 bar"));
             Assert.AreEqual ("foobar baz", StringUtil.RemoveNewlines (@"foo
@@ -132,6 +134,20 @@ baz"));
 windows
  newline 
 andunix"));
+        }
+
+        [Test]
+        public void RemovesHtml ()
+        {
+            Assert.AreEqual ("", StringUtil.RemoveHtml (""));
+            Assert.AreEqual (null, StringUtil.RemoveHtml (null));
+            Assert.AreEqual ("foobar", StringUtil.RemoveHtml ("foobar"));
+            Assert.AreEqual ("foobar", StringUtil.RemoveHtml ("foo<baz>bar"));
+            Assert.AreEqual ("foobar", StringUtil.RemoveHtml ("foo<baz/>bar"));
+            Assert.AreEqual ("foobar", StringUtil.RemoveHtml ("foo</baz>bar"));
+            Assert.AreEqual ("foobazbar", StringUtil.RemoveHtml ("foo<a href=\"http://lkjdflkjdflkjj\">baz</a>bar"));
+            Assert.AreEqual ("foobaz foo bar", StringUtil.RemoveHtml (@"foo<a 
+href=http://lkjdflkjdflkjj>baz foo< /a> bar"));
         }
     }
 }

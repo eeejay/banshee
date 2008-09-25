@@ -101,6 +101,11 @@ namespace Banshee.Podcasting.Gui
                     sort_query = String.Format (@"
                         PodcastEnclosures.LocalPath IS NOT NULL {0}, PodcastItems.PubDate DESC", ascDesc);
                     break;
+
+                case "Description":
+                    sort_query = String.Format (@"
+                        PodcastItems.StrippedDescription {0}, PodcastItems.PubDate DESC", ascDesc);
+                    break;
             }
 
             return sort_query ?? Banshee.Query.BansheeQuery.GetSort (key, asc);

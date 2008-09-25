@@ -121,6 +121,12 @@ namespace Banshee.Podcasting.Gui
                       <column modify-default=""AlbumColumn"">
                         <title>{0}</title>
                       </column>
+                      <column>
+                          <visible>true</visible>
+                          <title>{4}</title>
+                          <renderer type=""Hyena.Data.Gui.ColumnCellText"" property=""Description"" />
+                          <sort-key>Description</sort-key>
+                      </column>
                       <column modify-default=""FileSizeColumn"">
                           <visible>true</visible>
                       </column>
@@ -145,7 +151,8 @@ namespace Banshee.Podcasting.Gui
                       <sort-column direction=""desc"">published_date</sort-column>
                     </column-controller>
                 ",
-                Catalog.GetString ("Podcast"), Catalog.GetString ("Published"), Catalog.GetString ("New"), Catalog.GetString ("Downloaded")
+                Catalog.GetString ("Podcast"), Catalog.GetString ("Published"), Catalog.GetString ("New"),
+                Catalog.GetString ("Downloaded"), Catalog.GetString ("Description")
             ));
         }
         

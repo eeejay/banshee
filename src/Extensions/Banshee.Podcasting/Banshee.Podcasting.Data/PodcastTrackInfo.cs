@@ -90,6 +90,10 @@ namespace Banshee.Podcasting.Data
         public DateTime PublishedDate {
             get { return Item.PubDate; }
         }
+
+        public string Description {
+            get { return Item.StrippedDescription; }
+        }
         
         public bool IsNew {
             get { return !Item.IsRead; }
