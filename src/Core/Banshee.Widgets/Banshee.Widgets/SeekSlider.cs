@@ -72,7 +72,7 @@ namespace Banshee.Widgets
             
             OnSeekRequested();
             
-            return base.OnButtonPressEvent(evnt);
+            return base.OnButtonReleaseEvent(evnt);
         }
         
         protected override void OnValueChanged()
