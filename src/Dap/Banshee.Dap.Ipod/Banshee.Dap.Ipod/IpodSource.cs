@@ -84,6 +84,15 @@ namespace Banshee.Dap.Ipod
             name_path = Path.Combine (Path.GetDirectoryName (ipod_device.TrackDatabasePath), "BansheeIPodName");
             Name = GetDeviceName ();
 
+            SupportsPlaylists = ipod_device.ModelInfo.DeviceClass != "shuffle";
+
+            // TODO disable this later, but right now it won't disable it in Sync, so might as well
+            // leave it enabled
+            //SupportsPodcasts = ipod_device.ModelInfo.HasCapability ("podcast");
+            SupportsVideo = ipod_device.ModelInfo.DeviceClass == "video" ||
+                            ipod_device.ModelInfo.DeviceClass == "classic" ||
+                            (ipod_device.ModelInfo.DeviceClass == "nano" && ipod_device.ModelInfo.Generation >= 3);
+
             Initialize ();
 
             AddDapProperty (Catalog.GetString ("Device"), ipod_device.ModelInfo.DeviceClass);
@@ -574,21 +583,23 @@ namespace Banshee.Dap.Ipod
                 }
             }
             device_playlists.Clear ();
-
-            // Add playlists from Banshee to the device
-            foreach (Source child in Children) {
-                PlaylistSource from = child as PlaylistSource;
-                if (from != null && from.Count > 0) {
-                    IPod.Playlist playlist = ipod_device.TrackDatabase.CreatePlaylist (from.Name);
-                    foreach (int track_id in ServiceManager.DbConnection.QueryEnumerable<int> (String.Format (
-                        "SELECT CoreTracks.TrackID FROM CoreTracks{0} WHERE {1}",
-                        from.DatabaseTrackModel.JoinFragment, from.DatabaseTrackModel.Condition)))
-                    {
-                        playlist.AddTrack (tracks_map[track_id].IpodTrack);
+            
+            if (SupportsPlaylists) {
+                // Add playlists from Banshee to the device
+                foreach (Source child in Children) {
+                    PlaylistSource from = child as PlaylistSource;
+                    if (from != null && from.Count > 0) {
+                        IPod.Playlist playlist = ipod_device.TrackDatabase.CreatePlaylist (from.Name);
+                        foreach (int track_id in ServiceManager.DbConnection.QueryEnumerable<int> (String.Format (
+                            "SELECT CoreTracks.TrackID FROM CoreTracks{0} WHERE {1}",
+                            from.DatabaseTrackModel.JoinFragment, from.DatabaseTrackModel.Condition)))
+                        {
+                            playlist.AddTrack (tracks_map[track_id].IpodTrack);
+                        }
                     }
                 }
             }
-
+    
             // Sync podcast playlist
             /*IPod.Playlist podcast_playlist = GetPodcastPlaylist ();
             podcast_playlist.Clear ();
@@ -604,6 +615,8 @@ namespace Banshee.Dap.Ipod
                 ipod_device.TrackDatabase.SaveEnded += OnIpodDatabaseSaveEnded;
                 ipod_device.TrackDatabase.SaveProgressChanged += OnIpodDatabaseSaveProgressChanged;
                 ipod_device.Save ();
+            } catch (InsufficientSpaceException) {
+                ErrorSource.AddMessage (Catalog.GetString ("Out of space on device"), Catalog.GetString ("Please manually remove some songs"));
             } catch (Exception e) {
                 Log.Exception ("Failed to save iPod database", e);
             } finally {

@@ -203,7 +203,7 @@ namespace Banshee.Dap
                     sync.Dap.AddAllTracks (to_add);
                 }
 
-                if (library.SupportsPlaylists) {
+                if (library.SupportsPlaylists && sync.Dap.SupportsPlaylists) {
                     sync.Dap.RemovePlaylists ();
 
                     // Then create the playlists, taking snapshots of smart playlists and saving them
@@ -225,7 +225,13 @@ namespace Banshee.Dap
                             to.DbId, sync.Dap.DbId
                         );
                         to.UpdateCounts ();
-                        sync.Dap.AddChildSource (to);
+
+                        if (to.Count == 0) {
+                            // If it's empty, don't leave it on the device
+                            to.Unmap ();
+                        } else {
+                            sync.Dap.AddChildSource (to);
+                        }
                     }
                 }
 

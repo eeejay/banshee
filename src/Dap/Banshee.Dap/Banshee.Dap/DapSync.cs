@@ -152,9 +152,7 @@ namespace Banshee.Dap
                 library_syncs.Add (library_sync);
                 pref_sections.Add (library_sync.PrefsSection);
                 library_sync.PrefsSection.Order = ++i;
-            }
-
-            foreach (LibrarySource source in Libraries) {
+                
                 source.TracksAdded += OnLibraryChanged;
                 source.TracksDeleted += OnLibraryChanged;
             }
@@ -197,10 +195,14 @@ namespace Banshee.Dap
 
         private void OnLibraryChanged (Source sender, TrackEventArgs args)
         {
+            if (!Enabled) {
+                return;
+            }
+            
             foreach (DapLibrarySync lib_sync in library_syncs) {
                 if (lib_sync.Library == sender) {
                     if (AutoSync) {
-                        lib_sync.Sync ();
+                        Sync ();
                     } else {
                         lib_sync.CalculateSync ();
                         OnUpdated ();
@@ -213,6 +215,14 @@ namespace Banshee.Dap
         private IEnumerable<LibrarySource> Libraries {
             get {
                 List<Source> sources = new List<Source> (ServiceManager.SourceManager.Sources);
+                sources.Sort (delegate (Source a, Source b) {
+                    return a.Order.CompareTo (b.Order);
+                });
+    
+                if (!dap.SupportsVideo) {
+                    sources.Remove (ServiceManager.SourceManager.VideoLibrary);
+                }
+                
                 foreach (Source source in sources) {
                     if (source is LibrarySource) {
                         yield return source as LibrarySource;

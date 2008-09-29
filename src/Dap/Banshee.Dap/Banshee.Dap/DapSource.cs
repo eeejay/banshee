@@ -140,6 +140,18 @@ namespace Banshee.Dap
         {
         }
 
+        private bool supports_video = true;
+        public bool SupportsVideo {
+            get { return supports_video; }
+            protected set { supports_video = value; }
+        }
+
+        private bool supports_podcasts = true;
+        public bool SupportsPodcasts {
+            get { return supports_podcasts; }
+            protected set { supports_podcasts = value; }
+        }
+
 #region Source
 
         protected override void Initialize ()
@@ -184,8 +196,14 @@ namespace Banshee.Dap
             }
             
             AddChildSource (music_group_source = new MusicGroupSource (this));
-            AddChildSource (video_group_source = new VideoGroupSource (this));
-            AddChildSource (podcast_group_source = new PodcastGroupSource (this));
+
+            if (SupportsVideo) {
+                AddChildSource (video_group_source = new VideoGroupSource (this));
+            }
+
+            if (SupportsPodcasts) {
+                AddChildSource (podcast_group_source = new PodcastGroupSource (this));
+            }
 
             BuildPreferences ();
 

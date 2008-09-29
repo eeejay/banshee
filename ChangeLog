@@ -1,5 +1,23 @@
 2008-09-29  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs: Add SupportsVideo and
+	SupportsPodcast bools with protected setters so subclasses can turn off
+	the Video and Podcast child sources.
+
+	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs: Only enable
+	video support (syncing and the child source) for devices that support it.
+	Also don't sync playlists to iPod shuffle devices.  Give feedback about
+	out-of-space errors.
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapSync.cs: Don't show/sync video if not
+	supported.  Sync Music library first.  Improve/fix auto-syncing when you
+	change your libraries it should work better now.
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapLibrarySync.cs: Delete playlists if
+	they end up having no tracks when put on the device.
+
+2008-09-29  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/XmlColumnController.cs:
 	Allow setting the LongTitle in the xml.
 
