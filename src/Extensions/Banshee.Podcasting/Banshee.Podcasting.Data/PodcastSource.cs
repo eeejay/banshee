@@ -120,6 +120,7 @@ namespace Banshee.Podcasting.Gui
                       <remove-default column=""ArtistColumn"" />
                       <column modify-default=""AlbumColumn"">
                         <title>{0}</title>
+                        <long-title>{0}</long-title>
                       </column>
                       <column>
                           <visible>true</visible>

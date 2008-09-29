@@ -108,6 +108,7 @@ namespace Banshee.Collection.Gui
             string modify_default = null;
             
             string title = null;
+            string long_title = null;
             string sort_key = null;
             double width = -1;
             int max_width = -1;
@@ -134,6 +135,7 @@ namespace Banshee.Collection.Gui
                 
                 switch (reader.Name) {
                     case "title": title = reader.ReadString (); break;
+                    case "long-title": long_title = reader.ReadString (); break;
                     case "sort-key": sort_key = reader.ReadString (); break;
                     case "width": width = reader.ReadElementContentAsDouble (); break;
                     case "max-width": max_width = reader.ReadElementContentAsInt (); break;
@@ -156,6 +158,10 @@ namespace Banshee.Collection.Gui
                     
                 if (title != null) {
                     column.Title = title;
+                }
+
+                if (long_title != null) {
+                    column.LongTitle = long_title;
                 }
                 
                 if (renderer_type != null) {

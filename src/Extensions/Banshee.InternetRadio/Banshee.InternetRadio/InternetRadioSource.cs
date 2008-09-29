@@ -108,14 +108,17 @@ namespace Banshee.InternetRadio
                   <add-default column=""TitleColumn"" />
                   <column modify-default=""TitleColumn"">
                     <title>{0}</title>
+                    <long-title>{0}</long-title>
                   </column>
                   <add-default column=""ArtistColumn"" />
                   <column modify-default=""ArtistColumn"">
                     <title>{1}</title>
+                    <long-title>{1}</long-title>
                   </column>
                   <add-default column=""CommentColumn"" />
                   <column modify-default=""CommentColumn"">
                     <title>{2}</title>
+                    <long-title>{2}</long-title>
                   </column>
                   <add-default column=""RatingColumn"" />
                   <add-default column=""PlayCountColumn"" />

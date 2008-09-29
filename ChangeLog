@@ -1,3 +1,14 @@
+2008-09-29  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/XmlColumnController.cs:
+	Allow setting the LongTitle in the xml.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastSource.cs:
+	* src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSource.cs:
+	* src/Core/Banshee.Services/Banshee.Library/VideoLibrarySource.cs:
+	Override the long-title too so that the column names in the context menu
+	are changed appropriately.
+
 2008-09-29  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.ThickClient/Banshee.MediaProfiles.Gui/ProfileComboBox.cs:

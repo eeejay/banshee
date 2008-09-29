@@ -57,6 +57,7 @@ namespace Banshee.Library
                   <sort-column direction=""asc"">track_title</sort-column>
                   <column modify-default=""ArtistColumn"">
                     <title>{0}</title>
+                    <long-title>{0}</long-title>
                   </column>
                 </column-controller>
             ", Catalog.GetString ("Produced By")));
