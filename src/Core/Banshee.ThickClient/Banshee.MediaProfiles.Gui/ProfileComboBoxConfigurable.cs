@@ -68,18 +68,28 @@ namespace Banshee.MediaProfiles.Gui
             if (config != null) {
                 Combo.SetActiveProfile(config.Profile);
             }
-
+            
             description = new DescriptionLabel (delegate { return Combo.ActiveProfile.Description; });
             
             Combo.Changed += delegate {
                 if(Combo.ActiveProfile != null) {
-                    ProfileConfiguration.SaveActiveProfile(Combo.ActiveProfile, configurationId);
+                    Hyena.Log.DebugFormat ("Setting active encoding profile: {0} (saved to {1})",
+                        Combo.ActiveProfile.Name, configurationId);
+                    ProfileConfiguration.SaveActiveProfile (Combo.ActiveProfile, configurationId);
                     description.Update ();
                 }
             };
             
+            Combo.StateChanged += delegate {
+                if (Combo.State == StateType.Insensitive) {
+                    ((Container)parent ?? this).Remove (description);
+                } else {
+                    description.PackInto (parent ?? this, parent != null);
+                }
+            };
+            
             Spacing = 5;
-            PackStart(editor, true, true, 0);
+            PackStart (editor, true, true, 0);
             description.PackInto (parent ?? this, parent != null);
         }
         

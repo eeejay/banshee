@@ -198,8 +198,15 @@ namespace Banshee.MediaProfiles
         public ProfileConfiguration GetActiveProfileConfiguration(string id, string [] mimetypes)
         {
             ProfileConfiguration config = GetActiveProfileConfiguration (id);
-            if(config != null) {
-                return config;
+            if (config != null) {
+                // Ensure the profile configuration is valid for the mimetype restriction
+                foreach (string profile_mimetype in config.Profile.MimeTypes) {
+                    foreach (string mimetype in mimetypes) {
+                        if (mimetype == profile_mimetype) {
+                            return config;
+                        }
+                    }
+                }
             }
             
             foreach(string mimetype in mimetypes) {

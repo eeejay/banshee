@@ -69,9 +69,10 @@ namespace Banshee.MediaProfiles.Gui
             TreeIter active_iter;
             store.Clear();
             
-            List<Profile> mimetype_profiles = new List<Profile>();
+            List<Profile> mimetype_profiles = null;
                 
             if(mimetype_filter != null && mimetype_filter.Length > 0) {
+                mimetype_profiles = new List<Profile>();
                 foreach(string mimetype in mimetype_filter) {
                     Profile profile = manager.GetProfileForMimeType(mimetype);
                     if(profile != null && !mimetype_profiles.Contains(profile)) {
@@ -80,14 +81,15 @@ namespace Banshee.MediaProfiles.Gui
                 }
             }
             
-            if(manager.AvailableProfileCount == 0 || (mimetype_profiles.Count == 0 && mimetype_filter != null)) {
+            if(manager.AvailableProfileCount == 0 || (mimetype_profiles != null && 
+                mimetype_profiles.Count == 0 && mimetype_filter != null)) {
                 store.AppendValues(Catalog.GetString("No available profiles"), null);
                 Sensitive = false;
             } else {
                 Sensitive = true;
             }
             
-            if(mimetype_profiles.Count > 0) {
+            if(mimetype_profiles != null) {
                 foreach(Profile profile in mimetype_profiles) {
                     store.AppendValues(String.Format("{0}", profile.Name), profile);
                 }

@@ -1,3 +1,17 @@
+2008-09-29  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.ThickClient/Banshee.MediaProfiles.Gui/ProfileComboBox.cs:
+	Ensure that if there's a mimetype restriction filter and no profiles 
+	exist to match that filter that the combo box becomes insensitive and
+	displays 'no profiles'
+
+	* src/Core/Banshee.ThickClient/Banshee.MediaProfiles.Gui/ProfileComboBoxConfigurable.cs:
+	Do not show the profile description box if the combo is insensitive
+
+	* src/Core/Banshee.Services/Banshee.MediaProfiles/MediaProfileManager.cs:
+	When loading profile configurations, re-run the mimetype check to ensure
+	that the profile is actually valid for the request
+
 2008-09-29  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/ExtraTrackDetailsPage.cs:
