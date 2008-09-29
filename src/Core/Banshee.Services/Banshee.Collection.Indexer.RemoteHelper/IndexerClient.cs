@@ -130,14 +130,16 @@ namespace Banshee.Collection.Indexer.RemoteHelper
                 try {
                     listening = false;
                     service.CollectionChanged -= OnCollectionChanged;
-                } catch {
+                } catch (Exception e) {
+                    Debug (e.ToString ());
                 }
             }
             
             try {
-                service.Shutdown ();
                 service.CleanupAndShutdown -= OnCleanupAndShutdown;
-            } catch {
+                service.Shutdown ();
+            } catch (Exception e) {
+                Debug (e.ToString ());
             }
             
             ResetInternalState ();
@@ -189,6 +191,13 @@ namespace Banshee.Collection.Indexer.RemoteHelper
         protected abstract void UpdateIndex ();
         
         protected abstract void ResetState ();
+        
+        protected ICollectionIndexer CreateIndexer ()
+        {
+            ObjectPath object_path = service.CreateIndexer ();
+            Debug ("Creating an ICollectionIndexer ({0})", object_path);
+            return Bus.Session.GetObject<ICollectionIndexer> (indexer_bus_name, object_path);
+        }
         
         public bool ShowDebugMessages {
             get { return Log.Debugging; }

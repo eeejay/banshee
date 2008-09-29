@@ -17,6 +17,7 @@ SOURCES =  \
 	Banshee.Collection.Gui/ColumnCellDiscAndCount.cs \
 	Banshee.Collection.Gui/ColumnCellDuration.cs \
 	Banshee.Collection.Gui/ColumnCellFileSize.cs \
+	Banshee.Collection.Gui/ColumnCellLocation.cs \
 	Banshee.Collection.Gui/ColumnCellPositiveInt.cs \
 	Banshee.Collection.Gui/ColumnCellQueryText.cs \
 	Banshee.Collection.Gui/ColumnCellStatusIndicator.cs \

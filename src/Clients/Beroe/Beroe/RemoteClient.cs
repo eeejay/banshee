@@ -28,6 +28,9 @@
 
 using System;
 using System.Threading;
+using System.Collections.Generic;
+
+using Banshee.Collection.Indexer;
 
 namespace Beroe
 {
@@ -58,18 +61,32 @@ namespace Beroe
                 shutdown_requested = false;
             }
             
-            int i = 0;
-            Console.Write ("Updating Index... ");
-            while (i++ < 20 && !Shutdown) {
-                Console.Write ("{0} ", i);
-                System.Threading.Thread.Sleep (1000);
+            Sleep (5);
+            
+            ICollectionIndexer indexer = CreateIndexer ();
+            for (int i = 0, models = indexer.GetModelCounts (); i < models; i++) {
+                for (int j = 0, items = indexer.GetModelResultsCount (i); j < items; j++) {
+                    IDictionary<string, object> result = indexer.GetResult (i, j);
+                    Console.WriteLine (result["URI"]);
+                }
             }
-            Console.WriteLine (": Done");
+            indexer.Dispose ();
             
             lock (shutdown_mutex) {
                 indexer_running = false;
                 shutdown_requested = false;
             }
+        }
+        
+        private void Sleep (int seconds)
+        {
+            int i = 0;
+            Console.Write ("Sleeping... ");
+            while (i++ < seconds && !Shutdown) {
+                Console.Write ("{0} ", i);
+                System.Threading.Thread.Sleep (1000);
+            }
+            Console.WriteLine (": Done");
         }
         
         private bool Shutdown {

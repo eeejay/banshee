@@ -139,7 +139,7 @@ namespace Banshee.Collection.Gui
             skip_count_column   = Create (BansheeQuery.SkipCountField, 0.15, false, new ColumnCellPositiveInt (null, true, 2, 5));
 
             // Construct the URI column specially b/c we want to ellipsize in the middle of the text
-            ColumnCellText uri_cell = new ColumnCellText (BansheeQuery.UriField.PropertyName, true);
+            ColumnCellText uri_cell = new ColumnCellLocation (BansheeQuery.UriField.PropertyName, true);
             uri_cell.EllipsizeMode = Pango.EllipsizeMode.Start;
             uri_column          = Create (BansheeQuery.UriField, 0.15, false, uri_cell);
             

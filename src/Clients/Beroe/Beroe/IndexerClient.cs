@@ -59,6 +59,8 @@ namespace Beroe
                 return;
             }
             
+            Log.Information ("Indexer client started");
+            
             Startup ();
         }
         

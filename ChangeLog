@@ -1,3 +1,17 @@
+2008-09-29  Aaron Bockover  <abock@gnome.org>
+
+	* src/Clients/Beroe/Beroe/IndexerClient.cs: Log when the client has started
+
+	* src/Clients/Beroe/Beroe/RemoteClient.cs: Stubbed out some more 
+	example client indexer stuff
+	
+	* src/Core/Banshee.Services/Banshee.Collection.Indexer.RemoteHelper/IndexerClient.cs:
+	Add a helper method for creating indexers; fix a small race bug
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellLocation.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/DefaultColumnController.cs:
+	Added a new location cell to show local paths as paths and not URIs
+
 2008-09-29  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Interaction.cs:
