@@ -1,5 +1,5 @@
 ===============================================================================
-WELCOME TO BANSHEE 1.3.1 - Released September 22, 2008
+WELCOME TO BANSHEE 1.3.2 - Released September 29, 2008
 ===============================================================================
 
   * Banshee is a multimedia management and playback application for GNOME.
@@ -10,7 +10,7 @@ WELCOME TO BANSHEE 1.3.1 - Released September 22, 2008
     experience automatic cover art fetching as you listen; and easily browse,
     search, and control your media collection."
 
-  * Learn More: http://banshee-project.org/download/archives/1.3.1/
+  * Learn More: http://banshee-project.org/download/archives/1.3.2/
 
   * UNSTABLE RELEASE: This release is from the 1.3.x development series, and
     works towards a future 1.4.0 stable release. Certain features may be
@@ -21,33 +21,34 @@ WELCOME TO BANSHEE 1.3.1 - Released September 22, 2008
 NEW AWESOME FEATURES AND ENHANCEMENTS
 ===============================================================================
 
-    Banshee 1.3.1 is the second release in the new development series leading
+    Banshee 1.3.2 is the third release in the new development series leading
     up to a future 1.4.0 stable release.
 
     Notable new features:
 
-      * Freshly revamped track metadata editor
+      * Improved DAP syncing and interaction
+          - Sync button shown/hidden immediately when Manually Manage changed
+          - Music Library synced before others
+          - Playlists and video not synced to iPod shuffle devices
+          - Improved performance for adding/removing songs from iPods
+          - Better stability for MTP device syncing
 
-      * Break the columns context menu into multiple columns
+      * Allow queueing files via dbus
 
-      * Column widths should be much more reasonable
-          - Sensible width ranges set for time, dates, year, etc
-          - Some shorter labels used in column headers
+      * New podcast columns: downloaded; description; new
 
     Notable bug fixes:
 
-      * Remember sorting per source (BGO #524656)
-      * Audio CD crasher
-      * Allow editing Audio CDs' track info before ripping (BGO #532467)
-      * Dialogs' translation domain properly set (BGO #536268)
-      * Fix recent regression where the ListView scrolled to the 
-        top when you switched sources.
-      * Allow shrinking selections with shift-click (BGO #535561)
-      * Fix issue with it taking two clicks on the notification icon to
-        get the main window visible, if Banshee was minimized (BGO #551916)
-      * Don't give UI indication that the track list is sortable unless
-        it really is (BGO #551969)
-      * 42 bugs were closed since 1.3.0
+      * Fix bug with default CD importing profile (BGO #528621)
+      * libmtp8 support (BGO #542117)
+      * Fix bug with switching themes and things not getting updated
+      * Recommendations and DAP storage panes are visible again
+      * F11 toggles fullscreen (#553440)
+      * Remove newlines from podcast titles and descriptions (#550008)
+      * Fix issue with the Seek slider and recent versions of Gtk# (#536397).
+      * Improvements to the indexer
+      * Fix bug with showing/selecting invalid profile for DAP transcoding
+      * N bugs were closed since 1.3.1
 
 
 ===============================================================================
@@ -57,9 +58,9 @@ SOURCES / PACKAGES
 Sources
 -------
 
-    * Banshee 1.3.1 Tarballs:
-      http://download.banshee-project.org/banshee/banshee-1-1.3.1.tar.bz2
-      http://download.banshee-project.org/banshee/banshee-1-1.3.1.tar.gz
+    * Banshee 1.3.2 Tarballs:
+      http://download.banshee-project.org/banshee/banshee-1-1.3.2.tar.bz2
+      http://download.banshee-project.org/banshee/banshee-1-1.3.2.tar.gz
 
 Packages
 --------
@@ -72,8 +73,8 @@ Packages
 ChangeLogs & Checksums
 ----------------------
 
-    * http://download.banshee-project.org/banshee/banshee-1-1.3.1.changes
-    * http://download.banshee-project.org/banshee/banshee-1-1.3.1.sha1sum
+    * http://download.banshee-project.org/banshee/banshee-1-1.3.2.changes
+    * http://download.banshee-project.org/banshee/banshee-1-1.3.2.sha1sum
 
 
 ===============================================================================
@@ -125,7 +126,7 @@ REPORT BUGS - HELP THE PROJECT - GROW THE COMMUNITY
     If you encounter any bad behavior with this release, please do not
     hesitate to file bugs!
 
-    * http://bugzilla.gnome.org/enter_bug.cgi?product=banshee&version=1.3.1
+    * http://bugzilla.gnome.org/enter_bug.cgi?product=banshee&version=1.3.2
 
 
 ===============================================================================
@@ -138,12 +139,15 @@ Contributors For This Release
     The following people directly contributed to the release of this version
     of Banshee. Without their help, there would be no release!
 
-      Aaron Bockover, Bertrand Lorentz, Gabriel Burt, Michael Monreal
+      Aaron Bockover, Bertrand Lorentz, Gabriel Burt, Marek Habersack,
+      Salah Coronya
 
     The following people contributed updated translations to this release. 
     Without them, our project's reach would be much more limited.
 
-      Daniel Nylander, Ilkka Tuohela
+      Alexandre Prokoudine, Benjamín Valero Espinosa, Daniel Nylander,
+      Gabor Kelemen, Yannick Tailliez
+
 
 Contributors In Past Releases
 -----------------------------
