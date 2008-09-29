@@ -1,3 +1,13 @@
+2008-09-29  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/ExtraTrackDetailsPage.cs:
+	Set some properties on the BPM spin entry - 3 chars max, 0 decimal digits,
+	and numeric = true.  Also, it shouldn't be syncable.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ColumnCellText.cs: Comment out
+	Gtk# 2.12-dependent features; only used in commented out tooltip code
+	anyway.
+
 2008-09-29  Aaron Bockover  <abock@gnome.org>
 
 	* src/Clients/Beroe/Beroe/IndexerClient.cs: Log when the client has started

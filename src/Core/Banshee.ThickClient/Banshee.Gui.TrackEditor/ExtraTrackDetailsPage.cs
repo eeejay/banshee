@@ -71,13 +71,17 @@ namespace Banshee.Gui.TrackEditor
                 delegate (EditorTrackInfo track, Widget widget) { ((TextEntry)widget).Text = track.Grouping; },
                 delegate (EditorTrackInfo track, Widget widget) { track.Grouping = ((TextEntry)widget).Text; }
             );
-            
-            AddField (box, new SpinButtonEntry (0, 500, 1), 
+
+            SpinButtonEntry bpm_entry = new SpinButtonEntry (0, 999, 1);
+            bpm_entry.Digits = 0;
+            bpm_entry.MaxLength = 3;
+            bpm_entry.Numeric = true;
+            AddField (box, bpm_entry, 
                 Catalog.GetString ("Set all beats per minute to this value"),
                 delegate { return Catalog.GetString ("Beats Per Minute:"); },
                 delegate (EditorTrackInfo track, Widget widget) { ((SpinButtonEntry)widget).Value = track.Bpm; },
                 delegate (EditorTrackInfo track, Widget widget) { track.Bpm = (int)((SpinButtonEntry)widget).Value; },
-                FieldOptions.Shrink
+                FieldOptions.Shrink | FieldOptions.NoSync
             );
             
             AddField (this, new TextEntry (), 

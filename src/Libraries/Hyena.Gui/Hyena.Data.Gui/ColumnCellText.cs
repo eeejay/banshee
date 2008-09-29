@@ -108,7 +108,8 @@ namespace Hyena.Data.Gui
             }
             
             context.Layout.GetPixelSize (out text_width, out text_height);
-            is_ellipsized = context.Layout.IsEllipsized;
+            // Requires Gtk# 2.12
+            //is_ellipsized = context.Layout.IsEllipsized;
         }
         
         protected virtual string GetText (object obj)
@@ -116,10 +117,10 @@ namespace Hyena.Data.Gui
             return obj == null ? String.Empty : obj.ToString ();
         }
 
-        private bool is_ellipsized = false;
+        /*private bool is_ellipsized = false;
         public bool IsEllipsized {
             get { return is_ellipsized; }
-        }
+        }*/
 
         public string Text {
             get { return last_text; }
