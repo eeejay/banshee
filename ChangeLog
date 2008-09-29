@@ -1,3 +1,23 @@
+2008-09-29  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastTrackInfo.cs:
+	Remove a bunch of old, commented-out code.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ColumnCellRating.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/IInteractiveCell.cs: Whitespace
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Interaction.cs:
+	Factor some useful bits out of ProxyEventToCell that can be reused for
+	tooltip code.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView.cs: Implement
+	tooltips for ListView for ellipsized ColumnCellText cells, but comment it
+	out for now because there is a segfault bug in Gtk+ or Gtk# that rears its
+	head once in a while.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ColumnCellText.cs: Add public
+	UpdateText method and IsEllipsized and Text properties.
+
 2008-09-26  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Widgets/Banshee.Widgets/SeekSlider.cs: We were calling

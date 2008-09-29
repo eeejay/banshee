@@ -244,56 +244,5 @@ namespace Banshee.Podcasting.Data
         {
             return Provider.Refresh (this);
         }
-
-        public static void DeleteWithFeedId (long feed_id)
-        {
-            /*PodcastItem item = Provider.FetchFirstMatching (String.Format (
-                "primarysourceid = {0} and externalid = {1}", primary_id, feed_id
-            ));
-
-            if (item != null) {
-                item.Delete ();
-            }*/
-        }
-
-        /*public string Title {
-            get { return item.Title; }
-        }
-        
-        public string PodcastTitle {
-            get { return item.Feed.Title; }
-        }
-        
-        [VirtualDatabaseColumn ("PubDate", "PodcastItems", "TrackID", "TrackID")]
-        public DateTime PubDate {
-            get { return item.PubDate; }
-            set { item.PubDate = value; }
-        }
-        
-        [DatabaseColumn]
-        public string Author {
-            get { return item.Author; }
-            set { item.Author = value; }
-        }
-        
-        [DatabaseColumn ("FeedItemID", Constraints = DatabaseColumnConstraints.NotNull)]
-        public long FeedItemID {
-            get { return feedItemID; }
-            private set { feedItemID = value; }
-        }
-
-        [DatabaseColumn ("New", Constraints = DatabaseColumnConstraints.NotNull)]   
-        public bool New {
-            get { return (_new != 0) ? true : false; }
-            set { _new = (value) ? 1 : 0; }
-        }
-        
-        [DatabaseColumn ("Position", Constraints = DatabaseColumnConstraints.NotNull)]
-        public int Position {
-            get { return position; }
-            private set { 
-                position = (value < 0) ? 0 : value;
-            }
-        }        */
     }
 }

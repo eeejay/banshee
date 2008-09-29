@@ -49,6 +49,7 @@ namespace Hyena.Data.Gui
         private int text_height;
         private string text_format = null;
         protected string MinString, MaxString;
+        private string last_text = null;
         
         public ColumnCellText (string property, bool expand) : base (property, expand)
         {
@@ -69,7 +70,26 @@ namespace Hyena.Data.Gui
     
         public override void Render (CellContext context, StateType state, double cellWidth, double cellHeight)
         {
-            string text = GetText (BoundObject);
+            UpdateText (context, cellWidth);
+            if (String.IsNullOrEmpty (last_text)) {
+                return;
+            }
+            
+            context.Context.Rectangle (0, 0, cellWidth, cellHeight);
+            context.Context.Clip ();
+            context.Context.MoveTo (Spacing, ((int)cellHeight - text_height) / 2);
+            Cairo.Color color = context.Theme.Colors.GetWidgetColor (
+                context.TextAsForeground ? GtkColorClass.Foreground : GtkColorClass.Text, state);
+            color.A = (!context.Sensitive) ? 0.3 : opacity;
+            context.Context.Color = color;
+
+            PangoCairoHelper.ShowLayout (context.Context, context.Layout);
+            context.Context.ResetClip ();
+        }
+
+        public void UpdateText (CellContext context, double cellWidth)
+        {
+            string text = last_text = GetText (BoundObject);
             if (String.IsNullOrEmpty (text)) {
                 return;
             }
@@ -88,22 +108,21 @@ namespace Hyena.Data.Gui
             }
             
             context.Layout.GetPixelSize (out text_width, out text_height);
-
-            context.Context.Rectangle (0, 0, cellWidth, cellHeight);
-            context.Context.Clip ();
-            context.Context.MoveTo (Spacing, ((int)cellHeight - text_height) / 2);
-            Cairo.Color color = context.Theme.Colors.GetWidgetColor (
-                context.TextAsForeground ? GtkColorClass.Foreground : GtkColorClass.Text, state);
-            color.A = (!context.Sensitive) ? 0.3 : opacity;
-            context.Context.Color = color;
-
-            PangoCairoHelper.ShowLayout (context.Context, context.Layout);
-            context.Context.ResetClip ();
+            is_ellipsized = context.Layout.IsEllipsized;
         }
         
         protected virtual string GetText (object obj)
         {
             return obj == null ? String.Empty : obj.ToString ();
+        }
+
+        private bool is_ellipsized = false;
+        public bool IsEllipsized {
+            get { return is_ellipsized; }
+        }
+
+        public string Text {
+            get { return last_text; }
         }
         
         protected int TextWidth {

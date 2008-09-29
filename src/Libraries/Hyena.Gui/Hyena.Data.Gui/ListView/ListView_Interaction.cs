@@ -247,18 +247,15 @@ namespace Hyena.Data.Gui
                     icell_area.Width, icell_area.Height);
             }
         }
-        
+
         private bool ProxyEventToCell (Gdk.Event evnt, bool press, out IInteractiveCell icell, out Gdk.Rectangle icell_area)
         {
             icell = null;
             icell_area = Gdk.Rectangle.Zero;
-            
-            if (Model == null) {
-                return false;
-            }
-               
-            int evnt_x;
-            int evnt_y;
+
+            int evnt_x, evnt_y;
+            int x, y, row_index;
+            x = y = row_index = 0;
             
             Gdk.EventButton evnt_button = evnt as Gdk.EventButton;
             Gdk.EventMotion evnt_motion = evnt as Gdk.EventMotion;
@@ -274,47 +271,67 @@ namespace Hyena.Data.Gui
                 icell = last_icell;
                 return false;
             }
-            
-            int y = evnt_y - list_interaction_alloc.Y;
-            int x = evnt_x - list_interaction_alloc.X;
-            
-            int row_index = GetRowAtY (y);
-            if (row_index < 0 || row_index >= Model.Count) {
+
+            Column column;
+            if (!GetEventCell<IInteractiveCell> (evnt_x, evnt_y, out icell, out column, out row_index)) {
                 return false;
             }
-            
-            Column column = GetColumnAt (x);
-            if (column == null) {
-                return false;
-            }
-            
-            CachedColumn cached_column = GetCachedColumnForColumn (column);
-            
-            ColumnCell cell = column.GetCell (0);
-            icell = cell as IInteractiveCell;
-            
-            if (icell == null) {
-                return false;
-            }
-            
+
+            x = evnt_x - list_interaction_alloc.X;
+            y = evnt_y - list_interaction_alloc.Y;
+
             // Turn the view-absolute coordinates into cell-relative coordinates
+            CachedColumn cached_column = GetCachedColumnForColumn (column);
             x -= cached_column.X1;
             int page_offset = VadjustmentValue % RowHeight;
             y = (y + page_offset) % RowHeight;
-            
-            // Bind the row to the cell and then send it a synthesized input event
-            cell.BindListItem (model[row_index]);
-            
-            bool redraw = (evnt_motion != null)
-                ? icell.MotionEvent (x, y, evnt_motion) : icell.ButtonEvent (x, y, press, evnt_button);
-            
+
             icell_area.X = cached_column.X1 + Allocation.X;
             icell_area.Y = (int)GetYAtRow (row_index) + list_interaction_alloc.Y + Allocation.Y;
             icell_area.Width = cached_column.Width;
             icell_area.Height = RowHeight;
+
+            // Send the cell a synthesized input event
+            if (evnt_motion != null) {
+                return icell.MotionEvent (x, y, evnt_motion);
+            } else {
+                return icell.ButtonEvent (x, y, press, evnt_button);
+            }
+        }
+        
+        private bool GetEventCell<T> (int x, int y, out T icell, out Column column, out int row_index) where T : class
+        {
+            icell = null;
+            column = null;
+            row_index = 0;
+
+            if (Model == null) {
+                return false;
+            }
+
+            x -= list_interaction_alloc.X;
+            y -= list_interaction_alloc.Y;
+
+            row_index = GetRowAtY (y);
+            if (row_index < 0 || row_index >= Model.Count) {
+                return false;
+            }
             
-            return redraw;
-        }   
+            column = GetColumnAt (x);
+            if (column == null) {
+                return false;
+            }
+            
+            ColumnCell cell = column.GetCell (0);
+            icell = cell as T;
+            if (icell == null) {
+                return false;
+            }
+            
+            // Bind the row to the cell
+            cell.BindListItem (model[row_index]);
+            return true;
+        }
         
 #endregion
         
@@ -680,7 +697,7 @@ namespace Hyena.Data.Gui
             double y = (double)RowHeight * row;
             return y;
         }
-          
+
         private void FocusRow (int index)
         {
             Selection.FocusedIndex = index;

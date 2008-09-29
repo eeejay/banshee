@@ -52,7 +52,7 @@ namespace Hyena.Data.Gui
             Gdk.Rectangle area = new Gdk.Rectangle (0, 0, context.Area.Width, context.Area.Height);
             
             // FIXME: Compute font height and set to renderer.Size
-            
+
             renderer.Value = Value;
             renderer.Render (context.Context, area, context.Theme.Colors.GetWidgetColor (GtkColorClass.Text, state), 
                 hover_bound == BoundObjectParent && hover_bound != null, hover_value, 0.8, 0.45, 0.35);
