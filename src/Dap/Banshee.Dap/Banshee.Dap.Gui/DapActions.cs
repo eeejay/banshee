@@ -92,9 +92,7 @@ namespace Banshee.Dap.Gui
         {
             DapSource dap = Dap;
             if (dap != null) {
-                Banshee.Base.ThreadAssist.SpawnFromMain (delegate {
-                    dap.Sync.Sync ();
-                });
+                dap.Sync.Sync ();
             }
         }
     }

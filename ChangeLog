@@ -1,3 +1,16 @@
+2008-09-30  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapSync.cs: Ensure that the Sync happens
+	not on the main thread.  If you changed the Automatic Sync option, it
+	woudl trigger a sync immediately, but that sync was happening on the GUI
+	thread.
+
+	* src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapActions.cs: DapSync takes care of
+	threading now, remove SpawnFromMain call here.
+
+	* src/Core/Banshee.Services/Banshee.Base/ThreadAssist.cs: Add helper
+	method AssertNotInMainThread useful for debugging.
+
 2008-09-29  Aaron Bockover  <abock@gnome.org>
 
 	Banshee 1.3.2 Released

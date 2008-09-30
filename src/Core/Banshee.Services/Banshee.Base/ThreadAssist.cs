@@ -49,6 +49,13 @@ namespace Banshee.Base
                 return main_thread.Equals (Thread.CurrentThread); 
             }
         }
+
+        public static void AssertNotInMainThread ()
+        {
+            if (ApplicationContext.Debugging && Banshee.Base.ThreadAssist.InMainThread) {
+                Hyena.Log.Warning ("In GUI thread, will probably block it", System.Environment.StackTrace);
+            }
+        }
         
         public static void AssertInMainThread ()
         {

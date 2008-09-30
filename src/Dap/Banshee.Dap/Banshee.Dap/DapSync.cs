@@ -273,7 +273,13 @@ namespace Banshee.Dap
 
         public void Sync ()
         {
-            sync_limiter.Execute ();
+            if (Banshee.Base.ThreadAssist.InMainThread) {
+                Banshee.Base.ThreadAssist.SpawnFromMain (delegate {
+                    sync_limiter.Execute ();
+                });
+            } else {
+                sync_limiter.Execute ();
+            }
         }
 
         private void RateLimitedSync ()
