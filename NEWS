@@ -48,7 +48,7 @@ NEW AWESOME FEATURES AND ENHANCEMENTS
       * Fix issue with the Seek slider and recent versions of Gtk# (#536397).
       * Improvements to the indexer
       * Fix bug with showing/selecting invalid profile for DAP transcoding
-      * N bugs were closed since 1.3.1
+      * 24 bugs were closed since 1.3.1
 
 
 ===============================================================================
