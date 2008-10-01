@@ -44,6 +44,7 @@ namespace Banshee.MediaEngine
     {
         public delegate void TrackTranscodedHandler (TrackInfo track, SafeUri uri);
         public delegate void TranscodeCancelledHandler ();
+        public delegate void TranscodeErrorHandler (TrackInfo track);
 
         private struct TranscodeContext
         {
@@ -52,15 +53,17 @@ namespace Banshee.MediaEngine
             public ProfileConfiguration Config;
             public TrackTranscodedHandler Handler;
             public TranscodeCancelledHandler CancelledHandler;
+            public TranscodeErrorHandler ErrorHandler;
 
             public TranscodeContext (TrackInfo track, SafeUri out_uri, ProfileConfiguration config, 
-                TrackTranscodedHandler handler, TranscodeCancelledHandler cancelledHandler)
+                TrackTranscodedHandler handler, TranscodeCancelledHandler cancelledHandler, TranscodeErrorHandler errorHandler)
             {
                 Track = track;
                 OutUri = out_uri;
                 Config = config;
                 Handler = handler;
                 CancelledHandler = cancelledHandler;
+                ErrorHandler = errorHandler;
             }
         }
 
@@ -167,18 +170,18 @@ namespace Banshee.MediaEngine
         }
 
         public void Enqueue (TrackInfo track, ProfileConfiguration config, 
-            TrackTranscodedHandler handler, TranscodeCancelledHandler cancelledHandler)
+            TrackTranscodedHandler handler, TranscodeCancelledHandler cancelledHandler, TranscodeErrorHandler errorHandler)
         {
-            Enqueue (track, GetTempUriFor (config.Profile.OutputFileExtension), config, handler, cancelledHandler);
+            Enqueue (track, GetTempUriFor (config.Profile.OutputFileExtension), config, handler, cancelledHandler, errorHandler);
         }
 
         public void Enqueue (TrackInfo track, SafeUri out_uri, ProfileConfiguration config, 
-            TrackTranscodedHandler handler, TranscodeCancelledHandler cancelledHandler)
+            TrackTranscodedHandler handler, TranscodeCancelledHandler cancelledHandler, TranscodeErrorHandler errorHandler)
         {
             bool start = false;
             lock (queue) {
                 start = (queue.Count == 0 && !transcoding);
-                queue.Enqueue (new TranscodeContext (track, out_uri, config, handler, cancelledHandler));
+                queue.Enqueue (new TranscodeContext (track, out_uri, config, handler, cancelledHandler, errorHandler));
                 UserJob.Total++;
             }
 
@@ -233,8 +236,16 @@ namespace Banshee.MediaEngine
         
         private void OnError (object o, TranscoderErrorArgs args)
         {
-            Reset ();
-            Hyena.Log.Error (Catalog.GetString ("Cannot Convert File"), args.Message, true);
+            transcoding = false;
+
+            if (user_job == null || transcoder == null) {
+                return;
+            }
+
+            UserJob.Completed++;
+            current_context.ErrorHandler (current_context.Track);
+            Hyena.Log.Error ("Cannot Convert File", args.Message);
+            ProcessQueue ();
         }
 
 #endregion

@@ -52,6 +52,10 @@ namespace Banshee.Gui
         }
         
         public event EventHandler TitleChanged;
+
+        protected BaseClientWindow (IntPtr ptr) : base (ptr)
+        {
+        }
     
         public BaseClientWindow (string title, string configNameSpace, int defaultWidth, int defaultHeight) : base (title)
         {

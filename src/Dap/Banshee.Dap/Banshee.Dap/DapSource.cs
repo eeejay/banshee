@@ -384,7 +384,7 @@ namespace Banshee.Dap
                     "File format conversion support is not available"));
             }
             
-            transcoder.Enqueue (track, PreferredConfiguration, OnTrackTranscoded, OnTrackTranscodeCancelled);
+            transcoder.Enqueue (track, PreferredConfiguration, OnTrackTranscoded, OnTrackTranscodeCancelled, OnTrackTranscodeError);
         }
         
         private void OnTrackTranscoded (TrackInfo track, SafeUri outputUri)
@@ -403,6 +403,12 @@ namespace Banshee.Dap
         private void OnTrackTranscodeCancelled ()
         {
             IncrementAddedTracks (); 
+        }
+
+        private void OnTrackTranscodeError (TrackInfo track)
+        {
+            ErrorSource.AddMessage (Catalog.GetString ("Error converting file"), track.Uri.ToString ());
+            IncrementAddedTracks ();
         }
         
 #endregion

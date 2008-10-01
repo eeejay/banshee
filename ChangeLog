@@ -1,3 +1,18 @@
+2008-10-01  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Clients/Nereid/Nereid/PlayerInterface.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/BaseClientWindow.cs: Add stupid
+	protected IntPtr ctors.
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs: Set the transcoder
+	ErrorHandler and add an entry to the ErrorSource when there is a transcode
+	error.
+
+	* src/Core/Banshee.Services/Banshee.MediaEngine/TranscoderService.cs:
+	Instead of popping up a dialog with a transode error and cancelling all
+	other queued transcodes, simply call the error handler for the track and
+	move on.
+
 2008-09-30  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ArtworkManager.cs:

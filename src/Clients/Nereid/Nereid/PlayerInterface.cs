@@ -68,6 +68,10 @@ namespace Nereid
         private CompositeTrackSourceContents composite_view;
         private ObjectListSourceContents object_view;
         private Label status_label;
+
+        protected PlayerInterface (IntPtr ptr) : base (ptr)
+        {
+        }
         
         public PlayerInterface () : base (Catalog.GetString ("Banshee Media Player"), "player_window", 1024, 700)
         {
