@@ -1,5 +1,23 @@
 2008-10-01  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Metadata/MetadataServiceJob.cs: Factor
+	out the save-to-temp-file-then-move logic into a method, SaveAtomically,
+	that takes any input Stream and saves it to a file with that save
+	strategy.
+
+	* src/Core/Banshee.Services/Banshee.Metadata.Embedded/EmbeddedQueryJob.cs:
+	If the file is already a JPG, save it directly as a JPG but using the new
+	SaveAtomically method.  If it's not a JPG, save it with .cover extension
+	as before.
+
+	* src/Core/Banshee.Services/Banshee.Metadata.FileSystem/FileSystemQueryJob.cs:
+	Look for PNG and BMP files too (BGO #547841), and save as .cover if not
+	JPG, and use SaveAtomically method to avoid race.  Also, increase to 30
+	the threshold number of files in a folder above which we don't take any
+	image from it.
+
+2008-10-01  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Clients/Nereid/Nereid/PlayerInterface.cs:
 	* src/Core/Banshee.ThickClient/Banshee.Gui/BaseClientWindow.cs: Add stupid
 	protected IntPtr ctors.

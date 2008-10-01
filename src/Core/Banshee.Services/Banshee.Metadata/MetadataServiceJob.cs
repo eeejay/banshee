@@ -140,14 +140,8 @@ namespace Banshee.Metadata
                 }
                 return false;
             }
-            
-            // Save the file to a temporary path while downloading, so that nobody sees it
-            // and thinks it's ready for use before it is
-            string tmp_path = String.Format ("{0}.part", path);
-            Banshee.IO.StreamAssist.Save (from_stream, new FileStream (tmp_path, 
-                FileMode.Create, FileAccess.ReadWrite));
-                
-            Banshee.IO.File.Move (new SafeUri (tmp_path), new SafeUri (path));
+
+            SaveAtomically (path, from_stream);
             
             from_stream.Close ();
                 
@@ -157,6 +151,28 @@ namespace Banshee.Metadata
         protected bool SaveHttpStreamCover (Uri uri, string albumArtistId, string [] ignoreMimeTypes)
         {
             return SaveHttpStream (uri, CoverArtSpec.GetPath (albumArtistId), ignoreMimeTypes);
+        }
+
+        protected void SaveAtomically (string path, Stream from_stream)
+        {
+            if (String.IsNullOrEmpty (path) || from_stream == null || !from_stream.CanRead) {
+                return;
+            }
+
+            SafeUri path_uri = new SafeUri (path);
+            if (Banshee.IO.File.Exists (path_uri)) {
+                return;
+            }
+            
+            // Save the file to a temporary path while downloading/copying,
+            // so that nobody sees it and thinks it's ready for use before it is
+            SafeUri tmp_uri = new SafeUri (String.Format ("{0}.part", path));
+            try {
+                Banshee.IO.StreamAssist.Save (from_stream, Banshee.IO.File.OpenWrite (tmp_uri, true));
+                Banshee.IO.File.Move (tmp_uri, path_uri);
+            } catch (Exception e) {
+                Hyena.Log.Exception (e);
+            }
         }
     }
 }

@@ -57,7 +57,7 @@ namespace Banshee.Metadata.FileSystem
             Fetch ();
         }
         
-        private static string [] extensions = new string [] { ".jpg", ".jpeg" };
+        private static string [] extensions = new string [] { ".jpg", ".jpeg", ".png", ".bmp" };
         private static string [] filenames = new string [] { "cover", "folder", "front" };
         
         protected void Fetch ()
@@ -74,7 +74,7 @@ namespace Banshee.Metadata.FileSystem
             string best_file = null;
             int items_in_directory = 0;
             bool found_definite_best = false;
-            int max_acceptable_items = Math.Max (20, track.TrackCount + 8);
+            int max_acceptable_items = Math.Max (30, track.TrackCount + 8);
             foreach (string file in Banshee.IO.Directory.GetFiles (directory)) {
                 // Ignore directories with tons of songs in them; this lookup is only intended for when the
                 // music file is in a directory specific to its album.
@@ -107,8 +107,14 @@ namespace Banshee.Metadata.FileSystem
             
             if (best_file != null) {
                 try {
+                    string extension = "cover";
+                    if (best_file.EndsWith ("jpg", true, System.Globalization.CultureInfo.InvariantCulture) ||
+                        best_file.EndsWith ("jpeg", true, System.Globalization.CultureInfo.InvariantCulture)) {
+                        extension = "jpg";
+                    }
+
                     // Copy the file to the cover art directory
-                    Banshee.IO.File.Copy (new SafeUri (best_file), new SafeUri (CoverArtSpec.GetPath (Track.ArtworkId)), false);
+                    SaveAtomically (Path.ChangeExtension (CoverArtSpec.GetPath (Track.ArtworkId), extension), Banshee.IO.File.OpenRead (new SafeUri (best_file)));
 
                     // Send the new StreamTag
                     StreamTag tag = new StreamTag ();

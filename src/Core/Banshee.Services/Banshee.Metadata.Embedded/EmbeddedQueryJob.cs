@@ -116,11 +116,14 @@ namespace Banshee.Metadata.Embedded
             if (picture == null || picture.Data == null || picture.Data.Count == 0) {
                 return false;
             }
-            
-            Banshee.IO.StreamAssist.Save (new MemoryStream (picture.Data.Data), 
-                new FileStream (Path.ChangeExtension (image_path, "cover"), 
-                    FileMode.Create, FileAccess.ReadWrite));
-                
+
+            // Set the extension as .cover unless it's already a JPG
+            string extension = "cover";
+            if (picture.MimeType != null && (picture.MimeType.Contains ("jpeg") || picture.MimeType.Contains ("jpg"))) {
+                extension = "jpg";
+            }
+
+            SaveAtomically (Path.ChangeExtension (image_path, extension), new MemoryStream (picture.Data.Data));
             return true;
         }
     }
