@@ -55,7 +55,8 @@ namespace Banshee.Podcasting
     public partial class PodcastService : IExtensionService, IDisposable, IDelayedInitializeService
     {  
         private readonly string tmp_download_path;
-        private string tmp_enclosure_path; 
+        private string tmp_enclosure_path;
+        private uint refresh_timeout_id = 0;
             
         private bool disposed;
         
@@ -226,16 +227,11 @@ namespace Banshee.Podcasting
 
             ServiceManager.PlayerEngine.ConnectEvent (OnPlayerEvent, PlayerEvent.StateChange);
             ServiceManager.Get<DBusCommandService> ().ArgumentPushed += OnCommandLineArgument;
-            
-            Banshee.Kernel.Scheduler.Schedule (new Banshee.Kernel.DelegateJob (delegate {
-                DateTime now = DateTime.Now;
-                foreach (Feed feed in Feed.Provider.FetchAll ()) {
-                    if ((now - feed.LastDownloadTime).TotalHours > 1) {
-                        feed.Update ();
-                        RefreshArtworkFor (feed);
-                    }
-                }
-            }));
+
+            RefreshFeeds ();
+
+            // Every 10 minutes try to refresh again
+            refresh_timeout_id = Application.RunTimeout (1000 * 60 * 10, RefreshFeeds);
         }
         
         bool disposing;
@@ -248,6 +244,9 @@ namespace Banshee.Podcasting
                     disposing = true;               
                 }
             }
+
+            Application.IdleTimeoutRemove (refresh_timeout_id);
+            refresh_timeout_id = 0;
             
             ServiceManager.PlayerEngine.DisconnectEvent (OnPlayerEvent);
             ServiceManager.Get<DBusCommandService> ().ArgumentPushed -= OnCommandLineArgument;
@@ -273,6 +272,21 @@ namespace Banshee.Podcasting
                 disposing = false;            
                 disposed = true;
             }
+        }
+
+        private bool RefreshFeeds ()
+        {
+            Hyena.Log.Debug ("Refreshing any podcasts that haven't been updated in over an hour");
+            Banshee.Kernel.Scheduler.Schedule (new Banshee.Kernel.DelegateJob (delegate {
+                DateTime now = DateTime.Now;
+                foreach (Feed feed in Feed.Provider.FetchAll ()) {
+                    if ((now - feed.LastDownloadTime).TotalHours > 1) {
+                        feed.Update ();
+                        RefreshArtworkFor (feed);
+                    }
+                }
+            }));
+            return true;
         }
         
         private void OnCommandLineArgument (string uri, object value, bool isFile)

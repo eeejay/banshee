@@ -1,5 +1,11 @@
 2008-09-30  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting/PodcastService.cs:
+	Every 10 minutes refresh any podcasts that haven't been updated in over an
+	hour (BGO #508418).
+
+2008-09-30  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Dap/Banshee.Dap/Banshee.Dap/DapSync.cs: Ensure that the Sync happens
 	not on the main thread.  If you changed the Automatic Sync option, it
 	woudl trigger a sync immediately, but that sync was happening on the GUI
