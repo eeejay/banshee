@@ -30,10 +30,17 @@ using System;
 using System.IO;
 using System.Text.RegularExpressions;
 
+using Mono.Unix;
+
 namespace Banshee.Base
 {
     public static class CoverArtSpec
     {
+        private static string unknown_artist_tr = Catalog.GetString ("Unknown Artist");
+        private static string unknown_artist = "Unknown Artist";
+        private static string unknown_album_tr = Catalog.GetString ("Unknown Album");
+        private static string unknown_album = "Unknown Album";
+
         public static bool CoverExists (string artist, string album)
         {
             return CoverExists (CreateArtistAlbumId (artist, album));
@@ -46,7 +53,7 @@ namespace Banshee.Base
         
         public static bool CoverExistsForSize (string aaid, int size)
         {
-            return File.Exists (GetPathForSize (aaid, size));
+            return aaid == null ? false : File.Exists (GetPathForSize (aaid, size));
         }
         
         public static string GetPath (string aaid)
@@ -65,12 +72,16 @@ namespace Banshee.Base
         {
             return CreateArtistAlbumId (artist, album, false);
         }
-        
+
         public static string CreateArtistAlbumId (string artist, string album, bool asUriPart)
         {
+            if (artist == unknown_artist || artist == unknown_artist_tr || album == unknown_album || album == unknown_album_tr) {
+                return null;
+            }
+
             string sm_artist = EscapePart (artist);
             string sm_album = EscapePart (album);
-            
+
             return String.IsNullOrEmpty (sm_artist) || String.IsNullOrEmpty (sm_album)
                 ? null 
                 : String.Format ("{0}{1}{2}", sm_artist, asUriPart ? "/" : "-", sm_album); 

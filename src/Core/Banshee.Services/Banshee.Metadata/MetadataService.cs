@@ -78,7 +78,7 @@ namespace Banshee.Metadata
         
         public void Lookup (IBasicTrackInfo track, JobPriority priority)
         {
-            if (track == null || queries == null) {
+            if (track == null || queries == null || track.ArtworkId == null) {
                 return;
             }
             

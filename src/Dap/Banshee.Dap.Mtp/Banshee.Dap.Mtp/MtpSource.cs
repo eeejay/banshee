@@ -321,7 +321,7 @@ namespace Banshee.Dap.Mtp
                     if (supports_jpegs && can_sync) {
                         try {
                             Gdk.Pixbuf pic = ServiceManager.Get<Banshee.Collection.Gui.ArtworkManager> ().LookupScale (
-                                CoverArtSpec.CreateArtistAlbumId (track.ArtistName, track.AlbumTitle), thumb_width
+                                track.ArtworkId, thumb_width
                             );
                             if (pic != null) {
                                 byte [] bytes = pic.SaveToBuffer ("jpeg");

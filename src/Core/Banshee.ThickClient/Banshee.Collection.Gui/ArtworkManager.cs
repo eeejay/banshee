@@ -77,11 +77,6 @@ namespace Banshee.Collection.Gui
             Log.Debug (String.Format ("Migrated {0} album art images.", artwork_count));
         }
         
-        public Pixbuf Lookup (string artist, string album)
-        {
-            return Lookup (CoverArtSpec.CreateArtistAlbumId (artist, album));
-        }
-        
         public Pixbuf Lookup (string id)
         {
             return LookupScale (id, 0);

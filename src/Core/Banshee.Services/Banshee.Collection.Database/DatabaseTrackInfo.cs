@@ -248,6 +248,12 @@ namespace Banshee.Collection.Database
         public override string AlbumArtist {
             get { return base.AlbumArtist; }
             set {
+                // Can't set the AlbumArtist if not a compilation, b/c its implicitly kept
+                // the same as the Track Artist
+                if (!IsCompilation) {
+                    return;
+                }
+
                 value = CleanseString (value, AlbumArtist);
                 if (value == null)
                     return;
