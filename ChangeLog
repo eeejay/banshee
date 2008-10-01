@@ -1,5 +1,14 @@
 2008-09-30  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ArtworkManager.cs:
+	We allow putting files with extension .cover in the ~/.cache/album-art
+	folder, which means we should, on a later pass, cover them to jpeg if
+	necessary.  That code path was broken, which also broke embedded cover art
+	fetching because it always names the files it fetches with a .cover
+	extension (BGO #388162).
+
+2008-09-30  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting/PodcastService.cs:
 	Every 10 minutes refresh any podcasts that haven't been updated in over an
 	hour (BGO #508418).

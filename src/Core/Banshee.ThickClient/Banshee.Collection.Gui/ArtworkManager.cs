@@ -89,38 +89,45 @@ namespace Banshee.Collection.Gui
         
         public Pixbuf LookupScale (string id, int size)
         {
-            if (id == null) {
+            if (id == null || (size != 0 && size < 10)) {
                 return null;
             }
-            
+
+            // Find the scaled, cached file
             string path = CoverArtSpec.GetPathForSize (id, size);
             if (File.Exists (path)) {
-                if (Path.GetExtension (path) == "cover") {
-                    try {
-                        Pixbuf pixbuf = new Pixbuf (path);
-                        if (pixbuf.Width < 50 || pixbuf.Height < 50) {
-                            File.Delete (path);
-                            return null;
-                        }
-                        
-                        pixbuf.Save (Path.ChangeExtension (path, "jpg"), "jpeg");
-                        return pixbuf;
-                    } catch {
-                        File.Delete (path);
-                    }
-                    
-                    return null;
-                }
-                
                 try {
                     return new Pixbuf (path);
                 } catch {
                     return null;
                 }
             }
-            
+
             string orig_path = CoverArtSpec.GetPathForSize (id, 0);
-            if (File.Exists (orig_path) && size > 1) {
+            bool orig_exists = File.Exists (orig_path);
+
+            if (!orig_exists) {
+                // It's possible there is an image with extension .cover that's waiting
+                // to be converted into a jpeg
+                string unconverted_path = Path.ChangeExtension (orig_path, "cover");
+                if (File.Exists (unconverted_path)) {
+                    try {
+                        Pixbuf pixbuf = new Pixbuf (unconverted_path);
+                        if (pixbuf.Width < 50 || pixbuf.Height < 50) {
+                            Hyena.Log.DebugFormat ("Ignoring cover art {0} because less than 50x50", unconverted_path);
+                            return null;
+                        }
+                        
+                        pixbuf.Save (orig_path, "jpeg");
+                        orig_exists = true;
+                    } catch {
+                    } finally {
+                        File.Delete (unconverted_path);
+                    }
+                }
+            }
+            
+            if (orig_exists && size >= 10) {
                 try {
                     Pixbuf pixbuf = new Pixbuf (orig_path);
                     Pixbuf scaled_pixbuf = pixbuf.ScaleSimple (size, size, Gdk.InterpType.Bilinear);
