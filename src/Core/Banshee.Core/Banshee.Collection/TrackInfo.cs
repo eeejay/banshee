@@ -200,7 +200,7 @@ namespace Banshee.Collection
 
         [Exportable]
         public virtual string AlbumArtist {
-            get { return album_artist ?? (IsCompilation ? Catalog.GetString ("Various Artists") : ArtistName); }
+            get { return IsCompilation ? album_artist ?? Catalog.GetString ("Various Artists") : ArtistName; }
             set { album_artist = value; }
         }
         

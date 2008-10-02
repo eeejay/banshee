@@ -51,6 +51,7 @@ SOURCES =  \
 	Banshee.Gui.DragDrop/DragDropList.cs \
 	Banshee.Gui.DragDrop/DragDropTarget.cs \
 	Banshee.Gui.DragDrop/DragDropUtilities.cs \
+	Banshee.Gui.TrackEditor/AlbumArtistEntry.cs \
 	Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs \
 	Banshee.Gui.TrackEditor/EditorEntryUndoAdapter.cs \
 	Banshee.Gui.TrackEditor/EditorMode.cs \

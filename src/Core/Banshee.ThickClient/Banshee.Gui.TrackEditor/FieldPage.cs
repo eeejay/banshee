@@ -178,10 +178,12 @@ namespace Banshee.Gui.TrackEditor
                     AttachOptions.Fill, 
                     AttachOptions.Fill, 0, 0);
             }
-            
-            table.Attach (label, 0, table.NColumns, 0, 1,
-                AttachOptions.Fill | AttachOptions.Expand, 
-                AttachOptions.Fill, 0, 0);
+
+            if (label != null) {
+                table.Attach (label, 0, table.NColumns, 0, 1,
+                    AttachOptions.Fill | AttachOptions.Expand, 
+                    AttachOptions.Fill, 0, 0);
+            }
                 
             table.ShowAll ();
             
@@ -209,10 +211,10 @@ namespace Banshee.Gui.TrackEditor
         
         private void UpdateLabel (EditorTrackInfo track, FieldSlot slot)
         {
-            string value = slot.LabelClosure (track, slot.Label);
             Label label = slot.Label as Label;
-            if (value != null && label != null) {
-                label.Text = value;
+            if (label != null && slot.LabelClosure != null) {
+                string value = slot.LabelClosure (track, slot.Label);
+                label.Text = value ?? String.Empty;
             }
         }
     }

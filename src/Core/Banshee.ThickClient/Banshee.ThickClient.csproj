@@ -215,6 +215,7 @@
     <Compile Include="Banshee.Collection.Gui\ColumnCellTrackNumber.cs" />
     <Compile Include="Banshee.Collection.Gui\ColumnCellDiscAndCount.cs" />
     <Compile Include="Banshee.Collection.Gui\ColumnCellLocation.cs" />
+    <Compile Include="Banshee.Gui.TrackEditor\AlbumArtistEntry.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>

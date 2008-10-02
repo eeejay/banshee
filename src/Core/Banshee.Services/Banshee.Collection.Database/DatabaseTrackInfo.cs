@@ -215,6 +215,11 @@ namespace Banshee.Collection.Database
         }
 
         [VirtualDatabaseColumn ("Name", "CoreArtists", "ArtistID", "ArtistID")]
+        protected string ArtistNameField {
+            get { return ArtistName; }
+            set { base.ArtistName = value; }
+        }
+
         public override string ArtistName {
             get { return base.ArtistName; }
             set {
@@ -222,16 +227,17 @@ namespace Banshee.Collection.Database
                 if (value == null)
                     return;
 
-                if (!IsCompilation) {
-                    AlbumArtist = value;
-                }
-
                 base.ArtistName = value;
                 artist_changed = artist_changed != null;
             }
         }
 
         [VirtualDatabaseColumn ("Title", "CoreAlbums", "AlbumID", "AlbumID")]
+        protected string AlbumTitleField {
+            get { return AlbumTitle; }
+            set { base.AlbumTitle = value; }
+        }
+
         public override string AlbumTitle {
             get { return base.AlbumTitle; }
             set {
@@ -245,15 +251,14 @@ namespace Banshee.Collection.Database
         }
 
         [VirtualDatabaseColumn ("ArtistName", "CoreAlbums", "AlbumID", "AlbumID")]
+        protected string AlbumArtistField {
+            get { return AlbumArtist; }
+            set { base.AlbumArtist = value; }
+        }
+
         public override string AlbumArtist {
             get { return base.AlbumArtist; }
             set {
-                // Can't set the AlbumArtist if not a compilation, b/c its implicitly kept
-                // the same as the Track Artist
-                if (!IsCompilation) {
-                    return;
-                }
-
                 value = CleanseString (value, AlbumArtist);
                 if (value == null)
                     return;
@@ -264,6 +269,11 @@ namespace Banshee.Collection.Database
         }
         
         [VirtualDatabaseColumn ("IsCompilation", "CoreAlbums", "AlbumID", "AlbumID")]
+        protected bool IsCompilationField {
+            get { return IsCompilation; }
+            set { base.IsCompilation = value; }
+        }
+
         public override bool IsCompilation {
             get { return base.IsCompilation; }
             set {

@@ -1,5 +1,36 @@
 2008-10-02  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/FieldPage.cs: Don't
+	assume a slot has a Label or a LabelClosure.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs: 
+	Instead of creating the Is Compilation checkbox here and setting that as
+	the label for Album Artist, move it and its logic into a dedicated
+	AlbumArtistEntry widget.  Net effect is you can now sync the Is
+	Compilation checkbox and the Album Artist value via the single sync
+	button.
+
+	* src/Core/Banshee.ThickClient/Makefile.am:
+	* src/Core/Banshee.ThickClient/Banshee.ThickClient.csproj:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/AlbumArtistEntry.cs:
+	New editor widget that has a checkbox and a text entry.  Add tooltips to
+	the checkbox and entry to explain what these values are.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	Add *Field properties for actually loading/saving field values from/to the
+	database - avoiding the checks and such that happen when you use the
+	AlbumTitle et al setters.  Based on patch from Benoit Boissinot, remove
+	the restrictions on setting the AlbumArtist based on IsCompilation to avoid
+	race condition with whether the IsCompilation bool was set true before
+	trying to set the AlbumArtist value (BGO #554723).
+
+	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs: Also based on 
+	the same patch from Benoit, is IsCompilation is false, in the AlbumArtist
+	getter always return ArtistName, otherwise return the value of the album
+	artist or Various Artists if its not set.
+
+2008-10-02  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs: Patch from Benoit
 	Boissinot. If the track_count is zero, don't do the trick where we return
 	the TrackNumber (BGO #554720).

@@ -36,7 +36,6 @@ namespace Banshee.Gui.TrackEditor
 {
     public class BasicTrackDetailsPage : FieldPage, ITrackEditorPage
     {
-        private CheckButton enable_compilation = new CheckButton ();
         
         public int Order {
             get { return 10; }
@@ -49,8 +48,6 @@ namespace Banshee.Gui.TrackEditor
         public override void LoadTrack (EditorTrackInfo track)
         {
             base.LoadTrack (track);
-            enable_compilation.Active = track.IsCompilation;
-            OnEnableCompilationToggled (enable_compilation, EventArgs.Empty);
         }
 
         protected override void AddFields ()
@@ -81,15 +78,19 @@ namespace Banshee.Gui.TrackEditor
                 delegate (EditorTrackInfo track, Widget widget) { ((TextEntry)widget).Text = track.ArtistName; },
                 delegate (EditorTrackInfo track, Widget widget) { track.ArtistName = ((TextEntry)widget).Text; }
             );
-            
-            enable_compilation.Toggled += OnEnableCompilationToggled;
-            AddField (left, enable_compilation, new TextEntry (), null,
-                delegate (EditorTrackInfo track, Widget widget) { 
-                    ((CheckButton)widget).Label = Catalog.GetString ("Album Artist (part of a compilation):"); 
-                    return null; 
+
+            AddField (left, null, new AlbumArtistEntry (),
+                Catalog.GetString ("Set all compilation album artists to these values"), null,
+                delegate (EditorTrackInfo track, Widget widget) {
+                    AlbumArtistEntry entry = widget as AlbumArtistEntry;
+                    entry.IsCompilation = track.IsCompilation;
+                    entry.Text = track.AlbumArtist;
                 },
-                delegate (EditorTrackInfo track, Widget widget) { ((TextEntry)widget).Text = track.AlbumArtist; },
-                delegate (EditorTrackInfo track, Widget widget) { track.AlbumArtist = ((TextEntry)widget).Text; }
+                delegate (EditorTrackInfo track, Widget widget) {
+                    AlbumArtistEntry entry = widget as AlbumArtistEntry;
+                    track.IsCompilation = entry.IsCompilation;
+                    track.AlbumArtist = entry.Text;
+                }
             );
             
             AddField (left, new TextEntry (), 
@@ -141,7 +142,6 @@ namespace Banshee.Gui.TrackEditor
             );
             
             Label year_label = EditorUtilities.CreateLabel (null);
-            enable_compilation.SizeAllocated += delegate { year_label.HeightRequest = enable_compilation.Allocation.Height; };
             AddField (right, year_label, new SpinButtonEntry (1000, 3000, 1), 
                 Catalog.GetString ("Set all years to this value"),
                 delegate { return Catalog.GetString ("Year:"); },
@@ -155,23 +155,8 @@ namespace Banshee.Gui.TrackEditor
                 delegate { return Catalog.GetString ("Rating:"); },
                 delegate (EditorTrackInfo track, Widget widget) { ((RatingEntry)widget).Value = track.Rating; },
                 delegate (EditorTrackInfo track, Widget widget) { track.Rating = ((RatingEntry)widget).Value; },
-                FieldOptions.Shrink
+                FieldOptions.Shrink | FieldOptions.NoSync
             );
-        }
-        
-        private void OnEnableCompilationToggled (object o, EventArgs args)
-        {
-            CheckButton check = (CheckButton)o;
-            
-            if (CurrentTrack != null) {
-                CurrentTrack.IsCompilation = check.Active;
-            }
-            
-            foreach (Widget child in ((Container)check.Parent).Children) {
-                if (child != check) {
-                    child.Sensitive = check.Active;
-                }
-            }
         }
     }
 }
