@@ -1,5 +1,11 @@
 2008-10-02  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs: Patch from Benoit
+	Boissinot. If the track_count is zero, don't do the trick where we return
+	the TrackNumber (BGO #554720).
+
+2008-10-02  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Libraries/Migo/Migo.Syndication/FeedUpdateTask.cs:
 	* src/Libraries/Migo/Migo.TaskCore/Migo.TaskCore.Collections/TaskList.cs:
 	Style fixes.

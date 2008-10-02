@@ -292,7 +292,7 @@ namespace Banshee.Collection
 
         [Exportable]
         public virtual int TrackCount {
-            get { return TrackNumber > track_count ? TrackNumber : track_count; }
+            get { return (track_count != 0 && track_count < TrackNumber) ? TrackNumber : track_count; }
             set { track_count = value; }
         }
 
