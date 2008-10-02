@@ -34,8 +34,7 @@ using Migo.TaskCore;
 
 namespace Migo.TaskCore.Collections
 {    
-    public class TaskList<T> : 
-        TaskCollection<T>, IList<T>, IEnumerable<T>, IEnumerable 
+    public class TaskList<T> : TaskCollection<T>, IList<T>, IEnumerable<T>, IEnumerable 
         where T : Task
     {
         private List<T> list;
@@ -44,34 +43,22 @@ namespace Migo.TaskCore.Collections
         private readonly object syncRoot = new object ();
         
         public override bool CanReorder {
-            get { 
-                return true; 
-            }
+            get { return true; }
         }
         
-        public override int Count
-        {
-            get {
-                return list.Count; 
-            }
+        public override int Count {
+            get { return list.Count; }
         }
         
-        public override bool IsReadOnly
-        {
-            get { 
-                return false; 
-            }
+        public override bool IsReadOnly {
+            get { return false; }
         }        
         
-        public override bool IsSynchronized
-        {
-            get { 
-                return false; 
-            }
+        public override bool IsSynchronized {
+            get { return false; }
         }        
         
-        public override object SyncRoot
-        {
+        public override object SyncRoot {
             get { return syncRoot; }
         }
         
@@ -81,8 +68,7 @@ namespace Migo.TaskCore.Collections
             generation = 0;
         }
 
-        public override T this [int index] 
-        {
+        public override T this [int index] {
             get { 
                 CheckIndex (index);
                 return list[index];

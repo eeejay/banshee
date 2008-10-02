@@ -55,9 +55,9 @@ namespace Migo.Syndication
                     if (mre == null) {
                         mre = new ManualResetEvent (true);
                     }
-                   
+
                     return mre;
-            }
+                }
             }
         }
 

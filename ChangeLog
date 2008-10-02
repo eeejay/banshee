@@ -1,3 +1,9 @@
+2008-10-02  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Libraries/Migo/Migo.Syndication/FeedUpdateTask.cs:
+	* src/Libraries/Migo/Migo.TaskCore/Migo.TaskCore.Collections/TaskList.cs:
+	Style fixes.
+
 2008-10-01  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	This commit fixes jump-to-playing for podcasts and radio, avoids some
