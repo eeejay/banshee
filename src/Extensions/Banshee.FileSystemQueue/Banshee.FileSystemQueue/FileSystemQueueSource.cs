@@ -140,7 +140,9 @@ namespace Banshee.FileSystemQueue
                 }
             
                 if (PlaylistFileUtil.PathHasPlaylistExtension (path)) {
-                    PlaylistFileUtil.ImportPlaylistToLibrary (path, this, importer);
+                    Banshee.Kernel.Scheduler.Schedule (new DelegateJob (delegate {
+                        PlaylistFileUtil.ImportPlaylistToLibrary (path, this, importer);
+                    }));
                 } else {
                     importer.Enqueue (path);
                 }

@@ -197,26 +197,28 @@ namespace Banshee.PlayQueue
             }
         }
 
-        void IBasicPlaybackController.First ()
+        bool IBasicPlaybackController.First ()
         {
-            ((IBasicPlaybackController)this).Next (false);
+            return ((IBasicPlaybackController)this).Next (false);
         }
         
-        void IBasicPlaybackController.Next (bool restart)
+        bool IBasicPlaybackController.Next (bool restart)
         {
             RemovePlayingTrack ();
             
             if (Count == 0) {
                 ServiceManager.PlaybackController.Source = PriorSource;
                 ServiceManager.PlaybackController.Next (restart);
-                return;
+                return true;
             }
             
             ServiceManager.PlayerEngine.OpenPlay ((DatabaseTrackInfo)TrackModel[0]);
+            return true;
         }
         
-        void IBasicPlaybackController.Previous (bool restart)
+        bool IBasicPlaybackController.Previous (bool restart)
         {
+            return true;
         }
         
         private void RemovePlayingTrack ()

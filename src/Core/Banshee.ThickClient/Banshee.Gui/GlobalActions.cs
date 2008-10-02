@@ -205,10 +205,12 @@ namespace Banshee.Gui
             if (uris == null || uris.Length == 0) {
                 return;
             }
-            
-            foreach (string uri in uris) {
-                PlaylistFileUtil.ImportPlaylistToLibrary (uri);
-            }
+
+            Banshee.Kernel.Scheduler.Schedule (new Banshee.Kernel.DelegateJob (delegate {
+                foreach (string uri in uris) {
+                    PlaylistFileUtil.ImportPlaylistToLibrary (uri);
+                }
+            }));
         }
         
         private void OnQuit (object o, EventArgs args)

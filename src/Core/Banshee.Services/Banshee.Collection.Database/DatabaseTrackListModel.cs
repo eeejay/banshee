@@ -309,7 +309,12 @@ namespace Banshee.Collection.Database
         public override int IndexOf (TrackInfo track)
         {
             lock (this) {
-                return (int) cache.IndexOf (track as DatabaseTrackInfo);
+                if (track is DatabaseTrackInfo) {
+                    return (int) cache.IndexOf (track as DatabaseTrackInfo);
+                } else if (track is Banshee.Streaming.RadioTrackInfo) {
+                    return (int) cache.IndexOf ((track as Banshee.Streaming.RadioTrackInfo).ParentTrack as DatabaseTrackInfo);
+                }
+                return -1;
             }
         }
 

@@ -39,13 +39,14 @@ using Banshee.ServiceStack;
 using Banshee.Collection;
 using Banshee.Collection.Database;
 using Banshee.Configuration;
+using Banshee.PlaybackController;
 
 using Banshee.Gui;
 using Banshee.Sources.Gui;
 
 namespace Banshee.InternetRadio
 {
-    public class InternetRadioSource : PrimarySource, IDisposable
+    public class InternetRadioSource : PrimarySource, IDisposable, IBasicPlaybackController
     {
         private InternetRadioSourceContents source_contents;
         private uint ui_id;
@@ -134,6 +135,7 @@ namespace Banshee.InternetRadio
             ));
             
             ServiceManager.PlayerEngine.TrackIntercept += OnPlayerEngineTrackIntercept;
+            //ServiceManager.PlayerEngine.ConnectEvent (OnTrackInfoUpdated, Banshee.MediaEngine.PlayerEvent.TrackInfoUpdated);
             
             TrackEqualHandler = delegate (DatabaseTrackInfo a, TrackInfo b) {
                 RadioTrackInfo radio_track = b as RadioTrackInfo;
@@ -161,6 +163,8 @@ namespace Banshee.InternetRadio
         public override void Dispose ()
         {
             base.Dispose ();
+
+            //ServiceManager.PlayerEngine.DisconnectEvent (OnTrackInfoUpdated);
             
             InterfaceActionService uia_service = ServiceManager.Get<InterfaceActionService> ();
             if (uia_service == null) {
@@ -175,6 +179,18 @@ namespace Banshee.InternetRadio
             
             ServiceManager.PlayerEngine.TrackIntercept -= OnPlayerEngineTrackIntercept;
         }
+
+        // TODO the idea with this is to grab and display cover art when we get updated info
+        // for a radio station (eg it changes song and lets us know).  The problem is I'm not sure
+        // if that info ever/usually includes the album name, and also we would probably want to mark
+        // such downloaded/cached cover art as temporary.
+        /*private void OnTrackInfoUpdated (Banshee.MediaEngine.PlayerEventArgs args)
+        {
+            RadioTrackInfo radio_track = ServiceManager.PlaybackController.CurrentTrack as RadioTrackInfo;
+            if (radio_track != null) {
+                Banshee.Metadata.MetadataService.Instance.Lookup (radio_track);
+            }
+        }*/
         
         private bool OnPlayerEngineTrackIntercept (TrackInfo track)
         {
@@ -252,6 +268,36 @@ namespace Banshee.InternetRadio
                 }
             }
         }
+
+        #region IBasicPlaybackController implementation 
+        
+        public bool First ()
+        {
+            return false;
+        }
+        
+        public bool Next (bool restart)
+        {
+            RadioTrackInfo radio_track = ServiceManager.PlaybackController.CurrentTrack as RadioTrackInfo;
+            if (radio_track != null && radio_track.PlayNextStream ()) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        
+        public bool Previous (bool restart)
+        {
+            RadioTrackInfo radio_track = ServiceManager.PlaybackController.CurrentTrack as RadioTrackInfo;
+            if (radio_track != null && radio_track.PlayPreviousStream ()) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        
+        #endregion 
+        
         
         public override bool CanDeleteTracks {
             get { return false; }

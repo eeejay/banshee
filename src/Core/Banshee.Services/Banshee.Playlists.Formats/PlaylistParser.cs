@@ -53,6 +53,7 @@ namespace Banshee.Playlists.Formats
         
         public bool Parse (SafeUri uri)
         {
+            ThreadAssist.AssertNotInMainThread ();
             lock (this) {
                 elements = null;
                 Stream stream = null;

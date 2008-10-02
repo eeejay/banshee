@@ -66,6 +66,7 @@ namespace Banshee.Streaming
         {
             TrackTitle = track.Title;
             ArtistName = track.Creator;
+            
             this.track = track;
         }
         
@@ -109,12 +110,24 @@ namespace Banshee.Streaming
             }
         }
         
-        public void PlayNextStream()
+        public bool PlayNextStream()
         {
             if(stream_index < stream_uris.Count - 1) {
                 stream_index++;
                 Play();
+                return true;
             }
+            return false;
+        }
+
+        public bool PlayPreviousStream()
+        {
+            if (stream_index > 0) {
+                stream_index--;
+                Play();
+                return true;
+            }
+            return false;
         }
         
         private void LoadStreamUris()

@@ -139,7 +139,7 @@ namespace Banshee.PlaybackController
                     
                     CancelErrorTransition ();
                     // TODO why is this so long? any reason not to be instantaneous?
-                    Application.RunTimeout (500, EosTransition);
+                    Application.RunTimeout (250, EosTransition);
                     break;
                 case PlayerEvent.StateChange:
                     if (((PlayerEventStateChangeArgs)args).Current != PlayerState.Loading) {
@@ -196,10 +196,9 @@ namespace Banshee.PlaybackController
             // This and OnTransition() below commented out b/c of BGO #524556
             //raise_started_after_transition = true;
             
-            if (Source is IBasicPlaybackController) {
-                ((IBasicPlaybackController)Source).First ();
+            if (Source is IBasicPlaybackController && ((IBasicPlaybackController)Source).First ()) {
             } else {
-                ((ICanonicalPlaybackController)this).First ();
+                ((IBasicPlaybackController)this).First ();
             }
             
             //OnTransition ();
@@ -219,10 +218,9 @@ namespace Banshee.PlaybackController
 
             player_engine.IncrementLastPlayed ();
             
-            if (Source is IBasicPlaybackController) {
-                ((IBasicPlaybackController)Source).Next (restart);
+            if (Source is IBasicPlaybackController && ((IBasicPlaybackController)Source).Next (restart)) {
             } else {
-                ((ICanonicalPlaybackController)this).Next (restart);
+                ((IBasicPlaybackController)this).Next (restart);
             }
             
             OnTransition ();
@@ -242,23 +240,23 @@ namespace Banshee.PlaybackController
 
             player_engine.IncrementLastPlayed ();
             
-            if (Source is IBasicPlaybackController) {
-                ((IBasicPlaybackController)Source).Previous (restart);
+            if (Source is IBasicPlaybackController && ((IBasicPlaybackController)Source).Previous (restart)) {
             } else {
-                ((ICanonicalPlaybackController)this).Previous (restart);
+                ((IBasicPlaybackController)this).Previous (restart);
             }
             
             OnTransition ();
         }
         
-        void ICanonicalPlaybackController.First ()
+        bool IBasicPlaybackController.First ()
         {
             if (Source.Count > 0) {
                 player_engine.OpenPlay (Source.TrackModel[0]);
             }
+            return true;
         }
         
-        void ICanonicalPlaybackController.Next (bool restart)
+        bool IBasicPlaybackController.Next (bool restart)
         {
             TrackInfo tmp_track = CurrentTrack;
 
@@ -274,16 +272,17 @@ namespace Banshee.PlaybackController
                         previous_stack.Push (tmp_track);
                     }
                 } else {
-                    return;
+                    return true;
                 }
                 
                 CurrentTrack = next_track;
             }
             
             QueuePlayTrack ();
+            return true;
         }
         
-        void ICanonicalPlaybackController.Previous (bool restart)
+        bool IBasicPlaybackController.Previous (bool restart)
         {
             if (CurrentTrack != null && previous_stack.Count > 0) {
                 next_stack.Push (current_track);
@@ -296,11 +295,12 @@ namespace Banshee.PlaybackController
                 if (track != null) {
                     CurrentTrack = track;
                 } else {
-                    return;
+                    return true;
                 }
             }
             
             QueuePlayTrack ();
+            return true;
         }
         
         private TrackInfo QueryTrack (Direction direction, bool restart)

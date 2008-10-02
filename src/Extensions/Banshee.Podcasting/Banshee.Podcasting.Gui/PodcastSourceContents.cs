@@ -51,7 +51,7 @@ using Banshee.Podcasting.Data;
 
 namespace Banshee.Podcasting.Gui
 {
-    public class PodcastSourceContents : FilteredListSourceContents
+    public class PodcastSourceContents : FilteredListSourceContents, ITrackModelSourceContents
     {
         private PodcastItemView track_view;
         private PodcastFeedView feed_view;
@@ -89,7 +89,7 @@ namespace Banshee.Podcasting.Gui
             }
         }
 
-#region Implement ISourceContents
+        #region Implement ISourceContents
 
         public override bool SetSource (ISource source)
         {
@@ -131,7 +131,15 @@ namespace Banshee.Podcasting.Gui
             //Console.WriteLine ("PSC.reset_source 2");
         }
 
-#endregion        
+        #endregion
+
+        #region ITrackModelSourceContents implementation 
+        
+        public IListView<TrackInfo> TrackView {
+            get { return track_view; }
+        }
+        
+        #endregion 
 
         public static readonly SchemaEntry<int> VPanedPositionSchema = new SchemaEntry<int> (
             "plugins.podcasting", "vpaned_position", 120, "VPaned Position", ""

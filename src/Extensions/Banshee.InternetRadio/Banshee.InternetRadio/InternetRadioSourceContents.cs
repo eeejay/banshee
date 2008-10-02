@@ -47,7 +47,7 @@ using Banshee.Collection.Gui;
 
 namespace Banshee.InternetRadio
 {
-    public class InternetRadioSourceContents : FilteredListSourceContents
+    public class InternetRadioSourceContents : FilteredListSourceContents, ITrackModelSourceContents
     {
         private TrackListView track_view;
         private QueryFilterView<string> genre_view;
@@ -77,7 +77,7 @@ namespace Banshee.InternetRadio
             get { return "left"; }
         }
 
-#region Implement ISourceContents
+        #region Implement ISourceContents
 
         public override bool SetSource (ISource source)
         {
@@ -107,6 +107,14 @@ namespace Banshee.InternetRadio
             genre_view.SetModel (null);
         }
 
-#endregion  
+        #endregion
+
+        #region ITrackModelSourceContents implementation 
+        
+        public IListView<TrackInfo> TrackView {
+            get { return track_view; }
+        }
+        
+        #endregion
     }
 }

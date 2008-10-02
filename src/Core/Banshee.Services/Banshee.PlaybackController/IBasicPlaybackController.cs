@@ -30,8 +30,8 @@ namespace Banshee.PlaybackController
 {
     public interface IBasicPlaybackController
     {
-        void First ();
-        void Next (bool restart);
-        void Previous (bool restart);
+        bool First ();
+        bool Next (bool restart);
+        bool Previous (bool restart);
     }
 }

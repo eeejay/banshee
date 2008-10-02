@@ -1,5 +1,49 @@
 2008-10-01  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	This commit fixes jump-to-playing for podcasts and radio, avoids some
+	hangs when loading playlists from the command line or Media menu.
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:
+	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
+	* src/Core/Banshee.Services/Banshee.PlaybackController/ICanonicalPlaybackController.cs:
+	* src/Core/Banshee.Services/Banshee.PlaybackController/PlaybackControllerService.cs:
+	* src/Core/Banshee.Services/Banshee.PlaybackController/IBasicPlaybackController.cs:
+	Change the Next/Previos/First methods to return a bool saying whether they
+	handled the action.  So sources can implement IBasicPlaybackController and
+	return false if they want the normal controller to handle that action.
+
+	* src/Extensions/Banshee.FileSystemQueue/Banshee.FileSystemQueue/FileSystemQueueSource.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:
+	Make sure playlist parsing (which could involved network access) is done
+	not on the GUI thread.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting/PodcastImageFetchJob.cs:
+	Reload the whole source when done fetching podcast artwork.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastSourceContents.cs:
+	* src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSourceContents.cs:
+	Implement ITrackModelSourceContents so jump-to-playing track works for
+	podcasts and radio.
+
+	* src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSource.cs:
+	Implement IBasicPlaybackController, and play the next/previous stream
+	within the station (if any) when Next/Previous are called.
+
+	* src/Core/Banshee.Services/Banshee.Playlists.Formats/PlaylistParser.cs:
+	Add AssertNotInMainThread to help identify places we call this from the
+	GUI thread.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackListModel.cs:
+	In IndexOf method, if the track is a RadioTrackInfo, lookup the IndexOf
+	its parent track, since RadioTrackInfo is a wrapper.
+
+	* src/Core/Banshee.Services/Banshee.Streaming/RadioTrackInfo.cs: Add
+	PlayPreviousStream method, and return whether able to play next/previous
+	in those methods, so we can fall back on the normal playback controller if
+	not.
+
+2008-10-01  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs: Use
 	track.ArtworkId instead of explicitly calling CreateArtistAlbumId.
 

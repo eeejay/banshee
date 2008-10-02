@@ -289,13 +289,13 @@ namespace Banshee.Lastfm.Radio
         
 #region IBasicPlaybackController
 
-        void IBasicPlaybackController.First ()
+        bool IBasicPlaybackController.First ()
         {
-            ((IBasicPlaybackController)this).Next (false);
+            return ((IBasicPlaybackController)this).Next (false);
         }
         
         private bool playback_requested;    
-        void IBasicPlaybackController.Next (bool restart)
+        bool IBasicPlaybackController.Next (bool restart)
         {
             TrackInfo next = NextTrack;
             if (next != null) {
@@ -303,10 +303,12 @@ namespace Banshee.Lastfm.Radio
             }  else {
                 playback_requested = true;
             }
+            return true;
         }
         
-        void IBasicPlaybackController.Previous (bool restart)
+        bool IBasicPlaybackController.Previous (bool restart)
         {
+            return true;
         }
         
 #endregion
