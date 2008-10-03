@@ -80,7 +80,7 @@ namespace Banshee.Gui.TrackEditor
                 Catalog.GetString ("Set all beats per minute to this value"),
                 delegate { return Catalog.GetString ("Beats Per Minute:"); },
                 delegate (EditorTrackInfo track, Widget widget) { ((SpinButtonEntry)widget).Value = track.Bpm; },
-                delegate (EditorTrackInfo track, Widget widget) { track.Bpm = (int)((SpinButtonEntry)widget).Value; },
+                delegate (EditorTrackInfo track, Widget widget) { track.Bpm = ((SpinButtonEntry)widget).ValueAsInt; },
                 FieldOptions.Shrink | FieldOptions.NoSync
             );
             

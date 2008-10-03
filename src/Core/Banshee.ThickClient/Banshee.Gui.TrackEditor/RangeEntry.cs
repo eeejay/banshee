@@ -55,8 +55,8 @@ namespace Banshee.Gui.TrackEditor
             from_entry.WidthChars = 2;
             to_entry.WidthChars = 2;
             
-            from_entry.Changed += OnChanged;
-            to_entry.Changed += OnChanged;
+            from_entry.ValueChanged += OnChanged;
+            to_entry.ValueChanged += OnChanged;
         }
         
         private void OnChanged (object o, EventArgs args)

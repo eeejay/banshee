@@ -33,6 +33,11 @@ namespace Banshee.Gui.TrackEditor
 {
     public class SpinButtonEntry : SpinButton, IEditorField
     {
+        public new event EventHandler Changed {
+            add { ValueChanged += value; }
+            remove { ValueChanged -= value; }
+        }
+        
         public SpinButtonEntry (double min, double max, double step) : base (min, max, step)
         {
         }

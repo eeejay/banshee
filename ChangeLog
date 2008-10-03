@@ -1,5 +1,17 @@
 2008-10-03  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/ExtraTrackDetailsPage.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:
+	Use ValueAsInt instead of casting Value.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/RangeEntry.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/SpinButtonEntry.cs:
+	Instead of listening for the Changed event on SpinButtons, listen for the
+	ValueChanged.  Fixes issue with not saving any spin-entry values unless
+	you clicked the up/down arrows (BGO #552698).
+
+2008-10-03  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:
 	Add TODO about writing metadata to the DAP file to make sure its
 	MetadataHash will match that of the in-Library track when we load the DAP

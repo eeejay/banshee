@@ -150,7 +150,7 @@ namespace Banshee.Gui.TrackEditor
                 Catalog.GetString ("Set all years to this value"),
                 delegate { return Catalog.GetString ("Year:"); },
                 delegate (EditorTrackInfo track, Widget widget) { ((SpinButtonEntry)widget).Value = track.Year; },
-                delegate (EditorTrackInfo track, Widget widget) { track.Year = (int)((SpinButtonEntry)widget).Value; },
+                delegate (EditorTrackInfo track, Widget widget) { track.Year = ((SpinButtonEntry)widget).ValueAsInt; },
                 FieldOptions.Shrink
             );
             
