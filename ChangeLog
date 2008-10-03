@@ -1,5 +1,19 @@
 2008-10-03  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs: Add TODO to use
+	transactions when loading tracks and use slightly better TrackCount method
+	instead of accessing Tracks.Count twice.
+
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapTrackInfo.cs: Set BitRate
+	as well.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/HyenaSqliteConnection.cs: Add
+	thoghts on how to fix the transaction bug so we can bring back the
+	transaction methods.  Not going to do it now, too fundamental of a change
+	too close to 1.4.
+
+2008-10-03  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodTrackInfo.cs: Optimize
 	cover art setting so that we only create a Pixbuf of the track's cover art
 	if it's not already set.

@@ -54,8 +54,9 @@ namespace Banshee.Daap
             Year = track.Year;
             Duration = track.Duration;
             MimeType = track.Format;
+            BitRate = (int)track.BitRate;
             ExternalId = track.Id;
-            
+
             PrimarySource = source;
             
             Uri = new SafeUri (String.Format (
