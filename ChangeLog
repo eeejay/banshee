@@ -1,3 +1,18 @@
+2008-10-03  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodTrackInfo.cs: Optimize
+	cover art setting so that we only create a Pixbuf of the track's cover art
+	if it's not already set.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:
+	Reconnect the height of the year label to the height of the album artist
+	label, and make the minimum for the year entry 0 not 1000 so that for
+	tracks without a year set, it shows up as 0 not 1000.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/AlbumArtistEntry.cs:
+	Expose the LabelWidget (the checkbox, actually) so the year label's height
+	can be set off it.
+
 2008-10-02  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/FieldPage.cs: Don't

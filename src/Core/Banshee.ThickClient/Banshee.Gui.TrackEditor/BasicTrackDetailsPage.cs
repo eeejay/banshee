@@ -79,7 +79,8 @@ namespace Banshee.Gui.TrackEditor
                 delegate (EditorTrackInfo track, Widget widget) { track.ArtistName = ((TextEntry)widget).Text; }
             );
 
-            AddField (left, null, new AlbumArtistEntry (),
+            AlbumArtistEntry album_artist_entry = new AlbumArtistEntry ();
+            AddField (left, null, album_artist_entry,
                 Catalog.GetString ("Set all compilation album artists to these values"), null,
                 delegate (EditorTrackInfo track, Widget widget) {
                     AlbumArtistEntry entry = widget as AlbumArtistEntry;
@@ -142,7 +143,10 @@ namespace Banshee.Gui.TrackEditor
             );
             
             Label year_label = EditorUtilities.CreateLabel (null);
-            AddField (right, year_label, new SpinButtonEntry (1000, 3000, 1), 
+            album_artist_entry.LabelWidget.SizeAllocated += delegate { year_label.HeightRequest = album_artist_entry.LabelWidget.Allocation.Height; };
+            SpinButtonEntry year_entry = new SpinButtonEntry (0, 3000, 1);
+            year_entry.Numeric = true;
+            AddField (right, year_label, year_entry,
                 Catalog.GetString ("Set all years to this value"),
                 delegate { return Catalog.GetString ("Year:"); },
                 delegate (EditorTrackInfo track, Widget widget) { ((SpinButtonEntry)widget).Value = track.Year; },

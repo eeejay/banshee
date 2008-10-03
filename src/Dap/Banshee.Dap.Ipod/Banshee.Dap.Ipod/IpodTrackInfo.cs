@@ -225,7 +225,7 @@ namespace Banshee.Dap.Ipod
                 //track.RememberPosition = true;
                 //track.NotPlayedMark = track.PlayCount == 0;
             }
-            
+
             if (HasAttribute (TrackMediaAttributes.VideoStream)) {
                 if (HasAttribute (TrackMediaAttributes.Podcast)) {
                     track.Type = IPod.MediaType.VideoPodcast;
@@ -257,26 +257,26 @@ namespace Banshee.Dap.Ipod
         
         // FIXME: No reason for this to use GdkPixbuf - the file is on disk already in 
         // the artwork cache as a JPEG, so just shove the bytes from disk into the track
-        
         public static void SetIpodCoverArt (IPod.Device device, IPod.Track track, string path)
         {
             try {
-                Gdk.Pixbuf pixbuf = new Gdk.Pixbuf (path);
+                Gdk.Pixbuf pixbuf = null;
+                foreach (IPod.ArtworkFormat format in device.LookupArtworkFormats (IPod.ArtworkUsage.Cover)) {
+                    if (!track.HasCoverArt (format)) {
+                        // Lazily load the pixbuf
+                        if (pixbuf == null) {
+                            pixbuf = new Gdk.Pixbuf (path);
+                        }
+                        
+                        track.SetCoverArt (format, IPod.ArtworkHelpers.ToBytes (format, pixbuf));
+                    }
+                }
+                
                 if (pixbuf != null) {
-                    SetIpodCoverArt (device, track, IPod.ArtworkUsage.Cover, pixbuf);
                     pixbuf.Dispose ();
                 }
             } catch (Exception e) {
                 Log.Exception (String.Format ("Failed to set cover art on iPod from {0}", path), e);
-            }
-        }
-
-        private static void SetIpodCoverArt (IPod.Device device, IPod.Track track, IPod.ArtworkUsage usage, Gdk.Pixbuf pixbuf)
-        {
-            foreach (IPod.ArtworkFormat format in device.LookupArtworkFormats (usage)) {
-                if (!track.HasCoverArt (format)) {
-                    track.SetCoverArt (format, IPod.ArtworkHelpers.ToBytes (format, pixbuf));
-                }
             }
         }
     }

@@ -60,6 +60,10 @@ namespace Banshee.Gui.TrackEditor
             UpdateSensitivities ();
         }
 
+        public Widget LabelWidget {
+            get { return enable_compilation; }
+        }
+
         public bool IsCompilation {
             get { return enable_compilation.Active; }
             set {
