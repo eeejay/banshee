@@ -1,5 +1,12 @@
 2008-10-03  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:
+	Add TODO about writing metadata to the DAP file to make sure its
+	MetadataHash will match that of the in-Library track when we load the DAP
+	next time.
+
+2008-10-03  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs: Add TODO to use
 	transactions when loading tracks and use slightly better TrackCount method
 	instead of accessing Tracks.Count twice.

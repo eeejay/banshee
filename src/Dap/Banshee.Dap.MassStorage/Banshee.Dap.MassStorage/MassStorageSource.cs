@@ -428,6 +428,11 @@ namespace Banshee.Dap.MassStorage
                 Directory.Create (System.IO.Path.GetDirectoryName (new_uri.LocalPath));
                 File.Copy (fromUri, new_uri, false);
 
+                // TODO If write-to-file is NOT on, then write the metadata in db to the file on the DAP
+                // to ensure that when we load it next time, it's data will match what's in the database
+                // and the MetadataHash will actually match.  This isn't necessary on iPods or MTP since
+                // on them we store our db's metadata in their dbs.
+
                 DatabaseTrackInfo copied_track = new DatabaseTrackInfo (track);
                 copied_track.PrimarySource = this;
                 copied_track.Uri = new_uri;
