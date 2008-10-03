@@ -1,0 +1,150 @@
+//
+// PixbufImageSurface.cs
+//
+// Author:
+//   Aaron Bockover <abockover@novell.com>
+//
+// Copyright (C) 2008 Novell, Inc.
+//
+// Permission is hereby granted, free of charge, to any person obtaining
+// a copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to
+// permit persons to whom the Software is furnished to do so, subject to
+// the following conditions:
+//
+// The above copyright notice and this permission notice shall be
+// included in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+// LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+// OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+// WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//
+
+using System;
+using System.Runtime.InteropServices;
+
+using Cairo;
+
+namespace Hyena.Gui
+{
+    public class PixbufImageSurface : ImageSurface, IDisposable
+    {
+        private delegate void cairo_destroy_func_t (IntPtr userdata);
+    
+        private static bool is_le = BitConverter.IsLittleEndian;
+        private static int user_data_key = 0;
+        private static cairo_destroy_func_t destroy_func;
+               
+        private static void DestroyPixelData (IntPtr data)
+        {
+            Marshal.FreeHGlobal (data);
+        }
+        
+        static PixbufImageSurface ()
+        {
+            destroy_func = new cairo_destroy_func_t (DestroyPixelData);
+        }
+        
+        private IntPtr data;
+        
+        public PixbufImageSurface (Gdk.Pixbuf pixbuf) : this (pixbuf.Width, pixbuf.Height, 
+            pixbuf.NChannels, pixbuf.Rowstride, pixbuf.Pixels)
+        {
+        }
+        
+        // This ctor is to avoid multiple queries against the GdkPixbuf for width/height
+        private PixbufImageSurface (int width, int height, int channels, int rowstride, IntPtr pixels) : this (
+            Marshal.AllocHGlobal (width * height * 4), width, height, channels, rowstride, pixels)
+        {
+        }
+        
+        private PixbufImageSurface (IntPtr data, int width, int height, int channels, int rowstride, IntPtr pixels) 
+            : base (data, channels == 3 ? Format.Rgb24 : Format.Argb32, width, height, width * 4)
+        {
+            this.data = data;
+            
+            CreateSurface (width, height, channels, rowstride, pixels);
+            SetDestroyFunc ();
+        }
+        
+        private unsafe void CreateSurface (int width, int height, int channels, int gdk_rowstride, IntPtr pixels)
+        {
+            byte *gdk_pixels = (byte *)pixels;
+            byte *cairo_pixels = (byte *)data;
+            
+            for (int i = height; i > 0; i--) {
+                byte *p = gdk_pixels;
+                byte *q = cairo_pixels;
+                
+                if (channels == 3) {
+                    byte *end = p + 3 * width;
+                    while (p < end) {
+                        if (is_le) {
+                            q[0] = p[2];
+                            q[1] = p[1];
+                            q[2] = p[0];
+                        } else {
+                            q[1] = p[0];
+                            q[2] = p[1];
+                            q[3] = p[2];
+                        }
+                    
+                        p += 3;
+                        q += 4;
+                    }
+                } else {
+                    byte *end = p + 4 * width;
+                    while (p < end) {
+                        if (is_le) {
+                            q[0] = Mult (p[2], p[3]);
+                            q[1] = Mult (p[1], p[3]);
+                            q[2] = Mult (p[0], p[3]);
+                            q[3] = p[3];
+                        } else {
+                            q[0] = p[3];
+                            q[1] = Mult (p[0], p[3]);
+                            q[2] = Mult (p[1], p[3]);
+                            q[3] = Mult (p[2], p[3]);
+                        }
+                        
+                        p += 4;
+                        q += 4;
+                    }
+                }
+                
+                gdk_pixels += gdk_rowstride;
+                cairo_pixels += 4 * width;
+            }
+        }
+        
+        private static byte Mult (byte c, byte a)
+        {
+            int t = c * a + 0x7f; 
+            return (byte)(((t >> 8) + t) >> 8);
+        }
+        
+        [DllImport ("libcairo.so.2")]
+        private static extern Cairo.Status cairo_surface_set_user_data (IntPtr surface, 
+            ref int key, IntPtr userdata, cairo_destroy_func_t destroy);
+            
+        private void SetDestroyFunc ()
+        {
+            try {
+                Status status = cairo_surface_set_user_data (Handle, ref user_data_key, data, destroy_func);
+                if (status != Status.Success) {
+                    throw new ApplicationException (String.Format (
+                        "cairo_surface_set_user_data returned {0}", status));
+                }
+            } catch (Exception e) {
+                Console.Error.WriteLine ("WARNING: Image data will be leaked! ({0} bytes)", Width * Height * 4);
+                Console.Error.WriteLine (e);
+            }
+        }
+    }
+}

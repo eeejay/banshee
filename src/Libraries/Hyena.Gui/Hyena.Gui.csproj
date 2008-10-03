@@ -119,6 +119,7 @@
     <Compile Include="Hyena.Gui.Theatrics\Tests\ChoreographerTests.cs" />
     <Compile Include="Hyena.Widgets\PulsingButton.cs" />
     <Compile Include="Hyena.Gui.Theatrics\Pulsator.cs" />
+    <Compile Include="Hyena.Gui\PixbufImageSurface.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>

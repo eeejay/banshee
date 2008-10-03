@@ -77,6 +77,25 @@ namespace Banshee.Collection.Gui
             Log.Debug (String.Format ("Migrated {0} album art images.", artwork_count));
         }
         
+        public Cairo.Surface Lookup (Cairo.Context cr, string id)
+        {
+            return LookupScale (cr, id, 0);
+        }
+        
+        public Cairo.Surface LookupScale (Cairo.Context cr, string id, int size)
+        {
+            Pixbuf pixbuf = LookupScale (id, size);
+            if (pixbuf == null) {
+                return null;
+            }
+            
+            try {
+                return Hyena.Gui.CairoExtensions.CreateSurfaceForPixbuf (cr, pixbuf);
+            } finally {
+                pixbuf.Dispose ();
+            }
+        }
+        
         public Pixbuf Lookup (string id)
         {
             return LookupScale (id, 0);

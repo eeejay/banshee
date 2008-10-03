@@ -1,4 +1,5 @@
 ASSEMBLY = Hyena.Gui
+ASSEMBLY_BUILD_FLAGS = -unsafe
 TARGET = library
 LINK = $(REF_HYENA_GUI)
 SOURCES =  \
@@ -49,6 +50,7 @@ SOURCES =  \
 	Hyena.Gui/GtkUtilities.cs \
 	Hyena.Gui/GtkWorkarounds.cs \
 	Hyena.Gui/PangoCairoHelper.cs \
+	Hyena.Gui/PixbufImageSurface.cs \
 	Hyena.Gui/RatingRenderer.cs \
 	Hyena.Gui/ShadingTestWindow.cs \
 	Hyena.Gui/TestModuleAttribute.cs \

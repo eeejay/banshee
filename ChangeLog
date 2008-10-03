@@ -1,3 +1,20 @@
+2008-10-03  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ArtworkManager.cs:
+	Implement Surface lookup methods
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/LargeTrackInfoDisplay.cs:
+	Use PixbufImageSurface
+
+	* src/Libraries/Hyena.Gui/Hyena.Gui/CairoExtensions.cs: Use Paint instead 
+	of Rectangle+Fill, slight perf improvement
+
+	* src/Libraries/Hyena.Gui/Hyena.Gui/PixbufImageSurface.cs: A new Cairo 
+	ImageSurface that directly blits pixel data from a GdkPixbuf; better than 
+	using Gdk.CairoHelper since this does not require a context (direct 
+	pixbuf->surface instead of pixbuf->(internal surface)->context->
+	pattern->surface)
+
 2008-10-03  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	This patch adds support for importing all white-listed file formats, even

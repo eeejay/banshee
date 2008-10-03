@@ -121,7 +121,9 @@ namespace Banshee.Gui.Widgets
             
             cr.Save ();
             
-            Gdk.CairoHelper.SetSourcePixbuf (cr, pixbuf, 0, 0);
+            ImageSurface img = new PixbufImageSurface (pixbuf);
+            
+            cr.SetSource (img);
             cr.Paint ();
             
             cr.Rectangle (0, pixbuf.Height, pixbuf.Width, reflect);
@@ -132,7 +134,7 @@ namespace Banshee.Gui.Widgets
             matrix.Translate (0, -(2 * pixbuf.Height) + 1);
             cr.Transform (matrix);
             
-            Gdk.CairoHelper.SetSourcePixbuf (cr, pixbuf, 0, 0);
+            cr.SetSource (img);
             cr.Paint ();
             
             cr.Restore ();
@@ -147,6 +149,8 @@ namespace Banshee.Gui.Widgets
             cr.Rectangle (0, pixbuf.Height, pixbuf.Width, reflect);
             cr.Pattern = mask;
             cr.Fill ();
+            
+            img.Destroy ();
             
             ((IDisposable)cr).Dispose ();
             return surface;
