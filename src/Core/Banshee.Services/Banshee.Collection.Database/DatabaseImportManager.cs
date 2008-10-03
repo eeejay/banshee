@@ -52,7 +52,7 @@ namespace Banshee.Collection.Database
         // used to see if we should allow the file to be processed by TagLib. The
         // point is to rule out, at the path level, files that we won't support.
         
-        public static readonly string [] WhiteListFileExtensions = new string [] {
+        public static readonly Banshee.IO.ExtensionSet WhiteListFileExtensions = new Banshee.IO.ExtensionSet (
             "3g2",  "3gp",  "3gp2", "3gpp", "aac",  "ac3",  "aif",  "aifc", 
             "aiff", "al",   "alaw", "ape",  "asf",  "asx",  "au",   "avi", 
             "cda",  "cdr",  "divx", "dv",   "flac", "flv",  "gvi",  "gvp", 
@@ -65,26 +65,11 @@ namespace Banshee.Collection.Database
             "u",    "vfw",  "vob",  "wav",  "wave", "wax",  "wm",   "wma",  
             "wmd",  "wmv",  "wmx",  "wv",   "wvc",  "wvx",  "yuv",  "f4v",  
             "f4a",  "f4b"
-        };
-
-        static DatabaseImportManager ()
-        {
-            Array.Sort<string> (WhiteListFileExtensions);
-        }
+        );
 
         public static bool IsWhiteListedFile (string path)
         {
-            if (String.IsNullOrEmpty (path)) {
-                return false;
-            }
-            
-            int index = path.LastIndexOf ('.');
-            if (index < 0 || index == path.Length || index == path.Length - 1) {
-                return false;
-            }
-            
-            return Array.BinarySearch<string> (WhiteListFileExtensions, 
-                path.Substring (index + 1).ToLower ()) >= 0;
+            return WhiteListFileExtensions.IsMatchingFile (path);
         }
 
         public delegate PrimarySource TrackPrimarySourceChooser (DatabaseTrackInfo track);
@@ -138,11 +123,6 @@ namespace Banshee.Collection.Database
 
         protected override void OnImportRequested (string path)
         {
-            if (!IsWhiteListedFile (path)) {
-                UpdateProgress (null);
-                return;
-            }
-
             try {
                 DatabaseTrackInfo track = ImportTrack (path);
                 if (track != null && track.TrackId > 0) {
@@ -173,8 +153,11 @@ namespace Banshee.Collection.Database
 
         public DatabaseTrackInfo ImportTrack (SafeUri uri)
         {
-            DatabaseTrackInfo track = null;
-            
+            if (!IsWhiteListedFile (uri.LocalPath)) {
+                UpdateProgress (null);
+                return null;
+            }
+
             if (DatabaseTrackInfo.ContainsUri (uri, Paths.MakePathRelative (uri.AbsolutePath, BaseDirectory) ?? uri.AbsoluteUri, PrimarySourceIds)) {
                 // TODO add DatabaseTrackInfo.SyncedStamp property, and if the file has been
                 // updated since the last sync, fetch its metadata into the db.
@@ -182,13 +165,16 @@ namespace Banshee.Collection.Database
                 return null;
             }
 
+            DatabaseTrackInfo track = null;
+
             // TODO note, there is deadlock potential here b/c of locking of shared commands and blocking
             // because of transactions.  Needs to be fixed in HyenaDatabaseConnection.
             //ServiceManager.DbConnection.BeginTransaction ();
             try {
-                TagLib.File file = StreamTagger.ProcessUri (uri);
                 track = new DatabaseTrackInfo ();
-                StreamTagger.TrackInfoMerge (track, file);
+                track.Uri = uri;
+                StreamTagger.TrackInfoMerge (track, StreamTagger.ProcessUri (uri));
+                
                 track.PrimarySource = trackPrimarySourceChooser (track);
 
                 if (track.PrimarySource is Banshee.Library.LibrarySource) {

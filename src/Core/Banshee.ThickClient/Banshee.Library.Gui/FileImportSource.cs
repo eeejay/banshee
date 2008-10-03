@@ -49,7 +49,7 @@ namespace Banshee.Library.Gui
             
             chooser.AddButton (Stock.Cancel, ResponseType.Cancel);
             chooser.AddButton (Stock.Open, ResponseType.Ok);
-            chooser.AddFilter (Hyena.Gui.GtkUtilities.GetFileFilter (Catalog.GetString ("Media Files"), Banshee.Collection.Database.DatabaseImportManager.WhiteListFileExtensions));
+            chooser.AddFilter (Hyena.Gui.GtkUtilities.GetFileFilter (Catalog.GetString ("Media Files"), Banshee.Collection.Database.DatabaseImportManager.WhiteListFileExtensions.List));
             chooser.SelectMultiple = true;
             chooser.DefaultResponse = ResponseType.Ok;
             

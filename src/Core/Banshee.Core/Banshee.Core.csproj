@@ -99,6 +99,7 @@
     <Compile Include="Banshee.Collection\CacheableItem.cs" />
     <Compile Include="Banshee.IO\DirectoryScannerPipelineElement.cs" />
     <Compile Include="Banshee.Configuration\MemoryConfigurationClient.cs" />
+    <Compile Include="Banshee.IO\ExtensionSet.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\contributors.xml">

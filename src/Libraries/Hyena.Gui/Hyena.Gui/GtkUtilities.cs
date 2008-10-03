@@ -64,7 +64,7 @@ namespace Hyena.Gui
             return true;
         }
         
-        public static FileFilter GetFileFilter (string name, string [] extensions)
+        public static FileFilter GetFileFilter (string name, System.Collections.Generic.IEnumerable<string> extensions)
         {
             FileFilter filter = new FileFilter ();
             filter.Name = name;

@@ -1,5 +1,40 @@
 2008-10-03  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	This patch adds support for importing all white-listed file formats, even
+	if TagLib# can't process them.  That includes mov, flv, mkv, divx, and
+	more (BGO #524595).
+
+	* src/Core/Banshee.ThickClient/Banshee.Library.Gui/FileImportSource.cs:
+	Update to use new ExtensionSet class.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseImportManager.cs:
+	Use ExtensionSet class, move the IsWhiteListedFile check to the actual
+	ImportTrack method because its public and we don't want API-consumers to
+	be able to bypass the whitelist check.
+
+	* src/Core/Banshee.Services/Banshee.Metadata.Embedded/EmbeddedQueryJob.cs:
+	* src/Core/Banshee.Core/Banshee.Streaming/SaveTrackMetadataJob.cs:
+	StreamTagger.ProcessUri will return null now if TagLib# can't process a
+	file, instead of throwing an exception.  Adjust users of that method
+	accordingly.
+
+	* src/Core/Banshee.Core/Makefile.am:
+	* src/Core/Banshee.Core/Banshee.Core.csproj:
+	* src/Core/Banshee.Core/Banshee.IO/ExtensionSet.cs: New simple class that
+	takes an array of strings/extensions and can tell you if a give file
+	has one of the extensions in the set.
+
+	* src/Core/Banshee.Core/Banshee.Streaming/StreamTagger.cs: Catch TagLib#'s
+	exceptions in ProcessUri and return null.  Change MergeTrackInfo to accept
+	a null TagLib.File argument, and use a ExtensionSet of several video
+	extensions that might not work in taglib#, so we can properly mark such
+	files as videos.
+
+	* src/Libraries/Hyena.Gui/Hyena.Gui/GtkUtilities.cs: Change GetFileFilter
+	helper to take an IEnumerable<string> intead of a string array.
+
+2008-10-03  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/ExtraTrackDetailsPage.cs:
 	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:
 	Use ValueAsInt instead of casting Value.

@@ -29,6 +29,7 @@
 using System;
 using System.Text.RegularExpressions;
 
+using Banshee.IO;
 using Banshee.Base;
 using Banshee.Collection;
 
@@ -36,17 +37,25 @@ namespace Banshee.Streaming
 {
     public static class StreamTagger
     {
+        // This is a short list of video types that TagLib# might not support but that
+        // we want to make sure are recognized as videos
+        private static readonly ExtensionSet VideoExtensions = new ExtensionSet (
+            "avi", "divx", "dv", "f4p", "f4v", "flv", "m4v", "mkv", "mov", "ogv", "qt");
+        
         public static TagLib.File ProcessUri (SafeUri uri)
         {
-            TagLib.File file = Banshee.IO.DemuxVfs.OpenFile (uri.IsLocalPath ? uri.LocalPath : uri.AbsoluteUri, 
-                null, TagLib.ReadStyle.Average);
-
-            if ((file.Properties.MediaTypes & TagLib.MediaTypes.Audio) == 0 && 
-                (file.Properties.MediaTypes & TagLib.MediaTypes.Video) == 0) {
-                throw new TagLib.UnsupportedFormatException ("File does not contain video or audio");
+            try {
+                TagLib.File file = Banshee.IO.DemuxVfs.OpenFile (uri.IsLocalPath ? uri.LocalPath : uri.AbsoluteUri, 
+                    null, TagLib.ReadStyle.Average);
+    
+                if ((file.Properties.MediaTypes & TagLib.MediaTypes.Audio) == 0 && 
+                    (file.Properties.MediaTypes & TagLib.MediaTypes.Video) == 0) {
+                    throw new TagLib.UnsupportedFormatException ("File does not contain video or audio");
+                }
+                return file;
+            } catch (Exception) {
+                return null;
             }
-            
-            return file;
         }
 
         private static string Choose (string priority, string fallback)
@@ -109,41 +118,49 @@ namespace Banshee.Streaming
             // Performers[] (track artists), AlbumArtists[], Composers[], Genres[]
 
             // Note: this should be kept in sync with the metadata written in SaveTrackMetadataJob.cs
-            track.Uri = new SafeUri (file.Name);
-            track.MimeType = file.MimeType;
+
+            if (file != null) {
+                track.Uri = new SafeUri (file.Name);
+                track.MimeType = file.MimeType;
+                track.BitRate  = file.Properties.AudioBitrate;
+                track.Duration = file.Properties.Duration;
+                
+                FindTrackMediaAttributes (track, file);
+    
+                track.ArtistName = Choose (file.Tag.JoinedPerformers, track.ArtistName, preferTrackInfo);
+                track.AlbumTitle = Choose (file.Tag.Album, track.AlbumTitle, preferTrackInfo);
+                track.AlbumArtist = Choose (file.Tag.FirstAlbumArtist, track.AlbumArtist, preferTrackInfo);
+                track.IsCompilation = IsCompilation (file.Tag);
+                
+                track.TrackTitle = Choose (file.Tag.Title, track.TrackTitle, preferTrackInfo);
+                track.Genre = Choose (file.Tag.FirstGenre, track.Genre, preferTrackInfo);
+                track.Composer = Choose (file.Tag.FirstComposer, track.Composer, preferTrackInfo);
+                track.Conductor = Choose (file.Tag.Conductor, track.Conductor, preferTrackInfo);
+                track.Grouping = Choose (file.Tag.Grouping, track.Grouping, preferTrackInfo);
+                track.Copyright = Choose (file.Tag.Copyright, track.Copyright, preferTrackInfo);
+                track.Comment = Choose (file.Tag.Comment, track.Comment, preferTrackInfo);
+    
+                track.TrackNumber = Choose ((int)file.Tag.Track, track.TrackNumber, preferTrackInfo);
+                track.TrackCount = Choose ((int)file.Tag.TrackCount, track.TrackCount, preferTrackInfo);
+                track.DiscNumber = Choose ((int)file.Tag.Disc, track.DiscNumber, preferTrackInfo);
+                track.DiscCount = Choose ((int)file.Tag.DiscCount, track.DiscCount, preferTrackInfo);
+                track.Year = Choose ((int)file.Tag.Year, track.Year, preferTrackInfo);
+                track.Bpm = Choose ((int)file.Tag.BeatsPerMinute, track.Bpm, preferTrackInfo);
+            } else {
+                track.MediaAttributes = TrackMediaAttributes.AudioStream;
+                if (VideoExtensions.IsMatchingFile (track.Uri.LocalPath)) {
+                    track.MediaAttributes = TrackMediaAttributes.VideoStream;
+                }
+            }
+
             track.FileSize = Banshee.IO.File.GetSize (track.Uri);
             track.FileModifiedStamp = Banshee.IO.File.GetModifiedTime (track.Uri);
             track.LastSyncedStamp = DateTime.Now;
-            track.BitRate  = file.Properties.AudioBitrate;
-            track.Duration = file.Properties.Duration;
-            
-            FindTrackMediaAttributes (track, file);
-
-            track.ArtistName = Choose (file.Tag.JoinedPerformers, track.ArtistName, preferTrackInfo);
-            track.AlbumTitle = Choose (file.Tag.Album, track.AlbumTitle, preferTrackInfo);
-            track.AlbumArtist = Choose (file.Tag.FirstAlbumArtist, track.AlbumArtist, preferTrackInfo);
-            track.IsCompilation = IsCompilation (file.Tag);
-            
-            track.TrackTitle = Choose (file.Tag.Title, track.TrackTitle, preferTrackInfo);
-            track.Genre = Choose (file.Tag.FirstGenre, track.Genre, preferTrackInfo);
-            track.Composer = Choose (file.Tag.FirstComposer, track.Composer, preferTrackInfo);
-            track.Conductor = Choose (file.Tag.Conductor, track.Conductor, preferTrackInfo);
-            track.Grouping = Choose (file.Tag.Grouping, track.Grouping, preferTrackInfo);
-            track.Copyright = Choose (file.Tag.Copyright, track.Copyright, preferTrackInfo);
-            track.Comment = Choose (file.Tag.Comment, track.Comment, preferTrackInfo);
-
-            track.TrackNumber = Choose ((int)file.Tag.Track, track.TrackNumber, preferTrackInfo);
-            track.TrackCount = Choose ((int)file.Tag.TrackCount, track.TrackCount, preferTrackInfo);
-            track.DiscNumber = Choose ((int)file.Tag.Disc, track.DiscNumber, preferTrackInfo);
-            track.DiscCount = Choose ((int)file.Tag.DiscCount, track.DiscCount, preferTrackInfo);
-            track.Year = Choose ((int)file.Tag.Year, track.Year, preferTrackInfo);
-            track.Bpm = Choose ((int)file.Tag.BeatsPerMinute, track.Bpm, preferTrackInfo);
 
             if (String.IsNullOrEmpty (track.TrackTitle)) {
                 try {
-                    string filename = System.IO.Path.GetFileName (track.Uri.LocalPath);
+                    string filename = System.IO.Path.GetFileNameWithoutExtension (track.Uri.LocalPath);
                     if (!String.IsNullOrEmpty (filename)) {
-                        filename = filename.Substring (0, filename.LastIndexOf ('.'));
                         track.TrackTitle = filename;
                     }
                 } catch {}

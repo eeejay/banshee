@@ -44,6 +44,7 @@ SOURCES =  \
 	Banshee.IO/DemuxVfs.cs \
 	Banshee.IO/Directory.cs \
 	Banshee.IO/DirectoryScannerPipelineElement.cs \
+	Banshee.IO/ExtensionSet.cs \
 	Banshee.IO/File.cs \
 	Banshee.IO/IDemuxVfs.cs \
 	Banshee.IO/IDirectory.cs \
