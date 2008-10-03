@@ -32,6 +32,9 @@ namespace Hyena
 {
     public class DateTimeUtil
     {
+        // FIXME I don't think having a local-unix-epoch makes any sense, I think we should be using
+        // all UTC values.  Depending on the time of year in daylight savings timezones, the
+        // local-seconds-since-epoch value will differ, which will cause errors, no?
         public static readonly DateTime LocalUnixEpoch = new DateTime (1970, 1, 1).ToLocalTime ();
 
         public static DateTime ToDateTime (long time)
