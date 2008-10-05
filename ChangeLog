@@ -1,3 +1,13 @@
+2008-10-05  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Clients/Nereid/Nereid/ViewContainer.cs: Change "All Columns" in the
+	search menu to "Artist, Album, or Title" since it does in fact only search
+	those columns, not all of them (BGO #555122).
+
+	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs: Apply the same
+	fix as before, suggested by Benoit Boissinot, if the disc_count is zero,
+	don't do the trick where we return the DiscNumber
+
 2008-10-03  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ArtworkManager.cs:

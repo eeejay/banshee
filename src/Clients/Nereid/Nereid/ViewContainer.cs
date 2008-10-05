@@ -135,7 +135,7 @@ namespace Nereid
         
         private void BuildSearchEntry ()
         {
-            AddSearchFilter (TrackFilterType.None, String.Empty, Catalog.GetString ("All Columns"));
+            AddSearchFilter (TrackFilterType.None, String.Empty, Catalog.GetString ("Artist, Album, or Title"));
             AddSearchFilter (TrackFilterType.SongName, "title", Catalog.GetString ("Track Title"));
             AddSearchFilter (TrackFilterType.ArtistName, "artist", Catalog.GetString ("Artist Name"));
             AddSearchFilter (TrackFilterType.AlbumTitle, "album", Catalog.GetString ("Album Title"));

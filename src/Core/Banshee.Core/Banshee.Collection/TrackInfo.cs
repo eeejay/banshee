@@ -304,7 +304,7 @@ namespace Banshee.Collection
         
         [Exportable]
         public virtual int DiscCount {
-            get { return DiscNumber > disc_count ? DiscNumber : disc_count; }
+            get { return (disc_count != 0 && disc_count < DiscNumber) ? DiscNumber : disc_count; }
             set { disc_count = value; }
         }
 
