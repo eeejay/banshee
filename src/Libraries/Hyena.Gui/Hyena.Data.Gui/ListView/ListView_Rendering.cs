@@ -71,6 +71,11 @@ namespace Hyena.Data.Gui
 
             // Save the drawable so we can reuse it
             Gdk.Drawable drawable = cell_context != null ? cell_context.Drawable : null;
+            
+            if (pango_layout != null) {
+                pango_layout.Dispose ();
+                pango_layout = null;
+            }
 
             cell_context = new CellContext ();
             cell_context.Theme = theme;
@@ -86,7 +91,9 @@ namespace Hyena.Data.Gui
             }
             
             cairo_context = CairoHelper.Create (evnt.Window);
-            CairoExtensions.CreateLayout (this, cairo_context, ref pango_layout);
+            if (pango_layout == null) {
+                CairoExtensions.CreateLayout (this, cairo_context, ref pango_layout);
+            }
             cell_context.Context = cairo_context;
             cell_context.Layout = pango_layout;
             

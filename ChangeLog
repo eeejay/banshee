@@ -1,3 +1,9 @@
+2008-10-06  Aaron Bockover  <abock@gnome.org>
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Rendering.cs:
+	Do not re-create the layout on every expose; this fixes a pretty bad leak
+	and possibly speeds up rendering
+
 2008-10-06  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.ThickClient/Banshee.Query.Gui/RatingQueryValueEntry.cs:
