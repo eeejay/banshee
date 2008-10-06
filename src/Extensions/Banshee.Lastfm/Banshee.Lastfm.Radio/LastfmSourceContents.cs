@@ -226,7 +226,7 @@ namespace Banshee.Lastfm.Radio
                         AlbumInfo album = new AlbumInfo (track.Album);
                         album.ArtistName = track.Artist;
 
-                        Gdk.Pixbuf pb = artwork_manager == null ? null : artwork_manager.LookupScale (album.ArtworkId, 40);
+                        Gdk.Pixbuf pb = artwork_manager == null ? null : artwork_manager.LookupScalePixbuf (album.ArtworkId, 40);
                         if (pb != null) {
                             tile.Pixbuf = pb;
                         }

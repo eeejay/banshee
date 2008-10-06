@@ -458,10 +458,10 @@ namespace Banshee.Dap.MassStorage
                             SafeUri local_cover_uri = new SafeUri (Banshee.Base.CoverArtSpec.GetPath (coverart_id));
                             Banshee.IO.File.Copy (local_cover_uri, cover_uri, false);
                         } else {
-                            pic = artwork_manager.Lookup (coverart_id);
+                            pic = artwork_manager.LookupPixbuf (coverart_id);
                         }
                     } else {
-                        pic = artwork_manager.LookupScale (coverart_id, CoverArtSize);
+                        pic = artwork_manager.LookupScalePixbuf (coverart_id, CoverArtSize);
                     }
 
                     if (pic != null) {
@@ -473,7 +473,7 @@ namespace Banshee.Dap.MassStorage
                         } catch (GLib.GException){
                             Log.DebugFormat ("Could convert cover art to {0}, unsupported filetype?", CoverArtFileType);
                         } finally {
-                            pic.Dispose ();
+                            Banshee.Collection.Gui.ArtworkManager.DisposePixbuf (pic);
                         }
                     }
                 }

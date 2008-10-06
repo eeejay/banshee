@@ -41,6 +41,7 @@ namespace Banshee.Gui.Widgets
     public class LargeTrackInfoDisplay : TrackInfoDisplay
     {
         private Gdk.Rectangle text_alloc;
+        private Dictionary<ImageSurface, Surface> surfaces = new Dictionary<ImageSurface, Surface> ();
     
         public LargeTrackInfoDisplay ()
         {
@@ -82,26 +83,26 @@ namespace Banshee.Gui.Widgets
             QueueDraw ();
         }
        
-        protected override void RenderCoverArt (Cairo.Context cr, Gdk.Pixbuf pixbuf)
+        protected override void RenderCoverArt (Cairo.Context cr, ImageSurface image)
         {
-            if (pixbuf == null) {
+            if (image == null) {
                 return;
             }
             
             Gdk.Rectangle alloc = RenderAllocation;
             int asr = ArtworkSizeRequest;
-            int reflect = (int)(pixbuf.Height * 0.2);
-            int surface_w = pixbuf.Width;
-            int surface_h = pixbuf.Height + reflect;
+            int reflect = (int)(image.Height * 0.2);
+            int surface_w = image.Width;
+            int surface_h = image.Height + reflect;
             int x = alloc.X + alloc.Width - asr;
             int y = alloc.Y;
             
-            Surface surface = SurfaceLookup (pixbuf);
-            if (surface == null) {
-                surface = CreateSurfaceForPixbuf (cr, pixbuf, reflect);
-                SurfaceCache (pixbuf, surface);
+            Surface scene = null;
+            if (!surfaces.TryGetValue (image, out scene)) {
+                scene = CreateScene (cr, image, reflect);
+                surfaces.Add (image, scene);
             }
-                
+
             cr.Rectangle (x, y, asr, alloc.Height);
             cr.Color = BackgroundColor;
             cr.Fill ();
@@ -109,32 +110,30 @@ namespace Banshee.Gui.Widgets
             x += (asr - surface_w) / 2;
             y += surface_h > asr ? 0 : (asr - surface_h) / 2;
             
-            cr.SetSource (surface, x, y);
+            cr.SetSource (scene, x, y);
             cr.Paint ();
         }
         
-        private Surface CreateSurfaceForPixbuf (Cairo.Context window_cr, Gdk.Pixbuf pixbuf, int reflect)
+        private Surface CreateScene (Cairo.Context window_cr, ImageSurface image, int reflect)
         {
             Surface surface = window_cr.Target.CreateSimilar (window_cr.Target.Content, 
-                pixbuf.Width, pixbuf.Height + reflect);
+                image.Width, image.Height + reflect);
             Cairo.Context cr = new Context (surface);
             
             cr.Save ();
             
-            ImageSurface img = new PixbufImageSurface (pixbuf);
-            
-            cr.SetSource (img);
+            cr.SetSource (image);
             cr.Paint ();
             
-            cr.Rectangle (0, pixbuf.Height, pixbuf.Width, reflect);
+            cr.Rectangle (0, image.Height, image.Width, reflect);
             cr.Clip ();
             
             Matrix matrix = new Matrix ();
             matrix.InitScale (1, -1);
-            matrix.Translate (0, -(2 * pixbuf.Height) + 1);
+            matrix.Translate (0, -(2 * image.Height) + 1);
             cr.Transform (matrix);
             
-            cr.SetSource (img);
+            cr.SetSource (image);
             cr.Paint ();
             
             cr.Restore ();
@@ -142,15 +141,13 @@ namespace Banshee.Gui.Widgets
             Color bg_transparent = BackgroundColor;
             bg_transparent.A = 0.65;
             
-            LinearGradient mask = new LinearGradient (0, pixbuf.Height, 0, pixbuf.Height + reflect);
+            LinearGradient mask = new LinearGradient (0, image.Height, 0, image.Height + reflect);
             mask.AddColorStop (0, bg_transparent);
             mask.AddColorStop (1, BackgroundColor);
             
-            cr.Rectangle (0, pixbuf.Height, pixbuf.Width, reflect);
+            cr.Rectangle (0, image.Height, image.Width, reflect);
             cr.Pattern = mask;
             cr.Fill ();
-            
-            img.Destroy ();
             
             ((IDisposable)cr).Dispose ();
             return surface;
@@ -236,7 +233,7 @@ namespace Banshee.Gui.Widgets
         
         protected override void Invalidate ()
         {
-            if (CurrentPixbuf == null || CurrentTrack == null || IncomingPixbuf == null || IncomingTrack == null) {
+            if (CurrentImage == null || CurrentTrack == null || IncomingImage == null || IncomingTrack == null) {
                 QueueDraw ();
             } else {
                 Gdk.Rectangle alloc = RenderAllocation;
@@ -244,6 +241,15 @@ namespace Banshee.Gui.Widgets
                 QueueDrawArea (alloc.X + text_alloc.Width + Spacing, alloc.Y, 
                     alloc.Width - text_alloc.Width - Spacing, alloc.Height);
             }
+        }
+        
+        protected override void InvalidateCache ()
+        {
+            foreach (Surface surface in surfaces.Values) {
+                surface.Destroy ();
+            }
+            
+            surfaces.Clear ();
         }
     }
 }

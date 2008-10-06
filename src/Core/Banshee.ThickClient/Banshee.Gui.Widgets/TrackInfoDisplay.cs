@@ -32,7 +32,7 @@ using System.Collections.Generic;
 using Mono.Unix;
 
 using Gtk;
-using Gdk;
+using Cairo;
 
 using Hyena;
 using Hyena.Gui;
@@ -53,24 +53,26 @@ namespace Banshee.Gui.Widgets
             get { return artwork_manager; }
         }
         
-        private Pixbuf current_pixbuf;
-        protected Pixbuf CurrentPixbuf {
-            get { return current_pixbuf; }
+        private ImageSurface current_image;
+        protected ImageSurface CurrentImage {
+            get { return current_image; }
         }
         
-        private Pixbuf incoming_pixbuf;
-        protected Pixbuf IncomingPixbuf {
-            get { return incoming_pixbuf; }
+        private ImageSurface incoming_image;
+        protected ImageSurface IncomingImage {
+            get { return incoming_image; }
         }
         
-        private Pixbuf missing_audio_pixbuf;
-        protected Pixbuf MissingAudioPixbuf {
-            get { return missing_audio_pixbuf ?? missing_audio_pixbuf = IconThemeUtils.LoadIcon (MissingIconSizeRequest, "audio-x-generic"); }
+        private ImageSurface missing_audio_image;
+        protected ImageSurface MissingAudioImage {
+            get { return missing_audio_image ?? missing_audio_image 
+                = new PixbufImageSurface (IconThemeUtils.LoadIcon (MissingIconSizeRequest, "audio-x-generic"), true); }
         }
         
-        private Pixbuf missing_video_pixbuf;
-        protected Pixbuf MissingVideoPixbuf {
-            get { return missing_video_pixbuf ?? missing_video_pixbuf = IconThemeUtils.LoadIcon (MissingIconSizeRequest, "video-x-generic"); }
+        private ImageSurface missing_video_image;
+        protected ImageSurface MissingVideoImage {
+            get { return missing_video_image ?? missing_video_image 
+                = new PixbufImageSurface (IconThemeUtils.LoadIcon (MissingIconSizeRequest, "video-x-generic"), true); }
         }
         
         private Cairo.Color background_color;
@@ -100,8 +102,7 @@ namespace Banshee.Gui.Widgets
         
         private uint idle_timeout_id = 0;
         private SingleActorStage stage = new SingleActorStage ();
-        private Dictionary<Pixbuf, Cairo.Surface> surface_cache = new Dictionary<Pixbuf, Cairo.Surface> ();
-        
+
         protected TrackInfoDisplay (IntPtr native) : base (native)
         {
         }
@@ -135,7 +136,7 @@ namespace Banshee.Gui.Widgets
             stage.Iteration -= OnStageIteration;
             stage = null;
             
-            SurfaceCacheFlush ();
+            InvalidateCache ();
             
             base.Dispose ();
         }
@@ -149,17 +150,17 @@ namespace Banshee.Gui.Widgets
         protected override void OnUnrealized ()
         {
             base.OnUnrealized ();
-            SurfaceCacheFlush ();
+            InvalidateCache ();
         }
         
-        protected override void OnSizeAllocated (Rectangle allocation)
+        protected override void OnSizeAllocated (Gdk.Rectangle allocation)
         {
             base.OnSizeAllocated (allocation);
             
             if (current_track == null) {
                 LoadCurrentTrack ();
             } else {
-                LoadPixbuf (current_track);
+                LoadImage (current_track);
             }
         }
 
@@ -171,18 +172,18 @@ namespace Banshee.Gui.Widgets
             background_color = CairoExtensions.GdkColorToCairoColor (Style.Background (StateType.Normal));
             text_light_color = Hyena.Gui.Theming.GtkTheme.GetCairoTextMidColor (this);
             
-            if (missing_audio_pixbuf != null) {
-                missing_audio_pixbuf.Dispose ();
-                missing_audio_pixbuf = null;
+            if (missing_audio_image != null) {
+                missing_audio_image.Destroy ();
+                missing_audio_image = null;
             }
 
-            if (missing_video_pixbuf != null) {
-                missing_video_pixbuf.Dispose ();
-                missing_video_pixbuf = null;
+            if (missing_video_image != null) {
+                missing_video_image.Destroy ();
+                missing_video_image = null;
             }
         }
         
-        protected override bool OnExposeEvent (EventExpose evnt)
+        protected override bool OnExposeEvent (Gdk.EventExpose evnt)
         {
             bool idle = incoming_track == null && current_track == null;
             if (!Visible || !IsMapped || (idle && !CanRenderIdle)) {
@@ -221,14 +222,14 @@ namespace Banshee.Gui.Widgets
         {
             if (stage.Actor == null) {
                 // We are not in a transition, just render
-                RenderStage (cr, current_track, current_pixbuf);
+                RenderStage (cr, current_track, current_image);
                 return;
             } 
             
             if (current_track == null) {
                 // Fade in the whole stage, nothing to fade out
                 CairoExtensions.PushGroup (cr);
-                RenderStage (cr, incoming_track, incoming_pixbuf);
+                RenderStage (cr, incoming_track, incoming_image);
                 CairoExtensions.PopGroupToSource (cr);
                 
                 cr.PaintWithAlpha (stage.Actor.Percent);
@@ -236,10 +237,10 @@ namespace Banshee.Gui.Widgets
             }
             
             // XFade only the cover art
-            RenderCoverArt (cr, incoming_pixbuf);
+            RenderCoverArt (cr, incoming_image);
             
             CairoExtensions.PushGroup (cr);
-            RenderCoverArt (cr, current_pixbuf);
+            RenderCoverArt (cr, current_image);
             CairoExtensions.PopGroupToSource (cr);
             
             cr.PaintWithAlpha (1.0 - stage.Actor.Percent);
@@ -269,23 +270,27 @@ namespace Banshee.Gui.Widgets
             }
         }
         
-        private void RenderStage (Cairo.Context cr, TrackInfo track, Pixbuf pixbuf)
+        private void RenderStage (Cairo.Context cr, TrackInfo track, ImageSurface image)
         {
-            RenderCoverArt (cr, pixbuf);
+            RenderCoverArt (cr, image);
             RenderTrackInfo (cr, track, true, true);
         }
         
-        protected virtual void RenderCoverArt (Cairo.Context cr, Pixbuf pixbuf)
+        protected virtual void RenderCoverArt (Cairo.Context cr, ImageSurface image)
         {
-            ArtworkRenderer.RenderThumbnail (cr, pixbuf, false, Allocation.X, Allocation.Y, 
+            ArtworkRenderer.RenderThumbnail (cr, image, false, Allocation.X, Allocation.Y, 
                 ArtworkSizeRequest, ArtworkSizeRequest, 
-                !IsMissingPixbuf (pixbuf), 0, 
-                IsMissingPixbuf (pixbuf), BackgroundColor);
+                !IsMissingImage (image), 0, 
+                IsMissingImage (image), BackgroundColor);
         }
 
-        protected bool IsMissingPixbuf (Pixbuf pb)
+        protected bool IsMissingImage (ImageSurface pb)
         {
-            return (pb == missing_audio_pixbuf || pb == missing_video_pixbuf);
+            return pb == missing_audio_image || pb == missing_video_image;
+        }
+        
+        protected virtual void InvalidateCache ()
+        {
         }
         
         protected abstract void RenderTrackInfo (Cairo.Context cr, TrackInfo track, bool renderTrack, bool renderArtistAlbum);
@@ -302,7 +307,7 @@ namespace Banshee.Gui.Widgets
         {
             if (args.Event == PlayerEvent.StartOfStream || args.Event == PlayerEvent.TrackInfoUpdated) {
                 LoadCurrentTrack ();
-            } else if (args.Event == PlayerEvent.StateChange && (incoming_track != null || incoming_pixbuf != null)) {
+            } else if (args.Event == PlayerEvent.StateChange && (incoming_track != null || incoming_image != null)) {
                 PlayerEventStateChangeArgs state = (PlayerEventStateChangeArgs)args;
                 if (state.Current == PlayerState.Idle) {
                     if (idle_timeout_id > 0) {
@@ -319,7 +324,7 @@ namespace Banshee.Gui.Widgets
             if (ServiceManager.PlayerEngine.CurrentTrack == null || 
                 ServiceManager.PlayerEngine.CurrentState == PlayerState.Idle) {
                 incoming_track = null;
-                incoming_pixbuf = null;
+                incoming_image = null;
                 
                 if (stage != null && stage.Actor == null) {
                     stage.Reset ();
@@ -334,41 +339,41 @@ namespace Banshee.Gui.Widgets
         {
             TrackInfo track = ServiceManager.PlayerEngine.CurrentTrack;
 
-            if (track == current_track && !IsMissingPixbuf (current_pixbuf)) {
+            if (track == current_track && !IsMissingImage (current_image)) {
                 return;
             } else if (track == null) {
                 incoming_track = null;
-                incoming_pixbuf = null;
+                incoming_image = null;
                 return;
             }
 
             incoming_track = track;
             
-            LoadPixbuf (track);
+            LoadImage (track);
 
             if (stage.Actor == null) {
                 stage.Reset ();
             }
         }
         
-        private void LoadPixbuf (TrackInfo track)
+        private void LoadImage (TrackInfo track)
         {
-            Gdk.Pixbuf pixbuf = artwork_manager.LookupScale (track.ArtworkId, ArtworkSizeRequest);
+            ImageSurface image = artwork_manager.LookupScaleSurface (track.ArtworkId, ArtworkSizeRequest);
 
-            if (pixbuf == null) {
-                LoadMissingPixbuf ((track.MediaAttributes & TrackMediaAttributes.VideoStream) != 0);
+            if (image == null) {
+                LoadMissingImage ((track.MediaAttributes & TrackMediaAttributes.VideoStream) != 0);
             } else {
-                incoming_pixbuf = pixbuf;
+                incoming_image = image;
             }
             
             if (track == current_track) {
-                current_pixbuf = incoming_pixbuf;
+                current_image = incoming_image;
             }
         }
 
-        private void LoadMissingPixbuf (bool is_video)
+        private void LoadMissingImage (bool is_video)
         {
-            incoming_pixbuf = is_video ? MissingVideoPixbuf : MissingAudioPixbuf;
+            incoming_image = is_video ? MissingVideoImage : MissingAudioImage;
         }
         
         private double last_fps = 0.0;
@@ -382,17 +387,17 @@ namespace Banshee.Gui.Widgets
                 return;
             }
             
-            SurfaceCacheFlush ();
+            InvalidateCache ();
             
             if (ApplicationContext.Debugging) {
                 Log.DebugFormat ("TrackInfoDisplay RenderAnimation: {0:0.00} FPS", last_fps);
             }
             
-            if (current_pixbuf != incoming_pixbuf && !IsMissingPixbuf (current_pixbuf)) {
-                ArtworkRenderer.DisposePixbuf (current_pixbuf);
+            if (current_image != incoming_image && !IsMissingImage (current_image)) {
+                current_image.Destroy ();
             }
             
-            current_pixbuf = incoming_pixbuf;
+            current_image = incoming_image;
             current_track = incoming_track;
             
             incoming_track = null;
@@ -489,47 +494,6 @@ namespace Banshee.Gui.Widgets
                 markup = MarkupFormat (Catalog.GetString ("{0}by{1} {2}"), display_artist);
             }
             return markup;
-        }
-        
-        protected void SurfaceExpire (Gdk.Pixbuf pixbuf)
-        {
-            if (pixbuf == null) {
-                return;
-            }
-            
-            Cairo.Surface surface = null;
-            if (surface_cache.TryGetValue (pixbuf, out surface)) {
-                surface.Destroy ();
-                surface_cache.Remove (pixbuf);
-            }
-        }
-        
-        protected void SurfaceCacheFlush ()
-        {
-            foreach (Cairo.Surface surface in surface_cache.Values) {
-                surface.Destroy ();
-            }
-            
-            surface_cache.Clear ();
-        }
-        
-        protected void SurfaceCache (Gdk.Pixbuf pixbuf, Cairo.Surface surface)
-        {
-            if (pixbuf == null || surface == null) {
-                return;
-            }
-            
-            SurfaceExpire (pixbuf);
-            surface_cache.Add (pixbuf, surface);
-        }
-        
-        protected Cairo.Surface SurfaceLookup (Gdk.Pixbuf pixbuf)
-        {
-            Cairo.Surface surface = null;
-            if (pixbuf != null) {
-                surface_cache.TryGetValue (pixbuf, out surface);
-            }
-            return surface;
         }
     }
 }

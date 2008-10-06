@@ -5,6 +5,7 @@ SOURCES =  \
 	Hyena.Collections/CollectionExtensions.cs \
 	Hyena.Collections/IntervalHeap.cs \
 	Hyena.Collections/IStackProvider.cs \
+	Hyena.Collections/LruCache.cs \
 	Hyena.Collections/QueuePipeline.cs \
 	Hyena.Collections/QueuePipelineElement.cs \
 	Hyena.Collections/RangeCollection.cs \

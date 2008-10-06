@@ -53,24 +53,32 @@ namespace Hyena.Gui
         
         private IntPtr data;
         
-        public PixbufImageSurface (Gdk.Pixbuf pixbuf) : this (pixbuf.Width, pixbuf.Height, 
-            pixbuf.NChannels, pixbuf.Rowstride, pixbuf.Pixels)
+        public PixbufImageSurface (Gdk.Pixbuf pixbuf) : this (pixbuf, false)
+        {
+        }
+        
+        public PixbufImageSurface (Gdk.Pixbuf pixbuf, bool disposePixbuf) : this (disposePixbuf ? pixbuf : null, 
+            pixbuf.Width, pixbuf.Height, pixbuf.NChannels, pixbuf.Rowstride, pixbuf.Pixels)
         {
         }
         
         // This ctor is to avoid multiple queries against the GdkPixbuf for width/height
-        private PixbufImageSurface (int width, int height, int channels, int rowstride, IntPtr pixels) : this (
-            Marshal.AllocHGlobal (width * height * 4), width, height, channels, rowstride, pixels)
+        private PixbufImageSurface (Gdk.Pixbuf pixbuf, int width, int height, int channels, int rowstride, IntPtr pixels) 
+            : this (pixbuf, Marshal.AllocHGlobal (width * height * 4), width, height, channels, rowstride, pixels)
         {
         }
         
-        private PixbufImageSurface (IntPtr data, int width, int height, int channels, int rowstride, IntPtr pixels) 
+        private PixbufImageSurface (Gdk.Pixbuf pixbuf, IntPtr data, int width, int height, int channels, int rowstride, IntPtr pixels) 
             : base (data, channels == 3 ? Format.Rgb24 : Format.Argb32, width, height, width * 4)
         {
             this.data = data;
             
             CreateSurface (width, height, channels, rowstride, pixels);
             SetDestroyFunc ();
+            
+            if (pixbuf != null && pixbuf.Handle != IntPtr.Zero) {
+                pixbuf.Dispose ();
+            }
         }
         
         private unsafe void CreateSurface (int width, int height, int channels, int gdk_rowstride, IntPtr pixels)

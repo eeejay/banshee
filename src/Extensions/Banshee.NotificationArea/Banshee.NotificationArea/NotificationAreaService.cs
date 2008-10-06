@@ -386,7 +386,7 @@ namespace Banshee.NotificationArea
             Gdk.Pixbuf image = null;
             
             if (artwork_manager_service != null) {
-                image = artwork_manager_service.LookupScale (current_track.ArtworkId, 42);
+                image = artwork_manager_service.LookupScalePixbuf (current_track.ArtworkId, 42);
             }
             
             if (image == null) {

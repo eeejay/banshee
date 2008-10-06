@@ -38,33 +38,33 @@ namespace Banshee.Collection.Gui
         private static Color cover_border_light_color = new Color (1.0, 1.0, 1.0, 0.5);
         private static Color cover_border_dark_color = new Color (0.0, 0.0, 0.0, 0.65);
         
-        public static void RenderThumbnail (Cairo.Context cr, Gdk.Pixbuf pixbuf, bool dispose,
+        public static void RenderThumbnail (Cairo.Context cr, ImageSurface image, bool dispose,
             double x, double y, double width, double height, bool drawBorder, double radius)
         {
-            RenderThumbnail (cr, pixbuf, dispose, x, y, width, height, 
+            RenderThumbnail (cr, image, dispose, x, y, width, height, 
                 drawBorder, radius, false, cover_border_light_color);
         }
         
-        public static void RenderThumbnail (Cairo.Context cr, Gdk.Pixbuf pixbuf, bool dispose,
+        public static void RenderThumbnail (Cairo.Context cr, ImageSurface image, bool dispose,
             double x, double y, double width, double height, bool drawBorder, double radius, 
             bool fill, Color fillColor)
         {
-            RenderThumbnail (cr, pixbuf, dispose, x, y, width, height, drawBorder, radius, 
+            RenderThumbnail (cr, image, dispose, x, y, width, height, drawBorder, radius, 
                 fill, fillColor, CairoCorners.All);
         }
         
-        public static void RenderThumbnail (Cairo.Context cr, Gdk.Pixbuf pixbuf, bool dispose,
+        public static void RenderThumbnail (Cairo.Context cr, ImageSurface image, bool dispose,
             double x, double y, double width, double height, bool drawBorder, double radius, 
             bool fill, Color fillColor, CairoCorners corners)
         {
-            if (pixbuf == null || pixbuf.Handle == IntPtr.Zero) {
+            if (image == null || image.Handle == IntPtr.Zero) {
                 return;
             }
             
             double p_x = x;
             double p_y = y;
-            p_x += pixbuf.Width < width ? (width - pixbuf.Width) / 2 : 0;
-            p_y += pixbuf.Height < height ? (height - pixbuf.Height) / 2 : 0;
+            p_x += image.Width < width ? (width - image.Width) / 2 : 0;
+            p_y += image.Height < height ? (height - image.Height) / 2 : 0;
             
             cr.Antialias = Cairo.Antialias.Default;
             
@@ -74,13 +74,13 @@ namespace Banshee.Collection.Gui
                 cr.Fill();
             }
             
-            CairoExtensions.RoundedRectangle (cr, p_x, p_y, pixbuf.Width, pixbuf.Height, radius, corners);
-            Gdk.CairoHelper.SetSourcePixbuf (cr, pixbuf, p_x, p_y);
+            CairoExtensions.RoundedRectangle (cr, p_x, p_y, image.Width, image.Height, radius, corners);
+            cr.SetSource (image, p_x, p_y);
             cr.Fill ();
             
             if (!drawBorder) {
                 if (dispose) {
-                    DisposePixbuf (pixbuf);
+                    image.Destroy ();
                 }
                 
                 return;
@@ -100,24 +100,7 @@ namespace Banshee.Collection.Gui
             cr.Stroke ();
             
             if (dispose) {
-                DisposePixbuf (pixbuf);
-            }
-        }
-        
-        private static int dispose_count = 0;
-        public static void DisposePixbuf (Gdk.Pixbuf pixbuf)
-        {
-            if (pixbuf != null && pixbuf.Handle != IntPtr.Zero) {
-                pixbuf.Dispose ();
-                pixbuf = null;
-                
-                // There is an issue with disposing Pixbufs where we need to explicitly 
-                // call the GC otherwise it doesn't get done in a timely way.  But if we
-                // do it every time, it slows things down a lot; so only do it every 100th.
-                if (++dispose_count % 100 == 0) {
-                    GC.Collect ();
-                    dispose_count = 0;
-                }
+                image.Destroy ();
             }
         }
     }

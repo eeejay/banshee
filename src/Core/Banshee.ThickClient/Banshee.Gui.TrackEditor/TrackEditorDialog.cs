@@ -389,7 +389,7 @@ namespace Banshee.Gui.TrackEditor
             }
             
             ArtworkManager artwork = ServiceManager.Get<ArtworkManager> ();
-            Gdk.Pixbuf cover_art = artwork.LookupScale (current_track.ArtworkId, 64);
+            Gdk.Pixbuf cover_art = artwork.LookupScalePixbuf (current_track.ArtworkId, 64);
             header_image.Pixbuf = cover_art;
             if (cover_art == null) {
                 header_image.IconName = "media-optical";

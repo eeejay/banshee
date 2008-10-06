@@ -1,3 +1,49 @@
+2008-10-06  Aaron Bockover  <abock@gnome.org>
+
+	This commit finishes the port to using Cairo surface in almost all places
+	where we do rendering, and adds a surface cache system for improving 
+	performance in some places.
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellAlbum.cs:
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellPodcast.cs:
+	Use the new surface methods from artwork manager to directly render
+	surfaces as stored in the LRU cache
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ArtworkManager.cs:
+	Implement a surface caching system that should help improve the rendering
+	speed of the album browser. Tuned to never grow beyond 1MB of image data
+	per cache.
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ArtworkRenderer.cs:
+	Accept surfaces as input instead of pixbufs. Yay.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:
+	Port the beast to use cairo image surfaces directly intead of pixbufs,
+	get rid of the surface cache hack
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/LargeTrackInfoDisplay.cs:
+	Updated to reflect the surface changes in base class, cache the scene
+	surfaces to avoid re-rendering on each pass (was cached before, but using
+	a different mechanism)
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/ClassicTrackInfoDisplay.cs:
+	* src/Clients/Muinshee/Muinshee/MuinsheeTrackInfoDisplay.cs:
+	Updated to reflect surface changes in the base class
+		
+	* src/Libraries/Hyena/Hyena.Collections/LruCache.cs: Implement a somewhat
+	lame generic LRU cache collection
+
+	* src/Libraries/Hyena.Gui/Hyena.Gui/PixbufImageSurface.cs: Add a new 
+	ctor that disposes the input pixbuf when done with it, nice for 
+	inlining pixbuf->surface without temporary variables or leaking
+
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:
+	* src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSourceContents.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs:
+	Updated to reflect API rename in the artwork manager
+
 2008-10-06  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:

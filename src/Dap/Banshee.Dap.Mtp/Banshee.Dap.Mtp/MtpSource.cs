@@ -320,13 +320,13 @@ namespace Banshee.Dap.Mtp
 
                     if (supports_jpegs && can_sync) {
                         try {
-                            Gdk.Pixbuf pic = ServiceManager.Get<Banshee.Collection.Gui.ArtworkManager> ().LookupScale (
+                            Gdk.Pixbuf pic = ServiceManager.Get<Banshee.Collection.Gui.ArtworkManager> ().LookupScalePixbuf (
                                 track.ArtworkId, thumb_width
                             );
                             if (pic != null) {
                                 byte [] bytes = pic.SaveToBuffer ("jpeg");
                                 album.Save (bytes, (uint)pic.Width, (uint)pic.Height);
-                                pic.Dispose ();
+                                Banshee.Collection.Gui.ArtworkManager.DisposePixbuf (pic);
                             }
                             album_cache[key] = album;
                         } catch {}

@@ -28,13 +28,15 @@
 
 using System;
 
+using Cairo;
+using Hyena.Gui;
 using Banshee.Collection.Gui;
 
 namespace Muinshee
 {    
     public class MuinsheeTrackInfoDisplay : Banshee.Gui.Widgets.ClassicTrackInfoDisplay
     {
-        private Gdk.Pixbuf idle_album;
+        private ImageSurface idle_album;
 
         public MuinsheeTrackInfoDisplay () : base ()
         {
@@ -46,7 +48,9 @@ namespace Muinshee
 
         protected override void RenderIdle (Cairo.Context cr)
         {
-            idle_album = idle_album ?? Banshee.Gui.IconThemeUtils.LoadIcon (ArtworkSizeRequest, "media-optical");
+            idle_album = idle_album ?? new PixbufImageSurface (Banshee.Gui.IconThemeUtils.LoadIcon (
+                ArtworkSizeRequest, "media-optical"), true);
+            
             ArtworkRenderer.RenderThumbnail (cr, idle_album, false, Allocation.X, Allocation.Y, 
                 ArtworkSizeRequest, ArtworkSizeRequest, 
                 false, 0, true, BackgroundColor);

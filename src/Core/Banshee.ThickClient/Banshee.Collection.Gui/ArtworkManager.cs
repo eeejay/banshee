@@ -36,6 +36,9 @@ using Mono.Unix;
 using Gdk;
 
 using Hyena;
+using Hyena.Gui;
+using Hyena.Collections;
+
 using Banshee.Base;
 using Banshee.ServiceStack;
 
@@ -43,6 +46,22 @@ namespace Banshee.Collection.Gui
 {
     public class ArtworkManager : IService
     {
+        private Dictionary<int, SurfaceCache> scale_caches  = new Dictionary<int, SurfaceCache> ();
+            
+        private class SurfaceCache : LruCache<string, Cairo.ImageSurface>
+        {
+            public SurfaceCache (int max_items) : base (max_items)
+            {
+            }
+        
+            protected override void ExpireItem (Cairo.ImageSurface item)
+            {
+                if (item != null) {
+                    item.Destroy ();
+                }
+            }
+        }
+    
         public ArtworkManager ()
         {
             try {
@@ -77,31 +96,68 @@ namespace Banshee.Collection.Gui
             Log.Debug (String.Format ("Migrated {0} album art images.", artwork_count));
         }
         
-        public Cairo.Surface Lookup (Cairo.Context cr, string id)
+        public Cairo.ImageSurface LookupSurface (string id)
         {
-            return LookupScale (cr, id, 0);
+            return LookupScaleSurface (id, 0);
         }
         
-        public Cairo.Surface LookupScale (Cairo.Context cr, string id, int size)
+        public Cairo.ImageSurface LookupScaleSurface (string id, int size)
         {
-            Pixbuf pixbuf = LookupScale (id, size);
+            return LookupScaleSurface (id, size, false);
+        }
+        
+        public Cairo.ImageSurface LookupScaleSurface (string id, int size, bool useCache)
+        {
+            SurfaceCache cache = null;
+            Cairo.ImageSurface surface = null;
+            
+            if (id == null) {
+                return null;
+            }
+            
+            if (useCache && scale_caches.TryGetValue (size, out cache) && cache.TryGetValue (id, out surface)) {
+                return surface;
+            }
+        
+            Pixbuf pixbuf = LookupScalePixbuf (id, size);
             if (pixbuf == null) {
                 return null;
             }
             
             try {
-                return Hyena.Gui.CairoExtensions.CreateSurfaceForPixbuf (cr, pixbuf);
+                surface = new PixbufImageSurface (pixbuf);
+                if (surface == null) {
+                    return null;
+                }
+                
+                if (!useCache) {
+                    return surface;
+                }
+                
+                if (cache == null) {
+                    int bytes = 4 * size * size;
+                    int max = (1 << 20) / bytes;
+                    
+                    Log.DebugFormat ("Creating new surface cache for {0} KB (max) images, capped at 1 MB ({1} items)",
+                        bytes, max);
+                        
+                    cache = new SurfaceCache (max);
+                    scale_caches.Add (size, cache);
+                }
+                
+                cache.Add (id, surface);
+                return surface;
             } finally {
-                pixbuf.Dispose ();
+                DisposePixbuf (pixbuf);
             }
         }
         
-        public Pixbuf Lookup (string id)
+        public Pixbuf LookupPixbuf (string id)
         {
-            return LookupScale (id, 0);
+            return LookupScalePixbuf (id, 0);
         }
         
-        public Pixbuf LookupScale (string id, int size)
+        public Pixbuf LookupScalePixbuf (string id, int size)
         {
             if (id == null || (size != 0 && size < 10)) {
                 return null;
@@ -147,12 +203,29 @@ namespace Banshee.Collection.Gui
                     Pixbuf scaled_pixbuf = pixbuf.ScaleSimple (size, size, Gdk.InterpType.Bilinear);
                     Directory.CreateDirectory (Path.GetDirectoryName (path));
                     scaled_pixbuf.Save (path, "jpeg");
-                    ArtworkRenderer.DisposePixbuf (pixbuf);
+                    DisposePixbuf (pixbuf);
                     return scaled_pixbuf;
                 } catch {}
             }
             
             return null;
+        }
+        
+        private static int dispose_count = 0;
+        public static void DisposePixbuf (Pixbuf pixbuf)
+        {
+            if (pixbuf != null && pixbuf.Handle != IntPtr.Zero) {
+                pixbuf.Dispose ();
+                pixbuf = null;
+                
+                // There is an issue with disposing Pixbufs where we need to explicitly 
+                // call the GC otherwise it doesn't get done in a timely way.  But if we
+                // do it every time, it slows things down a lot; so only do it every 100th.
+                if (++dispose_count % 100 == 0) {
+                    System.GC.Collect ();
+                    dispose_count = 0;
+                }
+            }
         }
         
         string IService.ServiceName {

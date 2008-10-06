@@ -272,7 +272,7 @@ namespace Banshee.Gui.Widgets
                 return false;
             }
             
-            Gdk.Pixbuf pixbuf = ArtworkManager.Lookup (CurrentTrack.ArtworkId);
+            Gdk.Pixbuf pixbuf = ArtworkManager.LookupPixbuf (CurrentTrack.ArtworkId);
          
             if (pixbuf == null) {
                 HidePopup ();
@@ -299,7 +299,7 @@ namespace Banshee.Gui.Widgets
         private void HidePopup ()
         {
             if (popup != null) {
-                ArtworkRenderer.DisposePixbuf (popup.Image);
+                ArtworkManager.DisposePixbuf (popup.Image);
                 popup.Destroy ();
                 popup.EnterNotifyEvent -= OnPopupEnterNotifyEvent;
                 popup.LeaveNotifyEvent -= OnPopupLeaveNotifyEvent;

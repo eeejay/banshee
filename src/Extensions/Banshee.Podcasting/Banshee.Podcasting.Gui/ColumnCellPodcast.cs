@@ -46,11 +46,12 @@ namespace Banshee.Podcasting.Gui
 {
     public class ColumnCellPodcast : ColumnCell
     {
-        private static int pixbuf_spacing = 4;
-        private static int pixbuf_size = 48;
+        private static int image_spacing = 4;
+        private static int image_size = 48;
         
         // TODO replace this w/ new icon installation etc
-        private static Gdk.Pixbuf default_cover_pixbuf = IconThemeUtils.LoadIcon (48, "podcast");
+        private static ImageSurface default_cover_image 
+            = new PixbufImageSurface (IconThemeUtils.LoadIcon (48, "podcast"));
         
         private ArtworkManager artwork_manager;
 
@@ -72,20 +73,21 @@ namespace Banshee.Podcasting.Gui
             Feed feed = (Feed)BoundObject;
             
             bool is_default = false;          
-            Gdk.Pixbuf pixbuf = artwork_manager == null ? null : artwork_manager.LookupScale (PodcastService.ArtworkIdFor (feed), pixbuf_size);
+            ImageSurface image = artwork_manager == null ? null 
+                : artwork_manager.LookupScaleSurface (PodcastService.ArtworkIdFor (feed), image_size, true);
             
-            if (pixbuf == null) {
-                pixbuf = default_cover_pixbuf;
+            if (image == null) {
+                image = default_cover_image;
                 is_default = true;
             }
             
-            // int pixbuf_render_size = is_default ? pixbuf.Height : (int)cellHeight - 8;
-            int pixbuf_render_size = pixbuf_size;
-            int x = pixbuf_spacing;
-            int y = ((int)cellHeight - pixbuf_render_size) / 2;
+            // int image_render_size = is_default ? image.Height : (int)cellHeight - 8;
+            int image_render_size = image_size;
+            int x = image_spacing;
+            int y = ((int)cellHeight - image_render_size) / 2;
 
-            ArtworkRenderer.RenderThumbnail (context.Context, pixbuf, !is_default, x, y, 
-                pixbuf_render_size, pixbuf_render_size, !is_default, context.Theme.Context.Radius);
+            ArtworkRenderer.RenderThumbnail (context.Context, image, !is_default, x, y, 
+                image_render_size, image_render_size, !is_default, context.Theme.Context.Radius);
                 
             int fl_width = 0, fl_height = 0, sl_width = 0, sl_height = 0;
             Cairo.Color text_color = context.Theme.Colors.GetWidgetColor (GtkColorClass.Text, state);
@@ -164,7 +166,7 @@ namespace Banshee.Podcasting.Gui
             
             layout.Dispose ();
             
-            return (height < pixbuf_size ? pixbuf_size : height) + 6;
+            return (height < image_size ? image_size : height) + 6;
         }
     }
 }
