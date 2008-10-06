@@ -52,7 +52,8 @@ namespace Banshee.Lastfm.Radio
 
         public string GetStationFor (string arg)
         {
-            return "lastfm://" + String.Format (station_format, arg);
+            string url = String.Format (station_format, arg);
+            return url.StartsWith ("lastfm://") ? url : "lastfm://" + url;
         }
 
         public override string ToString ()
@@ -150,8 +151,17 @@ namespace Banshee.Lastfm.Radio
             false
         );
 
+        public static StationType LastfmUrl = new StationType (
+            "LastfmUrl",
+            Catalog.GetString ("lastfm:// URL"),
+            Catalog.GetString ("lastfm://"),
+            "{0}",
+            "lastfm-personal",
+            false
+        );
+
         public static StationType [] Types = new StationType [] {
-            Recommended, Personal, Loved, Neighbor, Group, Tag, Fan, Similar
+            Recommended, Personal, Loved, Neighbor, Group, Tag, Fan, Similar, LastfmUrl
         };
     }
 }

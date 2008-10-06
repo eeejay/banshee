@@ -1,5 +1,12 @@
 2008-10-06  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:
+	Support for creating a station in the station dialog from a lastfm:// URL,
+	based on a patch from Russ Smith, slightly modified by myself (BGO
+	#554724).
+
+2008-10-06  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/GenreEntry.cs:
 	Comment out Gtk+ 2.12 property (EntryCompletion#InlineSelection).
 
