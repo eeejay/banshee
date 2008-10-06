@@ -52,7 +52,7 @@ namespace Banshee.Gui.TrackEditor
             c.TextColumn = TextColumn;
             c.PopupCompletion = true;
             c.InlineCompletion = true;
-            c.InlineSelection = true;
+            //c.InlineSelection = true; // requires 2.12
             c.PopupSingleMatch = false;
             Entry.Completion = c;
         

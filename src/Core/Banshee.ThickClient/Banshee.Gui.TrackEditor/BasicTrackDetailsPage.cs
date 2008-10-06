@@ -72,7 +72,7 @@ namespace Banshee.Gui.TrackEditor
                 FieldOptions.NoSync
             );
             
-            AddField (left, new TextEntry (), 
+            AddField (left, new TextEntry ("CoreArtists", "Name"), 
                 Catalog.GetString ("Set all track artists to this value"),
                 delegate { return Catalog.GetString ("Track Artist:"); },
                 delegate (EditorTrackInfo track, Widget widget) { ((TextEntry)widget).Text = track.ArtistName; },
@@ -94,7 +94,7 @@ namespace Banshee.Gui.TrackEditor
                 }
             );
             
-            AddField (left, new TextEntry (), 
+            AddField (left, new TextEntry ("CoreAlbums", "Title"), 
                 Catalog.GetString ("Set all album titles to this value"),
                 delegate { return Catalog.GetString ("Album Title:"); },
                 delegate (EditorTrackInfo track, Widget widget) { ((TextEntry)widget).Text = track.AlbumTitle; },

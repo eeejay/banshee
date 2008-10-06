@@ -39,7 +39,7 @@ namespace Banshee.Gui.TrackEditor
         public event EventHandler Changed;
 
         private CheckButton enable_compilation = new CheckButton ();
-        private TextEntry entry = new TextEntry ();
+        private TextEntry entry = new TextEntry ("CoreAlbums", "ArtistName");
         private object tooltip_host = Hyena.Gui.TooltipSetter.CreateHost ();
         
         public AlbumArtistEntry () : base ()

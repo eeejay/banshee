@@ -29,11 +29,36 @@
 using System;
 using Gtk;
 
+using Banshee.ServiceStack;
+
 namespace Banshee.Gui.TrackEditor
 {
     public class TextEntry : Entry, IEditorField, ICanUndo
     {
         private EditorEntryUndoAdapter undo_adapter = new EditorEntryUndoAdapter ();
+
+        public TextEntry () : base ()
+        {
+        }
+
+        public TextEntry (string completion_table, string completion_column) : this ()
+        {
+            ListStore completion_model = new ListStore (typeof (string));
+            foreach (string val in ServiceManager.DbConnection.QueryEnumerable<string> (String.Format (
+                "SELECT DISTINCT {1} FROM {0} ORDER BY {1}", completion_table, completion_column))) {
+                if (!String.IsNullOrEmpty (val)) {
+                    completion_model.AppendValues (val);
+                }
+            }
+
+            Completion = new EntryCompletion ();
+            Completion.Model = completion_model;
+            Completion.TextColumn = 0;
+            Completion.PopupCompletion = true;
+            Completion.InlineCompletion = true;
+            //Completion.InlineSelection = true; // requires 2.12
+            Completion.PopupSingleMatch = false;
+        }
         
         public void DisconnectUndo ()
         {
