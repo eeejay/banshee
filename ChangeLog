@@ -1,5 +1,10 @@
 2008-10-06  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.ThickClient/Banshee.Query.Gui/RatingQueryValueEntry.cs:
+	Always show stars in the Rating widget shown in the smart playlist editor.
+
+2008-10-06  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Libraries/Hyena/Hyena.csproj: Ref System.Xml
 
 	* src/Libraries/Hyena/Hyena.Query/FileSizeQueryValue.cs:

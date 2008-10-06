@@ -46,6 +46,7 @@ namespace Banshee.Query.Gui
         public RatingQueryValueEntry () : base ()
         {
             entry = new RatingEntry ();
+            entry.AlwaysShowEmptyStars = true;
             entry.Changed += HandleValueChanged;
 
             Add (entry);
