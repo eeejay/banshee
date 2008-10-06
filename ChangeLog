@@ -1,3 +1,8 @@
+2008-10-06  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs: When
+	cancelled make the UserJob go away immediately (BGO #555197).
+
 2008-10-05  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Clients/Nereid/Nereid/ViewContainer.cs: Change "All Columns" in the

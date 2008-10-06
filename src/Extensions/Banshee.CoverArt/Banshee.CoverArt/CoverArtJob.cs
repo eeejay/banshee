@@ -91,6 +91,10 @@ namespace Banshee.CoverArt
 
             CanCancel = true;
             DelayShow = true;
+
+            CancelRequested += delegate {
+                Finish ();
+            };
         }
         
         public void Start ()
