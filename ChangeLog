@@ -9,7 +9,7 @@
 	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:
 	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/AlbumArtistEntry.cs:
 	Use new TextEntry ctor to enable autocomplete for artist, album, and album
-	artist.
+	artist (BGO #526014).
 
 2008-10-06  Gabriel Burt  <gabriel.burt@gmail.com>
 
