@@ -66,7 +66,7 @@ namespace Banshee.Collection.Database
             get { return provider ?? provider = new DatabaseTrackModelProvider<DatabaseTrackInfo> (ServiceManager.DbConnection); }
         }
 
-        private bool? artist_changed = null, album_changed = null;
+        private bool artist_changed = false, album_changed = false;
         private bool uri_fields_dirty = false;
         
         public DatabaseTrackInfo () : base ()
@@ -228,7 +228,7 @@ namespace Banshee.Collection.Database
                     return;
 
                 base.ArtistName = value;
-                artist_changed = artist_changed != null;
+                artist_changed = true;
             }
         }
 
@@ -246,7 +246,7 @@ namespace Banshee.Collection.Database
                     return;
 
                 base.AlbumTitle = value;
-                album_changed = album_changed != null;
+                album_changed = true;
             }
         }
 
@@ -264,7 +264,7 @@ namespace Banshee.Collection.Database
                     return;
 
                 base.AlbumArtist = value;
-                album_changed = album_changed != null;
+                album_changed = true;
             }
         }
         
@@ -278,7 +278,7 @@ namespace Banshee.Collection.Database
             get { return base.IsCompilation; }
             set {
                 base.IsCompilation = value;
-                album_changed = album_changed != null;
+                album_changed = true;
             }
         }
         

@@ -1,5 +1,13 @@
 2008-10-06  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	Change way in which we mark the album or artist as changed (and therefore
+	know to save it) to account for splitting the load-from-db properties out
+	from the public properties used by the editor etc.  Fixes issue with the
+	artist info not getting saved in the editor (BGO #555111).
+
+2008-10-06  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs: When
 	cancelled make the UserJob go away immediately (BGO #555197).
 
