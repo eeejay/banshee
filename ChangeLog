@@ -1,5 +1,11 @@
 2008-10-06  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/GenreEntry.cs:
+	Implement IEditorField so that changes are noticed and saved (BGO
+	#553555).  Also create/set an EntryCompletion so that autocomplete works.
+
+2008-10-06  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
 	Change way in which we mark the album or artist as changed (and therefore
 	know to save it) to account for splitting the load-from-db properties out

@@ -36,7 +36,7 @@ using Banshee.Collection.Database;
 
 namespace Banshee.Gui.TrackEditor
 {
-    public class GenreEntry : ComboBoxEntry, ICanUndo
+    public class GenreEntry : ComboBoxEntry, ICanUndo, IEditorField
     {
         private ListStore genre_model;
         private EditorEntryUndoAdapter undo_adapter = new EditorEntryUndoAdapter ();
@@ -46,6 +46,15 @@ namespace Banshee.Gui.TrackEditor
             genre_model = new ListStore (typeof (string));
             Model = genre_model;
             TextColumn = 0;
+
+            EntryCompletion c = new EntryCompletion ();
+            c.Model = genre_model;
+            c.TextColumn = TextColumn;
+            c.PopupCompletion = true;
+            c.InlineCompletion = true;
+            c.InlineSelection = true;
+            c.PopupSingleMatch = false;
+            Entry.Completion = c;
         
             foreach (string genre in ServiceManager.DbConnection.QueryEnumerable<string> (
                 "SELECT DISTINCT Genre FROM CoreTracks ORDER BY Genre")) {
