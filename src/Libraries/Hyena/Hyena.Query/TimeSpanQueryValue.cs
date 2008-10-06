@@ -117,7 +117,6 @@ namespace Hyena.Query
         {
             this.factor = factor;
             this.offset = (long) (offset * (double)factor);
-            DetermineFactor ();
             IsEmpty = false;
         }
 
@@ -145,9 +144,18 @@ namespace Hyena.Query
         {
             try {
                 LoadString (node.InnerText);
+                if (node.HasAttribute ("factor")) {
+                    this.factor = (TimeFactor) Enum.Parse (typeof(TimeFactor), node.GetAttribute ("factor"));
+                }
             } catch {
                 IsEmpty = true;
             }
+        }
+
+        public override void AppendXml (XmlElement node)
+        {
+            base.AppendXml (node);
+            node.SetAttribute ("factor", factor.ToString ());
         }
 
         public override string ToSql ()

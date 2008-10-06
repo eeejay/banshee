@@ -1,3 +1,14 @@
+2008-10-06  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Libraries/Hyena/Hyena.csproj: Ref System.Xml
+
+	* src/Libraries/Hyena/Hyena.Query/FileSizeQueryValue.cs:
+	* src/Libraries/Hyena/Hyena.Query/RelativeTimeSpanQueryValue.cs:
+	* src/Libraries/Hyena/Hyena.Query/TimeSpanQueryValue.cs:  Persist and read
+	the factor to/from XML, so we remember if the user chose '45 days' and
+	no longer turn it into 1.5 months the next time they edit a smart
+	playlist (BGO #545887).
+
 2008-10-06  Aaron Bockover  <abock@gnome.org>
 
 	This commit finishes the port to using Cairo surface in almost all places

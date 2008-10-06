@@ -95,7 +95,17 @@ namespace Hyena.Query
         public override void ParseXml (XmlElement node)
         {
             base.ParseUserQuery (node.InnerText);
-            DetermineFactor ();
+            if (node.HasAttribute ("factor")) {
+                this.factor = (FileSizeFactor) Enum.Parse (typeof(FileSizeFactor), node.GetAttribute ("factor"));
+            } else {
+                DetermineFactor ();
+            }
+        }
+
+        public override void AppendXml (XmlElement node)
+        {
+            base.AppendXml (node);
+            node.SetAttribute ("factor", factor.ToString ());
         }
 
         public void SetValue (double value, FileSizeFactor factor)

@@ -73,8 +73,8 @@ namespace Hyena.Query
 
         public override void AppendXml (XmlElement node)
         {
+            base.AppendXml (node);
             node.SetAttribute ("type", "rel");
-            node.InnerText = Value.ToString ();
         }
 
         public override string ToSql ()
