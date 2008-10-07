@@ -17,8 +17,8 @@ msgstr ""
 "Project-Id-Version: banshee\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-10-07 17:34+0200\n"
-"PO-Revision-Date: 2008-10-07 17:41+0200\n"
-"Last-Translator: Øivind Hoel <oivind.hoel@gmail.com>\n"
+"PO-Revision-Date: 2008-10-07 17:54+0200\n"
+"Last-Translator: Kjartan Maraas <kmaraas@broadpark.no>\n"
 "Language-Team: Norwegian <i18n-nb@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -3549,7 +3549,7 @@ msgstr "Last ned albumcover"
 
 #: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapContainerSource.cs:41
 msgid "Shared Music"
-msgstr ""
+msgstr "Delt musikk"
 
 #: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapErrorView.cs:73
 msgid "Disconnected from music share"
@@ -3812,14 +3812,12 @@ msgid "Add a new Last.fm radio station"
 msgstr ""
 
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:74
-#, fuzzy
 msgid "Connect"
-msgstr "Koble fra"
+msgstr "Koble til"
 
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:79
-#, fuzzy
 msgid "Sort Stations by"
-msgstr "Stasjon"
+msgstr "Sorter stasjoner etter"
 
 #. Translators: {0} is a type of Last.fm station, eg "Fans of" or "Similar to".
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:85
@@ -3984,9 +3982,9 @@ msgid "My Top Artists"
 msgstr "Artist"
 
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSourceContents.cs:206
-#, fuzzy, csharp-format
+#, csharp-format
 msgid "{0} plays"
-msgstr "{0} dag"
+msgstr "{0} avspillinger"
 
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs:103
 #, fuzzy
@@ -4057,28 +4055,26 @@ msgstr[1] "{0} sekunder"
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:564
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:84
 msgid "Recommended"
-msgstr ""
+msgstr "Anbefalt"
 
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:565
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:93
-#, fuzzy
 msgid "Personal"
-msgstr "Versjon"
+msgstr "Personlig"
 
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:566
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:102
 msgid "Loved"
-msgstr ""
+msgstr "Elsket"
 
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:567
-#, fuzzy
 msgid "Banshee Group"
-msgstr "Banshee"
+msgstr "Banshee gruppe"
 
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:568
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:111
 msgid "Neighbors"
-msgstr ""
+msgstr "Naboer"
 
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:85
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:94
@@ -4095,12 +4091,11 @@ msgstr ""
 
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:120
 msgid "Group"
-msgstr ""
+msgstr "Gruppe"
 
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:121
-#, fuzzy
 msgid "Group Name:"
-msgstr "Kontonavn:"
+msgstr "Gruppenavn:"
 
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:129
 #, fuzzy
@@ -4113,13 +4108,12 @@ msgid "Tag Name:"
 msgstr "Sportittel"
 
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:138
-#, fuzzy
 msgid "Fan"
-msgstr "enhver"
+msgstr "Fan"
 
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:139
 msgid "Fans of:"
-msgstr ""
+msgstr "Fans av:"
 
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:147
 msgid "Similar"
@@ -4207,7 +4201,7 @@ msgstr ""
 
 #: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:116
 msgid "_Close"
-msgstr ""
+msgstr "_Lukk"
 
 #: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:117
 msgid "Close"
@@ -4240,7 +4234,7 @@ msgstr "Spilles nå"
 
 #: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:409
 msgid "Skip this item"
-msgstr ""
+msgstr "Hopp over denne oppføringen"
 
 #: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:415
 msgid "Cannot show notification"
@@ -4280,7 +4274,7 @@ msgstr "Podcaster"
 
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastSource.cs:155
 msgid "Published"
-msgstr ""
+msgstr "Publisert"
 
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastSource.cs:155
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastTrackInfo.cs:171
@@ -4332,17 +4326,15 @@ msgstr "År"
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellDownloadStatus.cs:58
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellUnheard.cs:58
 msgid "All Items"
-msgstr ""
+msgstr "Alle oppføringer"
 
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellDownloadStatus.cs:59
-#, fuzzy
 msgid "Not Downloaded"
-msgstr "Last ned"
+msgstr "Ikke lastet ned"
 
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellPodcast.cs:113
-#, fuzzy
 msgid "Never updated"
-msgstr "Aldri spilt"
+msgstr "Aldri oppdatert"
 
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellPodcast.cs:115
 #, fuzzy, csharp-format
@@ -4350,32 +4342,29 @@ msgid "Updated at {0}"
 msgstr "Redigerer {0}"
 
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellPodcast.cs:117
-#, fuzzy, csharp-format
+#, csharp-format
 msgid "Updated {0}"
-msgstr "Redigerer {0}"
+msgstr "Oppdatert {0}"
 
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellUnheard.cs:57
 msgid "New Items"
-msgstr ""
+msgstr "Nye oppføringer"
 
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellUnheard.cs:59
 msgid "Old Items"
-msgstr ""
+msgstr "Gamle oppføringer"
 
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/DownloadManager/DownloadUserJob.cs:46
-#, fuzzy
 msgid "Downloads"
-msgstr "Last ned"
+msgstr "Nedlastet"
 
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/DownloadManager/DownloadUserJob.cs:50
-#, fuzzy
 msgid "Downloading Podcast(s)"
-msgstr "Laster ned filer"
+msgstr "Laster ned podcast(er)"
 
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/DownloadManager/DownloadUserJob.cs:51
-#, fuzzy
 msgid "Initializing..."
-msgstr "Initierer konverterer..."
+msgstr "Initierer..."
 
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/DownloadManager/DownloadUserJob.cs:52
 msgid "Cancel all podcast downloads?"
@@ -4398,9 +4387,8 @@ msgid "Waiting for downloads to terminate..."
 msgstr "Venter på media"
 
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:68
-#, fuzzy
 msgid "Update Podcasts"
-msgstr "Podcaster som ikke er hørt"
+msgstr "Oppdater podcast"
 
 #. "<control><shift>U",
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:69
@@ -4451,9 +4439,8 @@ msgid "Download Podcast(s)"
 msgstr "Podcaster som ikke er hørt"
 
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:135
-#, fuzzy
 msgid "Cancel Download"
-msgstr "Last ned"
+msgstr "Avbryt nedlasting"
 
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:141
 #, fuzzy
@@ -4474,7 +4461,6 @@ msgid "Podcast URL is invalid."
 msgstr "Tilleggets navn"
 
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastFeedPropertiesDialog.cs:78
-#, fuzzy
 msgid "Last updated:"
 msgstr "Sist oppdatert:"
 
@@ -4494,9 +4480,8 @@ msgid "No description available"
 msgstr "Ingen beskrivelse tilgjengelig"
 
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastPropertiesDialog.cs:75
-#, fuzzy
 msgid "Podcast:"
-msgstr "Podcast"
+msgstr "Podcast:"
 
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastPropertiesDialog.cs:79
 msgid "Date:"
@@ -4535,9 +4520,8 @@ msgid "Let me decide which episodes to download"
 msgstr ""
 
 #: ../src/Extensions/Banshee.RemoteAudio/Banshee.RemoteAudio/RemoteSpeakersWidget.cs:51
-#, fuzzy
 msgid "_Speaker:"
-msgstr "_Søk:"
+msgstr "_Høyttaler:"
 
 #: ../src/Extensions/Banshee.Sample/Banshee.Sample/SampleSource.cs:40
 msgid "Sample"
@@ -4556,9 +4540,9 @@ msgid "Stop SQL Monitoring"
 msgstr ""
 
 #: ../src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Header.cs:513
-#, fuzzy, csharp-format
+#, csharp-format
 msgid "Hide <i>{0}</i>"
-msgstr "Skjul {0}"
+msgstr "Skjul <i>{0}</i>"
 
 #: ../src/Libraries/Hyena.Gui/Hyena.Gui.Dialogs/ExceptionDialog.cs:52
 msgid "Banshee Encountered a Fatal Error"
@@ -4582,12 +4566,11 @@ msgstr "Modulnavn"
 
 #: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/FileSizeQueryValueEntry.cs:62
 msgid "KB"
-msgstr ""
+msgstr "KB"
 
 #: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryBox.cs:86
-#, fuzzy
 msgid "Condition:"
-msgstr "Brukervalg"
+msgstr "Betingelse:"
 
 #: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryBox.cs:104
 msgid "_Match"
@@ -4690,19 +4673,18 @@ msgstr "mer enn"
 
 #: ../src/Libraries/Hyena/Hyena.Query/NullQueryValue.cs:41
 msgid "empty"
-msgstr ""
+msgstr "tom"
 
 #: ../src/Libraries/Hyena/Hyena.Query/RelativeTimeSpanQueryValue.cs:88
-#, fuzzy, csharp-format
+#, csharp-format
 msgid "{0} ago"
-msgstr "{0} dag"
+msgstr "{0} siden"
 
 #: ../src/Libraries/Hyena/Hyena.Query/StringQueryValue.cs:41
 msgid "contains"
 msgstr "inneholder"
 
 #: ../src/Libraries/Hyena/Hyena.Query/StringQueryValue.cs:42
-#, fuzzy
 msgid "doesn't contain"
 msgstr "inneholder ikke"
 
@@ -4716,7 +4698,7 @@ msgstr "slutter med"
 
 #: ../src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginDialog.cs:49
 msgid "Log in to Last.fm"
-msgstr ""
+msgstr "Logg inn på Last.fm"
 
 #: ../src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginDialog.cs:76
 msgid "Last.fm Account Login"
@@ -4728,7 +4710,7 @@ msgstr ""
 
 #: ../src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginDialog.cs:105
 msgid "Save and Log In"
-msgstr ""
+msgstr "Lagre og logg inn"
 
 #: ../src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginForm.cs:113
 msgid "Sign up for Last.fm"
@@ -4741,7 +4723,7 @@ msgstr ""
 
 #: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:301
 msgid "Failed to Login to Last.fm"
-msgstr ""
+msgstr "Klarte ikke å logge inn på Last.fm"
 
 #: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:302
 msgid "Either your username or password is invalid."
@@ -4761,7 +4743,7 @@ msgstr ""
 
 #: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:443
 msgid "This station is not available."
-msgstr ""
+msgstr "Stasjonen er ikke tilgjengelig."
 
 #: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:444
 msgid "This station is only available to subscribers."
@@ -4778,11 +4760,11 @@ msgstr ""
 
 #: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:447
 msgid "There was an unknown error."
-msgstr ""
+msgstr "Det oppsto en ukjent feil."
 
 #: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:455
 msgid "Not connected to Last.fm."
-msgstr ""
+msgstr "Ikke koblet til Last.fm."
 
 #: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:456
 msgid "Account details are needed before you can connect to Last.fm"
@@ -4793,9 +4775,8 @@ msgid "No network connection detected."
 msgstr ""
 
 #: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:459
-#, fuzzy
 msgid "Connecting to Last.fm."
-msgstr "Kobler til {0}"
+msgstr "Kobler til Last.fm."
 
 #: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:460
 msgid "Connected to Last.fm."
