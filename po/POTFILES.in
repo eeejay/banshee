@@ -28,6 +28,7 @@ src/Clients/Muinshee/Muinshee/SongDialog.cs
 src/Clients/Nereid/Nereid/Client.cs
 src/Clients/Nereid/Nereid/PlayerInterface.cs
 src/Clients/Nereid/Nereid/ViewContainer.cs
+src/Core/Banshee.Core/Banshee.Base/CoverArtSpec.cs
 src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs
 src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs
 src/Core/Banshee.Core/Banshee.Streaming/SaveTrackMetadataJob.cs
@@ -83,6 +84,7 @@ src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackRepeatActions.cs
 src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackShuffleActions.cs
 src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs
 src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs
+src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/AlbumArtistEntry.cs
 src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs
 src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/ExtraTrackDetailsPage.cs
 src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/HelpPage.cs
@@ -167,6 +169,7 @@ src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastTrackInfo.cs
 src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellDownloadStatus.cs
 src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellPodcast.cs
 src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellUnheard.cs
+src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellYesNo.cs
 src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/DownloadManager/DownloadUserJob.cs
 src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs
 src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastFeedPropertiesDialog.cs
