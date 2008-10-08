@@ -92,8 +92,9 @@ namespace Hyena.Data.Gui
             
             cairo_context = CairoHelper.Create (evnt.Window);
             if (pango_layout == null) {
-                CairoExtensions.CreateLayout (this, cairo_context, ref pango_layout);
+                pango_layout = CairoExtensions.CreateLayout (this, cairo_context);
             }
+            
             cell_context.Context = cairo_context;
             cell_context.Layout = pango_layout;
             

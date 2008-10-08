@@ -1,5 +1,26 @@
 2008-10-08  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/LargeTrackInfoDisplay.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/ClassicTrackInfoDisplay.cs:
+	Like I fixed for the ListView yesterday, do not recreate the pango
+	layouts on each expose; this is a sligh perf improvement, but mostly,
+	it stops a huge leak (BGO #555365). Thanks to Michael Monreal for
+	helping to track this one down!
+
+	* src/Libraries/Hyena.Gui/Hyena.Gui/CairoExtensions.cs: Always create a
+	new layout and return it instead of accepting it as a ref parameter;
+	dispose the context after we request it from PangoCairoHelper
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Rendering.cs:
+	Updated to reflect API change of CairoExtensions.CreateLayout
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:
+	Added a virtual OnThemeChanged to simplify things for sub classes so
+	they don't have to worry about awkward logic often necessary with
+	OnStyleSet
+
+2008-10-08  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.Services/Banshee.Collection.Indexer/CollectionIndexer.cs:
 	Add a missing lock, which was causing a crash+race
 

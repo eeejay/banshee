@@ -181,6 +181,12 @@ namespace Banshee.Gui.Widgets
                 missing_video_image.Destroy ();
                 missing_video_image = null;
             }
+            
+            OnThemeChanged ();
+        }
+        
+        protected virtual void OnThemeChanged ()
+        {
         }
         
         protected override bool OnExposeEvent (Gdk.EventExpose evnt)

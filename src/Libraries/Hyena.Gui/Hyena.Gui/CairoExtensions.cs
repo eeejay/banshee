@@ -48,20 +48,21 @@ namespace Hyena.Gui
     
     public static class CairoExtensions
     {
-        public static void CreateLayout (Gtk.Widget widget, Cairo.Context cairo_context, ref Pango.Layout layout)
+        public static Pango.Layout CreateLayout (Gtk.Widget widget, Cairo.Context cairo_context)
         {
-            if (layout != null) {
-                layout.Dispose ();
-            }
-            
-            layout = PangoCairoHelper.CreateLayout (cairo_context);
+            Pango.Layout layout = PangoCairoHelper.CreateLayout (cairo_context);
             layout.FontDescription = widget.PangoContext.FontDescription.Copy ();
             
             double resolution = widget.Screen.Resolution;
             if (resolution != -1) {
                 Pango.Context context = PangoCairoHelper.LayoutGetContext (layout);
                 PangoCairoHelper.ContextSetResolution (context, resolution);
+                context.Dispose ();
             }
+            
+            Log.Debug ("Creating Pango.Layout, configuring Cairo.Context");
+            
+            return layout;
         }
         
         public static Surface CreateSurfaceForPixbuf (Cairo.Context cr, Gdk.Pixbuf pixbuf)

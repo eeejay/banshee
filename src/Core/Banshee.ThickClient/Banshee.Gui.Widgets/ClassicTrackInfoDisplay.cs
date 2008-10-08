@@ -45,6 +45,8 @@ namespace Banshee.Gui.Widgets
         private uint popup_timeout_id;
         private bool in_popup;
         private bool in_thumbnail_region;
+        private Pango.Layout first_line_layout;
+        private Pango.Layout second_line_layout;
         
         public ClassicTrackInfoDisplay () : base ()
         {
@@ -132,6 +134,19 @@ namespace Banshee.Gui.Widgets
             layout.Dispose ();
             return 2 * height;
         }
+        
+        protected override void OnThemeChanged ()
+        {
+            if (first_line_layout != null) {
+                first_line_layout.Dispose ();
+                first_line_layout = null;
+            }
+            
+            if (second_line_layout != null) {
+                second_line_layout.Dispose ();
+                second_line_layout = null;
+            }
+        }
 
 #endregion
         
@@ -147,14 +162,21 @@ namespace Banshee.Gui.Widgets
             double x = Allocation.X + offset;
             double width = Allocation.Width - offset;
             int fl_width, fl_height, sl_width, sl_height;
+            int pango_width = (int)(width * Pango.Scale.PangoScale);
+
+            if (first_line_layout == null) {
+                first_line_layout = CairoExtensions.CreateLayout (this, cr);
+                first_line_layout.Ellipsize = Pango.EllipsizeMode.End;
+            }
+            
+            if (second_line_layout == null) {
+                second_line_layout = CairoExtensions.CreateLayout (this, cr);
+                second_line_layout.Ellipsize = Pango.EllipsizeMode.End;
+            }
 
             // Set up the text layouts
-            Pango.Layout first_line_layout = null;
-            CairoExtensions.CreateLayout (this, cr, ref first_line_layout);
-            first_line_layout.Width = (int)(width * Pango.Scale.PangoScale);
-            first_line_layout.Ellipsize = Pango.EllipsizeMode.End;
-                        
-            Pango.Layout second_line_layout = first_line_layout.Copy ();
+            first_line_layout.Width = pango_width;
+            second_line_layout.Width = pango_width;
             
             // Compute the layout coordinates
             first_line_layout.SetMarkup (GetFirstLineText (track));
@@ -178,16 +200,11 @@ namespace Banshee.Gui.Widgets
             }
 
             if (!renderArtistAlbum) {
-                first_line_layout.Dispose ();
-                second_line_layout.Dispose ();
                 return;
             }
             
             cr.MoveTo (x, y + fl_height);
             PangoCairoHelper.ShowLayout (cr, second_line_layout);
-            
-            first_line_layout.Dispose ();
-            second_line_layout.Dispose ();
         }
         
 #endregion

@@ -42,6 +42,9 @@ namespace Banshee.Gui.Widgets
     {
         private Gdk.Rectangle text_alloc;
         private Dictionary<ImageSurface, Surface> surfaces = new Dictionary<ImageSurface, Surface> ();
+        private Pango.Layout first_line_layout;
+        private Pango.Layout second_line_layout;
+        private Pango.Layout third_line_layout;
     
         public LargeTrackInfoDisplay ()
         {
@@ -81,6 +84,24 @@ namespace Banshee.Gui.Widgets
         {
             base.OnSizeAllocated (allocation);
             QueueDraw ();
+        }
+
+        protected override void OnThemeChanged ()
+        {
+            if (first_line_layout != null) {
+                first_line_layout.Dispose ();
+                first_line_layout = null;
+            }
+            
+            if (second_line_layout != null) {
+                second_line_layout.Dispose ();
+                second_line_layout = null;
+            }
+            
+            if (third_line_layout != null) {
+                third_line_layout.Dispose ();
+                third_line_layout = null;
+            }
         }
        
         protected override void RenderCoverArt (Cairo.Context cr, ImageSurface image)
@@ -162,6 +183,7 @@ namespace Banshee.Gui.Widgets
             Gdk.Rectangle alloc = RenderAllocation;
             int width = ArtworkSizeRequest;
             int fl_width, fl_height, sl_width, sl_height, tl_width, tl_height;
+            int pango_width = (int)(width * Pango.Scale.PangoScale);
 
             string first_line = GetFirstLineText (track);
             
@@ -177,19 +199,31 @@ namespace Banshee.Gui.Widgets
                     line.Substring (split_pos, line.Length - split_pos));
             }
 
+            if (first_line_layout == null) {
+                first_line_layout = CairoExtensions.CreateLayout (this, cr);
+                first_line_layout.Ellipsize = Pango.EllipsizeMode.End;
+                first_line_layout.Alignment = Pango.Alignment.Right;
+                
+                int base_size = first_line_layout.FontDescription.Size;
+                first_line_layout.FontDescription.Size = (int)(base_size * Pango.Scale.XLarge);
+            }
+            
+            if (second_line_layout == null) {
+                second_line_layout = CairoExtensions.CreateLayout (this, cr);
+                second_line_layout.Ellipsize = Pango.EllipsizeMode.End;
+                second_line_layout.Alignment = Pango.Alignment.Right;
+            }
+            
+            if (third_line_layout == null) {
+                third_line_layout = CairoExtensions.CreateLayout (this, cr);
+                third_line_layout.Ellipsize = Pango.EllipsizeMode.End;
+                third_line_layout.Alignment = Pango.Alignment.Right;
+            }
+
             // Set up the text layouts
-            Pango.Layout first_line_layout = null;
-            CairoExtensions.CreateLayout (this, cr, ref first_line_layout);
-            first_line_layout.Width = (int)(width * Pango.Scale.PangoScale);
-            first_line_layout.Ellipsize = Pango.EllipsizeMode.End;
-            first_line_layout.Alignment = Pango.Alignment.Right;
-
-            int base_size = first_line_layout.FontDescription.Size;
-                        
-            Pango.Layout second_line_layout = first_line_layout.Copy ();
-            Pango.Layout third_line_layout = first_line_layout.Copy ();
-
-            first_line_layout.FontDescription.Size = (int)(base_size * Pango.Scale.XLarge);
+            first_line_layout.Width = pango_width;
+            second_line_layout.Width = pango_width;
+            third_line_layout.Width = pango_width;
             
             // Compute the layout coordinates
             first_line_layout.SetMarkup (first_line);
@@ -214,9 +248,6 @@ namespace Banshee.Gui.Widgets
             }
 
             if (!renderArtistAlbum) {
-                first_line_layout.Dispose ();
-                second_line_layout.Dispose ();
-                third_line_layout.Dispose ();
                 return;
             }
             
@@ -225,10 +256,6 @@ namespace Banshee.Gui.Widgets
             
             cr.MoveTo (text_alloc.X, text_alloc.Y + fl_height + sl_height);
             PangoCairoHelper.ShowLayout (cr, third_line_layout);
-            
-            first_line_layout.Dispose ();
-            second_line_layout.Dispose ();
-            third_line_layout.Dispose ();
         }
         
         protected override void Invalidate ()
