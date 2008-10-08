@@ -1,5 +1,14 @@
 2008-10-08  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.Services/Banshee.Collection.Indexer.RemoteHelper/SimpleIndexerClient.cs:
+	Pulled out the implementation from the Beroe remote client example
+	into a further encapsulation
+
+	* src/Clients/Beroe/Beroe/RemoteClient.cs: Now extend the new
+	SimpleIndexerClient
+
+2008-10-08  Aaron Bockover  <abock@gnome.org>
+
 	* src/Clients/Beroe/Beroe/RemoteClient.cs: Check for Shutdown when
 	processing the index
 

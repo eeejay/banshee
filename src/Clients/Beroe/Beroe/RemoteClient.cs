@@ -27,73 +27,21 @@
 //
 
 using System;
-using System.Threading;
 using System.Collections.Generic;
 
 using Banshee.Collection.Indexer;
 
 namespace Beroe
 {
-    public class RemoteClient : Banshee.Collection.Indexer.RemoteHelper.IndexerClient
+    public class RemoteClient : Banshee.Collection.Indexer.RemoteHelper.SimpleIndexerClient
     {
-        private object shutdown_mutex = new object ();
-        private bool indexer_running;
-        private bool shutdown_requested;
-        
-        public RemoteClient ()
+        protected override void IndexResult(IDictionary<string, object> result)
         {
-            ShowDebugMessages = true;
+            Console.WriteLine (result["URI"]);
         }
         
-        protected override void ResetState ()
+        protected override void OnShutdownWhileIndexing()
         {
-            lock (shutdown_mutex) {
-                if (indexer_running) {
-                    shutdown_requested = true;
-                }
-            }
-        }
-        
-        protected override void UpdateIndex ()
-        {
-            lock (shutdown_mutex) {
-                indexer_running = true;
-                shutdown_requested = false;
-            }
-            
-            Sleep (5);
-            
-            ICollectionIndexer indexer = CreateIndexer ();
-            indexer.Index ();
-            
-            for (int i = 0, models = indexer.GetModelCounts (); i < models; i++) {
-                for (int j = 0, items = indexer.GetModelResultsCount (i); j < items && !Shutdown; j++) {
-                    IDictionary<string, object> result = indexer.GetResult (i, j);
-                    Console.WriteLine (result["URI"]);
-                }
-            }
-            
-            indexer.Dispose ();
-            
-            lock (shutdown_mutex) {
-                indexer_running = false;
-                shutdown_requested = false;
-            }
-        }
-        
-        private void Sleep (int seconds)
-        {
-            int i = 0;
-            Console.Write ("Sleeping... ");
-            while (i++ < seconds && !Shutdown) {
-                Console.Write ("{0} ", i);
-                System.Threading.Thread.Sleep (1000);
-            }
-            Console.WriteLine (": Done");
-        }
-        
-        private bool Shutdown {
-            get { lock (shutdown_mutex) { return shutdown_requested || CleanupAndShutdown; } }
         }
         
         protected override bool HasCollectionChanged {

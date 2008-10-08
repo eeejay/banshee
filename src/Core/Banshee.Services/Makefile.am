@@ -23,6 +23,7 @@ SOURCES =  \
 	Banshee.Collection.Database/IDatabaseTrackModelProvider.cs \
 	Banshee.Collection.Database/QueryFilterInfo.cs \
 	Banshee.Collection.Indexer.RemoteHelper/IndexerClient.cs \
+	Banshee.Collection.Indexer.RemoteHelper/SimpleIndexerClient.cs \
 	Banshee.Collection.Indexer/CollectionIndexer.cs \
 	Banshee.Collection.Indexer/CollectionIndexerService.cs \
 	Banshee.Collection.Indexer/ICollectionIndexer.cs \

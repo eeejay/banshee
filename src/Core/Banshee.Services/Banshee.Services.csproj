@@ -235,6 +235,7 @@
     <Compile Include="Banshee.Collection.Indexer\IIndexerClient.cs" />
     <Compile Include="Banshee.Collection\RescanPipeline.cs" />
     <Compile Include="Banshee.Collection.Indexer.RemoteHelper\IndexerClient.cs" />
+    <Compile Include="Banshee.Collection.Indexer.RemoteHelper\SimpleIndexerClient.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Banshee.Services.addin.xml" />
