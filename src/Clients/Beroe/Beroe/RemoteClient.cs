@@ -67,7 +67,7 @@ namespace Beroe
             indexer.Index ();
             
             for (int i = 0, models = indexer.GetModelCounts (); i < models; i++) {
-                for (int j = 0, items = indexer.GetModelResultsCount (i); j < items; j++) {
+                for (int j = 0, items = indexer.GetModelResultsCount (i); j < items && !Shutdown; j++) {
                     IDictionary<string, object> result = indexer.GetResult (i, j);
                     Console.WriteLine (result["URI"]);
                 }

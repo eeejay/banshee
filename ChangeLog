@@ -1,5 +1,10 @@
 2008-10-08  Aaron Bockover  <abock@gnome.org>
 
+	* src/Clients/Beroe/Beroe/RemoteClient.cs: Check for Shutdown when
+	processing the index
+
+2008-10-08  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs:
 	Only click sync buttons when they are sensitive
 
