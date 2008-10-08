@@ -41,9 +41,12 @@ namespace Banshee.Gui.TrackEditor
         private CheckButton enable_compilation = new CheckButton ();
         private TextEntry entry = new TextEntry ("CoreAlbums", "ArtistName");
         private object tooltip_host = Hyena.Gui.TooltipSetter.CreateHost ();
+        private Button track_artist_sync_button;
         
-        public AlbumArtistEntry () : base ()
+        public AlbumArtistEntry (Button trackArtistSyncButton) : base ()
         {
+            track_artist_sync_button = trackArtistSyncButton;
+        
             enable_compilation.Label = Catalog.GetString ("Compilation Album Artist:");
 
             Hyena.Gui.TooltipSetter.Set (tooltip_host, enable_compilation,
@@ -89,6 +92,7 @@ namespace Banshee.Gui.TrackEditor
         private void UpdateSensitivities ()
         {
             entry.Sensitive = IsCompilation;
+            track_artist_sync_button.Sensitive = !IsCompilation;
         }
     }
 }

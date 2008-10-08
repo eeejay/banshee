@@ -326,7 +326,9 @@ namespace Banshee.Gui.TrackEditor
         private void InvokeFieldSync ()
         {
             ForeachWidget<SyncButton> (delegate (SyncButton button) {
-                button.Click ();
+                if (button.Sensitive) {
+                    button.Click ();
+                }
             });
         }
         

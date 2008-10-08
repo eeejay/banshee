@@ -1,5 +1,26 @@
 2008-10-08  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs:
+	Only click sync buttons when they are sensitive
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:
+	Save the field slot for the track artist and pass it to the album
+	artist field
+
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/PulsingButton.cs: Stop pulsing
+	when the widget goes to the insensitive state
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/FieldPage.cs:
+	Return the FieldSlot when adding a field
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/AlbumArtistEntry.cs:
+	When the compilation button is checked, disable the sync button for
+	the track artist; that is, if a selection sets album
+	artist/compilation, track artist will no longer sync, since that
+	would suck
+
+2008-10-08  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TextEntry.cs:
 	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/GenreEntry.cs:
 	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/EditorEditableUndoAdapter.cs:

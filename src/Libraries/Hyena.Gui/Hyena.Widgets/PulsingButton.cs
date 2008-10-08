@@ -123,5 +123,13 @@ namespace Hyena.Widgets
         {
             pulsator.StopPulsing ();
         }
+        
+        protected override void OnStateChanged (StateType previous_state)
+        {
+            base.OnStateChanged (previous_state);
+            if (State == StateType.Insensitive) {
+                StopPulsing ();
+            }
+        }
     }
 }

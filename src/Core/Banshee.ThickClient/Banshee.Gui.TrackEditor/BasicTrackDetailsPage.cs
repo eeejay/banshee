@@ -72,14 +72,14 @@ namespace Banshee.Gui.TrackEditor
                 FieldOptions.NoSync
             );
             
-            AddField (left, new TextEntry ("CoreArtists", "Name"), 
+            FieldPage.FieldSlot track_artist_slot = AddField (left, new TextEntry ("CoreArtists", "Name"), 
                 Catalog.GetString ("Set all track artists to this value"),
                 delegate { return Catalog.GetString ("Track Artist:"); },
                 delegate (EditorTrackInfo track, Widget widget) { ((TextEntry)widget).Text = track.ArtistName; },
                 delegate (EditorTrackInfo track, Widget widget) { track.ArtistName = ((TextEntry)widget).Text; }
             );
 
-            AlbumArtistEntry album_artist_entry = new AlbumArtistEntry ();
+            AlbumArtistEntry album_artist_entry = new AlbumArtistEntry (track_artist_slot.SyncButton);
             AddField (left, null, album_artist_entry,
                 Catalog.GetString ("Set all compilation album artists to these values"), null,
                 delegate (EditorTrackInfo track, Widget widget) {
