@@ -39,7 +39,7 @@ namespace Banshee.Gui.TrackEditor
     public class GenreEntry : ComboBoxEntry, ICanUndo, IEditorField
     {
         private ListStore genre_model;
-        private EditorEntryUndoAdapter undo_adapter = new EditorEntryUndoAdapter ();
+        private EditorEditableUndoAdapter<Entry> undo_adapter = new EditorEditableUndoAdapter<Entry> ();
         
         public GenreEntry ()
         {

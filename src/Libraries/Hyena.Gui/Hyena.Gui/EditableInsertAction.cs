@@ -1,10 +1,10 @@
 //
-// EntryInsertAction.cs
+// EditableInsertAction.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2007-2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -33,44 +33,43 @@ using Hyena;
 
 namespace Hyena.Gui
 {
-    internal class EntryInsertAction : IUndoAction
+    internal class EditableInsertAction : IUndoAction
     {
-        private Entry entry;
+        private Editable editable;
         private string text;
         private int index;
         private bool is_paste;
 
-        public EntryInsertAction(Entry entry, int start, string text, int length)
+        public EditableInsertAction (Editable editable, int start, string text, int length)
         {
-            this.entry = entry;
+            this.editable = editable;
             this.text = text;
             this.index = start;
             this.is_paste = length > 1;
         }
 
-        public void Undo()
+        public void Undo ()
         {
-            entry.DeleteText(index, index + text.Length);
-            entry.Position = index;
+            editable.DeleteText (index, index + text.Length);
+            editable.Position = index;
         }
 
-        public void Redo()
+        public void Redo ()
         {
             int index_r = index;
-            entry.InsertText(text, ref index_r);
-            entry.Position = index_r;
+            editable.InsertText (text, ref index_r);
+            editable.Position = index_r;
         }
 
-        public void Merge(IUndoAction action)
+        public void Merge (IUndoAction action)
         {
-            EntryInsertAction insert = (EntryInsertAction)action;
-            text += insert.text;
+            text += ((EditableInsertAction)action).text;
         }
 
-        public bool CanMerge(IUndoAction action) 
+        public bool CanMerge (IUndoAction action) 
         {
-            EntryInsertAction insert = action as EntryInsertAction;
-            if(insert == null || String.IsNullOrEmpty(text)) {
+            EditableInsertAction insert = action as EditableInsertAction;
+            if (insert == null || String.IsNullOrEmpty (text)) {
                 return false;
             }
 
@@ -82,9 +81,9 @@ namespace Hyena.Gui
             ); 
         }
 
-        public override string ToString()
+        public override string ToString ()
         {
-            return String.Format("Inserted: [{0}] ({1})", text, index);
+            return String.Format ("Inserted: [{0}] ({1})", text, index);
         }
     }
 }

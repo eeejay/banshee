@@ -4,7 +4,7 @@
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2007-2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -30,9 +30,9 @@ namespace Hyena
 {
     public interface IUndoAction
     {
-        void Undo();
-        void Redo();
-        void Merge(IUndoAction action);
-        bool CanMerge(IUndoAction action);
+        void Undo ();
+        void Redo ();
+        void Merge (IUndoAction action);
+        bool CanMerge (IUndoAction action);
     }
 }

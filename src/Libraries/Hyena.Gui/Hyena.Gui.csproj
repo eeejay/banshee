@@ -48,9 +48,9 @@
     <Compile Include="Hyena.Gui.Dialogs\VersionInformationDialog.cs" />
     <Compile Include="Hyena.Gui\CairoExtensions.cs" />
     <Compile Include="Hyena.Data.Gui\ObjectListView.cs" />
-    <Compile Include="Hyena.Gui\EntryEraseAction.cs" />
-    <Compile Include="Hyena.Gui\EntryInsertAction.cs" />
-    <Compile Include="Hyena.Gui\EntryUndoAdapter.cs" />
+    <Compile Include="Hyena.Gui\EditableEraseAction.cs" />
+    <Compile Include="Hyena.Gui\EditableInsertAction.cs" />
+    <Compile Include="Hyena.Gui\EditableUndoAdapter.cs" />
     <Compile Include="Hyena.Gui\GtkUtilities.cs" />
     <Compile Include="Hyena.Data.Gui\CellContext.cs" />
     <Compile Include="Hyena.Data.Gui\IHeaderCell.cs" />
@@ -120,6 +120,7 @@
     <Compile Include="Hyena.Widgets\PulsingButton.cs" />
     <Compile Include="Hyena.Gui.Theatrics\Pulsator.cs" />
     <Compile Include="Hyena.Gui\PixbufImageSurface.cs" />
+    <Compile Include="Hyena.Widgets\TextViewEditable.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>

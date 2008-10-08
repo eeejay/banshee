@@ -35,7 +35,7 @@ namespace Banshee.Gui.TrackEditor
 {
     public class TextEntry : Entry, IEditorField, ICanUndo
     {
-        private EditorEntryUndoAdapter undo_adapter = new EditorEntryUndoAdapter ();
+        private EditorEditableUndoAdapter<Entry> undo_adapter = new EditorEditableUndoAdapter<Entry> ();
 
         public TextEntry () : base ()
         {

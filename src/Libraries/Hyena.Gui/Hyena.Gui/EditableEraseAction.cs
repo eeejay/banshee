@@ -1,10 +1,10 @@
 //
-// EntryEraseAction.cs
+// EditableEraseAction.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2007-2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -33,42 +33,42 @@ using Hyena;
 
 namespace Hyena.Gui
 {
-    internal class EntryEraseAction : IUndoAction
+    internal class EditableEraseAction : IUndoAction
     {
-        private Entry entry;
+        private Editable editable;
         private string text;
         private int start;
         private int end;
         private bool is_forward;
         private bool is_cut;
 
-        public EntryEraseAction(Entry entry, int start, int end)
+        public EditableEraseAction (Editable editable, int start, int end)
         {
-            this.entry = entry;
-            this.text = entry.GetChars(start, end);
+            this.editable = editable;
+            this.text = editable.GetChars (start, end);
             this.start = start;
             this.end = end;
             this.is_cut = end - start > 1;
-            this.is_forward = entry.Position < start;
+            this.is_forward = editable.Position < start;
         }
 
-        public void Undo()
+        public void Undo ()
         {
             int start_r = start;
-            entry.InsertText(text, ref start_r);
-            entry.Position = is_forward ? start_r : end;
+            editable.InsertText (text, ref start_r);
+            editable.Position = is_forward ? start_r : end;
         }
 
-        public void Redo()
+        public void Redo ()
         {
-            entry.DeleteText(start, end);
-            entry.Position = start;
+            editable.DeleteText (start, end);
+            editable.Position = start;
         }
 
-        public void Merge(IUndoAction action)
+        public void Merge (IUndoAction action)
         {
-            EntryEraseAction erase = (EntryEraseAction)action;
-            if(start == erase.start) {
+            EditableEraseAction erase = (EditableEraseAction)action;
+            if (start == erase.start) {
                 text += erase.text;
                 end += erase.end - erase.start;
             } else {
@@ -77,10 +77,10 @@ namespace Hyena.Gui
             }
         }
 
-        public bool CanMerge(IUndoAction action) 
+        public bool CanMerge (IUndoAction action) 
         {
-            EntryEraseAction erase = action as EntryEraseAction;
-            if(erase == null) {
+            EditableEraseAction erase = action as EditableEraseAction;
+            if (erase == null) {
                 return false;
             }
 
@@ -93,9 +93,9 @@ namespace Hyena.Gui
             );
         }
 
-        public override string ToString()
+        public override string ToString ()
         {
-            return String.Format("Erased: [{0}] ({1},{2})", text, start, end);
+            return String.Format ("Erased: [{0}] ({1},{2})", text, start, end);
         }
     }
 }

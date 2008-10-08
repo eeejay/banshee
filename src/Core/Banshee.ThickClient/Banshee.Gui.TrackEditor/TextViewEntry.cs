@@ -29,13 +29,18 @@
 using System;
 using Gtk;
 
+using Hyena.Widgets;
+
 namespace Banshee.Gui.TrackEditor
 {
-    public class TextViewEntry : ScrolledWindow, IEditorField
-    {
+    public class TextViewEntry : Gtk.ScrolledWindow, IEditorField, ICanUndo
+    {    
+        private EditorEditableUndoAdapter<TextViewEditable> undo_adapter 
+            = new EditorEditableUndoAdapter<TextViewEditable> ();
+        
         public event EventHandler Changed;
         
-        private TextView entry;
+        private TextViewEditable entry;
         public TextView TextView {
             get { return entry; }
         }
@@ -51,7 +56,7 @@ namespace Banshee.Gui.TrackEditor
             HscrollbarPolicy = PolicyType.Never;
             ShadowType = ShadowType.In;
             
-            Add (entry = new TextView ());
+            Add (entry = new TextViewEditable ());
             entry.AcceptsTab = false;
             entry.Show ();
             entry.Buffer.Changed += OnChanged;
@@ -65,6 +70,16 @@ namespace Banshee.Gui.TrackEditor
             int line_height = ((int)(metrics.Ascent + metrics.Descent) + 512) >> 10; // PANGO_PIXELS(d)
             metrics.Dispose ();
             HeightRequest = (line_height + 2) * 2;
+        }
+        
+        public void DisconnectUndo ()
+        {
+            undo_adapter.DisconnectUndo ();
+        }
+        
+        public void ConnectUndo (EditorTrackInfo track)
+        {
+            undo_adapter.ConnectUndo (entry, track);
         }
                 
         private void OnChanged (object o, EventArgs args)

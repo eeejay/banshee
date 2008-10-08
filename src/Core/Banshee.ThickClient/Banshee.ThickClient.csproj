@@ -211,7 +211,7 @@
     <Compile Include="Banshee.Preferences.Gui\DescriptionLabel.cs" />
     <Compile Include="Banshee.Gui.Dialogs\DefaultApplicationHelperDialog.cs" />
     <Compile Include="Banshee.Gui.TrackEditor\ICanUndo.cs" />
-    <Compile Include="Banshee.Gui.TrackEditor\EditorEntryUndoAdapter.cs" />
+    <Compile Include="Banshee.Gui.TrackEditor\EditorEditableUndoAdapter.cs" />
     <Compile Include="Banshee.Collection.Gui\ColumnCellTrackNumber.cs" />
     <Compile Include="Banshee.Collection.Gui\ColumnCellDiscAndCount.cs" />
     <Compile Include="Banshee.Collection.Gui\ColumnCellLocation.cs" />

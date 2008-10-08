@@ -44,9 +44,9 @@ SOURCES =  \
 	Hyena.Gui/CleanRoomStartup.cs \
 	Hyena.Gui/CompositeUtils.cs \
 	Hyena.Gui/Contrast.cs \
-	Hyena.Gui/EntryEraseAction.cs \
-	Hyena.Gui/EntryInsertAction.cs \
-	Hyena.Gui/EntryUndoAdapter.cs \
+	Hyena.Gui/EditableEraseAction.cs \
+	Hyena.Gui/EditableInsertAction.cs \
+	Hyena.Gui/EditableUndoAdapter.cs \
 	Hyena.Gui/GtkUtilities.cs \
 	Hyena.Gui/GtkWorkarounds.cs \
 	Hyena.Gui/PangoCairoHelper.cs \
@@ -85,6 +85,7 @@ SOURCES =  \
 	Hyena.Widgets/ScrolledWindow.cs \
 	Hyena.Widgets/SegmentedBar.cs \
 	Hyena.Widgets/SmoothScrolledWindow.cs \
+	Hyena.Widgets/TextViewEditable.cs \
 	Hyena.Widgets/WrapLabel.cs
 
 RESOURCES =

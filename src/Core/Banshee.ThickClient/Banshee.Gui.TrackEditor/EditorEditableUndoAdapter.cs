@@ -1,5 +1,5 @@
 //
-// EditorEntryUndoAdapter.cs
+// EditorEditableUndoAdapter.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
@@ -34,11 +34,11 @@ using Hyena.Gui;
 
 namespace Banshee.Gui.TrackEditor
 {
-    public class EditorEntryUndoAdapter
+    public class EditorEditableUndoAdapter<T> where T : Widget, Editable
     {
-        private Dictionary<EditorTrackInfo, EntryUndoAdapter> undo_adapters 
-            = new Dictionary<EditorTrackInfo, EntryUndoAdapter> ();
-        private EntryUndoAdapter current_adapter;
+        private Dictionary<EditorTrackInfo, EditableUndoAdapter<T>> undo_adapters 
+            = new Dictionary<EditorTrackInfo, EditableUndoAdapter<T>> ();
+        private EditableUndoAdapter<T> current_adapter;
 
         public void DisconnectUndo ()
         {
@@ -48,14 +48,14 @@ namespace Banshee.Gui.TrackEditor
             }
         }
         
-        public void ConnectUndo (Entry entry, EditorTrackInfo track)
+        public void ConnectUndo (T entry, EditorTrackInfo track)
         {
             DisconnectUndo ();
         
             if (undo_adapters.ContainsKey (track)) {
                 current_adapter = undo_adapters[track];
             } else {
-                current_adapter = new EntryUndoAdapter (entry);
+                current_adapter = new EditableUndoAdapter<T> (entry);
                 undo_adapters.Add (track, current_adapter);
             }
             
