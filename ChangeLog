@@ -1,5 +1,11 @@
 2008-10-08  Aaron Bockover  <abock@gnome.org>
 
+	
+
+
+
+2008-10-08  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TextEntry.cs:
 	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/GenreEntry.cs:
 	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/EditorEditableUndoAdapter.cs:
