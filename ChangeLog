@@ -1,3 +1,11 @@
+2008-10-08  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Services/Banshee.Collection.Indexer/CollectionIndexer.cs:
+	Add a missing lock, which was causing a crash+race
+
+	* src/Clients/Beroe/Beroe/RemoteClient.cs: Add missing call to Index so
+	we actually can get results from the server
+
 2008-10-06  Aaron Bockover  <abock@gnome.org>
 
 	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Rendering.cs:

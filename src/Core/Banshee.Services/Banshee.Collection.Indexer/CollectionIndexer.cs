@@ -72,10 +72,12 @@ namespace Banshee.Collection.Indexer
         
         public void Dispose ()
         {
-            DisposeModels ();
+            lock (this) {
+                DisposeModels ();
             
-            if (service != null) {
-                service.DisposeIndexer (this);
+                if (service != null) {
+                    service.DisposeIndexer (this);
+                }
             }
         }
         

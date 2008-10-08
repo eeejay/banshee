@@ -64,12 +64,15 @@ namespace Beroe
             Sleep (5);
             
             ICollectionIndexer indexer = CreateIndexer ();
+            indexer.Index ();
+            
             for (int i = 0, models = indexer.GetModelCounts (); i < models; i++) {
                 for (int j = 0, items = indexer.GetModelResultsCount (i); j < items; j++) {
                     IDictionary<string, object> result = indexer.GetResult (i, j);
                     Console.WriteLine (result["URI"]);
                 }
             }
+            
             indexer.Dispose ();
             
             lock (shutdown_mutex) {
