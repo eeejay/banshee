@@ -1,6 +1,18 @@
 2008-10-09  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
+	Keep track of the track that was playing (if any) before the play queue
+	took over so we can return playback to the song after it (BGO #547213).
+
+	* src/Core/Banshee.Services/Banshee.PlaybackController/PlaybackControllerService.cs:
+	Add a public PriorTrack property that outside code can use to make the
+	QueryLinear code grab the next track after the one set, instead of the one
+	after the 'CurrentTrack' (eg the last one played).  Used to return
+	playback to the right spot in a source after the queue is finished.
+
+2008-10-09  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
 	When finished playing from the play queue, don't play from the prior
 	source if it wasn't playing when the play queue took over.  Partially
 	fixes BGO #547213.

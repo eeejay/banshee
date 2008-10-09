@@ -52,6 +52,7 @@ namespace Banshee.PlaybackController
         private IStackProvider<TrackInfo> next_stack;
     
         private TrackInfo current_track;
+        private TrackInfo prior_track;
         private TrackInfo changing_to_track;
         private bool raise_started_after_transition = false;
         private bool transition_track_started = false;
@@ -316,7 +317,11 @@ namespace Banshee.PlaybackController
             if (Source.TrackModel.Count == 0)
                 return null;
 
-            int index = Source.TrackModel.IndexOf (CurrentTrack);
+            int index = Source.TrackModel.IndexOf (PriorTrack);
+
+            // Clear the PriorTrack after using it, it's only meant to be used for a single Query
+            PriorTrack = null;
+
             if (index == -1) {
                 return Source.TrackModel[0];
             } else {
@@ -400,6 +405,11 @@ namespace Banshee.PlaybackController
         public TrackInfo CurrentTrack {
             get { return current_track; }
             protected set { current_track = value; }
+        }
+
+        public TrackInfo PriorTrack {
+            get { return prior_track ?? CurrentTrack; }
+            set { prior_track = value; }
         }
         
         protected DateTime source_set_at = DateTime.MinValue;

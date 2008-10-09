@@ -52,6 +52,7 @@ namespace Banshee.PlayQueue
 
         private ITrackModelSource prior_playback_source;
         private DatabaseTrackInfo playing_track;
+        private TrackInfo prior_playback_track;
         private PlayQueueActions actions;
         private bool was_playing = false;
         
@@ -188,14 +189,19 @@ namespace Banshee.PlayQueue
         private void OnPlayerEvent (PlayerEventArgs args)
         {
             if (args.Event == PlayerEvent.EndOfStream) {
-                if (RemovePlayingTrack () && !was_playing) {
-                    ServiceManager.PlaybackController.StopWhenFinished = true;
+                if (RemovePlayingTrack ()) {
+                    if (was_playing) {
+                        ServiceManager.PlaybackController.PriorTrack = prior_playback_track;
+                    } else {
+                        ServiceManager.PlaybackController.StopWhenFinished = true;
+                    }
                 }
             } else if (args.Event == PlayerEvent.StartOfStream) {
                 if (this == ServiceManager.PlaybackController.Source) {
-                    playing_track = ServiceManager.PlayerEngine.CurrentTrack as DatabaseTrackInfo; 
+                    playing_track = ServiceManager.PlayerEngine.CurrentTrack as DatabaseTrackInfo;
                 } else {
                     playing_track = null;
+                    prior_playback_track = ServiceManager.PlayerEngine.CurrentTrack;
                 }
             }
         }
@@ -212,6 +218,7 @@ namespace Banshee.PlayQueue
             if (Count == 0) {
                 ServiceManager.PlaybackController.Source = PriorSource;
                 if (was_playing) {
+                    ServiceManager.PlaybackController.PriorTrack = prior_playback_track;
                     ServiceManager.PlaybackController.Next (restart);
                 } else {
                     ServiceManager.PlayerEngine.Close ();
