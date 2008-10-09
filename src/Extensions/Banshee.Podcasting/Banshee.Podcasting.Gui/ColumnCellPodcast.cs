@@ -51,7 +51,7 @@ namespace Banshee.Podcasting.Gui
         
         // TODO replace this w/ new icon installation etc
         private static ImageSurface default_cover_image 
-            = new PixbufImageSurface (IconThemeUtils.LoadIcon (48, "podcast"));
+            = new PixbufImageSurface (IconThemeUtils.LoadIcon (image_size, "podcast"));
         
         private ArtworkManager artwork_manager;
 
@@ -72,7 +72,7 @@ namespace Banshee.Podcasting.Gui
             
             Feed feed = (Feed)BoundObject;
             
-            bool is_default = false;          
+            bool is_default = false;
             ImageSurface image = artwork_manager == null ? null 
                 : artwork_manager.LookupScaleSurface (PodcastService.ArtworkIdFor (feed), image_size, true);
             
@@ -86,7 +86,7 @@ namespace Banshee.Podcasting.Gui
             int x = image_spacing;
             int y = ((int)cellHeight - image_render_size) / 2;
 
-            ArtworkRenderer.RenderThumbnail (context.Context, image, !is_default, x, y, 
+            ArtworkRenderer.RenderThumbnail (context.Context, image, false, x, y, 
                 image_render_size, image_render_size, !is_default, context.Theme.Context.Radius);
                 
             int fl_width = 0, fl_height = 0, sl_width = 0, sl_height = 0;

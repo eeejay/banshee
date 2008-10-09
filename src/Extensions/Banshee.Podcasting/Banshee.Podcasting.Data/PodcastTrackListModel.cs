@@ -54,16 +54,15 @@ using Migo.Syndication;
 
 namespace Banshee.Podcasting.Gui
 {
-    public class PodcastTrackListModel : DatabaseTrackListModel, IListModel<PodcastTrackInfo>
+    public class PodcastTrackListModel : DatabaseTrackListModel
     {
         public PodcastTrackListModel (BansheeDbConnection conn, IDatabaseTrackModelProvider provider, DatabaseSource source) : base (conn, provider, source)
         {
-            JoinTable = String.Format ("{0}, {1}, {2}", Feed.Provider.TableName, FeedItem.Provider.TableName, FeedEnclosure.Provider.TableName);
-            JoinPrimaryKey = FeedItem.Provider.PrimaryKey;
-            JoinColumn = "ExternalID";
+            From = String.Format ("{0}, {1}, {2}, {3}", provider.From, Feed.Provider.TableName, FeedItem.Provider.TableName, FeedEnclosure.Provider.TableName);
+            int podcast_dbid = (source as PodcastSource ?? source.Parent as PodcastSource).DbId;
             AddCondition (String.Format (
-                "{0}.FeedID = {1}.FeedID AND CoreTracks.ExternalID = {1}.ItemID AND {1}.ItemID = {2}.ItemID",
-                Feed.Provider.TableName, FeedItem.Provider.TableName, FeedEnclosure.Provider.TableName
+                "CoreTracks.PrimarySourceID = {3} AND {0}.FeedID = {1}.FeedID AND CoreTracks.ExternalID = {1}.ItemID AND {1}.ItemID = {2}.ItemID",
+                Feed.Provider.TableName, FeedItem.Provider.TableName, FeedEnclosure.Provider.TableName, podcast_dbid
             ));
         }
 
@@ -109,14 +108,6 @@ namespace Banshee.Podcasting.Gui
             }
 
             return sort_query ?? Banshee.Query.BansheeQuery.GetSort (key, asc);
-        }
-        
-        public new PodcastTrackInfo this[int index] {
-            get {
-                lock (this) {
-                    return cache.GetValue (index) as PodcastTrackInfo;
-                }
-            }
         }
     }
 }

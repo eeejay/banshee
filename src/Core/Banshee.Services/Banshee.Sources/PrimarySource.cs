@@ -72,14 +72,32 @@ namespace Banshee.Sources
     }
 
     public delegate bool TrackEqualHandler (DatabaseTrackInfo a, TrackInfo b);
+    public delegate object TrackExternalObjectHandler (DatabaseTrackInfo a);
+    public delegate string TrackArtworkIdHandler (DatabaseTrackInfo a);
 
     public abstract class PrimarySource : DatabaseSource, IDisposable
     {
+        #region Functions that let us override some behavior of our DatabaseTrackInfos
+        
         private TrackEqualHandler track_equal_handler;
         public TrackEqualHandler TrackEqualHandler {
             get { return track_equal_handler; }
             protected set { track_equal_handler = value; }
         }
+
+        private TrackExternalObjectHandler track_external_object_handler;
+        public TrackExternalObjectHandler TrackExternalObjectHandler {
+            get { return track_external_object_handler; }
+            protected set { track_external_object_handler = value; }
+        }
+
+        private TrackArtworkIdHandler track_artwork_id_handler;
+        public TrackArtworkIdHandler TrackArtworkIdHandler {
+            get { return track_artwork_id_handler; }
+            protected set { track_artwork_id_handler = value; }
+        }
+
+        #endregion
     
         protected ErrorSource error_source;
         protected bool error_source_visible = false;

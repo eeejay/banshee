@@ -80,8 +80,9 @@ namespace Banshee.Podcasting
             }
             
             if (SaveHttpStreamCover (new Uri (feed.ImageUrl), cover_art_id, null)) {
-                if (ServiceManager.SourceManager.ActiveSource is PodcastSource) {
-                    (ServiceManager.SourceManager.ActiveSource as PodcastSource).Reload ();
+                Banshee.Sources.Source src = ServiceManager.SourceManager.ActiveSource;
+                if (src != null && (src is PodcastSource || src.Parent is PodcastSource)) {
+                    (src as Banshee.Sources.DatabaseSource).Reload ();
                 }
                 return;
             }

@@ -96,7 +96,7 @@ namespace Banshee.Gui
             });
         }
 
-        public new void Add (ActionEntry [] action_entries)
+        public new void Add (params ActionEntry [] action_entries)
         {
             if (ImportantByDefault) {
                 AddImportant (action_entries);

@@ -58,15 +58,7 @@ namespace Banshee.Sources
         protected DatabaseTrackListModel track_model;
         protected DatabaseAlbumListModel album_model;
         protected DatabaseArtistListModel artist_model;
-        
-        private DatabaseQueryFilterModel<string> genre_model;
-        protected DatabaseQueryFilterModel<string> GenreModel {
-            get {
-                return genre_model ?? 
-                    genre_model = new Banshee.Collection.Database.DatabaseQueryFilterModel<string> (this, DatabaseTrackModel, ServiceManager.DbConnection,
-                        Catalog.GetString ("All Genres ({0})"), UniqueId, BansheeQuery.GenreField, "Genre");
-            }
-        }
+        protected DatabaseQueryFilterModel<string> genre_model;
 
         private RateLimiter reload_limiter;
 
@@ -106,9 +98,7 @@ namespace Banshee.Sources
         }
 
         public DatabaseTrackListModel DatabaseTrackModel {
-            get {
-                return track_model ?? track_model = new DatabaseTrackListModel (ServiceManager.DbConnection, TrackProvider, this);
-            }
+            get { return track_model ?? track_model = (Parent as DatabaseSource ?? this).CreateTrackModelFor (this); }
             protected set { track_model = value; }
         }
 
@@ -131,20 +121,40 @@ namespace Banshee.Sources
             
             current_filters_schema = CreateSchema<string[]> ("current_filters");
 
-            if (HasArtistAlbum) {
-                artist_model = new DatabaseArtistListModel (this, DatabaseTrackModel, ServiceManager.DbConnection, UniqueId);
-                album_model = new DatabaseAlbumListModel (this, DatabaseTrackModel, ServiceManager.DbConnection, UniqueId);
-                
-                AvailableFilters.Add (GenreModel);
-                AvailableFilters.Add (artist_model);
-                AvailableFilters.Add (album_model);
-                
-                DefaultFilters.Add (GenreModel);
-                DefaultFilters.Add (artist_model);
-                DefaultFilters.Add (album_model);
+            DatabaseSource filter_src = Parent as DatabaseSource ?? this;
+            foreach (IFilterListModel filter in filter_src.CreateFiltersFor (this)) {
+                AvailableFilters.Add (filter);
+                DefaultFilters.Add (filter);
             }
 
             reload_limiter = new RateLimiter (RateLimitedReload);
+        }
+
+        protected virtual DatabaseTrackListModel CreateTrackModelFor (DatabaseSource src)
+        {
+            return new DatabaseTrackListModel (ServiceManager.DbConnection, TrackProvider, src);
+        }
+
+        protected virtual IEnumerable<IFilterListModel> CreateFiltersFor (DatabaseSource src)
+        {
+            if (!HasArtistAlbum) {
+                yield break;
+            }
+
+            DatabaseArtistListModel artist_model = new DatabaseArtistListModel (src, src.DatabaseTrackModel, ServiceManager.DbConnection, src.UniqueId);
+            DatabaseAlbumListModel album_model = new DatabaseAlbumListModel (src, src.DatabaseTrackModel, ServiceManager.DbConnection, src.UniqueId);
+            DatabaseQueryFilterModel<string> genre_model = new DatabaseQueryFilterModel<string> (src, src.DatabaseTrackModel, ServiceManager.DbConnection,
+                        Catalog.GetString ("All Genres ({0})"), src.UniqueId, BansheeQuery.GenreField, "Genre");
+
+            if (this == src) {
+                this.artist_model = artist_model;
+                this.album_model = album_model;
+                this.genre_model = genre_model;
+            }
+
+            yield return artist_model;
+            yield return album_model;
+            yield return genre_model;
         }
 
         protected virtual void AfterInitialized ()

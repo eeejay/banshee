@@ -56,13 +56,11 @@ namespace Banshee.Podcasting.Gui
     public class PodcastActions : BansheeActionGroup
     {
         private uint actions_id;
-        private PodcastSource source;
+        private DatabaseSource last_source;
         
         public PodcastActions (PodcastSource source) : base (ServiceManager.Get<InterfaceActionService> (), "Podcast")
         {
-            this.source = source;
-
-            AddImportant (new ActionEntry[] {
+            AddImportant (
                 new ActionEntry (
                     "PodcastUpdateAllAction", Stock.Refresh,
                      Catalog.GetString ("Update Podcasts"), null,//"<control><shift>U",
@@ -75,9 +73,9 @@ namespace Banshee.Podcasting.Gui
                      Catalog.GetString ("Subscribe to a new podcast"),
                      OnPodcastAdd
                 )         
-            });
+            );
             
-            Add (new ActionEntry [] {
+            Add (
                 new ActionEntry("PodcastFeedPopupAction", null, 
                     String.Empty, null, null, OnFeedPopup),
                     
@@ -154,18 +152,13 @@ namespace Banshee.Podcasting.Gui
                      null, String.Empty, 
                      OnPodcastItemProperties
                 )
-            });
+            );
             
             actions_id = Actions.UIManager.AddUiFromResource ("GlobalUI.xml");
             Actions.AddActionGroup (this);
 
             ServiceManager.SourceManager.ActiveSourceChanged += HandleActiveSourceChanged;
-            
-            source.TrackModel.Selection.Changed += delegate { Banshee.Base.ThreadAssist.ProxyToMain (UpdateItemActions); };
-            source.FeedModel.Selection.Changed += delegate { Banshee.Base.ThreadAssist.ProxyToMain (UpdateFeedActions); };
-            
-            UpdateFeedActions ();
-            UpdateItemActions ();
+            OnSelectionChanged (null, null);
         }
 
         public override void Dispose ()
@@ -176,8 +169,33 @@ namespace Banshee.Podcasting.Gui
         }
 
 #region State Event Handlers
-
+        
         private void HandleActiveSourceChanged (SourceEventArgs args)
+        {
+            if (last_source != null) {
+                foreach (IFilterListModel filter in last_source.AvailableFilters) {
+                    filter.Selection.Changed -= OnSelectionChanged;
+                }
+                last_source.TrackModel.Selection.Changed -= OnSelectionChanged;
+                last_source = null;
+            }
+
+            last_source = args.Source as DatabaseSource;
+            if (IsPodcastSource) {
+                if (last_source != null) {
+                    foreach (IFilterListModel filter in last_source.AvailableFilters) {
+                        filter.Selection.Changed += OnSelectionChanged;
+                    }
+                    last_source.TrackModel.Selection.Changed += OnSelectionChanged;
+                }
+            } else {
+                last_source = null;
+            }
+
+            OnSelectionChanged (null, null);
+        }
+
+        private void OnSelectionChanged (object o, EventArgs args)
         {
             Banshee.Base.ThreadAssist.ProxyToMain (delegate {
                 UpdateFeedActions ();
@@ -189,10 +207,37 @@ namespace Banshee.Podcasting.Gui
 
 #region Utility Methods
 
+        private DatabaseSource ActiveDbSource {
+            get { return last_source; }
+        }
+
+        private bool IsPodcastSource {
+            get {
+                return ActiveDbSource != null && (ActiveDbSource is PodcastSource || ActiveDbSource.Parent is PodcastSource);
+            }
+        }
+
+        public PodcastFeedModel ActiveFeedModel {
+            get {
+                if (ActiveDbSource == null) {
+                    return null;
+                } else if (ActiveDbSource is PodcastSource) {
+                    return (ActiveDbSource as PodcastSource).FeedModel;
+                } else {
+                    foreach (IFilterListModel filter in ActiveDbSource.AvailableFilters) {
+                        if (filter is PodcastFeedModel) {
+                            return filter as PodcastFeedModel;
+                        }
+                    }
+                    return null;
+                }
+            }
+        }
+
         private void UpdateItemActions ()
         {
-            if (ServiceManager.SourceManager.ActiveSource == source) {
-                bool has_single_selection = source.TrackModel.Selection.Count == 1;
+            if (IsPodcastSource) {
+                bool has_single_selection = ActiveDbSource.TrackModel.Selection.Count == 1;
                 UpdateActions (true, has_single_selection,
                    "PodcastItemLinkAction"
                 );
@@ -201,9 +246,9 @@ namespace Banshee.Podcasting.Gui
         
         private void UpdateFeedActions ()
         {
-            if (ServiceManager.SourceManager.ActiveSource == source) {
-                bool has_single_selection = source.FeedModel.Selection.Count == 1;
-                bool all_selected = source.FeedModel.Selection.AllSelected;
+            if (IsPodcastSource) {
+                bool has_single_selection = ActiveFeedModel.Selection.Count == 1;
+                bool all_selected = ActiveFeedModel.Selection.AllSelected;
 
                 UpdateActions (true, has_single_selection && !all_selected,
                     "PodcastDeleteAction", "PodcastUpdateFeedAction", "PodcastHomepageAction",
@@ -219,19 +264,21 @@ namespace Banshee.Podcasting.Gui
 
         private IEnumerable<TrackInfo> GetSelectedItems ()
         {
-            return new List<TrackInfo> (source.TrackModel.SelectedItems);
+            return new List<TrackInfo> (ActiveDbSource.TrackModel.SelectedItems);
         }
 
 #endregion
-            
+
+                
 #region Action Handlers
 
         private void OnFeedPopup (object o, EventArgs args)
         {
-            if (source.FeedModel.Selection.AllSelected)
+            if (ActiveFeedModel.Selection.AllSelected) {
                 ShowContextMenu ("/PodcastAllFeedsContextMenu");
-            else
+            } else {
                 ShowContextMenu ("/PodcastFeedPopup");
+            }
         }
 
         private void RunSubscribeDialog ()
@@ -375,7 +422,7 @@ namespace Banshee.Podcasting.Gui
         
         private void OnPodcastUpdate (object sender, EventArgs e)
         {
-            foreach (Feed feed in source.FeedModel.SelectedItems) {
+            foreach (Feed feed in ActiveFeedModel.SelectedItems) {
                 feed.Update ();
             }
         }        
@@ -389,7 +436,7 @@ namespace Banshee.Podcasting.Gui
         
         private void OnPodcastDelete (object sender, EventArgs e)
         {
-            Feed feed = source.FeedModel.FocusedItem;
+            Feed feed = ActiveFeedModel.FocusedItem;
             if (feed != null) {
                 feed.Delete (true);
             }
@@ -397,7 +444,7 @@ namespace Banshee.Podcasting.Gui
         
         private void OnPodcastDownloadAllEpisodes (object sender, EventArgs e)
         {
-            Feed feed = source.FeedModel.FocusedItem;
+            Feed feed = ActiveFeedModel.FocusedItem;
             if (feed != null) {
                 foreach (FeedItem item in feed.Items) {
                     item.Enclosure.AsyncDownload ();
@@ -407,15 +454,15 @@ namespace Banshee.Podcasting.Gui
 
         private void OnPodcastItemDeleteFile (object sender, EventArgs e)
         {
-            foreach (PodcastTrackInfo pi in GetSelectedItems ()) {
+            foreach (PodcastTrackInfo pi in PodcastTrackInfo.From (GetSelectedItems ())) {
                 if (pi.Enclosure.LocalPath != null)
                     pi.Enclosure.DeleteFile ();
             }
-        }  
+        }
 
         private void OnPodcastHomepage (object sender, EventArgs e)
         {
-            Feed feed = source.FeedModel.FocusedItem;
+            Feed feed = ActiveFeedModel.FocusedItem;
             if (feed != null && !String.IsNullOrEmpty (feed.Link)) {
                 Banshee.Web.Browser.Open (feed.Link);
             }   
@@ -423,7 +470,7 @@ namespace Banshee.Podcasting.Gui
 
         private void OnPodcastProperties (object sender, EventArgs e)
         {
-            Feed feed = source.FeedModel.FocusedItem;
+            Feed feed = ActiveFeedModel.FocusedItem;
             if (feed != null) {
                 new PodcastFeedPropertiesDialog (feed).Run ();
             }
@@ -450,19 +497,19 @@ namespace Banshee.Podcasting.Gui
         
         private void MarkPodcastItemSelection (bool markRead) 
         {
-            TrackInfo new_selection_track = source.TrackModel [source.TrackModel.Selection.LastIndex + 1];
+            TrackInfo new_selection_track = ActiveDbSource.TrackModel [ActiveDbSource.TrackModel.Selection.LastIndex + 1];
             
             PodcastService.IgnoreItemChanges = true;
             
             bool any = false;
-            foreach (PodcastTrackInfo track in GetSelectedItems ()) {
+            foreach (PodcastTrackInfo track in PodcastTrackInfo.From (GetSelectedItems ())) {
                 if (track.Item.IsRead != markRead) {
                     track.Item.IsRead = markRead;
                     track.Item.Save ();
 
-                    if (track.Item.IsRead ^ track.PlayCount > 0) {
-                        track.PlayCount = track.Item.IsRead ? 1 : 0;
-                        track.Save (false);
+                    if (track.Item.IsRead ^ track.Track.PlayCount > 0) {
+                        track.Track.PlayCount = track.Item.IsRead ? 1 : 0;
+                        track.Track.Save (false);
                     }
                     any = true;
                 }
@@ -471,16 +518,16 @@ namespace Banshee.Podcasting.Gui
             PodcastService.IgnoreItemChanges = false;
             
             if (any) {
-                source.Reload ();
+                ActiveDbSource.Reload ();
                 
                 // If we just removed all of the selected items from our view, we should select the
                 // item after the last removed item
-                if (source.TrackModel.Selection.Count == 0 && new_selection_track != null) {
-                    int new_i = source.TrackModel.IndexOf (new_selection_track);
+                if (ActiveDbSource.TrackModel.Selection.Count == 0 && new_selection_track != null) {
+                    int new_i = ActiveDbSource.TrackModel.IndexOf (new_selection_track);
                     if (new_i != -1) {
-                        source.TrackModel.Selection.Clear (false);
-                        source.TrackModel.Selection.FocusedIndex = new_i;
-                        source.TrackModel.Selection.Select (new_i);
+                        ActiveDbSource.TrackModel.Selection.Clear (false);
+                        ActiveDbSource.TrackModel.Selection.FocusedIndex = new_i;
+                        ActiveDbSource.TrackModel.Selection.Select (new_i);
                     }
                 }
             }
@@ -502,7 +549,7 @@ namespace Banshee.Podcasting.Gui
         
         private void OnPodcastItemDownload (object sender, EventArgs e)
         {
-            foreach (PodcastTrackInfo pi in GetSelectedItems ()) {
+            foreach (PodcastTrackInfo pi in PodcastTrackInfo.From (GetSelectedItems ())) {
                 if (pi.Enclosure.DownloadStatus != FeedDownloadStatus.Downloaded)
                     pi.Enclosure.AsyncDownload ();
             }
@@ -510,7 +557,7 @@ namespace Banshee.Podcasting.Gui
         
         private void OnPodcastItemLink (object sender, EventArgs e)
         {
-            PodcastTrackInfo track = source.TrackModel.FocusedItem as PodcastTrackInfo;
+            PodcastTrackInfo track = PodcastTrackInfo.From (ActiveDbSource.TrackModel.FocusedItem);
             if (track != null && !String.IsNullOrEmpty (track.Item.Link)) {
                 Banshee.Web.Browser.Open (track.Item.Link);
             }

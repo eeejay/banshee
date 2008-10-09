@@ -148,11 +148,11 @@ namespace Banshee.Podcasting
                         );
 
                         if (track_id > 0) {
-                            PodcastTrackInfo track = PodcastTrackInfo.Provider.FetchSingle (track_id);
-                            track.Item = enclosure.Item;
-                            track.PrimarySourceId = source.DbId;
-                            track.SyncWithFeedItem ();
-                            track.Save (false);
+                            PodcastTrackInfo pi = new PodcastTrackInfo (DatabaseTrackInfo.Provider.FetchSingle (track_id));
+                            pi.Item = enclosure.Item;
+                            pi.Track.PrimarySourceId = source.DbId;
+                            pi.SyncWithFeedItem ();
+                            pi.Track.Save (false);
                             moved++;
                         }
                     }
@@ -322,12 +322,19 @@ namespace Banshee.Podcasting
                 Banshee.Kernel.Scheduler.Schedule (new PodcastImageFetchJob (feed), Banshee.Kernel.JobPriority.BelowNormal);
             }
         }
+
+        private DatabaseTrackInfo GetTrackByItemId (long item_id)
+        {
+            return DatabaseTrackInfo.Provider.FetchFirstMatching ("PrimarySourceID = ? AND ExternalID = ?", source.DbId, item_id);
+        }
         
         private void OnItemAdded (FeedItem item)
         {
             if (item.Enclosure != null) {
-                PodcastTrackInfo track = new PodcastTrackInfo (item);
+                DatabaseTrackInfo track = new DatabaseTrackInfo ();
+                track.ExternalId = item.DbId;
                 track.PrimarySource = source;
+                (track.ExternalObject as PodcastTrackInfo).SyncWithFeedItem ();
                 track.Save (true);
                 RefreshArtworkFor (item.Feed);
             } else {
@@ -338,9 +345,9 @@ namespace Banshee.Podcasting
         
         private void OnItemRemoved (FeedItem item)
         {
-            PodcastTrackInfo track = PodcastTrackInfo.GetByItemId (item.DbId);
+            DatabaseTrackInfo track = GetTrackByItemId (item.DbId);
             if (track != null) {
-                track.Delete ();
+                DatabaseTrackInfo.Provider.Delete (track);
             }
         }
         
@@ -348,13 +355,17 @@ namespace Banshee.Podcasting
         
         private void OnItemChanged (FeedItem item)
         {
-            if (IgnoreItemChanges)
+            if (IgnoreItemChanges) {
                 return;
+            }
 
-            PodcastTrackInfo track = PodcastTrackInfo.GetByItemId (item.DbId);
+            DatabaseTrackInfo track = GetTrackByItemId (item.DbId);
             if (track != null) {
-                track.SyncWithFeedItem ();
-                track.Save (true);
+                PodcastTrackInfo pi = track.ExternalObject as PodcastTrackInfo;
+                if (pi != null) {
+                    pi.SyncWithFeedItem ();
+                    track.Save (true);
+                }
             }
         }
         
@@ -415,9 +426,9 @@ namespace Banshee.Podcasting
         public void AddFeedItem (FeedItem item)
         {
             if (item.Enclosure != null) {
-                PodcastTrackInfo pi = new PodcastTrackInfo (item);
-                pi.PrimarySource = source;
-                pi.Save (true);
+                PodcastTrackInfo pi = new PodcastTrackInfo (new DatabaseTrackInfo (), item);
+                pi.Track.PrimarySource = source;
+                pi.Track.Save (true);
                 source.NotifyUser ();
             } else {
                 item.Delete (false);                      

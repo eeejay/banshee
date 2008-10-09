@@ -187,17 +187,19 @@ namespace Banshee.Gui
             if (active_source == null) {
                 return;
             }
-            
-            active_source_actions = active_source.Properties.Get<BansheeActionGroup> ("ActiveSourceActions");
+
+            bool propagate = active_source.GetInheritedProperty<bool> ("ActiveSourceUIResourcePropagate");
+
+            active_source_actions = active_source.GetProperty<BansheeActionGroup> ("ActiveSourceActions", propagate);
             if (active_source_actions != null) {
                 AddActionGroup (active_source_actions);
             }
                 
             Assembly assembly = 
-                active_source.Properties.Get<Assembly> ("ActiveSourceUIResource.Assembly") ??
+                active_source.GetProperty<Assembly> ("ActiveSourceUIResource.Assembly", propagate) ??
                 Assembly.GetAssembly (active_source.GetType ());
 
-            active_source_uiid = AddUiFromFile (active_source.Properties.Get<string> ("ActiveSourceUIResource"), assembly);
+            active_source_uiid = AddUiFromFile (active_source.GetProperty<string> ("ActiveSourceUIResource", propagate), assembly);
         }
 
         public uint AddUiFromFileInCurrentAssembly (string ui_file)

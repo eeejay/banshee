@@ -56,21 +56,35 @@ namespace Banshee.Podcasting.Data
         None = 7
     }
 
-    public class PodcastTrackInfo : DatabaseTrackInfo
+    public class PodcastTrackInfo
     {
-        private static BansheeModelProvider<PodcastTrackInfo> provider = new DatabaseTrackModelProvider<PodcastTrackInfo> (ServiceManager.DbConnection);
-        public static new BansheeModelProvider<PodcastTrackInfo> Provider {
-            get { return provider; }
-        }
-        
-        public static PodcastTrackInfo GetByItemId (long item_id)
+        public static PodcastTrackInfo From (TrackInfo track)
         {
-            return Provider.FetchFirstMatching ("ExternalID = ?", item_id);
+            if (track != null) {
+                PodcastTrackInfo pi = track.ExternalObject as PodcastTrackInfo;
+                return pi;
+            }
+            return null;
+        }
+
+        public static IEnumerable<PodcastTrackInfo> From (IEnumerable<TrackInfo> tracks)
+        {
+            foreach (TrackInfo track in tracks) {
+                PodcastTrackInfo pi = From (track);
+                if (pi != null) {
+                    yield return pi;
+                }
+            }
         }
         
         private int position;
+        private DatabaseTrackInfo track;
 
 #region Properties
+
+        public DatabaseTrackInfo Track {
+            get { return track; }
+        }
 
         public Feed Feed {
             get { return Item.Feed; }
@@ -79,12 +93,12 @@ namespace Banshee.Podcasting.Data
         private FeedItem item;
         public FeedItem Item {
             get {
-                if (item == null && ExternalId > 0) {
-                    item = FeedItem.Provider.FetchSingle (ExternalId);
+                if (item == null && track.ExternalId > 0) {
+                    item = FeedItem.Provider.FetchSingle (track.ExternalId);
                 }
                 return item;
             }
-            set { item = value; ExternalId = value.DbId; }
+            set { item = value; track.ExternalId = value.DbId; }
         }
         
         public DateTime PublishedDate {
@@ -108,21 +122,9 @@ namespace Banshee.Podcasting.Data
             set { position = value; }
         }
 
-        public override DateTime ReleaseDate {
+        public DateTime ReleaseDate {
             get { return Item.PubDate; }
         }
-        
-        //[VirtualDatabaseColumn ("Title", Item.Feed.Title, "ItemID", "ExternalID")]
-        
-        // Override these two so they aren't considered DatabaseColumns so we don't
-        // join with CoreArtists/CoreAlbums
-        /*public override string AlbumTitle {
-            get { return Item.Feed.Title; }
-        }
-        
-        public override string ArtistName {
-            get { return Item.Author; }
-        }*/
         
         public FeedEnclosure Enclosure {
             get { return (Item == null) ? null : Item.Enclosure; }
@@ -151,41 +153,17 @@ namespace Banshee.Podcasting.Data
                 }
             }
         }
-        
-        public override string ArtworkId {
-            get { return PodcastService.ArtworkIdFor (Feed); }
-        }
-
-        public string StatusText {
-            get {
-                switch (Activity) {
-                    case PodcastItemActivity.Downloading: return Catalog.GetString ("Downloading");
-                    case PodcastItemActivity.DownloadPending: return Catalog.GetString ("Waiting to download");
-                    case PodcastItemActivity.DownloadPaused: return Catalog.GetString ("Download paused");
-                    case PodcastItemActivity.DownloadFailed: return Catalog.GetString ("Download failed");
-                    default:
-                        string download_status = Activity == PodcastItemActivity.Downloaded
-                            ? Catalog.GetString ("Downloaded")
-                            : Catalog.GetString ("Stream Available");
-                        string new_status = IsNew 
-                            ? Catalog.GetString ("New") 
-                            : ((MediaAttributes & TrackMediaAttributes.VideoStream) != 0
-                                ? Catalog.GetString ("Watched")
-                                : Catalog.GetString ("Heard"));
-                         return String.Format ("{0} / {1}", download_status, new_status);
-                 }
-            }
-        }
 
 #endregion
 
 #region Constructors
     
-        public PodcastTrackInfo () : base ()
+        public PodcastTrackInfo (DatabaseTrackInfo track) : base ()
         {
+            this.track = track;
         }
         
-        public PodcastTrackInfo (FeedItem feed_item) : base ()
+        public PodcastTrackInfo (DatabaseTrackInfo track, FeedItem feed_item) : this (track)
         {
             Item = feed_item;
             SyncWithFeedItem ();
@@ -193,56 +171,46 @@ namespace Banshee.Podcasting.Data
 
 #endregion
 
-        public void Delete ()
+        static PodcastTrackInfo ()
         {
-            Provider.Delete (this);
+            TrackInfo.PlaybackFinished += OnPlaybackFinished;
         }
-        
-        public override void IncrementPlayCount ()
+
+        private static void OnPlaybackFinished (TrackInfo track, double percentComplete)
         {
-            base.IncrementPlayCount ();
-            
-            if (PlayCount > 0 && !Item.IsRead) {
-                Item.IsRead = true;
-                Item.Save ();
-            }
+            if (percentComplete > 0.5 && track.PlayCount > 0) {
+                PodcastTrackInfo pi = PodcastTrackInfo.From (track);
+                if (pi != null && !pi.Item.IsRead) {
+                    pi.Item.IsRead = true;
+                    pi.Item.Save ();
+                }
+            }   
         }
         
         public void SyncWithFeedItem ()
         {
             //Console.WriteLine ("Syncing item, enclosure == null? {0}", Item.Enclosure == null);
-            ArtistName = Item.Author;
-            AlbumTitle = Item.Feed.Title;
-            TrackTitle = Item.Title;
-            Year = Item.PubDate.Year;
-            CanPlay = true;
-            Genre = Genre ?? "Podcast";
-            ReleaseDate = Item.PubDate;
-            MimeType = Item.Enclosure.MimeType;
-            Duration = Item.Enclosure.Duration;
-            FileSize = Item.Enclosure.FileSize;
-            LicenseUri = Item.LicenseUri;
-            Uri = new Banshee.Base.SafeUri (Item.Enclosure.LocalPath ?? Item.Enclosure.Url);
+            track.ArtistName = Item.Author;
+            track.AlbumTitle = Item.Feed.Title;
+            track.TrackTitle = Item.Title;
+            track.Year = Item.PubDate.Year;
+            track.CanPlay = true;
+            track.Genre = track.Genre ?? "Podcast";
+            track.ReleaseDate = Item.PubDate;
+            track.MimeType = Item.Enclosure.MimeType;
+            track.Duration = Item.Enclosure.Duration;
+            track.FileSize = Item.Enclosure.FileSize;
+            track.LicenseUri = Item.LicenseUri;
+            track.Uri = new Banshee.Base.SafeUri (Item.Enclosure.LocalPath ?? Item.Enclosure.Url);
             
             if (!String.IsNullOrEmpty (Item.Enclosure.LocalPath)) {
                 try {
-                    TagLib.File file = Banshee.Streaming.StreamTagger.ProcessUri (Uri);
-                    Banshee.Streaming.StreamTagger.TrackInfoMerge (this, file, true);
+                    TagLib.File file = Banshee.Streaming.StreamTagger.ProcessUri (track.Uri);
+                    Banshee.Streaming.StreamTagger.TrackInfoMerge (track, file, true);
                 } catch {}
             }
 
-            MediaAttributes |= TrackMediaAttributes.Podcast;
-        }
-        
-        protected override void ProviderSave ()
-        {
-            MediaAttributes |= TrackMediaAttributes.Podcast;
-            Provider.Save (this);
-        }
-        
-        protected override bool ProviderRefresh ()
-        {
-            return Provider.Refresh (this);
+            track.MediaAttributes |= TrackMediaAttributes.Podcast;
         }
     }
 }

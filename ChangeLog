@@ -1,3 +1,104 @@
+2008-10-08  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	This patch refactors the Podcast code so that it can have playlists and
+	smart playlists.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting/PodcastImageFetchJob.cs:
+	Don't assume the PodcastSource is the only podcast-containing source since
+	we now have playlists too.
+
+	* src/Core/Banshee.Services/Banshee.Sources/Source.cs: 
+	* src/Clients/Nereid/Nereid/PlayerInterface.cs: Add and use new
+	Source#GetProperty convenience method.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/InterfaceActionService.cs:
+	Support propagation of ActiveSource properties, so that podcast playlists
+	can have the same actions as the Podcasts source.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/BansheeActionGroup.cs: Change
+	Add to accept params.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/Column.cs: Get rid of cruft, and
+	take the Id for a column from the sub-property if it exists, otherwise
+	from the Property (as before).
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastItemView.cs:
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastTrackInfo.cs:
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting/PodcastService.cs:
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellPodcastStatusIndicator.cs:
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastPropertiesDialog.cs:
+	PodcastTrackInfo no longer subclasses from DatabaseTrackInfo - instead its
+	the ExternalObject to the TrackInfos that are under the PodcastSource.
+	Change code accessing the PodcastTrackInfo propeties to get to them via
+	the PodcastTrackInfo.From (track_info) helper.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellPodcast.cs:
+	Don't dispose images after rendering them the first time.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastSourceContents.cs:
+	Allow other DatabaseSources (eg PlaylistSources) to be used in this view.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastSource.cs:
+	Allow playlists, set Artwork and ExternalObject handlers, clean up, change
+	to reflect PodcastTrackInfo changes, etc.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastTrackListModel.cs:
+	Subclass only to set add some default conditions/FROM tables, but no
+	longer is a model for/returns PodcastTrackInfo objects.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastFeedModel.cs:
+	Change the reload fragment to work with playlists.
+
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs:
+	* src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSource.cs:
+	New (overridable) DatabaseSource API for creating the TrackModel and
+	default Filters for a DatabaseSource.  Child DatabaseSource objects use
+	their parent's Create methods so that they get any customizations they
+	might have (like Podcasts pulling in other tables/conditions).
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	Override ArtworkId and ExternalObject to use the PrimarySource's handlers,
+	if any, to return these values.  Allows us to customize the ArtworkId for
+	podcast episodes to be "podcast-$podcasttitle", for instance.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackListModel.cs:
+	Allow overriding the default string of table names to select from.
+
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs: Don't
+	accept DnD input from the Play Queue (or any parentless
+	non-PrimarySource).
+
+	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs: Add
+	ExternalObject and ArtworkId delegates that will change the default
+	behavior for tracks within this source.
+
+	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs: Add a static
+	PlaybackFinished event that is fired after play/skip counts are
+	incremented.  Used by PodcastTrackInfo to set the Item as not new once
+	it's been played.  Add a default (returning null) implementation of
+	ExternalObject property.
+
+	* src/Libraries/Hyena/Hyena.Query/RelativeTimeSpanQueryValue.cs: Call
+	DetermineFactor in the static helper so that the factor is set
+	appropriately; wasn't called anymore after my recent fix to remember the
+	unit the user entered.
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ColumnCell.cs: Allow setting a
+	sub-property, either with SubProperty = or by setting Property to a value
+	containing a period.  So setting Property to "Foo.Bar" would call the Bar
+	getter on the object returning from the Foo getter (called on the object
+	bound to the cell, usually a DatabaseTrackInfo in Banshee).  This lets us
+	have columns based on properties of, say, the TrackInfo#ExternalObject,
+	which we do for Podcasts for Description, PublishedDate, etc.
+
+	* src/Libraries/Hyena/Hyena.Collections/Selection.cs: Expose the
+	RangeCollection in a protected getter.
+
+	* src/Core/Banshee.Services/Banshee.Collection/SelectAllSelection.cs: Fix
+	bug where we considered any selection of Count 2 that contained the 1st
+	item to be 'all'.
+
 2008-10-08  Aaron Bockover  <abock@gnome.org>
 
 	* src/Clients/Beroe/Beroe/RemoteClient.cs: Updated for

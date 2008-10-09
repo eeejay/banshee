@@ -36,15 +36,15 @@ namespace Hyena.Data.Gui
     public abstract class ColumnCell
     {
         private bool expand;
-        private string property;
-        private PropertyInfo property_info;
+        private string property, sub_property;
+        private PropertyInfo property_info, sub_property_info;
         private object bound_object;
         private object bound_object_parent;
             
         public ColumnCell (string property, bool expand)
         {
-            this.property = property;
-            this.expand = expand;
+            Property = property;
+            Expand = expand;
         }
 
         public void BindListItem (object item)
@@ -60,19 +60,29 @@ namespace Hyena.Data.Gui
             if (property != null) {
                 EnsurePropertyInfo ();
                 bound_object = property_info.GetValue (bound_object_parent, null);
+
+                if (sub_property != null) {
+                    EnsurePropertyInfo (sub_property, ref sub_property_info, bound_object);
+                    bound_object = sub_property_info.GetValue (bound_object, null);
+                }
             } else {
                 bound_object = bound_object_parent;
             }
         }
-        
+
         private void EnsurePropertyInfo ()
         {
-            if (property_info == null || property_info.ReflectedType != bound_object_parent.GetType ()) {
-                property_info = bound_object_parent.GetType ().GetProperty (property);
-                if (property_info == null) {
+            EnsurePropertyInfo (property, ref property_info, bound_object_parent);
+        }
+        
+        private void EnsurePropertyInfo (string name, ref PropertyInfo prop, object obj)
+        {
+            if (prop == null || prop.ReflectedType != obj.GetType ()) {
+                prop = obj.GetType ().GetProperty (name);
+                if (prop == null) {
                     throw new Exception (String.Format (
                         "In {0}, type {1} does not have property {2}",
-                        this, bound_object_parent.GetType (), property
+                        this, obj.GetType (), name
                     ));
                 }
             }
@@ -109,7 +119,21 @@ namespace Hyena.Data.Gui
         
         public string Property {
             get { return property; }
-            set { property = value; }
+            set {
+                property = value;
+                if (value != null) {
+                    int i = value.IndexOf (".");
+                    if (i != -1) {
+                        property = value.Substring (0, i);
+                        SubProperty = value.Substring (i + 1, value.Length - i - 1);
+                    }
+                }
+            }
+        }
+
+        public string SubProperty {
+            get { return sub_property; }
+            set { sub_property = value; }
         }
     }
 }

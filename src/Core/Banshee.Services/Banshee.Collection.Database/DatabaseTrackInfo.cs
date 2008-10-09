@@ -106,7 +106,16 @@ namespace Banshee.Collection.Database
             }
             return TrackEqual (this, db_track);
         }
-        
+
+        public override string ArtworkId {
+            get {
+                if (PrimarySource != null && PrimarySource.TrackArtworkIdHandler != null) {
+                    return PrimarySource.TrackArtworkIdHandler (this);
+                }
+                return base.ArtworkId;
+            }
+        }
+
         public static bool TrackEqual (DatabaseTrackInfo a, DatabaseTrackInfo b)
         {
             return a != null && b != null && 
@@ -521,6 +530,16 @@ namespace Banshee.Collection.Database
         public long ExternalId {
             get { return external_id; }
             set { external_id = value; }
+        }
+
+        private object external_object;
+        public override object ExternalObject {
+            get {
+                if (external_id > 0 && external_object == null && PrimarySource != null && PrimarySource.TrackExternalObjectHandler != null) {
+                    external_object = PrimarySource.TrackExternalObjectHandler (this);
+                }
+                return external_object;
+            }
         }
         
         [DatabaseColumn ("LastPlayedStamp")]

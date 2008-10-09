@@ -34,6 +34,7 @@ using Gtk;
 using Pango;
 
 using Banshee.Podcasting.Data;
+using Banshee.Collection.Database;
 
 namespace Banshee.Podcasting.Gui
 {
@@ -41,8 +42,9 @@ namespace Banshee.Podcasting.Gui
     {
         private PodcastTrackInfo pi;
 
-        public PodcastPropertiesDialog (PodcastTrackInfo pi)
+        public PodcastPropertiesDialog (DatabaseTrackInfo track)
         {
+            PodcastTrackInfo pi = PodcastTrackInfo.From (track);
             if (pi == null)
             {
                 throw new ArgumentNullException ("pi");
@@ -50,7 +52,7 @@ namespace Banshee.Podcasting.Gui
             
             this.pi = pi;            
             
-            Title = pi.TrackTitle;
+            Title = track.TrackTitle;
             BuildWindow ();
             //IconThemeUtils.SetWindowIcon (this);
         }

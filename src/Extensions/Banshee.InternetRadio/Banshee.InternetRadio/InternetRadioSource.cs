@@ -27,6 +27,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 using Mono.Unix;
 using Gtk;
 
@@ -57,7 +58,6 @@ namespace Banshee.InternetRadio
             TypeUniqueId = "internet-radio";
             IsLocal = false;
             
-            InternetRadioInitialize ();
             AfterInitialized ();
             
             InterfaceActionService uia_service = ServiceManager.Get<InterfaceActionService> ();
@@ -147,17 +147,17 @@ namespace Banshee.InternetRadio
                 Reload ();
             }
         }
-        
-        protected override void Initialize ()
+
+        protected override IEnumerable<IFilterListModel> CreateFiltersFor (DatabaseSource src)
         {
-            base.Initialize ();
-            InternetRadioInitialize ();
-        }
-        
-        private void InternetRadioInitialize ()
-        {
-            AvailableFilters.Add (GenreModel);
-            DefaultFilters.Add (GenreModel);
+            DatabaseQueryFilterModel<string> genre_model = new DatabaseQueryFilterModel<string> (src, src.DatabaseTrackModel, ServiceManager.DbConnection,
+                        Catalog.GetString ("All Genres ({0})"), src.UniqueId, Banshee.Query.BansheeQuery.GenreField, "Genre");
+
+            if (this == src) {
+                this.genre_model = genre_model;
+            }
+
+            yield return genre_model;
         }
         
         public override void Dispose ()

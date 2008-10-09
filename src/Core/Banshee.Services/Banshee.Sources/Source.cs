@@ -242,6 +242,11 @@ namespace Banshee.Sources
                 }
             }
         }
+
+        public T GetProperty<T> (string name, bool propagate)
+        {
+            return propagate ? GetInheritedProperty<T> (name) : Properties.Get<T> (name);
+        }
         
         public T GetInheritedProperty<T> (string name)
         {

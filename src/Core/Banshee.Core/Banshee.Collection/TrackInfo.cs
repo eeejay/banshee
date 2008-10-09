@@ -57,6 +57,9 @@ namespace Banshee.Collection
     
         public delegate bool IsPlayingHandler (TrackInfo track);
         public static IsPlayingHandler IsPlayingMethod;
+
+        public delegate void PlaybackFinishedHandler (TrackInfo track, double percentComplete);
+        public static event PlaybackFinishedHandler PlaybackFinished;
             
         private SafeUri uri;
         private SafeUri more_info_uri;
@@ -107,12 +110,22 @@ namespace Banshee.Collection
         {
             LastPlayed = DateTime.Now;
             PlayCount++;
+            OnPlaybackFinished (1.0);
         }
 
         public virtual void IncrementSkipCount ()
         {
             LastSkipped = DateTime.Now;
             SkipCount++;
+            OnPlaybackFinished (0.0);
+        }
+
+        private void OnPlaybackFinished (double percentComplete)
+        {
+            PlaybackFinishedHandler handler = PlaybackFinished;
+            if (handler != null) {
+                handler (this, percentComplete);
+            }
         }
 
         public override string ToString ()
@@ -237,6 +250,10 @@ namespace Banshee.Collection
             get { return release_date; }
             set { release_date = value; }
         }        
+
+        public virtual object ExternalObject {
+            get { return null; }
+        }
         
         public string DisplayArtistName { 
             get {
@@ -468,16 +485,21 @@ namespace Banshee.Collection
                 MediaAttributes |= attr;
             }
         }
-        
+
+        // TODO turn this into a PrimarySource-owned delegate?
+        private static string type_podcast = Catalog.GetString ("Podcast");
+        private static string type_video = Catalog.GetString ("Video");
+        private static string type_song = Catalog.GetString ("Song");
+        private static string type_item = Catalog.GetString ("Item");
         public string MediaTypeName {
             get {
                 if (HasAttribute (TrackMediaAttributes.Podcast))
-                    return Catalog.GetString ("Podcast");
+                    return type_podcast;
                 if (HasAttribute (TrackMediaAttributes.VideoStream))
-                    return Catalog.GetString ("Video");
+                    return type_video;
                 if (HasAttribute (TrackMediaAttributes.Music))
-                    return Catalog.GetString ("Song");
-                return Catalog.GetString ("Item");
+                    return type_song;
+                return type_item;
             }
         }
         

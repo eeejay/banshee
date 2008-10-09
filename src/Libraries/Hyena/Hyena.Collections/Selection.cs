@@ -183,6 +183,10 @@ namespace Hyena.Collections
             }
         }
 
+        protected RangeCollection RangeCollection {
+            get { return ranges; }
+        }
+
         public RangeCollection.Range [] Ranges {
             get { return ranges.Ranges; }
         }

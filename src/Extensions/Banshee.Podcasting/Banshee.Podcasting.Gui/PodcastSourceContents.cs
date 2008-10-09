@@ -81,11 +81,8 @@ namespace Banshee.Podcasting.Gui
 
         protected override bool ActiveSourceCanHasBrowser {
             get {
-                if (!(ServiceManager.SourceManager.ActiveSource is PodcastSource)) {
-                    return false;
-                }
-                
-                return ((PodcastSource)ServiceManager.SourceManager.ActiveSource).ShowBrowser;
+                DatabaseSource db_src = ServiceManager.SourceManager.ActiveSource as DatabaseSource;
+                return db_src != null && db_src.ShowBrowser;
             }
         }
 
@@ -94,7 +91,7 @@ namespace Banshee.Podcasting.Gui
         public override bool SetSource (ISource source)
         {
             //Console.WriteLine ("PSC.set_source 1");
-            PodcastSource track_source = source as PodcastSource;
+            DatabaseSource track_source = source as DatabaseSource;
             if (track_source == null) {
                 return false;
             }

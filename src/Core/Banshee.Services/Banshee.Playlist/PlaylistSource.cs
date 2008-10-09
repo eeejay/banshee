@@ -137,8 +137,9 @@ namespace Banshee.Playlist
         public override bool AcceptsInputFromSource (Source source)
         {
             return base.AcceptsInputFromSource (source) && (
-                source == Parent || 
-                (source.Parent == Parent || Parent == null || (source.Parent == null && !(source is PrimarySource)))
+                source == Parent || (source.Parent == Parent || Parent == null)
+                // This is commented out because we don't support (yet?) DnD from Play Queue to a playlist
+                //(source.Parent == Parent || Parent == null || (source.Parent == null && !(source is PrimarySource)))
             );
         }
         
@@ -249,7 +250,7 @@ namespace Banshee.Playlist
                 //PrimarySource primary = Parent as PrimarySource;
                 //primary.AddSelectedTracks (model);
                 // then add to us
-                Log.Information ("Note: Feature Not Implemented", String.Format ("In this alpha release, you can only add tracks to {0} from {1} or its playlists.", Name, Parent.Name), true);
+                //Log.Information ("Note: Feature Not Implemented", String.Format ("In this alpha release, you can only add tracks to {0} from {1} or its playlists.", Name, Parent.Name), true);
             }
             return false;
         }

@@ -65,7 +65,7 @@ namespace Banshee.Podcasting.Gui
         
         protected override int GetIconIndex (TrackInfo track)
         {
-            PodcastTrackInfo podcast = track as PodcastTrackInfo;
+            PodcastTrackInfo podcast = PodcastTrackInfo.From (track);
             if (track == null) {
                 return -1;
             }
@@ -81,7 +81,7 @@ namespace Banshee.Podcasting.Gui
         
         public override void Render (CellContext context, StateType state, double cellWidth, double cellHeight)
         {
-            PodcastTrackInfo podcast = BoundTrack as PodcastTrackInfo;
+            PodcastTrackInfo podcast = PodcastTrackInfo.From (BoundTrack);
             if (podcast != null) {
                 if (podcast.Activity == PodcastItemActivity.DownloadPending) {
                     context.Sensitive = false;

@@ -60,7 +60,7 @@ namespace Banshee.Podcasting.Gui
                 return;
             }
             
-            PodcastTrackInfo podcast = boundItem as PodcastTrackInfo;
+            PodcastTrackInfo podcast = PodcastTrackInfo.From (boundItem as TrackInfo);
             if (podcast == null) {
                 return;
             }

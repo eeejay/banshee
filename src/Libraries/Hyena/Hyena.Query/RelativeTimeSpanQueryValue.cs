@@ -55,6 +55,7 @@ namespace Hyena.Query
         {
             RelativeTimeSpanQueryValue qv = new RelativeTimeSpanQueryValue ();
             qv.SetRelativeValue ((since - DateTime.Now).TotalSeconds, TimeFactor.Second);
+            qv.DetermineFactor ();
             return qv;
         }
 

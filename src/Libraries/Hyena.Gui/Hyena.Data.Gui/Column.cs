@@ -43,8 +43,6 @@ namespace Hyena.Data.Gui
         
         private int minWidth = 0;
         private int maxWidth = Int32.MaxValue;
-        //private double minRelativeWidth = 0;
-        //private double relativeWidth = 0;
         
         public Column (ColumnDescription description) :
             this (description, new ColumnCellText (description.Property, true))
@@ -176,11 +174,6 @@ namespace Hyena.Data.Gui
                 }
             }
         }
-
-        /*internal double MinRelativeWidth {
-            get { return minRelativeWidth; }
-            set { minRelativeWidth = value; }
-        }*/
         
         public int MaxWidth {
             get { return maxWidth; }
@@ -192,14 +185,15 @@ namespace Hyena.Data.Gui
             }
         }
 
-        /*public double RelativeWidth {
-            get { return relativeWidth; }
-            set { relativeWidth = value; }
-        }*/
-
         private string id;
         public string Id {
-            get { return id ?? id = StringUtil.CamelCaseToUnderCase (GetCell (0).Property); }
+            get {
+                if (id == null) {
+                    id = GetCell (0).SubProperty ?? GetCell (0).Property;
+                    id = StringUtil.CamelCaseToUnderCase (id);
+                }
+                return id;
+            }
             set { id = value; }
         }
     }

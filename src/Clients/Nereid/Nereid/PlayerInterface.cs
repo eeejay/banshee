@@ -333,9 +333,8 @@ namespace Nereid
             }
             
             // Connect the source models to the views if possible
-            ISourceContents contents = source.GetInheritedProperty<bool> ("Nereid.SourceContentsPropagate")
-                ? source.GetInheritedProperty<ISourceContents> ("Nereid.SourceContents")
-                : source.Properties.Get<ISourceContents> ("Nereid.SourceContents");
+            ISourceContents contents = source.GetProperty<ISourceContents> ("Nereid.SourceContents",
+                source.GetInheritedProperty<bool> ("Nereid.SourceContentsPropagate"));
 
             view_container.ClearFooter ();
             

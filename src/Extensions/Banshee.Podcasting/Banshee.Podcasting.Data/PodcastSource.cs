@@ -56,8 +56,6 @@ namespace Banshee.Podcasting.Gui
 { 
     public class PodcastSource : Banshee.Library.LibrarySource
     {
-        private PodcastUnheardFilterModel unheard_model;
-        private DownloadStatusFilterModel download_model;
         private PodcastFeedModel feed_model;
 
         private string baseDirectory;
@@ -68,10 +66,9 @@ namespace Banshee.Podcasting.Gui
         public override bool CanRename {
             get { return false; }
         }
-        
-        // FIXME all three of these should be true, eventually
+
         public override bool CanAddTracks {
-            get { return false; }
+            get { return true; }
         }
 
         public override bool CanRemoveTracks {
@@ -96,17 +93,22 @@ namespace Banshee.Podcasting.Gui
         public PodcastSource (string baseDirectory) : base (Catalog.GetString ("Podcasts"), "PodcastLibrary", 200)
         {
             this.baseDirectory = baseDirectory;
+            TrackExternalObjectHandler = GetPodcastInfoObject;
+            TrackArtworkIdHandler = GetTrackArtworkId;
             MediaTypes = TrackMediaAttributes.Podcast;
             NotMediaTypes = TrackMediaAttributes.AudioBook;
             SyncCondition = "(substr(CoreTracks.Uri, 0, 4) != 'http' AND CoreTracks.PlayCount = 0)";
 
-            // For now..
-            SupportsPlaylists = false;
-
             Properties.SetString ("Icon.Name", "podcast");
+            
             Properties.SetString ("ActiveSourceUIResource", "ActiveSourceUI.xml");
+            Properties.Set<bool> ("ActiveSourceUIResourcePropagate", true);
+            Properties.Set<System.Reflection.Assembly> ("ActiveSourceUIResource.Assembly", typeof(PodcastSource).Assembly);
+            
             Properties.SetString ("GtkActionPath", "/PodcastSourcePopup");
+
             Properties.Set<ISourceContents> ("Nereid.SourceContents", new PodcastSourceContents ());
+            Properties.Set<bool> ("Nereid.SourceContentsPropagate", true);
             
             Properties.SetString ("TrackView.ColumnControllerXml", String.Format (@"
                     <column-controller>
@@ -125,7 +127,7 @@ namespace Banshee.Podcasting.Gui
                       <column>
                           <visible>true</visible>
                           <title>{4}</title>
-                          <renderer type=""Hyena.Data.Gui.ColumnCellText"" property=""Description"" />
+                          <renderer type=""Hyena.Data.Gui.ColumnCellText"" property=""ExternalObject.Description"" />
                           <sort-key>Description</sort-key>
                       </column>
                       <column modify-default=""FileSizeColumn"">
@@ -134,19 +136,19 @@ namespace Banshee.Podcasting.Gui
                       <column>
                           <visible>false</visible>
                           <title>{2}</title>
-                          <renderer type=""Banshee.Podcasting.Gui.ColumnCellYesNo"" property=""IsNew"" />
+                          <renderer type=""Banshee.Podcasting.Gui.ColumnCellYesNo"" property=""ExternalObject.IsNew"" />
                           <sort-key>IsNew</sort-key>
                       </column>
                       <column>
                           <visible>false</visible>
                           <title>{3}</title>
-                          <renderer type=""Banshee.Podcasting.Gui.ColumnCellYesNo"" property=""IsDownloaded"" />
+                          <renderer type=""Banshee.Podcasting.Gui.ColumnCellYesNo"" property=""ExternalObject.IsDownloaded"" />
                           <sort-key>IsDownloaded</sort-key>
                       </column>
                       <column>
                           <visible>true</visible>
                           <title>{1}</title>
-                          <renderer type=""Banshee.Podcasting.Gui.ColumnCellPublished"" property=""PublishedDate"" />
+                          <renderer type=""Banshee.Podcasting.Gui.ColumnCellPublished"" property=""ExternalObject.PublishedDate"" />
                           <sort-key>PublishedDate</sort-key>
                       </column>
                       <sort-column direction=""desc"">published_date</sort-column>
@@ -158,42 +160,41 @@ namespace Banshee.Podcasting.Gui
         }
         
 #endregion
+
+        private object GetPodcastInfoObject (DatabaseTrackInfo track)
+        {
+            return new PodcastTrackInfo (track);
+        }
+
+        private string GetTrackArtworkId (DatabaseTrackInfo track)
+        {
+            return PodcastService.ArtworkIdFor (PodcastTrackInfo.From (track).Feed);
+        }
         
         protected override bool HasArtistAlbum {
             get { return false; }
         }
-        
-        protected override void InitializeTrackModel ()
+
+        public override bool AcceptsInputFromSource (Source source)
         {
-            DatabaseTrackModelProvider<PodcastTrackInfo> track_provider =
-                new DatabaseTrackModelProvider<PodcastTrackInfo> (ServiceManager.DbConnection);
-
-            DatabaseTrackModel = new PodcastTrackListModel (ServiceManager.DbConnection, track_provider, this);
-
-            TrackCache = new DatabaseTrackModelCache<PodcastTrackInfo> (ServiceManager.DbConnection,
-                    UniqueId, track_model, track_provider);
-                    
-            feed_model = new PodcastFeedModel (this, DatabaseTrackModel, ServiceManager.DbConnection, "PodcastFeeds");
-            
-            unheard_model = new PodcastUnheardFilterModel (DatabaseTrackModel);
-            download_model = new DownloadStatusFilterModel (DatabaseTrackModel);
-            
-            AvailableFilters.Add (unheard_model);
-            AvailableFilters.Add (download_model);
-            AvailableFilters.Add (feed_model);
-            
-            DefaultFilters.Add (unheard_model);
-            DefaultFilters.Add (download_model);
-            DefaultFilters.Add (feed_model);
-            
-            AfterInitialized ();
+            return false;
         }
-        
-        public override void AddChildSource (Source child)
+
+        protected override DatabaseTrackListModel CreateTrackModelFor (DatabaseSource src)
         {
-            Hyena.Log.Information ("Playlists and smart playlists are not supported by the Podcast Library, yet", "", true);
-            if (child is IUnmapableSource) {
-                (child as IUnmapableSource).Unmap ();
+            return new PodcastTrackListModel (ServiceManager.DbConnection, DatabaseTrackInfo.Provider, src);
+        }
+
+        protected override IEnumerable<IFilterListModel> CreateFiltersFor (DatabaseSource src)
+        {
+            PodcastFeedModel feed_model;
+            yield return feed_model = new PodcastFeedModel (src, src.DatabaseTrackModel, ServiceManager.DbConnection, String.Format ("PodcastFeeds-{0}", src.UniqueId));
+            yield return new PodcastUnheardFilterModel (src.DatabaseTrackModel);
+            yield return new DownloadStatusFilterModel (src.DatabaseTrackModel);
+
+            if (src == this) {
+                this.feed_model = feed_model;
+                AfterInitialized ();
             }
         }
         
@@ -237,37 +238,6 @@ namespace Banshee.Podcasting.Gui
                 Catalog.GetString ("Unwatched"),
                 Catalog.GetString ("Videos that haven't been played yet"),
                 "plays=0"),
-        };/*
-
-/*
-        public new TrackListModel TrackModel {
-            get { return null; }
-        }
-
-        public override void RemoveSelectedTracks ()
-        {
-        }
-
-        public override void DeleteSelectedTracks ()
-        {
-            throw new InvalidOperationException ();
-        }
-
-        public override bool CanRemoveTracks {
-            get { return false; }
-        }
-
-        public override bool CanDeleteTracks {
-            get { return false; }
-        }
-
-        public override bool ConfirmRemoveTracks {
-            get { return false; }
-        }
-        
-        public override bool ShowBrowser {
-            get { return false; }
-        }
-*/
+        };*/
     }
 }

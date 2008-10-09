@@ -189,12 +189,18 @@ namespace Banshee.Collection.Database
             get {
                 return unfiltered_query ?? unfiltered_query = String.Format (
                     "FROM {0}{1} WHERE {2} {3}",
-                    provider.From, JoinFragment,
+                    From, JoinFragment,
                     String.IsNullOrEmpty (provider.Where) ? "1=1" : provider.Where,
                     ConditionFragment
                 );
             }
         }
+
+        private string from;
+        protected string From {
+            get { return from ?? provider.From; }
+            set { from = value; }
+        }     
 
         public virtual void UpdateUnfilteredAggregates ()
         {
