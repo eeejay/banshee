@@ -53,6 +53,7 @@ namespace Banshee.PlayQueue
         private ITrackModelSource prior_playback_source;
         private DatabaseTrackInfo playing_track;
         private PlayQueueActions actions;
+        private bool was_playing = false;
         
         protected override bool HasArtistAlbum {
             get { return false; }
@@ -128,7 +129,7 @@ namespace Banshee.PlayQueue
         
         private void SetAsPlaybackSourceUnlessPlaying ()
         {
-            if (Count > 0) {
+            if (Count > 0 && ServiceManager.PlaybackController.Source != this) {
                 PriorSource = ServiceManager.PlaybackController.Source;
                 ServiceManager.PlaybackController.NextSource = this;
             }
@@ -187,7 +188,9 @@ namespace Banshee.PlayQueue
         private void OnPlayerEvent (PlayerEventArgs args)
         {
             if (args.Event == PlayerEvent.EndOfStream) {
-                RemovePlayingTrack ();
+                if (RemovePlayingTrack () && !was_playing) {
+                    ServiceManager.PlaybackController.StopWhenFinished = true;
+                }
             } else if (args.Event == PlayerEvent.StartOfStream) {
                 if (this == ServiceManager.PlaybackController.Source) {
                     playing_track = ServiceManager.PlayerEngine.CurrentTrack as DatabaseTrackInfo; 
@@ -208,7 +211,11 @@ namespace Banshee.PlayQueue
             
             if (Count == 0) {
                 ServiceManager.PlaybackController.Source = PriorSource;
-                ServiceManager.PlaybackController.Next (restart);
+                if (was_playing) {
+                    ServiceManager.PlaybackController.Next (restart);
+                } else {
+                    ServiceManager.PlayerEngine.Close ();
+                }
                 return true;
             }
             
@@ -221,12 +228,14 @@ namespace Banshee.PlayQueue
             return true;
         }
         
-        private void RemovePlayingTrack ()
+        private bool RemovePlayingTrack ()
         {
             if (playing_track != null) {
                 RemoveTrack (playing_track);
                 playing_track = null;
+                return true;
             }
+            return false;
         }
         
         private ITrackModelSource PriorSource {
@@ -241,6 +250,7 @@ namespace Banshee.PlayQueue
                     return;
                 }
                 prior_playback_source = value;
+                was_playing = ServiceManager.PlayerEngine.IsPlaying ();
             }
         }
         

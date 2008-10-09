@@ -1,5 +1,12 @@
 2008-10-09  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
+	When finished playing from the play queue, don't play from the prior
+	source if it wasn't playing when the play queue took over.  Partially
+	fixes BGO #547213.
+
+2008-10-09  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs:
 	Clarify the logging we do when a track editor page fails to initialize -
 	it's not necessarily b/c it doesn't implement ITrackEditorPage.
