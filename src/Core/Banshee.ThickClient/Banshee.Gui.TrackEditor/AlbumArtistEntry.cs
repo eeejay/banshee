@@ -92,7 +92,11 @@ namespace Banshee.Gui.TrackEditor
         private void UpdateSensitivities ()
         {
             entry.Sensitive = IsCompilation;
-            track_artist_sync_button.Sensitive = !IsCompilation;
+
+            // Will be null if we're only editing one track
+            if (track_artist_sync_button != null) {
+                track_artist_sync_button.Sensitive = !IsCompilation;
+            }
         }
     }
 }

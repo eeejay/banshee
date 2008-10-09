@@ -1,3 +1,13 @@
+2008-10-09  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs:
+	Clarify the logging we do when a track editor page fails to initialize -
+	it's not necessarily b/c it doesn't implement ITrackEditorPage.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/AlbumArtistEntry.cs:
+	Fix regression where the basic editor page wouldn't load when editing a
+	single item.
+
 2008-10-08  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	This patch refactors the Podcast code so that it can have playlists and

@@ -205,7 +205,7 @@ namespace Banshee.Gui.TrackEditor
                     }
                     page.Changed += OnPageChanged;
                 } catch (Exception e) {
-                    Hyena.Log.Exception ("Invalid NotebookPage extension node. Should implement ITrackEditorPage.", e);
+                    Hyena.Log.Exception ("Failed to initialize NotebookPage extension node. Ensure it implements ITrackEditorPage.", e);
                 }
             }
             
