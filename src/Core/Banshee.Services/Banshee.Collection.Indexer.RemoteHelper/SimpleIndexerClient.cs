@@ -34,6 +34,7 @@ namespace Banshee.Collection.Indexer.RemoteHelper
     public abstract class SimpleIndexerClient
     {
         private _SimpleIndexerClient client;
+        private List<string> export_fields;
         
         public SimpleIndexerClient ()
         {
@@ -44,12 +45,50 @@ namespace Banshee.Collection.Indexer.RemoteHelper
         {
             client.Start ();
         }
-    
-        protected abstract void IndexResult (IDictionary<string, object> result);
-    
-        protected abstract void OnShutdownWhileIndexing ();
         
-        protected abstract bool HasCollectionChanged { get; }
+        public string [] GetAvailableExportFields ()
+        {
+            return client.GetAvailableExportFields ();
+        }
+        
+        public void AddExportField (params string [] fields)
+        {
+            if (export_fields == null) {
+                export_fields = new List<string> ();
+            }
+            
+            foreach (string field in fields) {
+                if (!export_fields.Contains (field)) {
+                    export_fields.Add (field);
+                }
+            }
+        }
+        
+        public bool RemoveExportField (string field)
+        {
+            if (export_fields != null) {
+                return export_fields.Remove (field);
+            }
+            
+            return false;
+        }
+        
+        public IEnumerable<string> ExportFields {
+            get { 
+                if (export_fields == null) {
+                    yield break;
+                }
+                
+                foreach (string field in export_fields) {
+                    yield return field;
+                }
+            }
+        }
+        
+        protected abstract void IndexResult (IDictionary<string, object> result);
+        protected abstract void OnShutdownWhileIndexing ();
+        protected abstract int CollectionCount { get; }
+        protected abstract DateTime CollectionLastModified { get; }
             
         private class _SimpleIndexerClient : IndexerClient
         {
@@ -62,6 +101,11 @@ namespace Banshee.Collection.Indexer.RemoteHelper
             public _SimpleIndexerClient (SimpleIndexerClient parent)
             {
                 this.parent = parent;
+            }
+            
+            public string [] GetAvailableExportFields ()
+            {
+                return Service.GetAvailableExportFields ();
             }
         
             protected override void ResetState ()
@@ -81,6 +125,10 @@ namespace Banshee.Collection.Indexer.RemoteHelper
                 }
                 
                 bool shutdown_while_indexing = false;
+                
+                if (parent.export_fields != null && parent.export_fields.Count > 0) {
+                    indexer.SetExportFields (parent.export_fields.ToArray ());
+                }
                 
                 for (int i = 0, models = indexer.GetModelCounts (); i < models; i++) {
                     for (int j = 0, items = indexer.GetModelResultsCount (i); j < items; j++) {
@@ -106,7 +154,8 @@ namespace Banshee.Collection.Indexer.RemoteHelper
             }
             
             protected override bool HasCollectionChanged {
-                get { return parent.HasCollectionChanged; }
+                get { return Service.HasCollectionCountChanged (parent.CollectionCount) || 
+                    Service.HasCollectionLastModifiedChanged (Hyena.DateTimeUtil.ToTimeT (parent.CollectionLastModified)); }
             }
 
             private bool Shutdown {

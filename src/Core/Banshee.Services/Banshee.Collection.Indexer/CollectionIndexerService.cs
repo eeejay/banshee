@@ -136,7 +136,7 @@ namespace Banshee.Collection.Indexer
             }
         }
         
-        public bool HasCollectionLastModifiedChanged (int time)
+        public bool HasCollectionLastModifiedChanged (long time)
         {
             lock (this) {
                 long last_updated = 0;

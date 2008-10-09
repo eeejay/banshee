@@ -1,5 +1,17 @@
 2008-10-08  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.Services/Banshee.Collection.Indexer/CollectionIndexerService.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Indexer/ICollectionIndexerService.cs:
+	Make time a long, since it's time_t
+
+	* src/Core/Banshee.Services/Banshee.Collection.Indexer.RemoteHelper/SimpleIndexerClient.cs:
+	Support getting available export fields, and setting which fields you
+	want exported to you; abstract the HasCollectionChanged by adding
+	CollectionCount and CollectionLastModified abstract members that make
+	the API a little less confusing
+
+2008-10-08  Aaron Bockover  <abock@gnome.org>
+
 	* src/Clients/Beroe/Beroe/RemoteClient.cs: Whitespace; stupid MD
 
 	* src/Core/Banshee.Services/Banshee.Collection.Indexer.RemoteHelper/SimpleIndexerClient.cs:
