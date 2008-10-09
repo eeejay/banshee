@@ -29,15 +29,15 @@
 using System;
 using NDesk.DBus;
 
-using Banshee.ServiceStack;
-
 namespace Banshee.Collection.Indexer
 {
+    public delegate void ActionHandler ();
+
     [Interface ("org.bansheeproject.CollectionIndexer.Service")]
-    public interface ICollectionIndexerService : IService
+    public interface ICollectionIndexerService
     {
-        event Hyena.Action CollectionChanged;
-        event Hyena.Action CleanupAndShutdown;
+        event ActionHandler CollectionChanged;
+        event ActionHandler CleanupAndShutdown;
         
         void Hello ();
         void Shutdown ();

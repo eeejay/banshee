@@ -29,12 +29,10 @@
 using System;
 using NDesk.DBus;
 
-using Banshee.ServiceStack;
-
 namespace Banshee.Collection.Indexer
 {
     [Interface ("org.bansheeproject.CollectionIndexer.Client")]
-    public interface IIndexerClient : IDBusExportable
+    public interface IIndexerClient
     {
         void Hello ();
         void RebootWhenFinished (string [] args);

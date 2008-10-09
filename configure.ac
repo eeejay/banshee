@@ -147,6 +147,7 @@ src/Clients/Muinshee/Makefile
 src/Clients/Nereid/Makefile
 
 src/Core/Makefile
+src/Core/Banshee.CollectionIndexer/Makefile
 src/Core/Banshee.Core/Makefile
 src/Core/Banshee.Services/Makefile
 src/Core/Banshee.ThickClient/Makefile

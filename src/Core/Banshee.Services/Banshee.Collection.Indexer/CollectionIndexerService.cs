@@ -48,11 +48,11 @@ namespace Banshee.Collection.Indexer
         private string [] available_export_fields;
         private int open_indexers;
         
-        public event Hyena.Action CollectionChanged;
-        public event Hyena.Action CleanupAndShutdown;
+        public event ActionHandler CollectionChanged;
+        public event ActionHandler CleanupAndShutdown;
         
-        private Hyena.Action shutdown_handler;
-        public Hyena.Action ShutdownHandler {
+        private ActionHandler shutdown_handler;
+        public ActionHandler ShutdownHandler {
             get { return shutdown_handler; }
             set { shutdown_handler = value; }
         }
@@ -225,7 +225,7 @@ namespace Banshee.Collection.Indexer
         
         public void RequestCleanupAndShutdown ()
         {
-            Hyena.Action handler = CleanupAndShutdown;
+            ActionHandler handler = CleanupAndShutdown;
             if (handler != null) {
                 handler ();
             }
@@ -233,7 +233,7 @@ namespace Banshee.Collection.Indexer
         
         private void OnCollectionChanged ()
         {
-            Hyena.Action handler = CollectionChanged;
+            ActionHandler handler = CollectionChanged;
             if (handler != null) {
                 handler ();
             }

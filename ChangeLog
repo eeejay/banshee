@@ -1,3 +1,30 @@
+2008-10-09  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Services/Banshee.Collection.Indexer/CollectionIndexerService.cs:
+	Update to reflect clensing of the interfaces
+
+	* src/Core/Banshee.CollectionIndexer/Banshee.Collection.Indexer.RemoteHelper:
+	Moved the collection indexer remote helper into a standalone assembly
+	suitable for including in other projects
+
+	* src/Core/Banshee.Services/Banshee.Collection.Indexer/CollectionIndexer.cs:
+	Fix indexing bug, was using the wrong index for fetching items from
+	the model
+
+	* src/Core/Banshee.Services/Banshee.Collection.Indexer/IIndexerClient.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Indexer/ICollectionIndexer.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Indexer/ICollectionIndexerService.cs:
+	Ensure the interfaces are fully standalone and do not depend on any
+	Banshee API
+
+	* Banshee.sln:
+	* configure.ac:
+	* build/build.environment.mk:
+	* src/Core/Banshee.CollectionIndexer/Makefile.am:
+	* src/Core/Banshee.CollectionIndexer/Banshee.CollectionIndexer.csproj:
+	Build stuff for moving the collection indexer helper API into its own
+	light weight and standalone assembly
+
 2008-10-09  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:

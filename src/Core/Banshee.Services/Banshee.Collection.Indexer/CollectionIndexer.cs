@@ -213,8 +213,7 @@ namespace Banshee.Collection.Indexer
                     throw new IndexOutOfRangeException ("itemIndex");
                 }
                 
-                Log.DebugFormat ("GETTING ITEM {0} FROM MODEL {1}", itemIndex, modelIndex);
-                return model[modelIndex].GenerateExportable (export_fields);
+                return model[itemIndex].GenerateExportable (export_fields);
             }
         }
         

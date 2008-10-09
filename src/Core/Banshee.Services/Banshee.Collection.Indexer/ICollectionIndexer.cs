@@ -30,8 +30,6 @@ using System;
 using System.Collections.Generic;
 using NDesk.DBus;
 
-using Banshee.ServiceStack;
-
 namespace Banshee.Collection.Indexer
 {
     public delegate void SaveToXmlFinishedHandler (bool success, string path);

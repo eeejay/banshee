@@ -1,4 +1,5 @@
 SUBDIRS = \
+	Banshee.CollectionIndexer \
 	Banshee.Core \
 	Banshee.Services \
 	Banshee.Widgets \
