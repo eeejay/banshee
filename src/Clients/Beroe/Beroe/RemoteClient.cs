@@ -35,12 +35,12 @@ namespace Beroe
 {
     public class RemoteClient : Banshee.Collection.Indexer.RemoteHelper.SimpleIndexerClient
     {
-        protected override void IndexResult(IDictionary<string, object> result)
+        protected override void IndexResult (IDictionary<string, object> result)
         {
             Console.WriteLine (result["URI"]);
         }
         
-        protected override void OnShutdownWhileIndexing()
+        protected override void OnShutdownWhileIndexing ()
         {
         }
         

@@ -31,63 +31,87 @@ using System.Collections.Generic;
 
 namespace Banshee.Collection.Indexer.RemoteHelper
 {
-    public abstract class SimpleIndexerClient : IndexerClient
+    public abstract class SimpleIndexerClient
     {
-        private object shutdown_mutex = new object ();
-        private bool indexer_running;
-        private bool shutdown_requested;
-
-        protected override void ResetState ()
+        private _SimpleIndexerClient client;
+        
+        public SimpleIndexerClient ()
         {
-            lock (shutdown_mutex) {
-                if (indexer_running) {
-                    shutdown_requested = true;
-                }
-            }
+            client = new _SimpleIndexerClient (this);
         }
         
-        protected override void UpdateIndex ()
+        public void Start ()
         {
-            lock (shutdown_mutex) {
-                indexer_running = true;
-                shutdown_requested = false;
-            }
-            
-            bool shutdown_while_indexing = false;;
-            ICollectionIndexer indexer = CreateIndexer ();
-            indexer.Index ();
-            
-            for (int i = 0, models = indexer.GetModelCounts (); i < models; i++) {
-                for (int j = 0, items = indexer.GetModelResultsCount (i); j < items; j++) {
-                    if (Shutdown) {
-                        shutdown_while_indexing = true;
-                        break;
-                    }
-                    
-                    IndexResult (indexer.GetResult (i, j));
-                }
-                
-                if (shutdown_while_indexing) {
-                    break;
-                }
-            }
-            
-            indexer.Dispose ();
-            
-            lock (shutdown_mutex) {
-                indexer_running = false;
-                shutdown_requested = false;
-            }
-            
-            OnShutdownWhileIndexing ();
+            client.Start ();
         }
-        
+    
+        protected abstract void IndexResult (IDictionary<string, object> result);
+    
         protected abstract void OnShutdownWhileIndexing ();
         
-        protected abstract void IndexResult (IDictionary<string, object> result);
+        protected abstract bool HasCollectionChanged { get; }
+            
+        private class _SimpleIndexerClient : IndexerClient
+        {
+            private object shutdown_mutex = new object ();
+            private bool indexer_running;
+            private bool shutdown_requested;
+            
+            private SimpleIndexerClient parent;
+            
+            public _SimpleIndexerClient (SimpleIndexerClient parent)
+            {
+                this.parent = parent;
+            }
         
-        private bool Shutdown {
-            get { lock (shutdown_mutex) { return shutdown_requested || CleanupAndShutdown; } }
+            protected override void ResetState ()
+            {
+                lock (shutdown_mutex) {
+                    if (indexer_running) {
+                        shutdown_requested = true;
+                    }
+                }
+            }
+            
+            protected override void UpdateIndex (ICollectionIndexer indexer)
+            {
+                lock (shutdown_mutex) {
+                    indexer_running = true;
+                    shutdown_requested = false;
+                }
+                
+                bool shutdown_while_indexing = false;
+                
+                for (int i = 0, models = indexer.GetModelCounts (); i < models; i++) {
+                    for (int j = 0, items = indexer.GetModelResultsCount (i); j < items; j++) {
+                        if (Shutdown) {
+                            shutdown_while_indexing = true;
+                            break;
+                        }
+                        
+                        parent.IndexResult (indexer.GetResult (i, j));
+                    }
+                    
+                    if (shutdown_while_indexing) {
+                        break;
+                    }
+                }
+                
+                lock (shutdown_mutex) {
+                    indexer_running = false;
+                    shutdown_requested = false;
+                }
+                
+                parent.OnShutdownWhileIndexing ();
+            }
+            
+            protected override bool HasCollectionChanged {
+                get { return parent.HasCollectionChanged; }
+            }
+
+            private bool Shutdown {
+                get { lock (shutdown_mutex) { return shutdown_requested || CleanupAndShutdown; } }
+            }
         }
     }
 }

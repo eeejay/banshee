@@ -82,22 +82,31 @@ namespace Banshee.Collection.Indexer.RemoteHelper
         private void Index ()
         {
             if (HasCollectionChanged) {
-                ThreadPool.QueueUserWorkItem (delegate {
-                    Debug ("Running indexer");
-                    
-                    try {
-                        UpdateIndex ();
-                    } catch (Exception e) {
-                        Console.Error.WriteLine (e);
-                    }
-                    
-                    Debug ("Indexer finished");
-                    
-                    if (!ApplicationAvailable || !listening) {
-                        DisconnectFromIndexerService ();
-                    }
-                });
+                ICollectionIndexer indexer = CreateIndexer ();
+                indexer.IndexingFinished += delegate { _UpdateIndex (indexer); };
+                indexer.Index ();
             }
+        }
+        
+        private void _UpdateIndex (ICollectionIndexer indexer)
+        {
+            ThreadPool.QueueUserWorkItem (delegate {
+                Debug ("Running indexer");
+                
+                try {
+                    UpdateIndex (indexer);
+                } catch (Exception e) {
+                    Console.Error.WriteLine (e);
+                }
+                
+                Debug ("Indexer finished");
+                
+                indexer.Dispose ();
+                
+                if (!ApplicationAvailable || !listening) {
+                    DisconnectFromIndexerService ();
+                }
+            });
         }
         
         private void ConnectToIndexerService ()
@@ -188,7 +197,7 @@ namespace Banshee.Collection.Indexer.RemoteHelper
         
         protected abstract bool HasCollectionChanged { get; }
         
-        protected abstract void UpdateIndex ();
+        protected abstract void UpdateIndex (ICollectionIndexer indexer);
         
         protected abstract void ResetState ();
         

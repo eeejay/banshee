@@ -1,5 +1,20 @@
 2008-10-08  Aaron Bockover  <abock@gnome.org>
 
+	* src/Clients/Beroe/Beroe/RemoteClient.cs: Whitespace; stupid MD
+
+	* src/Core/Banshee.Services/Banshee.Collection.Indexer.RemoteHelper/SimpleIndexerClient.cs:
+	More abstraction to make remote clients easier, but I'm mainly just
+	playing around and seeing what sticks right now
+
+	* src/Core/Banshee.Services/Banshee.Collection.Indexer/CollectionIndexer.cs:
+	Add a lame temporary debug line
+
+	* src/Core/Banshee.Services/Banshee.Collection.Indexer.RemoteHelper/IndexerClient.cs:
+	Fix some raciness; I completely forgot that the remote Index call was
+	async
+
+2008-10-08  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.Services/Banshee.Collection.Indexer.RemoteHelper/SimpleIndexerClient.cs:
 	Pulled out the implementation from the Beroe remote client example
 	into a further encapsulation
