@@ -44,8 +44,12 @@ namespace Beroe
         {
         }
         
-        protected override bool HasCollectionChanged {
-            get { return true; }
+        protected override int CollectionCount { 
+            get { return 0; }
+        }
+        
+        protected override DateTime CollectionLastModified { 
+            get { return DateTime.MinValue; }
         }
     }
 }
