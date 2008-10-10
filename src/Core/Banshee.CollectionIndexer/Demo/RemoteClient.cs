@@ -29,12 +29,22 @@
 using System;
 using System.Collections.Generic;
 
-using Banshee.Collection.Indexer;
+using Banshee.Collection.Indexer.RemoteHelper;
 
-namespace Beroe
+namespace RemoteClient
 {
-    public class RemoteClient : Banshee.Collection.Indexer.RemoteHelper.SimpleIndexerClient
+    public class RemoteClientExample : SimpleIndexerClient
     {
+        public static void Main ()
+        {
+            RemoteClientExample client = new RemoteClientExample ();
+            client.Start ();
+            
+            while (true) {
+                NDesk.DBus.Bus.Session.Iterate ();
+            }
+        }
+    
         protected override void IndexResult (IDictionary<string, object> result)
         {
             Console.WriteLine (result["URI"]);

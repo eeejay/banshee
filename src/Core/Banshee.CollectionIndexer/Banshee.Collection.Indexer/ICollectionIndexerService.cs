@@ -27,28 +27,23 @@
 //
 
 using System;
-using System.Collections.Generic;
 using NDesk.DBus;
 
 namespace Banshee.Collection.Indexer
 {
-    public delegate void SaveToXmlFinishedHandler (bool success, string path);
-    
-    [Interface ("org.bansheeproject.CollectionIndexer.Indexer")]
-    public interface ICollectionIndexer
+    public delegate void ActionHandler ();
+
+    [Interface ("org.bansheeproject.CollectionIndexer.Service")]
+    public interface ICollectionIndexerService
     {
-        event ActionHandler IndexingFinished;
-        event SaveToXmlFinishedHandler SaveToXmlFinished;
+        event ActionHandler CollectionChanged;
+        event ActionHandler CleanupAndShutdown;
         
-        void Index ();
-        void Dispose ();
-        
-        void SetExportFields (string [] fields);
-        
-        int GetModelCounts ();
-        int GetModelResultsCount (int modelIndex);
-        IDictionary<string, object> GetResult (int modelIndex, int itemIndex);
-        
-        void SaveToXml (string path);
+        void Hello ();
+        void Shutdown ();
+        ObjectPath CreateIndexer ();
+        string [] GetAvailableExportFields ();
+        bool HasCollectionCountChanged (int count);
+        bool HasCollectionLastModifiedChanged (long time);
     }
 }

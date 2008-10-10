@@ -18,6 +18,10 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <StartupObject />
+    <EnvironmentVariables>
+      <EnvironmentVariables />
+    </EnvironmentVariables>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -46,5 +50,13 @@
   <ItemGroup>
     <Compile Include="Banshee.Collection.Indexer.RemoteHelper\IndexerClient.cs" />
     <Compile Include="Banshee.Collection.Indexer.RemoteHelper\SimpleIndexerClient.cs" />
+    <Compile Include="Banshee.Collection.Indexer\ICollectionIndexer.cs" />
+    <Compile Include="Banshee.Collection.Indexer\ICollectionIndexerService.cs" />
+    <Compile Include="Hyena\ConsoleCrayon.cs" />
+    <Compile Include="Hyena\Log.cs" />
+    <Compile Include="Hyena\DateTimeUtil.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Demo\RemoteClient.cs" />
   </ItemGroup>
 </Project>

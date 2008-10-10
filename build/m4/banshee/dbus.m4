@@ -1,8 +1,9 @@
 AC_DEFUN([BANSHEE_CHECK_NDESK_DBUS],
 [
-	PKG_CHECK_MODULES(NDESK_DBUS, 
-		ndesk-dbus-1.0 >= 0.5 \
-		ndesk-dbus-glib-1.0 >= 0.3)
+	PKG_CHECK_MODULES(NDESK_DBUS_GLIB, ndesk-dbus-glib-1.0 >= 0.3)
+	AC_SUBST(NDESK_DBUS_GLIB_LIBS)
+
+	PKG_CHECK_MODULES(NDESK_DBUS, ndesk-dbus-1.0 >= 0.5)
 	AC_SUBST(NDESK_DBUS_LIBS)
 ])
 

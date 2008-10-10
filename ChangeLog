@@ -1,5 +1,26 @@
 2008-10-09  Aaron Bockover  <abock@gnome.org>
 
+	* src/Clients/Beroe/Beroe/IndexerClient.cs: 
+	* src/Clients/Beroe/Beroe/RemoteClient.cs: Remove the client from the 
+	indexer server
+
+	* src/Core/Banshee.Services/Banshee.Collection.Indexer/ICollectionIndexer.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Indexer/CollectionIndexer.cs:
+	Fix standalone API issues
+
+	* src/Core/Banshee.CollectionIndexer/Hyena/ConsoleCrayon.cs:
+	* src/Core/Banshee.CollectionIndexer/Hyena/Log.cs:
+	* src/Core/Banshee.CollectionIndexer/Hyena/DateTimeUtil.cs: Synced from
+	Hyena
+
+	* src/Core/Banshee.CollectionIndexer/Demo/RemoteClient.cs: Moved the 
+	demo indexer client into its own assembly with simple build
+
+	* src/Core/Banshee.CollectionIndexer/update-includes: Script to sync
+	the stuff from hyena and the indexer dbus interfaces that we need
+
+2008-10-09  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.Services/Banshee.Collection.Indexer/CollectionIndexerService.cs:
 	Update to reflect clensing of the interfaces
 

@@ -1,0 +1,24 @@
+#!/bin/bash
+
+rm -f Hyena/* Banshee.Collection.Indexer/*
+
+INTERNALIZE_FILES="
+	../../Libraries/Hyena/Hyena/Log.cs
+	../../Libraries/Hyena/Hyena/ConsoleCrayon.cs
+	../../Libraries/Hyena/Hyena/DateTimeUtil.cs
+"
+
+for file in $INTERNALIZE_FILES; do
+	dest=Hyena/$(basename $file)
+	cp -a $file $dest.pub
+	sed 's,public ,internal ,g' < $dest.pub > $dest
+	rm $dest.pub
+done
+
+grep -l "\[Interface.*org\.bansheeproject.CollectionIndexer" $(find ../Banshee.Services/Banshee.Collection.Indexer/ -maxdepth 1 -name *.cs  | grep -v IIndexerClient | xargs) | xargs -i% cp -a % Banshee.Collection.Indexer
+
+for dir in Hyena Banshee.Collection.Indexer; do 
+	svn status $dir | grep ^? | sed s,^?,, | xargs --no-run-if-empty svn add
+	svn status $dir | grep ^\\! | sed s,^\\!,, | xargs --no-run-if-empty svn remove
+done
+

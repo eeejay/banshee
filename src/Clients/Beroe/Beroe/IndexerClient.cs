@@ -27,6 +27,8 @@
 //
 
 using System;
+using System.IO;
+using System.Reflection;
 using System.Diagnostics;
 
 using NDesk.DBus;
@@ -41,7 +43,7 @@ using Banshee.Collection.Indexer;
 namespace Beroe
 {
     [DBusExportable (ServiceName = "CollectionIndexer")]
-    public class IndexerClient : Client, IIndexerClient
+    public class IndexerClient : Client, IIndexerClient, IDBusExportable
     {
         public static void Main ()
         {
@@ -66,12 +68,6 @@ namespace Beroe
         
         private static void ActAsRemoteClient ()
         {
-            BusG.Init ();
-        
-            RemoteClient remote_client = new RemoteClient ();
-            remote_client.Start ();
-            
-            DBusConnection.RunMainLoop ();
         }
         
         private static void Startup ()
