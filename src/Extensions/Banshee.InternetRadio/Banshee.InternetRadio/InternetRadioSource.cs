@@ -297,7 +297,11 @@ namespace Banshee.InternetRadio
         }
         
         #endregion 
-        
+
+        public override bool AcceptsInputFromSource (Source source)
+        {
+            return false;
+        }
         
         public override bool CanDeleteTracks {
             get { return false; }
