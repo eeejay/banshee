@@ -1,5 +1,9 @@
 2008-10-11  Aaron Bockover  <abock@gnome.org>
 
+	Banshee 1.3.2 Released
+
+2008-10-11  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.CollectionIndexer/Banshee.Collection.Indexer.RemoteHelper/SimpleIndexerClient.cs:
 	Implement virtual hook functions (OnStarted, OnBeginUpdateIndex, 
 	OnEndUpdateIndex); only call OnShutDownWhileIndexing if indeed we were
