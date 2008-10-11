@@ -274,7 +274,7 @@
 	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/LargeTrackInfoDisplay.cs:
 	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/ClassicTrackInfoDisplay.cs:
 	Like I fixed for the ListView yesterday, do not recreate the pango
-	layouts on each expose; this is a sligh perf improvement, but mostly,
+	layouts on each expose; this is a slight perf improvement, but mostly,
 	it stops a huge leak (BGO #555365). Thanks to Michael Monreal for
 	helping to track this one down!
 
@@ -496,7 +496,7 @@
 	as well.
 
 	* src/Libraries/Hyena/Hyena.Data.Sqlite/HyenaSqliteConnection.cs: Add
-	thoghts on how to fix the transaction bug so we can bring back the
+	thoughts on how to fix the transaction bug so we can bring back the
 	transaction methods.  Not going to do it now, too fundamental of a change
 	too close to 1.4.
 
