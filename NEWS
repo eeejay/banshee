@@ -1,5 +1,5 @@
 ===============================================================================
-WELCOME TO BANSHEE 1.3.2 - Released September 29, 2008
+WELCOME TO BANSHEE 1.3.2 - Released October 11, 2008
 ===============================================================================
 
   * Banshee is a multimedia management and playback application for GNOME.
@@ -37,16 +37,19 @@ NEW AWESOME FEATURES AND ENHANCEMENTS
       * New podcast columns: downloaded; description; new
       * Podcasts can now have playlists and smart playlists
       * When finished playing from the play queue, play the song after the song 
-        we left off from (and stop playing if we weren't playing anything before).
+        we left off from (and stop playing if we weren't playing anything 
+		before).
       * Refresh podcasts every hour 
       * Import all white-listed files, even if TagLib# doesn't recognize them
-      * Cache and store images as Cairo.ImageSurfaces, gives performance and memory improvements
+      * Cache and store images as Cairo.ImageSurfaces, gives performance 
+	    and memory improvements
       * Enable autocomplete in editor for artist, album, and album artist
       * Improvements and fixes to the Indexer
 
     Notable bug fixes:
 
-      * Fix bug with non-JPG cover art getting downloaded but never converted/used (BGO #388162)
+      * Fix bug with non-JPG cover art getting downloaded but never 
+	    converted/used (BGO #388162)
       * Remember the user's smart playlist units (days/MB etc) (BGO #545887)
       * Look for PNG and BMP album art in the album's folder (BGO #547841)
       * Avoid showing album art for 'Unknown' artists/albums (BGO #549320)

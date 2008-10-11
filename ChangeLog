@@ -1,3 +1,16 @@
+2008-10-11  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.CollectionIndexer/Banshee.Collection.Indexer.RemoteHelper/SimpleIndexerClient.cs:
+	Implement virtual hook functions (OnStarted, OnBeginUpdateIndex, 
+	OnEndUpdateIndex); only call OnShutDownWhileIndexing if indeed we were
+	shutdown while indexing
+
+	* build/pkg-config/banshee-1-collection-indexer.pc.in: A separate 
+	pkg-config file for the standalone and bundleable collection indexer
+	helper libary 
+
+	* NEWS: Small fixes
+
 2008-10-10  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSource.cs:
@@ -679,10 +692,6 @@
 
 	* src/Core/Banshee.Services/Banshee.Base/ThreadAssist.cs: Add helper
 	method AssertNotInMainThread useful for debugging.
-
-2008-09-29  Aaron Bockover  <abock@gnome.org>
-
-	Banshee 1.3.2 Released
 
 2008-09-29  Gabriel Burt  <gabriel.burt@gmail.com>
 

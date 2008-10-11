@@ -1,0 +1,12 @@
+prefix=@prefix@
+exec_prefix=${prefix}
+libdir=@libdir@
+bansheedir=${libdir}/banshee-1
+Libraries=${bansheedir}/Banshee.CollectionIndexer.dll
+
+Name: Banshee Collection Indexer Helper
+Description: A library for applications to bundle to easily consume the Banshee Collection Indexer
+Version: @VERSION@
+Requires: ndesk-dbus-1.0
+Libs: -r:${Libraries}
+

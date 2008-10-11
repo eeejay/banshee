@@ -44,6 +44,7 @@ namespace Banshee.Collection.Indexer.RemoteHelper
         public void Start ()
         {
             client.Start ();
+            OnStarted ();
         }
         
         public string [] GetAvailableExportFields ()
@@ -83,6 +84,18 @@ namespace Banshee.Collection.Indexer.RemoteHelper
                     yield return field;
                 }
             }
+        }
+        
+        protected virtual void OnStarted ()
+        {
+        }
+        
+        protected virtual void OnBeginUpdateIndex ()
+        {
+        }
+        
+        protected virtual void OnEndUpdateIndex ()
+        {
         }
         
         protected abstract void IndexResult (IDictionary<string, object> result);
@@ -130,6 +143,8 @@ namespace Banshee.Collection.Indexer.RemoteHelper
                     indexer.SetExportFields (parent.export_fields.ToArray ());
                 }
                 
+                parent.OnBeginUpdateIndex ();
+                
                 for (int i = 0, models = indexer.GetModelCounts (); i < models; i++) {
                     for (int j = 0, items = indexer.GetModelResultsCount (i); j < items; j++) {
                         if (Shutdown) {
@@ -150,7 +165,11 @@ namespace Banshee.Collection.Indexer.RemoteHelper
                     shutdown_requested = false;
                 }
                 
-                parent.OnShutdownWhileIndexing ();
+                if (shutdown_while_indexing) {
+                    parent.OnShutdownWhileIndexing ();
+                }
+                
+                parent.OnEndUpdateIndex ();
             }
             
             protected override bool HasCollectionChanged {
