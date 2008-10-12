@@ -1,3 +1,8 @@
+2008-10-12  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs: Made ArtworkId
+	exportable for the collection indexer
+
 2008-10-11  Aaron Bockover  <abock@gnome.org>
 
 	Banshee 1.3.2 Released

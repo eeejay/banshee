@@ -1,4 +1,3 @@
-
 // TrackInfo.cs
 //
 // Author:
@@ -291,6 +290,7 @@ namespace Banshee.Collection
             } 
         }     
         
+        [Exportable (ExportName = "artwork-id")]
         public virtual string ArtworkId { 
             get { return CoverArtSpec.CreateArtistAlbumId (AlbumArtist, AlbumTitle); }
         }
