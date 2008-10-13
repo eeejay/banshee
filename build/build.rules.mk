@@ -53,7 +53,7 @@ $(ASSEMBLY_FILE): $(SOURCES_BUILD) $(RESOURCES_EXPANDED) $(DEP_LINK)
 	test "x$$colors" = "xyes" && \
 		echo -e "\033[1mCompiling $(notdir $@)...\033[0m" || \
 		echo "Compiling $(notdir $@)...";
-	@test "x$(DEVEL_BUILD)" = "xyes" && warn="-warnaserror"; $(BUILD) -nowarn:0078 -target:$(TARGET) -out:$@ $$warn -define:HAVE_GTK_2_10 -define:NET_2_0 $(BUILD_DEFINES) $(ENABLE_TESTS_FLAG) $(FILTERED_LINK) $(RESOURCES_BUILD) $(SOURCES_BUILD) 
+	@$(BUILD) $(GMCS_FLAGS) -nowarn:0078 -target:$(TARGET) -out:$@ $$warn -define:HAVE_GTK_2_10 -define:NET_2_0 $(BUILD_DEFINES) $(ENABLE_TESTS_FLAG) $(FILTERED_LINK) $(RESOURCES_BUILD) $(SOURCES_BUILD) 
 	@if [ -e $(notdir $@.config) ]; then \
 		cp $(notdir $@.config) $(top_builddir)/bin; \
 	fi;

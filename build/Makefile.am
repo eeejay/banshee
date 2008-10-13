@@ -3,6 +3,7 @@ SUBDIRS = pkg-config m4
 GCONF_SCHEMA_EXTRACTOR_ASSEMBLY = gconf-schema-extractor.exe
 TRANSLATOR_EXTRACTOR_ASSEMBLY = translator-extractor.exe
 
+if GCONF_SCHEMAS_INSTALL
 bansheedir = $(pkglibdir)
 banshee_SCRIPTS = $(GCONF_SCHEMA_EXTRACTOR_ASSEMBLY)
 
@@ -10,6 +11,7 @@ all: $(GCONF_SCHEMA_EXTRACTOR_ASSEMBLY) $(TRANSLATOR_EXTRACTOR_ASSEMBLY)
 
 $(GCONF_SCHEMA_EXTRACTOR_ASSEMBLY): GConfSchemaExtractor.cs
 	$(MCS) -out:$@ $<
+endif
 
 $(TRANSLATOR_EXTRACTOR_ASSEMBLY): TranslatorExtractor.cs
 	if [ "x$(top_srcdir)" = "x$(top_builddir)" ]; then \

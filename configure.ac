@@ -1,21 +1,18 @@
 dnl Automake setup
+AC_INIT([banshee-1], [1.3.3])
+ASM_DISPLAY_VERSION="1.3.3"
 
-AC_INIT([banshee-1], [1.3.2])
-ASM_DISPLAY_VERSION="1.3.2"
-DEVEL_BUILD=no
+DISTCHECK_CONFIGURE_FLAGS="--disable-docs --enable-mtp --enable-daap --enable-podcast --enable-release"
+AC_SUBST(DISTCHECK_CONFIGURE_FLAGS)
 
 AC_CANONICAL_SYSTEM
 AC_PREREQ(2.13)
 AM_INIT_AUTOMAKE([1.9 dist-bzip2 tar-ustar])
 AM_MAINTAINER_MODE
 
-DISTCHECK_CONFIGURE_FLAGS="--disable-docs --enable-mtp --enable-daap --enable-podcast"
-AC_SUBST(DISTCHECK_CONFIGURE_FLAGS)
-
 ASM_VERSION="$VERSION.0"
 AC_SUBST(ASM_VERSION)
 AC_SUBST(ASM_DISPLAY_VERSION)
-AC_SUBST(DEVEL_BUILD)
 
 dnl Pieces needed by autogen; can't be parsed from macros
 AM_CONFIG_HEADER(config.h)
@@ -30,7 +27,6 @@ SHAMROCK_EXPAND_DATADIR
 
 dnl libbanshee/native dependencies (required)
 BANSHEE_CHECK_LIBBANSHEE
-#BANSHEE_CHECK_NAUTILUS_BURN
 BANSHEE_CHECK_GSTREAMER
 
 BANSHEE_CHECK_NOW_PLAYING_X11
@@ -78,13 +74,23 @@ BANSHEE_CHECK_TAGLIB_SHARP
 
 dnl Required dependencies (managed/core)
 BANSHEE_CHECK_GTK_SHARP
-BANSHEE_CHECK_GNOME_SHARP
 
 PKG_CHECK_MODULES(SQLITE, sqlite3 >= 3.4)
 
-dnl GConf
-AC_PATH_PROG(GCONFTOOL, gconftool-2, no)
-AM_GCONF_SOURCE_2
+dnl GNOME (optional)
+AC_ARG_ENABLE(gnome, 
+	AC_HELP_STRING([--disable-gnome], 
+		[Disable GNOME support]), 
+	, enable_gnome="yes")
+if test "x$enable_gnome" = "xyes"; then
+	BANSHEE_CHECK_GNOME_SHARP
+	AC_PATH_PROG(GCONFTOOL, gconftool-2, no)
+	AM_GCONF_SOURCE_2
+	AM_CONDITIONAL(ENABLE_GNOME, true)
+else
+	AM_CONDITIONAL(GCONF_SCHEMAS_INSTALL, false)
+	AM_CONDITIONAL(ENABLE_GNOME, false)
+fi
 
 dnl DAP support (each module is optional)
 BANSHEE_CHECK_DAP_MTP
@@ -103,8 +109,25 @@ BANSHEE_CHECK_TORRENT
 dnl i18n
 SHAMROCK_CONFIGURE_I18N($PACKAGE)
 
-AC_ARG_ENABLE(podcast, AC_HELP_STRING([--disable-podcast], [Disable Podcasting support]), , enable_podcast="yes")
+dnl the bird is the word
+AC_ARG_ENABLE(podcast, 
+	AC_HELP_STRING([--disable-podcast], 
+		[Disable Podcasting support]), 
+	, enable_podcast="yes")
 AM_CONDITIONAL(ENABLE_PODCAST, test "x$enable_podcast" = "xyes")
+
+AC_ARG_ENABLE(release,
+	AC_HELP_STRING([--enable-release],
+		[Use release configuration [default=NO]]),
+	enable_release=yes, enable_release=no)
+AM_CONDITIONAL(ENABLE_RELEASE, text "x$enable_release" = "xyes")
+if test "x$enable_release" = "xyes"; then
+	GMCS_FLAGS="-define:RELEASE"
+else
+	GMCS_FLAGS="-warnaserror"
+fi
+AC_SUBST(GMCS_FLAGS)
+
 
 dnl generated files
 AC_OUTPUT([
@@ -209,7 +232,7 @@ ${PACKAGE}-${VERSION}
     Libdir:            ${expanded_libdir}
 
     C Compiler:        ${CC}
-    Mono C# Compiler:  ${MCS}
+    Mono C# Compiler:  ${MCS} ${GMCS_FLAGS}
     Mono Runtime:      ${MONO}
 
     Digital Audio Player (DAP) Support:
@@ -222,6 +245,7 @@ ${PACKAGE}-${VERSION}
     Podcast Support:   ${enable_podcast}
     Boo Scripting:     ${enable_boo}
     X11 Video Support: ${have_xvidmode}
+    GNOME Support:     ${enable_gnome}
 
     Unit Tests:        ${do_tests}	(requires nunit >= ${NUNIT_REQUIRED})
 "
