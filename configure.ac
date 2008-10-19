@@ -120,7 +120,7 @@ AC_ARG_ENABLE(release,
 	AC_HELP_STRING([--enable-release],
 		[Use release configuration [default=NO]]),
 	enable_release=yes, enable_release=no)
-AM_CONDITIONAL(ENABLE_RELEASE, text "x$enable_release" = "xyes")
+AM_CONDITIONAL(ENABLE_RELEASE, test "x$enable_release" = "xyes")
 if test "x$enable_release" = "xyes"; then
 	GMCS_FLAGS="-define:RELEASE"
 else

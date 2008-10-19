@@ -1,3 +1,7 @@
+2008-10-19  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* configure.ac: Fix typo, text => test.
+
 2008-10-19  Aaron Bockover  <abock@gnome.org>
 
 	* build/osx/collect-deps.sh: Script to collect all the privately built
