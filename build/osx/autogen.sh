@@ -27,8 +27,11 @@ fi
 	--disable-mtp \
 	--disable-daap \
 	--disable-ipod \
-	--disable-docs \
-	--disable-gnome
+	--disable-boo \
+	--disable-gnome \
+	--disable-docs
+
+mv configure.ac.orig configure.ac
 
 popd &>/dev/null
 popd &>/dev/null

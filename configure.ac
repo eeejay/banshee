@@ -246,6 +246,7 @@ ${PACKAGE}-${VERSION}
     Boo Scripting:     ${enable_boo}
     X11 Video Support: ${have_xvidmode}
     GNOME Support:     ${enable_gnome}
+    Graphics System:   ${GRAPHICS_SUBSYSTEM}
 
     Unit Tests:        ${do_tests}	(requires nunit >= ${NUNIT_REQUIRED})
 "

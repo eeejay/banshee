@@ -1,5 +1,18 @@
 2008-10-19  Aaron Bockover  <abock@gnome.org>
 
+	* build/m4/banshee/libbanshee.m4: Require either the x11 or quartz backend
+	in GDK depending on the target from GTK (based on Eoin's patch)
+
+	* configure.ac: Show what graphics backend we'll be building against
+
+	* build/osx/autogen.sh: Pass --disable-boo, and always restore the orignal
+	configure.ac after the script runs
+
+	* build/osx/build-deps.sh: Pull in ndesk-dbus, ndesk-dbus-glib, taglib-sharp
+	and mono-addins as bundle dependencies
+
+2008-10-19  Aaron Bockover  <abock@gnome.org>
+
 	This commit adds preliminary build scripts/environment/directions for
 	building Banshee on OS X, based heavily on Eoin's great work on porting
 	Banshee to OS X. Banshee does not actually build yet on OS X with this

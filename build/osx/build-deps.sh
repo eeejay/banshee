@@ -3,12 +3,18 @@
 GST_DOWNLOAD_URI="http://gstreamer.freedesktop.org/src/%n/%f"
 GST_CONFIGURE_ARGS="--disable-gtk-doc"
 
+NDBUS_DOWNLOAD_URI="http://www.ndesk.org/archive/dbus-sharp/%f"
+
 TARGETS=(
-    # name (%n)        version (%v)  dir (%d)  file (%f)  download uri          configure args
-	"liboil            0.3.15        %n-%v     %d.tar.gz  http://liboil.freedesktop.org/download/%f  ${GST_CONFIGURE_ARGS}"
-	"gstreamer         0.10.19       %n-%v     %d.tar.gz  ${GST_DOWNLOAD_URI}  ${GST_CONFIGURE_ARGS}"
-	"gst-plugins-base  0.10.19       %n-%v     %d.tar.gz  ${GST_DOWNLOAD_URI}  ${GST_CONFIGURE_ARGS}"
-	"gst-plugins-good  0.10.7        %n-%v     %d.tar.gz  ${GST_DOWNLOAD_URI}  ${GST_CONFIGURE_ARGS}"
+    # name (%n)        version (%v)  dir (%d)  file (%f)   download uri          configure args
+	"liboil            0.3.15        %n-%v     %d.tar.gz   http://liboil.freedesktop.org/download/%f  ${GST_CONFIGURE_ARGS}"
+	"gstreamer         0.10.19       %n-%v     %d.tar.gz   ${GST_DOWNLOAD_URI}                        ${GST_CONFIGURE_ARGS}"
+	"gst-plugins-base  0.10.19       %n-%v     %d.tar.gz   ${GST_DOWNLOAD_URI}                        ${GST_CONFIGURE_ARGS}"
+	"gst-plugins-good  0.10.7        %n-%v     %d.tar.gz   ${GST_DOWNLOAD_URI}                        ${GST_CONFIGURE_ARGS}"
+	"ndesk-dbus        0.6.0         %n-%v     %d.tar.gz   ${NDBUS_DOWNLOAD_URI}"
+	"ndesk-dbus-glib   0.4.1         %n-%v     %d.tar.gz   ${NDBUS_DOWNLOAD_URI}"
+	"taglib-sharp      2.0.3.0       %n-%v     %d.tar.gz   http://www.taglib-sharp.com/Download/%f    --disable-docs"
+	"mono-addins       0.3.1         %n-%v     %d.tar.bz2  http://go-mono.com/sources/mono-addins/%f  --disable-docs"
 )
 
 # There's probably no need to modify anything below
@@ -66,7 +72,7 @@ function run () {
 
 which wget &>/dev/null || bail "You need to install wget (sudo port install wget)"
 
-SOURCES_ROOT=sources
+SOURCES_ROOT=bundle-deps-src
 mkdir -p $SOURCES_ROOT
 pushd $SOURCES_ROOT &>/dev/null
 
