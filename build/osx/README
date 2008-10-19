@@ -1,0 +1,70 @@
+Building Banshee on Mac OS X 10.5
+=================================
+
+Dependency Frameworks
+---------------------
+
+  Before building Banshee, you must first install a few dependency 
+  frameworks, namely Mono, Xcode, and a few small bootstrap libraries
+  from the MacPorts project.
+
+  When installing these frameworks, it is highly recommended that you
+  leave all installation paths to their defaults.
+
+  Install the frameworks in this order:
+
+    * Xcode    (http://developer.apple.com/technology/xcode.html)
+    * Mono 2.0 (http://mono-project.com/Downloads)
+    * MacPorts (http://macports.org/install.php)
+
+
+Working Environment
+-------------------
+
+  Ensure that whenever you will be working with MacPorts (i.e.
+  the 'port' command) or building Banshee or any of its dependencies
+  that you have the /opt/local/bin path set in your PATH. It MUST
+  come before Mono's framework!
+
+  It is recommended that as a precaution you add this line to your
+  ~/.bash_profile
+
+    export PATH="/opt/local/bin:$PATH"
+
+  Additionally, there are two helper scripts for actually building
+  Banshee and any native libraries that will be bundled with it. 
+  These scripts will be covered later.
+
+
+MacPorts Dependencies
+---------------------
+
+  Install the gettext, intltool, glib2, and libtool ports from 
+  MacPorts, in that order. This can be done like this:
+
+    $ sudo port install gettext intltool glib2 libtool
+
+  After this is done, you should not need to worry about the port
+  command or dealing with MacPorts for building Banshee.
+
+
+Banshee Bundle Dependencies
+---------------------------
+
+  A few libraries need to be built manually, outside of the MacPorts
+  context. These are libraries that are bundled within Banshee.app
+  to reduce the runtime dependencies that end users must deal with.
+
+  Once your build environment is set up (as described in the three
+  sections above), building these bundle dependencies is as easy
+  as running the build-deps.sh script in this directory.
+
+
+Building Banshee
+----------------
+
+  Once the build environment and the bundled dependencies are built,
+  as described in the four sections above, building Banshee is as
+  easy as running the build-banshee.sh script in this directory.
+
+

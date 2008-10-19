@@ -1,3 +1,15 @@
+2008-10-19  Aaron Bockover  <abock@gnome.org>
+
+	This commit adds preliminary build scripts/environment/directions for
+	building Banshee on OS X, based heavily on Eoin's great work on porting
+	Banshee to OS X. Banshee does not actually build yet on OS X with this
+	commit, so don't try. This is phase one of merging Eoin's great work 
+	into our trunk.
+
+	* build/osx/*: Scripts and an awesome README for building on OS X
+
+	* autogen.osx.sh: Helper to call into the real OS X autogen wrapper
+
 2008-10-13  Aaron Bockover  <abock@gnome.org>
 
 	* configure.ac: Support --disable-gnome, should make building on OS X
