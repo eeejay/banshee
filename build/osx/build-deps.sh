@@ -123,6 +123,9 @@ for ((i = 0, n = ${#TARGETS[@]}; i < n; i++)); do
 done
 
 popd &>/dev/null
+
+./collect-deps.sh
+
 popd &>/dev/null
 
 test -f $BUILD_LOG && rm $BUILD_LOG

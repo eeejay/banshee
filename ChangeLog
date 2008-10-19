@@ -1,5 +1,12 @@
 2008-10-19  Aaron Bockover  <abock@gnome.org>
 
+	* build/osx/collect-deps.sh: Script to collect all the privately built
+	dependencies for bundling
+
+	* build/osx/build-deps.sh: Call collect (har har har)
+
+2008-10-19  Aaron Bockover  <abock@gnome.org>
+
 	* build/m4/banshee/libbanshee.m4: Require either the x11 or quartz backend
 	in GDK depending on the target from GTK (based on Eoin's patch)
 
