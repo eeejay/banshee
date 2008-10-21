@@ -1,0 +1,10 @@
+XIPH_DOWNLOAD_URI="http://downloads.xiph.org/releases"
+
+TARGETS=(
+    # name (%n)        version (%v)  dir (%d)  file (%f)   download uri                    configure args
+    "libogg            1.1.3         %n-%v     %d.tar.gz   ${XIPH_DOWNLOAD_URI}/ogg/%f     "
+    "libvorbis         1.2.0         %n-%v     %d.tar.gz   ${XIPH_DOWNLOAD_URI}/vorbis/%f  "
+	"flac              1.2.1         %n-%v     %d.tar.gz   ${XIPH_DOWNLOAD_URI}/%n/%f      --disable-asm-optimizations"
+    "libtheora         1.0beta3      %n-%v     %d.tar.gz   ${XIPH_DOWNLOAD_URI}/theora/%f  "
+    "speex             1.2rc1        %n-%v     %d.tar.gz   ${XIPH_DOWNLOAD_URI}/%n/%f      "
+)

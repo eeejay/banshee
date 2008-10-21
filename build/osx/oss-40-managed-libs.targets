@@ -1,0 +1,9 @@
+NDBUS_DOWNLOAD_URI="http://www.ndesk.org/archive/dbus-sharp/%f"
+
+TARGETS=(
+    # name (%n)        version (%v)  dir (%d)  file (%f)   download uri                               configure args 
+    "ndesk-dbus        0.6.0         %n-%v     %d.tar.gz   ${NDBUS_DOWNLOAD_URI}"
+    "ndesk-dbus-glib   0.4.1         %n-%v     %d.tar.gz   ${NDBUS_DOWNLOAD_URI}"
+    "taglib-sharp      2.0.3.0       %n-%v     %d.tar.gz   http://www.taglib-sharp.com/Download/%f    --disable-docs"
+    "mono-addins       0.3.1         %n-%v     %d.tar.bz2  http://go-mono.com/sources/mono-addins/%f  --disable-docs"
+)

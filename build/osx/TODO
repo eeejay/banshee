@@ -1,0 +1,7 @@
+FIXME/TODO Items for build-deps.sh:
+
+	* Do we really need to run autogen.sh? Probably are okay with just configure
+	* Allow specifying inclusion or exclusion targets in target sets
+	* Allow specifying actions for targets (i.e. make clean, make all, etc.)
+	* Maybe do not always rebuild targets; mark when a target succeeds and skip?
+

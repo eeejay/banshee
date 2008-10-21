@@ -1,24 +1,5 @@
 #!/bin/bash
 
-GST_DOWNLOAD_URI="http://gstreamer.freedesktop.org/src/%n/%f"
-GST_CONFIGURE_ARGS="--disable-gtk-doc"
-
-NDBUS_DOWNLOAD_URI="http://www.ndesk.org/archive/dbus-sharp/%f"
-
-TARGETS=(
-    # name (%n)        version (%v)  dir (%d)  file (%f)   download uri          configure args
-	"liboil            0.3.15        %n-%v     %d.tar.gz   http://liboil.freedesktop.org/download/%f  ${GST_CONFIGURE_ARGS}"
-	"gstreamer         0.10.19       %n-%v     %d.tar.gz   ${GST_DOWNLOAD_URI}                        ${GST_CONFIGURE_ARGS}"
-	"gst-plugins-base  0.10.19       %n-%v     %d.tar.gz   ${GST_DOWNLOAD_URI}                        ${GST_CONFIGURE_ARGS}"
-	"gst-plugins-good  0.10.7        %n-%v     %d.tar.gz   ${GST_DOWNLOAD_URI}                        ${GST_CONFIGURE_ARGS}"
-	"ndesk-dbus        0.6.0         %n-%v     %d.tar.gz   ${NDBUS_DOWNLOAD_URI}"
-	"ndesk-dbus-glib   0.4.1         %n-%v     %d.tar.gz   ${NDBUS_DOWNLOAD_URI}"
-	"taglib-sharp      2.0.3.0       %n-%v     %d.tar.gz   http://www.taglib-sharp.com/Download/%f    --disable-docs"
-	"mono-addins       0.3.1         %n-%v     %d.tar.bz2  http://go-mono.com/sources/mono-addins/%f  --disable-docs"
-)
-
-# There's probably no need to modify anything below
-
 VERBOSE=0
 BUILD_LOG=`pwd`/build-log
 
@@ -26,7 +7,7 @@ pushd $(dirname $0) &>/dev/null
 source build.env
 
 function show_help () {
-	echo "Usage: $0 [options]"
+	echo "Usage: $0 [options] [targets]"
 	echo
 	echo "Available Options:"
 	echo "  -h, --help        show this help"
@@ -35,12 +16,10 @@ function show_help () {
 	exit 1
 }
 
-for arg in $@; do
-	case $arg in
-		-v|--verbose) VERBOSE=1 ;;
-		-h|--help)    show_help ;;
-	esac
-done
+function bail () {
+	echo "ERROR: $1" 1>&2
+	exit $2
+}
 
 function expand_target_defs () {
 	for def in $@; do
@@ -55,11 +34,6 @@ function expand_target_defs () {
 	done
 }
 
-function bail () {
-	echo "ERROR: $1" 1>&2
-	exit $2
-}
-
 function run () {
 	echo "--> Running: $@"
 	BAIL_MESSAGE="Failed to run $1 against ${TARGET_NAME}"
@@ -70,15 +44,45 @@ function run () {
 	fi
 }
 
+ALL_TARGETS=()
+
+function append_target () {
+	FILE=$1
+	[[ -f $FILE ]] || FILE="$FILE.targets"
+	source $FILE &>/dev/null || bail "Could not load target set '$FILE'" 1
+	echo "Loading target set '$FILE'"
+	for ((i = 0, n = ${#TARGETS[@]}; i < n; i++)); do
+		ALL_TARGETS[${#ALL_TARGETS[*]}]=${TARGETS[$i]}
+	done
+}
+
+for arg in $@; do
+	case $arg in
+		-v|--verbose) VERBOSE=1 ;;
+		-h|--help)    show_help ;;
+		-*)           bail "Unknown argument: $arg" 1 ;;
+		*)            append_target $arg ;;
+	esac
+done
+
+if [ ${#ALL_TARGETS[@]} -eq 0 ]; then
+	for target_file in $(find $(dirname $0) -maxdepth 1 -name \*.targets); do
+		append_target $target_file
+	done
+fi
+
 which wget &>/dev/null || bail "You need to install wget (sudo port install wget)"
 
 SOURCES_ROOT=bundle-deps-src
 mkdir -p $SOURCES_ROOT
 pushd $SOURCES_ROOT &>/dev/null
 
-for ((i = 0, n = ${#TARGETS[@]}; i < n; i++)); do
+echo "Starting to build all targets..."
+echo
+
+for ((i = 0, n = ${#ALL_TARGETS[@]}; i < n; i++)); do
 	# Break the target definition into its parts
-	TARGET=(${TARGETS[$i]})
+	TARGET=(${ALL_TARGETS[$i]})
 	TARGET_NAME=${TARGET[0]}
 	TARGET_VERSION=${TARGET[1]}
 	TARGET_DIR=${TARGET[2]}
@@ -113,6 +117,15 @@ for ((i = 0, n = ${#TARGETS[@]}; i < n; i++)); do
 		CONFIGURE=./configure
 		if [ -f ./autogen.sh ]; then
 			CONFIGURE=./autogen.sh
+		fi
+
+		if [ ! -f patched ]; then
+			patches=$(find ../.. -maxdepth 1 -name ${TARGET_NAME}\*.patch)
+			for patch in $patches; do
+				echo "--> Running: patch -p0 < $patch"
+				patch -p0 < $patch 1>/dev/null || bail "Could not apply patch $patch to $TARGET_NAME" $?
+				touch patched
+			done
 		fi
 
 		run $CONFIGURE --prefix=$BUILD_PREFIX $TARGET_CONFIGURE_ARGS

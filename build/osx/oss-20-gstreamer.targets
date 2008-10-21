@@ -1,0 +1,10 @@
+GST_DOWNLOAD_URI="http://gstreamer.freedesktop.org/src/%n/%f"
+GST_CONFIGURE_ARGS="--disable-gtk-doc"
+
+TARGETS=(
+    # name (%n)        version (%v)  dir (%d)  file (%f)   download uri                               configure args
+    "liboil            0.3.15        %n-%v     %d.tar.gz   http://liboil.freedesktop.org/download/%f  ${GST_CONFIGURE_ARGS}"
+    "gstreamer         0.10.21       %n-%v     %d.tar.gz   ${GST_DOWNLOAD_URI}                        ${GST_CONFIGURE_ARGS}"
+    "gst-plugins-base  0.10.21       %n-%v     %d.tar.gz   ${GST_DOWNLOAD_URI}                        ${GST_CONFIGURE_ARGS} --disable-x --disable-xvideo --disable-xshm --disable-gio --disable-gnome_vfs"
+    "gst-plugins-good  0.10.10       %n-%v     %d.tar.gz   ${GST_DOWNLOAD_URI}                        ${GST_CONFIGURE_ARGS}"
+)

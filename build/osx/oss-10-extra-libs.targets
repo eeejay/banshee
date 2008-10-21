@@ -1,0 +1,5 @@
+TARGETS=(
+    # name (%n)        version (%v)  dir (%d)  file (%f)   download uri                    configure args
+    "wavpack           4.50.1        %n-%v     %d.tar.bz2  http://www.wavpack.com/%f"
+	"taglib            1.5           %n-%v     %d.tar.gz   http://developer.kde.org/~wheeler/files/src/%f"
+)
