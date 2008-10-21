@@ -75,6 +75,9 @@ BANSHEE_CHECK_TAGLIB_SHARP
 dnl Required dependencies (managed/core)
 BANSHEE_CHECK_GTK_SHARP
 
+dnl OS X (optional through --enable-osx)
+BANSHEE_CHECK_OSX
+
 PKG_CHECK_MODULES(SQLITE, sqlite3 >= 3.4)
 
 dnl GNOME (optional)
@@ -246,6 +249,7 @@ ${PACKAGE}-${VERSION}
     Boo Scripting:     ${enable_boo}
     X11 Video Support: ${have_xvidmode}
     GNOME Support:     ${enable_gnome}
+    OSX Support:       ${enable_osx}
     Graphics System:   ${GRAPHICS_SUBSYSTEM}
 
     Unit Tests:        ${do_tests}	(requires nunit >= ${NUNIT_REQUIRED})

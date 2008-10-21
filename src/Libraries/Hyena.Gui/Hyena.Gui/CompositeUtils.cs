@@ -35,14 +35,14 @@ namespace Hyena.Gui
 {
     public static class CompositeUtils 
     {
-        [DllImport ("libgdk-2.0-0.dll")]
+        [DllImport ("libgdk-win32-2.0-0.dll")]
         private static extern IntPtr gdk_screen_get_rgba_visual (IntPtr screen);
 
         [DllImport ("libgtk-win32-2.0-0.dll")]
         private static extern void gtk_widget_input_shape_combine_mask (IntPtr raw, IntPtr shape_mask, 
             int offset_x, int offset_y);
 
-        [DllImport ("libgdk-2.0-0.dll")]
+        [DllImport ("libgdk-win32-2.0-0.dll")]
         private static extern IntPtr gdk_screen_get_rgba_colormap (IntPtr screen);
         
         public static Colormap GetRgbaColormap (Screen screen)
@@ -89,11 +89,11 @@ namespace Hyena.Gui
             return null;
         }
 
-        [DllImport ("libgdk-2.0-0.dll")]
+        [DllImport ("libgdk-win32-2.0-0.dll")]
         private static extern void gdk_property_change (IntPtr window, IntPtr property, IntPtr type, 
             int format, int mode, uint [] data, int nelements);
 
-        [DllImport ("libgdk-2.0-0.dll")]
+        [DllImport ("libgdk-win32-2.0-0.dll")]
         private static extern void gdk_property_change (IntPtr window, IntPtr property, IntPtr type, 
             int format, int mode, byte [] data, int nelements);
       
@@ -107,7 +107,7 @@ namespace Hyena.Gui
             gdk_property_change (win.Handle, property.Handle, type.Handle, 8, (int)mode,  data, data.Length);
         }
 
-        [DllImport ("libgdk-2.0-0.dll")]
+        [DllImport ("libgdk-win32-2.0-0.dll")]
         private static extern bool gdk_x11_screen_supports_net_wm_hint (IntPtr screen, IntPtr property);
 
         public static bool SupportsHint (Screen screen, string name)
@@ -120,7 +120,7 @@ namespace Hyena.Gui
             }
         }
 
-        [DllImport ("libgdk-2.0-0.dll")]
+        [DllImport ("libgdk-win32-2.0-0.dll")]
         private static extern bool gdk_screen_is_composited (IntPtr screen);
 
         public static bool IsComposited (Screen screen) 

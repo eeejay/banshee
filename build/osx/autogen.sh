@@ -29,7 +29,8 @@ fi
 	--disable-ipod \
 	--disable-boo \
 	--disable-gnome \
-	--disable-docs
+	--disable-docs \
+	--enable-osx
 
 mv configure.ac.orig configure.ac
 

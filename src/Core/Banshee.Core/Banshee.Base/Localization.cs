@@ -120,7 +120,7 @@ namespace Banshee.Base
             return result;
         }
         
-        [DllImport("libglib-2.0.so.0")]
+        [DllImport("libglib-2.0.dll")]
         private static extern IntPtr g_get_language_names();
 
         private static string [] GetLanguageNames()

@@ -360,7 +360,7 @@ namespace Hyena.Gui
         
         private static bool native_push_pop_exists = true;
         
-        [DllImport ("libcairo.so.2")]
+        [DllImport ("libcairo-2.dll")]
         private static extern void cairo_push_group (IntPtr ptr);
         private static CairoInteropCall cairo_push_group_call = new CairoInteropCall ("PushGroup");
         
@@ -379,7 +379,7 @@ namespace Hyena.Gui
             }
         }
         
-        [DllImport ("libcairo.so.2")]
+        [DllImport ("libcairo-2.dll")]
         private static extern void cairo_pop_group_to_source (IntPtr ptr);
         private static CairoInteropCall cairo_pop_group_to_source_call = new CairoInteropCall ("PopGroupToSource");
         

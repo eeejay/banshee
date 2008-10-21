@@ -338,7 +338,7 @@ namespace Bacon
         private static extern void g_signal_stop_emission_by_name(IntPtr o, string signal);
         
         // In case there's no map provided by the assembly .config file
-        [DllImport("libgobject-2.0.so.0", EntryPoint="g_signal_stop_emission_by_name")]
+        [DllImport("libgobject-2.0-0.dll", EntryPoint="g_signal_stop_emission_by_name")]
         private static extern void g_signal_stop_emission_by_name_fallback(IntPtr o, string signal);
             
         private void OnWidgetEventAfter(object o, WidgetEventAfterArgs args)
@@ -696,7 +696,7 @@ namespace Bacon
             private static extern void g_type_query(IntPtr type, IntPtr query);
             
             // In case there's no map provided by the assembly .config file
-            [DllImport("libgobject-2.0.so.0", EntryPoint="g_type_query")]
+            [DllImport("libgobject-2.0-0.dll", EntryPoint="g_type_query")]
             private static extern void g_type_query_fallback(IntPtr type, IntPtr query);
 
             private int min_slider_size_offset = -1;

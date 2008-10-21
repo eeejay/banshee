@@ -1,3 +1,50 @@
+2008-10-21  Aaron Bockover  <abock@gnome.org>
+
+	This is round one of Eoin's core fixes for OS X support. This commit
+	yields an almost running Banshee. Getting very close. (BGO #557190)
+
+	* src/Extensions/Banshee.MultimediaKeys/Makefile.am: Only enable if 
+	we are on GNOME
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapService.cs: Don't initialize DAP
+	service without a HardwareManager instance. Necessary on OS X until we
+	have a backend implemented
+
+	* src/Core/Banshee.Widgets/Banshee.Widgets/VolumeButton.cs:
+	* src/Core/Banshee.Core/Banshee.Base/SafeUri.cs:
+	* src/Core/Banshee.Core/Banshee.Base/Localization.cs:
+	* src/Backends/Banshee.Unix/Banshee.IO.Unix/Directory.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Gui/CairoExtensions.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Gui/PangoCairoHelper.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Gui/CompositeUtils.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Gui/PixbufImageSurface.cs: Fixed up all
+	DllImport attributes to import directly against the Win32 target, to be
+	remapped to proper libraries on linux or osx through the newly fixed
+	dll map config files
+
+	* src/Core/Banshee.Widgets/Banshee.Widgets.dll.config:
+	* src/Core/Banshee.Core/Banshee.Core.dll.config:
+	* src/Libraries/Hyena.Gui/Hyena.Gui.dll.config: Made sure all dll maps
+	will work on Win32 without a .config, map these fixed up names to proper
+	.so or .dylib targets depending on whether the os is linux or osx
+	
+	* src/Core/Banshee.Core/Makefile.am: Include the new .config file
+
+	* build/m4/banshee/osx.m4: OS X specific check
+
+	* build/m4/banshee/dap-njb.m4: Removed, obsolete
+	
+	* build/osx/build.env: Fix up ACLOCAL_FLAGS
+	
+	* build/osx/autogen.sh: Pass --enable-osx 
+
+	* build/osx/oss-40-managed-libs.targets: Added ige-mac-integration-sharp,
+	removed mono-addins since that's part of the Mono 2.0 SDK
+	
+	* configure.ac: Added --enable-osx configure option, currently just 
+	makes sure we have ige-mac-integration-sharp. It should also check that we
+	actually have OS X
+
 2008-10-19  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* configure.ac: Fix typo, text => test.

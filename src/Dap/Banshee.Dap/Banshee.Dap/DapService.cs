@@ -58,7 +58,7 @@ namespace Banshee.Dap
         public void DelayedInitialize ()
         {
             lock (sync) {
-                if (initialized)
+                if (initialized || ServiceManager.HardwareManager == null)
                     return;
 
                 sources = new Dictionary<string, DapSource> ();
