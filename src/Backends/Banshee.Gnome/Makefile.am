@@ -3,9 +3,9 @@ TARGET = library
 LINK = $(REF_BACKEND_GNOME)
 INSTALL_DIR = $(BACKENDS_INSTALL_DIR)
 
+#Banshee.GnomeBackend/DefaultApplicationHelper.cs \
 SOURCES =  \
 	Banshee.GnomeBackend/Brasero.cs \
-	Banshee.GnomeBackend/DefaultApplicationHelper.cs \
 	Banshee.GnomeBackend/DiscDuplicator.cs \
 	Banshee.GnomeBackend/GConfConfigurationClient.cs \
 	Banshee.GnomeBackend/GnomeScreensaverManager.cs \

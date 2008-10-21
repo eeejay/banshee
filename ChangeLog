@@ -1,3 +1,11 @@
+2008-10-21  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Backends/Banshee.Gnome/Makefile.am: Remove the
+	DefaultApplicationHelper from the build because it needs more work;
+	it should probably be using GIO/g_app_info to set itself as the default,
+	and it shouldn't cause the "Want to set Banshee as the default?" dialog to
+	appear on distros where it's already the default.
+
 2008-10-21  Aaron Bockover  <abock@gnome.org>
 
 	This is round one of Eoin's core fixes for OS X support. This commit
