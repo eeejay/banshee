@@ -4,7 +4,7 @@ VERBOSE=0
 BUILD_LOG=`pwd`/build-log
 
 pushd $(dirname $0) &>/dev/null
-source build.env
+source build.env || exit $?
 
 function show_help () {
 	echo "Usage: $0 [options] [targets]"

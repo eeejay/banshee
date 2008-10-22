@@ -1,7 +1,7 @@
 #!/bin/bash
 
 pushd $(dirname $0) &>/dev/null
-source build.env
+source build.env || exit $?
 
 BUNDLE=bundle-deps
 

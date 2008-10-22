@@ -1,7 +1,7 @@
 #!/bin/bash
 
 pushd $(dirname $0) &>/dev/null
-source build.env
+source build.env || exit $?
 
 if [ ! -d $BUILD_PREFIX ]; then
 	echo "Error: Banshee bundle dependencies do not appear to be built."
