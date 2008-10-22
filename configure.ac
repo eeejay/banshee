@@ -4,6 +4,7 @@ ASM_DISPLAY_VERSION="1.3.3"
 
 DISTCHECK_CONFIGURE_FLAGS="--disable-docs --enable-mtp --enable-daap --enable-podcast --enable-release"
 AC_SUBST(DISTCHECK_CONFIGURE_FLAGS)
+AC_SUBST([ACLOCAL_AMFLAGS], ["-I build/m4/shamrock -I build/m4/banshee \${ACLOCAL_FLAGS}"])
 
 AC_CANONICAL_SYSTEM
 AC_PREREQ(2.13)

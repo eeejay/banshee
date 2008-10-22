@@ -75,7 +75,6 @@
   </language>
   <language code="it" name="Italian">
     <person>Gianvito Cavasoli</person>
-    <person>Alessandro Gervaso</person>
   </language>
   <language code="ja" name="Japanese">
     <person>Takeshi AIHANA</person>
@@ -121,6 +120,7 @@
     <person>Michel Recondo</person>
     <person>Vladimir Melo</person>
     <person>Daniel Abreu</person>
+    <person>Carlos Eduardo Moreira dos Santos</person>
   </language>
   <language code="ru" name="Russian">
     <person>Daniel Abramov</person>
