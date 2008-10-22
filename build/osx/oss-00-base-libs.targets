@@ -1,0 +1,7 @@
+TARGETS=(
+    # name (%n)        version (%v)  dir (%d)  file (%f)   download uri                    configure args
+#    "libxml2           2.6.30        %n-%v     %d.tar.bz2  http://ftp.gnome.org/pub/gnome/sources/libxml2/2.6/%f"
+	"gettext           0.17          %n-%v     %d.tar.gz   http://ftp.gnu.org/pub/gnu/gettext/%f  --without-emacs --disable-java"
+#	"intltool          0.40.5        %n-%v     %d.tar.bz2  http://ftp.gnome.org/pub/gnome/sources/intltool/0.40/%f"
+#	"libsoup           2.24.1        %n-%v     %d.tar.bz2  http://ftp.gnome.org/pub/gnome/sources/libsoup/2.24/%f  --disable-gtk-doc"
+)

@@ -71,8 +71,6 @@ if [ ${#ALL_TARGETS[@]} -eq 0 ]; then
 	done
 fi
 
-which wget &>/dev/null || bail "You need to install wget (sudo port install wget)"
-
 SOURCES_ROOT=bundle-deps-src
 mkdir -p $SOURCES_ROOT
 pushd $SOURCES_ROOT &>/dev/null
@@ -99,7 +97,7 @@ for ((i = 0, n = ${#ALL_TARGETS[@]}; i < n; i++)); do
 		# Download the tarball
 		if [ ! -a $TARGET_FILE ]; then
 			echo "--> Downloading ${TARGET_FILE}..."
-			wget -q $TARGET_URI || bail "Failed to download: ${TARGET_NAME}" $?
+			curl -Lsf -O $TARGET_URI || bail "Failed to download: ${TARGET_NAME}" $?
 		fi
 
 		# Extract the tarball
@@ -114,11 +112,6 @@ for ((i = 0, n = ${#ALL_TARGETS[@]}; i < n; i++)); do
 	fi
 
 	pushd $TARGET_DIR &>/dev/null
-		CONFIGURE=./configure
-		if [ -f ./autogen.sh ]; then
-			CONFIGURE=./autogen.sh
-		fi
-
 		if [ ! -f patched ]; then
 			patches=$(find ../.. -maxdepth 1 -name ${TARGET_NAME}\*.patch)
 			for patch in $patches; do
@@ -126,6 +119,11 @@ for ((i = 0, n = ${#ALL_TARGETS[@]}; i < n; i++)); do
 				patch -p0 < $patch 1>/dev/null || bail "Could not apply patch $patch to $TARGET_NAME" $?
 				touch patched
 			done
+		fi
+		
+		CONFIGURE=./configure
+		if [ -f ../../${TARGET_NAME}-autogen.sh ]; then
+			CONFIGURE=../../${TARGET_NAME}-autogen.sh
 		fi
 
 		run $CONFIGURE --prefix=$BUILD_PREFIX $TARGET_CONFIGURE_ARGS
@@ -137,9 +135,12 @@ done
 
 popd &>/dev/null
 
+echo "Collecting dependencies for bundle..."
 ./collect-deps.sh
 
 popd &>/dev/null
 
 test -f $BUILD_LOG && rm $BUILD_LOG
+
+echo "Success! Done."
 

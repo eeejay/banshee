@@ -16,7 +16,7 @@ AC_SUBST(ASM_DISPLAY_VERSION)
 
 dnl Pieces needed by autogen; can't be parsed from macros
 AM_CONFIG_HEADER(config.h)
-AC_PROG_INTLTOOL([0.21])
+IT_PROG_INTLTOOL([0.35.0])
 AC_PROG_LIBTOOL
 AC_PROG_INSTALL
 

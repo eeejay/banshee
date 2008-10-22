@@ -1,3 +1,23 @@
+2008-10-22  Aaron Bockover  <abock@gnome.org>
+
+	This commit fixes a number of OS X build issues and eliminates all 
+	dependencies on macports. It is now possible to build Banshee simply by
+	installing Xcode and the Mono 2.0 SDK
+
+	* build/osx/build.env: No longer require macports to bootstrap the 
+	bundle dependencies
+
+	* build/osx/oss-00-base-libs.targets: New targets, including intltool and
+	gettext so we can fully host the dependency build environment; no longer
+	do we require pieces from macports
+
+	* build/osx/build-deps.sh: Use curl instead of wget (provided by macports)
+
+	* build/m4/shamrock/i18n.m4:
+	* configure.ac:
+	* autogen.sh: Use only intltool, not a mix of gettext and intltool, which
+	we've used for quite some time and I'm not sure why
+
 2008-10-21  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Backends/Banshee.Gnome/Makefile.am: Remove the
