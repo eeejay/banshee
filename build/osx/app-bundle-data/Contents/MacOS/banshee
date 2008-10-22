@@ -1,0 +1,50 @@
+#!/bin/bash
+
+MONO_EXE=Nereid.exe
+MONO_FRAMEWORK_PATH=/Library/Frameworks/Mono.framework/Versions/Current
+MONO=$MONO_FRAMEWORK_PATH/bin/mono
+
+SELF_PATH=$(dirname $0)
+[[ ${SELF_PATH:0:1} = / ]] && BIN_PATH=$SELF_PATH || BIN_PATH="$(pwd)/$SELF_PATH"
+
+OSX_VERSION=$(uname -r | cut -f1 -d.)
+
+export GST_REGISTRY_FORK=no
+export DYLD_FALLBACK_LIBRARY_PATH=$BIN_PATH:$MONO_FRAMEWORK_PATH/lib:/usr/lib:/lib${DYLD_FALLBACK_LIBRARY_PATH+:$DYLD_FALLBACK_LIBRARY_PATH}
+export MONO_PATH=$BIN_PATH/glib-sharp-workaround
+
+[ -n "$BANSHEE_DEBUG" ] && BANSHEE_DEBUG="--debug"
+[ -n "$BANSHEE_TRACE" ] && BANSHEE_TRACE="--trace=$BANSHEE_TRACE"
+[ -n "$BANSHEE_PROFILE" ] && BANSHEE_PROFILE="--profile=$BANSHEE_PROFILE"
+
+for arg in $*; do
+    case "x--debug" in ("x$arg")
+        BANSHEE_DEBUG=$arg
+    esac
+
+    case "x--trace=" in ("x${arg:0:8}")
+        BANSHEE_TRACE=$arg
+    esac
+
+    case "x--profile=" in ("x${arg:0:10}")
+        BANSHEE_PROFILE=$arg
+    esac
+
+	case "x--redirect-log" in ("x$arg")
+		BANSHEE_REDIRECT_LOG="$HOME/.config/banshee-1/log"
+	esac
+done
+
+if [ -n "$BANSHEE_DEBUG" -o -n "$BANSHEE_TRACE" -o -n "$BANSHEE_PROFILE" ]; then
+    MONO_OPTIONS="$BANSHEE_DEBUG $BANSHEE_TRACE $BANSHEE_PROFILE"
+    echo "** Running Mono with $MONO_OPTIONS **"
+fi
+
+EXEC_COMMAND="$MONO $MONO_OPTIONS $BIN_PATH/$MONO_EXE $@"
+
+if [ $OSX_VERSION -lt 9 ]; then
+	$EXEC_COMMAND
+else
+	exec -a Banshee $EXEC_COMMAND
+fi
+
