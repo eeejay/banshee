@@ -189,7 +189,7 @@ namespace Banshee.PlayQueue
         private void OnPlayerEvent (PlayerEventArgs args)
         {
             if (args.Event == PlayerEvent.EndOfStream) {
-                if (RemovePlayingTrack ()) {
+                if (RemovePlayingTrack () && Count == 0) {
                     if (was_playing) {
                         ServiceManager.PlaybackController.PriorTrack = prior_playback_track;
                     } else {

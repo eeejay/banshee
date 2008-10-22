@@ -1,3 +1,8 @@
+2008-10-22  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
+	Fix bug with Play Queue stopping after every song (BGO #557386).
+
 2008-10-22  Aaron Bockover  <abock@gnome.org>
 
 	Patch from Eoin Hennessy <eoin@randomrules.org> (BGO #557190)
