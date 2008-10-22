@@ -731,7 +731,7 @@ msgstr "Aggiornamento database di Banshee"
 #: ../src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:227
 msgid ""
 "Please wait while your old Banshee database is migrated to the new format."
-msgstr "Attendere che il vecchio database di Banshee emigri al nuovo formato."
+msgstr "Attendere che il vecchio database di Banshee migri al nuovo formato."
 
 #: ../src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:932
 msgid "Refreshing Metadata"
@@ -3741,22 +3741,22 @@ msgstr "Tipo stazione"
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:258
 #, csharp-format
 msgid "http://last.fm/music/{0}"
-msgstr "http://last.fm/music/{0}"
+msgstr "http://lastfm.it/music/{0}"
 
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:266
 #, csharp-format
 msgid "http://last.fm/music/{0}/{1}"
-msgstr "http://last.fm/music/{0}/{1}"
+msgstr "http://lastfm.it/music/{0}/{1}"
 
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:274
 #, csharp-format
 msgid "http://last.fm/music/{0}/_/{1}"
-msgstr "http://last.fm/music/{0}/_/{1}"
+msgstr "http://lastfm.it/music/{0}/_/{1}"
 
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:282
 #, csharp-format
 msgid "http://www.last.fm/music/{0}/+videos"
-msgstr "http://www.last.fm/music/{0}/+videos"
+msgstr "http://www.lastfm.it/music/{0}/+videos"
 
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:290
 #, csharp-format
