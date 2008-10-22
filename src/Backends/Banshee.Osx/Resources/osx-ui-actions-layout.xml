@@ -1,0 +1,10 @@
+<ui>
+  <!-- This menu gets merged into the main menu to add the close window item -->
+  <menubar name="MainMenu">
+    <menu name="MediaMenu" action="MediaMenuAction">
+      <placeholder name="ClosePlaceholder">
+      <menuitem name="Close" action="CloseAction"/>
+      </placeholder>
+    </menu>
+  </menubar>
+</ui>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Addin 
+    id="Banshee.Osx"
+    version="1.0"
+    compatVersion="1.0"
+    copyright="© 2008 Eoin Hennessy. Licensed under the MIT X11 license."
+    category="required:Backends"
+    description="Backend providers for the OSX platform. Includes general OSX integration."
+    defaultEnabled="true">
+
+  <Dependencies>
+    <Addin id="Banshee.Core" version="1.0"/>
+    <Addin id="Banshee.Services" version="1.0"/>
+  </Dependencies>
+
+  <Extension path="/Banshee/ServiceManager/Service">
+    <Service class="Banshee.OsxBackend.OsxService"/>
+  </Extension>
+
+  <Extension path="/Banshee/Platform/HardwareManager">
+    <HardwareManager class="Banshee.OsxBackend.HardwareManager"/>
+  </Extension>
+</Addin>

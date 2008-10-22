@@ -1,3 +1,21 @@
+2008-10-22  Aaron Bockover  <abock@gnome.org>
+
+	Patch from Eoin Hennessy <eoin@randomrules.org> (BGO #557190)
+
+	* src/Backends/Banshee.OSX: Added OSX backend. Consists of a service 
+	that uses ige-mac-integration-sharp to bind the gtk menu to the 
+	global menu, make menus more osx-like etc.. and a hardware manager, 
+	which rigth now, doesn't do anything
+
+	* src/Extensions/Banshee.NotificationArea/Makefile.am: Disable the 
+	NotificationArea extension on OSX as the 'close-to-tray' behaviour it adds 
+	doesn't really make sense on OSX.
+	
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceRowRenderer.cs:
+	Swapping the rendering order of source icon and title fixes a 
+	rendering glitch on OSX where the icon for a source's first child is 
+	not rendered. 
+	
 2008-10-22  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Backends/Banshee.Gnome/Banshee.Gnome.addin.xml: Comment out the

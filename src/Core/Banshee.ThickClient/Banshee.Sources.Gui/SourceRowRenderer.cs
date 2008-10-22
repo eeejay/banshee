@@ -175,17 +175,17 @@ namespace Banshee.Sources.Gui
             title_layout.GetPixelSize (out title_layout_width, out title_layout_height);
             
             Gdk.GC main_gc = widget.Style.TextGC (state);
-
-            if (icon != null) {
-                drawable.DrawPixbuf (main_gc, icon, 0, 0, 
-                    cell_area.X, Middle (cell_area, icon.Height),
-                    icon.Width, icon.Height, RgbDither.None, 0, 0);
-            }
             
             drawable.DrawLayout (main_gc, 
                 cell_area.X + (icon == null ? 0 : icon.Width) + 6, 
                 Middle (cell_area, title_layout_height),
                 title_layout);
+            
+            if (icon != null) {
+                drawable.DrawPixbuf (main_gc, icon, 0, 0, 
+                    cell_area.X, Middle (cell_area, icon.Height),
+                    icon.Width, icon.Height, RgbDither.None, 0, 0);
+            }
             
             if (hide_counts) {
                 return;

@@ -185,6 +185,7 @@ src/Backends/Banshee.Gnome/Makefile
 src/Backends/Banshee.GStreamer/Makefile
 src/Backends/Banshee.Hal/Makefile
 src/Backends/Banshee.Unix/Makefile
+src/Backends/Banshee.Osx/Makefile
 src/Backends/Banshee.NowPlaying.X11/Makefile
 src/Backends/Banshee.NowPlaying.X11/libbnpx11/Makefile
 
