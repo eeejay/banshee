@@ -1,3 +1,14 @@
+2008-10-22  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Backends/Banshee.Gnome/Banshee.Gnome.addin.xml: Comment out the
+	DefaultApplicationHelper extension.
+
+	* src/Backends/Banshee.Gnome/Makefile.am: Remove the commented out
+	DefaultApplicationHelper.cs line.
+
+	* gstreamer/equalizer/gstiirequalizer.c: Patch from Sebastian Dröge, see
+	BGO #557260.
+
 2008-10-22  Aaron Bockover  <abock@gnome.org>
 
 	This commit fixes a number of OS X build issues and eliminates all 
