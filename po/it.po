@@ -3247,7 +3247,7 @@ msgstr "_Espellere al termine dell'importazione"
 
 #: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:172
 msgid "When an audio CD has been imported, automatically eject it."
-msgstr "Quando un CD audio è stato importato, automaticamente espellilo."
+msgstr "Quando un CD audio è stato importato, espellilo automaticamente."
 
 #: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:175
 msgid "Use error correction when importing"
