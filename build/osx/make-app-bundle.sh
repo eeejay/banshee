@@ -13,5 +13,7 @@ cp -rf bundle-deps/* $DEST
 cp -rf ../../bin/* $DEST
 cp -rf glib-sharp-workaround $DEST
 
+find Banshee.app -type d -iregex '.*\.svn$' | xargs rm -rf
+
 popd &>/dev/null
 
