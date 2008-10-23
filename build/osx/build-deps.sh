@@ -134,10 +134,6 @@ for ((i = 0, n = ${#ALL_TARGETS[@]}; i < n; i++)); do
 done
 
 popd &>/dev/null
-
-echo "Collecting dependencies for bundle..."
-./collect-deps.sh
-
 popd &>/dev/null
 
 test -f $BUILD_LOG && rm $BUILD_LOG

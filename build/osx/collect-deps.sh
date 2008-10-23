@@ -12,10 +12,11 @@ mkdir $BUNDLE/gstreamer-0.10
 
 LIB_PREFIX=$BUILD_PREFIX/lib
 
-#cp $BUILD_PREFIX/bin/{gst-launch,gst-inspect}-0.10 $BUNDLE &>/dev/null
+# Copy all runtime dependencies for bundling
+cp $BUILD_PREFIX/bin/{gst-launch,gst-inspect}-0.10 $BUNDLE &>/dev/null
 find $LIB_PREFIX -name *.dylib -type f -exec cp {} $BUNDLE \; &>/dev/null
-#find $LIB_PREFIX/gstreamer-0.10 -name *.so -type f -exec cp {} $BUNDLE/gstreamer-0.10 \; &>/dev/null
-#find $LIB_PREFIX/mono -name *.dll* -not -name *policy* -type f -exec cp {} $BUNDLE \; &>/dev/null
+find $LIB_PREFIX/gstreamer-0.10 -name *.so -type f -exec cp {} $BUNDLE/gstreamer-0.10 \; &>/dev/null
+find $LIB_PREFIX/mono -name *.dll* -not -name *policy* -type f -exec cp {} $BUNDLE \; &>/dev/null
 
 pushd $BUNDLE &>/dev/null
 
@@ -25,15 +26,21 @@ for link in $(find $LIB_PREFIX -name \*.dylib -type l); do
 done
 
 # Relocate libraries
-for dep in $(find . -type f -name \*.dylib -o -name \*.so); do
+for dep in $(find . -type f \( -name \*.dylib -o -name \*.so -o -name gst-\* \)); do
+	echo -n "Processing $dep: "
+	relocs=0
+	
 	link_deps=$(otool -L $dep | cut -f2 | cut -f1 -d' ')
-	echo "Processing $dep for relocation..."
+	dep_id=./$(basename $(otool -D $dep | tail -n1))
+
 	for link_dep in $link_deps; do
 		if [ "x${link_dep:0:${#LIB_PREFIX}}" = "x$LIB_PREFIX" ]; then
-			echo "--> $link_dep"
-			install_name_tool -change $link_dep $(basename $link_dep) $dep
-		fi	
+			install_name_tool -change $link_dep ./$(basename $link_dep) -id $dep_id $dep
+			relocs=$(($relocs + 1))
+		fi
 	done
+
+	echo "$relocs relocations"
 done
 
 popd &>/dev/null

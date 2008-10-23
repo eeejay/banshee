@@ -1,17 +1,10 @@
 #!/bin/bash
 
+BUNDLE_ROOT=$(dirname $0)
+source $BUNDLE_ROOT/runtime.env
+
 MONO_EXE=Nereid.exe
-MONO_FRAMEWORK_PATH=/Library/Frameworks/Mono.framework/Versions/Current
 MONO=$MONO_FRAMEWORK_PATH/bin/mono
-
-SELF_PATH=$(dirname $0)
-[[ ${SELF_PATH:0:1} = / ]] && BIN_PATH=$SELF_PATH || BIN_PATH="$(pwd)/$SELF_PATH"
-
-OSX_VERSION=$(uname -r | cut -f1 -d.)
-
-export GST_REGISTRY_FORK=no
-export DYLD_FALLBACK_LIBRARY_PATH=$BIN_PATH:$MONO_FRAMEWORK_PATH/lib:/usr/lib:/lib${DYLD_FALLBACK_LIBRARY_PATH+:$DYLD_FALLBACK_LIBRARY_PATH}
-export MONO_PATH=$BIN_PATH/glib-sharp-workaround
 
 [ -n "$BANSHEE_DEBUG" ] && BANSHEE_DEBUG="--debug"
 [ -n "$BANSHEE_TRACE" ] && BANSHEE_TRACE="--trace=$BANSHEE_TRACE"
