@@ -5,7 +5,7 @@ pushd $(dirname $0) &>/dev/null
 ./make-app-bundle.sh
 
 VOLUME_NAME=Banshee
-DMG_SRC="Banshee.app"
+DMG_APP=Banshee.app
 DMG_FILE=$VOLUME_NAME.dmg
 MOUNT_POINT=$VOLUME_NAME.mounted
 
@@ -13,7 +13,7 @@ rm -f $DMG_FILE
 rm -f $DMG_FILE.master
 
 # Compute an approximated image size in MB, and bloat by 1MB
-image_size=$(du -ck $DMG_SRC | tail -n1 | cut -f1)
+image_size=$(du -ck $DMG_APP | tail -n1 | cut -f1)
 image_size=$((($image_size + 1000) / 1000))
 
 echo "Creating disk image (${image_size}MB)..."
@@ -24,9 +24,7 @@ hdiutil attach $DMG_FILE -readwrite -noautoopen -mountpoint $MOUNT_POINT -quiet
 
 echo "Populating image..."
 
-for src in $DMG_SRC; do
-	cp -rf $src $MOUNT_POINT
-done
+mv $DMG_APP $MOUNT_POINT
 
 find $MOUNT_POINT -type d -iregex '.*\.svn$' &>/dev/null | xargs rm -rf
 
