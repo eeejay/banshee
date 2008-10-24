@@ -21,7 +21,15 @@ uninstall-hook:
 
 # Developer targets
 
-run:
+LC_BUILD = $(top_builddir)/bin/share/locale
+PO_FILES = $(addprefix po/, $(addsuffix .gmo, $(ALL_LINGUAS)))
+MO_FILES = $(patsubst po/%.gmo, $(LC_BUILD)/%/LC_MESSAGES/$(PACKAGE).mo, $(PO_FILES))
+
+$(MO_FILES): $(LC_BUILD)/%/LC_MESSAGES/$(PACKAGE).mo: po/%.gmo
+	$(mkdir_p) $(dir $@)
+	cp -af '$<' '$@'
+
+run: $(MO_FILES)
 	@pushd bin; \
 	$(MONO) --debug $(BANSHEE_DEV_MONO_OPTIONS) Nereid.exe --debug --uninstalled $(BANSHEE_DEV_OPTIONS); \
 	popd;
