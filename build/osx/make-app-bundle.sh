@@ -15,7 +15,6 @@ LIB_PREFIX=$BUILD_PREFIX/lib
 rm -rf $APP_DIR
 cp -rf app-bundle-data Banshee.app
 cp -rf ../../bin/* $BUNDLE
-cp -rf glib-sharp-workaround $BUNDLE
 
 mkdir $BUNDLE/gstreamer-0.10
 

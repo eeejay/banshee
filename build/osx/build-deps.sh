@@ -4,6 +4,14 @@ VERBOSE=0
 BUILD_LOG=`pwd`/build-log
 
 pushd $(dirname $0) &>/dev/null
+
+if [[ $# -eq 0 && -f build-deps.profile ]]; then
+	echo "No arguments passed and found a profile, so running the profile"
+	echo 
+	/bin/bash ./build-deps.profile
+	exit 1
+fi
+
 source build.env || exit $?
 
 function show_help () {
@@ -57,26 +65,34 @@ function append_target () {
 	done
 }
 
+ROOT_NAME=bundle
+expect_root=0
+
 for arg in $@; do
 	case $arg in
 		-v|--verbose) VERBOSE=1 ;;
 		-h|--help)    show_help ;;
+		-r|--root)    expect_root=1 ;;
 		-*)           bail "Unknown argument: $arg" 1 ;;
-		*)            append_target $arg ;;
+		*)            [[ $expect_root -eq 1 ]] && { ROOT_NAME=$arg; expect_root=0; } || append_target $arg ;;
 	esac
 done
 
+BUILD_PREFIX="$(dirname $BUILD_PREFIX)/${ROOT_NAME}-install"
+
 if [ ${#ALL_TARGETS[@]} -eq 0 ]; then
-	for target_file in $(find $(dirname $0)/targets -maxdepth 1 -name \*.targets); do
+	for target_file in $(find $(dirname $0)/targets -maxdepth 1 -name $ROOT_NAME\*.targets); do
 		append_target $target_file
 	done
 fi
 
-SOURCES_ROOT=deps/bundle-sources
+SOURCES_ROOT="deps/${ROOT_NAME}-sources"
 mkdir -p $SOURCES_ROOT
 pushd $SOURCES_ROOT &>/dev/null
 
 echo "Starting to build all targets..."
+echo "--> Root Name:    ${ROOT_NAME}"
+echo "--> Build Prefix: ${BUILD_PREFIX}"
 echo
 
 for ((i = 0, n = ${#ALL_TARGETS[@]}; i < n; i++)); do
@@ -114,7 +130,7 @@ for ((i = 0, n = ${#ALL_TARGETS[@]}; i < n; i++)); do
 
 	pushd $TARGET_DIR &>/dev/null
 		if [ ! -f patched ]; then
-			patches=$(find ../.. -maxdepth 1 -name ${TARGET_NAME}\*.patch)
+			patches=$(find ../../.. -maxdepth 2 -name ${TARGET_NAME}\*.patch)
 			for patch in $patches; do
 				echo "--> Running: patch -p0 < $patch"
 				patch -p0 < $patch 1>/dev/null || bail "Could not apply patch $patch to $TARGET_NAME" $?

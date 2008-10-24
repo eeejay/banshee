@@ -1,0 +1,4 @@
+TARGETS=(
+    # name (%n)        version (%v)  dir (%d)  file (%f)   download uri                    configure args
+    "gettext           0.17          %n-%v     %d.tar.gz   http://ftp.gnu.org/pub/gnu/gettext/%f  --without-emacs --disable-java"
+)
