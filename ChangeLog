@@ -1,3 +1,10 @@
+2008-10-23  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
+	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/IPlayQueue.cs: Patch
+	from Alex Launi and myself adding the ability to prepend a track to the
+	Play Queue (BGO #557526).
+
 2008-10-22  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:

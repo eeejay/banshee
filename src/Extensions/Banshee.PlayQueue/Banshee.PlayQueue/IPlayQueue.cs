@@ -35,5 +35,6 @@ namespace Banshee.PlayQueue
     public interface IPlayQueue
     {
         void EnqueueUri (string uri);
+        void EnqueueUri (string uri, bool prepend);
     }
 }

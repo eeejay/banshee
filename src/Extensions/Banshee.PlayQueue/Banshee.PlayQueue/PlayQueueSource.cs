@@ -108,11 +108,21 @@ namespace Banshee.PlayQueue
 
         public void EnqueueUri (string uri)
         {
+            EnqueueUri (uri, false);
+        }
+
+        public void EnqueueUri (string uri, bool prepend)
+        {
             int track_id = LibrarySource.GetTrackIdForUri (uri);
             if (track_id > 0) {
+                if (prepend) {
+                    ServiceManager.DbConnection.Execute ("UPDATE CorePlaylistEntries SET ViewOrder = ViewOrder + 1 WHERE PlaylistID = ?", DbId);
+                }
+
                 HyenaSqliteCommand insert_command = new HyenaSqliteCommand (String.Format (
-                    @"INSERT INTO CorePlaylistEntries (PlaylistID, TrackID) VALUES ({0}, ?)", DbId));
+                    @"INSERT INTO CorePlaylistEntries (PlaylistID, TrackID, ViewOrder) VALUES ({0}, ?, {1})", DbId, prepend ? 0 : MaxViewOrder));
                 ServiceManager.DbConnection.Execute (insert_command, track_id);
+
                 Reload ();
                 NotifyUser ();
             }
