@@ -9,20 +9,45 @@ SUBDIRS = \
 	extras \
 	po
 
-WINDOWS_ASSEMBLIES = \
-	Hyena.dll \
-	Hyena.Gui.dll \
-	Banshee.Core.dll \
-	Banshee.Services.dll \
-	Banshee.ThickClient.dll \
-	Banshee.Widgets.dll \
-	Banshee.PlayQueue.dll \
-	Banshee.Lastfm.dll \
-	Banshee.NotificationArea.dll \
-	Lastfm.Gui.dll \
-	Lastfm.dll \
-	Mono.Media.dll \
-	Nereid.exe
+# Important targets
+
+clean-local:
+	rm -rf $(top_builddir)/bin
+
+uninstall-hook:
+	if test `find $(pkglibdir) | wc -l` -eq 1; then \
+		rmdir $(pkglibdir); \
+	fi
+
+# Developer targets
+
+run:
+	@pushd bin; \
+	$(MONO) --debug $(BANSHEE_DEV_MONO_OPTIONS) Nereid.exe --debug --uninstalled $(BANSHEE_DEV_OPTIONS); \
+	popd;
+
+gdb:
+	@pushd bin; \
+	gdb mono --eval-command="handle SIGXCPU SIG35 SIGPWR nostop noprint" --eval-command="b g_return_if_fail_warning" --eval-command="r --debug Nereid.exe --debug --uninstalled"; \
+	popd;
+
+mdb:
+	@pushd bin; \
+	mdb -run -args Nereid.exe --debug --uninstalled"; \
+	popd;
+
+test:
+	@pushd tests; \
+	make test \
+	popd;
+
+hg:
+	pushd bin; \
+	echo "class Entry { static void Main () { Hyena.Gui.TestModuleRunner.Run (); } }" > tester.cs; \
+	gmcs -r:Hyena.Gui.dll tester.cs; \
+	mono --debug tester.exe; \
+	rm tester.*; \
+	popd; 
 
 EXTRA_DIST = \
 	intltool-extract.in \
@@ -59,51 +84,3 @@ MAINTAINERCLEANFILES = \
 	intltool-merge.in   \
 	intltool-update.in  \
 	mkinstalldirs
-
-run:
-	@pushd bin; \
-	$(MONO) --debug $(BANSHEE_DEV_MONO_OPTIONS) Nereid.exe --debug --uninstalled $(BANSHEE_DEV_OPTIONS); \
-	popd;
-
-gdb:
-	@pushd bin; \
-	gdb mono --eval-command="handle SIGXCPU SIG35 SIGPWR nostop noprint" --eval-command="b g_return_if_fail_warning" --eval-command="r --debug Nereid.exe --debug --uninstalled"; \
-	popd;
-
-mdb:
-	@pushd bin; \
-	mdb -run -args Nereid.exe --debug --uninstalled"; \
-	popd;
-
-test:
-	@pushd tests; \
-	make test \
-	popd;
-
-hg:
-	pushd bin; \
-	echo "class Entry { static void Main () { Hyena.Gui.TestModuleRunner.Run (); } }" > tester.cs; \
-	gmcs -r:Hyena.Gui.dll tester.cs; \
-	mono --debug tester.exe; \
-	rm tester.*; \
-	popd; 
-
-clean-local:
-	rm -rf $(top_builddir)/bin
-
-uninstall-hook:
-	if test `find $(pkglibdir) | wc -l` -eq 1; then \
-		rmdir $(pkglibdir); \
-	fi
-
-dist-windows: all
-	rm -rf banshee-windows; \
-	mkdir banshee-windows; \
-	mkdir banshee-windows/icons; \
-	cp -rf win-deps/* banshee-windows; \
-	for asm in $(WINDOWS_ASSEMBLIES); do \
-		cp -rf bin/$$asm banshee-windows; \
-	done; \
-	zip banshee-windows.zip -r banshee-windows; \
-	rm -rf banshee-windows
-
