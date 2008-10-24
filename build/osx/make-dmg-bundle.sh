@@ -44,10 +44,10 @@ mv $DMG_FILE $DMG_FILE.master
 echo "Creating distributable image..."
 hdiutil convert -quiet -format UDBZ -o $DMG_FILE $DMG_FILE.master
 
-echo "Installing end user license agreement..."
-hdiutil flatten -quiet $DMG_FILE
-/Developer/Tools/Rez /Developer/Headers/FlatCarbon/*.r dmg-data/license.r -a -o $DMG_FILE
-hdiutil unflatten -quiet $DMG_FILE
+#echo "Installing end user license agreement..."
+#hdiutil flatten -quiet $DMG_FILE
+#/Developer/Tools/Rez /Developer/Headers/FlatCarbon/*.r dmg-data/license.r -a -o $DMG_FILE
+#hdiutil unflatten -quiet $DMG_FILE
 
 echo "Done."
 

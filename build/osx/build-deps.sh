@@ -12,6 +12,7 @@ function show_help () {
 	echo "Available Options:"
 	echo "  -h, --help        show this help"
 	echo "  -v, --verbose     show all build messages"
+	echo "  -r, --root        name of the build root (default=bundle)"
 	echo
 	exit 1
 }
@@ -48,7 +49,7 @@ ALL_TARGETS=()
 
 function append_target () {
 	FILE=$1
-	[[ -f $FILE ]] || FILE="$FILE.targets"
+	[[ -f $FILE ]] || { FILE="$FILE.targets"; [[ -f $FILE ]] || { FILE=targets/$FILE; }; }
 	source $FILE &>/dev/null || bail "Could not load target set '$FILE'" 1
 	echo "Loading target set '$FILE'"
 	for ((i = 0, n = ${#TARGETS[@]}; i < n; i++)); do
@@ -66,12 +67,12 @@ for arg in $@; do
 done
 
 if [ ${#ALL_TARGETS[@]} -eq 0 ]; then
-	for target_file in $(find $(dirname $0) -maxdepth 1 -name \*.targets); do
+	for target_file in $(find $(dirname $0)/targets -maxdepth 1 -name \*.targets); do
 		append_target $target_file
 	done
 fi
 
-SOURCES_ROOT=bundle-deps-src
+SOURCES_ROOT=deps/bundle-sources
 mkdir -p $SOURCES_ROOT
 pushd $SOURCES_ROOT &>/dev/null
 
