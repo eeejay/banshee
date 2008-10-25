@@ -100,7 +100,7 @@ namespace Banshee.Query
         public static QueryField AlbumArtistField = new QueryField (
             "albumartist", "AlbumArtist",
             Catalog.GetString ("Album Artist"), "CoreAlbums.ArtistNameLowered", true,
-            // Translators: These are unique search aliases for "album".  Please, no spaces. Blank ok.
+            // Translators: These are unique search aliases for "album artist".  Please, no spaces. Blank ok.
             Catalog.GetString ("albumartist"), Catalog.GetString ("compilationartist"),
             "albumartist", "compilationartist"
         );
