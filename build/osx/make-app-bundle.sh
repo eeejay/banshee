@@ -14,9 +14,19 @@ LIB_PREFIX=$BUILD_PREFIX/lib
 
 rm -rf $APP_DIR
 cp -rf app-bundle-data Banshee.app
-cp -rf ../../bin/* $BUNDLE
 
-mkdir $BUNDLE/gstreamer-0.10
+if [ -d release-install ]; then
+	# we are building the .app from a tarball
+	cp -rf release-install/lib/banshee-1/* $BUNDLE
+	mkdir $BUNDLE/share
+	cp -rf release-install/share/banshee-1 $BUNDLE/share
+	cp -rf release-install/share/locale $BUNDLE/share
+else
+	# we are building from a svn build
+	cp -rf ../../bin/* $BUNDLE
+fi
+
+mkdir -p $BUNDLE/gstreamer-0.10
 
 # Copy all runtime dependencies for bundling
 cp $BUILD_PREFIX/bin/{gst-launch,gst-inspect}-0.10 $BUNDLE &>/dev/null
