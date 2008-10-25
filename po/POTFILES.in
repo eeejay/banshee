@@ -19,6 +19,7 @@ src/Backends/Banshee.Gnome/Banshee.GnomeBackend/GnomeScreensaverManager.cs
 src/Backends/Banshee.GStreamer/Banshee.GStreamer/AudioCdRipper.cs
 src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs
 src/Backends/Banshee.GStreamer/Banshee.GStreamer/Transcoder.cs
+src/Backends/Banshee.Osx/Banshee.OsxBackend/OsxService.cs
 src/Clients/Booter/Booter/Entry.cs
 src/Clients/Muinshee/Muinshee/AlbumDialog.cs
 src/Clients/Muinshee/Muinshee/BaseDialog.cs
