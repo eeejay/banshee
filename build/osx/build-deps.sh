@@ -9,7 +9,7 @@ if [[ $# -eq 0 && -f build-deps.profile ]]; then
 	echo "No arguments passed and found a profile, so running the profile"
 	echo 
 	/bin/bash ./build-deps.profile
-	exit 1
+	exit $?
 fi
 
 source build.env || exit $?

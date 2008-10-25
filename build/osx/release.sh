@@ -3,16 +3,6 @@
 pushd $(dirname $0) &>/dev/null
 source build.env || exit $?
 
-if [ ! -d $BUILD_PREFIX ]; then
-	echo "Error: Banshee bundle dependencies do not appear to be built."
-	echo "       please run the build-deps.sh script, and refer to the"
-	echo "       README file for building on Mac OS X."
-	echo
-	echo "       $(dirname $0)/README"
-	echo
-	exit 1
-fi
-
 function bail () {
 	echo "ERROR: Release build failed: $1"
 	exit 1
@@ -34,6 +24,8 @@ rm -rf $SOURCE_DIR
 }
 
 tar jxf $TARBALL || bail "Could not extract release tarball"
+
+[[ -d $BUILD_PREFIX ]] || { ./build-deps.sh || bail "Could not build dependencies"; }
 
 pushd $SOURCE_DIR &>/dev/null
 ./configure --prefix=$INSTALL_PREFIX \
