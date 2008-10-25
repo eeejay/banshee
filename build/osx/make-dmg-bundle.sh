@@ -13,7 +13,7 @@ rm -f $DMG_FILE
 rm -f $DMG_FILE.master
 
 # Compute an approximated image size in MB, and bloat by 1MB
-image_size=$(du -ck $DMG_APP | tail -n1 | cut -f1)
+image_size=$(du -ck $DMG_APP dmg-data | tail -n1 | cut -f1)
 image_size=$((($image_size + 1000) / 1000))
 
 echo "Creating disk image (${image_size}MB)..."
