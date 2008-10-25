@@ -399,7 +399,7 @@ namespace Banshee.Gui.Widgets
                 Log.DebugFormat ("TrackInfoDisplay RenderAnimation: {0:0.00} FPS", last_fps);
             }
             
-            if (current_image != incoming_image && !IsMissingImage (current_image)) {
+            if (current_image != null && current_image != incoming_image && !IsMissingImage (current_image)) {
                 current_image.Destroy ();
             }
             
