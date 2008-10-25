@@ -1,5 +1,5 @@
 ===============================================================================
-WELCOME TO BANSHEE 1.3.2 - Released October 11, 2008
+WELCOME TO BANSHEE 1.3.3 - Released October 11, 2008
 ===============================================================================
 
   * Banshee is a multimedia management and playback application for GNOME.
@@ -10,7 +10,7 @@ WELCOME TO BANSHEE 1.3.2 - Released October 11, 2008
     experience automatic cover art fetching as you listen; and easily browse,
     search, and control your media collection."
 
-  * Learn More: http://banshee-project.org/download/archives/1.3.2/
+  * Learn More: http://banshee-project.org/download/archives/1.3.3/
 
   * UNSTABLE RELEASE: This release is from the 1.3.x development series, and
     works towards a future 1.4.0 stable release. Certain features may be
@@ -21,50 +21,42 @@ WELCOME TO BANSHEE 1.3.2 - Released October 11, 2008
 NEW AWESOME FEATURES AND ENHANCEMENTS
 ===============================================================================
 
-    Banshee 1.3.2 is the third release in the new development series leading
+    Banshee 1.3.3 is the fourth release in the new development series leading
     up to a future 1.4.0 stable release.
 
     Notable new features:
 
-      * Improved DAP syncing and interaction
-          - Sync button shown/hidden immediately when Manually Manage changed
-          - Music Library synced before others
-          - Playlists and video not synced to iPod shuffle devices
-          - Improved performance for adding/removing songs from iPods
-          - Better stability for MTP device syncing
-
-      * Allow queueing files via dbus
-      * New podcast columns: downloaded; description; new
-      * Podcasts can now have playlists and smart playlists
-      * When finished playing from the play queue, play the song after the song 
-        we left off from (and stop playing if we weren't playing anything 
-		before).
-      * Refresh podcasts every hour 
-      * Import all white-listed files, even if TagLib# doesn't recognize them
-      * Cache and store images as Cairo.ImageSurfaces, gives performance 
-	    and memory improvements
-      * Enable autocomplete in editor for artist, album, and album artist
-      * Improvements and fixes to the Indexer
+      * First preview of Mac OS X support (Eoin Hennessy, Aaron Bockover)
+        - Currently very unstable due to GStreamer and GTK+ Quartz
+        - Technology Preview only, there are many known issues
+        - Please file bugs
 
     Notable bug fixes:
 
-      * Fix bug with non-JPG cover art getting downloaded but never 
-	    converted/used (BGO #388162)
-      * Remember the user's smart playlist units (days/MB etc) (BGO #545887)
-      * Look for PNG and BMP album art in the album's folder (BGO #547841)
-      * Avoid showing album art for 'Unknown' artists/albums (BGO #549320)
-      * Memory leak fixes for the ListView
-      * Jump to playing podcast and radio station now work
-      * Fix bug with default CD importing profile (BGO #528621)
-      * libmtp8 support (BGO #542117)
-      * Fix bug with switching themes and things not getting updated
-      * Recommendations and DAP storage panes are visible again
-      * F11 toggles fullscreen (#553440)
-      * Remove newlines from podcast titles and descriptions (#550008)
-      * Fix issue with the Seek slider and recent versions of Gtk# (#536397).
-      * Improvements to the indexer
-      * Fix bug with showing/selecting invalid profile for DAP transcoding
-      * 59 bugs were FIXED since 1.3.1
+      * Removed the default application support for GNOME since many issues
+        need to be ironed out here, and much of this belongs as integration
+        inside of Linux distributions; it will be added back in a better
+        state when GIO support lands in the GNOME backend (Gabriel Burt)
+
+      * Rely more heavily on intltool and almost completely remove gettext;
+        this mainly facilitates the OS X build environment (Aaron Bockover)
+
+      * Updated the bundled equalizer to avoid a bad crash (BGO #557260, 
+        Sebastian Dröge)
+
+      * Rendering and integration fixes for OS X (BGO #557190, Eoin Hennessy)
+
+      * Fix a bug with the play queue stopping after every song (BGO #557386,
+        Gabriel Burt)
+
+      * Allow both prepending and appending to the play queue; helpful for
+        external applications wishing to integrate with Banshee's playback,
+        like GNOME Do (BGO #557526, Alex Launi)
+
+      * Support localization when running uninstalled (BGO #393046, 
+        Bertrand Lorentz)
+
+      * 5 bugs were FIXED since 1.3.2
 
 
 ===============================================================================
@@ -74,9 +66,9 @@ SOURCES / PACKAGES
 Sources
 -------
 
-    * Banshee 1.3.2 Tarballs:
-      http://download.banshee-project.org/banshee/banshee-1-1.3.2.tar.bz2
-      http://download.banshee-project.org/banshee/banshee-1-1.3.2.tar.gz
+    * Banshee 1.3.3 Tarballs:
+      http://download.banshee-project.org/banshee/banshee-1-1.3.3.tar.bz2
+      http://download.banshee-project.org/banshee/banshee-1-1.3.3.tar.gz
 
 Packages
 --------
@@ -86,18 +78,22 @@ Packages
 
     * http://download.opensuse.org/repositories/Banshee/
 
+    Binaries for Mac OS X 10.4 and 10.5:
+
+    * http://download.banshee-project.org/banshee/banshee-1-1.3.3.macosx.intel.dmg
+
 ChangeLogs & Checksums
 ----------------------
 
-    * http://download.banshee-project.org/banshee/banshee-1-1.3.2.changes
-    * http://download.banshee-project.org/banshee/banshee-1-1.3.2.sha1sum
+    * http://download.banshee-project.org/banshee/banshee-1-1.3.3.changes
+    * http://download.banshee-project.org/banshee/banshee-1-1.3.3.sha1sum
 
 
 ===============================================================================
 DEPENDENCIES
 ===============================================================================
 
-    * Mono 1.2.2 (.NET 2.0 Profile / gmcs)
+    * Mono 1.2.6 (.NET 2.0 Profile / gmcs)
     * SQlite 3.4
     * Gtk# 2.10
     * GStreamer 0.10.3
@@ -142,7 +138,7 @@ REPORT BUGS - HELP THE PROJECT - GROW THE COMMUNITY
     If you encounter any bad behavior with this release, please do not
     hesitate to file bugs!
 
-    * http://bugzilla.gnome.org/enter_bug.cgi?product=banshee&version=1.3.2
+    * http://bugzilla.gnome.org/enter_bug.cgi?product=banshee&version=1.3.3
 
 
 ===============================================================================
@@ -155,14 +151,15 @@ Contributors For This Release
     The following people directly contributed to the release of this version
     of Banshee. Without their help, there would be no release!
 
-      Aaron Bockover, Bertrand Lorentz, Benoit Boissinot, Gabriel Burt,
-      Marek Habersack, Michael Monreal, Russ Smith, Salah Coronya
+      Aaron Bockover, Alex Launi, Bertrand Lorentz, Eoin Hennessy, 
+      Gabriel Burt, Sebastian Dröge
 
     The following people contributed updated translations to this release. 
     Without them, our project's reach would be much more limited.
-
-      Alexandre Prokoudine, Benjamín Valero Espinosa, Daniel Nylander,
-      Gabor Kelemen, Kjartan Maraas, Yannick Tailliez
+ 
+      Alexandre Prokoudine, Daniel Nylander, 甘露 (Gan Lu), 
+      Ignacio Casal Quinteiro, Jordi Mas, Jorge Gonzalez, Luca Ferretti,
+      Og Maciel, Žygimantas Beručka
 
 
 Contributors In Past Releases
@@ -174,13 +171,13 @@ Contributors In Past Releases
     Bertrand Lorentz, Bill Dawson, Bob Copeland, Bojan Rajkovic, Brad Taylor,
     Brian Nickel, Brian Teague, Chris Howie, Chris Lahey, Christian Krause,
     Christopher Halse Rogers, Chris Toshok, Chris Turchin, Daniel Munkton,
-    Dan Wilson, Dan Winship, David Spreen, Eric Butler, Fabian Jost,
-    Félix Velasco, Fredrik Hedberg, Gabriel Burt, Hans Petter Jansson, 
-    Iain Lane, Igor Guerrero Fonseca, Ilya Konstantinov, Ivan N. Zlatev,
-    James Willcox, Jan Arne Petersen, Jason Conti, Jeff Tickle, Jorge Castro,
-    Jo Shields, Juri Pakaste, Ken Vandine, Larry Ewing, Lauri Kotilainen,
-    Michael Kaiser, Michael Monreal, Miguel de Icaza, Mike Urbanski,
-    Nathan Palmer, Nicholas Parker, Oscar Forero, Pacho Ramos, 
+    Dan Wilson, Dan Winship, David Spreen, Eoin Hennessy, Eric Butler, 
+	Fabian Jost, Félix Velasco, Fredrik Hedberg, Gabriel Burt, 
+	Hans Petter Jansson, Iain Lane, Igor Guerrero Fonseca, Ilya Konstantinov, 
+	Ivan N. Zlatev, James Willcox, Jan Arne Petersen, Jason Conti, Jeff Tickle, 
+	Jorge Castro, Jo Shields, Juri Pakaste, Ken Vandine, Larry Ewing, 
+	Lauri Kotilainen, Michael Kaiser, Michael Monreal, Miguel de Icaza, 
+	Mike Urbanski, Nathan Palmer, Nicholas Parker, Oscar Forero, Pacho Ramos, 
     Patrick van Staveren, Pepijn van de Geer, Peter de Kraker, 
     Ruben Vermeersch, Sandy Armstrong, Scott Peterson, Sebastian Dröge,
     Tim Yamin, Todd Berman, Trey Ethridge, Will Farrington, Wouter Bolsterlee
