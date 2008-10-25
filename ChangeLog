@@ -1,7 +1,16 @@
 2008-10-25  Wouter Bolsterlee  <wbolster@svn.gnome.org>
 
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:
+	* src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:
+	* src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapActions.cs:
+
+	Added/updated translator comments.
+
+2008-10-25  Wouter Bolsterlee  <wbolster@svn.gnome.org>
+
 	* src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:
-	Correct translator comments.
+	Corrected translator comments.
 
 2008-10-25  Aaron Bockover  <abock@gnome.org>
 

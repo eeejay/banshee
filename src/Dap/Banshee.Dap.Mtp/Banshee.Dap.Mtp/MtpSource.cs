@@ -153,15 +153,15 @@ namespace Banshee.Dap.Mtp
                 List<Track> files = mtp_device.GetAllTracks (delegate (ulong current, ulong total, IntPtr data) {
                     //user_event.Progress = (double)current / total;
                     // Translators: {0} is the name of the MTP audio device (eg Gabe's Zen Player), {1} is the
-                    // current track being loaded, and {2} is the total # of tracks that will be loaded.
+                    // track currently being loaded, and {2} is the total # of tracks that will be loaded.
                     SetStatus (String.Format (Catalog.GetString ("Loading {0} - {1} of {2}"), Name, current, total), false);
                     return 0;
                 });
-                
+
                 /*if (user_event.IsCancelRequested) {
                     return;
                 }*/
-                
+
                 int [] source_ids = new int [] { DbId };
                 foreach (Track mtp_track in files) {
                     int track_id;

@@ -127,6 +127,7 @@ namespace Banshee.Gui.TrackEditor
                 
                 foreach (TagLib.ICodec codec in file.Properties.Codecs) {
                     if (codec != null) {
+                        /* Translators: {0} is the description of the codec */
                         AddItem (String.Format (Catalog.GetString ("{0} Codec:"), 
                             codec.MediaTypes.ToString ()), codec.Description);
                     }

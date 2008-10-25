@@ -66,7 +66,7 @@ namespace Banshee.Dap.Gui
             if (previous_dap != null) {
                 previous_dap.Sync.Updated -= OnSyncUpdated;
             }
-            
+
             previous_dap = ActiveSource as DapSource;
 
             if (previous_dap != null) {
@@ -84,6 +84,7 @@ namespace Banshee.Dap.Gui
             DapSource dap = Dap;
             if (dap != null) {
                 UpdateAction ("SyncDapAction", dap.Sync.Enabled && !dap.Sync.AutoSync);
+                /* Translators: {0} is the name of the digital audio player */
                 this["SyncDapAction"].Label = String.Format (Catalog.GetString ("Synchronize {0}"), dap.Name);
             }
         }
