@@ -981,7 +981,7 @@ msgstr "Shoutcast-speellijst versie 2 (*.pls)"
 
 #: ../src/Core/Banshee.Services/Banshee.Preferences/Page.cs:52
 msgid "General"
-msgstr "Algemeent"
+msgstr "Algemeen"
 
 #: ../src/Core/Banshee.Services/Banshee.Preferences/Page.cs:61
 msgid "Co_py files to media folders when importing"
