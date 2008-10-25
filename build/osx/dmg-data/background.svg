@@ -129,7 +129,7 @@
        xlink:href="#linearGradient6683"
        id="radialGradient3195"
        gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(0.7363301,0,0,0.5236798,-86.364683,-52.663008)"
+       gradientTransform="matrix(0.6960752,0,0,0.4682302,-70.299195,-31.468813)"
        cx="395"
        cy="681.54156"
        fx="395"
@@ -545,9 +545,9 @@
      inkscape:pageshadow="2"
      inkscape:zoom="1"
      inkscape:cx="117.11164"
-     inkscape:cy="71.605616"
+     inkscape:cy="40.305687"
      inkscape:document-units="px"
-     inkscape:current-layer="layer2"
+     inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:snap-global="false"
      inkscape:window-width="1680"
@@ -568,8 +568,7 @@
   <g
      inkscape:label="Background"
      inkscape:groupmode="layer"
-     id="layer1"
-     sodipodi:insensitive="true">
+     id="layer1">
     <rect
        style="opacity:0.07999998;fill:#000000;fill-opacity:1;stroke:#3b3b3b;stroke-width:0.5549922;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect2396"
@@ -580,15 +579,15 @@
     <rect
        style="fill:url(#radialGradient3195);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
        id="rect4580"
-       width="439"
-       height="329.93506"
-       x="-11.999992"
-       y="-17.467535" />
+       width="415"
+       height="295"
+       x="0"
+       y="2.2981617e-14" />
     <path
        style="fill:url(#radialGradient3186);fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1;stroke-linecap:round;stroke-linejoin:round;marker:none;marker-start:none;marker-mid:none;marker-end:none;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;visibility:visible;display:inline;overflow:visible;filter:url(#filter5670);enable-background:accumulate"
        d="M 0,0 L 0,310.0625 C 132.15313,323.22163 275.08135,330.40625 424.25,330.40625 C 555.70958,330.40625 682.33494,324.83293 801,314.5 L 801,0 L 0,0 z"
        id="rect5617"
-       transform="matrix(0.5480649,0,0,0.4521678,-11.999992,-17.467535)" />
+       transform="matrix(0.5480649,0,0,0.4521678,-10.99999,-22.467535)" />
   </g>
   <g
      inkscape:groupmode="layer"
@@ -667,7 +666,7 @@
     <g
        id="g3582"
        style="opacity:0.8185654"
-       transform="translate(0,-24)">
+       transform="matrix(0.6758789,0,0,0.6758789,122.81596,69.992649)">
       <g
          transform="translate(-64,0)"
          id="g3573">
