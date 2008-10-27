@@ -37,15 +37,19 @@ namespace Banshee.Gui.TrackEditor
     {
         private EditorEditableUndoAdapter<Entry> undo_adapter = new EditorEditableUndoAdapter<Entry> ();
 
-        public TextEntry () : base ()
+        public TextEntry ()
         {
         }
 
-        public TextEntry (string completion_table, string completion_column) : this ()
+        public TextEntry (string completionTable, string completionColumn)
         {
+            if (completionTable == null || completionColumn == null) {
+                return;
+            }
+        
             ListStore completion_model = new ListStore (typeof (string));
             foreach (string val in ServiceManager.DbConnection.QueryEnumerable<string> (String.Format (
-                "SELECT DISTINCT {1} FROM {0} ORDER BY {1}", completion_table, completion_column))) {
+                "SELECT DISTINCT {1} FROM {0} ORDER BY {1}", completionTable, completionColumn))) {
                 if (!String.IsNullOrEmpty (val)) {
                     completion_model.AppendValues (val);
                 }

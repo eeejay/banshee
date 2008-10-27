@@ -42,10 +42,15 @@ namespace Banshee.Gui.TrackEditor
         private TextEntry entry = new TextEntry ("CoreAlbums", "ArtistName");
         private object tooltip_host = Hyena.Gui.TooltipSetter.CreateHost ();
         private Button track_artist_sync_button;
+        private PageNavigationEntry title_entry;
+        private PageNavigationEntry track_artist_entry;
         
-        public AlbumArtistEntry (Button trackArtistSyncButton) : base ()
+        public AlbumArtistEntry (Button trackArtistSyncButton, PageNavigationEntry titleEntry, 
+            PageNavigationEntry trackArtistEntry) : base ()
         {
             track_artist_sync_button = trackArtistSyncButton;
+            title_entry = titleEntry;
+            track_artist_entry = trackArtistEntry;
         
             enable_compilation.Label = Catalog.GetString ("Compilation Album Artist:");
 
@@ -95,7 +100,15 @@ namespace Banshee.Gui.TrackEditor
 
             // Will be null if we're only editing one track
             if (track_artist_sync_button != null) {
-                track_artist_sync_button.Sensitive = !IsCompilation;
+                track_artist_sync_button.Visible = !IsCompilation;
+            }
+            
+            if (track_artist_entry.ForwardButton != null) {
+                track_artist_entry.ForwardButton.Visible = IsCompilation;
+            }
+            
+            if (title_entry.ForwardButton != null) {
+                title_entry.ForwardButton.Sensitive = !IsCompilation;
             }
         }
     }

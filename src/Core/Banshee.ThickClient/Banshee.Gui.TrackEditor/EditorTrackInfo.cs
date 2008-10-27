@@ -27,8 +27,12 @@
 //
 
 using System;
+using System.Reflection;
+using System.Collections.Generic;
+
 using TagLib;
 
+using Hyena;
 using Banshee.Streaming;
 using Banshee.Collection;
 
@@ -45,10 +49,31 @@ namespace Banshee.Gui.TrackEditor
             TrackInfo.ExportableMerge (source_track, this);
         }
         
-        private bool changed;
-        public bool Changed {
-            get { return changed; }
-            set { changed = value; }
+        public void GenerateDiff ()
+        {
+            diff_count = 0;
+            
+            foreach (KeyValuePair<string, PropertyInfo> iter in GetExportableProperties (typeof (TrackInfo))) {
+                try {
+                    PropertyInfo property = iter.Value;
+                    if (property.CanWrite && property.CanRead) {
+                        object old_value = property.GetValue (source_track, null);
+                        object new_value = property.GetValue (this, null);
+                        if (!Object.Equals (old_value, new_value)) {
+                            diff_count++;
+                            Log.DebugFormat ("Track field changed: {0} (old={1}, new={2})",
+                                property.Name, old_value, new_value);
+                        }
+                    }
+                } catch (Exception e) {
+                    Log.Exception (e);
+                }
+            }
+        }
+        
+        private int diff_count;
+        public int DiffCount {
+            get { return diff_count; }
         }
         
         private int editor_index;

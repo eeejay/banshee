@@ -36,7 +36,6 @@ namespace Banshee.Gui.TrackEditor
 {
     public class BasicTrackDetailsPage : FieldPage, ITrackEditorPage
     {
-
         public int Order {
             get { return 10; }
         }
@@ -65,21 +64,24 @@ namespace Banshee.Gui.TrackEditor
 
             // Left
 
-            AddField (left, new TitleEntry (Dialog), null,
+            PageNavigationEntry title_entry = new PageNavigationEntry (Dialog);
+            AddField (left, title_entry, null,
                 delegate { return Catalog.GetString ("Track Title:"); },
-                delegate (EditorTrackInfo track, Widget widget) { ((TitleEntry)widget).Text = track.TrackTitle; },
-                delegate (EditorTrackInfo track, Widget widget) { track.TrackTitle = ((TitleEntry)widget).Text; },
+                delegate (EditorTrackInfo track, Widget widget) { ((PageNavigationEntry)widget).Text = track.TrackTitle; },
+                delegate (EditorTrackInfo track, Widget widget) { track.TrackTitle = ((PageNavigationEntry)widget).Text; },
                 FieldOptions.NoSync
             );
 
-            FieldPage.FieldSlot track_artist_slot = AddField (left, new TextEntry ("CoreArtists", "Name"), 
+            PageNavigationEntry track_artist_entry = new PageNavigationEntry (Dialog, "CoreArtists", "Name");
+            FieldPage.FieldSlot track_artist_slot = AddField (left, track_artist_entry, 
                 Catalog.GetString ("Set all track artists to this value"),
                 delegate { return Catalog.GetString ("Track Artist:"); },
-                delegate (EditorTrackInfo track, Widget widget) { ((TextEntry)widget).Text = track.ArtistName; },
-                delegate (EditorTrackInfo track, Widget widget) { track.ArtistName = ((TextEntry)widget).Text; }
+                delegate (EditorTrackInfo track, Widget widget) { ((PageNavigationEntry)widget).Text = track.ArtistName; },
+                delegate (EditorTrackInfo track, Widget widget) { track.ArtistName = ((PageNavigationEntry)widget).Text; }
             );
 
-            AlbumArtistEntry album_artist_entry = new AlbumArtistEntry (track_artist_slot.SyncButton);
+            AlbumArtistEntry album_artist_entry = new AlbumArtistEntry (track_artist_slot.SyncButton, 
+                title_entry, track_artist_entry);
             AddField (left, null, album_artist_entry,
                 Catalog.GetString ("Set all compilation album artists to these values"), null,
                 delegate (EditorTrackInfo track, Widget widget) {
@@ -111,8 +113,21 @@ namespace Banshee.Gui.TrackEditor
             // Right
 
             /* Translators: "of" is the word beteen a track/disc number and the total count. */
-            AddField (right, new RangeEntry (Catalog.GetString ("of")), 
-                Catalog.GetString ("Automatically set track number and count"),
+            AddField (right, new RangeEntry (Catalog.GetString ("of"), !MultipleTracks 
+                ? null as RangeEntry.RangeOrderClosure
+                : delegate (RangeEntry entry) {
+                    for (int i = 0, n = Dialog.TrackCount; i < n; i++) {
+                        EditorTrackInfo track = Dialog.LoadTrack (i);
+                        track.TrackNumber = i + 1;
+                        track.TrackCount = n;
+                        
+                        if (Dialog.CurrentTrackIndex == i) {
+                            entry.From.Value = track.TrackNumber;
+                            entry.To.Value = track.TrackCount;
+                        }
+                    }
+                }, Catalog.GetString ("Automatically set track number and count")), 
+                null,
                 delegate { return Catalog.GetString ("Track Number:"); },
                 delegate (EditorTrackInfo track, Widget widget) {
                     RangeEntry entry = (RangeEntry)widget;
@@ -128,7 +143,8 @@ namespace Banshee.Gui.TrackEditor
             );
 
             AddField (right, new RangeEntry (Catalog.GetString ("of")), 
-                Catalog.GetString ("Automatically set disc number and count"),
+                // Catalog.GetString ("Automatically set disc number and count"),
+                Catalog.GetString ("Set all disc numbers and counts to these values"),
                 delegate { return Catalog.GetString ("Disc Number:"); },
                 delegate (EditorTrackInfo track, Widget widget) {
                     RangeEntry entry = (RangeEntry)widget;
@@ -140,11 +156,13 @@ namespace Banshee.Gui.TrackEditor
                     track.DiscNumber = (int)entry.From.Value;
                     track.DiscCount = (int)entry.To.Value;
                 },
-                FieldOptions.NoSync
+                FieldOptions.None
             );
 
             Label year_label = EditorUtilities.CreateLabel (null);
-            album_artist_entry.LabelWidget.SizeAllocated += delegate { year_label.HeightRequest = album_artist_entry.LabelWidget.Allocation.Height; };
+            album_artist_entry.LabelWidget.SizeAllocated += delegate { 
+                year_label.HeightRequest = album_artist_entry.LabelWidget.Allocation.Height; 
+            };
             SpinButtonEntry year_entry = new SpinButtonEntry (0, 3000, 1);
             year_entry.Numeric = true;
             AddField (right, year_label, year_entry,

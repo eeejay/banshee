@@ -82,20 +82,6 @@ namespace Banshee.Gui.TrackEditor
         {
         }
         
-        protected virtual void OnChanged ()
-        {
-            if (current_track == null) {
-                return;
-            }
-            
-            current_track.Changed = true;
-            
-            EventHandler handler = Changed;
-            if (handler != null) {
-                handler (this, EventArgs.Empty);
-            }
-        }
-        
         public virtual bool MultipleTracks {
             get { return dialog.TrackCount > 1; }
         }
@@ -166,7 +152,6 @@ namespace Banshee.Gui.TrackEditor
             IEditorField editor_field = field as IEditorField;
             if (editor_field != null) {
                 editor_field.Changed += delegate {
-                    OnChanged ();
                     if (CurrentTrack != null) {
                         slot.WriteClosure (CurrentTrack, slot.Field);
                     }

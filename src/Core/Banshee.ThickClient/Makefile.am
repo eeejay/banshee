@@ -66,6 +66,7 @@ SOURCES =  \
 	Banshee.Gui.TrackEditor/IEditorField.cs \
 	Banshee.Gui.TrackEditor/ITrackEditorPage.cs \
 	Banshee.Gui.TrackEditor/LyricsPage.cs \
+	Banshee.Gui.TrackEditor/PageNavigationEntry.cs \
 	Banshee.Gui.TrackEditor/PageType.cs \
 	Banshee.Gui.TrackEditor/RangeEntry.cs \
 	Banshee.Gui.TrackEditor/RatingEntry.cs \
@@ -74,7 +75,6 @@ SOURCES =  \
 	Banshee.Gui.TrackEditor/SyncButton.cs \
 	Banshee.Gui.TrackEditor/TextEntry.cs \
 	Banshee.Gui.TrackEditor/TextViewEntry.cs \
-	Banshee.Gui.TrackEditor/TitleEntry.cs \
 	Banshee.Gui.TrackEditor/TrackEditorDialog.cs \
 	Banshee.Gui.Widgets/ArtworkPopup.cs \
 	Banshee.Gui.Widgets/ClassicTrackInfoDisplay.cs \

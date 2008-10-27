@@ -1,3 +1,31 @@
+2008-10-26  Aaron Bockover  <abock@gnome.org>
+	
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/EditorTrackInfo.cs:
+	Implemented a GenerateDiff method and DiffCount property returning the
+	number of changed fields on the track; this ensures the confirm changes
+	dialog only shows up when something actually changes; before the dialog
+	was based on some hacked GUI change tracking, which could easily be fooled
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/FieldPage.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs:
+	Updated to use the new track diffing logic
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:
+	Implemented the auto-order range closure for track number/count
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/RangeEntry.cs:
+	Implemented an auto-order UI action (optional)
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/PageNavigationEntry.cs:
+	Make the navigatable text entry generic since we need to use it for
+	the track artist if we are editing a compilation album
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/AlbumArtistEntry.cs: 
+	Control the two navigation entries
+
+	* src/Core/Banshee.ThickClient/Banshee.ThickClient.addin.xml: Removed
+	the help page for now since it only has a picture of jcastro
+
 2008-10-25  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:

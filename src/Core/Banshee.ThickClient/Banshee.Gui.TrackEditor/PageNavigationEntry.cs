@@ -1,5 +1,5 @@
 //
-// TitleEntry.cs
+// PageNavigationEntry.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
@@ -31,16 +31,23 @@ using Gtk;
 
 namespace Banshee.Gui.TrackEditor
 {
-    public class TitleEntry : HBox, IEditorField, ICanUndo
+    public class PageNavigationEntry : HBox, IEditorField, ICanUndo
     {
         public event EventHandler Changed;
         
         private TextEntry entry;
         private Button forward_button;
+        public Button ForwardButton {
+            get { return forward_button; }
+        }
         
-        public TitleEntry (TrackEditorDialog dialog)
+        public PageNavigationEntry (TrackEditorDialog dialog) : this (dialog, null, null)
         {
-            entry = new TextEntry ();
+        }
+        
+        public PageNavigationEntry (TrackEditorDialog dialog, string completionTable, string completionColumn)
+        {
+            entry = new TextEntry (completionTable, completionColumn);
             entry.Changed += OnChanged;
             entry.Activated += delegate { 
                 if (dialog.CanGoForward) {

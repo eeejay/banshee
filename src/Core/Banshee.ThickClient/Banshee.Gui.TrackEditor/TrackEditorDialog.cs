@@ -63,18 +63,7 @@ namespace Banshee.Gui.TrackEditor
         private Label edit_notif_label;
         private object tooltip_host;
         
-        private DateTime first_change_time;
-        private bool changes_made;
-        public bool ChangesMade {
-            get { return changes_made; }
-            private set {
-                if (!changes_made && value) {
-                    first_change_time = DateTime.Now;
-                }
-                
-                changes_made = value;
-            }
-        }
+        private DateTime dialog_launch_datetime = DateTime.Now;
         
         private Notebook notebook;
         public Notebook Notebook {
@@ -203,7 +192,6 @@ namespace Banshee.Gui.TrackEditor
                         page.Initialize (this);
                         page.Widget.Show ();
                     }
-                    page.Changed += OnPageChanged;
                 } catch (Exception e) {
                     Hyena.Log.Exception ("Failed to initialize NotebookPage extension node. Ensure it implements ITrackEditorPage.", e);
                 }
@@ -345,11 +333,6 @@ namespace Banshee.Gui.TrackEditor
                 children[1].Allocation.Width) - children[0].Allocation.X - 1;
         }
         
-        private void OnPageChanged (object o, EventArgs args)
-        {
-            ChangesMade = true;
-        }
-
 #endregion
         
 #region Track Model/Changes API
@@ -609,17 +592,19 @@ namespace Banshee.Gui.TrackEditor
             track_editor.Response += delegate (object o, ResponseArgs args) {
                 if (args.ResponseId == ResponseType.Ok) {
                     track_editor.Save ();
-                } else if (track_editor.ChangesMade) {
+                } else {
                     int changed_count = 0;
                     for (int i = 0; i < track_editor.TrackCount; i++) {
                         EditorTrackInfo track = track_editor.LoadTrack (i, false);
-                        if (track != null && track.Changed) {
-                            changed_count++;
+                        if (track != null) {
+                            track.GenerateDiff ();
+                            if (track.DiffCount > 0) {
+                                changed_count++;
+                            }
                         }
                     }
                     
                     if (changed_count == 0) {
-                        // Shouldn't ever reach this
                         track_editor.Destroy ();
                         return;
                     }
@@ -683,7 +668,7 @@ namespace Banshee.Gui.TrackEditor
             messageDialog.MessageLabel.Text = String.Format (Catalog.GetString (
                 "If you don't save, changes from the last {0} will be permanently lost."),
                 Banshee.Sources.DurationStatusFormatters.ApproximateVerboseFormatter (
-                    DateTime.Now - trackEditor.first_change_time
+                    DateTime.Now - trackEditor.dialog_launch_datetime
                 )
             );
             

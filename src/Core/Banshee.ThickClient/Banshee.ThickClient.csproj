@@ -190,7 +190,7 @@
     <Compile Include="Banshee.Gui.TrackEditor\ITrackEditorPage.cs" />
     <Compile Include="Banshee.Gui.TrackEditor\BasicTrackDetailsPage.cs" />
     <Compile Include="Banshee.Gui.TrackEditor\EditorUtilities.cs" />
-    <Compile Include="Banshee.Gui.TrackEditor\TitleEntry.cs" />
+    <Compile Include="Banshee.Gui.TrackEditor\PageNavigationEntry.cs" />
     <Compile Include="Banshee.Gui.TrackEditor\ExtraTrackDetailsPage.cs" />
     <Compile Include="Banshee.Gui.TrackEditor\RangeEntry.cs" />
     <Compile Include="Banshee.Gui.TrackEditor\RatingEntry.cs" />

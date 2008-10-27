@@ -25,7 +25,7 @@
     <TrackEditorPage class="Banshee.Gui.TrackEditor.ExtraTrackDetailsPage"/>
     <!--<TrackEditorPage class="Banshee.Gui.TrackEditor.LyricsPage"/>-->
     <TrackEditorPage class="Banshee.Gui.TrackEditor.StatisticsPage"/>
-    <TrackEditorPage class="Banshee.Gui.TrackEditor.HelpPage"/>
+    <!--<TrackEditorPage class="Banshee.Gui.TrackEditor.HelpPage"/>-->
   </Extension>
   
   <!-- Exported Extension Points -->
