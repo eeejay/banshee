@@ -22,6 +22,12 @@
     <StartupObject />
     <Externalconsole>true</Externalconsole>
     <AssemblyKeyFile>.</AssemblyKeyFile>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="Build" command="make" workingdir="${SolutionDir}" />
+        <Command type="Execute" command="make run" workingdir="${SolutionDir}" />
+      </CustomCommands>
+    </CustomCommands>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />

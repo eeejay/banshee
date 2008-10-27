@@ -1,3 +1,12 @@
+2008-10-27  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* libbanshee/libbanshee.cproj:
+	* *.csproj: Add custom make and make run commands for build/execute
+
+	* Banshee.sln: Remove Torrent and MediaWeb projects from the build
+
+	* build/build.rules.mk: Add run target that does make run in the top dir
+
 2008-10-26  Aaron Bockover  <abock@gnome.org>
 	
 	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/EditorTrackInfo.cs:

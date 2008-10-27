@@ -34,6 +34,11 @@ module_SCRIPTS = $(OUTPUT_FILES)
 
 all: $(ASSEMBLY_FILE) theme-icons
 
+run: 
+	@pushd $(top_builddir); \
+	make run \
+	popd;
+
 build-debug:
 	@echo $(DEP_LINK)
 
