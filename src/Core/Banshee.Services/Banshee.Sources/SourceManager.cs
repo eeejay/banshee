@@ -349,6 +349,16 @@ namespace Banshee.Sources
             
             source.Activate();
         }
+
+        public IEnumerable<T> FindSources<T> () where T : Source
+        {
+            foreach (Source source in Sources) {
+                T t_source = source as T;
+                if (t_source != null) {
+                    yield return t_source;
+                }
+            }
+        }
      
         public ICollection<Source> Sources {
             get { return sources; }
