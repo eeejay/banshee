@@ -39,8 +39,6 @@ namespace Banshee.Gui.TrackEditor
         private ListStore model;
         private TreeView view;
         
-        public event EventHandler Changed;
-
         public StatisticsPage ()
         {
             ShadowType = ShadowType.In;

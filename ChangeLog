@@ -1,3 +1,14 @@
+2008-10-27  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/FieldPage.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/HelpPage.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/ITrackEditorPage.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:
+	Removed Changed, not needed
+
+	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
+	Add EnqueueTrack, generalize the other Enqueue methods to use EnqueueId
+
 2008-10-27  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* libbanshee/libbanshee.cproj:

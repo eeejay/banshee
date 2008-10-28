@@ -27,6 +27,7 @@
 //
 
 using System;
+using System.Linq;
 
 using Mono.Unix;
 
@@ -113,19 +114,36 @@ namespace Banshee.PlayQueue
 
         public void EnqueueUri (string uri, bool prepend)
         {
-            int track_id = LibrarySource.GetTrackIdForUri (uri);
-            if (track_id > 0) {
-                if (prepend) {
-                    ServiceManager.DbConnection.Execute ("UPDATE CorePlaylistEntries SET ViewOrder = ViewOrder + 1 WHERE PlaylistID = ?", DbId);
-                }
-
-                HyenaSqliteCommand insert_command = new HyenaSqliteCommand (String.Format (
-                    @"INSERT INTO CorePlaylistEntries (PlaylistID, TrackID, ViewOrder) VALUES ({0}, ?, {1})", DbId, prepend ? 0 : MaxViewOrder));
-                ServiceManager.DbConnection.Execute (insert_command, track_id);
-
-                Reload ();
-                NotifyUser ();
+            EnqueueId (LibrarySource.GetTrackIdForUri (uri), prepend);
+        }
+        
+        public void EnqueueTrack (TrackInfo track, bool prepend)
+        {
+            DatabaseTrackInfo db_track = track as DatabaseTrackInfo;
+            if (db_track != null) {
+                EnqueueId (db_track.TrackId, prepend);
+            } else {
+                EnqueueUri (track.Uri.AbsoluteUri, prepend);
             }
+        }
+        
+        private void EnqueueId (int trackId, bool prepend)
+        {
+            if (trackId <= 0) {
+                return;
+            }
+            
+            if (prepend) {
+                ServiceManager.DbConnection.Execute ("UPDATE CorePlaylistEntries SET ViewOrder = ViewOrder + 1 WHERE PlaylistID = ?", DbId);
+            }
+
+            HyenaSqliteCommand insert_command = new HyenaSqliteCommand (String.Format (
+                @"INSERT INTO CorePlaylistEntries (PlaylistID, TrackID, ViewOrder) VALUES ({0}, ?, {1})", 
+                    DbId, prepend ? 0 : MaxViewOrder));
+            ServiceManager.DbConnection.Execute (insert_command, trackId);
+
+            Reload ();
+            NotifyUser ();
         }
         
         IDBusExportable IDBusExportable.Parent {

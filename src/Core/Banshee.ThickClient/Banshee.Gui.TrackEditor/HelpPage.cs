@@ -36,9 +36,7 @@ namespace Banshee.Gui.TrackEditor
     {
         private Box tab_widget;
         private TrackEditorDialog dialog;
-        
-        public event EventHandler Changed;
-        
+               
         public HelpPage () : base (0.5f, 0.5f, 0.0f, 0.0f)
         {
             Image help = new Image ();

@@ -41,11 +41,6 @@ namespace Banshee.Gui.TrackEditor
         public delegate string FieldLabelClosure (EditorTrackInfo track, Widget widget);
         public delegate void FieldValueClosure (EditorTrackInfo track, Widget widget);
 
-        #pragma warning disable 0067
-        // FIXME: This is to mute gmcs: https://bugzilla.novell.com/show_bug.cgi?id=360455
-        public event EventHandler Changed;
-        #pragma warning restore 0067
-        
         private TrackEditorDialog dialog;
         protected TrackEditorDialog Dialog {
             get { return dialog; }

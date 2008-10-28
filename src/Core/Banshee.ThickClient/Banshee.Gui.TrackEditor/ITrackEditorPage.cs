@@ -33,9 +33,7 @@ using Banshee.Collection;
 namespace Banshee.Gui.TrackEditor
 {
     public interface ITrackEditorPage
-    {
-        event EventHandler Changed;
-        
+    {       
         void Initialize (TrackEditorDialog dialog);
         void LoadTrack (EditorTrackInfo track);
         
