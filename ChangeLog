@@ -1,3 +1,9 @@
+2008-10-29  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Clients/Nereid/Nereid/PlayerInterface.cs: Use a method instead of an
+	anonymous delegate to handle a ButtonPress event, fixing a strange crash
+	that I think is probably an issue in Mono (BGO #556573).
+
 2008-10-27  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/FieldPage.cs:

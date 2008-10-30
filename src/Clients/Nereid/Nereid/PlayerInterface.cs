@@ -192,13 +192,8 @@ namespace Nereid
             footer_toolbar.ToolbarStyle = ToolbarStyle.BothHoriz;
 
             EventBox status_event_box = new EventBox ();
-            status_event_box.ButtonPressEvent += delegate (object o, ButtonPressEventArgs args) {
-                Source source = ServiceManager.SourceManager.ActiveSource;
-                if (source != null) {
-                    source.CycleStatusFormat ();
-                    UpdateSourceInformation ();
-                }
-            };
+            status_event_box.ButtonPressEvent += OnStatusBoxButtonPress;
+            
             status_label = new Label ();
             status_event_box.Add (status_label);
             
@@ -215,6 +210,15 @@ namespace Nereid
 
             footer_toolbar.ShowAll ();
             primary_vbox.PackStart (footer_toolbar, false, true, 0);
+        }
+
+        private void OnStatusBoxButtonPress (object o, ButtonPressEventArgs args) 
+        {
+            Source source = ServiceManager.SourceManager.ActiveSource;
+            if (source != null) {
+                source.CycleStatusFormat ();
+                UpdateSourceInformation ();
+            }
         }
 
 #endregion
