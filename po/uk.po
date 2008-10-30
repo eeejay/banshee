@@ -2006,7 +2006,7 @@ msgstr "Перемішування"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackShuffleActions.cs:82
 msgid "Shuffle _Off"
-msgstr "Перемішування вимкнене"
+msgstr "Перемішування в_имкнене"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackShuffleActions.cs:83
 msgid "Do not shuffle playlist"
@@ -2014,7 +2014,7 @@ msgstr "Не перемішувати перелік"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackShuffleActions.cs:87
 msgid "Shuffle by _Song"
-msgstr "Перемішати по пісням"
+msgstr "Перемішати по _пісням"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackShuffleActions.cs:88
 msgid "Play songs randomly from the playlist"
@@ -2198,7 +2198,7 @@ msgstr "Шукати всі елементи, що відповідають де
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:112
 msgid "By Matching _Album"
-msgstr "Збіг альбому"
+msgstr "Збіг _альбому"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:113
 msgid "Search all songs of this album"
@@ -2206,7 +2206,7 @@ msgstr "Шукати всі пісні з цього альбому"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:116
 msgid "By Matching A_rtist"
-msgstr "Збіг виконавця"
+msgstr "Збіг ви_конавця"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:117
 msgid "Search all songs of this artist"
@@ -2525,8 +2525,8 @@ msgstr "<i>Редагування {0} з {1} елементів</i>"
 msgid "Save the changes made to the open track?"
 msgid_plural "Save the changes made to {0} of {1} open tracks?"
 msgstr[0] "Зберегти зміни зроблені у відкритій доріжці?"
-msgstr[1] "Зберегти зміни зроблені у {0} з {0} відкритих доріжок?"
-msgstr[2] "Зберегти зміни зроблені у {0} з {0} відкритих доріжок?"
+msgstr[1] "Зберегти зміни зроблені у {0} з {1} відкритих доріжок?"
+msgstr[2] "Зберегти зміни зроблені у {0} з {1} відкритих доріжок?"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs:633
 msgid "Close _without Saving"
@@ -2543,7 +2543,7 @@ msgstr "_Вигляд"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/ViewActions.cs:65
 msgid "_Equalizer"
-msgstr "Еквалайзер"
+msgstr "_Еквалайзер"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/ViewActions.cs:66
 msgid "View the graphical equalizer"
