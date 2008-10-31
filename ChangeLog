@@ -1,3 +1,9 @@
+2008-10-31  Sandy Armstrong  <sanfordarmstrong@gmail.com>
+
+	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
+	Remove unneeded "using System.Linq;" that was breaking the build on
+	older Mono installations.
+
 2008-10-31  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
 	* src/Core/Banshee.Core/Banshee.Base/SafeUri.cs:
