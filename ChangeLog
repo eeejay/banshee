@@ -1,3 +1,13 @@
+2008-10-31  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
+	* src/Core/Banshee.Core/Banshee.Base/SafeUri.cs:
+	* src/Core/Banshee.Core/Banshee.Base/Localization.cs:
+	* src/Backends/Banshee.Unix/Banshee.IO.Unix/Directory.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Gui.dll.config:
+	* src/Libraries/Hyena.Gui/Hyena.Gui/PangoCairoHelper.cs: Fix a 
+	DllNotFoundException by making the DllImport statements match the dllmap
+	in the .config files (BGO #557868).
+
 2008-10-29  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Clients/Nereid/Nereid/PlayerInterface.cs: Use a method instead of an

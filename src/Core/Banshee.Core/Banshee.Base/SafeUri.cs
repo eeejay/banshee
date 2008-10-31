@@ -176,10 +176,10 @@ namespace Banshee.Base
             get { return Scheme == System.Uri.UriSchemeFile; }
         }
         
-        [DllImport ("libglib-2.0.dll")]
+        [DllImport ("libglib-2.0-0.dll")]
         private static extern IntPtr g_filename_to_uri (IntPtr filename, IntPtr hostname, IntPtr error);
 
-        [DllImport ("libglib-2.0.dll")]
+        [DllImport ("libglib-2.0-0.dll")]
         private static extern IntPtr g_filename_from_uri (IntPtr uri, IntPtr hostname, IntPtr error);
     }
 }

@@ -33,7 +33,7 @@ namespace Hyena.Gui
 {
     public static class PangoCairoHelper
     {
-        [DllImport ("libpangocairo-1.0.dll")]
+        [DllImport ("libpangocairo-1.0-0.dll")]
         private static extern void pango_cairo_show_layout (IntPtr cr, IntPtr layout);
         
         public static void ShowLayout (Cairo.Context cr, Pango.Layout layout)
@@ -42,7 +42,7 @@ namespace Hyena.Gui
                 layout == null ? IntPtr.Zero : layout.Handle);
         }
         
-        [DllImport ("libpangocairo-1.0.dll")]
+        [DllImport ("libpangocairo-1.0-0.dll")]
         private static extern IntPtr pango_cairo_create_layout (IntPtr cr);
 
         public static Pango.Layout CreateLayout (Cairo.Context cr) 
@@ -51,7 +51,7 @@ namespace Hyena.Gui
             return GLib.Object.GetObject (raw_ret) as Pango.Layout;
         }
         
-        [DllImport ("libpangocairo-1.0.dll")]
+        [DllImport ("libpangocairo-1.0-0.dll")]
         private static extern void pango_cairo_layout_path (IntPtr cr, IntPtr layout);
 
         public static void LayoutPath (Cairo.Context cr, Pango.Layout layout, 
@@ -61,7 +61,7 @@ namespace Hyena.Gui
                 layout == null ? IntPtr.Zero : layout.Handle);
         }
         
-        [DllImport ("libpangocairo-1.0.dll")]
+        [DllImport ("libpangocairo-1.0-0.dll")]
         private static extern void pango_cairo_context_set_resolution (IntPtr pango_context, double dpi);
         
         public static void ContextSetResolution (Pango.Context context, double dpi)
@@ -69,7 +69,7 @@ namespace Hyena.Gui
             pango_cairo_context_set_resolution (context == null ? IntPtr.Zero : context.Handle, dpi);
         }
         
-        [DllImport ("libpangocairo-1.0.dll")]
+        [DllImport ("libpangocairo-1.0-0.dll")]
         private static extern IntPtr pango_layout_get_context (IntPtr layout);
         
         public static Pango.Context LayoutGetContext (Pango.Layout layout)
