@@ -1,3 +1,21 @@
+2008-11-04  Aaron Bockover  <abock@gnome.org>
+
+	* build/Makefile.am:
+	* build/DllMapVerifier.cs:
+	* build/dll-map-makefile-verifier:
+	* build/build.rules.mk: Wrote a DllImport and config file map verifier
+	tool that analyzes source code and the build to ensure that any DllImport
+	reference in the code must have a map in the config file or an explicit
+	ignore in the build; also ensures that if a config file exists, it is
+	included in module_SCRIPTS so it gets installed in the system
+
+	* src/Clients/Booter/Makefile.am:
+	* src/Clients/Booter/Banshee.exe.config:
+	* src/Clients/Booter/Booter/Entry.cs: 
+	* src/Backends/Banshee.Unix/Banshee.Unix.dll.config:
+	* src/Backends/Banshee.Unix/Makefile.am:
+	* src/Libraries/Hyena.Gui/Hyena.Gui.dll.config: Fixed up more DLL maps
+
 2008-10-31  Sandy Armstrong  <sanfordarmstrong@gmail.com>
 
 	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:

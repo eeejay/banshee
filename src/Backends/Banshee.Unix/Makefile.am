@@ -13,3 +13,6 @@ RESOURCES = Banshee.Unix.addin.xml
 
 include $(top_srcdir)/build/build.mk
 
+EXTRA_DIST += Banshee.Unix.dll.config
+module_SCRIPTS += Banshee.Unix.dll.config
+
