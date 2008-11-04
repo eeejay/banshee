@@ -1,5 +1,11 @@
 2008-11-04  Aaron Bockover  <abock@gnome.org>
 
+	* build/build.rules.mk:
+	* configure.ac: Do not run the DllImport verification when 
+	configured as a release build
+
+2008-11-04  Aaron Bockover  <abock@gnome.org>
+
 	* build/Makefile.am:
 	* build/DllMapVerifier.cs:
 	* build/dll-map-makefile-verifier:

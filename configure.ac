@@ -125,6 +125,8 @@ AC_ARG_ENABLE(release,
 		[Use release configuration [default=NO]]),
 	enable_release=yes, enable_release=no)
 AM_CONDITIONAL(ENABLE_RELEASE, test "x$enable_release" = "xyes")
+ENABLE_RELEASE=$enable_release
+AC_SUBST(ENABLE_RELEASE)
 if test "x$enable_release" = "xyes"; then
 	GMCS_FLAGS="-define:RELEASE"
 else
@@ -255,6 +257,7 @@ ${PACKAGE}-${VERSION}
     Graphics System:   ${GRAPHICS_SUBSYSTEM}
 
     Unit Tests:        ${do_tests}	(requires nunit >= ${NUNIT_REQUIRED})
+    Release Build:     ${enable_release}
 "
 
 # Unstable/in-development features; only show them if they were manually enabled
