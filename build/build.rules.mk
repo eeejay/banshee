@@ -58,7 +58,7 @@ $(ASSEMBLY_FILE): $(SOURCES_BUILD) $(RESOURCES_EXPANDED) $(DEP_LINK)
 	test "x$$colors" = "xyes" && \
 		echo -e "\033[1mCompiling $(notdir $@)...\033[0m" || \
 		echo "Compiling $(notdir $@)...";
-	if [ ! "x$(ENABLE_RELEASE)" = "xyes" ]; then \
+	@if [ ! "x$(ENABLE_RELEASE)" = "xyes" ]; then \
 		$(top_srcdir)/build/dll-map-makefile-verifier $(srcdir)/Makefile.am $(srcdir)/$(notdir $@.config) && \
 		$(MONO) $(top_builddir)/build/dll-map-verifier.exe $(srcdir)/$(notdir $@.config) -iwinmm -ilibbanshee -ilibbnpx11 -ilibc -ilibc.so.6 -iintl -ilibmtp.dll $(SOURCES_BUILD); \
 	fi;

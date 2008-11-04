@@ -1,6 +1,6 @@
 dnl Automake setup
-AC_INIT([banshee-1], [1.3.3])
-ASM_DISPLAY_VERSION="1.3.3"
+AC_INIT([banshee-1], [1.4.0])
+ASM_DISPLAY_VERSION="1.4.0"
 
 DISTCHECK_CONFIGURE_FLAGS="--disable-docs --enable-mtp --enable-daap --enable-podcast --enable-release"
 AC_SUBST(DISTCHECK_CONFIGURE_FLAGS)
@@ -122,8 +122,8 @@ AM_CONDITIONAL(ENABLE_PODCAST, test "x$enable_podcast" = "xyes")
 
 AC_ARG_ENABLE(release,
 	AC_HELP_STRING([--enable-release],
-		[Use release configuration [default=NO]]),
-	enable_release=yes, enable_release=no)
+		[Use release configuration]),
+	enable_release=yes, enable_release=`test ! -d .svn && echo "yes" || echo "no"`)
 AM_CONDITIONAL(ENABLE_RELEASE, test "x$enable_release" = "xyes")
 ENABLE_RELEASE=$enable_release
 AC_SUBST(ENABLE_RELEASE)
