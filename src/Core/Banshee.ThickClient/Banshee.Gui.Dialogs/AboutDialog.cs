@@ -42,6 +42,11 @@ namespace Banshee.Gui.Dialogs
 {
     public class AboutDialog : Gtk.AboutDialog
     {
+        private void OnResponse(object obj, ResponseArgs args)
+        {
+            Destroy ();
+        }
+
         public AboutDialog() : base()
         {
             // build authors page
@@ -103,6 +108,7 @@ namespace Banshee.Gui.Dialogs
             
             License = ProductInformation.License;
             WrapLicense = true;
+            Response += OnResponse;
         }
     }
 }

@@ -1,3 +1,9 @@
+2008-11-05  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs: Patch
+	from Maxim Ermilov to make the about dialog not modal (BGO #558050).
+
 2008-11-04  Aaron Bockover  <abock@gnome.org>
 
 	* configure.ac: Automatically --enable-release if there is

@@ -251,8 +251,7 @@ namespace Banshee.Gui
         private void OnAbout (object o, EventArgs args)
         {
             Banshee.Gui.Dialogs.AboutDialog dialog = new Banshee.Gui.Dialogs.AboutDialog ();
-            dialog.Run ();
-            dialog.Destroy ();
+            dialog.Show ();
         }
 
 #endregion
