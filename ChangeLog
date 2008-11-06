@@ -1,3 +1,10 @@
+2008-11-05  Eoin Hennessy <eoin@randomrules.org>
+
+	* build/osx/targets/gst-plugins-bad-qtwrapper-fixes.patch:
+	Added a patch containing a number of fixes for qtwrapper issues in 
+	gst-plugins-bad 0.10.9 backported from current cvs. Makes playback on 
+	OSX considerably more stable.
+
 2008-11-05  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
 	* src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:
