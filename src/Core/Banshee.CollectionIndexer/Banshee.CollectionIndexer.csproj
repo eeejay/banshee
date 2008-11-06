@@ -17,18 +17,18 @@
     <OutputPath>..\..\..\bin</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
     <StartupObject />
-    <EnvironmentVariables>
-      <EnvironmentVariables />
-    </EnvironmentVariables>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <ConsolePause>false</ConsolePause>
     <CustomCommands>
       <CustomCommands>
         <Command type="Execute" command="make run" workingdir="${SolutionDir}" />
         <Command type="Build" command="make" workingdir="${SolutionDir}" />
       </CustomCommands>
     </CustomCommands>
-    <ConsolePause>false</ConsolePause>
+    <EnvironmentVariables>
+      <EnvironmentVariables />
+    </EnvironmentVariables>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />

@@ -17,13 +17,13 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
-    <AssemblyKeyFile>.</AssemblyKeyFile>
     <CustomCommands>
       <CustomCommands>
         <Command type="Build" command="make" workingdir="${SolutionDir}" />
         <Command type="Execute" command="make run" workingdir="${SolutionDir}" />
       </CustomCommands>
     </CustomCommands>
+    <AssemblyKeyFile>.</AssemblyKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Banshee.Core\Banshee.Core.csproj">
@@ -49,6 +49,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Banshee.Dap.MassStorage\MassStorageSource.cs" />
+    <Compile Include="Banshee.Dap.MassStorage\MassStorageDevice.cs" />
+    <Compile Include="Banshee.Dap.MassStorage\KeyValueParser.cs" />
+    <Compile Include="Banshee.Dap.MassStorage\AndroidDevice.cs" />
+    <Compile Include="Banshee.Dap.MassStorage\DeviceMapper.cs" />
+    <Compile Include="Banshee.Dap.MassStorage\CustomMassStorageDevice.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Banshee.Dap.MassStorage.addin.xml" />

@@ -18,13 +18,13 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
-    <AssemblyKeyFile>.</AssemblyKeyFile>
     <CustomCommands>
       <CustomCommands>
         <Command type="Build" command="make" workingdir="${SolutionDir}" />
         <Command type="Execute" command="make run" workingdir="${SolutionDir}" />
       </CustomCommands>
     </CustomCommands>
+    <AssemblyKeyFile>.</AssemblyKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Banshee.Core\Banshee.Core.csproj">
@@ -57,6 +57,7 @@
     <Compile Include="Banshee.HalBackend\Volume.cs" />
     <Compile Include="Banshee.HalBackend\DiscVolume.cs" />
     <Compile Include="Banshee.HalBackend\DeviceMediaCapabilities.cs" />
+    <Compile Include="Banshee.HalBackend\UsbDevice.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Banshee.Hal.addin.xml" />
