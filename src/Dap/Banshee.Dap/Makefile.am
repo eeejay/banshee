@@ -9,11 +9,13 @@ SOURCES =  \
 	Banshee.Dap.Gui/DapInfoBar.cs \
 	Banshee.Dap.Gui/DapPropertiesDialog.cs \
 	Banshee.Dap.Gui/DapPropertiesDisplay.cs \
+	Banshee.Dap.Gui/PurchasedMusicActions.cs \
 	Banshee.Dap/DapLibrarySync.cs \
 	Banshee.Dap/DapService.cs \
 	Banshee.Dap/DapSource.cs \
 	Banshee.Dap/DapSync.cs \
 	Banshee.Dap/InvalidDeviceException.cs \
+	Banshee.Dap/IPurchasedMusicSource.cs \
 	Banshee.Dap/MediaGroupSource.cs \
 	Banshee.Dap/MusicGroupSource.cs \
 	Banshee.Dap/PodcastGroupSource.cs \
@@ -23,7 +25,8 @@ SOURCES =  \
 RESOURCES =  \
 	Banshee.Dap.addin.xml \
 	Resources/ActiveSourceUI.xml \
-	Resources/GlobalUI.xml
+	Resources/GlobalUI.xml \
+	Resources/PurchasedMusicSourceUI.xml
 
 include $(top_srcdir)/build/build.mk
 

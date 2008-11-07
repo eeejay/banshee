@@ -73,6 +73,8 @@
     <Compile Include="Banshee.Dap.Gui\DapContent.cs" />
     <Compile Include="Banshee.Dap.Gui\DapActions.cs" />
     <Compile Include="Banshee.Dap\PodcastGroupSource.cs" />
+    <Compile Include="Banshee.Dap\IPurchasedMusicSource.cs" />
+    <Compile Include="Banshee.Dap.Gui\PurchasedMusicActions.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Banshee.Dap.addin.xml" />
@@ -81,6 +83,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\GlobalUI.xml">
       <LogicalName>GlobalUI.xml</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\PurchasedMusicSourceUI.xml">
+      <LogicalName>PurchasedMusicSourceUI.xml</LogicalName>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

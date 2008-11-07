@@ -30,6 +30,7 @@ using System;
 using Mono.Unix;
 
 using Banshee.Hardware;
+using Banshee.Library;
 using Banshee.Collection.Database;
 
 namespace Banshee.Dap.MassStorage
@@ -63,10 +64,10 @@ namespace Banshee.Dap.MassStorage
         
         public override void SourceInitialize ()
         {
-            amazon_source = new AmazonMp3GroupSource (Source);
-            amazon_source.AutoHide = true;
-            
             amazon_base_dir = System.IO.Path.Combine (Source.Volume.MountPoint, audio_folders[1]);
+            
+            amazon_source = new AmazonMp3GroupSource (this, Source);
+            amazon_source.AutoHide = true;
         }
         
         public override bool LoadDeviceConfiguration ()
@@ -136,10 +137,15 @@ namespace Banshee.Dap.MassStorage
             return true;
         }
         
-        private class AmazonMp3GroupSource : MediaGroupSource
+        private class AmazonMp3GroupSource : MediaGroupSource, IPurchasedMusicSource
         {
-            public AmazonMp3GroupSource (DapSource parent) : base (parent, Catalog.GetString ("Purchased Music"))
+            private AndroidDevice android;
+            
+            public AmazonMp3GroupSource (AndroidDevice android, DapSource parent) 
+                : base (parent, Catalog.GetString ("Purchased Music"))
             {
+                this.android = android;
+                
                 Properties.SetString ("Icon.Name", "amazon-mp3-source");
                 ConditionSql = "(CoreTracks.Uri LIKE \"amazonmp3/%\")";
             }
@@ -154,6 +160,12 @@ namespace Banshee.Dap.MassStorage
             {
                 base.Deactivate ();
                 active = false;
+            }
+            
+            public void Import ()
+            {
+                LibraryImportManager importer = new LibraryImportManager (true);
+                importer.Enqueue (android.amazon_base_dir);
             }
             
             private bool active;

@@ -1,5 +1,22 @@
 2008-11-07  Aaron Bockover  <abock@gnome.org>
 
+	* src/Dap/Banshee.Dap/Banshee.Dap.Gui/PurchasedMusicActions.cs: UI
+	actions for IPurchasedMusicSource
+
+	* src/Dap/Banshee.Dap/Resources/PurchasedMusicSourceUI.xml: UI for
+	importing purchased music
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/IPurchasedMusicSource.cs: Interface
+	for advertising that the purchased music UI should be connected
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/MediaGroupSource.cs: If self
+	implements IPurchasedMusicSource, connect that UI
+
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/AndroidDevice.cs:
+	Implement IPurchasedMusicSource
+
+2008-11-07  Aaron Bockover  <abock@gnome.org>
+
 	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/AndroidDevice.cs:
 	Implemented special support for grouping tracks purchased from the
 	Amazon MP3 store on the G1 into their own source; also do not allow
