@@ -1,0 +1,23 @@
+<Type Name="TrackInfo+PlaybackFinishedHandler" FullName="Banshee.Collection.TrackInfo+PlaybackFinishedHandler">
+  <TypeSignature Language="C#" Value="public delegate void TrackInfo.PlaybackFinishedHandler(TrackInfo track, double percentComplete);" />
+  <AssemblyInfo>
+    <AssemblyName>Banshee.Core</AssemblyName>
+    <AssemblyVersion>1.4.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Delegate</BaseTypeName>
+  </Base>
+  <Parameters>
+    <Parameter Name="track" Type="Banshee.Collection.TrackInfo" />
+    <Parameter Name="percentComplete" Type="System.Double" />
+  </Parameters>
+  <ReturnValue>
+    <ReturnType>System.Void</ReturnType>
+  </ReturnValue>
+  <Docs>
+    <param name="track">To be added.</param>
+    <param name="percentComplete">To be added.</param>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+</Type>

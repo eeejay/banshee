@@ -4,6 +4,7 @@
     <AssemblyName>Hyena</AssemblyName>
     <AssemblyVersion>0.90.1.25402</AssemblyVersion>
     <AssemblyVersion>1.3.1.0</AssemblyVersion>
+    <AssemblyVersion>1.4.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>Hyena.SExpEngine.FunctionSet</BaseTypeName>
@@ -28,60 +29,60 @@
       <MemberType>Constructor</MemberType>
       <Parameters />
       <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="CheckList">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="CheckList">
       <MemberSignature Language="C#" Value="public void CheckList (Hyena.SExpEngine.TreeNode node);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters><Parameter Name="node" Type="Hyena.SExpEngine.TreeNode" /></Parameters>
       <Docs><param name="node">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="OnAppend">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="OnAppend">
       <MemberSignature Language="C#" Value="public virtual Hyena.SExpEngine.TreeNode OnAppend (Hyena.SExpEngine.TreeNode[] args);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>Hyena.SExpEngine.TreeNode</ReturnType></ReturnValue>
       <Parameters><Parameter Name="args" Type="Hyena.SExpEngine.TreeNode[]" /></Parameters>
       <Docs><param name="args">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><Attributes><Attribute><AttributeName>Hyena.SExpEngine.Function(System.Collections.ObjectModel.ReadOnlyCollection`1[System.Reflection.CustomAttributeTypedArgument])</AttributeName></Attribute></Attributes></Member><Member MemberName="OnForeach">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo><Attributes><Attribute><AttributeName>Hyena.SExpEngine.Function(System.Collections.ObjectModel.ReadOnlyCollection`1[System.Reflection.CustomAttributeTypedArgument])</AttributeName></Attribute></Attributes></Member><Member MemberName="OnForeach">
       <MemberSignature Language="C#" Value="public virtual Hyena.SExpEngine.TreeNode OnForeach (Hyena.SExpEngine.TreeNode[] args);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>Hyena.SExpEngine.TreeNode</ReturnType></ReturnValue>
       <Parameters><Parameter Name="args" Type="Hyena.SExpEngine.TreeNode[]" /></Parameters>
       <Docs><param name="args">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><Attributes><Attribute><AttributeName>Hyena.SExpEngine.Function(System.Collections.ObjectModel.ReadOnlyCollection`1[System.Reflection.CustomAttributeTypedArgument])</AttributeName></Attribute></Attributes></Member><Member MemberName="OnInsert">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo><Attributes><Attribute><AttributeName>Hyena.SExpEngine.Function(System.Collections.ObjectModel.ReadOnlyCollection`1[System.Reflection.CustomAttributeTypedArgument])</AttributeName></Attribute></Attributes></Member><Member MemberName="OnInsert">
       <MemberSignature Language="C#" Value="public virtual Hyena.SExpEngine.TreeNode OnInsert (Hyena.SExpEngine.TreeNode[] args);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>Hyena.SExpEngine.TreeNode</ReturnType></ReturnValue>
       <Parameters><Parameter Name="args" Type="Hyena.SExpEngine.TreeNode[]" /></Parameters>
       <Docs><param name="args">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><Attributes><Attribute><AttributeName>Hyena.SExpEngine.Function(System.Collections.ObjectModel.ReadOnlyCollection`1[System.Reflection.CustomAttributeTypedArgument])</AttributeName></Attribute></Attributes></Member><Member MemberName="OnIsList">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo><Attributes><Attribute><AttributeName>Hyena.SExpEngine.Function(System.Collections.ObjectModel.ReadOnlyCollection`1[System.Reflection.CustomAttributeTypedArgument])</AttributeName></Attribute></Attributes></Member><Member MemberName="OnIsList">
       <MemberSignature Language="C#" Value="public virtual Hyena.SExpEngine.TreeNode OnIsList (Hyena.SExpEngine.TreeNode[] args);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>Hyena.SExpEngine.TreeNode</ReturnType></ReturnValue>
       <Parameters><Parameter Name="args" Type="Hyena.SExpEngine.TreeNode[]" /></Parameters>
       <Docs><param name="args">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><Attributes><Attribute><AttributeName>Hyena.SExpEngine.Function(System.Collections.ObjectModel.ReadOnlyCollection`1[System.Reflection.CustomAttributeTypedArgument])</AttributeName></Attribute></Attributes></Member><Member MemberName="OnItemAt">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo><Attributes><Attribute><AttributeName>Hyena.SExpEngine.Function(System.Collections.ObjectModel.ReadOnlyCollection`1[System.Reflection.CustomAttributeTypedArgument])</AttributeName></Attribute></Attributes></Member><Member MemberName="OnItemAt">
       <MemberSignature Language="C#" Value="public virtual Hyena.SExpEngine.TreeNode OnItemAt (Hyena.SExpEngine.TreeNode[] args);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>Hyena.SExpEngine.TreeNode</ReturnType></ReturnValue>
       <Parameters><Parameter Name="args" Type="Hyena.SExpEngine.TreeNode[]" /></Parameters>
       <Docs><param name="args">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><Attributes><Attribute><AttributeName>Hyena.SExpEngine.Function(System.Collections.ObjectModel.ReadOnlyCollection`1[System.Reflection.CustomAttributeTypedArgument])</AttributeName></Attribute></Attributes></Member><Member MemberName="OnPrepend">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo><Attributes><Attribute><AttributeName>Hyena.SExpEngine.Function(System.Collections.ObjectModel.ReadOnlyCollection`1[System.Reflection.CustomAttributeTypedArgument])</AttributeName></Attribute></Attributes></Member><Member MemberName="OnPrepend">
       <MemberSignature Language="C#" Value="public virtual Hyena.SExpEngine.TreeNode OnPrepend (Hyena.SExpEngine.TreeNode[] args);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>Hyena.SExpEngine.TreeNode</ReturnType></ReturnValue>
       <Parameters><Parameter Name="args" Type="Hyena.SExpEngine.TreeNode[]" /></Parameters>
       <Docs><param name="args">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><Attributes><Attribute><AttributeName>Hyena.SExpEngine.Function(System.Collections.ObjectModel.ReadOnlyCollection`1[System.Reflection.CustomAttributeTypedArgument])</AttributeName></Attribute></Attributes></Member><Member MemberName="OnRemove">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo><Attributes><Attribute><AttributeName>Hyena.SExpEngine.Function(System.Collections.ObjectModel.ReadOnlyCollection`1[System.Reflection.CustomAttributeTypedArgument])</AttributeName></Attribute></Attributes></Member><Member MemberName="OnRemove">
       <MemberSignature Language="C#" Value="public virtual Hyena.SExpEngine.TreeNode OnRemove (Hyena.SExpEngine.TreeNode[] args);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>Hyena.SExpEngine.TreeNode</ReturnType></ReturnValue>
       <Parameters><Parameter Name="args" Type="Hyena.SExpEngine.TreeNode[]" /></Parameters>
       <Docs><param name="args">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><Attributes><Attribute><AttributeName>Hyena.SExpEngine.Function(System.Collections.ObjectModel.ReadOnlyCollection`1[System.Reflection.CustomAttributeTypedArgument])</AttributeName></Attribute></Attributes></Member><Member MemberName="OnRemoveAt">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo><Attributes><Attribute><AttributeName>Hyena.SExpEngine.Function(System.Collections.ObjectModel.ReadOnlyCollection`1[System.Reflection.CustomAttributeTypedArgument])</AttributeName></Attribute></Attributes></Member><Member MemberName="OnRemoveAt">
       <MemberSignature Language="C#" Value="public virtual Hyena.SExpEngine.TreeNode OnRemoveAt (Hyena.SExpEngine.TreeNode[] args);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>Hyena.SExpEngine.TreeNode</ReturnType></ReturnValue>
       <Parameters><Parameter Name="args" Type="Hyena.SExpEngine.TreeNode[]" /></Parameters>
       <Docs><param name="args">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><Attributes><Attribute><AttributeName>Hyena.SExpEngine.Function(System.Collections.ObjectModel.ReadOnlyCollection`1[System.Reflection.CustomAttributeTypedArgument])</AttributeName></Attribute></Attributes></Member>
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo><Attributes><Attribute><AttributeName>Hyena.SExpEngine.Function(System.Collections.ObjectModel.ReadOnlyCollection`1[System.Reflection.CustomAttributeTypedArgument])</AttributeName></Attribute></Attributes></Member>
   </Members>
 </Type>

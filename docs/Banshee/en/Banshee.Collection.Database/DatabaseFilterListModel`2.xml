@@ -3,6 +3,7 @@
   <AssemblyInfo>
     <AssemblyName>Banshee.Services</AssemblyName>
     <AssemblyVersion>1.3.1.0</AssemblyVersion>
+    <AssemblyVersion>1.4.0.0</AssemblyVersion>
   </AssemblyInfo>
   <TypeParameters>
     <TypeParameter>T</TypeParameter>
@@ -10,10 +11,8 @@
   </TypeParameters>
   <Base>
     <BaseTypeName>Banshee.Collection.FilterListModel&lt;U&gt;</BaseTypeName>
-    <BaseTypeArguments>
-      <BaseTypeArgument TypeParamName="T">U</BaseTypeArgument>
-    </BaseTypeArguments>
-  </Base>
+    
+  <BaseTypeArguments><BaseTypeArgument TypeParamName="T">U</BaseTypeArgument></BaseTypeArguments></Base>
   <Interfaces>
     <Interface>
       <InterfaceName>Hyena.Data.Sqlite.ICacheableDatabaseModel</InterfaceName>
@@ -31,296 +30,171 @@
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public DatabaseFilterListModel (string name, string label, Banshee.Sources.DatabaseSource source, Banshee.Collection.Database.DatabaseTrackListModel trackModel, Hyena.Data.Sqlite.HyenaSqliteConnection connection, Hyena.Data.Sqlite.SqliteModelProvider&lt;T&gt; provider, U selectAllItem, string uuid);" />
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.3.1.0</AssemblyVersion>
-      </AssemblyInfo>
-      <Parameters>
-        <Parameter Name="name" Type="System.String" />
-        <Parameter Name="label" Type="System.String" />
-        <Parameter Name="source" Type="Banshee.Sources.DatabaseSource" />
-        <Parameter Name="trackModel" Type="Banshee.Collection.Database.DatabaseTrackListModel" />
-        <Parameter Name="connection" Type="Hyena.Data.Sqlite.HyenaSqliteConnection" />
-        <Parameter Name="provider" Type="Hyena.Data.Sqlite.SqliteModelProvider&lt;T&gt;" />
-        <Parameter Name="selectAllItem" Type="U" />
-        <Parameter Name="uuid" Type="System.String" />
-      </Parameters>
-      <Docs>
-        <param name="name">To be added.</param>
-        <param name="label">To be added.</param>
-        <param name="source">To be added.</param>
-        <param name="trackModel">To be added.</param>
-        <param name="connection">To be added.</param>
-        <param name="provider">To be added.</param>
-        <param name="selectAllItem">To be added.</param>
-        <param name="uuid">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="CacheId">
+        
+      <AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo>
+      <Parameters><Parameter Name="name" Type="System.String" /><Parameter Name="label" Type="System.String" /><Parameter Name="source" Type="Banshee.Sources.DatabaseSource" /><Parameter Name="trackModel" Type="Banshee.Collection.Database.DatabaseTrackListModel" /><Parameter Name="connection" Type="Hyena.Data.Sqlite.HyenaSqliteConnection" /><Parameter Name="provider" Type="Hyena.Data.Sqlite.SqliteModelProvider&lt;T&gt;" /><Parameter Name="selectAllItem" Type="U" /><Parameter Name="uuid" Type="System.String" /></Parameters>
+      <Docs><param name="name">To be added.</param><param name="label">To be added.</param><param name="source">To be added.</param><param name="trackModel">To be added.</param><param name="connection">To be added.</param><param name="provider">To be added.</param><param name="selectAllItem">To be added.</param><param name="uuid">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="CacheId">
       <MemberSignature Language="C#" Value="public int CacheId { get; }" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.3.1.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>System.Int32</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="CachesJoinTableEntries">
+        
+      <AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo>
+      <ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="CachesJoinTableEntries">
       <MemberSignature Language="C#" Value="public virtual bool CachesJoinTableEntries { get; }" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.3.1.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>System.Boolean</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="CachesValues">
+        
+      <AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo>
+      <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="CachesValues">
       <MemberSignature Language="C#" Value="public virtual bool CachesValues { get; }" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.3.1.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>System.Boolean</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="FetchCount">
+        
+      <AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo>
+      <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="FetchCount">
       <MemberSignature Language="C#" Value="public virtual int FetchCount { get; }" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.3.1.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>System.Int32</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="FilterColumn">
+        
+      <AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo>
+      <ReturnValue><ReturnType>System.Int32</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="FilterColumn">
       <MemberSignature Language="C#" Value="public abstract string FilterColumn { get; }" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.3.1.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>System.String</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="GenerateReloadFragment">
+        
+      <AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo>
+      <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="GenerateReloadFragment">
       <MemberSignature Language="C#" Value="protected virtual void GenerateReloadFragment ();" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.3.1.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
+        
+      <AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters />
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="GetSelectedObjects">
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="GetSelectedObjects">
       <MemberSignature Language="C#" Value="public System.Collections.Generic.IEnumerable&lt;object&gt; GetSelectedObjects ();" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.3.1.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>System.Collections.Generic.IEnumerable&lt;System.Object&gt;</ReturnType>
-      </ReturnValue>
+        
+      <AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo>
+      <ReturnValue><ReturnType>System.Collections.Generic.IEnumerable&lt;System.Object&gt;</ReturnType></ReturnValue>
       <Parameters />
-      <Docs>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="ItemToFilterValue">
+      <Docs><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    <Attributes><Attribute><AttributeName>System.Diagnostics.DebuggerHidden</AttributeName></Attribute></Attributes></Member><Member MemberName="ItemToFilterValue">
       <MemberSignature Language="C#" Value="protected abstract string ItemToFilterValue (object o);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.3.1.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>System.String</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="o" Type="System.Object" />
-      </Parameters>
-      <Docs>
-        <param name="o">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="JoinColumn">
+        
+      <AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo>
+      <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="o" Type="System.Object" /></Parameters>
+      <Docs><param name="o">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="JoinColumn">
       <MemberSignature Language="C#" Value="public virtual string JoinColumn { get; }" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.3.1.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>System.String</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="JoinFragment">
+        
+      <AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo>
+      <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="JoinFragment">
       <MemberSignature Language="C#" Value="public virtual string JoinFragment { get; }" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.3.1.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>System.String</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="JoinPrimaryKey">
+        
+      <AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo>
+      <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="JoinPrimaryKey">
       <MemberSignature Language="C#" Value="public virtual string JoinPrimaryKey { get; }" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.3.1.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>System.String</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="JoinTable">
+        
+      <AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo>
+      <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="JoinTable">
       <MemberSignature Language="C#" Value="public virtual string JoinTable { get; }" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.3.1.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>System.String</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="ReloadFragment">
+        
+      <AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo>
+      <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="ReloadFragment">
       <MemberSignature Language="C#" Value="public string ReloadFragment { protected set; get; }" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.3.1.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>System.String</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="ReloadFragmentFormat">
+        
+      <AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo>
+      <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="ReloadFragmentFormat">
       <MemberSignature Language="C#" Value="protected string ReloadFragmentFormat { set; get; }" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.3.1.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>System.String</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="select_all_item">
+        
+      <AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo>
+      <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="select_all_item">
       <MemberSignature Language="C#" Value="protected readonly U select_all_item;" />
       <MemberType>Field</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.3.1.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>U</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="SelectAggregates">
+        
+      <AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo>
+      <ReturnValue><ReturnType>U</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="SelectAggregates">
       <MemberSignature Language="C#" Value="public virtual string SelectAggregates { get; }" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.3.1.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>System.String</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="UpdateSelectAllItem">
+        
+      <AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo>
+      <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="UpdateSelectAllItem">
       <MemberSignature Language="C#" Value="public abstract void UpdateSelectAllItem (long count);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.3.1.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="count" Type="System.Int64" />
-      </Parameters>
-      <Docs>
-        <param name="count">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
+        
+      <AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="count" Type="System.Int64" /></Parameters>
+      <Docs><param name="count">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
   </Members>
 </Type>

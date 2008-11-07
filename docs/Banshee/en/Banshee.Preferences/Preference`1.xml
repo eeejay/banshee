@@ -3,6 +3,7 @@
   <AssemblyInfo>
     <AssemblyName>Banshee.Services</AssemblyName>
     <AssemblyVersion>1.3.1.0</AssemblyVersion>
+    <AssemblyVersion>1.4.0.0</AssemblyVersion>
   </AssemblyInfo>
   <TypeParameters>
     <TypeParameter>T</TypeParameter>
@@ -17,77 +18,41 @@
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
+    
+    
+    
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public Preference (string id, string name);" />
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.3.1.0</AssemblyVersion>
-      </AssemblyInfo>
-      <Parameters>
-        <Parameter Name="id" Type="System.String" />
-        <Parameter Name="name" Type="System.String" />
-      </Parameters>
-      <Docs>
-        <param name="id">To be added.</param>
-        <param name="name">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName=".ctor">
+        
+      <AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo>
+      <Parameters><Parameter Name="id" Type="System.String" /><Parameter Name="name" Type="System.String" /></Parameters>
+      <Docs><param name="id">To be added.</param><param name="name">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public Preference (string id, string name, string description);" />
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.3.1.0</AssemblyVersion>
-      </AssemblyInfo>
-      <Parameters>
-        <Parameter Name="id" Type="System.String" />
-        <Parameter Name="name" Type="System.String" />
-        <Parameter Name="description" Type="System.String" />
-      </Parameters>
-      <Docs>
-        <param name="id">To be added.</param>
-        <param name="name">To be added.</param>
-        <param name="description">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName=".ctor">
+        
+      <AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo>
+      <Parameters><Parameter Name="id" Type="System.String" /><Parameter Name="name" Type="System.String" /><Parameter Name="description" Type="System.String" /></Parameters>
+      <Docs><param name="id">To be added.</param><param name="name">To be added.</param><param name="description">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public Preference (string id, string name, string description, T value);" />
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.3.1.0</AssemblyVersion>
-      </AssemblyInfo>
-      <Parameters>
-        <Parameter Name="id" Type="System.String" />
-        <Parameter Name="name" Type="System.String" />
-        <Parameter Name="description" Type="System.String" />
-        <Parameter Name="value" Type="T" />
-      </Parameters>
-      <Docs>
-        <param name="id">To be added.</param>
-        <param name="name">To be added.</param>
-        <param name="description">To be added.</param>
-        <param name="value">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="Value">
+        
+      <AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo>
+      <Parameters><Parameter Name="id" Type="System.String" /><Parameter Name="name" Type="System.String" /><Parameter Name="description" Type="System.String" /><Parameter Name="value" Type="T" /></Parameters>
+      <Docs><param name="id">To be added.</param><param name="name">To be added.</param><param name="description">To be added.</param><param name="value">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="Value">
       <MemberSignature Language="C#" Value="public virtual T Value { set; get; }" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.3.1.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>T</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
+        
+      <AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo>
+      <ReturnValue><ReturnType>T</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member>
   </Members>
 </Type>

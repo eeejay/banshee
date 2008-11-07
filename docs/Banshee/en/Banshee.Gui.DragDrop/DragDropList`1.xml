@@ -4,6 +4,7 @@
     <AssemblyName>Banshee.ThickClient</AssemblyName>
     <AssemblyVersion>0.90.1.25406</AssemblyVersion>
     <AssemblyVersion>1.3.1.0</AssemblyVersion>
+    <AssemblyVersion>1.4.0.0</AssemblyVersion>
   </AssemblyInfo>
   <TypeParameters>
     <TypeParameter>T</TypeParameter>
@@ -30,40 +31,40 @@
       <MemberType>Constructor</MemberType>
       <Parameters />
       <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName=".ctor">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public DragDropList (T o);" />
       <MemberType>Constructor</MemberType>
       <Parameters><Parameter Name="o" Type="T" /></Parameters>
       <Docs><param name="o">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName=".ctor">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public DragDropList (T o, Gtk.SelectionData selectionData, Gdk.Atom target);" />
       <MemberType>Constructor</MemberType>
       <Parameters><Parameter Name="o" Type="T" /><Parameter Name="selectionData" Type="Gtk.SelectionData" /><Parameter Name="target" Type="Gdk.Atom" /></Parameters>
       <Docs><param name="o">To be added.</param><param name="selectionData">To be added.</param><param name="target">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="AssignToSelection">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="AssignToSelection">
       <MemberSignature Language="C#" Value="public void AssignToSelection (Gtk.SelectionData selectionData, Gdk.Atom target);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters><Parameter Name="selectionData" Type="Gtk.SelectionData" /><Parameter Name="target" Type="Gdk.Atom" /></Parameters>
       <Docs><param name="selectionData">To be added.</param><param name="target">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="op_Implicit">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="op_Implicit">
       <MemberSignature Language="C#" Value="public static byte[] op_Implicit (Banshee.Gui.DragDrop.DragDropList&lt;T&gt; transferrable);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Byte[]</ReturnType></ReturnValue>
       <Parameters><Parameter Name="transferrable" Type="Banshee.Gui.DragDrop.DragDropList&lt;T&gt;" /></Parameters>
       <Docs><param name="transferrable">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="op_Implicit">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="op_Implicit">
       <MemberSignature Language="C#" Value="public static Banshee.Gui.DragDrop.DragDropList&lt;T&gt; op_Implicit (Gtk.SelectionData transferrable);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>Banshee.Gui.DragDrop.DragDropList&lt;T&gt;</ReturnType></ReturnValue>
       <Parameters><Parameter Name="transferrable" Type="Gtk.SelectionData" /></Parameters>
       <Docs><param name="transferrable">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="op_Implicit">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="op_Implicit">
       <MemberSignature Language="C#" Value="public static Banshee.Gui.DragDrop.DragDropList&lt;T&gt; op_Implicit (byte[] transferrable);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>Banshee.Gui.DragDrop.DragDropList&lt;T&gt;</ReturnType></ReturnValue>
       <Parameters><Parameter Name="transferrable" Type="System.Byte[]" /></Parameters>
       <Docs><param name="transferrable">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member>
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member>
   </Members>
 </Type>

@@ -4,6 +4,7 @@
     <AssemblyName>Banshee.ThickClient</AssemblyName>
     <AssemblyVersion>0.90.1.25406</AssemblyVersion>
     <AssemblyVersion>1.3.1.0</AssemblyVersion>
+    <AssemblyVersion>1.4.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -42,77 +43,77 @@
       <MemberType>Constructor</MemberType>
       <Parameters />
       <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="AddActionGroup">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="AddActionGroup">
       <MemberSignature Language="C#" Value="public void AddActionGroup (Gtk.ActionGroup group);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters><Parameter Name="group" Type="Gtk.ActionGroup" /></Parameters>
       <Docs><param name="group">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="AddActionGroup">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="AddActionGroup">
       <MemberSignature Language="C#" Value="public void AddActionGroup (string name);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters><Parameter Name="name" Type="System.String" /></Parameters>
       <Docs><param name="name">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="AddUiFromFile"><MemberSignature Language="C#" Value="public uint AddUiFromFile (string ui_file, System.Reflection.Assembly assembly);" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.UInt32</ReturnType></ReturnValue><Parameters><Parameter Name="ui_file" Type="System.String" /><Parameter Name="assembly" Type="System.Reflection.Assembly" /></Parameters><Docs><param name="ui_file">To be added.</param><param name="assembly">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member><Member MemberName="AddUiFromFileInCurrentAssembly"><MemberSignature Language="C#" Value="public uint AddUiFromFileInCurrentAssembly (string ui_file);" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.UInt32</ReturnType></ReturnValue><Parameters><Parameter Name="ui_file" Type="System.String" /></Parameters><Docs><param name="ui_file">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member><Member MemberName="Banshee.ServiceStack.IService.ServiceName">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="AddUiFromFile"><MemberSignature Language="C#" Value="public uint AddUiFromFile (string ui_file, System.Reflection.Assembly assembly);" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.UInt32</ReturnType></ReturnValue><Parameters><Parameter Name="ui_file" Type="System.String" /><Parameter Name="assembly" Type="System.Reflection.Assembly" /></Parameters><Docs><param name="ui_file">To be added.</param><param name="assembly">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member><Member MemberName="AddUiFromFileInCurrentAssembly"><MemberSignature Language="C#" Value="public uint AddUiFromFileInCurrentAssembly (string ui_file);" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.UInt32</ReturnType></ReturnValue><Parameters><Parameter Name="ui_file" Type="System.String" /></Parameters><Docs><param name="ui_file">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member><Member MemberName="Banshee.ServiceStack.IService.ServiceName">
       <MemberSignature Language="C#" Value="string Banshee.ServiceStack.IService.ServiceName { get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="FindAction">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="FindAction">
       <MemberSignature Language="C#" Value="public Gtk.Action FindAction (string actionId);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>Gtk.Action</ReturnType></ReturnValue>
       <Parameters><Parameter Name="actionId" Type="System.String" /></Parameters>
       <Docs><param name="actionId">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="FindActionGroup"><MemberSignature Language="C#" Value="public Gtk.ActionGroup FindActionGroup (string actionGroupId);" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>Gtk.ActionGroup</ReturnType></ReturnValue><Parameters><Parameter Name="actionGroupId" Type="System.String" /></Parameters><Docs><param name="actionGroupId">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member><Member MemberName="GlobalActions">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="FindActionGroup"><MemberSignature Language="C#" Value="public Gtk.ActionGroup FindActionGroup (string actionGroupId);" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>Gtk.ActionGroup</ReturnType></ReturnValue><Parameters><Parameter Name="actionGroupId" Type="System.String" /></Parameters><Docs><param name="actionGroupId">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member><Member MemberName="GlobalActions">
       <MemberSignature Language="C#" Value="public Banshee.Gui.GlobalActions GlobalActions { get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>Banshee.Gui.GlobalActions</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="Item">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="Item">
       <MemberSignature Language="C#" Value="public Gtk.Action this[string actionId] { get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>Gtk.Action</ReturnType></ReturnValue>
       <Parameters><Parameter Name="actionId" Type="System.String" /></Parameters>
       <Docs><param name="actionId">To be added.</param><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="PlaybackActions">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="PlaybackActions">
       <MemberSignature Language="C#" Value="public Banshee.Gui.PlaybackActions PlaybackActions { get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>Banshee.Gui.PlaybackActions</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="PopulateToolbarPlaceholder">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="PopulateToolbarPlaceholder">
       <MemberSignature Language="C#" Value="public void PopulateToolbarPlaceholder (Gtk.Toolbar toolbar, string path, Gtk.Widget item);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters><Parameter Name="toolbar" Type="Gtk.Toolbar" /><Parameter Name="path" Type="System.String" /><Parameter Name="item" Type="Gtk.Widget" /></Parameters>
       <Docs><param name="toolbar">To be added.</param><param name="path">To be added.</param><param name="item">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="PopulateToolbarPlaceholder">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="PopulateToolbarPlaceholder">
       <MemberSignature Language="C#" Value="public void PopulateToolbarPlaceholder (Gtk.Toolbar toolbar, string path, Gtk.Widget item, bool expand);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters><Parameter Name="toolbar" Type="Gtk.Toolbar" /><Parameter Name="path" Type="System.String" /><Parameter Name="item" Type="Gtk.Widget" /><Parameter Name="expand" Type="System.Boolean" /></Parameters>
       <Docs><param name="toolbar">To be added.</param><param name="path">To be added.</param><param name="item">To be added.</param><param name="expand">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="RemoveActionGroup"><MemberSignature Language="C#" Value="public void RemoveActionGroup (Gtk.ActionGroup group);" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters><Parameter Name="group" Type="Gtk.ActionGroup" /></Parameters><Docs><param name="group">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="RemoveActionGroup">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="RemoveActionGroup"><MemberSignature Language="C#" Value="public void RemoveActionGroup (Gtk.ActionGroup group);" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters><Parameter Name="group" Type="Gtk.ActionGroup" /></Parameters><Docs><param name="group">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="RemoveActionGroup">
       <MemberSignature Language="C#" Value="public void RemoveActionGroup (string name);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters><Parameter Name="name" Type="System.String" /></Parameters>
       <Docs><param name="name">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="SourceActions">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="SourceActions">
       <MemberSignature Language="C#" Value="public Banshee.Gui.SourceActions SourceActions { get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>Banshee.Gui.SourceActions</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="TrackActions">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="TrackActions">
       <MemberSignature Language="C#" Value="public Banshee.Gui.TrackActions TrackActions { get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>Banshee.Gui.TrackActions</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="UIManager">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="UIManager">
       <MemberSignature Language="C#" Value="public Gtk.UIManager UIManager { get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>Gtk.UIManager</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="ViewActions"><MemberSignature Language="C#" Value="public Banshee.Gui.ViewActions ViewActions { get; }" /><MemberType>Property</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>Banshee.Gui.ViewActions</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member></Members>
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="ViewActions"><MemberSignature Language="C#" Value="public Banshee.Gui.ViewActions ViewActions { get; }" /><MemberType>Property</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>Banshee.Gui.ViewActions</ReturnType></ReturnValue><Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs></Member></Members>
 </Type>

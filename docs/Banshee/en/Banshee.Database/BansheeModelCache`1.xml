@@ -4,6 +4,7 @@
     <AssemblyName>Banshee.Services</AssemblyName>
     <AssemblyVersion>0.90.1.25404</AssemblyVersion>
     <AssemblyVersion>1.3.1.0</AssemblyVersion>
+    <AssemblyVersion>1.4.0.0</AssemblyVersion>
   </AssemblyInfo>
   <TypeParameters>
     <TypeParameter>T</TypeParameter>
@@ -21,16 +22,16 @@
   <Members>
     
     
-    <Member MemberName=".ctor"><MemberSignature Language="C#" Value="public BansheeModelCache (Hyena.Data.Sqlite.HyenaSqliteConnection connection, string uuid, Hyena.Data.Sqlite.ICacheableDatabaseModel model, Hyena.Data.Sqlite.SqliteModelProvider&lt;T&gt; provider);" /><MemberType>Constructor</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><Parameters><Parameter Name="connection" Type="Hyena.Data.Sqlite.HyenaSqliteConnection" /><Parameter Name="uuid" Type="System.String" /><Parameter Name="model" Type="Hyena.Data.Sqlite.ICacheableDatabaseModel" /><Parameter Name="provider" Type="Hyena.Data.Sqlite.SqliteModelProvider&lt;T&gt;" /></Parameters><Docs><param name="connection">To be added.</param><param name="uuid">To be added.</param><param name="model">To be added.</param><param name="provider">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="CacheModelsTableName">
+    <Member MemberName=".ctor"><MemberSignature Language="C#" Value="public BansheeModelCache (Hyena.Data.Sqlite.HyenaSqliteConnection connection, string uuid, Hyena.Data.Sqlite.ICacheableDatabaseModel model, Hyena.Data.Sqlite.SqliteModelProvider&lt;T&gt; provider);" /><MemberType>Constructor</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo><Parameters><Parameter Name="connection" Type="Hyena.Data.Sqlite.HyenaSqliteConnection" /><Parameter Name="uuid" Type="System.String" /><Parameter Name="model" Type="Hyena.Data.Sqlite.ICacheableDatabaseModel" /><Parameter Name="provider" Type="Hyena.Data.Sqlite.SqliteModelProvider&lt;T&gt;" /></Parameters><Docs><param name="connection">To be added.</param><param name="uuid">To be added.</param><param name="model">To be added.</param><param name="provider">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="CacheModelsTableName">
       <MemberSignature Language="C#" Value="protected override string CacheModelsTableName { get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="CacheTableName">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="CacheTableName">
       <MemberSignature Language="C#" Value="protected override string CacheTableName { get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member>
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member>
   </Members>
 </Type>

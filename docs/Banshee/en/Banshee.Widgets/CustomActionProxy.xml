@@ -4,6 +4,7 @@
     <AssemblyName>Banshee.Widgets</AssemblyName>
     <AssemblyVersion>0.90.1.25405</AssemblyVersion>
     <AssemblyVersion>1.3.1.0</AssemblyVersion>
+    <AssemblyVersion>1.4.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -26,33 +27,33 @@
       <MemberType>Constructor</MemberType>
       <Parameters><Parameter Name="ui" Type="Gtk.UIManager" /><Parameter Name="proxiedAction" Type="Gtk.Action" /></Parameters>
       <Docs><param name="ui">To be added.</param><param name="proxiedAction">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="action">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="action">
       <MemberSignature Language="C#" Value="protected Gtk.Action action;" />
       <MemberType>Field</MemberType>
       <ReturnValue><ReturnType>Gtk.Action</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="AddPath">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="AddPath">
       <MemberSignature Language="C#" Value="public void AddPath (string menuPath);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters><Parameter Name="menuPath" Type="System.String" /></Parameters>
       <Docs><param name="menuPath">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="AddPath">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="AddPath">
       <MemberSignature Language="C#" Value="public void AddPath (string menuPath, string menuItemPath);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters><Parameter Name="menuPath" Type="System.String" /><Parameter Name="menuItemPath" Type="System.String" /></Parameters>
       <Docs><param name="menuPath">To be added.</param><param name="menuItemPath">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="GetNewMenuItem"><MemberSignature Language="C#" Value="protected virtual Hyena.Widgets.ComplexMenuItem GetNewMenuItem ();" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>Hyena.Widgets.ComplexMenuItem</ReturnType></ReturnValue><Parameters /><Docs><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member><Member MemberName="GetNewToolItem"><MemberSignature Language="C#" Value="protected virtual Gtk.ToolItem GetNewToolItem ();" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>Gtk.ToolItem</ReturnType></ReturnValue><Parameters /><Docs><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member><Member MemberName="InsertProxy"><MemberSignature Language="C#" Value="protected virtual void InsertProxy (Gtk.Action menuAction, Gtk.Widget parent, Gtk.Widget afterItem);" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters><Parameter Name="menuAction" Type="Gtk.Action" /><Parameter Name="parent" Type="Gtk.Widget" /><Parameter Name="afterItem" Type="Gtk.Widget" /></Parameters><Docs><param name="menuAction">To be added.</param><param name="parent">To be added.</param><param name="afterItem">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="paths">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="GetNewMenuItem"><MemberSignature Language="C#" Value="protected virtual Hyena.Widgets.ComplexMenuItem GetNewMenuItem ();" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>Hyena.Widgets.ComplexMenuItem</ReturnType></ReturnValue><Parameters /><Docs><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member><Member MemberName="GetNewToolItem"><MemberSignature Language="C#" Value="protected virtual Gtk.ToolItem GetNewToolItem ();" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>Gtk.ToolItem</ReturnType></ReturnValue><Parameters /><Docs><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member><Member MemberName="InsertProxy"><MemberSignature Language="C#" Value="protected virtual void InsertProxy (Gtk.Action menuAction, Gtk.Widget parent, Gtk.Widget afterItem);" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters><Parameter Name="menuAction" Type="Gtk.Action" /><Parameter Name="parent" Type="Gtk.Widget" /><Parameter Name="afterItem" Type="Gtk.Widget" /></Parameters><Docs><param name="menuAction">To be added.</param><param name="parent">To be added.</param><param name="afterItem">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="paths">
       <MemberSignature Language="C#" Value="protected string[] paths;" />
       <MemberType>Field</MemberType>
       <ReturnValue><ReturnType>System.String[]</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="ui">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="ui">
       <MemberSignature Language="C#" Value="protected Gtk.UIManager ui;" />
       <MemberType>Field</MemberType>
       <ReturnValue><ReturnType>Gtk.UIManager</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member>
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member>
   </Members>
 </Type>

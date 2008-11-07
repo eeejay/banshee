@@ -1,0 +1,34 @@
+<Type Name="ColumnCellLocation" FullName="Banshee.Collection.Gui.ColumnCellLocation">
+  <TypeSignature Language="C#" Value="public class ColumnCellLocation : Hyena.Data.Gui.ColumnCellText" />
+  <AssemblyInfo>
+    <AssemblyName>Banshee.ThickClient</AssemblyName>
+    <AssemblyVersion>1.4.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>Hyena.Data.Gui.ColumnCellText</BaseTypeName>
+  </Base>
+  <Interfaces />
+  <Docs>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public ColumnCellLocation (string property, bool expand);" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>1.4.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="property" Type="System.String" />
+        <Parameter Name="expand" Type="System.Boolean" />
+      </Parameters>
+      <Docs>
+        <param name="property">To be added.</param>
+        <param name="expand">To be added.</param>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

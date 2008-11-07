@@ -1,6 +1,6 @@
 <Overview>
   <Assemblies>
-    <Assembly Name="Hyena" Version="1.3.1.0">
+    <Assembly Name="Hyena" Version="1.4.0.0">
       <Attributes>
         <Attribute>
           <AttributeName>System.Runtime.CompilerServices.RuntimeCompatibility(WrapNonExceptionThrows=true)</AttributeName>
@@ -19,7 +19,7 @@
         </Attribute>
       </Attributes>
     </Assembly>
-    <Assembly Name="Hyena.Gui" Version="1.3.1.0">
+    <Assembly Name="Hyena.Gui" Version="1.4.0.0">
       <Attributes>
         <Attribute>
           <AttributeName>System.Runtime.CompilerServices.RuntimeCompatibility(WrapNonExceptionThrows=true)</AttributeName>
@@ -58,9 +58,11 @@
       <Type Name="UndoManager" />
     </Namespace>
     <Namespace Name="Hyena.Collections">
+      <Type Name="CacheEntry`2" DisplayName="CacheEntry&lt;TKey,TValue&gt;" />
       <Type Name="CollectionExtensions" />
       <Type Name="IntervalHeap`1" DisplayName="IntervalHeap&lt;T&gt;" />
       <Type Name="IStackProvider`1" DisplayName="IStackProvider&lt;T&gt;" />
+      <Type Name="LruCache`2" DisplayName="LruCache&lt;TKey,TValue&gt;" />
       <Type Name="QueuePipeline`1" DisplayName="QueuePipeline&lt;T&gt;" />
       <Type Name="QueuePipelineElement`1" DisplayName="QueuePipelineElement&lt;T&gt;" />
       <Type Name="RangeCollection" />
@@ -165,10 +167,12 @@
       <Type Name="CompositeUtils" />
       <Type Name="Contrast" />
       <Type Name="ContrastPaletteColor" />
+      <Type Name="EditableUndoAdapter`1" DisplayName="EditableUndoAdapter&lt;T&gt;" />
       <Type Name="EntryUndoAdapter" />
       <Type Name="GtkUtilities" />
       <Type Name="GtkWorkarounds" />
       <Type Name="PangoCairoHelper" />
+      <Type Name="PixbufImageSurface" />
       <Type Name="RatingRenderer" />
       <Type Name="ShadingTestWindow" />
       <Type Name="TestModuleRunner" />
@@ -314,6 +318,7 @@
       <Type Name="SegmentedBar+BarValueFormatHandler" />
       <Type Name="SegmentedBar+Segment" />
       <Type Name="SmoothScrolledWindow" />
+      <Type Name="TextViewEditable" />
       <Type Name="WrapLabel" />
     </Namespace>
   </Types>

@@ -3,6 +3,7 @@
   <AssemblyInfo>
     <AssemblyName>Banshee.Services</AssemblyName>
     <AssemblyVersion>1.3.1.0</AssemblyVersion>
+    <AssemblyVersion>1.4.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>Banshee.Collection.ImportManager</BaseTypeName>
@@ -13,238 +14,136 @@
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public DatabaseImportManager (Banshee.Collection.Database.DatabaseImportManager.TrackPrimarySourceChooser chooser);" />
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.3.1.0</AssemblyVersion>
-      </AssemblyInfo>
-      <Parameters>
-        <Parameter Name="chooser" Type="Banshee.Collection.Database.DatabaseImportManager+TrackPrimarySourceChooser" />
-      </Parameters>
-      <Docs>
-        <param name="chooser">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName=".ctor">
+        
+      <AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo>
+      <Parameters><Parameter Name="chooser" Type="Banshee.Collection.Database.DatabaseImportManager+TrackPrimarySourceChooser" /></Parameters>
+      <Docs><param name="chooser">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public DatabaseImportManager (Banshee.Sources.PrimarySource psource);" />
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.3.1.0</AssemblyVersion>
-      </AssemblyInfo>
-      <Parameters>
-        <Parameter Name="psource" Type="Banshee.Sources.PrimarySource" />
-      </Parameters>
-      <Docs>
-        <param name="psource">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName=".ctor">
+        
+      <AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo>
+      <Parameters><Parameter Name="psource" Type="Banshee.Sources.PrimarySource" /></Parameters>
+      <Docs><param name="psource">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public DatabaseImportManager (Banshee.Sources.ErrorSource error_source, Banshee.Collection.Database.DatabaseImportManager.TrackPrimarySourceChooser chooser, int[] primarySourceIds, string baseDirectory);" />
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.3.1.0</AssemblyVersion>
-      </AssemblyInfo>
-      <Parameters>
-        <Parameter Name="error_source" Type="Banshee.Sources.ErrorSource" />
-        <Parameter Name="chooser" Type="Banshee.Collection.Database.DatabaseImportManager+TrackPrimarySourceChooser" />
-        <Parameter Name="primarySourceIds" Type="System.Int32[]" />
-        <Parameter Name="baseDirectory" Type="System.String" />
-      </Parameters>
-      <Docs>
-        <param name="error_source">To be added.</param>
-        <param name="chooser">To be added.</param>
-        <param name="primarySourceIds">To be added.</param>
-        <param name="baseDirectory">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="BaseDirectory">
+        
+      <AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo>
+      <Parameters><Parameter Name="error_source" Type="Banshee.Sources.ErrorSource" /><Parameter Name="chooser" Type="Banshee.Collection.Database.DatabaseImportManager+TrackPrimarySourceChooser" /><Parameter Name="primarySourceIds" Type="System.Int32[]" /><Parameter Name="baseDirectory" Type="System.String" /></Parameters>
+      <Docs><param name="error_source">To be added.</param><param name="chooser">To be added.</param><param name="primarySourceIds">To be added.</param><param name="baseDirectory">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="BaseDirectory">
       <MemberSignature Language="C#" Value="protected virtual string BaseDirectory { set; get; }" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.3.1.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>System.String</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="ErrorSource">
+        
+      <AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo>
+      <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="ErrorSource">
       <MemberSignature Language="C#" Value="protected virtual Banshee.Sources.ErrorSource ErrorSource { get; }" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.3.1.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>Banshee.Sources.ErrorSource</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="ForceCopy">
+        
+      <AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo>
+      <ReturnValue><ReturnType>Banshee.Sources.ErrorSource</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="ForceCopy">
       <MemberSignature Language="C#" Value="protected virtual bool ForceCopy { set; get; }" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.3.1.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>System.Boolean</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="ImportResult">
+        
+      <AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo>
+      <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="ImportResult">
       <MemberSignature Language="C#" Value="public event Banshee.Collection.Database.DatabaseImportResultHandler ImportResult;" />
       <MemberType>Event</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.3.1.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>Banshee.Collection.Database.DatabaseImportResultHandler</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="ImportTrack">
+        
+      <AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo>
+      <ReturnValue><ReturnType>Banshee.Collection.Database.DatabaseImportResultHandler</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="ImportTrack">
       <MemberSignature Language="C#" Value="public Banshee.Collection.Database.DatabaseTrackInfo ImportTrack (Banshee.Base.SafeUri uri);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.3.1.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>Banshee.Collection.Database.DatabaseTrackInfo</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="uri" Type="Banshee.Base.SafeUri" />
-      </Parameters>
-      <Docs>
-        <param name="uri">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="ImportTrack">
+        
+      <AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo>
+      <ReturnValue><ReturnType>Banshee.Collection.Database.DatabaseTrackInfo</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="uri" Type="Banshee.Base.SafeUri" /></Parameters>
+      <Docs><param name="uri">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="ImportTrack">
       <MemberSignature Language="C#" Value="public Banshee.Collection.Database.DatabaseTrackInfo ImportTrack (string path);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.3.1.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>Banshee.Collection.Database.DatabaseTrackInfo</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="path" Type="System.String" />
-      </Parameters>
-      <Docs>
-        <param name="path">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="IsWhiteListedFile">
+        
+      <AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo>
+      <ReturnValue><ReturnType>Banshee.Collection.Database.DatabaseTrackInfo</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="path" Type="System.String" /></Parameters>
+      <Docs><param name="path">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="IsWhiteListedFile">
       <MemberSignature Language="C#" Value="public static bool IsWhiteListedFile (string path);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.3.1.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>System.Boolean</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="path" Type="System.String" />
-      </Parameters>
-      <Docs>
-        <param name="path">To be added.</param>
-        <summary>To be added.</summary>
-        <returns>To be added.</returns>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="NotifyAllSources">
+        
+      <AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo>
+      <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="path" Type="System.String" /></Parameters>
+      <Docs><param name="path">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="NotifyAllSources">
       <MemberSignature Language="C#" Value="public void NotifyAllSources ();" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.3.1.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
+        
+      <AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters />
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="OnImportResult">
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="OnImportResult">
       <MemberSignature Language="C#" Value="protected virtual void OnImportResult (Banshee.Collection.Database.DatabaseTrackInfo track, string path, Exception error);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.3.1.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="track" Type="Banshee.Collection.Database.DatabaseTrackInfo" />
-        <Parameter Name="path" Type="System.String" />
-        <Parameter Name="error" Type="System.Exception" />
-      </Parameters>
-      <Docs>
-        <param name="track">To be added.</param>
-        <param name="path">To be added.</param>
-        <param name="error">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="PrimarySourceIds">
+        
+      <AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="track" Type="Banshee.Collection.Database.DatabaseTrackInfo" /><Parameter Name="path" Type="System.String" /><Parameter Name="error" Type="System.Exception" /></Parameters>
+      <Docs><param name="track">To be added.</param><param name="path">To be added.</param><param name="error">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="PrimarySourceIds">
       <MemberSignature Language="C#" Value="protected virtual int[] PrimarySourceIds { set; get; }" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.3.1.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>System.Int32[]</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="WhiteListFileExtensions">
-      <MemberSignature Language="C#" Value="public static readonly string[] WhiteListFileExtensions;" />
+        
+      <AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo>
+      <ReturnValue><ReturnType>System.Int32[]</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="WhiteListFileExtensions">
+      <MemberSignature Language="C#" Value="public static readonly Banshee.IO.ExtensionSet WhiteListFileExtensions;" />
       <MemberType>Field</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.3.1.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>System.String[]</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
+        
+      <AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo>
+      <ReturnValue><ReturnType>Banshee.IO.ExtensionSet</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
   </Members>
 </Type>

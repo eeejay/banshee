@@ -4,6 +4,7 @@
     <AssemblyName>Banshee.ThickClient</AssemblyName>
     <AssemblyVersion>0.90.1.25406</AssemblyVersion>
     <AssemblyVersion>1.3.1.0</AssemblyVersion>
+    <AssemblyVersion>1.4.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>Bacon.VolumeButton</BaseTypeName>
@@ -20,5 +21,5 @@
       <MemberType>Constructor</MemberType>
       <Parameters />
       <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName=".ctor"><MemberSignature Language="C#" Value="public ConnectedVolumeButton (bool classic);" /><MemberType>Constructor</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><Parameters><Parameter Name="classic" Type="System.Boolean" /></Parameters><Docs><param name="classic">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member></Members>
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName=".ctor"><MemberSignature Language="C#" Value="public ConnectedVolumeButton (bool classic);" /><MemberType>Constructor</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo><Parameters><Parameter Name="classic" Type="System.Boolean" /></Parameters><Docs><param name="classic">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member></Members>
 </Type>

@@ -4,6 +4,7 @@
     <AssemblyName>Hyena</AssemblyName>
     <AssemblyVersion>0.90.1.25402</AssemblyVersion>
     <AssemblyVersion>1.3.1.0</AssemblyVersion>
+    <AssemblyVersion>1.4.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -31,74 +32,74 @@
       <MemberType>Constructor</MemberType>
       <Parameters />
       <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="AddValueType">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="AddValueType">
       <MemberSignature Language="C#" Value="public static void AddValueType (Type type);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters><Parameter Name="type" Type="System.Type" /></Parameters>
       <Docs><param name="type">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="AppendXml">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="AppendXml">
       <MemberSignature Language="C#" Value="public virtual void AppendXml (System.Xml.XmlElement node);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters><Parameter Name="node" Type="System.Xml.XmlElement" /></Parameters>
       <Docs><param name="node">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="CreateFromStringValue"><MemberSignature Language="C#" Value="public static Hyena.Query.QueryValue CreateFromStringValue (string input, Hyena.Query.QueryField field);" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>Hyena.Query.QueryValue</ReturnType></ReturnValue><Parameters><Parameter Name="input" Type="System.String" /><Parameter Name="field" Type="Hyena.Query.QueryField" /></Parameters><Docs><param name="input">To be added.</param><param name="field">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member><Member MemberName="CreateFromUserQuery">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="CreateFromStringValue"><MemberSignature Language="C#" Value="public static Hyena.Query.QueryValue CreateFromStringValue (string input, Hyena.Query.QueryField field);" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>Hyena.Query.QueryValue</ReturnType></ReturnValue><Parameters><Parameter Name="input" Type="System.String" /><Parameter Name="field" Type="Hyena.Query.QueryField" /></Parameters><Docs><param name="input">To be added.</param><param name="field">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member><Member MemberName="CreateFromUserQuery">
       <MemberSignature Language="C#" Value="public static Hyena.Query.QueryValue CreateFromUserQuery (string input, Hyena.Query.QueryField field);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>Hyena.Query.QueryValue</ReturnType></ReturnValue>
       <Parameters><Parameter Name="input" Type="System.String" /><Parameter Name="field" Type="Hyena.Query.QueryField" /></Parameters>
       <Docs><param name="input">To be added.</param><param name="field">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="CreateFromXml">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="CreateFromXml">
       <MemberSignature Language="C#" Value="public static Hyena.Query.QueryValue CreateFromXml (System.Xml.XmlElement parent, Hyena.Query.QueryField field);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>Hyena.Query.QueryValue</ReturnType></ReturnValue>
       <Parameters><Parameter Name="parent" Type="System.Xml.XmlElement" /><Parameter Name="field" Type="Hyena.Query.QueryField" /></Parameters>
       <Docs><param name="parent">To be added.</param><param name="field">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="IsEmpty">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="IsEmpty">
       <MemberSignature Language="C#" Value="public bool IsEmpty { protected set; get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="LoadString"><MemberSignature Language="C#" Value="public abstract void LoadString (string input);" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters><Parameter Name="input" Type="System.String" /></Parameters><Docs><param name="input">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="OperatorSet">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="LoadString"><MemberSignature Language="C#" Value="public abstract void LoadString (string input);" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue><Parameters><Parameter Name="input" Type="System.String" /></Parameters><Docs><param name="input">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="OperatorSet">
       <MemberSignature Language="C#" Value="public abstract Hyena.Query.AliasedObjectSet&lt;Hyena.Query.Operator&gt; OperatorSet { get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>Hyena.Query.AliasedObjectSet&lt;Hyena.Query.Operator&gt;</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="ParseUserQuery">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="ParseUserQuery">
       <MemberSignature Language="C#" Value="public abstract void ParseUserQuery (string input);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters><Parameter Name="input" Type="System.String" /></Parameters>
       <Docs><param name="input">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="ParseXml">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="ParseXml">
       <MemberSignature Language="C#" Value="public abstract void ParseXml (System.Xml.XmlElement node);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters><Parameter Name="node" Type="System.Xml.XmlElement" /></Parameters>
       <Docs><param name="node">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="ToSql">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="ToSql">
       <MemberSignature Language="C#" Value="public abstract string ToSql ();" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
       <Parameters />
       <Docs><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="ToUserQuery">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="ToUserQuery">
       <MemberSignature Language="C#" Value="public virtual string ToUserQuery ();" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
       <Parameters />
       <Docs><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="Value">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="Value">
       <MemberSignature Language="C#" Value="public abstract object Value { get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.Object</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="XmlElementName">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="XmlElementName">
       <MemberSignature Language="C#" Value="public abstract string XmlElementName { get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member>
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member>
   </Members>
 </Type>

@@ -1,6 +1,6 @@
 <Overview>
   <Assemblies>
-    <Assembly Name="Banshee.Core" Version="1.3.1.0">
+    <Assembly Name="Banshee.Core" Version="1.4.0.0">
       <Attributes>
         <Attribute>
           <AttributeName>System.Runtime.CompilerServices.RuntimeCompatibility(WrapNonExceptionThrows=true)</AttributeName>
@@ -19,7 +19,7 @@
         </Attribute>
       </Attributes>
     </Assembly>
-    <Assembly Name="Banshee.Services" Version="1.3.1.0">
+    <Assembly Name="Banshee.Services" Version="1.4.0.0">
       <Attributes>
         <Attribute>
           <AttributeName>System.Runtime.CompilerServices.RuntimeCompatibility(WrapNonExceptionThrows=true)</AttributeName>
@@ -38,7 +38,7 @@
         </Attribute>
       </Attributes>
     </Assembly>
-    <Assembly Name="Banshee.Widgets" Version="1.3.1.0">
+    <Assembly Name="Banshee.Widgets" Version="1.4.0.0">
       <Attributes>
         <Attribute>
           <AttributeName>System.Runtime.CompilerServices.RuntimeCompatibility(WrapNonExceptionThrows=true)</AttributeName>
@@ -57,7 +57,7 @@
         </Attribute>
       </Attributes>
     </Assembly>
-    <Assembly Name="Banshee.ThickClient" Version="1.3.1.0">
+    <Assembly Name="Banshee.ThickClient" Version="1.4.0.0">
       <Attributes>
         <Attribute>
           <AttributeName>System.Runtime.CompilerServices.RuntimeCompatibility(WrapNonExceptionThrows=true)</AttributeName>
@@ -166,6 +166,7 @@
       <Type Name="TrackInfo" />
       <Type Name="TrackInfo+ExportableAttribute" />
       <Type Name="TrackInfo+IsPlayingHandler" />
+      <Type Name="TrackInfo+PlaybackFinishedHandler" />
       <Type Name="TrackListModel" />
       <Type Name="TrackMediaAttributes" />
       <Type Name="TrackSyncPipelineElement" />
@@ -211,6 +212,7 @@
       <Type Name="ColumnCellDiscAndCount" />
       <Type Name="ColumnCellDuration" />
       <Type Name="ColumnCellFileSize" />
+      <Type Name="ColumnCellLocation" />
       <Type Name="ColumnCellPlaybackIndicator" />
       <Type Name="ColumnCellPositiveInt" />
       <Type Name="ColumnCellQueryText" />
@@ -228,6 +230,7 @@
       <Type Name="XmlColumnController" />
     </Namespace>
     <Namespace Name="Banshee.Collection.Indexer">
+      <Type Name="ActionHandler" />
       <Type Name="CollectionIndexer" />
       <Type Name="CollectionIndexerService" />
       <Type Name="ICollectionIndexer" />
@@ -324,7 +327,9 @@
       <Type Name="DragDropUtilities" />
     </Namespace>
     <Namespace Name="Banshee.Gui.TrackEditor">
+      <Type Name="AlbumArtistEntry" />
       <Type Name="BasicTrackDetailsPage" />
+      <Type Name="EditorEditableUndoAdapter`1" DisplayName="EditorEditableUndoAdapter&lt;T&gt;" />
       <Type Name="EditorEntryUndoAdapter" />
       <Type Name="EditorMode" />
       <Type Name="EditorTrackInfo" />
@@ -333,6 +338,7 @@
       <Type Name="FieldOptions" />
       <Type Name="FieldPage" />
       <Type Name="FieldPage+FieldLabelClosure" />
+      <Type Name="FieldPage+FieldSlot" />
       <Type Name="FieldPage+FieldValueClosure" />
       <Type Name="GenreEntry" />
       <Type Name="HelpPage" />
@@ -340,8 +346,10 @@
       <Type Name="IEditorField" />
       <Type Name="ITrackEditorPage" />
       <Type Name="LyricsPage" />
+      <Type Name="PageNavigationEntry" />
       <Type Name="PageType" />
       <Type Name="RangeEntry" />
+      <Type Name="RangeEntry+RangeOrderClosure" />
       <Type Name="RatingEntry" />
       <Type Name="SpinButtonEntry" />
       <Type Name="StatisticsPage" />
@@ -383,7 +391,9 @@
       <Type Name="IDiscVolume" />
       <Type Name="IDiskDevice" />
       <Type Name="IHardwareManager" />
+      <Type Name="IUsbDevice" />
       <Type Name="IVolume" />
+      <Type Name="VendorProductInfo" />
     </Namespace>
     <Namespace Name="Banshee.I18n">
       <Type Name="AssemblyCatalogAttribute" />
@@ -393,6 +403,7 @@
       <Type Name="DemuxVfs" />
       <Type Name="Directory" />
       <Type Name="DirectoryScannerPipelineElement" />
+      <Type Name="ExtensionSet" />
       <Type Name="File" />
       <Type Name="IDemuxVfs" />
       <Type Name="IDirectory" />
@@ -479,6 +490,7 @@
       <Type Name="TranscoderService" />
       <Type Name="TranscoderService+TrackTranscodedHandler" />
       <Type Name="TranscoderService+TranscodeCancelledHandler" />
+      <Type Name="TranscoderService+TranscodeErrorHandler" />
       <Type Name="TranscoderTrackFinishedArgs" />
       <Type Name="TranscoderTrackFinishedHandler" />
       <Type Name="VisualizationDataHandler" />
@@ -691,8 +703,10 @@
       <Type Name="SourceManager" />
       <Type Name="SourceMergeType" />
       <Type Name="SourceMessage" />
+      <Type Name="TrackArtworkIdHandler" />
       <Type Name="TrackEqualHandler" />
       <Type Name="TrackEventArgs" />
+      <Type Name="TrackExternalObjectHandler" />
     </Namespace>
     <Namespace Name="Banshee.Sources.Gui">
       <Type Name="CompositeTrackSourceContents" />

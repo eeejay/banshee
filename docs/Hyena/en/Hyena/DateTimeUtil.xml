@@ -4,6 +4,7 @@
     <AssemblyName>Hyena</AssemblyName>
     <AssemblyVersion>0.90.1.25402</AssemblyVersion>
     <AssemblyVersion>1.3.1.0</AssemblyVersion>
+    <AssemblyVersion>1.4.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -25,42 +26,42 @@
       <MemberType>Constructor</MemberType>
       <Parameters />
       <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="FormatDuration">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="FormatDuration">
       <MemberSignature Language="C#" Value="public static string FormatDuration (long time);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
       <Parameters><Parameter Name="time" Type="System.Int64" /></Parameters>
       <Docs><param name="time">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="FormatDuration"><MemberSignature Language="C#" Value="public static string FormatDuration (TimeSpan time);" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.String</ReturnType></ReturnValue><Parameters><Parameter Name="time" Type="System.TimeSpan" /></Parameters><Docs><param name="time">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member><Member MemberName="FormatDuration"><MemberSignature Language="C#" Value="public static string FormatDuration (int hours, int minutes, int seconds);" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.String</ReturnType></ReturnValue><Parameters><Parameter Name="hours" Type="System.Int32" /><Parameter Name="minutes" Type="System.Int32" /><Parameter Name="seconds" Type="System.Int32" /></Parameters><Docs><param name="hours">To be added.</param><param name="minutes">To be added.</param><param name="seconds">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member><Member MemberName="FromDateTime">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="FormatDuration"><MemberSignature Language="C#" Value="public static string FormatDuration (TimeSpan time);" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.String</ReturnType></ReturnValue><Parameters><Parameter Name="time" Type="System.TimeSpan" /></Parameters><Docs><param name="time">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member><Member MemberName="FormatDuration"><MemberSignature Language="C#" Value="public static string FormatDuration (int hours, int minutes, int seconds);" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>System.String</ReturnType></ReturnValue><Parameters><Parameter Name="hours" Type="System.Int32" /><Parameter Name="minutes" Type="System.Int32" /><Parameter Name="seconds" Type="System.Int32" /></Parameters><Docs><param name="hours">To be added.</param><param name="minutes">To be added.</param><param name="seconds">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member><Member MemberName="FromDateTime">
       <MemberSignature Language="C#" Value="public static long FromDateTime (DateTime time);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Int64</ReturnType></ReturnValue>
       <Parameters><Parameter Name="time" Type="System.DateTime" /></Parameters>
       <Docs><param name="time">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="FromTimeT">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="FromTimeT">
       <MemberSignature Language="C#" Value="public static DateTime FromTimeT (long time);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.DateTime</ReturnType></ReturnValue>
       <Parameters><Parameter Name="time" Type="System.Int64" /></Parameters>
       <Docs><param name="time">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="LocalUnixEpoch">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="LocalUnixEpoch">
       <MemberSignature Language="C#" Value="public static readonly DateTime LocalUnixEpoch = 12/31/1969 7:00:00 PM;" />
       <MemberType>Field</MemberType>
       <ReturnValue><ReturnType>System.DateTime</ReturnType></ReturnValue>
       <MemberValue>12/31/1969 7:00:00 PM</MemberValue>
       <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="ToDateTime">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="ToDateTime">
       <MemberSignature Language="C#" Value="public static DateTime ToDateTime (long time);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.DateTime</ReturnType></ReturnValue>
       <Parameters><Parameter Name="time" Type="System.Int64" /></Parameters>
       <Docs><param name="time">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="ToTimeT">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="ToTimeT">
       <MemberSignature Language="C#" Value="public static long ToTimeT (DateTime time);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Int64</ReturnType></ReturnValue>
       <Parameters><Parameter Name="time" Type="System.DateTime" /></Parameters>
       <Docs><param name="time">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member>
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member>
   </Members>
 </Type>

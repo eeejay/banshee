@@ -4,6 +4,7 @@
     <AssemblyName>Banshee.Services</AssemblyName>
     <AssemblyVersion>0.90.1.25404</AssemblyVersion>
     <AssemblyVersion>1.3.1.0</AssemblyVersion>
+    <AssemblyVersion>1.4.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>System.Object</BaseTypeName>
@@ -15,12 +16,12 @@
   </Docs>
   <Members>
     
-    <Member MemberName=".ctor"><MemberSignature Language="C#" Value="public ImportPlaylistWorker (string name, string[] uris, Banshee.Sources.PrimarySource source, Banshee.Collection.Database.DatabaseImportManager importer);" /><MemberType>Constructor</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo><Parameters><Parameter Name="name" Type="System.String" /><Parameter Name="uris" Type="System.String[]" /><Parameter Name="source" Type="Banshee.Sources.PrimarySource" /><Parameter Name="importer" Type="Banshee.Collection.Database.DatabaseImportManager" /></Parameters><Docs><param name="name">To be added.</param><param name="uris">To be added.</param><param name="source">To be added.</param><param name="importer">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="Import">
+    <Member MemberName=".ctor"><MemberSignature Language="C#" Value="public ImportPlaylistWorker (string name, string[] uris, Banshee.Sources.PrimarySource source, Banshee.Collection.Database.DatabaseImportManager importer);" /><MemberType>Constructor</MemberType><AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo><Parameters><Parameter Name="name" Type="System.String" /><Parameter Name="uris" Type="System.String[]" /><Parameter Name="source" Type="Banshee.Sources.PrimarySource" /><Parameter Name="importer" Type="Banshee.Collection.Database.DatabaseImportManager" /></Parameters><Docs><param name="name">To be added.</param><param name="uris">To be added.</param><param name="source">To be added.</param><param name="importer">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs></Member><Member MemberName="Import">
       <MemberSignature Language="C#" Value="public void Import ();" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters />
       <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member>
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member>
   </Members>
 </Type>

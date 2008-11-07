@@ -1,0 +1,21 @@
+<Type Name="RangeEntry+RangeOrderClosure" FullName="Banshee.Gui.TrackEditor.RangeEntry+RangeOrderClosure">
+  <TypeSignature Language="C#" Value="public delegate void RangeEntry.RangeOrderClosure(RangeEntry entry);" />
+  <AssemblyInfo>
+    <AssemblyName>Banshee.ThickClient</AssemblyName>
+    <AssemblyVersion>1.4.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Delegate</BaseTypeName>
+  </Base>
+  <Parameters>
+    <Parameter Name="entry" Type="Banshee.Gui.TrackEditor.RangeEntry" />
+  </Parameters>
+  <ReturnValue>
+    <ReturnType>System.Void</ReturnType>
+  </ReturnValue>
+  <Docs>
+    <param name="entry">To be added.</param>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+</Type>

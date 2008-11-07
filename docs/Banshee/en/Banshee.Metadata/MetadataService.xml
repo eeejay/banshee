@@ -4,6 +4,7 @@
     <AssemblyName>Banshee.Services</AssemblyName>
     <AssemblyVersion>0.90.1.25404</AssemblyVersion>
     <AssemblyVersion>1.3.1.0</AssemblyVersion>
+    <AssemblyVersion>1.4.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>Banshee.Metadata.BaseMetadataProvider</BaseTypeName>
@@ -25,40 +26,40 @@
       <MemberType>Constructor</MemberType>
       <Parameters />
       <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="AddProvider">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="AddProvider">
       <MemberSignature Language="C#" Value="public void AddProvider (Banshee.Metadata.IMetadataProvider provider);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters><Parameter Name="provider" Type="Banshee.Metadata.IMetadataProvider" /></Parameters>
       <Docs><param name="provider">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="AddProvider">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="AddProvider">
       <MemberSignature Language="C#" Value="public void AddProvider (int position, Banshee.Metadata.IMetadataProvider provider);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters><Parameter Name="position" Type="System.Int32" /><Parameter Name="provider" Type="Banshee.Metadata.IMetadataProvider" /></Parameters>
       <Docs><param name="position">To be added.</param><param name="provider">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="Instance">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="Instance">
       <MemberSignature Language="C#" Value="public static Banshee.Metadata.MetadataService Instance { get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>Banshee.Metadata.MetadataService</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="Lookup">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="Lookup">
       <MemberSignature Language="C#" Value="public void Lookup (Banshee.Collection.IBasicTrackInfo track, Banshee.Kernel.JobPriority priority);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters><Parameter Name="track" Type="Banshee.Collection.IBasicTrackInfo" /><Parameter Name="priority" Type="Banshee.Kernel.JobPriority" /></Parameters>
       <Docs><param name="track">To be added.</param><param name="priority">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="Providers">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="Providers">
       <MemberSignature Language="C#" Value="public System.Collections.ObjectModel.ReadOnlyCollection&lt;Banshee.Metadata.IMetadataProvider&gt; Providers { get; }" />
       <MemberType>Property</MemberType>
       <ReturnValue><ReturnType>System.Collections.ObjectModel.ReadOnlyCollection&lt;Banshee.Metadata.IMetadataProvider&gt;</ReturnType></ReturnValue>
       <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="RemoveProvider">
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member><Member MemberName="RemoveProvider">
       <MemberSignature Language="C#" Value="public void RemoveProvider (Banshee.Metadata.IMetadataProvider provider);" />
       <MemberType>Method</MemberType>
       <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters><Parameter Name="provider" Type="Banshee.Metadata.IMetadataProvider" /></Parameters>
       <Docs><param name="provider">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
-    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion></AssemblyInfo></Member>
+    <AssemblyInfo><AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo></Member>
   </Members>
 </Type>

@@ -3,6 +3,7 @@
   <AssemblyInfo>
     <AssemblyName>Banshee.ThickClient</AssemblyName>
     <AssemblyVersion>1.3.1.0</AssemblyVersion>
+    <AssemblyVersion>1.4.0.0</AssemblyVersion>
   </AssemblyInfo>
   <Base>
     <BaseTypeName>Gtk.VBox</BaseTypeName>
@@ -13,19 +14,30 @@
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public FieldPage ();" />
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.3.1.0</AssemblyVersion>
-      </AssemblyInfo>
+        
+      <AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo>
       <Parameters />
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="AddField">
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="AddField"><MemberSignature Language="C#" Value="public Banshee.Gui.TrackEditor.FieldPage.FieldSlot AddField (Gtk.Box parent, Gtk.Widget field, string syncTooltip, Banshee.Gui.TrackEditor.FieldPage.FieldLabelClosure labelClosure, Banshee.Gui.TrackEditor.FieldPage.FieldValueClosure readClosure, Banshee.Gui.TrackEditor.FieldPage.FieldValueClosure writeClosure);" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>Banshee.Gui.TrackEditor.FieldPage+FieldSlot</ReturnType></ReturnValue><Parameters><Parameter Name="parent" Type="Gtk.Box" /><Parameter Name="field" Type="Gtk.Widget" /><Parameter Name="syncTooltip" Type="System.String" /><Parameter Name="labelClosure" Type="Banshee.Gui.TrackEditor.FieldPage+FieldLabelClosure" /><Parameter Name="readClosure" Type="Banshee.Gui.TrackEditor.FieldPage+FieldValueClosure" /><Parameter Name="writeClosure" Type="Banshee.Gui.TrackEditor.FieldPage+FieldValueClosure" /></Parameters><Docs><param name="parent">To be added.</param><param name="field">To be added.</param><param name="syncTooltip">To be added.</param><param name="labelClosure">To be added.</param><param name="readClosure">To be added.</param><param name="writeClosure">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member><Member MemberName="AddField">
       <MemberSignature Language="C#" Value="public void AddField (Gtk.Box parent, Gtk.Widget field, string syncTooltip, Banshee.Gui.TrackEditor.FieldPage.FieldLabelClosure labelClosure, Banshee.Gui.TrackEditor.FieldPage.FieldValueClosure readClosure, Banshee.Gui.TrackEditor.FieldPage.FieldValueClosure writeClosure);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
@@ -52,8 +64,7 @@
         <summary>To be added.</summary>
         <remarks>To be added.</remarks>
       </Docs>
-    </Member>
-    <Member MemberName="AddField">
+    </Member><Member MemberName="AddField"><MemberSignature Language="C#" Value="public Banshee.Gui.TrackEditor.FieldPage.FieldSlot AddField (Gtk.Box parent, Gtk.Widget label, Gtk.Widget field, string syncTooltip, Banshee.Gui.TrackEditor.FieldPage.FieldLabelClosure labelClosure, Banshee.Gui.TrackEditor.FieldPage.FieldValueClosure readClosure, Banshee.Gui.TrackEditor.FieldPage.FieldValueClosure writeClosure);" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>Banshee.Gui.TrackEditor.FieldPage+FieldSlot</ReturnType></ReturnValue><Parameters><Parameter Name="parent" Type="Gtk.Box" /><Parameter Name="label" Type="Gtk.Widget" /><Parameter Name="field" Type="Gtk.Widget" /><Parameter Name="syncTooltip" Type="System.String" /><Parameter Name="labelClosure" Type="Banshee.Gui.TrackEditor.FieldPage+FieldLabelClosure" /><Parameter Name="readClosure" Type="Banshee.Gui.TrackEditor.FieldPage+FieldValueClosure" /><Parameter Name="writeClosure" Type="Banshee.Gui.TrackEditor.FieldPage+FieldValueClosure" /></Parameters><Docs><param name="parent">To be added.</param><param name="label">To be added.</param><param name="field">To be added.</param><param name="syncTooltip">To be added.</param><param name="labelClosure">To be added.</param><param name="readClosure">To be added.</param><param name="writeClosure">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member><Member MemberName="AddField">
       <MemberSignature Language="C#" Value="public void AddField (Gtk.Box parent, Gtk.Widget label, Gtk.Widget field, string syncTooltip, Banshee.Gui.TrackEditor.FieldPage.FieldLabelClosure labelClosure, Banshee.Gui.TrackEditor.FieldPage.FieldValueClosure readClosure, Banshee.Gui.TrackEditor.FieldPage.FieldValueClosure writeClosure);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
@@ -82,8 +93,7 @@
         <summary>To be added.</summary>
         <remarks>To be added.</remarks>
       </Docs>
-    </Member>
-    <Member MemberName="AddField">
+    </Member><Member MemberName="AddField"><MemberSignature Language="C#" Value="public Banshee.Gui.TrackEditor.FieldPage.FieldSlot AddField (Gtk.Box parent, Gtk.Widget field, string syncTooltip, Banshee.Gui.TrackEditor.FieldPage.FieldLabelClosure labelClosure, Banshee.Gui.TrackEditor.FieldPage.FieldValueClosure readClosure, Banshee.Gui.TrackEditor.FieldPage.FieldValueClosure writeClosure, Banshee.Gui.TrackEditor.FieldOptions options);" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>Banshee.Gui.TrackEditor.FieldPage+FieldSlot</ReturnType></ReturnValue><Parameters><Parameter Name="parent" Type="Gtk.Box" /><Parameter Name="field" Type="Gtk.Widget" /><Parameter Name="syncTooltip" Type="System.String" /><Parameter Name="labelClosure" Type="Banshee.Gui.TrackEditor.FieldPage+FieldLabelClosure" /><Parameter Name="readClosure" Type="Banshee.Gui.TrackEditor.FieldPage+FieldValueClosure" /><Parameter Name="writeClosure" Type="Banshee.Gui.TrackEditor.FieldPage+FieldValueClosure" /><Parameter Name="options" Type="Banshee.Gui.TrackEditor.FieldOptions" /></Parameters><Docs><param name="parent">To be added.</param><param name="field">To be added.</param><param name="syncTooltip">To be added.</param><param name="labelClosure">To be added.</param><param name="readClosure">To be added.</param><param name="writeClosure">To be added.</param><param name="options">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member><Member MemberName="AddField">
       <MemberSignature Language="C#" Value="public void AddField (Gtk.Box parent, Gtk.Widget field, string syncTooltip, Banshee.Gui.TrackEditor.FieldPage.FieldLabelClosure labelClosure, Banshee.Gui.TrackEditor.FieldPage.FieldValueClosure readClosure, Banshee.Gui.TrackEditor.FieldPage.FieldValueClosure writeClosure, Banshee.Gui.TrackEditor.FieldOptions options);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
@@ -112,8 +122,7 @@
         <summary>To be added.</summary>
         <remarks>To be added.</remarks>
       </Docs>
-    </Member>
-    <Member MemberName="AddField">
+    </Member><Member MemberName="AddField"><MemberSignature Language="C#" Value="public Banshee.Gui.TrackEditor.FieldPage.FieldSlot AddField (Gtk.Box parent, Gtk.Widget label, Gtk.Widget field, string syncTooltip, Banshee.Gui.TrackEditor.FieldPage.FieldLabelClosure labelClosure, Banshee.Gui.TrackEditor.FieldPage.FieldValueClosure readClosure, Banshee.Gui.TrackEditor.FieldPage.FieldValueClosure writeClosure, Banshee.Gui.TrackEditor.FieldOptions options);" /><MemberType>Method</MemberType><AssemblyInfo><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo><ReturnValue><ReturnType>Banshee.Gui.TrackEditor.FieldPage+FieldSlot</ReturnType></ReturnValue><Parameters><Parameter Name="parent" Type="Gtk.Box" /><Parameter Name="label" Type="Gtk.Widget" /><Parameter Name="field" Type="Gtk.Widget" /><Parameter Name="syncTooltip" Type="System.String" /><Parameter Name="labelClosure" Type="Banshee.Gui.TrackEditor.FieldPage+FieldLabelClosure" /><Parameter Name="readClosure" Type="Banshee.Gui.TrackEditor.FieldPage+FieldValueClosure" /><Parameter Name="writeClosure" Type="Banshee.Gui.TrackEditor.FieldPage+FieldValueClosure" /><Parameter Name="options" Type="Banshee.Gui.TrackEditor.FieldOptions" /></Parameters><Docs><param name="parent">To be added.</param><param name="label">To be added.</param><param name="field">To be added.</param><param name="syncTooltip">To be added.</param><param name="labelClosure">To be added.</param><param name="readClosure">To be added.</param><param name="writeClosure">To be added.</param><param name="options">To be added.</param><summary>To be added.</summary><returns>To be added.</returns><remarks>To be added.</remarks></Docs></Member><Member MemberName="AddField">
       <MemberSignature Language="C#" Value="public void AddField (Gtk.Box parent, Gtk.Widget label, Gtk.Widget field, string syncTooltip, Banshee.Gui.TrackEditor.FieldPage.FieldLabelClosure labelClosure, Banshee.Gui.TrackEditor.FieldPage.FieldValueClosure readClosure, Banshee.Gui.TrackEditor.FieldPage.FieldValueClosure writeClosure, Banshee.Gui.TrackEditor.FieldOptions options);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
@@ -144,23 +153,16 @@
         <summary>To be added.</summary>
         <remarks>To be added.</remarks>
       </Docs>
-    </Member>
-    <Member MemberName="AddFields">
+    </Member><Member MemberName="AddFields">
       <MemberSignature Language="C#" Value="protected virtual void AddFields ();" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.3.1.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
+        
+      <AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters />
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="Changed">
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="Changed">
       <MemberSignature Language="C#" Value="public event EventHandler Changed;" />
       <MemberType>Event</MemberType>
       <AssemblyInfo>
@@ -173,89 +175,49 @@
         <summary>To be added.</summary>
         <remarks>To be added.</remarks>
       </Docs>
-    </Member>
-    <Member MemberName="CurrentTrack">
+    </Member><Member MemberName="CurrentTrack">
       <MemberSignature Language="C#" Value="protected Banshee.Gui.TrackEditor.EditorTrackInfo CurrentTrack { get; }" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.3.1.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>Banshee.Gui.TrackEditor.EditorTrackInfo</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="Dialog">
+        
+      <AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo>
+      <ReturnValue><ReturnType>Banshee.Gui.TrackEditor.EditorTrackInfo</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="Dialog">
       <MemberSignature Language="C#" Value="protected Banshee.Gui.TrackEditor.TrackEditorDialog Dialog { get; }" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.3.1.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>Banshee.Gui.TrackEditor.TrackEditorDialog</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="Initialize">
+        
+      <AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo>
+      <ReturnValue><ReturnType>Banshee.Gui.TrackEditor.TrackEditorDialog</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="Initialize">
       <MemberSignature Language="C#" Value="public void Initialize (Banshee.Gui.TrackEditor.TrackEditorDialog dialog);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.3.1.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="dialog" Type="Banshee.Gui.TrackEditor.TrackEditorDialog" />
-      </Parameters>
-      <Docs>
-        <param name="dialog">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="LoadTrack">
+        
+      <AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="dialog" Type="Banshee.Gui.TrackEditor.TrackEditorDialog" /></Parameters>
+      <Docs><param name="dialog">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="LoadTrack">
       <MemberSignature Language="C#" Value="public virtual void LoadTrack (Banshee.Gui.TrackEditor.EditorTrackInfo track);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.3.1.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="track" Type="Banshee.Gui.TrackEditor.EditorTrackInfo" />
-      </Parameters>
-      <Docs>
-        <param name="track">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="MultipleTracks">
+        
+      <AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="track" Type="Banshee.Gui.TrackEditor.EditorTrackInfo" /></Parameters>
+      <Docs><param name="track">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="MultipleTracks">
       <MemberSignature Language="C#" Value="public virtual bool MultipleTracks { get; }" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.3.1.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>System.Boolean</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="OnChanged">
+        
+      <AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo>
+      <ReturnValue><ReturnType>System.Boolean</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="OnChanged">
       <MemberSignature Language="C#" Value="protected virtual void OnChanged ();" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
@@ -269,51 +231,30 @@
         <summary>To be added.</summary>
         <remarks>To be added.</remarks>
       </Docs>
-    </Member>
-    <Member MemberName="PageType">
+    </Member><Member MemberName="PageType">
       <MemberSignature Language="C#" Value="public virtual Banshee.Gui.TrackEditor.PageType PageType { get; }" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.3.1.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>Banshee.Gui.TrackEditor.PageType</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="TabWidget">
+        
+      <AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo>
+      <ReturnValue><ReturnType>Banshee.Gui.TrackEditor.PageType</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="TabWidget">
       <MemberSignature Language="C#" Value="public Gtk.Widget TabWidget { get; }" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.3.1.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>Gtk.Widget</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="Widget">
+        
+      <AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo>
+      <ReturnValue><ReturnType>Gtk.Widget</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="Widget">
       <MemberSignature Language="C#" Value="public virtual Gtk.Widget Widget { get; }" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
-        <AssemblyVersion>1.3.1.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>Gtk.Widget</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
+        
+      <AssemblyVersion>1.3.1.0</AssemblyVersion><AssemblyVersion>1.4.0.0</AssemblyVersion></AssemblyInfo>
+      <ReturnValue><ReturnType>Gtk.Widget</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member>
   </Members>
 </Type>
