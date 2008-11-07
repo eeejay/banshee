@@ -38,12 +38,16 @@ namespace Banshee.Dap.Gui
 {
     public class PurchasedMusicActions : BansheeActionGroup
     {
-        private IPurchasedMusicSource source;
-        
-        public PurchasedMusicActions (IPurchasedMusicSource source) : base ("dap-purchased-music")
+        private static PurchasedMusicActions instance;
+        public static void Create ()
         {
-            this.source = source;
-            
+            if (instance == null) {
+                instance = new PurchasedMusicActions ();
+            }
+        }
+    
+        private PurchasedMusicActions () : base ("dap-purchased-music")
+        {
             AddImportant (
                 new ActionEntry ("PurchasedMusicImportAction", null,
                     Catalog.GetString ("Import Purchased Music"), null,
@@ -52,18 +56,21 @@ namespace Banshee.Dap.Gui
             
             this["PurchasedMusicImportAction"].IconName = Stock.Save;
             
-            Actions.AddActionGroup (this);
-        }
-        
-        public override void Dispose ()
-        {
-            Actions.RemoveActionGroup (this);
-            base.Dispose ();
+            Actions.SourceActions.Updated += OnUpdateActions;
+            Register ();
         }
 
+        private void OnUpdateActions (Banshee.Sources.Source source)
+        {
+            UpdateAction ("PurchasedMusicImportAction", source is IPurchasedMusicSource);
+        }
+        
         private void OnImportPurchasedMusic (object o, EventArgs args)
         {
-            source.Import ();
+            IPurchasedMusicSource source = Actions.SourceActions.ActionSource as IPurchasedMusicSource;
+            if (source != null) {
+                source.Import ();
+            }
         }
     }
 }

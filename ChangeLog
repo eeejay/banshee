@@ -1,5 +1,28 @@
 2008-11-07  Aaron Bockover  <abock@gnome.org>
 
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/AndroidDevice.cs:
+	Ensure a proper folder depth and path layout
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/MediaGroupSource.cs: Removed some
+	overhead do to reworking of the PurchasedMusicActions
+
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:
+	See if the device provides its own track path and use it if so,
+	otherwise create one
+
+	* src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs: Do not
+	use number formatting on what will always be integers; copy and paste
+	failbaug
+
+	* src/Dap/Banshee.Dap/Banshee.Dap.Gui/PurchasedMusicActions.cs: Fixed
+	bug where only one device per instance would show up due to the UI
+	actions already being registered
+
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageDevice.cs:
+	Allow the device to provide a preferred path layout
+
+2008-11-07  Aaron Bockover  <abock@gnome.org>
+
 	Banshee 1.4.0 Released
 
 2008-11-07  Aaron Bockover  <abock@gnome.org>

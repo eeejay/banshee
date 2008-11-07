@@ -177,8 +177,8 @@ namespace Banshee.Collection
                 if (new_progress >= 0.0 && new_progress <= 1.0 && Math.Abs (new_progress - old_progress) > 0.001) {
                     lock (number_format) {
                         string disp_progress = String.Format (ProgressMessage, 
-                            import_element.ProcessedCount.ToString ("N", number_format), 
-                            import_element.TotalCount.ToString ("N", number_format));
+                            import_element.ProcessedCount, 
+                            import_element.TotalCount);
                         
                         user_job.Title = disp_progress;
                         user_job.Status = String.IsNullOrEmpty (message) ? Catalog.GetString ("Scanning...") : message;

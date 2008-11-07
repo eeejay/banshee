@@ -41,10 +41,9 @@ using Banshee.Dap.Gui;
 
 namespace Banshee.Dap
 {
-    public abstract class MediaGroupSource : SmartPlaylistSource, IDisposable
+    public abstract class MediaGroupSource : SmartPlaylistSource
     {
         private DapSource parent;
-        private PurchasedMusicActions actions;
         
         public MediaGroupSource (DapSource parent, string name) : base (name, parent)
         {
@@ -57,18 +56,10 @@ namespace Banshee.Dap
                 String.Format (Catalog.GetString ("Delete From {0}"), parent.Name));
                 
             if (this is IPurchasedMusicSource) {
-                actions = new PurchasedMusicActions ((IPurchasedMusicSource)this);
+                PurchasedMusicActions.Create ();
                 
                 Properties.Set<Assembly> ("ActiveSourceUIResource.Assembly", Assembly.GetExecutingAssembly ());
                 Properties.SetString ("ActiveSourceUIResource", "PurchasedMusicSourceUI.xml");
-            }
-        }
-        
-        public void Dispose ()
-        {
-            if (actions != null) {
-                actions.Dispose ();
-                actions = null;
             }
         }
 

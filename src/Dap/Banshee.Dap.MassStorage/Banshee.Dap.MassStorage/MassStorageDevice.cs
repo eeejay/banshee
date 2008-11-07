@@ -34,6 +34,7 @@ using Hyena;
 
 using Banshee.Base;
 using Banshee.Hardware;
+using Banshee.Collection;
 using Banshee.Collection.Database;
 
 namespace Banshee.Dap.MassStorage
@@ -104,6 +105,12 @@ namespace Banshee.Dap.MassStorage
             has_is_audio_player_file = true;
             
             return true;
+        }
+        
+        public virtual bool GetTrackPath (TrackInfo track, out string path)
+        {
+            path = null;
+            return false;
         }
         
         private bool has_is_audio_player_file;

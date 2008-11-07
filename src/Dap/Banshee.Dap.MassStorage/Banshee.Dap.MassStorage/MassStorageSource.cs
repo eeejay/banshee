@@ -534,8 +534,16 @@ namespace Banshee.Dap.MassStorage
 
         private string GetTrackPath (TrackInfo track, string ext)
         {
-            string file_path = WritePath;
+            string file_path = null;
+            if (ms_device == null || !ms_device.GetTrackPath (track, out file_path)) {
+                file_path = FileNamePattern.CreateFromTrackInfo (track);
+            }
 
+            file_path = System.IO.Path.Combine (WritePath, file_path);
+            file_path += ext;
+
+            return file_path;
+            
             /*string artist = FileNamePattern.Escape (track.ArtistName);
             string album = FileNamePattern.Escape (track.AlbumTitle);
             string number_title = FileNamePattern.Escape (track.TrackNumberTitle);
@@ -572,11 +580,6 @@ namespace Banshee.Dap.MassStorage
                 file_path = System.IO.Path.Combine (file_path, FileNamePattern.CreateFromTrackInfo (track));
             }
             */
-
-            file_path = System.IO.Path.Combine (file_path, FileNamePattern.CreateFromTrackInfo (track));
-            file_path += ext;
-
-            return file_path;
         }
     }
 }

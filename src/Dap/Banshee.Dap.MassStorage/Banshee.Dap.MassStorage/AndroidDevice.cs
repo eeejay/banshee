@@ -29,8 +29,10 @@
 using System;
 using Mono.Unix;
 
+using Banshee.Base;
 using Banshee.Hardware;
 using Banshee.Library;
+using Banshee.Collection;
 using Banshee.Collection.Database;
 
 namespace Banshee.Dap.MassStorage
@@ -101,6 +103,10 @@ namespace Banshee.Dap.MassStorage
         // packages/apps/Music/src/com/android/music/MusicUtils.java
         // <3 open source
         
+        public override int FolderDepth {
+            get { return 2; }
+        }
+        
         public override string CoverArtFileName {
             get { return "AlbumArt.jpg"; }
         }
@@ -111,6 +117,14 @@ namespace Banshee.Dap.MassStorage
         
         public override int CoverArtSize {
             get { return 320; }
+        }
+        
+        public override bool GetTrackPath (TrackInfo track, out string path)
+        {
+            path = FileNamePattern.CreateFromTrackInfo (
+                "%artist%%path_sep%%album%%path_sep%%track_number%. %title%",
+                track);
+            return true;
         }
         
 #region Amazon MP3 Store Purchased Tracks Management
