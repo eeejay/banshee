@@ -1,5 +1,9 @@
 2008-11-07  Aaron Bockover  <abock@gnome.org>
 
+	Banshee 1.4.0 Released
+
+2008-11-07  Aaron Bockover  <abock@gnome.org>
+
 	* src/Dap/Banshee.Dap/Banshee.Dap.Gui/PurchasedMusicActions.cs: UI
 	actions for IPurchasedMusicSource
 
