@@ -1,3 +1,8 @@
+2008-11-07  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:
+	Fix the build, broken by the last commit.
+
 2008-11-07  Alexandre Prokoudine  <alexandre.prokoudine@gmail.org>
 
 	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:
