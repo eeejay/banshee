@@ -53,7 +53,6 @@ NEW AWESOME FEATURES AND ENHANCEMENTS
       * Support for BPM, Grouping, BitRate, Conductor, DiscCount, and
         IsCompilation reading, writing, columns, and searching.
 
-
       * Freshly revamped track metadata editor
 
       * Break the columns context menu into multiple columns
@@ -71,24 +70,30 @@ NEW AWESOME FEATURES AND ENHANCEMENTS
           - Better stability for MTP device syncing
 
       * Allow queueing files via dbus
+
       * New podcast columns: downloaded; description; new
+
       * Podcasts can now have playlists and smart playlists
+
       * When finished playing from the play queue, play the song after the song 
         we left off from (and stop playing if we weren't playing anything 
 		before).
+
       * Refresh podcasts every hour 
+
       * Import all white-listed files, even if TagLib# doesn't recognize them
+
       * Cache and store images as Cairo.ImageSurfaces, gives performance 
 	    and memory improvements
-      * Enable autocomplete in editor for artist, album, and album artist
-      * Improvements and fixes to the Indexer
 
+      * Enable autocomplete in editor for artist, album, and album artist
+
+      * Improvements and fixes to the Indexer
 
       * First preview of Mac OS X support
         - Currently very unstable due to GStreamer and GTK+ Quartz
         - Technology Preview only, there are many known issues
         - Please file bugs
-
 
       * Support for the T-Mobile G1/Android phone, including recognizing
         Amazonmp3 store purchases.
@@ -103,7 +108,6 @@ NEW AWESOME FEATURES AND ENHANCEMENTS
       * Fix performance issue with album and podcast browsers (BGO #547628)
       * Fix lots of threading/freezing issues
       * Fix lots of avoidable crashes
-
       * Remember sorting per source (BGO #524656)
       * Audio CD crasher
       * Allow editing Audio CDs' track info before ripping (BGO #532467)
@@ -115,7 +119,6 @@ NEW AWESOME FEATURES AND ENHANCEMENTS
         get the main window visible, if Banshee was minimized (BGO #551916)
       * Don't give UI indication that the track list is sortable unless
         it really is (BGO #551969)
-
       * Fix bug with non-JPG cover art getting downloaded but never 
 	    converted/used (BGO #388162)
       * Remember the user's smart playlist units (days/MB etc) (BGO #545887)
@@ -132,27 +135,19 @@ NEW AWESOME FEATURES AND ENHANCEMENTS
       * Fix issue with the Seek slider and recent versions of Gtk# (#536397).
       * Improvements to the indexer
       * Fix bug with showing/selecting invalid profile for DAP transcoding
-
       * Removed the default application support for GNOME since many issues
         need to be ironed out here, and much of this belongs as integration
         inside of Linux distributions; it will be added back in a better
         state when GIO support lands in the GNOME backend (Gabriel Burt)
-
       * Rely more heavily on intltool and almost completely remove gettext;
         this mainly facilitates the OS X build environment
-
       * Updated the bundled equalizer to avoid a bad crash (BGO #557260)
-
       * Rendering and integration fixes for OS X (BGO #557190)
-
       * Fix a bug with the play queue stopping after every song (BGO #557386)
-
       * Allow both prepending and appending to the play queue; helpful for
         external applications wishing to integrate with Banshee's playback,
         like GNOME Do (BGO #557526)
-
       * Support localization when running uninstalled (BGO #393046)
-
       * 192 bugs were FIXED since 1.2.1
 
 
