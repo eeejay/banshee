@@ -65,13 +65,29 @@ namespace Banshee.Dap
             if (parent != null) {
                 parent.RaiseUpdated ();
             }
+            
+            if (AutoHide) {
+                bool contains_me = parent.ContainsChildSource (this);
+                int count = Count;
+                
+                if (count == 0 && contains_me) {
+                    parent.RemoveChildSource (this);
+                } else if (count > 0 && !contains_me) {
+                    parent.AddChildSource (this);
+                }
+            }
         }
-
 
         /*public override bool AcceptsInputFromSource (Source source)
         {
             return (source is DatabaseSource) && source.Parent != Parent && source != Parent;
         }*/
+        
+        private bool auto_hide;
+        public virtual bool AutoHide {
+            get { return auto_hide; }
+            set { auto_hide = value; }
+        }
         
         public override string ConditionSql {
             get { return base.ConditionSql; }

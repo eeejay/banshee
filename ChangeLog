@@ -1,3 +1,52 @@
+2008-11-07  Aaron Bockover  <abock@gnome.org>
+
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/AndroidDevice.cs:
+	Implemented special support for grouping tracks purchased from the
+	Amazon MP3 store on the G1 into their own source; also do not allow
+	deleting these tracks in the main Music source on the device; they
+	can only be deleted from the Purchased Music source
+
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageDevice.cs:
+	Implemented SourceInitialize and DeleteTrackHook methods
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/VideoGroupSource.cs:
+	* src/Dap/Banshee.Dap/Banshee.Dap/PodcastGroupSource.cs: Set AutoHide to
+	true so these sources will only show up if there is content in them
+
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:
+	Call SourceInitialize on the MassStorageDevice if we have one and
+	after the source itself is initialized; call DeleteTrackHook on the
+	MassStorageDevice if we have one and return false if the hook returns
+	false, effectively voiding the track deletion from both the disk and
+	the database
+
+	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs: Make
+	DeleteTrack return bool; in DeleteTrackList, cache the track against
+	which DeleteTrack returns false in a skip list and when the cache
+	iteration is complete, remove any skip list tracks from the cache
+	list before executing the database purge against the cache list.
+	Phew.
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs: Do not add the video and
+	podcasts group sources since they are now AutoHide and will manage
+	that on their own
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/MediaGroupSource.cs: Implemented an
+	AutoHide feature that will only show items when the feature is on if
+	there are actually items in the source
+
+	* src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:
+	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:
+	* src/Core/Banshee.Services/Banshee.Library/LibrarySource.cs:
+	* src/Dap/Banshee.Dap.Karma/Banshee.Dap.Karma/KarmaSource.cs: Updated to
+	reflect API change in PrimarySource
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/CachedList.cs:
+	Implement a Remove method that allows trimming the cache
+
+	* src/Core/Banshee.Services/Banshee.Sources/Source.cs: Implemented
+	ContainsChildSource method
+
 2008-11-06  Aaron Bockover  <abock@gnome.org>
 
 	This commit provides my first pass at allowing for custom USB mass storage

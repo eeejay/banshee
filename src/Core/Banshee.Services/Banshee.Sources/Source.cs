@@ -173,6 +173,13 @@ namespace Banshee.Sources
             this.parent = parent;
         }
         
+        public virtual bool ContainsChildSource (Source child)
+        {
+            lock (Children) {
+                return child_sources.Contains (child);
+            }
+        }
+        
         public virtual void AddChildSource (Source child)
         {
             lock (Children) {

@@ -429,17 +429,19 @@ namespace Banshee.Dap.Ipod
             throw new Exception ("Copy to Library is not implemented for iPods yet");
         }*/
 
-        protected override void DeleteTrack (DatabaseTrackInfo track)
+        protected override bool DeleteTrack (DatabaseTrackInfo track)
         {
             lock (sync_mutex) {
                 if (!tracks_map.ContainsKey (track.TrackId)) {
-                    return;
+                    return true;
                 }
                 
                 IpodTrackInfo ipod_track = tracks_map[track.TrackId];
                 if (ipod_track != null) {
                     tracks_to_remove.Enqueue (ipod_track);
                 }
+                
+                return true;
             }
         }
         

@@ -34,6 +34,7 @@ using Hyena;
 
 using Banshee.Base;
 using Banshee.Hardware;
+using Banshee.Collection.Database;
 
 namespace Banshee.Dap.MassStorage
 {
@@ -47,6 +48,15 @@ namespace Banshee.Dap.MassStorage
         public MassStorageDevice (MassStorageSource source)
         {
             this.source = source;
+        }
+        
+        public virtual void SourceInitialize ()
+        {
+        }
+        
+        public virtual bool DeleteTrackHook (DatabaseTrackInfo track)
+        {
+            return true;
         }
         
         public virtual bool LoadDeviceConfiguration ()

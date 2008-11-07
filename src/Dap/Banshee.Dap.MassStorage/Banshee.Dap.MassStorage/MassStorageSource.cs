@@ -96,7 +96,11 @@ namespace Banshee.Dap.MassStorage
             mount_point = volume.MountPoint;
 
             Initialize ();
-
+            
+            if (ms_device != null) {
+                ms_device.SourceInitialize ();
+            }
+            
             AddDapProperties ();
 
             // TODO differentiate between Audio Players and normal Disks, and include the size, eg "2GB Audio Player"?
@@ -333,7 +337,7 @@ namespace Banshee.Dap.MassStorage
         }
 
         private string write_path = null;
-        protected string WritePath {
+        public string WritePath {
             get {
                 if (write_path == null) {
                     write_path = BaseDirectory;
@@ -482,9 +486,13 @@ namespace Banshee.Dap.MassStorage
             }
         }
 
-        protected override void DeleteTrack (DatabaseTrackInfo track)
+        protected override bool DeleteTrack (DatabaseTrackInfo track)
         {
             try {
+                if (ms_device != null && !ms_device.DeleteTrackHook (track)) {
+                    return false;
+                }
+            
                 string track_file = System.IO.Path.GetFileName (track.Uri.LocalPath);
                 string track_dir = System.IO.Path.GetDirectoryName (track.Uri.LocalPath);
                 int files = 0;
@@ -508,6 +516,8 @@ namespace Banshee.Dap.MassStorage
             } catch (System.IO.FileNotFoundException) {
             } catch (System.IO.DirectoryNotFoundException) {
             }
+            
+            return true;
         }
 
         protected override void Eject ()

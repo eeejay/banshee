@@ -40,6 +40,7 @@ namespace Banshee.Dap
             Properties.Remove ("Icon.Name");
             Properties.SetStringList ("Icon.Name", "podcast");
             ConditionSql = String.Format ("(CoreTracks.Attributes & {0}) != 0", (int)TrackMediaAttributes.Podcast);
+            AutoHide = true;
         }
     }
 }

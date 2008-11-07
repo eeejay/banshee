@@ -27,8 +27,10 @@
 //
 
 using System;
+using Mono.Unix;
 
 using Banshee.Hardware;
+using Banshee.Collection.Database;
 
 namespace Banshee.Dap.MassStorage
 {
@@ -47,13 +49,24 @@ namespace Banshee.Dap.MassStorage
         };
         
         private static string [] audio_folders = new string [] {
-            "Music/",
+            "music/",
             "amazonmp3/"
         };
+        
+        private AmazonMp3GroupSource amazon_source;
+        private string amazon_base_dir;
         
         public AndroidDevice (VendorProductInfo productInfo, MassStorageSource source) 
             : base (productInfo, source)
         {
+        }
+        
+        public override void SourceInitialize ()
+        {
+            amazon_source = new AmazonMp3GroupSource (Source);
+            amazon_source.AutoHide = true;
+            
+            amazon_base_dir = System.IO.Path.Combine (Source.Volume.MountPoint, audio_folders[1]);
         }
         
         public override bool LoadDeviceConfiguration ()
@@ -75,7 +88,7 @@ namespace Banshee.Dap.MassStorage
             }
         }
         
-        public override string[] AudioFolders {
+        public override string [] AudioFolders {
             get { return audio_folders; }
         }
         
@@ -98,5 +111,58 @@ namespace Banshee.Dap.MassStorage
         public override int CoverArtSize {
             get { return 320; }
         }
+        
+#region Amazon MP3 Store Purchased Tracks Management
+
+        public override bool DeleteTrackHook (DatabaseTrackInfo track)
+        {
+            // Do not allow removing purchased tracks if not in the
+            // Amazon Purchased Music source; this should prevent
+            // accidental deletion of purchased music that may not 
+            // have been copied from the device yet.
+            //
+            // TODO: Provide some feedback when a purchased track is
+            // skipped from deletion
+            //
+            // FIXME: unfortunately this does not work due to 
+            // the cache models being potentially different
+            // even though they will always reference the same tracks
+            // amazon_source.TrackModel.IndexOf (track) >= 0
+            
+            if (!amazon_source.Active && amazon_source.Count > 0 && track.Uri.LocalPath.StartsWith (amazon_base_dir)) {
+                return false;
+            }
+            
+            return true;
+        }
+        
+        private class AmazonMp3GroupSource : MediaGroupSource
+        {
+            public AmazonMp3GroupSource (DapSource parent) : base (parent, Catalog.GetString ("Purchased Music"))
+            {
+                Properties.SetString ("Icon.Name", "amazon-mp3-source");
+                ConditionSql = "(CoreTracks.Uri LIKE \"amazonmp3/%\")";
+            }
+            
+            public override void Activate ()
+            {
+                base.Activate ();
+                active = true;
+            }
+
+            public override void Deactivate ()
+            {
+                base.Deactivate ();
+                active = false;
+            }
+            
+            private bool active;
+            public bool Active {
+                get { return active; }
+            }
+        }
+
+#endregion
+
     }
 }

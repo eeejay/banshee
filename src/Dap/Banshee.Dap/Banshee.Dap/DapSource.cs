@@ -198,11 +198,11 @@ namespace Banshee.Dap
             AddChildSource (music_group_source = new MusicGroupSource (this));
 
             if (SupportsVideo) {
-                AddChildSource (video_group_source = new VideoGroupSource (this));
+                video_group_source = new VideoGroupSource (this);
             }
 
             if (SupportsPodcasts) {
-                AddChildSource (podcast_group_source = new PodcastGroupSource (this));
+                podcast_group_source = new PodcastGroupSource (this);
             }
 
             BuildPreferences ();

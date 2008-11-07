@@ -113,17 +113,19 @@ namespace Banshee.Dap.Karma
             Log.Information("Unimplemented");
         }
 
-        protected override void DeleteTrack(DatabaseTrackInfo track)
+        protected override bool DeleteTrack(DatabaseTrackInfo track)
         {
             KarmaTrackInfo karma_track = track_map[track.TrackId];
             if (karma_track == null)
-                return;
+                return true;
 
             lock (device) {
                 device.DeleteSong(karma_track.KarmaId);
                 device.Save();
                 track_map.Remove(track.TrackId);
             }
+            
+            return true;
         }
 
         protected override void AddTrackToDevice(DatabaseTrackInfo track, SafeUri fromUri)

@@ -40,6 +40,7 @@ namespace Banshee.Dap
             Properties.Remove ("Icon.Name");
             Properties.SetStringList ("Icon.Name", Banshee.ServiceStack.ServiceManager.SourceManager.VideoLibrary.Properties.GetStringList ("Icon.Name"));
             ConditionSql = Banshee.ServiceStack.ServiceManager.SourceManager.VideoLibrary.AttributesCondition;
+            AutoHide = true;
         }
     }
 }

@@ -361,7 +361,7 @@ namespace Banshee.Dap.Mtp
             return 0;
         }
 
-        protected override void DeleteTrack (DatabaseTrackInfo track)
+        protected override bool DeleteTrack (DatabaseTrackInfo track)
         {
             lock (mtp_device) {
                 Track mtp_track = track_map [track.TrackId];
@@ -380,6 +380,8 @@ namespace Banshee.Dap.Mtp
                         album_cache.Remove (key);
                     }
                 }
+                
+                return true;
             }
         }
 

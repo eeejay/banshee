@@ -479,6 +479,7 @@ namespace Banshee.Sources
         {
             is_deleting = true;
             DeleteTrackJob.Total += (int) list.Count;
+            List<DatabaseTrackInfo> skip_deletion = null;
 
             // Remove from file system
             foreach (DatabaseTrackInfo track in list) {
@@ -489,7 +490,12 @@ namespace Banshee.Sources
 
                 try {
                     DeleteTrackJob.Status = String.Format ("{0} - {1}", track.ArtistName, track.TrackTitle);
-                    DeleteTrack (track);
+                    if (!DeleteTrack (track)) {
+                        if (skip_deletion == null) {
+                            skip_deletion = new List<DatabaseTrackInfo> ();
+                        }
+                        skip_deletion.Add (track);
+                    }
                 } catch (Exception e) {
                     Log.Exception (e);
                     ErrorSource.AddMessage (e.Message, track.Uri.ToString ());
@@ -507,10 +513,18 @@ namespace Banshee.Sources
                 delete_track_job.Finish ();
                 delete_track_job = null;
             }
+            
+            if (skip_deletion != null) {
+                list.Remove (skip_deletion);
+                skip_deletion.Clear ();
+                skip_deletion = null;
+            }
 
             // Remove from database
-            ServiceManager.DbConnection.Execute (remove_list_command, DateTime.Now, list.CacheId, list.CacheId);
-
+            if (list.Count > 0) {
+                ServiceManager.DbConnection.Execute (remove_list_command, DateTime.Now, list.CacheId, list.CacheId);
+            }
+            
             ThreadAssist.ProxyToMain (delegate {
                 OnTracksDeleted ();
                 OnUserNotifyUpdated ();
@@ -518,7 +532,7 @@ namespace Banshee.Sources
             });
         }
 
-        protected virtual void DeleteTrack (DatabaseTrackInfo track)
+        protected virtual bool DeleteTrack (DatabaseTrackInfo track)
         {
             throw new Exception ("PrimarySource DeleteTrack method not implemented");
         }

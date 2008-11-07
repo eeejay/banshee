@@ -27,6 +27,7 @@
 //
 
 using System;
+using System.Text;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -114,6 +115,28 @@ namespace Banshee.Collection.Database
         public void Dispose ()
         {
             ServiceManager.DbConnection.Execute ("DELETE FROM CoreCache WHERE ModelId = ?", CacheId);
+        }
+        
+        public void Remove (IEnumerable<T> items)
+        {
+            lock (cache) {
+                StringBuilder builder = new StringBuilder ();
+                bool first = true;
+                foreach (T item in items) {
+                    if (!first) {
+                        builder.Append (',');
+                    }
+                    
+                    builder.Append (item.CacheEntryId);
+                    first = false;
+                }
+                
+                ServiceManager.DbConnection.Execute (String.Format (
+                    "DELETE FROM CoreCache WHERE ModelId = {0} AND ItemId IN ({1})", 
+                    CacheId, builder));
+                    
+                cache.UpdateAggregates ();
+            }
         }
         
         public T this[int index] {
