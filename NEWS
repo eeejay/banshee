@@ -1,5 +1,5 @@
 ===============================================================================
-WELCOME TO BANSHEE 1.3.3 - Released October 11, 2008
+WELCOME TO BANSHEE 1.4 - Released November 8, 2008
 ===============================================================================
 
   * Banshee is a multimedia management and playback application for GNOME.
@@ -10,28 +10,128 @@ WELCOME TO BANSHEE 1.3.3 - Released October 11, 2008
     experience automatic cover art fetching as you listen; and easily browse,
     search, and control your media collection."
 
-  * Learn More: http://banshee-project.org/download/archives/1.3.3/
-
-  * UNSTABLE RELEASE: This release is from the 1.3.x development series, and
-    works towards a future 1.4.0 stable release. Certain features may be
-    incomplete or unstable. Use this release at your own risk.
+  * Learn More: http://banshee-project.org/download/archives/1.4.0/
 
 
 ===============================================================================
 NEW AWESOME FEATURES AND ENHANCEMENTS
 ===============================================================================
 
-    Banshee 1.3.3 is the fourth release in the new development series leading
-    up to a future 1.4.0 stable release.
-
     Notable new features:
 
-      * First preview of Mac OS X support (Eoin Hennessy, Aaron Bockover)
+      * Vastly improved portable media player support:
+        - Real media player synchronization is now supported, along with the
+          classic ability to manually manage portable media players
+        - Playlists and Smart Playlists can now be saved to media players
+        - Cover art now syncs to USB mass storage devices
+
+      * Library rescanning - Banshee can now detect newly added, removed,
+        and relocated files and update its collection
+
+      * Option to rename files and folders when metadata changes
+
+      * Collection indexer service and DBus API - allows third party
+        applications like GNOME Do, Beagle, and Tangerine to create their
+        own queryable indexes of Banshee's collection, or query Banshee's
+        collection in real time
+
+      * Flat-file playlists can now be opened from the command line/nautilus
+
+      * Podcasting improvements
+
+      * New flashy Now Playing UI for displaying cover art
+
+      * ReplayGain support
+
+      * Improved album and podcast browser speed
+
+      * Offline mode - control whether Banshee is able to access the Web
+        for extra metadata and other features
+
+      * Banshee will now ask if it should be the default media player
+
+      * Support for BPM, Grouping, BitRate, Conductor, DiscCount, and
+        IsCompilation reading, writing, columns, and searching.
+
+
+      * Freshly revamped track metadata editor
+
+      * Break the columns context menu into multiple columns
+
+      * Column widths should be much more reasonable
+          - Sensible width ranges set for time, dates, year, etc
+          - Some shorter labels used in column headers
+
+
+      * Improved DAP syncing and interaction
+          - Sync button shown/hidden immediately when Manually Manage changed
+          - Music Library synced before others
+          - Playlists and video not synced to iPod shuffle devices
+          - Improved performance for adding/removing songs from iPods
+          - Better stability for MTP device syncing
+
+      * Allow queueing files via dbus
+      * New podcast columns: downloaded; description; new
+      * Podcasts can now have playlists and smart playlists
+      * When finished playing from the play queue, play the song after the song 
+        we left off from (and stop playing if we weren't playing anything 
+		before).
+      * Refresh podcasts every hour 
+      * Import all white-listed files, even if TagLib# doesn't recognize them
+      * Cache and store images as Cairo.ImageSurfaces, gives performance 
+	    and memory improvements
+      * Enable autocomplete in editor for artist, album, and album artist
+      * Improvements and fixes to the Indexer
+
+
+      * First preview of Mac OS X support
         - Currently very unstable due to GStreamer and GTK+ Quartz
         - Technology Preview only, there are many known issues
         - Please file bugs
 
+
+      * Support for the T-Mobile G1/Android phone, including recognizing
+        Amazonmp3 store purchases.
+
     Notable bug fixes:
+
+      * Drag and Drop to Nautilus works again (BGO #535128) 
+      * Improved support for dark themes (BGO #544840)
+      * Improved ASX support (BGO #545646)
+      * Fix performance bug with loading USB Mass Storage DAPs (BGO #548254)
+      * Fix bug with the DAP usage bar being filtered (BGO #537366)
+      * Fix performance issue with album and podcast browsers (BGO #547628)
+      * Fix lots of threading/freezing issues
+      * Fix lots of avoidable crashes
+
+      * Remember sorting per source (BGO #524656)
+      * Audio CD crasher
+      * Allow editing Audio CDs' track info before ripping (BGO #532467)
+      * Dialogs' translation domain properly set (BGO #536268)
+      * Fix recent regression where the ListView scrolled to the 
+        top when you switched sources.
+      * Allow shrinking selections with shift-click (BGO #535561)
+      * Fix issue with it taking two clicks on the notification icon to
+        get the main window visible, if Banshee was minimized (BGO #551916)
+      * Don't give UI indication that the track list is sortable unless
+        it really is (BGO #551969)
+
+      * Fix bug with non-JPG cover art getting downloaded but never 
+	    converted/used (BGO #388162)
+      * Remember the user's smart playlist units (days/MB etc) (BGO #545887)
+      * Look for PNG and BMP album art in the album's folder (BGO #547841)
+      * Avoid showing album art for 'Unknown' artists/albums (BGO #549320)
+      * Memory leak fixes for the ListView
+      * Jump to playing podcast and radio station now work
+      * Fix bug with default CD importing profile (BGO #528621)
+      * libmtp8 support (BGO #542117)
+      * Fix bug with switching themes and things not getting updated
+      * Recommendations and DAP storage panes are visible again
+      * F11 toggles fullscreen (#553440)
+      * Remove newlines from podcast titles and descriptions (#550008)
+      * Fix issue with the Seek slider and recent versions of Gtk# (#536397).
+      * Improvements to the indexer
+      * Fix bug with showing/selecting invalid profile for DAP transcoding
 
       * Removed the default application support for GNOME since many issues
         need to be ironed out here, and much of this belongs as integration
@@ -39,24 +139,21 @@ NEW AWESOME FEATURES AND ENHANCEMENTS
         state when GIO support lands in the GNOME backend (Gabriel Burt)
 
       * Rely more heavily on intltool and almost completely remove gettext;
-        this mainly facilitates the OS X build environment (Aaron Bockover)
+        this mainly facilitates the OS X build environment
 
-      * Updated the bundled equalizer to avoid a bad crash (BGO #557260, 
-        Sebastian Dröge)
+      * Updated the bundled equalizer to avoid a bad crash (BGO #557260)
 
-      * Rendering and integration fixes for OS X (BGO #557190, Eoin Hennessy)
+      * Rendering and integration fixes for OS X (BGO #557190)
 
-      * Fix a bug with the play queue stopping after every song (BGO #557386,
-        Gabriel Burt)
+      * Fix a bug with the play queue stopping after every song (BGO #557386)
 
       * Allow both prepending and appending to the play queue; helpful for
         external applications wishing to integrate with Banshee's playback,
-        like GNOME Do (BGO #557526, Alex Launi)
+        like GNOME Do (BGO #557526)
 
-      * Support localization when running uninstalled (BGO #393046, 
-        Bertrand Lorentz)
+      * Support localization when running uninstalled (BGO #393046)
 
-      * 5 bugs were FIXED since 1.3.2
+      * 192 bugs were FIXED since 1.2.1
 
 
 ===============================================================================
@@ -66,9 +163,9 @@ SOURCES / PACKAGES
 Sources
 -------
 
-    * Banshee 1.3.3 Tarballs:
-      http://download.banshee-project.org/banshee/banshee-1-1.3.3.tar.bz2
-      http://download.banshee-project.org/banshee/banshee-1-1.3.3.tar.gz
+    * Banshee 1.4.0 Tarballs:
+      http://download.banshee-project.org/banshee/banshee-1-1.4.0.tar.bz2
+      http://download.banshee-project.org/banshee/banshee-1-1.4.0.tar.gz
 
 Packages
 --------
@@ -80,13 +177,13 @@ Packages
 
     Binaries for Mac OS X 10.4 and 10.5:
 
-    * http://download.banshee-project.org/banshee/banshee-1-1.3.3.macosx.intel.dmg
+    * http://download.banshee-project.org/banshee/banshee-1-1.4.0.macosx.intel.dmg
 
 ChangeLogs & Checksums
 ----------------------
 
-    * http://download.banshee-project.org/banshee/banshee-1-1.3.3.changes
-    * http://download.banshee-project.org/banshee/banshee-1-1.3.3.sha1sum
+    * http://download.banshee-project.org/banshee/banshee-1-1.4.0.changes
+    * http://download.banshee-project.org/banshee/banshee-1-1.4.0.sha1sum
 
 
 ===============================================================================
@@ -104,7 +201,7 @@ DEPENDENCIES
     * TagLib# (taglib-sharp) 2.0.3.0
 
     * Required to build default feature stack:
-      * libmtp >= 0.2.0 and < 0.3.0 (0.2.6 recommended)
+      * libmtp >= 0.2.0 
         * Note to packagers: since libmtp has different .so files for
           different versions, you need to require in your package the same
           version of libmtp you used to build Banshee.
@@ -138,7 +235,7 @@ REPORT BUGS - HELP THE PROJECT - GROW THE COMMUNITY
     If you encounter any bad behavior with this release, please do not
     hesitate to file bugs!
 
-    * http://bugzilla.gnome.org/enter_bug.cgi?product=banshee&version=1.3.3
+    * http://bugzilla.gnome.org/enter_bug.cgi?product=banshee&version=1.4.0
 
 
 ===============================================================================
@@ -151,15 +248,23 @@ Contributors For This Release
     The following people directly contributed to the release of this version
     of Banshee. Without their help, there would be no release!
 
-      Aaron Bockover, Alex Launi, Bertrand Lorentz, Eoin Hennessy, 
-      Gabriel Burt, Sebastian Dröge
+      Aaron Bockover, Alan McGovern, Alexander Hixon, Alex Launi,
+      Andrés G. Aragoneses, Benoit Boissinot, Bertrand Lorentz, Bob Copeland,
+      Brad Taylor, Chris Howie, David Spreen, Eoin Hennessy, Eric Butler,
+      Félix Velasco, Gabriel Burt, Gabriel Burt, Iain Lane, James Willcox,
+      Marek Habersack, Maxim Ermilov, Michael Monreal, Pacho Ramos,
+      Ruben Vermeersch, Russ Smith, Salah Coronya, Sandy Armstrong,
+      Sebastian Dröge, Wouter Bolsterlee
 
     The following people contributed updated translations to this release. 
     Without them, our project's reach would be much more limited.
  
-      Alexandre Prokoudine, Daniel Nylander, 甘露 (Gan Lu), 
-      Ignacio Casal Quinteiro, Jordi Mas, Jorge Gonzalez, Luca Ferretti,
-      Og Maciel, Žygimantas Beručka
+      Alexandre Prokoudine, Ankitkumar Patel, Benjamín Valero Espinosa,
+      Chao-Hsiung Liao, Daniel Nylander, Gabor Kelemen, Gianvito Cavasoli,
+      Ignacio Casal Quinteiro, Ilkka Tuohela, Jordi Mas, Jorge Gonzalez,
+      Kjartan Maraas, Luca Ferretti, Og Maciel, Oleksandr Kovalenko,
+      Tomasz Dominikowski, Wouter Bolsterlee, Yannick Tailliez,
+      Žygimantas Beručka, 甘露 (Gan Lu)
 
 
 Contributors In Past Releases
