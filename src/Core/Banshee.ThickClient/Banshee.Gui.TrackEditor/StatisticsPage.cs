@@ -131,7 +131,7 @@ namespace Banshee.Gui.TrackEditor
                     }
                 }
                 
-                AddItem ("Container Formats:", file.TagTypes.ToString ());
+                AddItem (Catalog.GetString ("Container Formats:", file.TagTypes.ToString ()));
                 AddSeparator ();
             }
             

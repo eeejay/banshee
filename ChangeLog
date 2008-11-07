@@ -1,3 +1,9 @@
+2008-11-07  Alexandre Prokoudine  <alexandre.prokoudine@gmail.org>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:
+	Somebody forgot to mark this message for translation, and there are even 
+	more in this file.
+
 2008-11-07  Aaron Bockover  <abock@gnome.org>
 
 	Banshee 1.4.0.1 Released
