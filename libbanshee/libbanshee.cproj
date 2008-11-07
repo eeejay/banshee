@@ -22,7 +22,6 @@
     <CodeGeneration>
       <CodeGeneration ctype="CCompilationParameters" />
     </CodeGeneration>
-    <OutputName>libbanshee</OutputName>
     <CompileTarget>SharedLibrary</CompileTarget>
     <CustomCommands>
       <CustomCommands>
@@ -30,6 +29,7 @@
         <Command type="Execute" command="make run" workingdir="${SolutionDir}" />
       </CustomCommands>
     </CustomCommands>
+    <OutputName>libbanshee</OutputName>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="banshee-ripper.c" />
