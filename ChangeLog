@@ -1,5 +1,9 @@
 2008-11-07  Aaron Bockover  <abock@gnome.org>
 
+	Banshee 1.4.0.1 Released
+
+2008-11-07  Aaron Bockover  <abock@gnome.org>
+
 	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/AndroidDevice.cs:
 	Ensure a proper folder depth and path layout
 
