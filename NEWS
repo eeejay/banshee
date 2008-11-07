@@ -1,5 +1,5 @@
 ===============================================================================
-WELCOME TO BANSHEE 1.4 - Released November 8, 2008
+WELCOME TO BANSHEE 1.4 - Released November 7, 2008
 ===============================================================================
 
   * Banshee is a multimedia management and playback application for GNOME.
@@ -24,6 +24,16 @@ NEW AWESOME FEATURES AND ENHANCEMENTS
           classic ability to manually manage portable media players
         - Playlists and Smart Playlists can now be saved to media players
         - Cover art now syncs to USB mass storage devices
+        - Full out of the box support for the T-Mobile G1/Android phone,
+          including the ability to recognize and import music purchased
+          from the Amazon MP3 store on the G1
+
+      * Improved DAP syncing and interaction
+          - Sync button shown/hidden immediately when Manually Manage changed
+          - Music Library synced before others
+          - Playlists and video not synced to iPod shuffle devices
+          - Improved performance for adding/removing songs from iPods
+          - Better stability for MTP device syncing
 
       * Library rescanning - Banshee can now detect newly added, removed,
         and relocated files and update its collection
@@ -48,9 +58,7 @@ NEW AWESOME FEATURES AND ENHANCEMENTS
       * Offline mode - control whether Banshee is able to access the Web
         for extra metadata and other features
 
-      * Banshee will now ask if it should be the default media player
-
-      * Support for BPM, Grouping, BitRate, Conductor, DiscCount, and
+      * Support for BPM, BitRate, Conductor, DiscCount, and
         IsCompilation reading, writing, columns, and searching.
 
       * Freshly revamped track metadata editor
@@ -61,14 +69,6 @@ NEW AWESOME FEATURES AND ENHANCEMENTS
           - Sensible width ranges set for time, dates, year, etc
           - Some shorter labels used in column headers
 
-
-      * Improved DAP syncing and interaction
-          - Sync button shown/hidden immediately when Manually Manage changed
-          - Music Library synced before others
-          - Playlists and video not synced to iPod shuffle devices
-          - Improved performance for adding/removing songs from iPods
-          - Better stability for MTP device syncing
-
       * Allow queueing files via dbus
 
       * New podcast columns: downloaded; description; new
@@ -77,14 +77,14 @@ NEW AWESOME FEATURES AND ENHANCEMENTS
 
       * When finished playing from the play queue, play the song after the song 
         we left off from (and stop playing if we weren't playing anything 
-		before).
+        before).
 
       * Refresh podcasts every hour 
 
       * Import all white-listed files, even if TagLib# doesn't recognize them
 
       * Cache and store images as Cairo.ImageSurfaces, gives performance 
-	    and memory improvements
+        and memory improvements
 
       * Enable autocomplete in editor for artist, album, and album artist
 
@@ -94,9 +94,6 @@ NEW AWESOME FEATURES AND ENHANCEMENTS
         - Currently very unstable due to GStreamer and GTK+ Quartz
         - Technology Preview only, there are many known issues
         - Please file bugs
-
-      * Support for the T-Mobile G1/Android phone, including recognizing
-        Amazonmp3 store purchases.
 
     Notable bug fixes:
 
@@ -120,7 +117,7 @@ NEW AWESOME FEATURES AND ENHANCEMENTS
       * Don't give UI indication that the track list is sortable unless
         it really is (BGO #551969)
       * Fix bug with non-JPG cover art getting downloaded but never 
-	    converted/used (BGO #388162)
+        converted/used (BGO #388162)
       * Remember the user's smart playlist units (days/MB etc) (BGO #545887)
       * Look for PNG and BMP album art in the album's folder (BGO #547841)
       * Avoid showing album art for 'Unknown' artists/albums (BGO #549320)
@@ -272,12 +269,12 @@ Contributors In Past Releases
     Brian Nickel, Brian Teague, Chris Howie, Chris Lahey, Christian Krause,
     Christopher Halse Rogers, Chris Toshok, Chris Turchin, Daniel Munkton,
     Dan Wilson, Dan Winship, David Spreen, Eoin Hennessy, Eric Butler, 
-	Fabian Jost, Félix Velasco, Fredrik Hedberg, Gabriel Burt, 
-	Hans Petter Jansson, Iain Lane, Igor Guerrero Fonseca, Ilya Konstantinov, 
-	Ivan N. Zlatev, James Willcox, Jan Arne Petersen, Jason Conti, Jeff Tickle, 
-	Jorge Castro, Jo Shields, Juri Pakaste, Ken Vandine, Larry Ewing, 
-	Lauri Kotilainen, Michael Kaiser, Michael Monreal, Miguel de Icaza, 
-	Mike Urbanski, Nathan Palmer, Nicholas Parker, Oscar Forero, Pacho Ramos, 
+    Fabian Jost, Félix Velasco, Fredrik Hedberg, Gabriel Burt, 
+    Hans Petter Jansson, Iain Lane, Igor Guerrero Fonseca, Ilya Konstantinov, 
+    Ivan N. Zlatev, James Willcox, Jan Arne Petersen, Jason Conti, Jeff Tickle, 
+    Jorge Castro, Jo Shields, Juri Pakaste, Ken Vandine, Larry Ewing, 
+    Lauri Kotilainen, Michael Kaiser, Michael Monreal, Miguel de Icaza, 
+    Mike Urbanski, Nathan Palmer, Nicholas Parker, Oscar Forero, Pacho Ramos, 
     Patrick van Staveren, Pepijn van de Geer, Peter de Kraker, 
     Ruben Vermeersch, Sandy Armstrong, Scott Peterson, Sebastian Dröge,
     Tim Yamin, Todd Berman, Trey Ethridge, Will Farrington, Wouter Bolsterlee
