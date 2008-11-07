@@ -1,5 +1,5 @@
 //
-// IDevice.cs
+// IUsbDevice.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
@@ -30,26 +30,11 @@ using System;
 
 namespace Banshee.Hardware
 {
-    public interface IDevice
+    public interface IUsbDevice : IDevice
     {
-        string Uuid { get; }
-        string Serial { get; }
-        string Name { get; }
-
-        string Product { get; }
-        string Vendor { get; }
-
-        IDeviceMediaCapabilities MediaCapabilities { get; }
-        
-        bool PropertyExists (string key);
-        
-        string GetPropertyString (string key);
-        double GetPropertyDouble (string key);
-        bool GetPropertyBoolean (string key);
-        int GetPropertyInteger (string key);
-        ulong GetPropertyUInt64 (string key);
-        string [] GetPropertyStringList (string key);
-        
-        IUsbDevice ResolveRootUsbDevice ();
+        int ProductId { get; }
+        int VendorId { get; }
+        double Speed { get; }
+        double Version { get; }
     }
 }

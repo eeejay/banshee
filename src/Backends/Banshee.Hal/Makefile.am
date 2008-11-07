@@ -11,6 +11,7 @@ SOURCES =  \
 	Banshee.HalBackend/DiscVolume.cs \
 	Banshee.HalBackend/DiskDevice.cs \
 	Banshee.HalBackend/HardwareManager.cs \
+	Banshee.HalBackend/UsbDevice.cs \
 	Banshee.HalBackend/Volume.cs \
 	Hal/Device.cs \
 	Hal/Manager.cs \

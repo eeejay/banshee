@@ -3,7 +3,13 @@ TARGET = library
 LINK = $(REF_DAP_MASS_STORAGE)
 INSTALL_DIR = $(EXTENSIONS_INSTALL_DIR)
 
-SOURCES = Banshee.Dap.MassStorage/MassStorageSource.cs
+SOURCES =  \
+	Banshee.Dap.MassStorage/AndroidDevice.cs \
+	Banshee.Dap.MassStorage/CustomMassStorageDevice.cs \
+	Banshee.Dap.MassStorage/DeviceMapper.cs \
+	Banshee.Dap.MassStorage/KeyValueParser.cs \
+	Banshee.Dap.MassStorage/MassStorageDevice.cs \
+	Banshee.Dap.MassStorage/MassStorageSource.cs
 
 RESOURCES = Banshee.Dap.MassStorage.addin.xml
 

@@ -129,6 +129,11 @@ namespace Banshee.HalBackend
             return device.GetPropertyStringList (key);
         }
         
+        public IUsbDevice ResolveRootUsbDevice ()
+        {
+            return UsbDevice.Resolve (HalManager, CollectUsbDeviceStack (device).Peek ());
+        }
+        
         private static Stack<Hal.Device> CollectUsbDeviceStack (Hal.Device device)
         {
             Stack<Hal.Device> device_stack = new Stack<Hal.Device> ();

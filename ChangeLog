@@ -1,3 +1,57 @@
+2008-11-06  Aaron Bockover  <abock@gnome.org>
+
+	This commit provides my first pass at allowing for custom USB mass storage
+	device profiles. It allows writing customized classes to special case
+	certain devices that are just USB mass storage where extra features and
+	polish are desired. As an example, basic out of the box support for the
+	T-Mobile G1/Android Phone is implemented. This means the G1 should work
+	out of the box with no .is_audio_player necessary or any changes to HAL
+
+	It supports reading/syncing music purchased through the Amazon MP3 store
+	on the G1 and syncing cover art along with music.
+
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageDevice.cs:
+	Moved the is_audio_player reader into new base device properties class
+
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/KeyValueParser.cs:
+	Lots of fixes for parsing the key/value file for is_audio_player
+
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/CustomMassStorageDevice.cs:
+	MassStorageDevice class that custom device support classes should derive
+
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/AndroidDevice.cs:
+	An implementation of a custom device for the T-Mobile G1/Android phone
+
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/DeviceMapper.cs:
+	Given a USB Device, find out what kind of device profile to create, 
+	checking a table of custom supported devices (e.g. Android devices), and
+	falling back to the base MassStorageDevice that supports reading 
+	is_audio_player
+
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:
+	Use the new MassStorageDevice class for reading customized properties
+	that are not part of DeviceMediaCapabilities (e.g. from HAL); also when
+	deleting tracks, check to see if the directory will become empty after
+	removing the track, and if so, also remove the cover art file if one
+	exists.
+
+	* src/Core/Banshee.Services/Banshee.Hardware/IUsbDevice.cs: New interface
+	for USB specific device properties
+
+	* src/Core/Banshee.Services/Banshee.Hardware/IDevice.cs: Defined
+	ResolveRootUsbDevice which is to return the top level USB device
+	as an IUsbDevice
+
+	* src/Core/Banshee.Services/Banshee.Hardware/VendorProductInfo.cs: 
+	Struct to define USB devices through vendor/product IDs
+
+	* src/Backends/Banshee.Hal/Banshee.HalBackend/Device.cs:
+	* src/Backends/Banshee.Hal/Banshee.HalBackend/UsbDevice.cs: Implement the
+	new IUsbDevice support against HAL
+
+	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/PodSleuthDevice.cs: Proxy
+	the ResolveRootUsbDevice method now defined on IDevice
+
 2008-11-05  Eoin Hennessy <eoin@randomrules.org>
 
 	* build/osx/targets/gst-plugins-bad-qtwrapper-fixes.patch:

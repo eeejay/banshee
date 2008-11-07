@@ -50,29 +50,38 @@ namespace Banshee.Dap.MassStorage
 {
     public class MassStorageSource : DapSource
     {
-        private Banshee.Collection.Gui.ArtworkManager artwork_manager = ServiceManager.Get<Banshee.Collection.Gui.ArtworkManager> ();
-        protected IVolume volume;
+        private Banshee.Collection.Gui.ArtworkManager artwork_manager 
+            = ServiceManager.Get<Banshee.Collection.Gui.ArtworkManager> ();
+        
+        private MassStorageDevice ms_device;
+        private IVolume volume;
+        private IUsbDevice usb_device;
 
         public override void DeviceInitialize (IDevice device)
         {
             base.DeviceInitialize (device);
             
-            this.volume = device as IVolume;
-            if (volume == null)
+            volume = device as IVolume;
+            if (volume == null || (usb_device = volume.ResolveRootUsbDevice ()) == null) {
                 throw new InvalidDeviceException ();
+            }
+            
+            ms_device = DeviceMapper.Map (this);
+            try {
+                if (!ms_device.LoadDeviceConfiguration ()) {
+                    ms_device = null;
+                }
+            } catch {
+                ms_device = null;
+            }
 
-            // TODO set up a ui for selecting volumes we want mounted/shown within Banshee
-            // (so people don't have to touch .is_audio_player, and so we can give them a harddrive icon
-            // instead of pretending they are DAPs).
-            if (!HasMediaCapabilities && !HasIsAudioPlayerFile)
+            if (!HasMediaCapabilities && ms_device == null) {
                 throw new InvalidDeviceException ();
-
-            if (HasIsAudioPlayerFile)
-                ParseIsAudioPlayerFile ();
-
+            }
+            
             // Ignore iPods, except ones with .is_audio_player files
             if (MediaCapabilities != null && MediaCapabilities.IsType ("ipod")) {
-                if (HasIsAudioPlayerFile) {
+                if (ms_device != null && ms_device.HasIsAudioPlayerFile) {
                     Log.Information (
                         "Mass Storage Support Loading iPod",
                         "The USB mass storage audio player support is loading an iPod because it has an .is_audio_player file. " +
@@ -83,7 +92,7 @@ namespace Banshee.Dap.MassStorage
                 }
             }
 
-            Name = volume.Name;
+            Name = ms_device == null ? volume.Name : ms_device.Name;
             mount_point = volume.MountPoint;
 
             Initialize ();
@@ -183,34 +192,27 @@ namespace Banshee.Dap.MassStorage
         public IVolume Volume {
             get { return volume; }
         }
+        
+        public IUsbDevice UsbDevice {
+            get { return usb_device; }
+        }
 
         private string mount_point;
         public override string BaseDirectory {
             get { return mount_point; }
         }
 
-        private bool? has_is_audio_player_file = null;
-        private bool HasIsAudioPlayerFile {
-            get {
-                if (has_is_audio_player_file == null)
-                    has_is_audio_player_file = File.Exists (new SafeUri (IsAudioPlayerPath));
-                return has_is_audio_player_file.Value;
-            }
-        }
-
         protected override IDeviceMediaCapabilities MediaCapabilities {
             get {
-                return (volume.Parent == null)
-                    ? base.MediaCapabilities
-                    : volume.Parent.MediaCapabilities ?? base.MediaCapabilities;
+                return ms_device ?? (
+                    volume.Parent == null
+                        ? base.MediaCapabilities
+                        : volume.Parent.MediaCapabilities ?? base.MediaCapabilities
+                );
             }
         }
 
-        protected string IsAudioPlayerPath {
-            get { return System.IO.Path.Combine (volume.MountPoint, ".is_audio_player"); }
-        }
-
-        #region Properties and Methods for Supporting Syncing of Playlists
+#region Properties and Methods for Supporting Syncing of Playlists
 
         private string playlists_path;
         private string PlaylistsPath {
@@ -315,8 +317,8 @@ namespace Banshee.Dap.MassStorage
             }
         }
 
-        #endregion
-        
+#endregion
+
         public override long BytesUsed {
             get { return BytesCapacity - volume.Available; }
         }
@@ -351,7 +353,7 @@ namespace Banshee.Dap.MassStorage
         protected string [] AudioFolders {
             get {
                 if (audio_folders == null) {
-                    audio_folders = HasMediaCapabilities ? MediaCapabilities.AudioFolders : new string [] {};
+                    audio_folders = HasMediaCapabilities ? MediaCapabilities.AudioFolders : new string[0];
                 }
                 return audio_folders;
             }
@@ -483,6 +485,25 @@ namespace Banshee.Dap.MassStorage
         protected override void DeleteTrack (DatabaseTrackInfo track)
         {
             try {
+                string track_file = System.IO.Path.GetFileName (track.Uri.LocalPath);
+                string track_dir = System.IO.Path.GetDirectoryName (track.Uri.LocalPath);
+                int files = 0;
+                
+                // Count how many files remain in the track's directory,
+                // excluding self or cover art
+                foreach (string file in System.IO.Directory.GetFiles (track_dir)) {
+                    string relative = System.IO.Path.GetFileName (file);
+                    if (relative != track_file && relative != CoverArtFileName) {
+                        files++;
+                    }
+                }
+                
+                // If we are the last track, go ahead and delete the artwork
+                // to ensure that the directory tree can get trimmed away too
+                if (files == 0) {
+                    System.IO.File.Delete (Paths.Combine (track_dir, CoverArtFileName));
+                }
+                
                 Banshee.IO.Utilities.DeleteFileTrimmingParentDirectories (track.Uri);
             } catch (System.IO.FileNotFoundException) {
             } catch (System.IO.DirectoryNotFoundException) {
@@ -546,76 +567,6 @@ namespace Banshee.Dap.MassStorage
             file_path += ext;
 
             return file_path;
-        }
-
-        private void ParseIsAudioPlayerFile ()
-        {
-            // Allow the HAL values to be overridden by corresponding key=value pairs in .is_audio_player
-            System.IO.StreamReader reader = null;
-            try {
-                reader = new System.IO.StreamReader (IsAudioPlayerPath);
-
-                string line;
-                while ((line = reader.ReadLine ()) != null) {
-                    string [] pieces = line.Split ('=');
-                    if (line.StartsWith ("#") || pieces == null || pieces.Length != 2)
-                        continue;
-
-                    string key = pieces[0];
-                    string val = pieces[1];
-
-                    switch (key) {
-                    case "audio_folders":
-                        AudioFolders = val.Split (',');
-                        break;
-
-                    case "output_formats":
-                        AcceptableMimeTypes = val.Split (',');
-                        for (int i = 0; i < AcceptableMimeTypes.Length; i++) {
-                            AcceptableMimeTypes[i] = AcceptableMimeTypes[i].Trim ();
-                        }
-                        break;
-
-                    case "folder_depth":
-                        FolderDepth = Int32.Parse (val);
-                        break;
-    
-                    case "playlist_format":
-                        PlaylistFormats = val.Split (',');
-                        for (int i = 0; i < PlaylistFormats.Length; i++) {
-                            PlaylistFormats[i] = PlaylistFormats[i].Trim ();
-                        }
-                        break;
-
-                    case "playlist_path":
-                        playlists_path = System.IO.Path.Combine (WritePath, val);
-                        playlists_path = playlists_path.Replace ("%File", String.Empty);
-                        break;
-
-                    case "cover_art_file_type":
-                        CoverArtFileType = val.ToLower ();
-                        break;
-
-                    case "cover_art_file_name":
-                        CoverArtFileName = val;
-                        break;
-
-                    case "cover_art_size":
-                        CoverArtSize = Int32.Parse (val);
-                        break;
-
-                    case "input_formats":
-                    default:
-                        Log.DebugFormat ("Unsupported .is_audio_player key: {0}", key);
-                        break;
-                    }
-                }
-            } catch (Exception e) {
-                Log.Exception ("Error parsing .is_audio_player file", e);
-            } finally {
-                if (reader != null)
-                    reader.Close ();
-            }
         }
     }
 }

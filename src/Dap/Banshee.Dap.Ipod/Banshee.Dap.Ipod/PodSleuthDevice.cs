@@ -357,6 +357,11 @@ namespace Banshee.Dap.Ipod
             return volume.GetPropertyStringList (key);
         }
         
+        public IUsbDevice ResolveRootUsbDevice ()
+        {
+            return volume.ResolveRootUsbDevice ();
+        }
+        
 #endregion
 
     }
