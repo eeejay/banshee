@@ -1,3 +1,9 @@
+2008-11-07  Eoin Hennessy <eoin@randomrules.org>
+
+	* build/osx/build.env
+	Added CXX_FLAGS to build env so that C++ gstreamer plugins are compiled with 
+	-mmacosx-version-min. Was the cause of various crashes on OSX 10.4. 
+
 2008-11-07  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:
