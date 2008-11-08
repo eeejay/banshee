@@ -4209,7 +4209,7 @@ msgstr "Möchten Sie das Herunterladen aller Podcasts abbrechen?"
 msgid "Transfering {0} file at {1} KB/s"
 msgid_plural "Transfering {0} of {2} files at {1} KB/s"
 msgstr[0] "Momentane Übertragung von {0} Datei mit {1} KB/s"
-msgstr[1] "Momentane Übertragung von {0} Dateien mit {1} KB/s"
+msgstr[1] "Momentane Übertragung von {0} von {2} Dateien mit {1} KB/s"
 
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/DownloadManager/DownloadUserJob.cs:133
 msgid "Canceling Downloads"
