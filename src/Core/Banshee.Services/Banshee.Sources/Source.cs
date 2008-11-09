@@ -485,7 +485,7 @@ namespace Banshee.Sources
                 if (unique_id == null && type_unique_id == null) {
                     Log.ErrorFormat ("Creating Source.UniqueId for {0}, but TypeUniqueId is null; trace is {1}", this.Name, System.Environment.StackTrace);
                 }
-                return unique_id ?? unique_id = String.Format ("{0}-{1}", this.GetType ().Name, TypeUniqueId);
+                return unique_id ?? (unique_id = String.Format ("{0}-{1}", this.GetType ().Name, TypeUniqueId));
             }
         }
         
@@ -581,7 +581,7 @@ namespace Banshee.Sources
 
         private string conf_id;
         public string ConfigurationId {
-            get { return conf_id ?? conf_id = UniqueId.Replace ('.', '_'); }
+            get { return conf_id ?? (conf_id = UniqueId.Replace ('.', '_')); }
         }
 
         public virtual int FilteredCount { get { return Count; } }

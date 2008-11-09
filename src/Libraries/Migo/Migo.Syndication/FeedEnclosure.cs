@@ -71,7 +71,7 @@ namespace Migo.Syndication
 #region Public Properties
 
         public FeedItem Item { 
-            get { return item ?? item = FeedItem.Provider.FetchSingle (item_id); } 
+            get { return item ?? (item = FeedItem.Provider.FetchSingle (item_id)); } 
             internal set {
                 item = value;
                 if (item != null && item.DbId > 0) {

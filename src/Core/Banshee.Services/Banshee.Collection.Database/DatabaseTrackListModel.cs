@@ -187,12 +187,12 @@ namespace Banshee.Collection.Database
         private string unfiltered_query;
         public string UnfilteredQuery {
             get {
-                return unfiltered_query ?? unfiltered_query = String.Format (
+                return unfiltered_query ?? (unfiltered_query = String.Format (
                     "FROM {0}{1} WHERE {2} {3}",
                     From, JoinFragment,
                     String.IsNullOrEmpty (provider.Where) ? "1=1" : provider.Where,
                     ConditionFragment
-                );
+                ));
             }
         }
 

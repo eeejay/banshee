@@ -90,7 +90,7 @@ namespace Banshee.Collection
         protected ModelSelection<T> model_selection;
         public virtual ModelSelection<T> SelectedItems {
             get {
-                return model_selection ?? model_selection = new ModelSelection<T> (this, Selection);
+                return model_selection ?? (model_selection = new ModelSelection<T> (this, Selection));
             }
         }
         

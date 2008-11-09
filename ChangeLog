@@ -1,3 +1,20 @@
+2008-11-10  Ivan N. Zlatev  <contact@i-nz.net>
+
+	* src/Clients/Booter/Booter/Entry.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackListModel.cs:
+	* src/Core/Banshee.Services/Banshee.Playlist/AbstractPlaylistSource.cs:
+	* src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs:
+	* src/Core/Banshee.Services/Banshee.Sources/Source.cs:
+	* src/Core/Banshee.Services/Banshee.Collection/BansheeListModel.cs:
+	* src/Core/Banshee.Services/Banshee.Library/LibrarySource.cs:
+	* src/Backends/Banshee.Hal/Banshee.HalBackend/Device.cs:
+	* src/Libraries/MusicBrainz/MusicBrainz/LocalDisc.cs:
+	* src/Libraries/Migo/Migo.Syndication/FeedEnclosure.cs:  Fix missing () 
+	in ?? operator usage. Fixes compilation with gmcs HEAD (BGO #559616).
+
 2008-11-10  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
 	* src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/FileChooserDialog.cs:

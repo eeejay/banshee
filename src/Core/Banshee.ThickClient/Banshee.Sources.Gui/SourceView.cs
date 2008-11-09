@@ -445,8 +445,8 @@ namespace Banshee.Sources.Gui
         internal Source NewPlaylistSource {
             get {
                 return new_playlist_source ??
-                    new_playlist_source = new PlaylistSource (Catalog.GetString ("New Playlist"), 
-                        ServiceManager.SourceManager.MusicLibrary);
+                    (new_playlist_source = new PlaylistSource (Catalog.GetString ("New Playlist"), 
+                        ServiceManager.SourceManager.MusicLibrary));
             }
         }
 

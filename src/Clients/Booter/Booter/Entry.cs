@@ -227,7 +227,7 @@ namespace Booter
                     case "help-playback": Console.WriteLine (commands.ToString ("playback")); break;
                     default:
                         if (argument.Key.StartsWith ("help")) {
-                            (errors ?? errors = new List<string> ()).Add (argument.Key);
+                            (errors ?? (errors = new List<string> ())).Add (argument.Key);
                         }
                         break;
                 }

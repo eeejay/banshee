@@ -99,7 +99,7 @@ namespace MusicBrainz
         
         string submission_url;
         public string SubmissionUrl {
-            get { return submission_url ?? submission_url = BuildSubmissionUrl (); }
+            get { return submission_url ?? (submission_url = BuildSubmissionUrl ()); }
         }
         
         string BuildSubmissionUrl ()

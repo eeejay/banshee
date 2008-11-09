@@ -147,7 +147,7 @@ namespace Banshee.Library
         private static int [] library_ids;
         private static int [] LibraryIds {
             get {
-                return library_ids ?? library_ids = new int [] {ServiceManager.SourceManager.MusicLibrary.DbId, ServiceManager.SourceManager.VideoLibrary.DbId};
+                return library_ids ?? (library_ids = new int [] {ServiceManager.SourceManager.MusicLibrary.DbId, ServiceManager.SourceManager.VideoLibrary.DbId});
             }
         }
     }

@@ -107,11 +107,11 @@ namespace Banshee.Playlist
         protected HyenaSqliteCommand CountUpdatedCommand {
             get {
                 return count_updated_command ??
-                    count_updated_command = new HyenaSqliteCommand (String.Format (
+                    (count_updated_command = new HyenaSqliteCommand (String.Format (
                         @"SELECT COUNT(*) FROM {0} WHERE {1} = {2} AND TrackID IN (
                             SELECT TrackID FROM CoreTracks WHERE DateUpdatedStamp > ?)",
                         TrackJoinTable, SourcePrimaryKey, dbid
-                    ));
+                    )));
             }
         }
 
@@ -119,11 +119,11 @@ namespace Banshee.Playlist
         protected HyenaSqliteCommand CountRemovedCommand {
             get {
                 return count_removed_command ??
-                    count_removed_command = new HyenaSqliteCommand (String.Format (
+                    (count_removed_command = new HyenaSqliteCommand (String.Format (
                         @"SELECT COUNT(*) FROM {0} WHERE {1} = {2} AND TrackID IN (
                             SELECT TrackID FROM CoreRemovedTracks WHERE DateRemovedStamp > ?)",
                         TrackJoinTable, SourcePrimaryKey, dbid
-                    ));
+                    )));
             }
         }
 

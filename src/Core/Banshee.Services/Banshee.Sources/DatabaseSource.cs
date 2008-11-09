@@ -98,15 +98,15 @@ namespace Banshee.Sources
         }
 
         public DatabaseTrackListModel DatabaseTrackModel {
-            get { return track_model ?? track_model = (Parent as DatabaseSource ?? this).CreateTrackModelFor (this); }
+            get { return track_model ?? (track_model = (Parent as DatabaseSource ?? this).CreateTrackModelFor (this)); }
             protected set { track_model = value; }
         }
 
         private IDatabaseTrackModelCache track_cache;
         protected IDatabaseTrackModelCache TrackCache {
             get {
-                return track_cache ?? track_cache = new DatabaseTrackModelCache<DatabaseTrackInfo> (
-                    ServiceManager.DbConnection, UniqueId, DatabaseTrackModel, TrackProvider);
+                return track_cache ?? (track_cache = new DatabaseTrackModelCache<DatabaseTrackInfo> (
+                    ServiceManager.DbConnection, UniqueId, DatabaseTrackModel, TrackProvider));
             }
             set { track_cache = value; }
         }
@@ -306,13 +306,13 @@ namespace Banshee.Sources
         
         private IList<IFilterListModel> available_filters;
         public IList<IFilterListModel> AvailableFilters {
-            get { return available_filters ?? available_filters = new List<IFilterListModel> (); }
+            get { return available_filters ?? (available_filters = new List<IFilterListModel> ()); }
             protected set { available_filters = value; }
         }
         
         private IList<IFilterListModel> default_filters;
         public IList<IFilterListModel> DefaultFilters {
-            get { return default_filters ?? default_filters = new List<IFilterListModel> (); }
+            get { return default_filters ?? (default_filters = new List<IFilterListModel> ()); }
             protected set { default_filters = value; }
         }
         
@@ -655,14 +655,14 @@ namespace Banshee.Sources
         protected HyenaSqliteCommand prune_command;
         protected HyenaSqliteCommand PruneCommand {
             get {
-                return prune_command ?? prune_command = new HyenaSqliteCommand (String.Format (
+                return prune_command ?? (prune_command = new HyenaSqliteCommand (String.Format (
                         @"DELETE FROM CoreCache WHERE ModelID = ? AND ItemID NOT IN (SELECT ArtistID FROM CoreTracks WHERE TrackID IN (SELECT {0}));
                           DELETE FROM CoreCache WHERE ModelID = ? AND ItemID NOT IN (SELECT AlbumID FROM CoreTracks WHERE TrackID IN (SELECT {0}));",
                         track_model.TrackIdsSql
                     ),
                     artist_model.CacheId, artist_model.CacheId, 0, artist_model.Count,
                     album_model.CacheId, album_model.CacheId, 0, album_model.Count
-                );
+                ));
             }
         }
 
