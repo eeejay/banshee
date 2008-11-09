@@ -48,7 +48,10 @@ namespace Banshee.Gui.Dialogs
         protected override void OnResponse (ResponseType response)
         {
             base.OnResponse (response);
-            LastFileChooserUri.Set (CurrentFolderUri);
+            
+            if (CurrentFolderUri != null) {
+                LastFileChooserUri.Set (CurrentFolderUri);
+            }
         }
         
         public static readonly SchemaEntry<string> LastFileChooserUri = new SchemaEntry<string> (
