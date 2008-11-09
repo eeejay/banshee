@@ -30,13 +30,13 @@
     <Reference Include="System" />
     <Reference Include="Banshee.Core, Version=1.3.3.0, Culture=neutral" />
     <Reference Include="Banshee.Services, Version=1.3.3.0, Culture=neutral" />
-    <Reference Include="Migo, Version=1.3.3.0, Culture=neutral, PublicKeyToken=null">
+    <Reference Include="Migo, Version=1.4.0.1, Culture=neutral, PublicKeyToken=null">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\bin\Migo.dll</HintPath>
     </Reference>
     <Reference Include="NDesk.DBus, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f6716e4f9b2ed099" />
     <Reference Include="Hyena, Version=1.3.3.0, Culture=neutral" />
-    <Reference Include="monotorrent-dbus" />
+    <Reference Include="monotorrent-dbus, Version=1.0.3235.2456, Culture=neutral" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Banshee.Torrent.addin.xml" />

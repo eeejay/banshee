@@ -52,13 +52,13 @@ namespace Banshee.Torrent
         private IEngineSettings settings;
         
         public int MaxDownloadSpeed {
-            get { return settings.GlobalMaxDownloadSpeed; }
-            set { settings.GlobalMaxDownloadSpeed = value; }
+            get { return settings.GetGlobalMaxDownloadSpeed (); }
+            set { settings.SetGlobalMaxDownloadSpeed (value); }
         }
         
         public int MaxUploadSpeed {
-            get { return settings.GlobalMaxUploadSpeed; }
-            set { settings.GlobalMaxUploadSpeed = value; }
+            get { return settings.GetGlobalMaxUploadSpeed (); }
+            set { settings.SetGlobalMaxUploadSpeed (value); }
         }
 
         public string ServiceName {
@@ -75,11 +75,11 @@ namespace Banshee.Torrent
             ObjectPath path = engine.RegisterTorrent (torrentUri, savePath);
             IDownloader downloader = bus.GetObject <IDownloader> (BusName, path);
             
-            if (downloader.State == TorrentState.Stopped) {
+            if (downloader.GetState () == TorrentState.Stopped) {
                 downloader.Start ();
-                Console.WriteLine ("Started: {0}", downloader.Path);
+                Console.WriteLine ("Started: {0}", downloader.GetPath ());
             } else {
-                Console.WriteLine ("{0} already running", downloader.Path);
+                Console.WriteLine ("{0} already running", downloader.GetPath ());
             }
             return downloader;
         }
@@ -104,7 +104,7 @@ namespace Banshee.Torrent
                 // Get the service and call a method on it to ensure that it is
                 // running and able to answer queries.
                 service = bus.GetObject<ITorrentService> (BusName, ServicePath);
-                service.AvailableEngines ();
+                service.GetAvailableEngines ();
             } catch {
                 Log.Error ("Torrent backend could not be found and could not be auto-started");
                 service = null;
@@ -112,7 +112,8 @@ namespace Banshee.Torrent
             }
             
             // Register with Migo so we can handle .torrent downloads
-            Migo.DownloadCore.DownloadManager.Register ("torrent", typeof (TorrentFileDownloadTask));
+            if (!RegisteredInMigo)
+                Migo.DownloadCore.DownloadManager.Register ("torrent", typeof (TorrentFileDownloadTask));
             RegisteredInMigo = true;
             
             // Get the engine from DBus which we will use to download torrents with

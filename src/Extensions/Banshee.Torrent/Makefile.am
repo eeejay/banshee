@@ -7,6 +7,8 @@ SOURCES =  \
 	Banshee.Torrent/TorrentService.cs \
 	Banshee.Torrent/TorrentFileDownloadTask.cs
 
+RESOURCES = Banshee.Torrent.addin.xml
+
 if HAVE_MONOTORRENT_DBUS
 include $(top_srcdir)/build/build.mk
 else

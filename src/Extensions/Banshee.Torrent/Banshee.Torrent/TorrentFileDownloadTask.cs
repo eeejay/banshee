@@ -35,14 +35,13 @@ namespace Banshee.Torrent
 {
 	public class TorrentFileDownloadTask : Migo.DownloadCore.HttpFileDownloadTask
 	{
-		private string torrentPath;
 		private MonoTorrent.DBus.IDownloader downloader;
 		private MonoTorrent.DBus.ITorrent torrent;
 		
 		public TorrentFileDownloadTask(string remoteUri, string localPath, object userState)
 			: base (remoteUri, localPath.Substring(0, localPath.Length - 8), userState)
 		{
-			
+			Console.WriteLine ("Torrent file download task!");
 		}
 		
 		public override long BytesReceived {
@@ -51,7 +50,7 @@ namespace Banshee.Torrent
 				if (downloader == null)
                     return 0;
                 
-				return (long)(downloader.Progress / 100.0 * torrent.Size); 
+				return (long)(downloader.GetProgress () / 100.0 * torrent.GetSize ()); 
 			}
 		}
 		
@@ -67,14 +66,16 @@ namespace Banshee.Torrent
 
 		public override void ExecuteAsync ()
 		{
+			Console.WriteLine ("Running!");
 			SetStatus (TaskStatus.Running);
 			TorrentService s = (TorrentService) Banshee.ServiceStack.ServiceManager.Get<TorrentService>("TorrentService");
 			downloader = s.Download (this.RemoteUri.ToString(), Path.GetDirectoryName(this.LocalPath));
-			torrent = MonoTorrent.DBus.TorrentService.Bus.GetObject <MonoTorrent.DBus.ITorrent> (MonoTorrent.DBus.TorrentService.BusName, this.downloader.Torrent);
+			torrent = MonoTorrent.DBus.TorrentService.Bus.GetObject <ITorrent> (TorrentService.BusName, this.downloader.GetTorrent ());
 			
 			this.downloader.StateChanged += delegate {
-				if (downloader.State == TorrentState.Seeding)
+				if (downloader.GetState () == TorrentState.Seeding)
 				{
+					Console.WriteLine("Progress");
 					SetProgress(100);
 					SetStatus (TaskStatus.Succeeded);
 					OnTaskCompleted (null, false);
@@ -87,9 +88,11 @@ namespace Banshee.Torrent
 				while (base.Progress != 100 && 
 				       (Status == TaskStatus.Running || Status == TaskStatus.Paused || Status == TaskStatus.Running))
 				{
+					
+					Console.WriteLine("Progress");
 					Hyena.Log.Debug ("Torrent Tick");
 					System.Threading.Thread.Sleep (2000);
-					SetProgress((int)downloader.Progress);
+					SetProgress((int)downloader.GetProgress ());
 				}
 			});
 		}
