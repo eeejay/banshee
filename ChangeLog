@@ -1,3 +1,9 @@
+2008-11-09  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageDevice.cs:
+	Patch from Florent Thoumie to fix compilation with mono 1.2.5 and 1.2.6
+	(BGO #559776).
+
 2008-11-08  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.Torrent/Banshee.Torrent/TorrentService.cs: Add
