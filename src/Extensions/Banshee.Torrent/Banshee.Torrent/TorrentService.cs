@@ -41,7 +41,7 @@ namespace Banshee.Torrent
 {
     public class TorrentService : IExtensionService, IDelayedInitializeService
     {
-        static bool RegisteredInMigo = false;
+        private static bool RegisteredInMigo = false;
         public static readonly string BusName = "org.monotorrent.dbus";
         public static readonly string EngineName = "banshee";
         public static readonly ObjectPath ServicePath = new ObjectPath ("/org/monotorrent/service");

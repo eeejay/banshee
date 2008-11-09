@@ -4,7 +4,12 @@ AC_DEFUN([BANSHEE_CHECK_TORRENT],
 
 	if test "x$enable_torrent" = "xyes"; then
         PKG_CHECK_MODULES(MONOTORRENT_DBUS, monotorrent-dbus >= 0.1);
+		asms="`$PKG_CONFIG --variable=Libraries monotorrent` `$PKG_CONFIG --variable=Libraries monotorrent-dbus`"
+		for asm in $asms; do
+			MONOTORRENT_ASSEMBLIES="$MONOTORRENT_ASSEMBLIES $asm $asm.mdb"
+		done
         AC_SUBST(MONOTORRENT_DBUS_LIBS)
+		AC_SUBST(MONOTORRENT_ASSEMBLIES)
         AM_CONDITIONAL(HAVE_MONOTORRENT_DBUS, true)
 	else
 		AM_CONDITIONAL(HAVE_MONOTORRENT_DBUS, false)
