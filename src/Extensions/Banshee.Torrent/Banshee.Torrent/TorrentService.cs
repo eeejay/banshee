@@ -107,9 +107,15 @@ namespace Banshee.Torrent
                 service = bus.GetObject<ITorrentService> (BusName, ServicePath);
                 service.GetAvailableEngines ();
             } catch {
-                Log.Error ("Torrent backend could not be found and could not be auto-started");
-                service = null;
-                return;
+                // Try one more time
+                try {
+                    service = bus.GetObject<ITorrentService> (BusName, ServicePath);
+                    service.GetAvailableEngines ();
+                } catch {
+                    Log.Error ("Torrent backend could not be found and could not be auto-started");
+                    service = null;
+                    return;
+                }
             }
             
             // Register with Migo so we can handle .torrent downloads

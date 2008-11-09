@@ -1,4 +1,9 @@
 2008-11-09 Alan McGovern <alan.mcgovern@gmail.com>
+	* Banshee.Torrent/Banshee.Torrent/TorrentService.cs: If the service is
+	  not already running when banshee calls it, we need to ping it a
+	  second time to see if it auto-started
+
+2008-11-09 Alan McGovern <alan.mcgovern@gmail.com>
 	* Banshee.Torrent/Banshee.Torrent/TorrentService.cs:
 	* Banshee.Torrent/Banshee.Torrent/TorrentFileDownloadTask.cs: Update to
 	  work with the latest monotorrent.dbus
