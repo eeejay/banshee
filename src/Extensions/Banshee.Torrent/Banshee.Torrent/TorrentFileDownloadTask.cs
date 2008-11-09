@@ -70,7 +70,7 @@ namespace Banshee.Torrent
 			SetStatus (TaskStatus.Running);
 			TorrentService s = (TorrentService) Banshee.ServiceStack.ServiceManager.Get<TorrentService>("TorrentService");
 			downloader = s.Download (this.RemoteUri.ToString(), Path.GetDirectoryName(this.LocalPath));
-			torrent = MonoTorrent.DBus.TorrentService.Bus.GetObject <ITorrent> (TorrentService.BusName, this.downloader.GetTorrent ());
+			torrent = TorrentService.Bus.GetObject <ITorrent> (TorrentService.BusName, this.downloader.GetTorrent ());
 			
 			this.downloader.StateChanged += delegate {
 				if (downloader.GetState () == TorrentState.Seeding)
