@@ -44,6 +44,7 @@ popd &>/dev/null
 DMG_FILE=banshee-1-$VERSION.macosx.intel.dmg
 mv Banshee.dmg $DMG_FILE
 rm -rf $SOURCE_DIR
+rm -rf $INSTALL_PREFIX
 
 echo "$DMG_FILE is ready."
 

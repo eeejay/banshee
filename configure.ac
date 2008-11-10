@@ -1,6 +1,11 @@
 dnl Automake setup
-AC_INIT([banshee-1], [1.4.0.1])
-ASM_DISPLAY_VERSION="1.4.0.1"
+AC_INIT([banshee-1], [1.4.1])
+ASM_DISPLAY_VERSION="1.4.1"
+API_VERSION="1.4"
+ASM_VERSION="$API_VERSION.0.0"
+AC_SUBST(API_VERSION)
+AC_SUBST(ASM_VERSION)
+AC_SUBST(ASM_DISPLAY_VERSION)
 
 DISTCHECK_CONFIGURE_FLAGS="--disable-docs --enable-mtp --enable-daap --enable-podcast --enable-release"
 AC_SUBST(DISTCHECK_CONFIGURE_FLAGS)
@@ -10,11 +15,6 @@ AC_CANONICAL_SYSTEM
 AC_PREREQ(2.13)
 AM_INIT_AUTOMAKE([1.9 dist-bzip2 tar-ustar])
 AM_MAINTAINER_MODE
-
-ASM_VERSION="$VERSION"
-#ASM_VERSION="$VERSION.0"
-AC_SUBST(ASM_VERSION)
-AC_SUBST(ASM_DISPLAY_VERSION)
 
 dnl Pieces needed by autogen; can't be parsed from macros
 AM_CONFIG_HEADER(config.h)
