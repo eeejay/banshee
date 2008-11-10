@@ -323,6 +323,12 @@ namespace Banshee.Dap.MassStorage
 
 #endregion
 
+        protected override string [] GetIconNames ()
+        {
+            string [] names = ms_device != null ? ms_device.GetIconNames () : null;
+            return names == null ? base.GetIconNames () : names;
+        }
+        
         public override long BytesUsed {
             get { return BytesCapacity - volume.Available; }
         }

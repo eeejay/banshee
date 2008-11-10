@@ -433,7 +433,7 @@ namespace Banshee.Dap
             }
         }
         
-        private string FallbackIcon {
+        public static string FallbackIcon {
             get { return "multimedia-player"; }
         }
 

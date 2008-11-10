@@ -1,5 +1,24 @@
 2008-11-10  Aaron Bockover  <abock@gnome.org>
 
+	* src/Dap/Banshee.Dap.MassStorage/ThemeIcons/32x32/devices/phone-htc-g1-white.png:
+	* src/Dap/Banshee.Dap.MassStorage/ThemeIcons/16x16/devices/phone-htc-g1-white.png:
+	* src/Dap/Banshee.Dap.MassStorage/ThemeIcons/22x22/devices/phone-htc-g1-white.png:
+	* src/Dap/Banshee.Dap.MassStorage/ThemeIcons/48x48/devices/phone-htc-g1-white.png:
+	* src/Dap/Banshee.Dap.MassStorage/ThemeIcons/128x128/devices/phone-htc-g1-white.png:
+	Awesome G1 icons from jimmac
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs: Make FallbackIcon public
+	and static so other DapSources can use it
+
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/AndroidDevice.cs:
+	Use jimmac's awesome G1 icons
+
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageDevice.cs:
+	Allow devices to override the source icon; set the G1 source 
+
+2008-11-10  Aaron Bockover  <abock@gnome.org>
+
 	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageDevice.cs:
 	Don't use var because gmcs 1.2.5 sucks more than I thought it did
 

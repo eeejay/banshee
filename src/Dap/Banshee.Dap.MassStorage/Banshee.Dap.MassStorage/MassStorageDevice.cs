@@ -176,6 +176,11 @@ namespace Banshee.Dap.MassStorage
             get { return "mass-storage"; }
         }
         
+        public virtual string [] GetIconNames ()
+        {
+            return null;
+        }
+        
         public bool IsType (string type)
         {
             return type == DeviceType;

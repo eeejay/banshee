@@ -56,6 +56,10 @@ namespace Banshee.Dap.MassStorage
             "amazonmp3/"
         };
         
+        private static string [] icon_names = new string [] {
+            "phone-htc-g1-white", DapSource.FallbackIcon
+        };
+        
         private AmazonMp3GroupSource amazon_source;
         private string amazon_base_dir;
         
@@ -112,6 +116,11 @@ namespace Banshee.Dap.MassStorage
         
         public override int CoverArtSize {
             get { return 320; }
+        }
+        
+        public override string [] GetIconNames () 
+        {
+            return icon_names;
         }
         
         public override bool GetTrackPath (TrackInfo track, out string path)
