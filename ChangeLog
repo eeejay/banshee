@@ -1,3 +1,9 @@
+2008-11-09  Sandy Armstrong  <sanfordarmstrong@gmail.com>
+
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/DeviceMapper.cs:
+	Add support for T-Mobile G1 with USB Debugging enabled (product_id
+	changes to 0x0c02).  Fixes BGO #560096.
+
 2008-11-10  Ivan N. Zlatev  <contact@i-nz.net>
 
 	* src/Clients/Booter/Booter/Entry.cs:

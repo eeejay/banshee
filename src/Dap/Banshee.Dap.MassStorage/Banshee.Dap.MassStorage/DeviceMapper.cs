@@ -34,7 +34,8 @@ namespace Banshee.Dap.MassStorage
     internal static class DeviceMapper
     {
         private static DeviceMap [] devices = new DeviceMap [] {
-            new DeviceMap (typeof (AndroidDevice), "HTC", "T-Mobile G1", 0x0bb4, 0x0c01)
+            new DeviceMap (typeof (AndroidDevice), "HTC", "T-Mobile G1", 0x0bb4, 0x0c01),
+            new DeviceMap (typeof (AndroidDevice), "HTC", "T-Mobile G1", 0x0bb4, 0x0c02)
         };
     
         public static MassStorageDevice Map (MassStorageSource source)
