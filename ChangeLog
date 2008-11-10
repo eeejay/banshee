@@ -1,3 +1,9 @@
+2008-11-09  Eoin Hennessy <eoin@randomrules.org>
+
+	* src/Backends/Banshee.Osx/Banshee.OsxBackend/OsxBackend.cs: Fixed issue 
+	with dock events being ignored due to change in ige-mac-integration api.
+	Disabled quitting via dock item menu until BGO #560108 is fixed. 
+
 2008-11-09  Sandy Armstrong  <sanfordarmstrong@gmail.com>
 
 	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/DeviceMapper.cs:

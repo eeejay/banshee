@@ -94,14 +94,14 @@ namespace Banshee.OsxBackend
 
             elements_service.PrimaryWindow.WindowStateEvent += WindowStateHandler;
             
-            // bind gtk menu to globel osx menu 
+            // bind gtk menu to global osx menu 
             BindMenuBar ();
 
             // make menu more osx-like
             AdjustMainMenu ();
 
             // add dock handlers
-            IgeMacDock doc = new IgeMacDock();
+            IgeMacDock doc = IgeMacDock.Default;
             doc.Clicked += OnDockClicked;
             doc.QuitActivate += OnDockQuitActivated;
         }
@@ -131,7 +131,10 @@ namespace Banshee.OsxBackend
 
         private void OnDockQuitActivated (object o, System.EventArgs args) 
         {
-            Banshee.ServiceStack.Application.Shutdown ();
+            // FIXME: disabled due to issue with intermitant throwing of exception 
+            // while quitting via the dock item.. need to figure out where exactly
+            // the issue is..
+            //Banshee.ServiceStack.Application.Shutdown ();
         }
         
         private void BindMenuBar ()
