@@ -43,7 +43,7 @@ namespace Banshee.Dap.MassStorage
                 short product_id = (short)source.UsbDevice.ProductId;
                 
                 if (node.Matches (vendor_id, product_id)) {
-                    MassStorageDevice device = (MassStorageDevice)node.CreateInstance (); 
+                    CustomMassStorageDevice device = (CustomMassStorageDevice)node.CreateInstance (); 
                     device.VendorProductInfo = new VendorProductInfo (
                         node.VendorName, node.ProductName,
                         vendor_id, product_id);

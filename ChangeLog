@@ -1,5 +1,13 @@
 2008-11-10  Aaron Bockover  <abock@gnome.org>
 
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageDevice.cs:
+	Don't use var because gmcs 1.2.5 sucks more than I thought it did
+
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/DeviceMapper.cs:
+	Unbreak the build
+
+2008-11-10  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.Services/Banshee.Hardware/VendorProductDeviceNode.cs:
 	Custom Mono.Addins extension node that allows targeting device class
 	definitions as extensions
