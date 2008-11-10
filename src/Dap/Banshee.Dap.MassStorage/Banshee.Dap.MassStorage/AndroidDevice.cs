@@ -59,11 +59,6 @@ namespace Banshee.Dap.MassStorage
         private AmazonMp3GroupSource amazon_source;
         private string amazon_base_dir;
         
-        public AndroidDevice (VendorProductInfo productInfo, MassStorageSource source) 
-            : base (productInfo, source)
-        {
-        }
-        
         public override void SourceInitialize ()
         {
             amazon_base_dir = System.IO.Path.Combine (Source.Volume.MountPoint, audio_folders[1]);

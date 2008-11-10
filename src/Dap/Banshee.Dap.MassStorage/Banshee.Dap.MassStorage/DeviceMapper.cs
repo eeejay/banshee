@@ -27,46 +27,32 @@
 //
 
 using System;
+using Mono.Addins;
+
 using Banshee.Hardware;
 
 namespace Banshee.Dap.MassStorage
 {
     internal static class DeviceMapper
     {
-        private static DeviceMap [] devices = new DeviceMap [] {
-            new DeviceMap (typeof (AndroidDevice), "HTC", "T-Mobile G1", 0x0bb4, 0x0c01),
-            new DeviceMap (typeof (AndroidDevice), "HTC", "T-Mobile G1", 0x0bb4, 0x0c02)
-        };
-    
         public static MassStorageDevice Map (MassStorageSource source)
         {
-            foreach (DeviceMap map in devices) {
-                if (map.VendorProductInfo.VendorId == source.UsbDevice.VendorId && 
-                    map.VendorProductInfo.ProductId == source.UsbDevice.ProductId) {
-                    return (CustomMassStorageDevice)Activator.CreateInstance (map.DeviceType, 
-                        new object [] { map.VendorProductInfo, source });
+            foreach (VendorProductDeviceNode node in AddinManager.GetExtensionNodes (
+                "/Banshee/Dap/MassStorage/Device")) {
+                short vendor_id = (short)source.UsbDevice.VendorId;
+                short product_id = (short)source.UsbDevice.ProductId;
+                
+                if (node.Matches (vendor_id, product_id)) {
+                    MassStorageDevice device = (MassStorageDevice)node.CreateInstance (); 
+                    device.VendorProductInfo = new VendorProductInfo (
+                        node.VendorName, node.ProductName,
+                        vendor_id, product_id);
+                    device.Source = source;
+                    return device;
                 }
             }
             
             return new MassStorageDevice (source);
-        }
-        
-        private struct DeviceMap
-        {
-            public DeviceMap (Type type, VendorProductInfo vpi)
-            {
-                DeviceType = type;
-                VendorProductInfo = vpi;
-            }
-            
-            public DeviceMap (Type type, string vendor, string product, short vendorId, short productId)
-            {
-                DeviceType = type;
-                VendorProductInfo = new VendorProductInfo (vendor, product, vendorId, productId);
-            }
-            
-            public VendorProductInfo VendorProductInfo;
-            public Type DeviceType;
         }
     }
 }

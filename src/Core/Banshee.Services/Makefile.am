@@ -63,6 +63,7 @@ SOURCES =  \
 	Banshee.Hardware/IHardwareManager.cs \
 	Banshee.Hardware/IUsbDevice.cs \
 	Banshee.Hardware/IVolume.cs \
+	Banshee.Hardware/VendorProductDeviceNode.cs \
 	Banshee.Hardware/VendorProductInfo.cs \
 	Banshee.Library/HomeDirectoryImportSource.cs \
 	Banshee.Library/IImportSource.cs \

@@ -1,7 +1,23 @@
-2008-11-10  Sandy Armstrong  <sanfordarmstrong@gmail.com>
+2008-11-10  Aaron Bockover  <abock@gnome.org>
 
-	* build/osx/README: Need to run `make` to build Banshee, not just
-	autogen.osx.sh.
+	* src/Core/Banshee.Services/Banshee.Hardware/VendorProductDeviceNode.cs:
+	Custom Mono.Addins extension node that allows targeting device class
+	definitions as extensions
+
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage.addin.xml:
+	Defined a MassStorageDevice extension point and custom node; added
+	the T-Mobile G1 devices as extensions using new node support
+
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/DeviceMapper.cs:
+	Use Mono.Addins and the new extension node to load custom devices, so
+	other devices can be supported in the future without requiring
+	modifications to Banshee
+
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/AndroidDevice.cs:
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageDevice.cs:
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/CustomMassStorageDevice.cs:
+	Updated API to ensure everything works well with Mono.Addins'
+	TypeExtensionNode instantiation
 
 2008-11-09  Eoin Hennessy <eoin@randomrules.org>
 

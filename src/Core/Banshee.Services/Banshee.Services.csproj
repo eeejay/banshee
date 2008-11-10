@@ -242,6 +242,7 @@
     <Compile Include="Banshee.Collection\RescanPipeline.cs" />
     <Compile Include="Banshee.Hardware\VendorProductInfo.cs" />
     <Compile Include="Banshee.Hardware\IUsbDevice.cs" />
+    <Compile Include="Banshee.Hardware\VendorProductDeviceNode.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Banshee.Services.addin.xml" />

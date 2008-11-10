@@ -34,16 +34,14 @@ namespace Banshee.Dap.MassStorage
 {   
     public class CustomMassStorageDevice : MassStorageDevice
     {       
-        private VendorProductInfo product_info;
-        
-        public CustomMassStorageDevice (VendorProductInfo productInfo, MassStorageSource source) 
-            : base (source)
-        {
-            product_info = productInfo;
+        private VendorProductInfo vendor_product_info;
+        public VendorProductInfo VendorProductInfo {
+            get { return vendor_product_info; }
+            set { vendor_product_info = value; }
         }
         
         public override string Name {
-            get { return product_info.ProductName; }
+            get { return vendor_product_info.ProductName; }
         }
     }
 }

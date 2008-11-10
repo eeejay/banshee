@@ -18,5 +18,16 @@
   <Extension path="/Banshee/Dap/DeviceClass">
     <DeviceClass class="Banshee.Dap.MassStorage.MassStorageSource"/>
   </Extension>
+  
+  <ExtensionPoint path="/Banshee/Dap/MassStorage/Device">
+    <ExtensionNode name="MassStorageDevice" type="Banshee.Hardware.VendorProductDeviceNode"/>
+  </ExtensionPoint>
+  
+  <!-- Any devices we wish to special case and support out of the box -->
+  <Extension path="/Banshee/Dap/MassStorage/Device">
+    <MassStorageDevice class="Banshee.Dap.MassStorage.AndroidDevice" 
+        vendor-name="HTC" product-name="T-Mobile G1"
+        vendor-id="0x0bb4" product-id="0x0c01,0x0c02"/>
+  </Extension>
 
 </Addin>

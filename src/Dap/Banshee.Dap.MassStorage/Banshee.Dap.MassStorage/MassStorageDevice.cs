@@ -42,13 +42,18 @@ namespace Banshee.Dap.MassStorage
     public class MassStorageDevice : IDeviceMediaCapabilities
     {
         private MassStorageSource source;
-        protected MassStorageSource Source {
+        public MassStorageSource Source {
             get { return source; }
+            set { source = value; }
+        }
+        
+        public MassStorageDevice ()
+        {
         }
         
         public MassStorageDevice (MassStorageSource source)
         {
-            this.source = source;
+            Source = source;
         }
         
         public virtual void SourceInitialize ()
@@ -70,7 +75,7 @@ namespace Banshee.Dap.MassStorage
             }
             
             try {
-                foreach (KeyValuePair<string, string []> item in new KeyValueParser (reader = new StreamReader (path))) {
+                foreach (var item in new KeyValueParser (reader = new StreamReader (path))) {
                     try {
                         switch (item.Key) {
                             case "name": name = item.Value[0]; break;
