@@ -42,8 +42,7 @@ namespace Banshee.Dap.Gui
     public class DapContent : DapPropertiesDisplay
     {
         private DapSource dap;
-
-        private VBox vbox;
+        
         //private WrapLabel dap_stats;
 
         // Ugh, this is to avoid the GLib.MissingIntPtrCtorException seen by some; BGO #552169
@@ -60,29 +59,34 @@ namespace Banshee.Dap.Gui
 
         private void BuildWidgets ()
         {
-            vbox = new VBox ();
-            Add (vbox);
-
-            HBox header_box = new HBox ();
-            header_box.PackStart (new Image (LargeIcon), false, false, 0);
+            HBox split_box = new HBox ();
+            VBox content_box = new VBox ();
+            
+            content_box.BorderWidth = 5;
             
             Label title = new Label ();
             title.Markup = String.Format ("<span size=\"x-large\" weight=\"bold\">{0}</span>", dap.Name);
-            title.Xalign = 0f;
-            header_box.PackStart (title, false, false, 0);
+            title.Xalign = 0.0f;
             
-            vbox.PackStart (header_box, false, false, 0);
+            Banshee.Preferences.Gui.NotebookPage properties = new Banshee.Preferences.Gui.NotebookPage (dap.Preferences);
+            properties.BorderWidth = 0;
             
-            vbox.PackStart (new Banshee.Preferences.Gui.NotebookPage (dap.Preferences), false, false, 0);
-
-            //vbox.PackStart (new HSeparator (), false, false, 0);
-
+            content_box.PackStart (title, false, false, 0);
+            content_box.PackStart (properties, false, false, 0);
+            
+            Image image = new Image (LargeIcon);
+            image.Yalign = 0.0f;
+            
+            split_box.PackStart (image, false, true, 0);
+            split_box.PackEnd (content_box, true, true, 0);
+            
+            Add (split_box);
+            ShowAll ();
+            
             /*dap_stats = new WrapLabel ();
             dap.Sync.Updated += delegate { Banshee.Base.ThreadAssist.ProxyToMain (UpdateStatus); };
             dap_stats.Text = dap.Sync.ToString ();
             vbox.PackStart (dap_stats, false, false, 0);*/
-            
-            ShowAll ();
         }
 
         /*private void UpdateStatus ()

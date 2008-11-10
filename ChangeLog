@@ -1,5 +1,18 @@
 2008-11-10  Aaron Bockover  <abock@gnome.org>
 
+	* src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapPropertiesDisplay.cs: Extend
+	Gtk.Alignment and render the frame manually so content can be
+	centered
+
+	* src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapContent.cs: Reworked content
+	layout to be more visually appealing and space optimizing
+
+	* src/Dap/Banshee.Dap.MassStorage/ThemeIcons/16x16/categories/amazon-mp3-source.png:
+	* src/Dap/Banshee.Dap.MassStorage/ThemeIcons/22x22/categories/amazon-mp3-source.png:
+	Super hot new store icon from jimmac
+
+2008-11-10  Aaron Bockover  <abock@gnome.org>
+
 	* src/Dap/Banshee.Dap.MassStorage/ThemeIcons/32x32/devices/phone-htc-g1-white.png:
 	* src/Dap/Banshee.Dap.MassStorage/ThemeIcons/16x16/devices/phone-htc-g1-white.png:
 	* src/Dap/Banshee.Dap.MassStorage/ThemeIcons/22x22/devices/phone-htc-g1-white.png:
