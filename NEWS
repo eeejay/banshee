@@ -10,7 +10,7 @@ WELCOME TO BANSHEE 1.4 - Released November 7, 2008
     experience automatic cover art fetching as you listen; and easily browse,
     search, and control your media collection."
 
-  * Learn More: http://banshee-project.org/download/archives/1.4.0/
+  * Learn More: http://banshee-project.org/download/archives/1.4.1/
 
 
 ===============================================================================
@@ -145,7 +145,7 @@ NEW AWESOME FEATURES AND ENHANCEMENTS
         external applications wishing to integrate with Banshee's playback,
         like GNOME Do (BGO #557526)
       * Support localization when running uninstalled (BGO #393046)
-      * 192 bugs were FIXED since 1.2.1
+      * 196 bugs were FIXED since 1.2.1
 
 
 ===============================================================================
@@ -155,9 +155,9 @@ SOURCES / PACKAGES
 Sources
 -------
 
-    * Banshee 1.4.0 Tarballs:
-      http://download.banshee-project.org/banshee/banshee-1-1.4.0.tar.bz2
-      http://download.banshee-project.org/banshee/banshee-1-1.4.0.tar.gz
+    * Banshee 1.4.1 Tarballs:
+      http://download.banshee-project.org/banshee/banshee-1-1.4.1.tar.bz2
+      http://download.banshee-project.org/banshee/banshee-1-1.4.1.tar.gz
 
 Packages
 --------
@@ -169,13 +169,13 @@ Packages
 
     Binaries for Mac OS X 10.4 and 10.5:
 
-    * http://download.banshee-project.org/banshee/banshee-1-1.4.0.macosx.intel.dmg
+    * http://download.banshee-project.org/banshee/banshee-1-1.4.1.macosx.intel.dmg
 
 ChangeLogs & Checksums
 ----------------------
 
-    * http://download.banshee-project.org/banshee/banshee-1-1.4.0.changes
-    * http://download.banshee-project.org/banshee/banshee-1-1.4.0.sha1sum
+    * http://download.banshee-project.org/banshee/banshee-1-1.4.1.changes
+    * http://download.banshee-project.org/banshee/banshee-1-1.4.1.sha1sum
 
 
 ===============================================================================
@@ -227,7 +227,7 @@ REPORT BUGS - HELP THE PROJECT - GROW THE COMMUNITY
     If you encounter any bad behavior with this release, please do not
     hesitate to file bugs!
 
-    * http://bugzilla.gnome.org/enter_bug.cgi?product=banshee&version=1.4.0
+    * http://bugzilla.gnome.org/enter_bug.cgi?product=banshee&version=1.4.1
 
 
 ===============================================================================
@@ -243,10 +243,10 @@ Contributors For This Release
       Aaron Bockover, Alan McGovern, Alexander Hixon, Alex Launi,
       Andrés G. Aragoneses, Benoit Boissinot, Bertrand Lorentz, Bob Copeland,
       Brad Taylor, Chris Howie, David Spreen, Eoin Hennessy, Eric Butler,
-      Félix Velasco, Gabriel Burt, Gabriel Burt, Iain Lane, James Willcox,
-      Marek Habersack, Maxim Ermilov, Michael Monreal, Pacho Ramos,
-      Ruben Vermeersch, Russ Smith, Salah Coronya, Sandy Armstrong,
-      Sebastian Dröge, Wouter Bolsterlee
+      Félix Velasco, Gabriel Burt, Gabriel Burt, Iain Lane, Ivan N. Zlatev,
+      James Willcox, Marek Habersack, Maxim Ermilov, Michael Monreal,
+      Pacho Ramos, Ruben Vermeersch, Russ Smith, Salah Coronya,
+      Sandy Armstrong, Sebastian Dröge, Wouter Bolsterlee
 
     The following people contributed updated translations to this release. 
     Without them, our project's reach would be much more limited.
