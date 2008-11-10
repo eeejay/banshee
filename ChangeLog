@@ -1,3 +1,8 @@
+2008-11-10  Sandy Armstrong  <sanfordarmstrong@gmail.com>
+
+	* build/osx/README: Need to run `make` to build Banshee, not just
+	autogen.osx.sh.
+
 2008-11-09  Eoin Hennessy <eoin@randomrules.org>
 
 	* src/Backends/Banshee.Osx/Banshee.OsxBackend/OsxBackend.cs: Fixed issue 

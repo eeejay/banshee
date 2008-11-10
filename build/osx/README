@@ -33,7 +33,7 @@ Building Banshee
 
   Once the bundled dependencies are built, as described above, building 
   Banshee is as easy as running the autogen.osx.sh script in the top of 
-  the Banshee checkout.
+  the Banshee checkout, then running `make`.
 
 
 Running Banshee
