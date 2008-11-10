@@ -33,15 +33,17 @@
 	Patch from Cosmin Banu to prevent a crash when importing a file from
 	recent items (BGO #559823).
 
-2008-11-09 Alan McGovern <alan.mcgovern@gmail.com>
-	* Banshee.Torrent/Banshee.Torrent/TorrentService.cs: If the service is
-	  not already running when banshee calls it, we need to ping it a
-	  second time to see if it auto-started
+2008-11-09  Alan McGovern <alan.mcgovern@gmail.com>
 
-2008-11-09 Alan McGovern <alan.mcgovern@gmail.com>
-	* Banshee.Torrent/Banshee.Torrent/TorrentService.cs:
-	* Banshee.Torrent/Banshee.Torrent/TorrentFileDownloadTask.cs: Update to
-	  work with the latest monotorrent.dbus
+	* src/Extensions/Banshee.Torrent/Banshee.Torrent/TorrentService.cs: If the
+	service is not already running when banshee calls it, we need to ping it a
+	second time to see if it auto-started.
+
+2008-11-09  Alan McGovern <alan.mcgovern@gmail.com>
+
+	* src/Extensions/Banshee.Torrent/Banshee.Torrent/TorrentService.cs:
+	* src/Extensions/Banshee.Torrent/Banshee.Torrent/TorrentFileDownloadTask.cs:
+	Update to work with the latest monotorrent.dbus
 
 2008-11-09  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
