@@ -19,16 +19,8 @@
       <AssemblyInfo>
         <AssemblyVersion>1.4.0.0</AssemblyVersion>
       </AssemblyInfo>
-      <Parameters>
-        <Parameter Name="property" Type="System.String" />
-        <Parameter Name="expand" Type="System.Boolean" />
-      </Parameters>
-      <Docs>
-        <param name="property">To be added.</param>
-        <param name="expand">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <Parameters><Parameter Name="property" Type="System.String" /><Parameter Name="expand" Type="System.Boolean" /></Parameters>
+      <Docs><param name="property">To be added.</param><param name="expand">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
   </Members>
 </Type>

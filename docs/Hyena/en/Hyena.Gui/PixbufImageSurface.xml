@@ -13,37 +13,23 @@
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
+    
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public PixbufImageSurface (Gdk.Pixbuf pixbuf);" />
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.4.0.0</AssemblyVersion>
       </AssemblyInfo>
-      <Parameters>
-        <Parameter Name="pixbuf" Type="Gdk.Pixbuf" />
-      </Parameters>
-      <Docs>
-        <param name="pixbuf">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName=".ctor">
+      <Parameters><Parameter Name="pixbuf" Type="Gdk.Pixbuf" /></Parameters>
+      <Docs><param name="pixbuf">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public PixbufImageSurface (Gdk.Pixbuf pixbuf, bool disposePixbuf);" />
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.4.0.0</AssemblyVersion>
       </AssemblyInfo>
-      <Parameters>
-        <Parameter Name="pixbuf" Type="Gdk.Pixbuf" />
-        <Parameter Name="disposePixbuf" Type="System.Boolean" />
-      </Parameters>
-      <Docs>
-        <param name="pixbuf">To be added.</param>
-        <param name="disposePixbuf">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <Parameters><Parameter Name="pixbuf" Type="Gdk.Pixbuf" /><Parameter Name="disposePixbuf" Type="System.Boolean" /></Parameters>
+      <Docs><param name="pixbuf">To be added.</param><param name="disposePixbuf">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
   </Members>
 </Type>

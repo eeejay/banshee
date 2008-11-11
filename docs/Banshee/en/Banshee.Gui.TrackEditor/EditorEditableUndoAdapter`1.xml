@@ -17,6 +17,8 @@
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
+    
+    
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public EditorEditableUndoAdapter ();" />
       <MemberType>Constructor</MemberType>
@@ -24,45 +26,25 @@
         <AssemblyVersion>1.4.0.0</AssemblyVersion>
       </AssemblyInfo>
       <Parameters />
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="ConnectUndo">
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="ConnectUndo">
       <MemberSignature Language="C#" Value="public void ConnectUndo (T entry, Banshee.Gui.TrackEditor.EditorTrackInfo track);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.4.0.0</AssemblyVersion>
       </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="entry" Type="T" />
-        <Parameter Name="track" Type="Banshee.Gui.TrackEditor.EditorTrackInfo" />
-      </Parameters>
-      <Docs>
-        <param name="entry">To be added.</param>
-        <param name="track">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="DisconnectUndo">
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="entry" Type="T" /><Parameter Name="track" Type="Banshee.Gui.TrackEditor.EditorTrackInfo" /></Parameters>
+      <Docs><param name="entry">To be added.</param><param name="track">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="DisconnectUndo">
       <MemberSignature Language="C#" Value="public void DisconnectUndo ();" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.4.0.0</AssemblyVersion>
       </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters />
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
     </Member>
   </Members>
 </Type>

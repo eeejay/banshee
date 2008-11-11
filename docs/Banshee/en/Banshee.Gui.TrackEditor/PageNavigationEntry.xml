@@ -20,131 +20,79 @@
     <remarks>To be added.</remarks>
   </Docs>
   <Members>
+    
+    
+    
+    
+    
+    
+    
     <Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public PageNavigationEntry (Banshee.Gui.TrackEditor.TrackEditorDialog dialog);" />
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.4.0.0</AssemblyVersion>
       </AssemblyInfo>
-      <Parameters>
-        <Parameter Name="dialog" Type="Banshee.Gui.TrackEditor.TrackEditorDialog" />
-      </Parameters>
-      <Docs>
-        <param name="dialog">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName=".ctor">
+      <Parameters><Parameter Name="dialog" Type="Banshee.Gui.TrackEditor.TrackEditorDialog" /></Parameters>
+      <Docs><param name="dialog">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName=".ctor">
       <MemberSignature Language="C#" Value="public PageNavigationEntry (Banshee.Gui.TrackEditor.TrackEditorDialog dialog, string completionTable, string completionColumn);" />
       <MemberType>Constructor</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.4.0.0</AssemblyVersion>
       </AssemblyInfo>
-      <Parameters>
-        <Parameter Name="dialog" Type="Banshee.Gui.TrackEditor.TrackEditorDialog" />
-        <Parameter Name="completionTable" Type="System.String" />
-        <Parameter Name="completionColumn" Type="System.String" />
-      </Parameters>
-      <Docs>
-        <param name="dialog">To be added.</param>
-        <param name="completionTable">To be added.</param>
-        <param name="completionColumn">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="Changed">
+      <Parameters><Parameter Name="dialog" Type="Banshee.Gui.TrackEditor.TrackEditorDialog" /><Parameter Name="completionTable" Type="System.String" /><Parameter Name="completionColumn" Type="System.String" /></Parameters>
+      <Docs><param name="dialog">To be added.</param><param name="completionTable">To be added.</param><param name="completionColumn">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="Changed">
       <MemberSignature Language="C#" Value="public event EventHandler Changed;" />
       <MemberType>Event</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.4.0.0</AssemblyVersion>
       </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>System.EventHandler</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="ConnectUndo">
+      <ReturnValue><ReturnType>System.EventHandler</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="ConnectUndo">
       <MemberSignature Language="C#" Value="public void ConnectUndo (Banshee.Gui.TrackEditor.EditorTrackInfo track);" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.4.0.0</AssemblyVersion>
       </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
-      <Parameters>
-        <Parameter Name="track" Type="Banshee.Gui.TrackEditor.EditorTrackInfo" />
-      </Parameters>
-      <Docs>
-        <param name="track">To be added.</param>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="DisconnectUndo">
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
+      <Parameters><Parameter Name="track" Type="Banshee.Gui.TrackEditor.EditorTrackInfo" /></Parameters>
+      <Docs><param name="track">To be added.</param><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="DisconnectUndo">
       <MemberSignature Language="C#" Value="public void DisconnectUndo ();" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.4.0.0</AssemblyVersion>
       </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>System.Void</ReturnType>
-      </ReturnValue>
+      <ReturnValue><ReturnType>System.Void</ReturnType></ReturnValue>
       <Parameters />
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="Entry">
+      <Docs><summary>To be added.</summary><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="Entry">
       <MemberSignature Language="C#" Value="public Banshee.Gui.TrackEditor.TextEntry Entry { get; }" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.4.0.0</AssemblyVersion>
       </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>Banshee.Gui.TrackEditor.TextEntry</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="ForwardButton">
+      <ReturnValue><ReturnType>Banshee.Gui.TrackEditor.TextEntry</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="ForwardButton">
       <MemberSignature Language="C#" Value="public Gtk.Button ForwardButton { get; }" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.4.0.0</AssemblyVersion>
       </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>Gtk.Button</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
-    </Member>
-    <Member MemberName="Text">
+      <ReturnValue><ReturnType>Gtk.Button</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
+    </Member><Member MemberName="Text">
       <MemberSignature Language="C#" Value="public string Text { set; get; }" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>1.4.0.0</AssemblyVersion>
       </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>System.String</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <value>To be added.</value>
-        <remarks>To be added.</remarks>
-      </Docs>
+      <ReturnValue><ReturnType>System.String</ReturnType></ReturnValue>
+      <Docs><summary>To be added.</summary><value>To be added.</value><remarks>To be added.</remarks></Docs>
     </Member>
   </Members>
 </Type>

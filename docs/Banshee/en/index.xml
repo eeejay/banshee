@@ -393,6 +393,7 @@
       <Type Name="IHardwareManager" />
       <Type Name="IUsbDevice" />
       <Type Name="IVolume" />
+      <Type Name="VendorProductDeviceNode" />
       <Type Name="VendorProductInfo" />
     </Namespace>
     <Namespace Name="Banshee.I18n">
