@@ -239,43 +239,47 @@ namespace Banshee.ServiceStack
             get { return "media-player-banshee"; }
         }
         
-        private static string version;
-        public static string Version {
+        private static string api_version;
+        public static string ApiVersion {
             get { 
-                if (version != null) {
-                    return version;
+                if (api_version != null) {
+                    return api_version;
                 }
                 
                 try {
                     AssemblyName name = Assembly.GetEntryAssembly ().GetName ();
-                    version = String.Format ("{0}.{1}.{2}", name.Version.Major, 
+                    api_version = String.Format ("{0}.{1}.{2}", name.Version.Major, 
                         name.Version.Minor, name.Version.Build);
                 } catch {
-                    version = Catalog.GetString ("Unknown");
+                    api_version = "unknown";
                 }
                 
-                return version;
+                return api_version;
             }
+        }
+        
+        private static string version;
+        public static string Version {
+            get { return version ?? (version = GetVersion ("ReleaseVersion")); }
         }
         
         private static string display_version;
         public static string DisplayVersion {
-            get { 
-                if (display_version != null) {
-                    return display_version;
+            get { return display_version ?? (display_version = GetVersion ("DisplayVersion")); }
+        }
+        
+        private static string GetVersion (string versionName)
+        {
+            foreach (Attribute attribute in Assembly.GetEntryAssembly ().GetCustomAttributes (false)) {
+                Type type = attribute.GetType ();
+                PropertyInfo property = type.GetProperty (versionName);
+                if (type.Name == "ApplicationVersionAttribute" && property != null && 
+                    property.PropertyType == typeof (string)) {
+                    return (string)property.GetValue (attribute, null); 
                 }
-                
-                foreach (Attribute attribute in Assembly.GetEntryAssembly ().GetCustomAttributes (false)) {
-                    Type type = attribute.GetType ();
-                    PropertyInfo property = type.GetProperty ("Version");
-                    if (type.Name == "AssemblyDisplayVersionAttribute" && property != null && 
-                        property.PropertyType == typeof (string)) {
-                        display_version = (string)property.GetValue (attribute, null); 
-                    }
-                }
-                
-                return display_version;
             }
+            
+            return Catalog.GetString ("Unknown");
         }
     }
 }

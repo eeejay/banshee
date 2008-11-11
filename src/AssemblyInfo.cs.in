@@ -2,24 +2,30 @@ using System;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
+[assembly: ApplicationVersion ("@VERSION@", "@DISPLAY_VERSION@")]
 [assembly: AssemblyVersion ("@ASM_VERSION@")]
-[assembly: AssemblyDisplayVersion ("@ASM_DISPLAY_VERSION@")]
 [assembly: AssemblyTitle ("Banshee")]
 [assembly: AssemblyDescription ("Banshee Media Player")]
 [assembly: AssemblyCopyright ("Copyright (C) 2005-2008 Novell, 2005 Aaron Bockover")]
 [assembly: AssemblyCompany ("Novell, Inc.")]
 
 [AttributeUsage (AttributeTargets.Assembly, Inherited = false)]
-internal sealed class AssemblyDisplayVersionAttribute : Attribute
+internal sealed class ApplicationVersionAttribute : Attribute
 {
-    private string version;
-    public string Version {
-        get { return version; }
+    private string release_version;
+    public string ReleaseVersion {
+        get { return release_version; }
     }
 
-    public AssemblyDisplayVersionAttribute (string version)
+    private string display_version;
+    public string DisplayVersion {
+        get { return display_version; }
+    }
+
+    public ApplicationVersionAttribute (string releaseVersion, string displayVersion)
     {
-        this.version = version;
+        release_version = releaseVersion;
+        display_version = displayVersion;
     }
 }
 

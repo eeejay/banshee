@@ -1,5 +1,13 @@
 2008-11-10  Aaron Bockover  <abock@gnome.org>
 
+	* configure.ac:
+	* src/AssemblyInfo.cs.in:
+	* src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs: Added a
+	third version concept, since we need the assembly version to stay the
+	same to reflect the stable API version
+
+2008-11-10  Aaron Bockover  <abock@gnome.org>
+
 	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/AndroidDevice.cs:
 	Return the device name simply as what's in the VendorProductInfo
 	object
