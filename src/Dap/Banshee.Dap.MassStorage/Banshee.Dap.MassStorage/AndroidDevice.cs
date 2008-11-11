@@ -76,18 +76,8 @@ namespace Banshee.Dap.MassStorage
             return true;
         }
         
-        private string name;
         public override string Name {
-            get { 
-                if (name == null) {
-                    name = Source.UsbDevice.Name;
-                    if (String.IsNullOrEmpty (Name)) {
-                        name = base.Name ?? "Android Phone";
-                    }
-                }
-                
-                return name;
-            }
+            get { return VendorProductInfo.ProductName; }
         }
         
         public override string [] AudioFolders {

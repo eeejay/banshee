@@ -1,5 +1,14 @@
 2008-11-10  Aaron Bockover  <abock@gnome.org>
 
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/AndroidDevice.cs:
+	Return the device name simply as what's in the VendorProductInfo
+	object
+
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage.addin.xml:
+	Change to Android G1 Phone, detaching from T-Mobile
+
+2008-11-10  Aaron Bockover  <abock@gnome.org>
+
 	* src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapPropertiesDisplay.cs: Extend
 	Gtk.Alignment and render the frame manually so content can be
 	centered
