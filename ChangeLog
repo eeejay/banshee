@@ -1,5 +1,9 @@
 2008-11-10  Aaron Bockover  <abock@gnome.org>
 
+	Banshee 1.4.1 Released
+
+2008-11-10  Aaron Bockover  <abock@gnome.org>
+
 	* configure.ac:
 	* src/AssemblyInfo.cs.in:
 	* src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs: Added a
