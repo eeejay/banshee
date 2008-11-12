@@ -514,7 +514,7 @@ namespace Banshee.Dap.MassStorage
                 
                 // If we are the last track, go ahead and delete the artwork
                 // to ensure that the directory tree can get trimmed away too
-                if (files == 0) {
+                if (files == 0 && CoverArtFileName != null) {
                     System.IO.File.Delete (Paths.Combine (track_dir, CoverArtFileName));
                 }
                 

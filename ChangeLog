@@ -1,3 +1,9 @@
+2008-11-12  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:
+	Patch from Benjamín Valero Espinosa fixing bug that prevented the last
+	tracks in a folder from being deleted (BGO #560550).
+
 2008-11-10  Aaron Bockover  <abock@gnome.org>
 
 	Banshee 1.4.1 Released
