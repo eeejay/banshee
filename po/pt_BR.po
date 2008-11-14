@@ -4,7 +4,7 @@
 # Marco Carvalho <marcocarvalho89@yahoo.com.br>, 2005.
 # Evandro Fernandes Giovanini <evandrofg@ig.com.br>, 2006.
 # Vladimir Melo <vladimirmelo.psi@gmail.com>, 2007-2008.
-# Og Maciel <ogmaciel@ubuntu.com>, 2007-2008.
+# Og Maciel <ogmaciel@gnome.org>, 2007-2008.
 # Daniel Abreu <dlabreu@gmail.com>, 2007.
 # Rodrigo Flores <rodrigomarquesflores@gmail.com>, 2008.
 # Michel Recondo <mrecondo@gmail.com>, 2008.
@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-01 11:24-0400\n"
-"PO-Revision-Date: 2008-11-01 11:27-0400\n"
+"POT-Creation-Date: 2008-11-14 08:42-0500\n"
+"PO-Revision-Date: 2008-11-14 08:43-0500\n"
 "Last-Translator: Og Maciel <ogmaciel@gnome.org>\n"
 "Language-Team: Brazilian Portuguese <gnome-l10n-br@listas.cipsga.org.br>\n"
 "MIME-Version: 1.0\n"
@@ -706,17 +706,17 @@ msgstr "Todos os artistas ({0})"
 
 #: ../src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs:136
 msgid "Scanning for media"
-msgstr "Varrendo por mídias"
+msgstr "Verificando mídias"
 
 #: ../src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs:184
 #: ../src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:933
 msgid "Scanning..."
-msgstr "Varrendo..."
+msgstr "Verificando..."
 
 #: ../src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs:200
 #, csharp-format
 msgid "Scanning ({0} files)..."
-msgstr "Varrendo ({0} arquivos)..."
+msgstr "Verificando ({0} arquivos)..."
 
 #: ../src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs:234
 msgid "Importing Media"
@@ -742,7 +742,7 @@ msgstr "Renomeando {0}"
 #: ../src/Core/Banshee.Services/Banshee.Collection/RescanPipeline.cs:77
 #, csharp-format
 msgid "Rescanning {0} of {1}"
-msgstr "Varrendo {0} de {1}"
+msgstr "Verificando {0} de {1}"
 
 #: ../src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:226
 msgid "Upgrading your Banshee Database"
@@ -1477,7 +1477,7 @@ msgstr "Pulos"
 msgid "Plays"
 msgstr "Reproduções"
 
-#: ../src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs:254
+#: ../src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs:282
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:139
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:141
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:143
@@ -1566,17 +1566,17 @@ msgstr "Erros"
 msgid "Drive"
 msgstr "Drive"
 
-#: ../src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs:659
+#: ../src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs:673
 #, csharp-format
 msgid "Adding {0} of {1} to {2}"
 msgstr "Adicionando {0} de {1} para {2}"
 
-#: ../src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs:676
+#: ../src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs:690
 #, csharp-format
 msgid "Deleting {0} of {1} From {2}"
 msgstr "Excluindo {0} de {1} de {2}"
 
-#: ../src/Core/Banshee.Services/Banshee.Sources/Source.cs:639
+#: ../src/Core/Banshee.Services/Banshee.Sources/Source.cs:646
 #, csharp-format
 msgid "{0} item"
 msgid_plural "{0} items"
@@ -1669,19 +1669,19 @@ msgstr "Habilitado"
 msgid "{0} by {1}"
 msgstr "{0} por {1}"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:49
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:54
 msgid "Primary Development"
 msgstr "Desenvolvimento primário"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:57
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:62
 msgid "Contributors"
 msgstr "Colaboradores"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:91
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:96
 msgid "Extraordinary Multimedia Management and Playback"
 msgstr "Gerenciamento extraordinário de multimídia e reprodução"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:93
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:98
 msgid ""
 "Copyright © 2005–2008 Novell, Inc.\n"
 "Copyright © 2005 Aaron Bockover"
@@ -1689,7 +1689,7 @@ msgstr ""
 "Copyright © 2005-2008 Novell, Inc.\n"
 "Copyright © 2005 Aaron Bockover"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:98
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:103
 msgid "Banshee Website"
 msgstr "Site do Banshee"
 
@@ -1783,11 +1783,11 @@ msgstr "Importar uma lista de reprodução"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:61
 msgid "Rescan Music Library"
-msgstr "Varrer novamente biblioteca de música"
+msgstr "Verificar novamente biblioteca de música"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:62
 msgid "Rescan the Music Library folder"
-msgstr "Varrer novamente a pasta da biblioteca de música"
+msgstr "Verificar novamente a pasta da biblioteca de música"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:67
 msgid "Open _Location..."
@@ -2308,7 +2308,7 @@ msgstr "Definir todos os títulos do álbum para este valor"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:101
 msgid "Album Title:"
-msgstr "Título do Álbum:"
+msgstr "Título do álbum:"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:107
 msgid "Set all genres to this value"
@@ -2331,7 +2331,7 @@ msgstr "Definir automaticamente o número da faixa e a contagem"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:131
 msgid "Track Number:"
-msgstr "Número da Faixa:"
+msgstr "Número da faixa:"
 
 #. Catalog.GetString ("Automatically set disc number and count"),
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:147
@@ -2466,6 +2466,10 @@ msgstr "Dimensões do vídeo:"
 #, csharp-format
 msgid "{0} Codec:"
 msgstr "{0} codec:"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:134
+msgid "Container Formats:"
+msgstr "Formatos do recipiente"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:138
 msgid "Imported On:"
@@ -2964,7 +2968,11 @@ msgstr "Capacidade usada"
 msgid "Advanced details"
 msgstr "Detalhes avançados"
 
-#: ../src/Dap/Banshee.Dap/Banshee.Dap/MediaGroupSource.cs:53
+#: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/PurchasedMusicActions.cs:53
+msgid "Import Purchased Music"
+msgstr "Importar música comprada"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/MediaGroupSource.cs:56
 #, csharp-format
 msgid "Delete From {0}"
 msgstr "Excluir de {0}"
@@ -3004,7 +3012,7 @@ msgstr "Reconstruindo banco de dados"
 
 #: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/DatabaseRebuilder.cs:93
 msgid "Scanning iPod..."
-msgstr "Varrendo o iPod..."
+msgstr "Verificando o iPod..."
 
 #: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/DatabaseRebuilder.cs:128
 msgid "Processing Tracks..."
@@ -3063,27 +3071,27 @@ msgstr "Suporta arte de capa"
 msgid "Supports photos"
 msgstr "Suporta fotos"
 
-#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:619
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:621
 msgid "Out of space on device"
 msgstr "Não há espaço suficiente no disco"
 
-#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:619
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:621
 msgid "Please manually remove some songs"
 msgstr "Por favor, remova manualmente algumas músicas"
 
-#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:648
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:650
 msgid "Syncing iPod"
 msgstr "Sincronizando o iPod"
 
-#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:649
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:651
 msgid "Preparing to synchronize..."
 msgstr "Preparando para sincroniar..."
 
-#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:670
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:672
 msgid "Updating..."
 msgstr "Atualizando..."
 
-#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:674
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:676
 msgid "Flushing to disk..."
 msgstr "Descartando para o disco..."
 
@@ -3159,18 +3167,22 @@ msgstr "Reconstruir banco de dados"
 msgid "Rebuilding iPod Database..."
 msgstr "Reconstruindo banco de dados do iPod..."
 
-#: ../src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:101
+#: ../src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/AndroidDevice.cs:153
+msgid "Purchased Music"
+msgstr "Música comprada"
+
+#: ../src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:114
 #, csharp-format
 msgid "Audio Folder"
 msgid_plural "Audio Folders"
 msgstr[0] "Pasta de áudio"
 msgstr[1] "Pastas de áudio"
 
-#: ../src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:107
+#: ../src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:120
 msgid "Required Folder Depth"
 msgstr "Profundidade de pasta requerida"
 
-#: ../src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:110
+#: ../src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:123
 msgid "Supports Playlists"
 msgstr "Suporta listas de reprodução"
 
@@ -4905,9 +4917,6 @@ msgstr "Podcast desconhecido"
 
 #~ msgid "Import files inside a folder"
 #~ msgstr "Importar arquivos dentro de uma pasta"
-
-#~ msgid "Import Source"
-#~ msgstr "Importar Fonte"
 
 #~ msgid "User Scripts"
 #~ msgstr "Scripts do Usuário"
