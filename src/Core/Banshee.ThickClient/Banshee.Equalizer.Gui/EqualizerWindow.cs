@@ -127,11 +127,20 @@ namespace Banshee.Equalizer.Gui
             limits.MinHeight = SizeRequest ().Height;
             limits.MaxHeight = Gdk.Screen.Default.Height;
             SetGeometryHints (this, limits, Gdk.WindowHints.MaxSize);
-            
+
+            KeyPressEvent += OnKeyPress;
+
             Add (box);
             box.ShowAll ();
         }
-        
+
+        protected void OnKeyPress (object o, Gtk.KeyPressEventArgs evnt)
+        {
+            if (evnt.Event.Key == Gdk.Key.Escape) {
+                Destroy ();
+            }
+        }
+
         protected override void OnDestroyed ()
         {
             instance = null;

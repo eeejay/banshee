@@ -1,3 +1,9 @@
+2008-11-17  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.ThickClient/Banshee.Equalizer.Gui/EqualizerWindow.cs:
+	Patch from Erik Schmidt adding support for hitting Esc to close the
+	equalizer dialog (BGO #552818).
+
 2008-11-12  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:
