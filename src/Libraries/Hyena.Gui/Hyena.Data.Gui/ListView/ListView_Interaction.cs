@@ -299,8 +299,7 @@ namespace Hyena.Data.Gui
             }
         }
 
-        #pragma warning disable 0169
-        private bool GetEventCell<T> (int x, int y, out T icell, out Column column, out int row_index) where T : class
+        private bool GetEventCell<G> (int x, int y, out G icell, out Column column, out int row_index) where G : class
         {
             icell = null;
             column = null;
@@ -324,7 +323,7 @@ namespace Hyena.Data.Gui
             }
             
             ColumnCell cell = column.GetCell (0);
-            icell = cell as T;
+            icell = cell as G;
             if (icell == null) {
                 return false;
             }
@@ -333,7 +332,6 @@ namespace Hyena.Data.Gui
             cell.BindListItem (model[row_index]);
             return true;
         }
-        #pragma warning restore 0169
         
 #endregion
         

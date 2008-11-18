@@ -1,3 +1,8 @@
+2008-11-18  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Interaction.cs:
+	Patch from Brandon Perry fixing warning that mono svn raises (BGO #561392)
+
 2008-11-17  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.ThickClient/Banshee.Equalizer.Gui/EqualizerWindow.cs:
