@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-03 13:03+0100\n"
-"PO-Revision-Date: 2008-11-03 13:03+0100\n"
+"POT-Creation-Date: 2008-11-18 12:27+0100\n"
+"PO-Revision-Date: 2008-11-18 12:28+0100\n"
 "Last-Translator: Wouter Bolsterlee <wbolster@gnome.org>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "MIME-Version: 1.0\n"
@@ -1483,7 +1483,7 @@ msgstr "Doorgespoeld"
 msgid "Plays"
 msgstr "Afgespeeld"
 
-#: ../src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs:254
+#: ../src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs:282
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:139
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:141
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:143
@@ -1572,17 +1572,17 @@ msgstr "Fouten"
 msgid "Drive"
 msgstr "Schijf"
 
-#: ../src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs:659
+#: ../src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs:673
 #, csharp-format
 msgid "Adding {0} of {1} to {2}"
 msgstr "Bezig met toevoegen aan {2} ({0} van {1})"
 
-#: ../src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs:676
+#: ../src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs:690
 #, csharp-format
 msgid "Deleting {0} of {1} From {2}"
 msgstr "Bezig met verwijderen van {2} ({0} van {1})"
 
-#: ../src/Core/Banshee.Services/Banshee.Sources/Source.cs:639
+#: ../src/Core/Banshee.Services/Banshee.Sources/Source.cs:646
 #, csharp-format
 msgid "{0} item"
 msgid_plural "{0} items"
@@ -1676,20 +1676,20 @@ msgid "{0} by {1}"
 msgstr "{0} door {1}"
 
 # Vrij vertaald (Wouter Bolsterlee)
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:49
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:54
 msgid "Primary Development"
 msgstr "Hoofdontwikkeling:"
 
 # Vrij vertaald (Wouter Bolsterlee)
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:57
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:62
 msgid "Contributors"
 msgstr "Bijdragen van:"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:91
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:96
 msgid "Extraordinary Multimedia Management and Playback"
 msgstr "Beheren en afspelen van uw muziek"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:93
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:98
 msgid ""
 "Copyright © 2005–2008 Novell, Inc.\n"
 "Copyright © 2005 Aaron Bockover"
@@ -1697,7 +1697,7 @@ msgstr ""
 "Copyright © 2005–2008 Novell, Inc.\n"
 "Copyright © 2005 Aaron Bockover"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:98
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:103
 msgid "Banshee Website"
 msgstr "Banshee-website"
 
@@ -2500,6 +2500,10 @@ msgstr "Video-afmetingen:"
 msgid "{0} Codec:"
 msgstr "{0}-codec:"
 
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:134
+msgid "Container Formats:"
+msgstr "Container-formaten:"
+
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:138
 msgid "Imported On:"
 msgstr "Geïmporteerd:"
@@ -3001,7 +3005,11 @@ msgstr "Gebruikte capaciteit"
 msgid "Advanced details"
 msgstr "Geavanceerde details"
 
-#: ../src/Dap/Banshee.Dap/Banshee.Dap/MediaGroupSource.cs:53
+#: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/PurchasedMusicActions.cs:53
+msgid "Import Purchased Music"
+msgstr "Gekochte muziek importeren"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/MediaGroupSource.cs:56
 #, csharp-format
 msgid "Delete From {0}"
 msgstr "Verwijderen van {0}"
@@ -3100,27 +3108,27 @@ msgstr "Ondersteunt albumafbeeldingen"
 msgid "Supports photos"
 msgstr "Ondersteunt foto's"
 
-#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:619
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:621
 msgid "Out of space on device"
 msgstr "Geen ruimte meer op apparaat"
 
-#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:619
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:621
 msgid "Please manually remove some songs"
 msgstr "Verwijder handmatige enkele nummers"
 
-#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:648
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:650
 msgid "Syncing iPod"
 msgstr "iPod aan het synchroniseren"
 
-#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:649
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:651
 msgid "Preparing to synchronize..."
 msgstr "Synchroniseren voorbereiden…"
 
-#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:670
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:672
 msgid "Updating..."
 msgstr "Bijwerken…"
 
-#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:674
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:676
 msgid "Flushing to disk..."
 msgstr "Naar schijf schrijven…"
 
@@ -3196,18 +3204,22 @@ msgstr "Database opnieuw maken"
 msgid "Rebuilding iPod Database..."
 msgstr "iPod-database opnieuw maken…"
 
-#: ../src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:101
+#: ../src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/AndroidDevice.cs:153
+msgid "Purchased Music"
+msgstr "Gekochte muziek"
+
+#: ../src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:114
 #, csharp-format
 msgid "Audio Folder"
 msgid_plural "Audio Folders"
 msgstr[0] "Muziekmap"
 msgstr[1] "Muziekmappen"
 
-#: ../src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:107
+#: ../src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:120
 msgid "Required Folder Depth"
 msgstr "Benodigde mapdiepte"
 
-#: ../src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:110
+#: ../src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:123
 msgid "Supports Playlists"
 msgstr "Ondersteunt speellijsten"
 
@@ -4901,9 +4913,6 @@ msgstr "Onbekende podcast"
 
 #~ msgid "Repeat N_one"
 #~ msgstr "_Niets herhalen"
-
-#~ msgid "Import Source"
-#~ msgstr "Bron importeren"
 
 #~ msgid "_Audioscrobbler"
 #~ msgstr "_Audioscrobbler"
