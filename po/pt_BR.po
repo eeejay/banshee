@@ -10,6 +10,7 @@
 # Michel Recondo <mrecondo@gmail.com>, 2008.
 # Fabrício Godoy <skarllot@gmail.com>, 2008.
 # Carlos Eduardo Moreira dos Santos <cems@cemshost.com.br>, 2008.
+# Fábio Nogueira <deb-user-ba@ubuntu.com>, 2008.
 #
 # referências baseadas no gstreamer
 # filesink -> consumidor de arquivo
@@ -18,9 +19,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-14 08:42-0500\n"
-"PO-Revision-Date: 2008-11-14 08:43-0500\n"
-"Last-Translator: Og Maciel <ogmaciel@gnome.org>\n"
+"POT-Creation-Date: 2008-11-20 16:49-0500\n"
+"PO-Revision-Date: 2008-11-20 18:30-0300\n"
+"Last-Translator: Fábio Nogueira <deb-user-ba@ubuntu.com>\n"
 "Language-Team: Brazilian Portuguese <gnome-l10n-br@listas.cipsga.org.br>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -2259,9 +2260,11 @@ msgstr "Remover seleção de {0}?"
 msgid "Are you sure you want to remove the selected item from your {1}?"
 msgid_plural ""
 "Are you sure you want to remove the selected {0} items from your {1}?"
-msgstr[0] "Você tem certeza que quer remover o item selecionado do seu {1}?"
+msgstr[0] ""
+"Você tem certeza que quer remover o item selecionado do(a) seu(sua) {1}?"
 msgstr[1] ""
-"Você tem certeza que quer remover os {0} itens selecionados do seu {1}?"
+"Você tem certeza que quer remover os {0} itens selecionados do(a) seu(sua) "
+"{1}?"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/AlbumArtistEntry.cs:55
 msgid "Compilation Album Artist:"
