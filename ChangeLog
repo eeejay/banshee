@@ -1,5 +1,14 @@
 2008-11-21  Aaron Bockover  <abock@gnome.org>
 
+	* src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/DefaultPreferenceWidgets.cs:
+	Create the muisc directory before setting it on the FileChooserButton
+	to prevent GTK from wigging out and then setting the directory to
+	$HOME, causing the preference to save; if the music directory we create
+	here ends up not being chosen by the user, try to remove it (if it is
+	empty, which it should be since we created it) (BNC #432754)
+
+2008-11-21  Aaron Bockover  <abock@gnome.org>
+
 	* data/banshee-1.desktop.in.in:
 	* data/mimetypes.txt: Remove Real Audio/Video mime types (BNC #440615)
 

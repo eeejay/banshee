@@ -35,6 +35,7 @@ using Banshee.Library;
 using Banshee.Preferences;
 using Banshee.Collection;
 
+using Hyena;
 using Hyena.Widgets;
 using Banshee.Widgets;
 using Banshee.Gui.Widgets;
@@ -76,7 +77,8 @@ namespace Banshee.Preferences.Gui
             private FileChooserButton chooser;
             private Button reset;
             private LibraryLocationPreference preference;
-            
+            private string created_directory;
+
             public LibraryLocationButton (PreferenceBase pref)
             {
                 preference = (LibraryLocationPreference)pref;
@@ -84,6 +86,18 @@ namespace Banshee.Preferences.Gui
                 
                 Spacing = 5;
                 
+                // FileChooserButton wigs out if the directory does not exist,
+                // so create it if it doesn't and store the fact that we did
+                // in case it ends up not being used, we can remove it
+                try {
+                    if (!Banshee.IO.Directory.Exists (preference.Value)) {
+                        Banshee.IO.Directory.Create (preference.Value);
+                        created_directory = preference.Value;
+                        Log.DebugFormat ("Created library directory: {0}", created_directory);
+                    } 
+                } catch {
+                }
+
                 chooser = new FileChooserButton (Catalog.GetString ("Select library location"), 
                     FileChooserAction.SelectFolder);
                 chooser.SetCurrentFolder (preference.Value);
@@ -112,6 +126,24 @@ namespace Banshee.Preferences.Gui
             private void OnChooserChanged (object o, EventArgs args)
             {
                 preference.Value = chooser.Filename;
+            }
+
+            protected override void OnUnrealized ()
+            {
+                // If the directory we had to create to appease FileSystemChooser exists
+                // and ended up not being the one selected by the user we clean it up
+                if (created_directory != null && chooser.Filename != created_directory) {
+                    try {
+                        Banshee.IO.Directory.Delete (created_directory);
+                        if (!Banshee.IO.Directory.Exists (created_directory)) {
+                            Log.DebugFormat ("Deleted unusedi and empty previous library directory: {0}", created_directory);
+                            created_directory = null;
+                        }
+                    } catch {
+                    }
+                }
+                
+                base.OnUnrealized ();
             }
         }
         
