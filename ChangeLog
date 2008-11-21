@@ -1,3 +1,8 @@
+2008-11-21  Aaron Bockover  <abock@gnome.org>
+
+	* data/banshee-1.desktop.in.in:
+	* data/mimetypes.txt: Remove Real Audio/Video mime types (BNC #440615)
+
 2008-11-18  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Interaction.cs:
