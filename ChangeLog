@@ -1,3 +1,15 @@
+2008-11-24  Aaron Bockover  <abock@gnome.org>
+
+	* src/Clients/Booter/banshee-1.in: Fixed quoting in wrapper script so
+	filenames with spaces work; especially important since Dolphin/Konqueror do
+	not use URIs for local file paths even though %U is specified in the 
+	.desktop file (BNC #440883)
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Gui/GtkUtilities.cs: Moved ForeachWidget
+	method into GtkUtilities so it can be reused by third party extensions,
+	which is particularly useful (BGO #562151)
+
 2008-11-21  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/DefaultPreferenceWidgets.cs:

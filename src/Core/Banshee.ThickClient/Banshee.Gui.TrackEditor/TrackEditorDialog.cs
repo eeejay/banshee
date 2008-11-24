@@ -283,34 +283,13 @@ namespace Banshee.Gui.TrackEditor
             button_box.ShowAll ();
         }
         
-        private delegate void WidgetAction<T> (T widget) where T : class;
-        
-        private void ForeachWidget<T> (WidgetAction<T> action) where T : class
+        public void ForeachWidget<T> (WidgetAction<T> action) where T : class
         {
             for (int i = 0; i < notebook.NPages; i++) {
-                ForeachWidget (notebook.GetNthPage (i) as Container, action);
+                GtkUtilities.ForeachWidget (notebook.GetNthPage (i) as Container, action);
             }     
         }
-        
-        private void ForeachWidget<T> (Container container, WidgetAction<T> action) where T : class
-        {
-            if (container == null) {
-                return;
-            }
-            
-            foreach (Widget child in container.Children) {
-                T widget = child as T;
-                if (widget != null) {
-                    action (widget);
-                } else {
-                    Container child_container = child as Container;
-                    if (child_container != null) {
-                        ForeachWidget<T> (child_container, action);
-                    }
-                }
-            }
-        }
-        
+
         private void InvokeFieldSync ()
         {
             ForeachWidget<SyncButton> (delegate (SyncButton button) {

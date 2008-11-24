@@ -37,13 +37,13 @@ if [ -n "$BANSHEE_DEBUG" -o -n "$BANSHEE_TRACE" -o -n "$BANSHEE_PROFILE" ]; then
 fi
 
 # Finally - environment is set up, time to run our beloved
-exec_args="-a banshee-1 mono $MONO_OPTIONS $MONO_EXE $@"
+exec_args="-a banshee-1 mono $MONO_OPTIONS $MONO_EXE"
 
 if [ -z "$BANSHEE_REDIRECT_LOG" ]; then
-	exec $exec_args
+	exec $exec_args "$@"
 else
 	mkdir -p `dirname "$BANSHEE_REDIRECT_LOG"`
-	exec $exec_args &> $BANSHEE_REDIRECT_LOG
+	exec $exec_args "$@" &> $BANSHEE_REDIRECT_LOG
 fi
 
 

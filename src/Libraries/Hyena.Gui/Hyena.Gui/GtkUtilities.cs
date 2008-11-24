@@ -31,6 +31,8 @@ using Gtk;
 
 namespace Hyena.Gui
 {
+    public delegate void WidgetAction<T> (T widget) where T : class;
+    
     public static class GtkUtilities
     {
         private static Gdk.ModifierType [] important_modifiers = new Gdk.ModifierType [] {
@@ -141,6 +143,25 @@ namespace Hyena.Gui
         {
             object result = widget.StyleGetProperty (property);
             return result != null && result.GetType () == typeof (T) ? (T)result : default_value;
+        }
+        
+        public static void ForeachWidget<T> (Container container, WidgetAction<T> action) where T : class
+        {
+            if (container == null) {
+                return;
+            }
+            
+            foreach (Widget child in container.Children) {
+                T widget = child as T;
+                if (widget != null) {
+                    action (widget);
+                } else {
+                    Container child_container = child as Container;
+                    if (child_container != null) {
+                        ForeachWidget<T> (child_container, action);
+                    }
+                }
+            }
         }
     }
 }
