@@ -218,27 +218,27 @@ namespace Banshee.Sources.Gui
                 bool last_even_filter = (i == filter_scrolled_windows.Count - 1 && filter_scrolled_windows.Count % 2 == 0);
                 if (i > 0 && !last_even_filter) {
                     Paned new_pane = GetPane (top);
-                    current_pane.Add2 (new_pane);
+                    current_pane.Pack2 (new_pane, true, false);
                     current_pane.Position = 350;
                     PersistentPaneController.Control (current_pane, ControllerName (top, i));
                     current_pane = new_pane;
                 }
                
                 if (last_even_filter) {
-                    current_pane.Add2 (window);
+                    current_pane.Pack2 (window, true, false);
                     current_pane.Position = 350;
                     PersistentPaneController.Control (current_pane, ControllerName (top, i));
                 } else {
                     /*if (i == 0)
                         current_pane.Pack1 (window, false, false);
                     else*/
-                        current_pane.Add1 (window);
+                        current_pane.Pack1 (window, true, false);
                 }
                     
             }
             
-            container.Add1 (filter_box);
-            container.Add2 (main_scrolled_window);
+            container.Pack1 (filter_box, true, false);
+            container.Pack2 (main_scrolled_window, true, false);
             browser_container = filter_box;
             
             container.Position = top ? 175 : 275;

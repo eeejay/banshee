@@ -1,3 +1,11 @@
+2008-12-04  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/FilteredListSourceContents.cs:
+	Use Pack instead of Add when adding items to Panes, so that the min-size
+	of children is respected and they can't be practically hidden - fixes bug
+	with podcasts list being zero height and therefore not visible on small
+	screens (BGO #560675)
+
 2008-11-24  Aaron Bockover  <abock@gnome.org>
 
 	* src/Clients/Booter/banshee-1.in: Fixed quoting in wrapper script so
