@@ -86,11 +86,11 @@ namespace Banshee.HalBackend
         public string CoverArtFileType {
             get {
                 if (cover_art_file_type == null) {
-                    cover_art_file_name = SafelyGetString ("portable_audio_player.cover_art_file_type");
+                    cover_art_file_type = SafelyGetString ("portable_audio_player.cover_art_file_type");
                 }
                 return cover_art_file_type;
             }
-        }		
+        }
 
         private string [] playlist_formats;
         public string [] PlaylistFormats {

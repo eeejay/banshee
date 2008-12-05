@@ -1,5 +1,11 @@
 2008-12-04  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Backends/Banshee.Hal/Banshee.HalBackend/DeviceMediaCapabilities.cs:
+	Fix bug that prevents 'portable_audio_player.cover_art_file_type' property
+	from being used (BGO #563290)
+
+2008-12-04  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/FilteredListSourceContents.cs:
 	Use Pack instead of Add when adding items to Panes, so that the min-size
 	of children is respected and they can't be practically hidden - fixes bug
