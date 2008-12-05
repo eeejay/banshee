@@ -6,8 +6,11 @@ TARGETS=(
     "liboil            0.3.15        %n-%v     %d.tar.gz   http://liboil.freedesktop.org/download/%f  ${GST_CONFIGURE_ARGS}"
     "gstreamer         0.10.21       %n-%v     %d.tar.gz   ${GST_DOWNLOAD_URI}                        ${GST_CONFIGURE_ARGS}"
     "gst-plugins-base  0.10.21       %n-%v     %d.tar.gz   ${GST_DOWNLOAD_URI}                        ${GST_CONFIGURE_ARGS} --disable-x --disable-xvideo --disable-xshm --disable-gio --disable-gnome_vfs"
-    "gst-plugins-good  0.10.11       %n-%v     %d.tar.gz   ${GST_DOWNLOAD_URI}                        ${GST_CONFIGURE_ARGS} --disable-x --disable-xvideo --disable-xshm --disable-gdk_pixbuf --disable-cairo --disable-jpeg --disable-libpng --disable-annodex --disable-flac"
+    "gst-plugins-good  0.10.11       %n-%v     %d.tar.gz   ${GST_DOWNLOAD_URI}                        ${GST_CONFIGURE_ARGS} --disable-x --disable-xvideo --disable-xshm --disable-gdk_pixbuf --disable-cairo --disable-jpeg --disable-libpng --disable-annodex"
     
     # We rely on -bad just for the QuickTime loader plugin right now
     "gst-plugins-bad   0.10.9        %n-%v     %d.tar.gz   ${GST_DOWNLOAD_URI}                        ${GST_CONFIGURE_ARGS} --with-plugins=quicktime --disable-apexsink --disable-bz2 --disable-metadata --disable-oss4 --disable-theoradec"
+
+    # mp3 playback via qtwrapper requires mp3parse
+    "gst-plugins-ugly  0.10.10        %n-%v     %d.tar.gz   ${GST_DOWNLOAD_URI}                        ${GST_CONFIGURE_ARGS} --disable-asfdemux"
 )

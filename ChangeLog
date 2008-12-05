@@ -1,3 +1,12 @@
+2008-12-02  Eoin Hennessy <eoin@randomrules.org>
+
+	* build/osx/targets/bundle-30-gstreamer.targets: Added gst-plugins-ugly to
+	osx dependency targets. The mp3parse element is necessary for duration queries 
+	to work on mp3 audio pipelines.
+
+	* build/osx/targets/bundle-10-xiph-libs.target: Readded FLAC support to 
+	osx dependencies. 
+
 2008-12-04  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Backends/Banshee.Hal/Banshee.HalBackend/DeviceMediaCapabilities.cs:
