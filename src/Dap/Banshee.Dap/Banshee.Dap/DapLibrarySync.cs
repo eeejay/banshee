@@ -219,9 +219,9 @@ namespace Banshee.Dap
                         ServiceManager.DbConnection.Execute (
                             String.Format (
                                 @"INSERT INTO CorePlaylistEntries (PlaylistID, TrackID)
-                                    SELECT ?, TrackID FROM CoreTracks WHERE PrimarySourceID = ? AND MetadataHash IN (
-                                        SELECT MetadataHash FROM CoreTracks{0} WHERE {1})",
-                                from.DatabaseTrackModel.JoinFragment, from.DatabaseTrackModel.Condition),
+                                    SELECT ?, TrackID FROM CoreTracks WHERE PrimarySourceID = ? AND MetadataHash IN 
+                                        (SELECT MetadataHash FROM {0} WHERE {1})",
+                                from.DatabaseTrackModel.ConditionFromFragment, from.DatabaseTrackModel.Condition),
                             to.DbId, sync.Dap.DbId
                         );
                         to.UpdateCounts ();

@@ -593,8 +593,8 @@ namespace Banshee.Dap.Ipod
                     if (from != null && from.Count > 0) {
                         IPod.Playlist playlist = ipod_device.TrackDatabase.CreatePlaylist (from.Name);
                         foreach (int track_id in ServiceManager.DbConnection.QueryEnumerable<int> (String.Format (
-                            "SELECT CoreTracks.TrackID FROM CoreTracks{0} WHERE {1}",
-                            from.DatabaseTrackModel.JoinFragment, from.DatabaseTrackModel.Condition)))
+                            "SELECT CoreTracks.TrackID FROM {0} WHERE {1}",
+                            from.DatabaseTrackModel.ConditionFromFragment, from.DatabaseTrackModel.Condition)))
                         {
                             playlist.AddTrack (tracks_map[track_id].IpodTrack);
                         }

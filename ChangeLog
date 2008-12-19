@@ -1,3 +1,14 @@
+2008-12-19  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastTrackListModel.cs:
+	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:
+	* src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapLibrarySync.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackListModel.cs:
+	Fix crash that happened toward the end of syncing a DAP device, caused by
+	not including in the FROM clause all the tables needed for the WHERE
+	conditions of podcast-related playlists (BGO #558662)
+
 2008-12-02  Eoin Hennessy <eoin@randomrules.org>
 
 	* build/osx/targets/bundle-30-gstreamer.targets: Added gst-plugins-ugly to

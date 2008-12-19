@@ -64,7 +64,7 @@ namespace Banshee.Collection.Database
         private bool forced_sort_query;
         
         private string reload_fragment;
-        private string join_table, join_fragment, join_primary_key, join_column, condition;
+        private string join_table, join_fragment, join_primary_key, join_column, condition, condition_from;
 
         private string query_fragment;
         private string user_query;
@@ -188,8 +188,8 @@ namespace Banshee.Collection.Database
         public string UnfilteredQuery {
             get {
                 return unfiltered_query ?? (unfiltered_query = String.Format (
-                    "FROM {0}{1} WHERE {2} {3}",
-                    From, JoinFragment,
+                    "FROM {0} WHERE {1} {2}",
+                    FromFragment,
                     String.IsNullOrEmpty (provider.Where) ? "1=1" : provider.Where,
                     ConditionFragment
                 ));
@@ -200,7 +200,12 @@ namespace Banshee.Collection.Database
         protected string From {
             get { return from ?? provider.From; }
             set { from = value; }
-        }     
+        }
+
+        private string from_fragment;
+        public string FromFragment {
+            get { return from_fragment ?? (from_fragment = String.Format ("{0}{1}", From, JoinFragment)); }
+        }
 
         public virtual void UpdateUnfilteredAggregates ()
         {
@@ -426,16 +431,44 @@ namespace Banshee.Collection.Database
             get { return join_column; }
             set { join_column = value; }
         }
-        
+
         public void AddCondition (string part)
+        {
+            AddCondition (null, part);
+        }
+        
+        public void AddCondition (string tables, string part)
         {
             if (!String.IsNullOrEmpty (part)) {
                 condition = condition == null ? part : String.Format ("{0} AND {1}", condition, part);
+
+                if (!String.IsNullOrEmpty (tables)) {
+                    condition_from = condition_from == null ? tables : String.Format ("{0}, {1}", condition_from, tables);
+                }
             }
         }
         
         public string Condition {
             get { return condition; }
+        }
+
+        private string condition_from_fragment;
+        public string ConditionFromFragment {
+            get {
+                if (condition_from_fragment == null) {
+                    if (JoinFragment == null) {
+                        condition_from_fragment = condition_from;
+                    } else {
+                        if (condition_from == null) {
+                            condition_from = "CoreTracks";
+                        }
+
+                        condition_from_fragment = String.Format ("{0}{1}", condition_from, JoinFragment);
+                    }
+                }
+
+                return condition_from_fragment;
+            }
         }
 
         public string ConditionFragment {

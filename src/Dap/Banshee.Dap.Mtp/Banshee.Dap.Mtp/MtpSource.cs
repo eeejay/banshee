@@ -228,8 +228,8 @@ namespace Banshee.Dap.Mtp
                     if (from != null && from.Count > 0) {
                         MTP.Playlist playlist = new MTP.Playlist (mtp_device, from.Name);
                         foreach (int track_id in ServiceManager.DbConnection.QueryEnumerable<int> (String.Format (
-                            "SELECT CoreTracks.ExternalID FROM CoreTracks{0} WHERE {1}",
-                            from.DatabaseTrackModel.JoinFragment, from.DatabaseTrackModel.Condition)))
+                            "SELECT CoreTracks.ExternalID FROM {0} WHERE {1}",
+                            from.DatabaseTrackModel.ConditionFromFragment, from.DatabaseTrackModel.Condition)))
                         {
                             playlist.AddTrack (track_id);
                         }
