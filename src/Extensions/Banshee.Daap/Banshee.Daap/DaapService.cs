@@ -129,6 +129,11 @@ namespace Banshee.Daap
 
         public void DelayedInitialize ()
         {
+            Application.RunTimeout (3*1000, DelayedInitializeTimeout);
+        }
+
+        public bool DelayedInitializeTimeout ()
+        {
             // Add the source, even though its empty, so that the user sees the
             // plugin is enabled, just no child sources yet.
             source_map = new Dictionary<string, DaapSource> ();
@@ -151,6 +156,7 @@ namespace Banshee.Daap
             } catch (Exception e) {
                 Hyena.Log.Exception ("Failed to start DAAP client", e);
             }
+            return false;
         }
         
         string IService.ServiceName {

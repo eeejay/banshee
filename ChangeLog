@@ -1,5 +1,11 @@
 2008-12-19  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapService.cs: Delay the
+	initialization of the DAAP plugin for 3 seconds in an attempt to avoid the
+	lock-related freezes (BNC #450125)
+
+2008-12-19  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs: Fix
 	crasher bug with using Banshee in a language that has a non-ASCII
 	character in "Audio CD" (BGO #565059).
