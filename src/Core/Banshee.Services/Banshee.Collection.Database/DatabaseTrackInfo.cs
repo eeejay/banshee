@@ -163,7 +163,7 @@ namespace Banshee.Collection.Database
 
             ProviderSave ();
 
-            if (notify) {
+            if (notify && PrimarySource != null) {
                 if (is_new) {
                     PrimarySource.NotifyTracksAdded ();
                 } else {

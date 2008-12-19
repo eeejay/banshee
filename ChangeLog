@@ -1,5 +1,14 @@
 2008-12-19  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs: Fix
+	crasher bug with using Banshee in a language that has a non-ASCII
+	character in "Audio CD" (BGO #565059).
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	Prevent NRE.
+
+2008-12-19  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastTrackListModel.cs:
 	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:
 	* src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:

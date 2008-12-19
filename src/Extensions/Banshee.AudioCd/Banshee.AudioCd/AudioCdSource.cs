@@ -55,7 +55,8 @@ namespace Banshee.AudioCd
         {
             this.service = service;
             this.disc_model = discModel;
-            TypeUniqueId = discModel.Title;
+
+            TypeUniqueId = "";
             
             Properties.SetString ("TrackView.ColumnControllerXml", String.Format (@"
                 <column-controller>
