@@ -60,12 +60,6 @@ namespace Banshee.Collection
                     return true;
                 }
 
-                // Same as base.AllSelected except range can start at 1 or 0
-                if (RangeCollection.RangeCount == 1) {
-                    RangeCollection.Range range = RangeCollection.Ranges[0];
-                    return range.Start <= 1 && range.End == MaxIndex;
-                }
-
                 return false;
             }
         }

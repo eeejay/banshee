@@ -1,5 +1,12 @@
 2008-12-19  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Collection/SelectAllSelection.cs: Fix
+	a bug with determining if a selection (of podcasts, etc) was 'all'; this
+	prevented users who had only one subscription from deleting it (BGO
+	#560210)
+
+2008-12-19  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapService.cs: Delay the
 	initialization of the DAAP plugin for 3 seconds in an attempt to avoid the
 	lock-related freezes (BNC #450125)
