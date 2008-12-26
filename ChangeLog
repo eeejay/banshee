@@ -1,3 +1,8 @@
+2008-12-26  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Services/Banshee.Services.addins: Remove /tmp from
+	the list of paths to scan for addins (BGO #556656)
+
 2008-12-19  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Collection/SelectAllSelection.cs: Fix
