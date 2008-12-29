@@ -62,6 +62,9 @@ namespace Banshee.Podcasting.Data
         {
             if (track != null) {
                 PodcastTrackInfo pi = track.ExternalObject as PodcastTrackInfo;
+                if (pi != null) {
+                    track.ReleaseDate = pi.PublishedDate;
+                }
                 return pi;
             }
             return null;

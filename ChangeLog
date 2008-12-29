@@ -1,5 +1,11 @@
 2008-12-29  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastTrackInfo.cs:
+	Fix bug with the published date of a playing podcast episode not getting
+	loaded/displayed properly (BGO #565863)
+
+2008-12-29  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumInfo.cs: 
 	Patch from John Millikin fixing issue with an album sometimes being listed
 	twice, once as a compilation album and once not (BGO #557313)
