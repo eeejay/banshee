@@ -181,6 +181,9 @@ namespace Banshee.Streaming
             if (apple_tag != null && apple_tag.IsCompilation)
                 return true;
             
+            // FIXME the FirstAlbumArtist != FirstPerformer check might return true for half the
+            // tracks on a compilation album, but false for some
+            // TODO checked for 'Soundtrack' (and translated) in the title?
             if (tag.Performers.Length > 0 && tag.AlbumArtists.Length > 0 &&
                 (tag.Performers.Length != tag.AlbumArtists.Length || tag.FirstAlbumArtist != tag.FirstPerformer)) {
                 return true;

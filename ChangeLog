@@ -1,5 +1,14 @@
 2008-12-29  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumInfo.cs: 
+	Patch from John Millikin fixing issue with an album sometimes being listed
+	twice, once as a compilation album and once not (BGO #557313)
+
+	* src/Core/Banshee.Core/Banshee.Streaming/StreamTagger.cs: Add some notes
+	in a comment.
+
+2008-12-29  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/BasicTrackDetailsPage.cs:
 	Patch from Ivan Zlatev, fixing bug where the first track's TrackCount
 	value wasn't set properly when using the automagic-button (BGO #561083)

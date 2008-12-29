@@ -50,7 +50,7 @@ namespace Banshee.Collection.Database
         }
 
         private static HyenaSqliteCommand select_command = new HyenaSqliteCommand (String.Format (
-            "SELECT {0} FROM {1} WHERE {2} AND CoreAlbums.ArtistID = ? AND CoreAlbums.Title = ? AND CoreAlbums.IsCompilation = ?",
+            "SELECT {0} FROM {1} WHERE {2} AND CoreAlbums.ArtistID = ? AND CoreAlbums.Title = ?",
             provider.Select, provider.From,
             (String.IsNullOrEmpty (provider.Where) ? "1=1" : provider.Where)
         ));
@@ -63,7 +63,6 @@ namespace Banshee.Collection.Database
 
         private static int last_artist_id;
         private static string last_title;
-        private static bool last_compilation;
         private static DatabaseAlbumInfo last_album;
         
         public static void Reset ()
@@ -83,7 +82,7 @@ namespace Banshee.Collection.Database
 
         public static DatabaseAlbumInfo FindOrCreate (DatabaseArtistInfo artist, DatabaseAlbumInfo album)
         {
-            if (album.Title == last_title && artist.DbId == last_artist_id && last_album != null && last_compilation == album.IsCompilation) {
+            if (album.Title == last_title && artist.DbId == last_artist_id && last_album != null) {
                 return last_album;
             }
 
@@ -91,12 +90,24 @@ namespace Banshee.Collection.Database
                 album.Title = Catalog.GetString ("Unknown Album");
             }
 
-            using (IDataReader reader = ServiceManager.DbConnection.Query (select_command, artist.DbId, album.Title, album.IsCompilation)) {
+            using (IDataReader reader = ServiceManager.DbConnection.Query (select_command, artist.DbId, album.Title)) {
                 if (reader.Read ()) {
+                    bool save = false;
                     last_album = provider.Load (reader);
+
                     // If the artist name has changed since last time (but it's the same artist) then update our copy of the ArtistName
                     if (last_album.ArtistName != artist.Name) {
                         last_album.ArtistName = artist.Name;
+                        save = true;
+                    }
+                    
+                    // If the album IsCompilation status has changed, update the saved album info
+                    if (last_album.IsCompilation != album.IsCompilation) {
+                        last_album.IsCompilation = album.IsCompilation;
+                        save = true;
+                    }
+
+                    if (save) {
                         last_album.Save ();
                     }
                 } else {
@@ -109,7 +120,6 @@ namespace Banshee.Collection.Database
             
             last_title = album.Title;
             last_artist_id = artist.DbId;
-            last_compilation = album.IsCompilation;
             return last_album;
         }
 
