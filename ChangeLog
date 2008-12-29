@@ -1,5 +1,10 @@
 2008-12-29  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/ImageButton.cs: Patch from Wouter
+	Bolsterlee fixing mnemonic support (BGO #557880)
+
+2008-12-29  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastTrackInfo.cs:
 	Fix bug with the published date of a playing podcast episode not getting
 	loaded/displayed properly (BGO #565863)

@@ -44,7 +44,7 @@ namespace Hyena.Widgets
             image.IconSize = (int) iconSize;
 
             Label label = new Label ();
-            label.Markup = text;
+            label.MarkupWithMnemonic = text;
 
             HBox hbox = new HBox ();
             hbox.Spacing = 2;
