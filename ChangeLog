@@ -1,5 +1,10 @@
 2008-12-29  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Libraries/Lastfm/Lastfm/AudioscrobblerConnection.cs: Patch from John
+	Millikin fixing bug encoding/scrobbling non-ASCII info (BGO #539963)
+
+2008-12-29  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Libraries/Hyena.Gui/Hyena.Widgets/ImageButton.cs: Patch from Wouter
 	Bolsterlee fixing mnemonic support (BGO #557880)
 

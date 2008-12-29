@@ -87,7 +87,7 @@ namespace Lastfm
         
         private HttpWebRequest now_playing_post;
         private bool now_playing_started;
-        private string current_now_playing_uri;
+        private string current_now_playing_data;
         private HttpWebRequest current_web_req;
         private IAsyncResult current_async_result;
         private State state;
@@ -190,9 +190,9 @@ namespace Lastfm
                 } else {
                     if (queue.Count > 0 && session_id != null) {
                         state = State.NeedTransmit;
-                    } else if (current_now_playing_uri != null && session_id != null) {
+                    } else if (current_now_playing_data != null && session_id != null) {
                         // Now playing info needs to be sent
-                        NowPlaying (current_now_playing_uri);
+                        NowPlaying (current_now_playing_data);
                     } else {
                         StopTransitionHandler ();
                     }
@@ -496,14 +496,14 @@ namespace Lastfm
             // Fall back to prefixing the URL with a # in case we haven't actually
             // authenticated yet. We replace it with the now_playing_url and session_id
             // later on in NowPlaying(uri).
-            string uriprefix = "#";
+            string dataprefix = "#";
             
             if (session_id != null) {
-                uriprefix = String.Format ("{0}?s={1}", now_playing_url, session_id);
+                dataprefix = String.Format ("s={0}", session_id);
             }
             
-            string uri = String.Format ("{0}&a={1}&t={2}&b={3}&l={4}&n={5}&m={6}",
-                                        uriprefix,
+            string data = String.Format ("{0}&a={1}&t={2}&b={3}&l={4}&n={5}&m={6}",
+                                        dataprefix,
                                         HttpUtility.UrlEncode(artist),
                                         HttpUtility.UrlEncode(title),
                                         HttpUtility.UrlEncode(album),
@@ -512,10 +512,10 @@ namespace Lastfm
                                         mbrainzid);
 
             Console.WriteLine ("Submitting via non-uri handler.");            
-            NowPlaying (uri);
+            NowPlaying (data);
         }
         
-        private void NowPlaying (string uri)
+        private void NowPlaying (string data)
         {            
             if (now_playing_started) {
                 return;
@@ -525,13 +525,13 @@ namespace Lastfm
             // had actually authenticated. So, because we didn't know the session_id and
             // now_playing_url previously, we should now, so we put that in and create our
             // new URI.
-            if (uri.StartsWith ("#") && session_id != null) {
-                uri = String.Format ("{0}?s={1}{2}", now_playing_url,
-                                    session_id,
-                                    uri.Substring (1));
+            if (data.StartsWith ("#") && session_id != null) {
+                data = String.Format ("s={0}{1}",
+                                      session_id,
+                                      data.Substring (1));
             }
             
-            current_now_playing_uri = uri;
+            current_now_playing_data = data;
             
             if (session_id == null) {
                 // Go connect - we'll come back later in main timer loop.
@@ -540,11 +540,18 @@ namespace Lastfm
             }
 
             try {
-                now_playing_post = (HttpWebRequest) WebRequest.Create (uri);
+                now_playing_post = (HttpWebRequest) WebRequest.Create (now_playing_url);
                 now_playing_post.UserAgent = LastfmCore.UserAgent;
                 now_playing_post.Method = "POST";
                 now_playing_post.ContentType = "application/x-www-form-urlencoded";
-                now_playing_post.ContentLength = uri.Length;
+                
+                ASCIIEncoding encoding = new ASCIIEncoding ();
+                byte[] data_bytes = encoding.GetBytes (data);
+                now_playing_post.ContentLength = data_bytes.Length;
+                Stream request_stream = now_playing_post.GetRequestStream ();
+                request_stream.Write (data_bytes, 0, data_bytes.Length);
+                request_stream.Close ();
+
                 if (state == State.Idle) {
                     // Don't actually POST it until we're idle (that is, we
                     // probably have stuff queued which will reset the Now
@@ -556,8 +563,8 @@ namespace Lastfm
                 Log.Warning ("Audioscrobbler NowPlaying failed",
                                   String.Format ("Exception while creating request: {0}", ex), false);
                 
-                // Reset current_now_playing_uri if it was the problem.
-                current_now_playing_uri = null;
+                // Reset current_now_playing_data if it was the problem.
+                current_now_playing_data = null;
             }
         }
 
@@ -587,7 +594,7 @@ namespace Lastfm
                     Log.DebugFormat ("Submitted NowPlaying track to Audioscrobbler");
                     now_playing_started = false;
                     now_playing_post = null;
-                    current_now_playing_uri = null;
+                    current_now_playing_data = null;
                     return;
                 } else {
                     Log.Warning ("Audioscrobbler NowPlaying failed", "Unexpected or no response", false);       
@@ -601,10 +608,10 @@ namespace Lastfm
             // NowPlaying error/success is non-crutial.
             hard_failures++;
             if (hard_failures < 3) {
-                NowPlaying (current_now_playing_uri);
+                NowPlaying (current_now_playing_data);
             } else {
                 // Give up - NowPlaying status information is non-critical.
-                current_now_playing_uri = null;
+                current_now_playing_data = null;
                 now_playing_started = false;
                 now_playing_post = null;
             }
