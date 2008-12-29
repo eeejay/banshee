@@ -1,5 +1,11 @@
 2008-12-29  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Libraries/Migo/Migo.Syndication/RssParser.cs: If RFC 822 datetime
+	parsing fails, try falling back to parsing the pubDate etc with
+	DateTime.TryParse (BGO #561381)
+
+2008-12-29  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseQueryFilterModel.cs:
 	Update to new QueryField api - will probably need some work when we
 	re-enable other filters (genre browser, etc).

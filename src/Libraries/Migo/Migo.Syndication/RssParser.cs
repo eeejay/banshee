@@ -301,7 +301,13 @@ namespace Migo.Syndication
             string result = GetXmlNodeText (node, tag);
 
             if (!String.IsNullOrEmpty (result)) {
-                Rfc822DateTime.TryParse (result, out ret);
+                if (Rfc822DateTime.TryParse (result, out ret)) {
+                    return ret;
+                }
+
+                if (DateTime.TryParse (result, out ret)) {
+                    return ret;
+                }
             }
                     
             return ret;              
