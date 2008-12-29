@@ -78,10 +78,14 @@ namespace Banshee.Collection.Database
                             field.ToSql (IntegerQueryValue.GreaterThanEqual, qv);
                             field.ToSql (IntegerQueryValue.GreaterThanEqual, qv);*/
                         } else if (qv is StringQueryValue) {
-                            sql = field.ToSql (StringQueryValue.Equal, qv, true);
+                            // TODO this might need fixing
+                            //sql = field.ToSql (StringQueryValue.Equal, qv, true);
+                            sql = field.ToSql (StringQueryValue.Equal, qv);
                         }
                     } else {
-                        sql = field.ToSql (NullQueryValue.IsNullOrEmpty, NullQueryValue.Instance, true);
+                        // TODO this might need fixing
+                        //sql = field.ToSql (NullQueryValue.IsNullOrEmpty, NullQueryValue.Instance, true);
+                        sql = field.ToSql (NullQueryValue.IsNullOrEmpty, NullQueryValue.Instance);
                     }
                     
                     if (sql != null) {

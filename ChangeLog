@@ -1,5 +1,15 @@
 2008-12-29  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseQueryFilterModel.cs:
+	Update to new QueryField api - will probably need some work when we
+	re-enable other filters (genre browser, etc).
+
+	* src/Libraries/Hyena/Hyena.Query/QueryField.cs: Based on patch from
+	Félix Velasco, fix case-sensitivity bug with genre and other string
+	matching (BGO #555120)
+
+2008-12-29  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Libraries/Lastfm/Lastfm/AudioscrobblerConnection.cs: Patch from John
 	Millikin fixing bug encoding/scrobbling non-ASCII info (BGO #539963)
 

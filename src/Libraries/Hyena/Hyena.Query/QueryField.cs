@@ -143,11 +143,6 @@ namespace Hyena.Query
 
         public string ToSql (Operator op, QueryValue qv)
         {
-            return ToSql (op, qv, false);
-        }
-        
-        public string ToSql (Operator op, QueryValue qv, bool caseSensitive)
-        {
             string value = qv.ToSql () ?? String.Empty;
 
             if (op == null) op = qv.OperatorSet.First;
@@ -156,7 +151,7 @@ namespace Hyena.Query
 
             if (no_custom_format) {
                 if (qv is StringQueryValue) {
-                    if (column_lowered || !caseSensitive) {
+                    if (column_lowered) {
                         // The column is pre-lowered, no need to call lower() in SQL
                         sb.AppendFormat ("{0} {1}", Column, String.Format (op.SqlFormat, value.ToLower ()));
                     } else {
