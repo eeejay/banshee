@@ -118,12 +118,15 @@ namespace Banshee.Gui.TrackEditor
                 : delegate (RangeEntry entry) {
                     for (int i = 0, n = Dialog.TrackCount; i < n; i++) {
                         EditorTrackInfo track = Dialog.LoadTrack (i);
-                        track.TrackNumber = i + 1;
-                        track.TrackCount = n;
-                        
+
                         if (Dialog.CurrentTrackIndex == i) {
-                            entry.From.Value = track.TrackNumber;
-                            entry.To.Value = track.TrackCount;
+                            // In this case the writeClosure is invoked, 
+                            // which will take care of updating the TrackInfo
+                            entry.From.Value = i + 1;
+                            entry.To.Value = n;
+                        } else {
+                            track.TrackNumber = i + 1;
+                            track.TrackCount = n;
                         }
                     }
                 }, Catalog.GetString ("Automatically set track number and count")), 

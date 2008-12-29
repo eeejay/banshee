@@ -1,3 +1,9 @@
+2008-12-29  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/BasicTrackDetailsPage.cs:
+	Patch from Ivan Zlatev, fixing bug where the first track's TrackCount
+	value wasn't set properly when using the automagic-button (BGO #561083)
+
 2008-12-26  Eoin Hennessy <eoin@randomrules.org>
 
 	* build/osx/targets/bundle-30-gstreamer.targets: We can't ship anything from 
