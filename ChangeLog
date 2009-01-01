@@ -1,3 +1,9 @@
+2009-01-01  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Libraries/Hyena.Gui/Hyena.Gui/GtkUtilities.cs: Add both upper and
+	lowercase versions of file extensions to the file chooser filter, so that
+	my.MP3 will appear in the Local Files import dialog (BGO #566224).
+
 2008-12-29  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Libraries/Migo/Migo.Syndication/RssParser.cs: If RFC 822 datetime

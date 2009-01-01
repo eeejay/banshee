@@ -71,7 +71,8 @@ namespace Hyena.Gui
             FileFilter filter = new FileFilter ();
             filter.Name = name;
             foreach (string extension in extensions) {
-                filter.AddPattern (String.Format ("*.{0}", extension));
+                filter.AddPattern (String.Format ("*.{0}", extension.ToLower ()));
+                filter.AddPattern (String.Format ("*.{0}", extension.ToUpper ()));
             }
             return filter;
         }
