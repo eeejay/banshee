@@ -47,6 +47,7 @@ audio/basic
 audio/flac
 audio/midi
 audio/mp
+audio/mp2
 audio/mp3
 audio/mp4
 audio/mp4a-latm
