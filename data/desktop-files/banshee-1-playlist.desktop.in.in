@@ -1,1 +1,2 @@
 Exec=banshee-1 --redirect-log --radio %U
+NoDisplay=true
