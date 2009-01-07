@@ -49,7 +49,7 @@ namespace Banshee.Collection
     // 4. Remove tracks that aren't on disk and weren't found to have moved
     //
     // Approach:
-    // 1. For each file in the source's directory, find oraphend db track if any, or add if new 
+    // 1. For each file in the source's directory, find orphaned db track if any, or add if new 
     //    and update if modified; update the LastScannedAt stamp
     // 2. Remove all db tracks from the database that weren't scanned (LastScannedAt < scan_started)
     public class RescanPipeline : QueuePipeline<string>
@@ -185,7 +185,8 @@ namespace Banshee.Collection
                     // If we still couldn't find it, try to import it
                     if (similar_track == null) {
                         //Hyena.Log.DebugFormat ("Couldn't find it, so queueing to import it");
-                        ServiceManager.Get<Banshee.Library.LibraryImportManager> ().Enqueue (file_path);
+                        status = System.IO.Path.GetFileNameWithoutExtension (file_path);
+                        ServiceManager.Get<Banshee.Library.LibraryImportManager> ().ImportTrack (file_path);
                     }
                 }
             } catch (Exception e) {

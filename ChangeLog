@@ -1,5 +1,12 @@
 2009-01-07  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Collection/RescanPipeline.cs: Fix
+	issue with the Rescan tool where it popped up/removed lots and lots of
+	progress bars (UserJobs) during a given import, which caused a ton of
+	unnecessary CPU usage (BGO #552561).
+
+2009-01-07  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Libraries/Migo/Migo.Net/AsyncWebClient.cs: Patch from Benjamín
 	Valero Espinosa fixing bug with not handling the XML encoding attribute
 	properly; RSS feeds in non-UTF-8 should now parse correctly (BGO #538224)
