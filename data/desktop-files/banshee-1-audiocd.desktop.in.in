@@ -1,0 +1,2 @@
+Exec=banshee-1 --redirect-log --audio-cd %U
+MimeType=x-content/audio-cdda
