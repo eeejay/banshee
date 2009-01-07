@@ -781,7 +781,21 @@ namespace Migo.Net
             case DownloadType.String:
                 string s;
                 try {
-                    s = Encoding.GetString (resultPtr);
+                    s = Encoding.GetString (resultPtr).TrimStart ();
+
+                    // Workaround if the string is a XML to set the encoding from it
+                    if (s.StartsWith("<?xml")) {
+                        string auxStr = "encoding=";
+                        int startIndex = s.IndexOf (auxStr) + auxStr.Length + 1;
+                        int endIndex = s.IndexOf ('\"', startIndex);
+                        string encodingStr = s.Substring (startIndex, endIndex - startIndex);
+                        try {
+                            Encoding enc = Encoding.GetEncoding (encodingStr);
+                            if (!enc.Equals (Encoding)) {
+                                s = enc.GetString (resultPtr);
+                            }
+                        } catch (ArgumentException) {}
+                    }
                 } catch {
                     s = String.Empty;
                 }
