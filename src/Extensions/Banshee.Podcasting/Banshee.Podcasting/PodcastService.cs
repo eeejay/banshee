@@ -73,6 +73,7 @@ namespace Banshee.Podcasting
         public PodcastService ()
         {
             // TODO translate Podcasts folder?
+            // If changed, change HACK in src/Core/Banshee.Services/Banshee.Collection/RescanPipeline.cs too
             tmp_enclosure_path = Path.Combine (Paths.LibraryLocation, "Podcasts");
             tmp_download_path = Path.Combine (Paths.ApplicationData, "downloads");
             Migo.Net.AsyncWebClient.DefaultUserAgent = Banshee.Web.Browser.UserAgent;

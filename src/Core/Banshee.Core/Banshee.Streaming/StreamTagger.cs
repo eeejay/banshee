@@ -106,6 +106,17 @@ namespace Banshee.Streaming
                 track.MediaAttributes |= TrackMediaAttributes.Music;
             }
         }
+
+        public static void TrackInfoMerge (TrackInfo track, SafeUri uri)
+        {
+            track.Uri = uri;
+            TagLib.File file = StreamTagger.ProcessUri (uri);
+            TrackInfoMerge (track, file);
+
+            if (file == null) {
+                track.TrackTitle = uri.AbsoluteUri;
+            }
+        }
         
         public static void TrackInfoMerge (TrackInfo track, TagLib.File file)
         {
@@ -148,7 +159,7 @@ namespace Banshee.Streaming
                 track.Bpm = Choose ((int)file.Tag.BeatsPerMinute, track.Bpm, preferTrackInfo);
             } else {
                 track.MediaAttributes = TrackMediaAttributes.AudioStream;
-                if (VideoExtensions.IsMatchingFile (track.Uri.LocalPath)) {
+                if (track.Uri != null && VideoExtensions.IsMatchingFile (track.Uri.LocalPath)) {
                     track.MediaAttributes = TrackMediaAttributes.VideoStream;
                 }
             }

@@ -1,5 +1,14 @@
 2009-01-07  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting/PodcastService.cs:
+	* src/Core/Banshee.Services/Banshee.Collection/RescanPipeline.cs: Avoid
+	dealing with Podcast files at all (BGO #552976).
+
+	* src/Core/Banshee.Core/Banshee.Streaming/StreamTagger.cs: Add another
+	TrackInfoMerge override, avoid a NRE.
+
+2009-01-07  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Collection/RescanPipeline.cs: Fix
 	issue with the Rescan tool where it popped up/removed lots and lots of
 	progress bars (UserJobs) during a given import, which caused a ton of

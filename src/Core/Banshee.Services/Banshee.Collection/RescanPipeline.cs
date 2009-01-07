@@ -145,6 +145,11 @@ namespace Banshee.Collection
                 return null;
             }
 
+            // Hack to ignore Podcast files
+            if (file_path.Contains ("Podcasts")) {
+                return null;
+            }
+
             //Hyena.Log.DebugFormat ("Rescanning item {0}", file_path);
             try {
                 string relative_path = Banshee.Base.Paths.MakePathRelative (file_path, psource.BaseDirectory);
@@ -163,8 +168,7 @@ namespace Banshee.Collection
                 } else {
                     // This URI is not in the database - try to find it based on MetadataHash in case it was simply moved
                     DatabaseTrackInfo track = new DatabaseTrackInfo ();
-                    TagLib.File file = Banshee.Streaming.StreamTagger.ProcessUri (new SafeUri (file_path));
-                    Banshee.Streaming.StreamTagger.TrackInfoMerge (track, file);
+                    Banshee.Streaming.StreamTagger.TrackInfoMerge (track, new SafeUri (file_path));
     
                     IDataReader similar_reader = ServiceManager.DbConnection.Query (fetch_similar_command, psource.DbId, scan_started, track.MetadataHash);
                     DatabaseTrackInfo similar_track = null;
