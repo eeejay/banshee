@@ -2,6 +2,7 @@
 
 DESKTOP_SOURCE="$1"
 VERSION="$2"
+UPDATE_MIME_FILE="$3"
 MIMETYPES_FILE="$(basename "$DESKTOP_SOURCE" .in.in).mime"
 
 echo "[Desktop Entry]"
@@ -17,5 +18,11 @@ if [[ -f "$MIMETYPES_FILE" ]]; then
 	)
 
 	echo "MimeType=$MIMETYPES"
+
+	if [[ "$UPDATE_MIME_FILE" == "yes" ]]; then
+		(grep -E '^[[:space:]]*#' "$MIMETYPES_FILE";
+			echo "$MIMETYPES" | sed 's,;,\n,g') > "$MIMETYPES_FILE".tmp
+		mv "$MIMETYPES_FILE".tmp "$MIMETYPES_FILE"
+	fi
 fi
 
