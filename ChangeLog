@@ -1,3 +1,9 @@
+2009-01-07  Aaron Bockover  <abock@gnome.org>
+
+	* build/m4/banshee/libbanshee.m4: If the gtk+-2.0 target check fails,
+	explicitly check for gtk+-2.0 as an entire module to show the standard
+	missing devel package error message from pkg-config
+
 2009-01-07  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* data/desktop-files/*: Make banshee-1-subscription.desktop, handling RSS,
