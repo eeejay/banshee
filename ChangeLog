@@ -1,5 +1,10 @@
 2009-01-07  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* data/desktop-files/*: Make banshee-1-subscription.desktop, handling RSS,
+	OPML, and Miro's OPML subscription mimetypes.
+
+2009-01-07  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting/PodcastService.cs:
 	* src/Core/Banshee.Services/Banshee.Collection/RescanPipeline.cs: Avoid
 	dealing with Podcast files at all (BGO #552976).
