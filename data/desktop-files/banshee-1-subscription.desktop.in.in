@@ -1,2 +1,0 @@
-Exec=banshee-1 --redirect-log --subscribe %U
-NoDisplay=true
