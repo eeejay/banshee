@@ -11,7 +11,7 @@ data/audio-profiles/vorbis.xml.in
 data/audio-profiles/wavpack.xml.in
 data/audio-profiles/wav.xml.in
 data/audio-profiles/wma.xml.in
-data/banshee-1.desktop.in.in
+data/desktop-files/common.desktop
 libbanshee/banshee-ripper.c
 libbanshee/banshee-transcoder.c
 src/Backends/Banshee.Gnome/Banshee.GnomeBackend/Brasero.cs
