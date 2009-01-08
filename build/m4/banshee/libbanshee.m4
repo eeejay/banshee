@@ -11,15 +11,18 @@ AC_DEFUN([BANSHEE_CHECK_LIBBANSHEE],
 	LIBBANSHEE_CFLAGS=""
 
 	GRAPHICS_SUBSYSTEM="Unknown"
+	GTK_TARGET=$(pkg-config --variable=target gtk+-2.0)
 
-	if test x$(pkg-config --variable=target gtk+-2.0) = xx11; then
+	if test x$GTK_TARGET = xx11; then
 		PKG_CHECK_MODULES(GDK_X11, gdk-x11-2.0 >= 2.8)
 		SHAMROCK_CONCAT_MODULE(LIBBANSHEE, GDK_X11)
 		GRAPHICS_SUBSYSTEM="X11"
-	elif test x$(pkg-config --variable=target gtk+-2.0) = xquartz; then
+	elif test x$GTK_TARGET = xquartz; then
 		PKG_CHECK_MODULES(GDK_QUARTZ, gdk-quartz-2.0 >= 2.14)
 		SHAMROCK_CONCAT_MODULE(LIBBANSHEE, GDK_QUARTZ)
 		GRAPHICS_SUBSYSTEM="Quartz"
+	else
+		PKG_CHECK_MODULES(GTK, gtk+-2.0 >= 2.8)
 	fi
 
 	AM_CONDITIONAL(HAVE_X11, test "x$GRAPHICS_SUBSYSTEM" = "xX11")
