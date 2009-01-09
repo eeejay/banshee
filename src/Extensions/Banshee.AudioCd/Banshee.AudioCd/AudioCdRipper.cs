@@ -37,7 +37,6 @@ using Banshee.ServiceStack;
 using Banshee.Collection;
 using Banshee.Collection.Database;
 using Banshee.MediaEngine;
-using Banshee.Streaming;
 
 namespace Banshee.AudioCd
 {
@@ -199,9 +198,9 @@ namespace Banshee.AudioCd
         
             ripped_duration += track.Duration;
             track.PrimarySource = ServiceManager.SourceManager.MusicLibrary;
+            track.Uri = args.Uri;
             
-            TagLib.File file = StreamTagger.ProcessUri (args.Uri);
-            StreamTagger.TrackInfoMerge (track, file, true);
+            track.FileSize = Banshee.IO.File.GetSize (track.Uri);
             
             track.Save ();
 

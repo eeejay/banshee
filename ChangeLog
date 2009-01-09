@@ -20,13 +20,6 @@
 	new RadioTrackInfo.OpenPlay method, moved the original code into that
 	new API implementation; no functional change
 
-2009-01-09  Gabriel Burt  <gabriel.burt@gmail.com>
-
-	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdRipper.cs: Patch
-	from Nicholas Doyle fixing issue with tracks' mimetype not getting set
-	when we rip them, which caused problems later with transcoding to devices,
-	searching, etc (BGO #558526)
-
 2009-01-08  Aaron Bockover  <abock@gnome.org>
 
 	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:
