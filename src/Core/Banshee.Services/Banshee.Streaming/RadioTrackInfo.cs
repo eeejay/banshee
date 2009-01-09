@@ -29,6 +29,7 @@
 using System;
 using System.Threading;
 using System.Collections.Generic;
+using Mono.Unix;
 
 using Hyena;
 using Media.Playlists.Xspf;
@@ -42,6 +43,55 @@ namespace Banshee.Streaming
 {   
     public class RadioTrackInfo : TrackInfo
     {
+    
+#region Static Helper Methods
+
+        public static RadioTrackInfo OpenPlay (string uri)
+        {
+            try {
+                return OpenPlay (new SafeUri (uri));
+            } catch (Exception e) {
+                Hyena.Log.Exception (e);
+                return null;
+            }
+        }
+        
+        public static RadioTrackInfo OpenPlay (SafeUri uri)
+        {
+            RadioTrackInfo track = Open (uri);
+            if (track != null) {
+                track.Play ();
+            }
+            return track;
+        }
+    
+        public static RadioTrackInfo Open (string uri)
+        {
+            return Open (new SafeUri (uri));
+        }
+    
+        public static RadioTrackInfo Open (SafeUri uri)
+        {
+            try {
+                RadioTrackInfo radio_track = new RadioTrackInfo (uri);
+                radio_track.ParsingPlaylistEvent += delegate {
+                    if (radio_track.PlaybackError != StreamPlaybackError.None) {
+                        Log.Error (Catalog.GetString ("Error opening stream"), 
+                            Catalog.GetString ("Could not open stream or playlist"), true);
+                        radio_track = null;
+                    }
+                };
+                
+                return radio_track;
+            } catch {
+                Log.Error (Catalog.GetString ("Error opening stream"), 
+                    Catalog.GetString("Problem parsing playlist"), true);
+                return null;
+            }
+        }
+
+#endregion
+        
         private Track track;
         private SafeUri single_location;
         private List<SafeUri> stream_uris = new List<SafeUri>();

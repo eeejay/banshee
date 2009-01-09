@@ -1,5 +1,27 @@
 2009-01-09  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.FileSystemQueue/Banshee.FileSystemQueue/FileSystemQueueSource.cs:
+	If passed a playlist file from /tmp, try to load/play it as a radio
+	station (BNC #456120).  Also, clear/delete playlists when Cleared.
+
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistFileUtil.cs: Avoid
+	bug where duplicate playlists were created.
+
+	* src/Core/Banshee.Core/Banshee.Base/Paths.cs: Add SystemTempDir property.
+
+2009-01-09  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Services/Banshee.Streaming/RadioTrackInfo.cs: Added
+	Open/OpenPlay helper methods that handle the typical case of simply 
+	opening a stream/playlist, connecting to error/event handling, and 
+	playing the stream
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs: Use the
+	new RadioTrackInfo.OpenPlay method, moved the original code into that
+	new API implementation; no functional change
+
+2009-01-09  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdRipper.cs: Patch
 	from Nicholas Doyle fixing issue with tracks' mimetype not getting set
 	when we rip them, which caused problems later with transcoding to devices,

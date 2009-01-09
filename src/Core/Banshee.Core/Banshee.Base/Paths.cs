@@ -165,6 +165,10 @@ namespace Banshee.Base
         public static string DefaultLibraryPath {
             get { return XdgBaseDirectorySpec.GetUserDirectory ("XDG_MUSIC_DIR", "Music"); }
         }
+
+        public static string SystemTempDir {
+            get { return "/tmp/"; }
+        }
         
         public static string TempDir {
             get {

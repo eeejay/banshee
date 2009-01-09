@@ -151,23 +151,8 @@ namespace Banshee.Gui
             string address = dialog.Address;
             dialog.Destroy ();
             
-            if(response != ResponseType.Ok) {
-                return;
-            }
-            
-            try {
-                RadioTrackInfo radio_track = new RadioTrackInfo (new SafeUri (address));
-                radio_track.ParsingPlaylistEvent += delegate {
-                    if (radio_track.PlaybackError != StreamPlaybackError.None) {
-                        Log.Error (Catalog.GetString ("Error opening stream"), 
-                            Catalog.GetString ("Could not open stream or playlist"), true);
-                        radio_track = null;
-                    }
-                };
-                radio_track.Play ();
-            } catch {
-                Log.Error (Catalog.GetString ("Error opening stream"), 
-                    Catalog.GetString("Problem parsing playlist"), true);
+            if (response == ResponseType.Ok) {
+                RadioTrackInfo.OpenPlay (address);
             }
         }
 

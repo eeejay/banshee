@@ -214,6 +214,7 @@ namespace Banshee.Playlist
         
         private PrimarySource source;
         private DatabaseImportManager importer;
+        private bool finished;
         
         public ImportPlaylistWorker (string name, string [] uris, PrimarySource source, DatabaseImportManager importer)
         {
@@ -229,6 +230,7 @@ namespace Banshee.Playlist
                 if (importer == null) {
                     importer = new Banshee.Library.LibraryImportManager ();
                 }
+                finished = false;
                 importer.Finished += CreatePlaylist;
                 importer.Enqueue (uris);
             } catch (PlaylistImportCanceledException e) {
@@ -238,6 +240,12 @@ namespace Banshee.Playlist
         
         private void CreatePlaylist (object o, EventArgs args)
         {
+            if (finished) {
+                return;
+            }
+
+            finished = true;
+
             try {
                 PlaylistSource playlist = new PlaylistSource (name, source);
                 playlist.Save ();

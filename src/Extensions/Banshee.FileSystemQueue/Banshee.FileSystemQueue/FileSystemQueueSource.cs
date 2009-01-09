@@ -141,7 +141,12 @@ namespace Banshee.FileSystemQueue
             
                 if (PlaylistFileUtil.PathHasPlaylistExtension (path)) {
                     Banshee.Kernel.Scheduler.Schedule (new DelegateJob (delegate {
-                        PlaylistFileUtil.ImportPlaylistToLibrary (path, this, importer);
+                        // If it's in /tmp it probably came from Firefox - just play it
+                        if (path.StartsWith (Paths.SystemTempDir)) {
+                            Banshee.Streaming.RadioTrackInfo.OpenPlay (path);
+                        } else {
+                            PlaylistFileUtil.ImportPlaylistToLibrary (path, this, importer);
+                        }
                     }));
                 } else {
                     importer.Enqueue (path);
@@ -238,6 +243,15 @@ namespace Banshee.FileSystemQueue
         
         private void OnClearFileSystemQueue (object o, EventArgs args)
         {
+            // Delete any child playlists
+            ClearChildSources ();
+            ServiceManager.DbConnection.Execute (@"
+                DELETE FROM CorePlaylistEntries WHERE PlaylistID IN
+                    (SELECT PlaylistID FROM CorePlaylists WHERE PrimarySourceID = ?);
+                DELETE FROM CorePlaylists WHERE PrimarySourceID = ?;",
+                this.DbId, this.DbId
+            );
+
             RemoveTrackRange ((DatabaseTrackListModel)TrackModel, new Hyena.Collections.RangeCollection.Range (0, Count));
             Reload ();
         }
