@@ -1,3 +1,9 @@
+2009-01-08  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.Core/Banshee.Base/Localization.cs: Look for xml:lang
+	nodes with lang codes in the form of xx_YY not xx-YY; intltool should be 
+	using xx-YY per xml:lang convention, but we'll bend for now (BNC #449788)
+
 2009-01-07  Aaron Bockover  <abock@gnome.org>
 
 	* build/m4/banshee/libbanshee.m4: If the gtk+-2.0 target check fails,

@@ -60,13 +60,12 @@ namespace Banshee.Base
                 bool first = true;
                 
                 foreach(string lang in Languages) {
-                    string xml_lang = lang.Replace("_", "-");
-                    if(first && (xml_lang == "C" || xml_lang.StartsWith("en"))) {
+                    if(first && (lang == "C" || lang.StartsWith("en_US"))) {
                         prepend_empty = true;
                     }
                     
                     first = false;
-                    xml_langs.Add(xml_lang);
+                    xml_langs.Add(lang);
                 }
                 
                 if(prepend_empty) {
