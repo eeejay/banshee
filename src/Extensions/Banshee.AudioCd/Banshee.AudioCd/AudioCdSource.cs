@@ -35,6 +35,7 @@ using Hyena;
 using Banshee.Base;
 using Banshee.ServiceStack;
 using Banshee.Sources;
+using Banshee.Library;
 using Banshee.Collection;
 using Banshee.Collection.Database;
 
@@ -44,7 +45,7 @@ using Banshee.Gui;
 namespace Banshee.AudioCd
 {
     public class AudioCdSource : Source, ITrackModelSource, IUnmapableSource, 
-        IDurationAggregator, IFileSizeAggregator, IDisposable
+        IImportSource, IDurationAggregator, IFileSizeAggregator, IDisposable
     {
         private AudioCdService service;
         private AudioCdDiscModel disc_model;
@@ -442,6 +443,27 @@ namespace Banshee.AudioCd
             }
             
             base.OnUpdated ();
+        }
+        
+#endregion
+
+#region IImportSource
+
+        void IImportSource.Import ()
+        {
+            ImportDisc ();
+        }
+        
+        string [] IImportSource.IconNames {
+            get { return Properties.GetStringList ("Icon.Name"); }
+        }
+        
+        bool IImportSource.CanImport {
+            get { return true; }
+        }
+        
+        int IImportSource.SortOrder {
+            get { return -10; }
         }
         
 #endregion

@@ -1,5 +1,11 @@
 2009-01-08  Aaron Bockover  <abock@gnome.org>
 
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:
+	Implement IImportSource so the disc shows up in the Import Media dialog,
+	fixing a functional regression from legacy 0.13.x (BNC #457918)
+
+2009-01-08  Aaron Bockover  <abock@gnome.org>
+
 	* src/Core/Banshee.Core/Banshee.Base/Localization.cs: Look for xml:lang
 	nodes with lang codes in the form of xx_YY not xx-YY; intltool should be 
 	using xx-YY per xml:lang convention, but we'll bend for now (BNC #449788)
