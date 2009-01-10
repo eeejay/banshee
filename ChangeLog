@@ -1,3 +1,18 @@
+2009-01-09  Aaron Bockover  <abock@gnome.org>
+
+	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/AudioCdRipper.cs:
+	Handle the new mimetype callback and set it on the track (BGO #558526,
+	BNC #464889)
+
+	* libbanshee/banshee-ripper.c: Implemented support for the typefind
+	element in the pipeline after the encoder to query a proper mime type
+	for the encoded and muxed content
+
+	* libbanshee/banshee-gst.h:
+	* libbanshee/banshee-gst.c: Factored out a generic callback invoking
+	version of gst_bin_iterate_recurse and gst_bin_iterate_all_by_interface
+	to avoid duplicating a lot of iterator boilerplate code
+
 2009-01-09  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.FileSystemQueue/Banshee.FileSystemQueue/FileSystemQueueSource.cs:

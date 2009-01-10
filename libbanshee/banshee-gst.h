@@ -29,11 +29,15 @@
 #ifndef _BANSHEE_GST_H
 #define _BANSHEE_GST_H
 
-#include <glib.h>
+#include <gst/gst.h>
 
 gboolean  banshee_is_debugging ();
 guint     banshee_get_version_number ();
 
 void      banshee_log_debug (const gchar *component, const gchar *format, ...);
+
+typedef gboolean (* BansheeGstBinIterateCallback) (GstBin *bin, GType type, gpointer bin_element, gpointer data);
+gboolean  banshee_gst_bin_iterate_all_by_interface (GstBin *bin, GType type, BansheeGstBinIterateCallback callback, gpointer data);
+gboolean  banshee_gst_bin_iterate_recurse (GstBin *bin, BansheeGstBinIterateCallback callback, gpointer data);
 
 #endif /* _BANSHEE_GST_H */

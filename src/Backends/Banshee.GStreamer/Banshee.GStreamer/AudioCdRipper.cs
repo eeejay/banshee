@@ -50,6 +50,7 @@ namespace Banshee.GStreamer
         private TrackInfo current_track;
         
         private RipperProgressHandler progress_handler;
+        private RipperMimeTypeHandler mimetype_handler;
         private RipperFinishedHandler finished_handler;
         private RipperErrorHandler error_handler;
     
@@ -94,6 +95,9 @@ namespace Banshee.GStreamer
                 
                 progress_handler = new RipperProgressHandler (OnNativeProgress);
                 br_set_progress_callback (handle, progress_handler);
+                
+                mimetype_handler = new RipperMimeTypeHandler (OnNativeMimeType);
+                br_set_mimetype_callback (handle, mimetype_handler);
                 
                 finished_handler = new RipperFinishedHandler (OnNativeFinished);
                 br_set_finished_callback (handle, finished_handler);
@@ -173,6 +177,21 @@ namespace Banshee.GStreamer
             OnProgress (current_track, TimeSpan.FromMilliseconds (mseconds));
         }
         
+        private void OnNativeMimeType (IntPtr ripper, IntPtr mimetype)
+        {
+            if (mimetype != IntPtr.Zero && current_track != null) {
+                string type = GLib.Marshaller.Utf8PtrToString (mimetype);
+                if (type != null) {
+                    string [] split = type.Split (';', '.', ' ', '\t');
+                    if (split != null && split.Length > 0) {
+                        current_track.MimeType = split[0].Trim ();
+                    } else {
+                        current_track.MimeType = type.Trim ();
+                    }
+                }
+            }
+        }
+        
         private void OnNativeFinished (IntPtr ripper)
         {
             SafeUri uri = new SafeUri (output_path);
@@ -198,6 +217,7 @@ namespace Banshee.GStreamer
         }
         
         private delegate void RipperProgressHandler (IntPtr ripper, int mseconds);
+        private delegate void RipperMimeTypeHandler (IntPtr ripper, IntPtr mimetype);
         private delegate void RipperFinishedHandler (IntPtr ripper);
         private delegate void RipperErrorHandler (IntPtr ripper, IntPtr error, IntPtr debug);
         
@@ -213,6 +233,9 @@ namespace Banshee.GStreamer
         
         [DllImport ("libbanshee")]
         private static extern void br_set_progress_callback (HandleRef handle, RipperProgressHandler callback);
+        
+        [DllImport ("libbanshee")]
+        private static extern void br_set_mimetype_callback (HandleRef handle, RipperMimeTypeHandler callback);
         
         [DllImport ("libbanshee")]
         private static extern void br_set_finished_callback (HandleRef handle, RipperFinishedHandler callback);
