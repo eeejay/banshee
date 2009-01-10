@@ -117,8 +117,8 @@ namespace Banshee.Podcasting.Gui
 
             syncCombo = new SyncPreferenceComboBox ();
 
-            expander_children.PackStart (sync_text);
-            expander_children.PackStart (syncCombo);
+            expander_children.PackStart (sync_text, true, true, 0);
+            expander_children.PackStart (syncCombo, true, true, 0);
 
             sync_vbox.Add (expander_children);
 

@@ -96,7 +96,7 @@ namespace Banshee.MediaProfiles.Gui
                         sexpr_results.Buffer.Text = profile.Pipeline.GetDefaultProcess();
                     }
                 };
-                ActionArea.PackStart(test_button);
+                ActionArea.PackStart(test_button, true, true, 0);
                 
                 sexpr_results = new TextView();
             }
