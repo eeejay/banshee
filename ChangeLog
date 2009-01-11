@@ -1,5 +1,15 @@
 2009-01-11  Aaron Bockover  <abock@gnome.org>
 
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapService.cs: Add null checks
+	around the source_map and its children when disposing since it won't be
+	initialized if dispose is called before delayed initialize (BNC #465159)
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/ServiceManager.cs: As
+	an extra precaution, wrap all service disposals in an exception handling
+	block and just report the exception in the log
+
+2009-01-11  Aaron Bockover  <abock@gnome.org>
+
 	* src/Clients/Booter/banshee-1.in: Use XDG_CONFIG_HOME instead of an
 	explicit ~/.config; do not allow --redirect-log if another banshee-1
 	process is running (this overwrites the original log); and allow for

@@ -270,8 +270,12 @@ namespace Banshee.ServiceStack
             lock (self_mutex) {
                 while (dispose_services.Count > 0) {
                     IService service = dispose_services.Pop ();
-                    ((IDisposable)service).Dispose ();
-                    Log.DebugFormat ("Service disposed ({0})", service.ServiceName);
+                    try {
+                        ((IDisposable)service).Dispose ();
+                        Log.DebugFormat ("Service disposed ({0})", service.ServiceName);
+                    } catch (Exception e) {
+                        Log.Exception ("Service disposal ({0}) threw an exception", e);
+                    }
                 }
                 
                 services.Clear ();

@@ -70,17 +70,21 @@ namespace Banshee.Daap
             }
             
             // Dispose any remaining child sources
-            foreach (KeyValuePair <string, DaapSource> kv in source_map) {
-                kv.Value.Disconnect (true);
-                kv.Value.Dispose ();
+            if (source_map != null) {
+                foreach (KeyValuePair <string, DaapSource> kv in source_map) {
+                    if (kv.Value != null) {
+                        kv.Value.Disconnect (true);
+                        kv.Value.Dispose ();
+                    }
+                }
+            
+                source_map.Clear ();
             }
             
             if (container != null) {
                 ServiceManager.SourceManager.RemoveSource (container, true);
                 container = null;
             }
-            
-            source_map.Clear ();
         }
         
         private void OnServiceFound (object o, ServiceArgs args)
