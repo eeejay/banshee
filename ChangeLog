@@ -1,3 +1,27 @@
+2009-01-11  Aaron Bockover  <abock@gnome.org>
+
+	ATTENTION PACKAGERS: This is a VERY important commit; please read this
+	ChangeLog message as it applies to YOU :). Conforming to this will
+	help with bug reports.
+
+	* configure.ac: Accept --with-vendor-build-id=<foo> for packagers to use.
+	This string should always be set by packagers and detail the distro 
+	name and version (e.g. openSUSE 11.1), and the repository origin, such
+	as 'Banshee Team PPA'; for example, the %distribution macro is used in
+	the openSUSE Build Service, which expands to something like this:
+	'home:gabrielburt:branches:Banshee / openSUSE_Factory'; also the
+	build/configure time is stored along with the host OS and CPU
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/GtkBaseClient.cs: Print all
+	build metadata at startup so it hits the log file, should be very helpful
+	for bug reports, especially when debugging against patched builds
+
+	* src/AssemblyInfo.cs.in: Store build metadata from configure in assembly
+	attributes (vendor, build time, host os/cpu)
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs: Added
+	APIs for accessing the build metadata
+
 2009-01-10  Aaron Bockover  <abock@gnome.org>
 
 	* libbanshee/banshee-ripper.c: Second pass at the mime type detection

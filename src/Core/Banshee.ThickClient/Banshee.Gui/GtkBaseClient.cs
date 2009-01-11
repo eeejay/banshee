@@ -46,7 +46,8 @@ namespace Banshee.Gui
         
         public static void Startup<T> (string [] args) where T : GtkBaseClient
         {
-            Hyena.Log.InformationFormat ("Running Banshee {0}", Application.Version);
+            Hyena.Log.InformationFormat ("Running Banshee {0}: [{1}]", Application.Version,
+                Application.BuildDisplayInfo);
             
             // This could go into GtkBaseClient, but it's probably something we
             // should really only support at each client level

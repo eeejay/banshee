@@ -135,6 +135,18 @@ else
 fi
 AC_SUBST(GMCS_FLAGS)
 
+AC_ARG_WITH(vendor-build-id,
+	AC_HELP_STRING([--with-build-id=<vendor-build-id>],
+		[Set a vendor build ID, recommended for packagers]),
+	[vendor_build_id="$withval"], [vendor_build_id="source-tarball"])
+BUILD_VENDOR_ID="$vendor_build_id"
+BUILD_HOST_OS="$host_os"
+BUILD_HOST_CPU="$host_cpu"
+BUILD_TIME=`date +"%F %T %Z"`
+AC_SUBST(BUILD_VENDOR_ID)
+AC_SUBST(BUILD_HOST_OS)
+AC_SUBST(BUILD_HOST_CPU)
+AC_SUBST(BUILD_TIME)
 
 dnl generated files
 AC_OUTPUT([
@@ -260,6 +272,7 @@ ${PACKAGE}-${VERSION}
 
     Unit Tests:        ${do_tests}	(requires nunit >= ${NUNIT_REQUIRED})
     Release Build:     ${enable_release}
+    Vendor Build ID:   ${vendor_build_id}
 "
 
 # Unstable/in-development features; only show them if they were manually enabled

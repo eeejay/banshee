@@ -268,18 +268,62 @@ namespace Banshee.ServiceStack
             get { return display_version ?? (display_version = GetVersion ("DisplayVersion")); }
         }
         
+        private static string build_time;
+        public static string BuildTime {
+            get { return build_time ?? (build_time = GetBuildInfo ("BuildTime")); }
+        }
+        
+        private static string build_host_os;
+        public static string BuildHostOperatingSystem {
+            get { return build_host_os ?? (build_host_os = GetBuildInfo ("HostOperatingSystem")); }
+        }
+        
+        private static string build_host_cpu;
+        public static string BuildHostCpu {
+            get { return build_host_cpu ?? (build_host_cpu = GetBuildInfo ("HostCpu")); }
+        }
+        
+        private static string build_vendor;
+        public static string BuildVendor {
+            get { return build_vendor ?? (build_vendor = GetBuildInfo ("Vendor")); }
+        }
+        
+        private static string build_display_info;
+        public static string BuildDisplayInfo {
+            get {
+                if (build_display_info != null) {
+                    return build_display_info;
+                }
+                
+                build_display_info = String.Format ("{0} ({1}, {2}) @ {3}",
+                    BuildVendor, BuildHostOperatingSystem, BuildHostCpu, BuildTime);
+                return build_display_info;
+            }
+        }
+        
         private static string GetVersion (string versionName)
+        {
+            return GetCustomAssemblyMetadata ("ApplicationVersionAttribute", versionName) 
+                ?? Catalog.GetString ("Unknown");
+        }
+        
+        private static string GetBuildInfo (string buildField)
+        {
+            return GetCustomAssemblyMetadata ("ApplicationBuildInformationAttribute", buildField);
+        }
+        
+        private static string GetCustomAssemblyMetadata (string attrName, string field)
         {
             foreach (Attribute attribute in Assembly.GetEntryAssembly ().GetCustomAttributes (false)) {
                 Type type = attribute.GetType ();
-                PropertyInfo property = type.GetProperty (versionName);
-                if (type.Name == "ApplicationVersionAttribute" && property != null && 
+                PropertyInfo property = type.GetProperty (field);
+                if (type.Name == attrName && property != null && 
                     property.PropertyType == typeof (string)) {
                     return (string)property.GetValue (attribute, null); 
                 }
             }
             
-            return Catalog.GetString ("Unknown");
+            return null;
         }
     }
 }
