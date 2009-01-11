@@ -1,3 +1,13 @@
+2009-01-10  Aaron Bockover  <abock@gnome.org>
+
+	* libbanshee/banshee-ripper.c: Second pass at the mime type detection
+	without typefind, better mime type prioritization, and use the new 
+	BANSHEE_GST_ITERATOR_ITERATE macro instead of the bulky functions I 
+	wrote last night (BGO #558526, BNC #464889)
+
+	* libbanshee/banshee-gst.h: Implement BANSHEE_GST_ITERATOR_ITERATE, 
+	a macro that handles the typical implementation of walking a GstIterator
+
 2009-01-10  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting/PodcastService.cs:

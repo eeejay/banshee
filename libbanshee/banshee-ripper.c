@@ -39,6 +39,7 @@
 typedef struct BansheeRipper BansheeRipper;
 
 typedef void (* BansheeRipperFinishedCallback) (BansheeRipper *ripper);
+typedef void (* BansheeRipperMimeTypeCallback) (BansheeRipper *ripper, const gchar *mimetype);
 typedef void (* BansheeRipperProgressCallback) (BansheeRipper *ripper, gint msec, gpointer user_info);
 typedef void (* BansheeRipperErrorCallback)    (BansheeRipper *ripper, const gchar *error, const gchar *debug);
 
@@ -59,6 +60,7 @@ struct BansheeRipper {
     GstFormat track_format;
     
     BansheeRipperProgressCallback progress_cb;
+    BansheeRipperMimeTypeCallback mimetype_cb;
     BansheeRipperFinishedCallback finished_cb;
     BansheeRipperErrorCallback error_cb;
 };
@@ -128,6 +130,55 @@ br_stop_iterate_timeout (BansheeRipper *ripper)
     ripper->iterate_timeout_id = 0;
 }
 
+static const gchar const *
+br_encoder_probe_mime_type (GstBin *bin)
+{
+    GstIterator *elem_iter = gst_bin_iterate_recurse (bin);
+    const gchar *preferred_mimetype = NULL;
+    
+    BANSHEE_GST_ITERATOR_ITERATE (elem_iter, GstElement *, element, TRUE, {
+        GstIterator *pad_iter = gst_element_iterate_src_pads (element);
+        
+        BANSHEE_GST_ITERATOR_ITERATE (pad_iter, GstPad *, pad, TRUE, {
+            GstStructure *str = GST_PAD_CAPS (pad) != NULL
+                ? gst_caps_get_structure (GST_PAD_CAPS (pad), 0)
+                : NULL;
+
+            if (str != NULL) {
+                const gchar *mimetype = gst_structure_get_name (str);
+                gint mpeg_layer;
+                
+                // Prefer and adjust audio/mpeg, leaving MP3 as audio/mpeg
+                if (g_str_has_prefix (mimetype, "audio/mpeg") && 
+                    gst_structure_get_int (str, "mpegversion", &mpeg_layer)) {
+                    switch (mpeg_layer) {
+                        case 2: mimetype = "audio/mp2"; break;
+                        case 4: mimetype = "audio/mp4"; break;
+                        default: break;
+                    }
+                    
+                    preferred_mimetype = mimetype;
+                    
+                // If no preferred type set and it's not RAW, prefer it
+                } else if (preferred_mimetype == NULL && 
+                    !g_str_has_prefix (mimetype, "audio/x-raw")) {
+                    preferred_mimetype = mimetype;
+                    
+                // Always prefer application containers
+                } else if (g_str_has_prefix (mimetype, "application/")) {
+                    preferred_mimetype = mimetype;    
+                }
+            }
+            
+            gst_object_unref (pad);
+        });
+        
+        gst_object_unref (element);
+    });
+
+    return preferred_mimetype;
+}
+
 static gboolean
 br_pipeline_bus_callback (GstBus *bus, GstMessage *message, gpointer data)
 {
@@ -136,6 +187,22 @@ br_pipeline_bus_callback (GstBus *bus, GstMessage *message, gpointer data)
     g_return_val_if_fail (ripper != NULL, FALSE);
 
     switch (GST_MESSAGE_TYPE (message)) {
+        case GST_MESSAGE_STATE_CHANGED: {
+            GstState old, new, pending;
+            gst_message_parse_state_changed (message, &old, &new, &pending);
+            
+            if (old == GST_STATE_READY && new == GST_STATE_PAUSED && pending == GST_STATE_PLAYING) {
+                const gchar *mimetype = br_encoder_probe_mime_type (GST_BIN (ripper->encoder));
+                if (mimetype != NULL) {
+                    banshee_log_debug ("ripper", "Found Mime Type for encoded content: %s", mimetype);
+                    if (ripper->mimetype_cb != NULL) {
+                        ripper->mimetype_cb (ripper, mimetype);
+                    }
+                }
+            }
+            break;
+        }
+    
         case GST_MESSAGE_ERROR: {
             GError *error;
             gchar *debug;
@@ -304,10 +371,7 @@ gboolean
 br_rip_track (BansheeRipper *ripper, gint track_number, gchar *output_path, 
     GstTagList *tags, gboolean *tagging_supported)
 {
-    GstIterator *bin_iterator;
-    GstElement *bin_element;
-    gboolean can_tag = FALSE;
-    gboolean iterate_done = FALSE;
+    GstIterator *iter;
 
     g_return_val_if_fail (ripper != NULL, FALSE);
 
@@ -320,49 +384,28 @@ br_rip_track (BansheeRipper *ripper, gint track_number, gchar *output_path,
     g_object_set (G_OBJECT (ripper->filesink), "location", output_path, NULL);
     
     // find an element to do the tagging and set tag data
-    bin_iterator = gst_bin_iterate_all_by_interface (GST_BIN (ripper->encoder), GST_TYPE_TAG_SETTER);
-    while (!iterate_done) {
-        switch (gst_iterator_next (bin_iterator, (gpointer)&bin_element)) {
-            case GST_ITERATOR_OK: {
-                GstTagSetter *tag_setter = GST_TAG_SETTER (bin_element);
-                if (tag_setter == NULL) {
-                    break;
-                }
-                
-                gst_tag_setter_add_tags (tag_setter, GST_TAG_MERGE_REPLACE_ALL,
-                    GST_TAG_ENCODER, "Banshee " VERSION,
-                    GST_TAG_ENCODER_VERSION, banshee_get_version_number (),
-                    NULL);
-                    
-                if (tags != NULL) {
-                    gst_tag_setter_merge_tags (tag_setter, tags, GST_TAG_MERGE_APPEND);
-                }
-                
-                if (banshee_is_debugging ()) {
-                    bt_tag_list_dump (gst_tag_setter_get_tag_list (tag_setter));
-                }
-                    
-                can_tag = TRUE;    
-                gst_object_unref (bin_element);
-                break;
+    iter = gst_bin_iterate_all_by_interface (GST_BIN (ripper->encoder), GST_TYPE_TAG_SETTER);
+    BANSHEE_GST_ITERATOR_ITERATE (iter, GstElement *, element, TRUE, {
+        GstTagSetter *tag_setter = GST_TAG_SETTER (element);
+        if (tag_setter != NULL) {
+            gst_tag_setter_add_tags (tag_setter, GST_TAG_MERGE_REPLACE_ALL,
+                GST_TAG_ENCODER, "Banshee " VERSION,
+                GST_TAG_ENCODER_VERSION, banshee_get_version_number (),
+                NULL);
+            
+            if (tags != NULL) {
+                gst_tag_setter_merge_tags (tag_setter, tags, GST_TAG_MERGE_APPEND);
             }
             
-            case GST_ITERATOR_RESYNC: {
-                gst_iterator_resync (bin_iterator);
-                break;
+            if (banshee_is_debugging ()) {
+                bt_tag_list_dump (gst_tag_setter_get_tag_list (tag_setter));
             }
             
-            default: {
-                iterate_done = TRUE;
-                break;
-            }
+            // We'll warn the user in the UI if we can't tag the encoded audio files
+            *tagging_supported = TRUE;
+            gst_object_unref (element);
         }
-    }
-    
-    gst_iterator_free (bin_iterator);
-    
-    // We'll warn the user in the UI if we can't tag the encoded audio files
-    *tagging_supported = can_tag;
+    });
     
     // Begin the rip
     g_object_set (G_OBJECT (ripper->cddasrc), "track", track_number, NULL);
@@ -377,6 +420,13 @@ br_set_progress_callback (BansheeRipper *ripper, BansheeRipperProgressCallback c
 {
     g_return_if_fail (ripper != NULL);
     ripper->progress_cb = cb;
+}
+
+void
+br_set_mimetype_callback (BansheeRipper *ripper, BansheeRipperMimeTypeCallback cb)
+{
+    g_return_if_fail (ripper != NULL);
+    ripper->mimetype_cb = cb;
 }
 
 void

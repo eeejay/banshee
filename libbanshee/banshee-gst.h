@@ -31,6 +31,21 @@
 
 #include <glib.h>
 
+#define BANSHEE_GST_ITERATOR_ITERATE(iter,child_type,child_name,free,block) { \
+    gboolean iter##_done = FALSE; \
+    while (!iter##_done) { \
+        child_type child_name; \
+        switch (gst_iterator_next (iter, (gpointer)&child_name)) { \
+            case GST_ITERATOR_OK: { \
+                { block; } \
+                break; \
+            } \
+            default: iter##_done = TRUE; break; \
+        } \
+    } \
+    if (free) gst_iterator_free (iter); \
+}
+
 gboolean  banshee_is_debugging ();
 guint     banshee_get_version_number ();
 
