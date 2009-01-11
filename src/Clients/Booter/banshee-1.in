@@ -43,7 +43,7 @@ if [ -z "$BANSHEE_REDIRECT_LOG" ]; then
 	exec $exec_args "$@"
 else
 	mkdir -p `dirname "$BANSHEE_REDIRECT_LOG"`
-	exec $exec_args "$@" &> $BANSHEE_REDIRECT_LOG
+	(echo "exec $exec_args " "$@"; echo; exec $exec_args "$@") &> $BANSHEE_REDIRECT_LOG
 fi
 
 

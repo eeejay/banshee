@@ -1,5 +1,10 @@
 2009-01-11  Aaron Bockover  <abock@gnome.org>
 
+	* src/Clients/Booter/banshee-1.in: Output the exec line when 
+	the log is being redirected
+
+2009-01-11  Aaron Bockover  <abock@gnome.org>
+
 	ATTENTION PACKAGERS: This is a VERY important commit; please read this
 	ChangeLog message as it applies to YOU :). Conforming to this will
 	help with bug reports.
