@@ -306,14 +306,30 @@ namespace Banshee.Podcasting
                 } catch (Exception e) {
                     Log.Exception (e);
                 }
-            } else if (uri.Contains ("xml") || uri.Contains ("rss") || uri.Contains ("feed") || uri.StartsWith ("itpc")) {
+            } else if (uri.Contains ("xml") || uri.Contains ("rss") || uri.Contains ("feed") || uri.StartsWith ("itpc") || uri.StartsWith ("pcast")) {
                 if (uri.StartsWith ("feed://") || uri.StartsWith ("itpc://")) {
                     uri = String.Format ("http://{0}", uri.Substring (7));
+                } else if (uri.StartsWith ("pcast://")) {
+                    uri = String.Format ("http://{0}", uri.Substring (8));
                 }
 
                 // TODO replace autodownload w/ actual default preference
                 FeedsManager.Instance.FeedManager.CreateFeed (uri, FeedAutoDownload.None);
                 source.NotifyUser ();
+            } else if (uri.StartsWith ("itms://")) {
+                System.Threading.ThreadPool.QueueUserWorkItem (delegate {
+                    try {
+                        string feed_url = new ItmsPodcast (uri).FeedUrl;
+                        if (feed_url != null) {
+                            ThreadAssist.ProxyToMain (delegate {
+                                FeedsManager.Instance.FeedManager.CreateFeed (feed_url, FeedAutoDownload.None);
+                                source.NotifyUser ();
+                            });
+                        }
+                    } catch (Exception e) {
+                        Hyena.Log.Exception (e);
+                    }
+                });
             }
         }
         

@@ -1,3 +1,15 @@
+2009-01-10  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting/PodcastService.cs:
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting/ItmsPodcast.cs:
+	* src/Extensions/Banshee.Podcasting/Makefile.am: Add support for itms://
+	podcast links that you see on many podcast websites (BNC #465149).
+	I think setting Banshee as the app Firefox (etc) uses when they are
+	clicked has to be done manually, unfortunately
+
+	* src/Core/Banshee.Services/Banshee.Web/HttpRequest.cs: Transparently
+	support gzip'd responses, add ResponseBody property.
+
 2009-01-10  Aaron Bockover  <abock@gnome.org>
 
 	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastSubscribeDialog.cs:

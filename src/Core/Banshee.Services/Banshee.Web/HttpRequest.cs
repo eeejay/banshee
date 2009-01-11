@@ -31,6 +31,8 @@ using System.IO;
 using System.Net;
 using System.Collections.Generic;
 
+using ICSharpCode.SharpZipLib.GZip;
+
 using Banshee.Base;
 using Banshee.ServiceStack;
 using Banshee.Networking;
@@ -115,7 +117,7 @@ namespace Banshee.Web
         
         public void DumpResponseStream ()
         {
-            using (Stream stream = response.GetResponseStream ()) {
+            using (Stream stream = GetResponseStream ()) {
                 StreamReader reader = new StreamReader (stream);
                 Console.WriteLine (reader.ReadToEnd ());
                 reader.Dispose ();
@@ -161,6 +163,29 @@ namespace Banshee.Web
         
         public HttpWebResponse Response {
             get { return response; }
+        }
+
+        public Stream GetResponseStream ()
+        {
+            return response.ContentEncoding == "gzip"
+                ? new GZipInputStream (response.GetResponseStream ())
+                : response.GetResponseStream ();
+        }
+
+        private string response_body;
+        public string ResponseBody {
+            get {
+                if (response_body == null) {
+                    GetResponse ();
+                    using (Stream stream = GetResponseStream ()) {
+                        StreamReader reader = new StreamReader (stream);
+                        response_body = reader.ReadToEnd ();
+                        reader.Dispose ();
+                    }
+                }
+
+                return response_body;
+            }
         }
         
         private static TimeSpan default_timeout = TimeSpan.FromSeconds (20);
