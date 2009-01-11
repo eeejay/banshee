@@ -544,20 +544,13 @@ namespace Lastfm
                 now_playing_post.UserAgent = LastfmCore.UserAgent;
                 now_playing_post.Method = "POST";
                 now_playing_post.ContentType = "application/x-www-form-urlencoded";
-                
-                ASCIIEncoding encoding = new ASCIIEncoding ();
-                byte[] data_bytes = encoding.GetBytes (data);
-                now_playing_post.ContentLength = data_bytes.Length;
-                Stream request_stream = now_playing_post.GetRequestStream ();
-                request_stream.Write (data_bytes, 0, data_bytes.Length);
-                request_stream.Close ();
 
                 if (state == State.Idle) {
                     // Don't actually POST it until we're idle (that is, we
                     // probably have stuff queued which will reset the Now
                     // Playing if we send them first).
-                    now_playing_post.BeginGetResponse (NowPlayingGetResponse, null);
                     now_playing_started = true;
+                    now_playing_post.BeginGetRequestStream (NowPlayingGetRequestStream, data);
                 }
             } catch (Exception ex) {
                 Log.Warning ("Audioscrobbler NowPlaying failed",
@@ -565,6 +558,22 @@ namespace Lastfm
                 
                 // Reset current_now_playing_data if it was the problem.
                 current_now_playing_data = null;
+            }
+        }
+
+        private void NowPlayingGetRequestStream (IAsyncResult ar)
+        {
+            try {
+                string data = ar.AsyncState as string;
+                ASCIIEncoding encoding = new ASCIIEncoding ();
+                byte[] data_bytes = encoding.GetBytes (data);
+                Stream request_stream = now_playing_post.EndGetRequestStream (ar);
+                request_stream.Write (data_bytes, 0, data_bytes.Length);
+                request_stream.Close ();
+
+                now_playing_post.BeginGetResponse (NowPlayingGetResponse, null);
+            } catch (Exception e) {
+                Log.Exception (e);
             }
         }
 

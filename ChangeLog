@@ -1,3 +1,9 @@
+2009-01-11  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Libraries/Lastfm/Lastfm/AudioscrobblerConnection.cs: Fix recently
+	introduced bug that hung Banshee when Last.fm submitted Now Playing
+	information (BNC #465215) 
+
 2009-01-11  Aaron Bockover  <abock@gnome.org>
 
 	This commit addresses BNC #461677, allowing device commands to be sent
