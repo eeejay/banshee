@@ -47,6 +47,7 @@ namespace Banshee.Dap
     public class DapService : IExtensionService, IDelayedInitializeService, IDisposable
     {
         private Dictionary<string, DapSource> sources;
+        private List<DeviceCommand> unhandled_device_commands;
         private List<TypeExtensionNode> supported_dap_types;
         private bool initialized;
         private object sync = new object ();
@@ -68,6 +69,7 @@ namespace Banshee.Dap
                 
                 ServiceManager.HardwareManager.DeviceAdded += OnHardwareDeviceAdded;
                 ServiceManager.HardwareManager.DeviceRemoved += OnHardwareDeviceRemoved;
+                ServiceManager.HardwareManager.DeviceCommand += OnDeviceCommand;
                 ServiceManager.SourceManager.SourceRemoved += OnSourceRemoved;
                 initialized = true;
             }
@@ -114,6 +116,7 @@ namespace Banshee.Dap
                 
                 ServiceManager.HardwareManager.DeviceAdded -= OnHardwareDeviceAdded;
                 ServiceManager.HardwareManager.DeviceRemoved -= OnHardwareDeviceRemoved;
+                ServiceManager.HardwareManager.DeviceCommand -= OnDeviceCommand;
                 ServiceManager.SourceManager.SourceRemoved -= OnSourceRemoved;
                 
                 List<DapSource> dap_sources = new List<DapSource> (sources.Values);
@@ -206,6 +209,25 @@ namespace Banshee.Dap
                     ThreadAssist.ProxyToMain (delegate {
                         ServiceManager.SourceManager.AddSource (source);
                         source.NotifyUser ();
+                        
+                        // If there are any queued device commands, see if they are to be
+                        // handled by this new DAP (e.g. --device-activate=file:///media/disk)
+                        try {
+                            if (service.unhandled_device_commands != null) {
+                                foreach (DeviceCommand command in service.unhandled_device_commands) {
+                                    if (source.CanHandleDeviceCommand (command)) {
+                                        service.HandleDeviceCommand (source, command.Action);
+                                        service.unhandled_device_commands.Remove (command);
+                                        if (service.unhandled_device_commands.Count == 0) {
+                                            service.unhandled_device_commands = null;
+                                        }
+                                        break;
+                                    }
+                                }
+                            }
+                        } catch (Exception e) {
+                            Log.Exception (e);
+                        }
                     });
                 }
             }
@@ -251,6 +273,37 @@ namespace Banshee.Dap
         {
             UnmapDevice (args.DeviceUuid);
         }
+        
+      
+#region DeviceCommand Handling
+
+        private void HandleDeviceCommand (DapSource source, DeviceCommandAction action)
+        {
+            if ((action & DeviceCommandAction.Activate) != 0) {
+                ServiceManager.SourceManager.SetActiveSource (source);
+            }
+        }
+        
+        private void OnDeviceCommand (object o, DeviceCommand command)
+        {
+            lock (this) {
+                // Check to see if we have an already mapped disc volume that should
+                // handle this incoming command; if not, queue it for later devices
+                foreach (DapSource source in sources.Values) {
+                    if (source.CanHandleDeviceCommand (command)) {
+                        HandleDeviceCommand (source, command.Action);
+                        return;
+                    }
+                }
+                
+                if (unhandled_device_commands == null) {
+                    unhandled_device_commands = new List<DeviceCommand> ();
+                }
+                unhandled_device_commands.Add (command);
+            }
+        }
+        
+#endregion
         
         string IService.ServiceName {
             get { return "DapService"; }

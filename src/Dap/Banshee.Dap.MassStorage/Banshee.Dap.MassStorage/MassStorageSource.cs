@@ -537,6 +537,16 @@ namespace Banshee.Dap.MassStorage
                 volume.Eject ();
             }
         }
+        
+        protected override bool CanHandleDeviceCommand (DeviceCommand command)
+        {
+            try {
+                SafeUri uri = new SafeUri (command.DeviceId);
+                return BaseDirectory.StartsWith (uri.LocalPath);
+            } catch {
+                return false;
+            }
+        }
 
         private string GetTrackPath (TrackInfo track, string ext)
         {

@@ -53,6 +53,8 @@ namespace Banshee.MediaEngine
         private PlayerEngine active_engine;
         private PlayerEngine default_engine;
         private PlayerEngine pending_engine;
+        private object pending_playback_for_not_ready;
+        private bool pending_playback_for_not_ready_play;
 
         private string preferred_engine_id = null;
 
@@ -183,6 +185,12 @@ namespace Banshee.MediaEngine
                         }
                     }
                 }
+
+                if (pending_playback_for_not_ready != null) {
+                    OpenCheck (pending_playback_for_not_ready, pending_playback_for_not_ready_play);
+                    pending_playback_for_not_ready = null;
+                    pending_playback_for_not_ready_play = false;
+                }
             }
             
             DBusPlayerStateHandler dbus_handler = dbus_state_changed;
@@ -272,8 +280,7 @@ namespace Banshee.MediaEngine
             }
         
             try {
-                OpenCheck (track);
-                active_engine.Play ();
+                OpenCheck (track, true);
             } catch (Exception e) {
                 Log.Exception (e);
                 Log.Error (Catalog.GetString ("Problem with Player Engine"), e.Message, true);
@@ -281,12 +288,18 @@ namespace Banshee.MediaEngine
                 ActiveEngine = default_engine;
             }
         }
-        
+
         private void OpenCheck (object o)
         {
+            OpenCheck (o, false);
+        }
+        
+        private void OpenCheck (object o, bool play)
+        {
             if (CurrentState == PlayerState.NotReady) {
-                throw new InvalidOperationException (String.Format ("Player engine {0} is in the NotReady state", 
-                    active_engine.GetType ().FullName));
+                pending_playback_for_not_ready = o;
+                pending_playback_for_not_ready_play = play;
+                return;
             }
         
             SafeUri uri = null;
@@ -312,6 +325,10 @@ namespace Banshee.MediaEngine
             } else if (uri != null) {
                 active_engine.Open (uri);
                 incremented_last_played = false;
+            }
+
+            if (play) {
+                active_engine.Play ();
             }
         }
 

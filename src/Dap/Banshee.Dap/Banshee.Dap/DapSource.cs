@@ -469,6 +469,11 @@ namespace Banshee.Dap
                 return preferred_config;
             }
         }
+        
+        internal protected virtual bool CanHandleDeviceCommand (DeviceCommand command)
+        {
+            return false;
+        }
 
         private string [] acceptable_mimetypes;
         public string [] AcceptableMimeTypes {

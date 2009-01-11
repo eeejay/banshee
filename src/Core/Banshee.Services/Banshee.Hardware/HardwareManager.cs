@@ -4,7 +4,7 @@
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2008 Novell, Inc.
+// Copyright (C) 2008-2009 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -67,6 +67,8 @@ namespace Banshee.Hardware
             manager.DeviceAdded += OnDeviceAdded;
             manager.DeviceRemoved += OnDeviceRemoved;
             
+            ServiceManager.Get<DBusCommandService> ().ArgumentPushed += OnCommandLineArgument;
+
             AddinManager.AddExtensionNodeHandler ("/Banshee/Platform/HardwareDeviceProvider", OnExtensionChanged);
         }
         
@@ -79,6 +81,8 @@ namespace Banshee.Hardware
                     manager.Dispose ();
                     manager = null;
                 }
+
+                ServiceManager.Get<DBusCommandService> ().ArgumentPushed -= OnCommandLineArgument;
                 
                 if (custom_device_providers != null) {
                     foreach (ICustomDeviceProvider provider in custom_device_providers.Values) {
@@ -107,6 +111,62 @@ namespace Banshee.Hardware
                 }
             }
         }
+
+#region Device Command Line Argument Handling
+
+        private event DeviceCommandHandler device_command;
+        public event DeviceCommandHandler DeviceCommand {
+            add {
+                try {
+                    device_command += value;
+                } finally {
+                    if (value != null && StartupDeviceCommand != null) {
+                        value (this, StartupDeviceCommand);
+                    }
+                }
+            }
+            
+            remove { device_command -= value; }
+        }           
+
+        private Banshee.Hardware.DeviceCommand startup_device_command;
+        private bool startup_device_command_checked = false;
+
+        public Banshee.Hardware.DeviceCommand StartupDeviceCommand {
+            get {
+                lock (this) {
+                    if (startup_device_command_checked) {
+                        return startup_device_command;
+                    }
+
+                    startup_device_command_checked = true;
+
+                    foreach (KeyValuePair<string, string> argument in Banshee.Base.ApplicationContext.CommandLine.Arguments) {
+                        startup_device_command = Banshee.Hardware.DeviceCommand.ParseCommandLine (argument.Key, argument.Value);
+                        if (startup_device_command != null) {
+                            break;
+                        }
+                    }
+
+                    return startup_device_command;
+                }
+            }
+        }
+
+        private void OnCommandLineArgument (string argument, object value, bool isFile)
+        {
+            Banshee.Hardware.DeviceCommand command = Banshee.Hardware.DeviceCommand.ParseCommandLine (argument, value.ToString ());
+            if (command == null) {
+                return;
+            }
+
+            DeviceCommandHandler handler = device_command;
+            if (handler != null) {
+                handler (this, command);
+            }
+        }
+
+#endregion
         
         private void OnDeviceAdded (object o, DeviceAddedArgs args)
         {

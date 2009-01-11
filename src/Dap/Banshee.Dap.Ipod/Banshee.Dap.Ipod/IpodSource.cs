@@ -133,6 +133,16 @@ namespace Banshee.Dap.Ipod
             Dispose ();
         }
         
+        protected override bool CanHandleDeviceCommand (DeviceCommand command)
+        {
+            try {
+                SafeUri uri = new SafeUri (command.DeviceId);
+                return IpodDevice.MountPoint.StartsWith (uri.LocalPath);
+            } catch {
+                return false;
+            }
+        }
+        
         protected override IDeviceMediaCapabilities MediaCapabilities {
             get { return ipod_device.Parent.MediaCapabilities ?? base.MediaCapabilities; }
         }

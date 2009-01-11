@@ -1,5 +1,42 @@
 2009-01-11  Aaron Bockover  <abock@gnome.org>
 
+	This commit addresses BNC #461677, allowing device commands to be sent
+	to a new or existing process. Device commands allow Banshee to perform
+	actions against a device, such as activating the source in the UI or 
+	starting playback of an Audio CD. Two .desktop files exist for Nautilus/GIO
+	to use to activate device commands on Banshee.
+
+	* src/Core/Banshee.Services/Banshee.Hardware/DeviceCommand.cs: Simple
+	structure that parses device action arguments such as --device-activate=x
+	or --device-activate-play=y
+
+	* src/Core/Banshee.Services/Banshee.Hardware/HardwareManager.cs: Provide
+	a DeviceCommand event which is raised whenever a DeviceCommand argument
+	described above is passed; this provides a simple facility for services
+	to listen to actions to be applied against devices (e.g. the play CD
+	action from Nautilus)
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs: 
+	Listen to the HW manager's DeviceCommand event and handle cdda actions
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapService.cs: Listen to the HW
+	manager's DeviceCommand and pass them off to children DapSources at the
+	right time for actual handling
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:
+	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:
+	Added/implemented CanHandleDeviceCommand so the DapService can know if
+	a DeviceCommand action applies to the DAP
+
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:
+	Fix a race where services may try to play a stream before the player
+	engine has entered the READY state; this happens for example when Banshee
+	is started with a --device-play or --device-activate-play command that
+	may be handled before the player engine READYs
+
+2009-01-11  Aaron Bockover  <abock@gnome.org>
+
 	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapService.cs: Add null checks
 	around the source_map and its children when disposing since it won't be
 	initialized if dispose is called before delayed initialize (BNC #465159)

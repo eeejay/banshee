@@ -51,6 +51,7 @@ SOURCES =  \
 	Banshee.Equalizer/EqualizerManager.cs \
 	Banshee.Equalizer/EqualizerSetting.cs \
 	Banshee.Equalizer/EqualizerSettingEvent.cs \
+	Banshee.Hardware/DeviceCommand.cs \
 	Banshee.Hardware/HardwareManager.cs \
 	Banshee.Hardware/IBlockDevice.cs \
 	Banshee.Hardware/ICdromDevice.cs \

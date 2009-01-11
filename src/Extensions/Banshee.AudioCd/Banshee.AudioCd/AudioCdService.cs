@@ -43,6 +43,7 @@ namespace Banshee.AudioCd
     public class AudioCdService : IExtensionService, IDisposable
     {
         private Dictionary<string, AudioCdSource> sources;
+        private List<DeviceCommand> unhandled_device_commands;
         private Page pref_page;
         private Section pref_section;
         private uint global_interface_id;
@@ -64,6 +65,7 @@ namespace Banshee.AudioCd
                 
                 ServiceManager.HardwareManager.DeviceAdded += OnHardwareDeviceAdded;
                 ServiceManager.HardwareManager.DeviceRemoved += OnHardwareDeviceRemoved;
+                ServiceManager.HardwareManager.DeviceCommand += OnDeviceCommand;
                 
                 SetupActions ();
             }
@@ -76,6 +78,7 @@ namespace Banshee.AudioCd
             
                 ServiceManager.HardwareManager.DeviceAdded -= OnHardwareDeviceAdded;
                 ServiceManager.HardwareManager.DeviceRemoved -= OnHardwareDeviceRemoved;
+                ServiceManager.HardwareManager.DeviceCommand -= OnDeviceCommand;
                 
                 foreach (AudioCdSource source in sources.Values) {
                     source.Dispose ();
@@ -107,6 +110,26 @@ namespace Banshee.AudioCd
                     AudioCdSource source = new AudioCdSource (this, new AudioCdDiscModel (volume));
                     sources.Add (volume.Uuid, source);
                     ServiceManager.SourceManager.AddSource (source);
+
+                    // If there are any queued device commands, see if they are to be
+                    // handled by this new volume (e.g. --device-activate-play=cdda://sr0/)
+                    try {
+                        if (unhandled_device_commands != null) {
+                            foreach (DeviceCommand command in unhandled_device_commands) {
+                                if (DeviceCommandMatchesSource (source, command)) {
+                                    HandleDeviceCommand (source, command.Action);
+                                    unhandled_device_commands.Remove (command);
+                                    if (unhandled_device_commands.Count == 0) {
+                                        unhandled_device_commands = null;
+                                    }
+                                    break;
+                                }
+                            }
+                        }
+                    } catch (Exception e) {
+                        Log.Exception (e);
+                    }
+                    
                     Log.DebugFormat ("Mapping audio CD ({0})", volume.Uuid);
                 }
             }
@@ -142,6 +165,59 @@ namespace Banshee.AudioCd
             }
         }
         
+#region DeviceCommand Handling
+
+        private bool DeviceCommandMatchesSource (AudioCdSource source, DeviceCommand command)
+        {
+            if (command.DeviceId.StartsWith ("cdda:")) {
+                try {
+                    Uri uri = new Uri (command.DeviceId);
+                    string match_device_node = String.Format ("{0}{1}", uri.Host, 
+                        uri.AbsolutePath).TrimEnd ('/', '\\');
+                    string device_node = source.DiscModel.Volume.DeviceNode;
+                    return device_node.EndsWith (match_device_node);
+                } catch {
+                }
+            }
+            
+            return false;
+        }
+
+        private void HandleDeviceCommand (AudioCdSource source, DeviceCommandAction action)
+        {
+            if ((action & DeviceCommandAction.Activate) != 0) {
+                ServiceManager.SourceManager.SetActiveSource (source);
+            }
+
+            if ((action & DeviceCommandAction.Play) != 0) {
+                ServiceManager.PlaybackController.NextSource = source;
+                if (!ServiceManager.PlayerEngine.IsPlaying ()) {
+                    ServiceManager.PlaybackController.Next ();
+                }
+            }
+        }
+        
+        private void OnDeviceCommand (object o, DeviceCommand command)
+        {
+            lock (this) {
+                // Check to see if we have an already mapped disc volume that should
+                // handle this incoming command; if not, queue it for later discs
+                foreach (AudioCdSource source in sources.Values) {
+                    if (DeviceCommandMatchesSource (source, command)) {
+                        HandleDeviceCommand (source, command.Action);
+                        return;
+                    }
+                }
+                
+                if (unhandled_device_commands == null) {
+                    unhandled_device_commands = new List<DeviceCommand> ();
+                }
+                unhandled_device_commands.Add (command);
+            }
+        }
+        
+#endregion
+
 #region Preferences        
         
         private void InstallPreferences ()
