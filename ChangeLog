@@ -1,5 +1,13 @@
 2009-01-11  Aaron Bockover  <abock@gnome.org>
 
+	* src/Clients/Booter/banshee-1.in: Use XDG_CONFIG_HOME instead of an
+	explicit ~/.config; do not allow --redirect-log if another banshee-1
+	process is running (this overwrites the original log); and allow for
+	a special file ~/.config/banshee-1/always-debug that if present always
+	will turn on debug mode, useful for when launched from a desktop file/GUI
+
+2009-01-11  Aaron Bockover  <abock@gnome.org>
+
 	* src/Clients/Booter/banshee-1.in: Output the exec line when 
 	the log is being redirected
 

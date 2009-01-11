@@ -4,12 +4,14 @@ prefix=@prefix@
 libdir=@expanded_libdir@
 exec_asm="Banshee.exe"
 MONO_EXE="@expanded_libdir@/@PACKAGE@/$exec_asm"
+BANSHEE_EXEC_NAME="banshee-1"
+BANSHEE_CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/banshee-1"
 
 export DYLD_LIBRARY_PATH=@expanded_libdir@:@expanded_libdir@/@PACKAGE@${DYLD_LIBRARY_PATH+:$DYLD_LIBRARY_PATH}
 export LD_LIBRARY_PATH=@expanded_libdir@:@expanded_libdir@/@PACKAGE@${LD_LIBRARY_PATH+:$LD_LIBRARY_PATH}
 export GST_PLUGIN_PATH=@expanded_libdir@/@PACKAGE@/gstreamer-0.10${GST_PLUGIN_PATH+:$GST_PLUGIN_PATH}
 
-[ -n "$BANSHEE_DEBUG" ] && BANSHEE_DEBUG="--debug"
+[ -n "$BANSHEE_DEBUG" -o -f "${BANSHEE_CONFIG_DIR}/always-debug" ] && BANSHEE_DEBUG="--debug"
 [ -n "$BANSHEE_TRACE" ] && BANSHEE_TRACE="--trace=$BANSHEE_TRACE"
 [ -n "$BANSHEE_PROFILE" ] && BANSHEE_PROFILE="--profile=$BANSHEE_PROFILE"
 
@@ -27,7 +29,7 @@ for arg in $*; do
     esac
 
 	case "x--redirect-log" in ("x$arg")
-		BANSHEE_REDIRECT_LOG="$HOME/.config/banshee-1/log"
+		[ -z "$(pidof $BANSHEE_EXEC_NAME)" ] && BANSHEE_REDIRECT_LOG="${BANSHEE_CONFIG_DIR}/log"
 	esac
 done
 
@@ -37,7 +39,7 @@ if [ -n "$BANSHEE_DEBUG" -o -n "$BANSHEE_TRACE" -o -n "$BANSHEE_PROFILE" ]; then
 fi
 
 # Finally - environment is set up, time to run our beloved
-exec_args="-a banshee-1 mono $MONO_OPTIONS $MONO_EXE"
+exec_args="-a $BANSHEE_EXEC_NAME mono $MONO_OPTIONS $MONO_EXE $BANSHEE_DEBUG"
 
 if [ -z "$BANSHEE_REDIRECT_LOG" ]; then
 	exec $exec_args "$@"
