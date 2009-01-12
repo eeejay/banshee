@@ -1,3 +1,8 @@
+2009-11-01  Eoin Hennessy <eoin@randomrules.org>
+	* build/osx/targets/bundle-30-gstreamer.targets: Re-add gst-plugins-ugly 
+	to OSX build dependecies. The m3parse element is required for mp3 playback 
+	with qtwrapper. We don't build *any* other elements from -ugly.
+
 2009-01-11  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Libraries/Lastfm/Lastfm/AudioscrobblerConnection.cs: Fix recently
