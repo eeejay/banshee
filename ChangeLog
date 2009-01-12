@@ -1,3 +1,8 @@
+2009-01-12  Aaron Bockover  <abock@gnome.org>
+
+	* src/Core/Banshee.ThickClient/Banshee.Equalizer.Gui/EqualizerWindow.cs:
+	Patch to fix unlocalised text on Equalizer (BNC #447606)
+
 2009-01-11  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.FileSystemQueue/Banshee.FileSystemQueue/FileSystemQueueSource.cs:

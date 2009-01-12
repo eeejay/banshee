@@ -155,7 +155,7 @@ namespace Banshee.Equalizer.Gui
          
         private void OnNewPreset (object o, EventArgs args)
         {
-            EqualizerSetting eq = new EqualizerSetting ("New Preset");
+            EqualizerSetting eq = new EqualizerSetting (Catalog.GetString ("New Preset"));
             EqualizerManager.Instance.Add (eq);
             eq_preset_combo.ActiveEqualizer = eq;
             eq_preset_combo.Entry.SelectRegion (0, eq_preset_combo.Entry.Text.Length);
