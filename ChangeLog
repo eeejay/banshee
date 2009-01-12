@@ -1,3 +1,9 @@
+2009-01-11  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.FileSystemQueue/Banshee.FileSystemQueue/FileSystemQueueSource.cs:
+	Use SafeUri to unescape and get the file://-less path if possible, fixes
+	bug with Firefox launching us with a file:// playlist URI (BNC #456120)
+
 2009-11-01  Eoin Hennessy <eoin@randomrules.org>
 	* build/osx/targets/bundle-30-gstreamer.targets: Re-add gst-plugins-ugly 
 	to OSX build dependecies. The m3parse element is required for mp3 playback 

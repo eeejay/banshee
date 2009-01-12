@@ -110,6 +110,14 @@ namespace Banshee.FileSystemQueue
         
         public void Enqueue (string path)
         {
+            try {
+                SafeUri uri = new SafeUri (path);
+                if (uri.IsLocalPath && !String.IsNullOrEmpty (uri.LocalPath)) {
+                    path = uri.LocalPath;
+                }
+            } catch {
+            }
+
             lock (this) {
                 if (importer == null) {
                     importer = new DatabaseImportManager (this);
