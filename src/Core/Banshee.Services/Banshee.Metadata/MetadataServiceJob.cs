@@ -103,7 +103,7 @@ namespace Banshee.Metadata
         
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri.AbsoluteUri);
             request.UserAgent = Banshee.Web.Browser.UserAgent;
-            request.Timeout = 20 * 1000;
+            request.Timeout = 10 * 1000;
             request.KeepAlive = false;
             request.AllowAutoRedirect = true;
             

@@ -1,5 +1,11 @@
 2009-01-13  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Metadata/MetadataServiceJob.cs: Change
+	the timeout to 10s to alleviate long waits from not-responding servers
+	(BGO #540178).
+
+2009-01-13  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Dap/Banshee.Dap.Karma/Banshee.Dap.Karma/KarmaSource.cs: Patch from
 	Bob Copeland improving Karma detection and adding OnTracksAdded call (BGO
 	#566205)
