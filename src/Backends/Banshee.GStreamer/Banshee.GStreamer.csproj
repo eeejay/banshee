@@ -7,7 +7,7 @@
     <ProjectGuid>{6171E5DE-5B36-4AE4-8707-F6BEE0AD945B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <UseParentDirectoryAsNamespace>true</UseParentDirectoryAsNamespace>
-    <AssemblyName>Banshee.MediaEngine.GStreamer</AssemblyName>
+    <AssemblyName>Banshee.GStreamer</AssemblyName>
     <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">

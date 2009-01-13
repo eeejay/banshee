@@ -99,6 +99,7 @@
     <Compile Include="Banshee.Podcasting.Gui\DownloadStatusFilterView.cs" />
     <Compile Include="Banshee.Podcasting.Gui\ColumnCellDownloadStatus.cs" />
     <Compile Include="Banshee.Podcasting.Gui\ColumnCellYesNo.cs" />
+    <Compile Include="Banshee.Podcasting\ItmsPodcast.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>

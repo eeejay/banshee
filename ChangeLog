@@ -1,3 +1,20 @@
+2009-01-13  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.csproj:
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.csproj:
+	* src/Core/Banshee.Services/Banshee.Services.csproj:
+	* src/Backends/Banshee.Gnome/Banshee.Gnome.csproj:
+	* src/Backends/Banshee.GStreamer/Banshee.GStreamer.csproj: Various fixes and 
+	updates.
+
+	* src/Libraries/Lastfm/Lastfm.csproj:
+	* src/Libraries/Lastfm.Gui/Lastfm.Gui.csproj: Enable Makefile integration.
+
+	* src/Libraries/Lastfm/Makefile.am:
+	* src/Libraries/Lastfm.Gui/Makefile.am: Whitespace changes and re-ordering,
+	to keep MonoDevelop happy, now that Makefile integration is enabled for these
+	projects.
+
 2009-01-12  Aaron Bockover  <abock@gnome.org>
 
 	* src/Core/Banshee.ThickClient/Banshee.Equalizer.Gui/EqualizerWindow.cs:

@@ -243,6 +243,7 @@
     <Compile Include="Banshee.Hardware\VendorProductInfo.cs" />
     <Compile Include="Banshee.Hardware\IUsbDevice.cs" />
     <Compile Include="Banshee.Hardware\VendorProductDeviceNode.cs" />
+    <Compile Include="Banshee.Hardware\DeviceCommand.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Banshee.Services.addin.xml" />

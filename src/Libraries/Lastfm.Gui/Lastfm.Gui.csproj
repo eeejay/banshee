@@ -7,14 +7,14 @@
     <ProjectGuid>{7271F1DF-1E15-4324-8102-E3D911A62BC5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <UseParentDirectoryAsNamespace>true</UseParentDirectoryAsNamespace>
-    <AssemblyName>Lastfm</AssemblyName>
+    <AssemblyName>Lastfm.Gui</AssemblyName>
     <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>.</OutputPath>
+    <OutputPath>..\..\..\bin</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
@@ -49,7 +49,24 @@
     <MonoDevelop>
       <Properties>
         <GtkDesignInfo />
+        <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="true" RelativeMakefileName="Makefile.am">
+          <BuildFilesVar Sync="true" Name="SOURCES" />
+          <DeployFilesVar />
+          <ResourcesVar Sync="true" Name="RESOURCES" />
+          <OthersVar />
+          <GacRefVar />
+          <AsmRefVar />
+          <ProjectRefVar />
+        </MonoDevelop.Autotools.MakefileInfo>
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\badge-hover.png">
+      <LogicalName>badge-hover.png</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\badge.png">
+      <LogicalName>badge.png</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
 </Project>

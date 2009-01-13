@@ -2,20 +2,20 @@ ASSEMBLY = Lastfm
 TARGET = library
 LINK = $(REF_LASTFM)
 
-SOURCES = \
+SOURCES =  \
+	Lastfm.Data/DataCore.cs \
+	Lastfm.Data/DataEntry.cs \
+	Lastfm.Data/DataEntryCollection.cs \
+	Lastfm.Data/LastfmAlbumData.cs \
+	Lastfm.Data/LastfmArtistData.cs \
+	Lastfm.Data/LastfmData.cs \
+	Lastfm.Data/LastfmUserData.cs \
 	Lastfm/Account.cs \
 	Lastfm/AudioscrobblerConnection.cs \
 	Lastfm/Browser.cs \
 	Lastfm/IQueue.cs \
 	Lastfm/LastfmCore.cs \
-	Lastfm/RadioConnection.cs \
-	Lastfm.Data/DataCore.cs \
-	Lastfm.Data/DataEntry.cs \
-	Lastfm.Data/DataEntryCollection.cs \
-	Lastfm.Data/LastfmData.cs \
-	Lastfm.Data/LastfmArtistData.cs \
-	Lastfm.Data/LastfmUserData.cs \
-	Lastfm.Data/LastfmAlbumData.cs 
+	Lastfm/RadioConnection.cs 
 
 include $(top_srcdir)/build/build.mk
 
