@@ -1,3 +1,9 @@
+2009-01-13  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Dap/Banshee.Dap.Karma/Banshee.Dap.Karma/KarmaSource.cs: Patch from
+	Bob Copeland improving Karma detection and adding OnTracksAdded call (BGO
+	#566205)
+
 2009-01-13  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
 	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.csproj:

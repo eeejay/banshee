@@ -72,29 +72,25 @@ namespace Banshee.Dap.Karma
         protected override void LoadFromDevice()
         {
             ReloadDatabase();
+            OnTracksAdded();
         }
 
         private bool IsKarma(IDevice dev)
         {
-            IBlockDevice bdev = dev as IBlockDevice;
+            IVolume volume = dev as IVolume;
 
-            if (bdev == null ||
-                dev.Name.IndexOf("Rio Karma") < 0) {
+            if (volume == null)
                 return false;
-            }
 
-            // now check for a mounted disk (pick the largest partition)
-            bool found = false;
-            ulong max_size = 0;
-            foreach (IVolume volume in bdev.Volumes) {
-                if (volume.FileSystem.Equals("omfs") &&
-                    volume.Capacity > max_size) {
-                        Name = volume.Name;
-                    mount_point = volume.MountPoint;
-                    found = true;
-                }
-            }
-            return found;
+            IUsbDevice usbdev = volume.ResolveRootUsbDevice();
+            if (usbdev == null)
+                return false;
+
+            int vendor_id = usbdev.VendorId;
+            int product_id = usbdev.ProductId;
+
+            mount_point = volume.MountPoint;
+            return (vendor_id == 0x045a && product_id == 0x5210);
         }
 
         private void ReloadDatabase()
