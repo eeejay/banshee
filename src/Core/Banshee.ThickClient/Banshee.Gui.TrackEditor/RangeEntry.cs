@@ -56,9 +56,9 @@ namespace Banshee.Gui.TrackEditor
         {
             AutoOrderButton auto_order_button;
         
-            PackStart (from_entry = new SpinButton (0, 99, 1), true, true, 0);
+            PackStart (from_entry = new SpinButton (0, 999, 1), true, true, 0);
             PackStart (new Label (rangeLabel), false, false, 6);
-            PackStart (to_entry = new SpinButton (0, 99, 1), true, true, 0);
+            PackStart (to_entry = new SpinButton (0, 999, 1), true, true, 0);
             if (orderClosure != null) {
                 PackStart (auto_order_button = new AutoOrderButton (), false, false, 1);
                 auto_order_button.Clicked += delegate { orderClosure (this); };

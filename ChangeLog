@@ -1,5 +1,10 @@
 2009-01-13  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/RangeEntry.cs:
+	Allow setting the track/disc number/counts to > 99 (up to 999 now).
+
+2009-01-13  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Collection.Indexer/CollectionIndexerService.cs:
 	Fix bug in logic of whether to raise a collection changed event.  We
 	should have been ignoring all changes unless to a field other than
