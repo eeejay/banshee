@@ -50,6 +50,7 @@ namespace Banshee.Collection.Indexer.RemoteHelper
         private bool listening;
         private ICollectionIndexerService service;
         private bool cleanup_and_shutdown;
+        private bool index_when_collection_changed = true;
         
         public void Start ()
         {
@@ -87,7 +88,7 @@ namespace Banshee.Collection.Indexer.RemoteHelper
                 indexer.Index ();
             }
         }
-        
+
         private void _UpdateIndex (ICollectionIndexer indexer)
         {
             ThreadPool.QueueUserWorkItem (delegate {
@@ -182,7 +183,9 @@ namespace Banshee.Collection.Indexer.RemoteHelper
         
         private void OnCollectionChanged ()
         {
-            Index ();
+            if (IndexWhenCollectionChanged) {
+                Index ();
+            }
         }
         
         private void OnCleanupAndShutdown ()
@@ -215,6 +218,11 @@ namespace Banshee.Collection.Indexer.RemoteHelper
         
         protected bool CleanupAndShutdown {
             get { return cleanup_and_shutdown; }
+        }
+
+        public bool IndexWhenCollectionChanged {
+            get { return index_when_collection_changed; }
+            set { index_when_collection_changed = value; }
         }
         
         protected ICollectionIndexerService Service {

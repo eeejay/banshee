@@ -214,11 +214,12 @@ namespace Banshee.Collection.Indexer
             }
             
             foreach (Hyena.Query.QueryField field in args.ChangedFields) {
-                if (field != Banshee.Query.BansheeQuery.LastPlayedField ||
+                if (field != Banshee.Query.BansheeQuery.LastPlayedField &&
                     field != Banshee.Query.BansheeQuery.LastSkippedField &&
                     field != Banshee.Query.BansheeQuery.PlayCountField &&
                     field != Banshee.Query.BansheeQuery.SkipCountField) {
                     OnCollectionChanged ();
+                    return;
                 }
             }
         }

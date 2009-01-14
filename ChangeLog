@@ -1,5 +1,17 @@
 2009-01-13  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Collection.Indexer/CollectionIndexerService.cs:
+	Fix bug in logic of whether to raise a collection changed event.  We
+	should have been ignoring all changes unless to a field other than
+	LastPlayed/Skipped or Play/SkipCount but weren't (BGO #567552)
+
+	* src/Core/Banshee.CollectionIndexer/Banshee.Collection.Indexer.RemoteHelper/IndexerClient.cs:
+	* src/Core/Banshee.CollectionIndexer/Banshee.Collection.Indexer.RemoteHelper/SimpleIndexerClient.cs:
+	Add IndexWhenCollectionChanged property to allow disabling the default
+	behavior of retriggering a reindex on every collection change event.
+
+2009-01-13  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Metadata/MetadataServiceJob.cs: Change
 	the timeout to 10s to alleviate long waits from not-responding servers
 	(BGO #540178).

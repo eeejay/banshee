@@ -51,6 +51,10 @@ namespace Banshee.Collection.Indexer.RemoteHelper
         {
             return client.GetAvailableExportFields ();
         }
+
+        protected bool IndexWhenCollectionChanged {
+            set { client.IndexWhenCollectionChanged = value; }
+        }
         
         public void AddExportField (params string [] fields)
         {
@@ -173,7 +177,7 @@ namespace Banshee.Collection.Indexer.RemoteHelper
             }
             
             protected override bool HasCollectionChanged {
-                get { return Service.HasCollectionCountChanged (parent.CollectionCount) || 
+                get { return Service.HasCollectionCountChanged (parent.CollectionCount) ||
                     Service.HasCollectionLastModifiedChanged (Hyena.DateTimeUtil.ToTimeT (parent.CollectionLastModified)); }
             }
 
