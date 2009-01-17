@@ -37,6 +37,7 @@ namespace Banshee.Collection.Gui
         public ColumnCellPositiveInt (string property, bool expand, int min_digits, int max_digits) : base (property, expand)
         {
             SetMinMaxStrings ((int)Math.Pow (10, min_digits) - 1, (int)Math.Pow (10, max_digits) - 1);
+            Alignment = Pango.Alignment.Right;
         }
         
         protected override string GetText (object obj)

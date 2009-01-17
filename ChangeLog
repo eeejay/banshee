@@ -1,3 +1,11 @@
+2009-01-17  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellTrackNumber.cs:
+	Patch from Christoph Burgdorf to right align this (BGO #553322)
+
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellPositiveInt.cs:
+	Apply the same fix for all int-based columns (bpm, play/skip count, etc)
+
 2009-01-13  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/RangeEntry.cs:

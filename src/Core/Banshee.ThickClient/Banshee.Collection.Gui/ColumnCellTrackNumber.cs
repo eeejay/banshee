@@ -37,6 +37,7 @@ namespace Banshee.Collection.Gui
         public ColumnCellTrackNumber (string property, bool expand) : base (property, expand)
         {
             SetMinMaxStrings (99, 999);
+            Alignment = Pango.Alignment.Right;    
         }
         
         protected override string GetText (object obj)
