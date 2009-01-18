@@ -8,14 +8,14 @@
 # Maria Majadas <maria.majadas@hispalinux.es>, 2005, 2006, 2007.
 # Jorge González <jorgegonz@svn.gnome.org>, 2007, 2008.
 # Andrés Herrera <andres@usr.cl>, 2008.
-# Benjamín Valero Espinosa <benjavalero@gmail.com>, 2008.
+# Benjamín Valero Espinosa <benjavalero@gmail.com>, 200, 2009.
 msgid ""
 msgstr ""
 "Project-Id-Version: banshee.HEAD\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
-"product=banshee&amp;component=general\n"
-"POT-Creation-Date: 2008-12-27 11:42+0000\n"
-"PO-Revision-Date: 2008-12-31 15:42+0100\n"
+"product=banshee&component=general\n"
+"POT-Creation-Date: 2009-01-10 05:08+0000\n"
+"PO-Revision-Date: 2009-01-10 13:54+0100\n"
 "Last-Translator: Benjamín Valero Espinosa <benjavalero@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -184,43 +184,27 @@ msgstr "Usar una tasa de bits variable"
 msgid "Windows Media Audio"
 msgstr "Windows Media Audio"
 
-#: ../data/banshee-1.desktop.in.in.h:1
-#: ../src/Clients/Muinshee/Muinshee/PlayerInterface.cs:72
-#: ../src/Clients/Nereid/Nereid/PlayerInterface.cs:76
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/BaseClientWindow.cs:162
-msgid "Banshee Media Player"
-msgstr "Reproductor multimedia Banshee"
-
-#: ../data/banshee-1.desktop.in.in.h:2
-#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:182
-msgid "Media Player"
-msgstr "Reproductor multimedia"
-
-#: ../data/banshee-1.desktop.in.in.h:3
-msgid "Play and organize your media collection"
-msgstr "Reproduzca y organice su colección multimedia"
-
-#: ../libbanshee/banshee-ripper.c:201
+#: ../libbanshee/banshee-ripper.c:268
 msgid "Could not create pipeline"
 msgstr "No se pudo crear un pipeline"
 
-#: ../libbanshee/banshee-ripper.c:207
+#: ../libbanshee/banshee-ripper.c:274
 msgid "Could not initialize element from cdda URI"
 msgstr "No se pudo inicializar el elemento desde el URI cdda"
 
-#: ../libbanshee/banshee-ripper.c:221
+#: ../libbanshee/banshee-ripper.c:288
 msgid "Could not create encoder pipeline"
 msgstr "No se pudo crear un pipeline para el codificador"
 
-#: ../libbanshee/banshee-ripper.c:227
+#: ../libbanshee/banshee-ripper.c:294
 msgid "Could not create queue plugin"
 msgstr "No se pudo crear complemento de colas"
 
-#: ../libbanshee/banshee-ripper.c:235
+#: ../libbanshee/banshee-ripper.c:302
 msgid "Could not create filesink plugin"
 msgstr "No se pudo crear el complemento «filesink»"
 
-#: ../libbanshee/banshee-ripper.c:242
+#: ../libbanshee/banshee-ripper.c:309
 msgid "Could not link pipeline elements"
 msgstr "No se pudieron enlazar los elementos de la tubería"
 
@@ -276,11 +260,11 @@ msgstr "No se pudo iniciar Brasero"
 msgid "Fullscreen video playback active"
 msgstr "Reproducción de vídeo a pantalla completa activa"
 
-#: ../src/Backends/Banshee.GStreamer/Banshee.GStreamer/AudioCdRipper.cs:88
+#: ../src/Backends/Banshee.GStreamer/Banshee.GStreamer/AudioCdRipper.cs:89
 msgid "Could not find an encoder for ripping."
 msgstr "No se pudo encontrar un codificador para la extracción."
 
-#: ../src/Backends/Banshee.GStreamer/Banshee.GStreamer/AudioCdRipper.cs:104
+#: ../src/Backends/Banshee.GStreamer/Banshee.GStreamer/AudioCdRipper.cs:108
 msgid "Could not create CD ripping driver."
 msgstr "No se pudo crear el controlador extractor de CD."
 
@@ -575,6 +559,12 @@ msgstr "Reproducir _álbum"
 msgid "Add an album to the playlist"
 msgstr "Añadir un álbum a la lista de reproducción"
 
+#: ../src/Clients/Muinshee/Muinshee/PlayerInterface.cs:72
+#: ../src/Clients/Nereid/Nereid/PlayerInterface.cs:76
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/BaseClientWindow.cs:162
+msgid "Banshee Media Player"
+msgstr "Reproductor multimedia Banshee"
+
 #: ../src/Clients/Muinshee/Muinshee/PlayerInterface.cs:254
 #, csharp-format
 msgid "{0} remaining"
@@ -615,7 +605,7 @@ msgstr "Artista desconocido"
 
 #: ../src/Core/Banshee.Core/Banshee.Base/CoverArtSpec.cs:41
 #: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:270
-#: ../src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumInfo.cs:91
+#: ../src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumInfo.cs:90
 #: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdDiscModel.cs:100
 #: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:161
 msgid "Unknown Album"
@@ -871,11 +861,11 @@ msgstr "No vistos"
 msgid "Videos that haven't been played yet"
 msgstr "Vídeos que no han sido reproducidos aún"
 
-#: ../src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:92
+#: ../src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:94
 msgid "Default player engine"
 msgstr "Motor de reproducción predeterminado"
 
-#: ../src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:99
+#: ../src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:101
 msgid ""
 "No player engines were found. Please ensure Banshee has been cleanly "
 "installed."
@@ -883,7 +873,7 @@ msgstr ""
 "No se ha encontrado ningún motor de reproducción. Asegúrese de que Banshee "
 "se ha instalado correctamente."
 
-#: ../src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:279
+#: ../src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:286
 msgid "Problem with Player Engine"
 msgstr "Problema con el motor de reproducción"
 
@@ -1470,7 +1460,7 @@ msgstr "Omisiones"
 msgid "Plays"
 msgstr "Reproducciones"
 
-#: ../src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs:282
+#: ../src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs:307
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:139
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:141
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:143
@@ -1654,6 +1644,11 @@ msgstr "Ecualizador"
 #: ../src/Core/Banshee.ThickClient/Banshee.Equalizer.Gui/EqualizerWindow.cs:81
 msgid "Enabled"
 msgstr "Activado"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Equalizer.Gui/EqualizerWindow.cs:158
+#| msgid "New Playlist"
+msgid "New Preset"
+msgstr "Lista de reproducción nueva"
 
 #. Translators: this is the window title when a track is playing
 #. {0} is the track title, {1} is the artist name
@@ -1869,29 +1864,16 @@ msgstr "Información de la _versión"
 msgid "View detailed version and configuration information"
 msgstr "Ver información detallada de la versión y la configuración"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:162
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:169
-msgid "Error opening stream"
-msgstr "Error al abrir el flujo"
-
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:163
-msgid "Could not open stream or playlist"
-msgstr "No se puro abrir el flujo o la lista de reproducción"
-
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:170
-msgid "Problem parsing playlist"
-msgstr "Problema al analizar la lista de reproducción"
-
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:178
 msgid "Import Playlist"
 msgstr "Importar lista de reproducción"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:185
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:170
 msgid "Playlists"
 msgstr "Listas de reproducción"
 
 #. Translators: verb
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:192
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:177
 msgid "Import"
 msgstr "Importar"
 
@@ -2316,40 +2298,40 @@ msgstr "Género:"
 #. Right
 #. Translators: "of" is the word beteen a track/disc number and the total count.
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:116
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:145
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:148
 msgid "of"
 msgstr "de"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:129
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:132
 msgid "Automatically set track number and count"
 msgstr "Establecer automáticamente los números de pista y los totales"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:131
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:134
 msgid "Track Number:"
 msgstr "Número de pista:"
 
 #. Catalog.GetString ("Automatically set disc number and count"),
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:147
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:150
 msgid "Set all disc numbers and counts to these values"
 msgstr "Establecer todos los números de disco y totales a estos valores"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:148
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:151
 msgid "Disc Number:"
 msgstr "Número de disco:"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:169
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:172
 msgid "Set all years to this value"
 msgstr "Establecer todos los años a este valor"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:170
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:173
 msgid "Year:"
 msgstr "Año:"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:177
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:180
 msgid "Set all ratings to this value"
 msgstr "Establecer todas las puntaciones a este valor"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:178
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:181
 #: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/StationEditor.cs:128
 #: ../src/Libraries/Hyena.Gui/Hyena.Widgets/RatingMenuItem.cs:48
 msgid "Rating:"
@@ -2630,7 +2612,7 @@ msgstr "Parar la operación"
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTile.cs:137
 #, csharp-format
 msgid "Stop {0}"
-msgstr "Parar {0}"
+msgstr "Parar «{0}»"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTile.cs:140
 msgid "This operation is still performing work. Would you like to stop it?"
@@ -2649,7 +2631,7 @@ msgstr "Continuar"
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTile.cs:147
 #, csharp-format
 msgid "Continue {0}"
-msgstr "Continuar {0}"
+msgstr "Continuar «{0}»"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTile.cs:182
 msgid "Stopping..."
@@ -2840,6 +2822,10 @@ msgstr "Sincronizar {0}"
 #: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:165
 msgid "Device Properties"
 msgstr "Propiedades del dispositivo"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:182
+msgid "Media Player"
+msgstr "Reproductor multimedia"
 
 #: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:189
 msgid "Product"
@@ -3065,27 +3051,27 @@ msgstr "Soporta portadas"
 msgid "Supports photos"
 msgstr "Soporta imágenes"
 
-#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:621
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:631
 msgid "Out of space on device"
 msgstr "Dispositivo sin espacio suficiente"
 
-#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:621
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:631
 msgid "Please manually remove some songs"
 msgstr "Elimine manualmente algunas canciones"
 
-#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:650
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:660
 msgid "Syncing iPod"
 msgstr "Sincronizando iPod"
 
-#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:651
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:661
 msgid "Preparing to synchronize..."
 msgstr "Preparándose para sincronizar…"
 
-#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:672
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:682
 msgid "Updating..."
 msgstr "Actualizando…"
 
-#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:676
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:686
 msgid "Flushing to disk..."
 msgstr "Descargando al disco…"
 
@@ -3235,8 +3221,8 @@ msgid "Loading {0} - {1} of {2}"
 msgstr "Cargando {0} - {1} de {2}"
 
 #: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdDiscModel.cs:76
-#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:156
-#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:54
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:232
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:55
 msgid "Audio CD"
 msgstr "CD de sonido"
 
@@ -3264,19 +3250,19 @@ msgstr "<i>{0}</i> aún se está importando a la fonoteca. ¿Quiere pararlo?"
 msgid "Cannot Import CD"
 msgstr "No se puede importar el CD"
 
-#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:160
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:236
 msgid "Audio CD Importing"
 msgstr "Importación de CD de sonido"
 
-#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:162
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:238
 msgid "_Import format"
 msgstr "Formato de _importación"
 
-#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:166
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:242
 msgid "_Automatically import audio CDs when inserted"
 msgstr "Importar _automáticamente los CD de sonido al insertarlos"
 
-#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:167
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:243
 msgid ""
 "When an audio CD is inserted, automatically begin importing it if metadata "
 "can be found and it is not already in the library."
@@ -3284,19 +3270,19 @@ msgstr ""
 "Al insertar un CD de sonido, comenzar a importar automáticamente si se "
 "pueden encontrar metadatos y no está ya en la fonoteca."
 
-#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:171
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:247
 msgid "_Eject when done importing"
 msgstr "_Expulsar al terminar la importación"
 
-#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:172
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:248
 msgid "When an audio CD has been imported, automatically eject it."
 msgstr "Cuando un CD de sonido se haya importado, expulsarlo automáticamente."
 
-#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:175
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:251
 msgid "Use error correction when importing"
 msgstr "Usar corrección de errores al importar"
 
-#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:176
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:252
 msgid ""
 "Error correction tries to work around problem areas on a disc, such as "
 "surface scratches, but will slow down importing substantially."
@@ -3305,59 +3291,59 @@ msgstr ""
 "de los discos, tales como rayaduras en la superficie, pero ralentizará mucho "
 "la importación."
 
-#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:244
-#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:426
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:320
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:427
 msgid "Import CD"
 msgstr "Importar CD"
 
-#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:245
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:321
 msgid "Import this audio CD to the library"
 msgstr "Importar este CD de sonido a la fonoteca"
 
-#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:251
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:327
 msgid "Duplicate CD"
 msgstr "Copiar CD"
 
-#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:252
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:328
 msgid "Duplicate this audio CD"
 msgstr "Copiar este CD de sonido"
 
-#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:129
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:130
 msgid "Searching for CD metadata..."
 msgstr "Buscando metadatos del CD…"
 
-#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:162
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:163
 msgid "Could not fetch metadata for CD."
 msgstr "No se pudieron obtener los metadatos de este CD."
 
-#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:190
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:191
 msgid "Automatic import off since this album is already in the Music Library."
 msgstr ""
 "Desactivación automática de importación dado que este álbum ya se encuentra "
 "en la fonoteca."
 
-#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:213
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:214
 msgid "Could not import CD"
 msgstr "No se pudo importar el CD"
 
-#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:230
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:231
 msgid "Could not duplicate audio CD"
 msgstr "No se pudo copiar el CD de sonido"
 
-#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:350
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:351
 msgid "Ejecting audio CD..."
 msgstr "Expulsando CD de sonido…"
 
-#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:368
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:369
 #, csharp-format
 msgid "Could not eject audio CD: {0}"
 msgstr "No se pudo expulsar el CD de sonido: {0}"
 
-#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:401
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:402
 msgid "Eject Disc"
 msgstr "Expulsar disco"
 
-#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:425
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:426
 #, csharp-format
 msgid "Import ‟{0}”"
 msgstr "Importar «{0}»"
@@ -3387,7 +3373,7 @@ msgstr "{0} ({1}:{2:00})"
 
 #: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:82
 msgid "Downloading Cover Art"
-msgstr "Descargando arte de portada"
+msgstr "Descargando portadas"
 
 #: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:115
 msgid "Preparing..."
@@ -4560,6 +4546,18 @@ msgstr "Conectado a Last.fm"
 #: ../src/Libraries/Migo/Migo.Syndication/Feed.cs:149
 msgid "Unknown Podcast"
 msgstr "Podcast desconocido"
+
+#~ msgid "Play and organize your media collection"
+#~ msgstr "Reproduzca y organice su colección multimedia"
+
+#~ msgid "Error opening stream"
+#~ msgstr "Error al abrir el flujo"
+
+#~ msgid "Could not open stream or playlist"
+#~ msgstr "No se puro abrir el flujo o la lista de reproducción"
+
+#~ msgid "Problem parsing playlist"
+#~ msgstr "Problema al analizar la lista de reproducción"
 
 #~ msgid "Automatically set disc number and count"
 #~ msgstr "Establecer automáticamente los números de disco y los totales"
