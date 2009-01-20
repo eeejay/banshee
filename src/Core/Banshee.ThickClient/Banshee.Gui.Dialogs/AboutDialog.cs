@@ -94,10 +94,11 @@ namespace Banshee.Gui.Dialogs
                     Banshee.ServiceStack.Application.DisplayVersion, 
                     Banshee.ServiceStack.Application.Version);
             Comments = Catalog.GetString ("Extraordinary Multimedia Management and Playback");
-            Copyright = Catalog.GetString (
-                "Copyright \u00a9 2005\u20132008 Novell, Inc.\n" + 
+            Copyright = String.Format (Catalog.GetString (
+                "Copyright \u00a9 2005\u2013{0} Novell, Inc.\n" + 
+                "Copyright \u00a9 2005\u2013{0} Others\n" +
                 "Copyright \u00a9 2005 Aaron Bockover"
-            );
+            ), "2009");
             
             Website = "http://banshee-project.org/";
             WebsiteLabel = Catalog.GetString ("Banshee Website");
