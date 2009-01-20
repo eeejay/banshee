@@ -136,7 +136,7 @@ fi
 AC_SUBST(GMCS_FLAGS)
 
 AC_ARG_WITH(vendor-build-id,
-	AC_HELP_STRING([--with-build-id=<vendor-build-id>],
+	AC_HELP_STRING([--with-vendor-build-id=<vendor-build-id>],
 		[Set a vendor build ID, recommended for packagers]),
 	[vendor_build_id="$withval"], [
 		test -d .svn \
