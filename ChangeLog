@@ -1,5 +1,9 @@
 2009-01-20  Aaron Bockover  <abock@gnome.org>
 
+	Banshee 1.4.2 Released
+
+2009-01-20  Aaron Bockover  <abock@gnome.org>
+
 	* configure.ac: Bump to 1.4.2, set vendor to svn or tarball automatically
 
 	* NEWS: Updated
