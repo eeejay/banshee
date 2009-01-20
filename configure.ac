@@ -1,6 +1,6 @@
 dnl Automake setup
-AC_INIT([banshee-1], [1.4.1])
-DISPLAY_VERSION="1.4.1"
+AC_INIT([banshee-1], [1.4.2])
+DISPLAY_VERSION="1.4.2"
 API_VERSION="1.4"
 ASM_VERSION="$API_VERSION.0.0"
 AC_SUBST(API_VERSION)
@@ -138,7 +138,11 @@ AC_SUBST(GMCS_FLAGS)
 AC_ARG_WITH(vendor-build-id,
 	AC_HELP_STRING([--with-build-id=<vendor-build-id>],
 		[Set a vendor build ID, recommended for packagers]),
-	[vendor_build_id="$withval"], [vendor_build_id="source-tarball"])
+	[vendor_build_id="$withval"], [
+		test -d .svn \
+			&& vendor_build_id="svn-checkout" \
+			|| vendor_build_id="source-tarball"
+	])
 BUILD_VENDOR_ID="$vendor_build_id"
 BUILD_HOST_OS="$host_os"
 BUILD_HOST_CPU="$host_cpu"

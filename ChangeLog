@@ -1,5 +1,11 @@
 2009-01-20  Aaron Bockover  <abock@gnome.org>
 
+	* configure.ac: Bump to 1.4.2, set vendor to svn or tarball automatically
+
+	* NEWS: Updated
+
+2009-01-20  Aaron Bockover  <abock@gnome.org>
+
 	* src/AssemblyInfo.cs.in:
 	* src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:
 	Updated Copyright strings for 2009
