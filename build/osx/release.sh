@@ -35,7 +35,8 @@ pushd $SOURCE_DIR &>/dev/null
 	--disable-boo \
 	--disable-gnome \
 	--disable-docs \
-	--enable-osx || "Configure failed"
+	--enable-osx \
+	--with-vendor-build-id="Banshee:OSX-10.5-Intel" || "Configure failed"
 make || bail "Build failed"
 make install || "Install failed"
 popd &>/dev/null
