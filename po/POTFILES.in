@@ -2,7 +2,6 @@
 # Please keep this file in alphabetical order; run ./sort-potfiles
 # after adding files here.
 [encoding: UTF-8]
-
 data/audio-profiles/base.xml.in
 data/audio-profiles/flac.xml.in
 data/audio-profiles/mp3-lame.xml.in
@@ -64,6 +63,7 @@ src/Core/Banshee.Services/Banshee.Sources/DurationStatusFormatters.cs
 src/Core/Banshee.Services/Banshee.Sources/ErrorSource.cs
 src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs
 src/Core/Banshee.Services/Banshee.Sources/Source.cs
+src/Core/Banshee.Services/Banshee.Streaming/RadioTrackInfo.cs
 src/Core/Banshee.Services/Banshee.Web/Browser.cs
 src/Core/Banshee.ThickClient/Banshee.Addins.Gui/AddinDetailsDialog.cs
 src/Core/Banshee.ThickClient/Banshee.Addins.Gui/AddinTile.cs
