@@ -1,5 +1,5 @@
 ===============================================================================
-WELCOME TO BANSHEE 1.4.2 - Released January ?, 2008
+WELCOME TO BANSHEE 1.4.2 - Released January 20, 2009
 ===============================================================================
 
   * Banshee is a multimedia management and playback application for GNOME.
@@ -18,9 +18,24 @@ NEW AWESOME FEATURES AND ENHANCEMENTS
 ===============================================================================
 
     Banshee 1.4.2 is primarily a bug fix release, and is considered stable.
+    
+    Improvements:
+
+      * Add support for itms:// podcast links (BNC #465149)
+      * Audio CDs appear in the Import Media dropdown (BNC #457918)
+      * Right align track #, disc #, bpm, play/skip count columns (BGO #553322)
 
     Notable bug fixes:
 
+      * Handle parsing non-UTF8 RSS feeds (BGO #538224)
+      * Fix bug with Rescan UI being glitchy, CPU heavy (BGO #552561)
+      * Don't import podcast episodes during Rescan (BGO #552976)
+      * Fix localization issue with audio profiles (BNC #449788)
+      * Fix duplicating and clearing File System Queue playlists
+      * Set the mimetype on ripped tracks (BGO #558526)
+      * Fix opening to a specific device/cd (BNC #461677)
+      * Fix support for playing m3u's etc passed in from Firefox (BNC #456120)
+      * Fixed Rio Karma support (BGO #566205)
       * Escape closes the equalizer dialog (BGO #552818).
       * Fix crash that occured near the end of syncing a DAP (BGO #558662)
       * Fix audio cd crash when running in certain languages (BGO #565059)
@@ -36,7 +51,12 @@ NEW AWESOME FEATURES AND ENHANCEMENTS
       * Fix case-sensitivity bug with genre smart playlists (BGO #555120)
       * Support parsing dates for some invalid RSS feeds (BGO #561381)
       * Files with uppercase extensions show in import dialog (BGO #566224)
-      * ? bugs were FIXED since 1.4.1
+      * 62 bugs were FIXED since 1.4.1
+
+    OS X specific:
+
+      * Fix support for mp3 playback on OS X
+      * Updated to latest GStreamer release (0.10.22 core, 0.10.22 base)
 
 
 ===============================================================================
@@ -52,6 +72,10 @@ Sources
 
 Packages
 --------
+
+    Download and installation information is available here:
+
+    * http://banshee-project.org/download/
 
     Packages for openSUSE 11.0, openSUSE 10.3, and openSUSE Factory are 
     available from the openSUSE Build Service in the Banshee project.
@@ -81,7 +105,7 @@ DEPENDENCIES
     * NDesk DBus (ndesk-dbus) 0.5
     * NDesk DBus GLib (ndesk-dbus-glib) 0.3
     * Mono.Addins (mono-addins) 0.3.1
-    * TagLib# (taglib-sharp) 2.0.3.0
+    * TagLib# (taglib-sharp) 2.0.3.1
 
     * Required to build default feature stack:
       * libmtp >= 0.2.0 
@@ -93,9 +117,17 @@ DEPENDENCIES
       * boo >= 0.8.1
 
     * Run-time requirements for default feature stack:
-      * PodSleuth (0.6.3)
+      * PodSleuth (0.6.4)
       * Brasero   (0.8.1)
       * Avahi
+
+    Packagers:
+      * --with-vendor-build-id=<foo> should always be set and detail the distro 
+        name and version (e.g. openSUSE 11.1), and the repository origin, such
+        as 'Banshee Team PPA'; for example, the %distribution macro is used in
+        the openSUSE Build Service, which expands to something like this:
+        'home:gabrielburt:branches:Banshee / openSUSE_Factory'; also the
+        build/configure time is stored along with the host OS and CPU
 
     Please note that for openSUSE, all of the dependencies above can be 
     found in the openSUSE Build Service, and are linked into the 
@@ -133,16 +165,16 @@ Contributors For This Release
     of Banshee. Without their help, there would be no release!
 
       Aaron Bockover, Benjamín Valero Espinos, Bertrand Lorentz,
-      Brandon Perry, Eoin Hennessy, Erik Schmidt, Félix Velasco
-      Gabriel Burt, Ivan N. Zlatev, John Millikin, Nicholas Doyle,
-      Wouter Bolsterlee
+      Bob Copeland, Brandon Perry, Christoph Burgdorf, Eoin Hennessy,
+      Erik Schmidt, Félix Velasco, Gabriel Burt, Ivan N. Zlatev,
+      John Millikin, Nicholas Doyle, Wouter Bolsterlee
 
     The following people contributed updated translations to this release. 
     Without them, our project's reach would be much more limited.
  
       Benjamin Valero, Daniel Nylander, Fábio Nogueir, Gabor Kelemen,
       Gianvito Cavasoli, Gintautas Miliauskas, Lasse Bang Mikkelsen,
-      Og Maciel, Tomasz Dominikowski, Wouter Bolsterlee
+      Nickolay V. Shmyrev, Og Maciel, Tomasz Dominikowski, Wouter Bolsterlee
 
 Contributors In Past Releases
 -----------------------------
