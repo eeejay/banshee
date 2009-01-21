@@ -160,6 +160,7 @@ namespace Booter
                     new LayoutOption ("play-enqueued", Catalog.GetString ("Automatically start playing any tracks enqueued on the command line")),
                     new LayoutOption ("play", Catalog.GetString ("Start playback")),
                     new LayoutOption ("pause", Catalog.GetString ("Pause playback")),
+                    new LayoutOption ("toggle-playing", Catalog.GetString ("Toggle playback")),
                     new LayoutOption ("stop", Catalog.GetString ("Completely stop playback")),
                     new LayoutOption ("stop-when-finished", Catalog.GetString (
                         "Enable or disable playback stopping after the currently playing track (value should be either 'true' or 'false')")),

@@ -1,5 +1,10 @@
 2009-01-21  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
+	* src/Clients/Booter/Booter/Entry.cs: Patch from Daniel Siegel to add
+	an option missing from the help output (BGO #554713).
+
+2009-01-21  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
 	* src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:
 	Change the count query to avoid an infinite loop (BGO #548131).
 
