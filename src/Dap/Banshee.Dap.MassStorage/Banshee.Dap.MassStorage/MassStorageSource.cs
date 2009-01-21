@@ -551,7 +551,13 @@ namespace Banshee.Dap.MassStorage
         private string GetTrackPath (TrackInfo track, string ext)
         {
             string file_path = null;
-            if (ms_device == null || !ms_device.GetTrackPath (track, out file_path)) {
+            
+            if (track.HasAttribute (TrackMediaAttributes.Podcast)) {
+                string album = FileNamePattern.Escape (track.AlbumTitle);
+                string title = FileNamePattern.Escape (track.TrackTitle);
+                file_path = System.IO.Path.Combine ("Podcasts", album);
+                file_path = System.IO.Path.Combine (file_path, title);
+            } else if (ms_device == null || !ms_device.GetTrackPath (track, out file_path)) {
                 file_path = FileNamePattern.CreateFromTrackInfo (track);
             }
 

@@ -1,5 +1,12 @@
 2009-01-21  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:
+	Patch from David Spreen making sure podcasts are copied to the Podcasts
+	folder on mass-storage devices. Otherwise they are indistinguishable
+	from Music (BGO #561786).
+
+2009-01-21  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
 	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageDevice.cs:
 	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:
 	* src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs: Make sure that folder depth
