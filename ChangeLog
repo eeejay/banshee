@@ -1,5 +1,10 @@
 2009-01-21  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
+	* src/Clients/Muinshee/Muinshee/BaseDialog.cs: Patch from Wouter Bolsterlee
+	to improve the labels on two buttons (BGO #557866).
+
+2009-01-21  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
 	* src/Clients/Booter/Booter/Entry.cs: Patch from Daniel Siegel to add
 	an option missing from the help output (BGO #554713).
 

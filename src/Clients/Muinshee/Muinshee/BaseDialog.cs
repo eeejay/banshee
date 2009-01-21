@@ -80,10 +80,10 @@ namespace Muinshee
 
             AddDefaultCloseButton ();
             
-            Button queue_button = new ImageButton (Catalog.GetString ("Queue"), "stock_timer");
+            Button queue_button = new ImageButton (Catalog.GetString ("En_queue"), "stock_timer");
             AddActionWidget (queue_button, Gtk.ResponseType.Apply);
 
-            Button play_button = new ImageButton (Catalog.GetString ("Play"), "media-playback-start");
+            Button play_button = new ImageButton (Catalog.GetString ("_Play"), "media-playback-start");
             AddButton (play_button, Gtk.ResponseType.Ok, true);
 
             window_controller = new PersistentWindowController (this, String.Format ("muinshee.{0}", addType), 500, 475, WindowPersistOptions.Size);
