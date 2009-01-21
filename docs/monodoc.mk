@@ -11,7 +11,9 @@ monodoc_DATA = \
 	$(DOC_PACKAGE).tree \
 	$(DOC_PACKAGE).source
 
-$(DOC_PACKAGE).zip $(DOC_PACKAGE).tree: $(srcdir)/en/*/*.xml $(srcdir)/en/*.xml
+$(DOC_PACKAGE).tree: $(DOC_PACKAGE).zip
+
+$(DOC_PACKAGE).zip: $(srcdir)/en/*/*.xml $(srcdir)/en/*.xml
 	$(DOC_ASSEMBLER) $(srcdir)/en
 
 update-docs: $(ASSEMBLIES)

@@ -1,5 +1,9 @@
 2009-01-21  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
+	* docs/monodoc.mk: Fix parallel build for docs (BGO #559917).
+
+2009-01-21  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
 	* build/icon-theme-installer: Also update the icon cache during 
 	"make uninstall" (BGO #561461).
 
