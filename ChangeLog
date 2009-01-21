@@ -1,5 +1,10 @@
 2009-01-21  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
+	* src/Libraries/Hyena/Hyena/StringUtil.cs: Make a regex a static field,
+	for a small performance improvement (BGO #560234).
+
+2009-01-21  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
 	* docs/monodoc.mk: Fix parallel build for docs (BGO #559917).
 
 2009-01-21  Bertrand Lorentz  <bertrand.lorentz@gmail.com>

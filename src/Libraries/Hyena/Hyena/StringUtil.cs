@@ -66,6 +66,7 @@ namespace Hyena
             return CamelCaseToUnderCase (s, '_');
         }
         
+        private static Regex camelcase = new Regex ("([A-Z]{1}[a-z]+)", RegexOptions.Compiled);
         public static string CamelCaseToUnderCase (string s, char underscore)
         {
             if (String.IsNullOrEmpty (s)) {
@@ -73,7 +74,7 @@ namespace Hyena
             }
         
             StringBuilder undercase = new StringBuilder ();
-            string [] tokens = Regex.Split (s, "([A-Z]{1}[a-z]+)");
+            string [] tokens = camelcase.Split (s);
             
             for (int i = 0; i < tokens.Length; i++) {
                 if (tokens[i] == String.Empty) {
