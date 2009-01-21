@@ -1,3 +1,8 @@
+2009-01-21  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
+	* build/m4/shamrock/programs.m4: Properly detect when a program is not
+	found (BGO #562185).
+
 2009-01-20  Aaron Bockover  <abock@gnome.org>
 
 	Banshee 1.4.2 Released
