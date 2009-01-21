@@ -386,7 +386,7 @@ namespace Banshee.Dap.MassStorage
         protected int FolderDepth {
             get {
                 if (folder_depth == -1) {
-                    folder_depth = HasMediaCapabilities ? MediaCapabilities.FolderDepth : 0;
+                    folder_depth = HasMediaCapabilities ? MediaCapabilities.FolderDepth : -1;
                 }
                 return folder_depth;
             }
@@ -452,7 +452,7 @@ namespace Banshee.Dap.MassStorage
             }
 
             if (CoverArtSize > -1 && !String.IsNullOrEmpty (CoverArtFileType) && 
-                    !String.IsNullOrEmpty (CoverArtFileName) && FolderDepth > 0) {
+                    !String.IsNullOrEmpty (CoverArtFileName) && (FolderDepth == -1 || FolderDepth > 0)) {
                 SafeUri cover_uri = new SafeUri (System.IO.Path.Combine (System.IO.Path.GetDirectoryName (new_uri.LocalPath),
                                                                          CoverArtFileName));
                 string coverart_id;

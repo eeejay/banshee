@@ -190,7 +190,7 @@ namespace Banshee.Dap
             AddDapProperty (Catalog.GetString ("Vendor"), device.Vendor);
             
             if (acceptable_mimetypes == null) {
-                acceptable_mimetypes = MediaCapabilities != null 
+                acceptable_mimetypes = HasMediaCapabilities 
                     ? MediaCapabilities.PlaybackMimeTypes 
                     : new string [] { "taglib/mp3" };
             }

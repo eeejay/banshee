@@ -1,5 +1,13 @@
 2009-01-21  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageDevice.cs:
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs: Make sure that folder depth
+	defaults to -1 if it's not set, and transfer cover art to the DAP in this
+	case (BGO #561914).
+
+2009-01-21  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
 	* src/Libraries/Hyena/Hyena/StringUtil.cs: Make a regex a static field,
 	for a small performance improvement (BGO #560234).
 

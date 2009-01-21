@@ -84,7 +84,12 @@ namespace Banshee.Dap.MassStorage
                             case "cover_art_file_name": cover_art_file_name = item.Value[0]; break;
                             case "cover_art_size": Int32.TryParse (item.Value[0], out cover_art_size); break;
                             
-                            case "folder_depth": Int32.TryParse (item.Value[0], out folder_depth); break;
+                            case "folder_depth": 
+                                if (!Int32.TryParse (item.Value[0], out folder_depth)) {
+                                    folder_depth = -1;
+                                }
+                            Hyena.Log.DebugFormat ("MassStorageDevice.LoadDeviceConfiguration {0}", folder_depth);
+                                break;
                             case "audio_folders": audio_folders = item.Value; break;
                             
                             case "output_formats": playback_mime_types = item.Value; break;
@@ -137,7 +142,7 @@ namespace Banshee.Dap.MassStorage
             get { return cover_art_size; } 
         }
         
-        private int folder_depth;
+        private int folder_depth = -1;
         public virtual int FolderDepth { 
             get { return folder_depth; } 
         }
