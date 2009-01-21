@@ -1,5 +1,10 @@
 2009-01-21  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
+	* src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:
+	Change the count query to avoid an infinite loop (BGO #548131).
+
+2009-01-21  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
 	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:
 	Patch from David Spreen making sure podcasts are copied to the Podcasts
 	folder on mass-storage devices. Otherwise they are indistinguishable

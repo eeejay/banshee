@@ -58,10 +58,12 @@ namespace Banshee.CoverArt
 
         private static HyenaSqliteCommand count_query = new HyenaSqliteCommand (@"
             SELECT count(DISTINCT CoreTracks.AlbumID)
-            FROM CoreTracks
+            FROM CoreTracks, CoreArtists, CoreAlbums
             WHERE
                 CoreTracks.PrimarySourceID = ? AND
                 CoreTracks.DateUpdatedStamp > ? AND
+                CoreTracks.AlbumID = CoreAlbums.AlbumID AND 
+                CoreAlbums.ArtistID = CoreArtists.ArtistID AND
                 CoreTracks.AlbumID NOT IN (
                     SELECT AlbumID FROM CoverArtDownloads WHERE
                         LastAttempt > ? OR Downloaded = 1)");
