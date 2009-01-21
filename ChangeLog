@@ -1,5 +1,10 @@
 2009-01-21  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
+	* build/icon-theme-installer: Also update the icon cache during 
+	"make uninstall" (BGO #561461).
+
+2009-01-21  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
 	* build/m4/shamrock/programs.m4: Properly detect when a program is not
 	found (BGO #562185).
 
