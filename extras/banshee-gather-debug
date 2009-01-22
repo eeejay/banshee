@@ -1,0 +1,222 @@
+#!/bin/bash
+
+STRACE_DURATION=60
+BANSHEE_PID=0
+BANSHEE_CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/banshee-1"
+BANSHEE_LOG_FILE="${BANSHEE_CONFIG_DIR}/log"
+
+OUTPUT_FILE="banshee-debugging-$(date +%F-%H-%M-%S)"
+[[ -d $HOME/Desktop ]] \
+	&& OUTPUT_FILE="$HOME/Desktop/$OUTPUT_FILE"	\
+	|| OUTPUT_FILE="$HOME/$OUTPUT_FILE"
+
+function bail () {
+	echo "ERROR: $1" 2>&1
+	exit 1
+}
+
+function begin_log () {
+	(echo
+	echo "*************************************************************"
+	echo "$1"
+	echo "*************************************************************"
+	echo)1>&2
+}
+
+function find_pid () {
+	BANSHEE_PID=`(pidof banshee-1 2>/dev/null || 
+		(ps -eo pid,cmd | awk '/mono.*banshee-1\/.*.exe/ { print $1 }')2>/dev/null) | 
+		tr -d '[:space:]'`
+	
+	[[ -z "$BANSHEE_PID" ]] && \
+		bail "Banshee does not appear to be running. Could not find PID"
+}
+
+function capture_mono_stack_trace () {
+	echo -n " - Sending SIGQUIT to Banshee to get a thread stack dump: "
+	begin_log "Sending SIGQUIT to ${BANSHEE_PID} get Mono thread stack dump"
+	kill -s QUIT $BANSHEE_PID 1>&2 && echo "success" || echo "error"
+}
+
+function capture_gdb_stack_trace () {
+	echo -n " - Running gdb to get a stack dump: "
+	begin_log "Running gdb (where, detach, quit)"
+	gdb --quiet --pid=$(pidof banshee-1) -ex where -ex detach -ex quit 1>&2 \
+		&& echo "success" \
+		|| echo "error"
+}
+
+function gather_open_files () {
+	echo -n " - Gathering a list of open files: "
+	begin_log "Gathering data from lsof against ${BANSHEE_PID}"
+	lsof -p $BANSHEE_PID 1>&2 && echo "success" || echo "error"
+}
+
+function pause_playback () {
+	echo -n " - Pausing playback for nicer strace: "
+	begin_log "Pausing playback"
+	dbus-send --session --print-reply \
+		--dest=org.bansheeproject.Banshee \
+		/org/bansheeproject/Banshee/PlayerEngine \
+		org.bansheeproject.Banshee.PlayerEngine.Pause 1>&2 \
+			&& echo "success" \
+			|| echo "error (maybe nothing was playing)"
+}
+
+function hide_window () {
+	echo -n " - Hiding window to for nicer strace: "
+	begin_log "Hiding window"
+	dbus-send --session --print-reply \
+		--dest=org.bansheeproject.Banshee \
+		/org/bansheeproject/Banshee/ClientWindow \
+		org.bansheeproject.Banshee.ClientWindow.Hide 1>&2 \
+			&& echo "success" \
+			|| echo "error"
+}
+
+function restore_window () {
+	echo -n " - Showing window: "
+	begin_log "Restoring window"
+	dbus-send --session --print-reply \
+		--dest=org.bansheeproject.Banshee \
+		/org/bansheeproject/Banshee/ClientWindow \
+		org.bansheeproject.Banshee.ClientWindow.Present 1>&2 \
+			&& echo "success" \
+			|| echo "error"
+}
+
+function capture_strace () {
+	STRACE_MSG=" - Gathering an strace dump for $STRACE_DURATION seconds: "
+	echo -n "$STRACE_MSG"
+	begin_log "strace (${STRACE_DURATION}s)"
+	( strace -Tvi -p $BANSHEE_PID 1>&2 & \
+		STRACE_PID=$!
+		sleep 1; ps -p $STRACE_PID &>/dev/null && { 
+			STRACE_REMAINING=$STRACE_DURATION
+			while [[ $STRACE_REMAINING -gt 0 ]]; do
+				STRACE_REMAINING=$(($STRACE_REMAINING - 1))
+				printf "\r$STRACE_MSG%d " $STRACE_REMAINING
+				sleep 1
+			done
+			printf "\r$STRACE_MSG"
+			kill $STRACE_PID &>/dev/null \
+				&& echo "success" \
+				|| echo "strace terminated early"
+		}
+	) || echo "error"
+}
+
+function concat_log () {
+	echo -n " - Storing the Banshee log file: "
+	begin_log "Storing log file ${BANSHEE_LOG_FILE}"
+	cat "$BANSHEE_LOG_FILE" 1>&2 \
+		&& echo "success" \
+		|| echo "error"
+}
+
+function inspect_gstreamer () {
+	echo " - Gathering information about GStreamer"
+	
+	begin_log "gst-inspect-0.10 --version"
+	echo -n "   > gst-inspect-0.10 --version: "
+	gst-inspect-0.10 --version 1>&2 \
+		&& echo "success" \
+		|| echo "error"
+
+	begin_log "gst-inspect-0.10"
+	echo -n "   > gst-inspect-0.10: "
+	gst-inspect-0.10 1>&2 \
+		&& echo "success" \
+		|| echo "error"
+
+	begin_log "pkg-config version probes"
+	(for path in /usr/lib64 /usr/lib /usr/local/lib64 /usr/local/lib; do
+		echo "Checking: $path/pkgconfig"
+		for file in $(find $path/pkgconfig -name gstreamer\*.pc 2>/dev/null); do
+			pc_name=$(basename $file)
+			pc_command="pkg-config --modversion --libs --cflags ${pc_name%%.pc}"
+			echo "$pc_command"
+			$pc_command
+			echo
+		done
+	done) 1>&2
+}
+
+function inspect_mono () {
+	echo " - Gathering information about Mono"
+
+	begin_log "mono --version"
+	echo -n "   > mono --version: "
+	mono --version 1>&2 \
+		&& echo "success" \
+		|| echo "error"
+}
+
+function inspect_distro () {
+	echo " - Gathering information about your distro"
+	begin_log "Distro Information"
+
+	(
+		echo "+ /etc/lsb-release"
+		cat /etc/lsb-release 
+
+		for release_file in $(find /etc -name \*-release 2>/dev/null); do
+			echo "+ $release_file"
+			cat $release_file
+		done
+
+		echo "+ uname -a"
+		uname -a
+	) 1>&2
+}
+
+find_pid
+
+cat <<EOF
+Inspecting Banshee Process ID: ${BANSHEE_PID}
+
+NOTE: If you were listening to or watching anything that you would consider
+embarrassing, please switch playback to something that would not be so first!
+
+After data is collected about your running instance of Banshee, it is your
+responsibility to review it before submitting to developers for review.
+
+EOF
+
+read -p "Press <enter> to continue... " || exit 1
+echo "Running..."
+echo
+
+(
+	capture_mono_stack_trace &&
+	capture_gdb_stack_trace &&
+	gather_open_files &&
+	# these are to reduce noise from a working pipeline and input/redraw in the strace
+	pause_playback && 
+	hide_window &&
+	capture_strace &&
+	# restore the window since we're done stracing
+	restore_window &&
+	concat_log &&
+	inspect_mono &&
+	inspect_gstreamer &&
+	inspect_distro
+) 2>"$OUTPUT_FILE" || exit $?
+
+cat <<EOF
+
+Done.
+
+A number of useful resources have been gathered to help debug
+your Banshee issue. Please review the data file before you send
+it to us. No sensitive user data is gathered, but path names of
+of open files are provided, for example.
+
+Please upload this file to the bug:
+
+    $OUTPUT_FILE
+
+Thank you!
+
+EOF
+
