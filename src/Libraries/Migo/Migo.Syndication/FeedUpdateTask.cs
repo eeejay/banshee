@@ -121,7 +121,9 @@ namespace Migo.Syndication
             try {                                                                       
                 wc = new AsyncWebClient ();                  
                 wc.Timeout = (30 * 1000); // 30 Seconds  
-                wc.IfModifiedSince = feed.LastDownloadTime.ToUniversalTime ();
+                if (feed.LastDownloadTime != DateTime.MinValue) {
+                    wc.IfModifiedSince = feed.LastDownloadTime.ToUniversalTime ();
+                }
                 wc.DownloadStringCompleted += OnDownloadDataReceived;
                 
                 feed.DownloadStatus = FeedDownloadStatus.Downloading;

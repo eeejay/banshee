@@ -1,3 +1,8 @@
+2009-01-23  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Libraries/Migo/Migo.Syndication/FeedUpdateTask.cs: Fix bug with
+	IfModifiedSince header that prevented subscribing to some feeds.
+
 2009-01-23  Aaron Bockover  <abock@gnome.org>
 
 	* data/desktop-files/update-desktop-file.sh:
