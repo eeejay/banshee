@@ -1,5 +1,10 @@
 2009-01-23  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapService.cs: Patch from Félix Velasco
+	removing unnecessary lock that was causing some hangs (BGO #559479)
+
+2009-01-23  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Libraries/Migo/Migo.Syndication/FeedUpdateTask.cs: Fix bug with
 	IfModifiedSince header that prevented subscribing to some feeds.
 
