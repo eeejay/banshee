@@ -17,7 +17,7 @@ if [[ -f "$MIMETYPES_FILE" ]]; then
 		awk '{printf $1 ";"}' | sed 's,;$,,'
 	)
 
-	echo "MimeType=$MIMETYPES"
+	echo "MimeType=$MIMETYPES;"
 
 	if [[ "$UPDATE_MIME_FILE" == "yes" ]]; then
 		(grep -E '^[[:space:]]*#' "$MIMETYPES_FILE";

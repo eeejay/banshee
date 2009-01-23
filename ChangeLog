@@ -1,3 +1,11 @@
+2009-01-23  Aaron Bockover  <abock@gnome.org>
+
+	* data/desktop-files/update-desktop-file.sh:
+	* data/desktop-files/banshee-1-audiocd.desktop.in.in:
+	* data/desktop-files/banshee-1-media-player.desktop.in.in: Ensure the
+	MimeType field in the desktop files has a trailing ; which is apperently
+	required by the spec, or at least RPMLINT seems to think so
+
 2009-01-21  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
 	* src/Clients/Muinshee/Muinshee/BaseDialog.cs: Patch from Wouter Bolsterlee
