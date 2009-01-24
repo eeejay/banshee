@@ -242,6 +242,7 @@ src/Extensions/Banshee.MultimediaKeys/Makefile
 src/Extensions/Banshee.NotificationArea/Makefile
 src/Extensions/Banshee.NowPlaying/Makefile
 src/Extensions/Banshee.PlayQueue/Makefile
+src/Extensions/Banshee.PlayerMigration/Makefile
 src/Extensions/Banshee.Podcasting/Makefile
 src/Extensions/Banshee.SqlDebugConsole/Makefile
 src/Extensions/Banshee.Sample/Makefile

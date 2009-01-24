@@ -21,11 +21,6 @@
     <ExtensionNode name="ImportSource"/>
   </ExtensionPoint>
 
-  <Extension path="/Banshee/Library/ImportSource">
-    <ImportSource class="Banshee.PlayerMigration.RhythmboxPlayerImportSource"/>
-    <ImportSource class="Banshee.PlayerMigration.AmarokPlayerImportSource"/>
-  </Extension>
-
   <ExtensionPoint path="/Banshee/MediaEngine/PlayerEngine">
     <ExtensionNode name="PlayerEngine"/>
   </ExtensionPoint>

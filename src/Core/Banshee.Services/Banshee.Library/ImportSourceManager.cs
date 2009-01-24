@@ -31,29 +31,26 @@ using System.Collections;
 using System.Collections.Generic;
 using Mono.Addins;
 
-using Banshee.PlayerMigration;
 using Banshee.ServiceStack;
 
 namespace Banshee.Library
 {
     public class ImportSourceManager : IService, IEnumerable<IImportSource>
     {
-        private List<IImportSource> import_sources;
-        
+        private HomeDirectoryImportSource home_source = new HomeDirectoryImportSource ();
+
         public ImportSourceManager ()
         {
         }
         
         public IEnumerator<IImportSource> GetEnumerator ()
         {
-            if (import_sources == null) {
-                import_sources = new List<IImportSource> ();
-                import_sources.Add (new HomeDirectoryImportSource ());
+            List<IImportSource> import_sources = new List<IImportSource> ();
+            import_sources.Add (home_source);
 
-                foreach (IImportSource source in AddinManager.GetExtensionObjects ("/Banshee/Library/ImportSource")) {
-                    if (source.CanImport) {
-                        import_sources.Add (source);
-                    }
+            foreach (IImportSource source in AddinManager.GetExtensionObjects ("/Banshee/Library/ImportSource")) {
+                if (source.CanImport) {
+                    import_sources.Add (source);
                 }
             }
             
