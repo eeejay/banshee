@@ -5,9 +5,6 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.50727</ProductVersion>
     <ProjectGuid>{6B781836-AB65-49EF-BECD-CCC193C5D589}</ProjectGuid>
-    <Packages>
-      <Packages />
-    </Packages>
     <Compiler>
       <Compiler ctype="GccCompiler" />
     </Compiler>

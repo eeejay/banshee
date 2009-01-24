@@ -30,6 +30,7 @@ using System;
 using Gtk;
 
 using Banshee.ServiceStack;
+using Banshee.MediaEngine;
 
 namespace Banshee.NowPlaying
 {   
@@ -80,7 +81,11 @@ namespace Banshee.NowPlaying
                         
             video_window.SetBackPixmap (null, false);
             
-            ServiceManager.PlayerEngine.VideoWindow = video_window.Handle;
+            if (ServiceManager.PlayerEngine.VideoDisplayContextType == VideoDisplayContextType.GdkWindow) {
+                ServiceManager.PlayerEngine.VideoDisplayContext = video_window.Handle;
+            } else {
+                ServiceManager.PlayerEngine.VideoDisplayContext = IntPtr.Zero;
+            }
         }
         
         protected override void OnUnrealized ()
@@ -119,7 +124,7 @@ namespace Banshee.NowPlaying
         
         protected override bool OnConfigureEvent (Gdk.EventConfigure evnt)
         {
-            if (video_window != null && ServiceManager.PlayerEngine.SupportsVideo) {
+            if (video_window != null && ServiceManager.PlayerEngine.VideoDisplayContextType == VideoDisplayContextType.GdkWindow) {
                 ServiceManager.PlayerEngine.VideoExpose (video_window.Handle, true);
             }
             
@@ -128,7 +133,9 @@ namespace Banshee.NowPlaying
         
         protected override void ExposeVideo (Gdk.EventExpose evnt)
         {
-            ServiceManager.PlayerEngine.VideoExpose (video_window.Handle, true);
+            if (ServiceManager.PlayerEngine.VideoDisplayContextType == VideoDisplayContextType.GdkWindow) {
+                ServiceManager.PlayerEngine.VideoExpose (video_window.Handle, true);
+            }
         }
     }
 }

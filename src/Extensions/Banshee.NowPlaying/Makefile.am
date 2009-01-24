@@ -9,6 +9,7 @@ SOURCES =  \
 	Banshee.NowPlaying/FullscreenWindow.cs \
 	Banshee.NowPlaying/IFullscreenAdapter.cs \
 	Banshee.NowPlaying/IScreensaverManager.cs \
+	Banshee.NowPlaying/IVideoDisplay.cs \
 	Banshee.NowPlaying/NowPlayingContents.cs \
 	Banshee.NowPlaying/NowPlayingInterface.cs \
 	Banshee.NowPlaying/NowPlayingSource.cs \
@@ -24,4 +25,7 @@ RESOURCES =  \
 	Resources/idle-logo.png
 
 include $(top_srcdir)/build/build.mk
+
+module_SCRIPTS += Banshee.NowPlaying.dll.config
+EXTRA_DIST += Banshee.NowPlaying.dll.config
 

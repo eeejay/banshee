@@ -35,7 +35,7 @@ namespace Banshee.NowPlaying
 {
     public class NowPlayingContents : Table, IDisposable
     {
-        private VideoDisplay video_display;
+        private Widget video_display;
         private bool video_display_initial_shown = false;
         
         private TrackInfoDisplay track_info_display;
@@ -44,8 +44,21 @@ namespace Banshee.NowPlaying
         {
             NoShowAll = true;
         
-            video_display = new XOverlayVideoDisplay ();
-            video_display.IdleStateChanged += OnVideoDisplayIdleStateChanged;
+            switch (Banshee.ServiceStack.ServiceManager.PlayerEngine.VideoDisplayContextType) {
+                case Banshee.MediaEngine.VideoDisplayContextType.GdkWindow:
+                    video_display = new XOverlayVideoDisplay ();
+                    break;
+                case Banshee.MediaEngine.VideoDisplayContextType.Unsupported:
+                default:
+                    video_display = null;
+                    break;
+            }
+            
+            IVideoDisplay ivideo_display = video_display as IVideoDisplay;
+            if (ivideo_display != null) {
+                ivideo_display.IdleStateChanged += OnVideoDisplayIdleStateChanged;
+            }
+            
             Attach (video_display, 0, 1, 0, 1, 
                 AttachOptions.Expand | AttachOptions.Fill, 
                 AttachOptions.Expand | AttachOptions.Fill, 0, 0);
@@ -58,8 +71,12 @@ namespace Banshee.NowPlaying
         
         public override void Dispose ()
         {
+            IVideoDisplay ivideo_display = video_display as IVideoDisplay;
+            if (ivideo_display != null) {
+                ivideo_display.IdleStateChanged -= OnVideoDisplayIdleStateChanged;
+            }
+            
             if (video_display != null) {
-                video_display.IdleStateChanged -= OnVideoDisplayIdleStateChanged;
                 video_display = null;
             }
             
@@ -73,7 +90,11 @@ namespace Banshee.NowPlaying
             // Ugly hack to ensure the video window is mapped/realized
             if (!video_display_initial_shown) {
                 video_display_initial_shown = true;
-                video_display.Show ();
+                
+                if (video_display != null) {
+                    video_display.Show ();
+                }
+                
                 GLib.Idle.Add (delegate { 
                     CheckIdle (); 
                     return false;
@@ -92,8 +113,11 @@ namespace Banshee.NowPlaying
 
         private void CheckIdle ()
         {
-            video_display.Visible = !video_display.IsIdle;
-            track_info_display.Visible = video_display.IsIdle;
+            IVideoDisplay ivideo_display = video_display as IVideoDisplay;
+            if (ivideo_display != null) {
+                video_display.Visible = !ivideo_display.IsIdle;
+                track_info_display.Visible = ivideo_display.IsIdle;
+            }
         }
 
         private void OnVideoDisplayIdleStateChanged (object o, EventArgs args)

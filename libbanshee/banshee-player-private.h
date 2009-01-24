@@ -47,6 +47,10 @@
 #  include <gst/interfaces/xoverlay.h>
 #endif
 
+#ifdef HAVE_CLUTTER
+#  include <clutter/clutter.h>
+#endif
+
 #include "banshee-gst.h"
 
 #define P_INVOKE
@@ -97,6 +101,12 @@ struct BansheePlayer {
     #ifdef GDK_WINDOWING_X11
     GstXOverlay *xoverlay;
     GdkWindow *video_window;
+    #endif
+    
+    // Clutter State
+    #ifdef HAVE_CLUTTER
+    GstElement *clutter_sink;
+    ClutterTexture *clutter_texture;
     #endif
     
     // Visualization State

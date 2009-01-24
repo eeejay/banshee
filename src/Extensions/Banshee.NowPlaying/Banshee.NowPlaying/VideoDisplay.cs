@@ -35,7 +35,7 @@ using Banshee.Collection;
 
 namespace Banshee.NowPlaying
 {   
-    public abstract class VideoDisplay : Gtk.Widget
+    public abstract class VideoDisplay : Gtk.Widget, IVideoDisplay
     {
         private bool is_idle = true;
         
@@ -73,7 +73,7 @@ namespace Banshee.NowPlaying
                 return true;
             }
             
-            if (!is_idle && ServiceManager.PlayerEngine.SupportsVideo) {
+            if (!is_idle && ServiceManager.PlayerEngine.VideoDisplayContextType != VideoDisplayContextType.Unsupported) {
                 ExposeVideo (evnt);
             }
             

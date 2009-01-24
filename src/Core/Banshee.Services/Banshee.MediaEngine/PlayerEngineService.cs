@@ -416,13 +416,14 @@ namespace Banshee.MediaEngine
             }
         }
         
-        public void VideoExpose (IntPtr window, bool direct)
+        public void VideoExpose (IntPtr displayContext, bool direct)
         {
-            active_engine.VideoExpose (window, direct);
+            active_engine.VideoExpose (displayContext, direct);
         }
         
-        public IntPtr VideoWindow {
-            set { active_engine.VideoWindow = value; }
+        public IntPtr VideoDisplayContext {
+            set { active_engine.VideoDisplayContext = value; }
+            get { return active_engine.VideoDisplayContext; }
         }
         
         public void TrackInfoUpdated ()
@@ -522,8 +523,8 @@ namespace Banshee.MediaEngine
             get { return ((active_engine is IEqualizer) && active_engine.SupportsEqualizer); }
         }
         
-        public bool SupportsVideo {
-            get { return active_engine.SupportsVideo; }
+        public VideoDisplayContextType VideoDisplayContextType {
+            get { return active_engine.VideoDisplayContextType; }
         }
         
         public uint Length {

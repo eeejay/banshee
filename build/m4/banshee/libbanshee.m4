@@ -25,8 +25,19 @@ AC_DEFUN([BANSHEE_CHECK_LIBBANSHEE],
 		PKG_CHECK_MODULES(GTK, gtk+-2.0 >= 2.8)
 	fi
 
+	PKG_CHECK_MODULES(CLUTTER,
+		clutter-0.8 >= 0.8.6,
+		enable_clutter=yes, enable_clutter=no)
+
+	if test "x$enable_clutter" = "xyes"; then
+		SHAMROCK_CONCAT_MODULE(LIBBANSHEE, CLUTTER)
+		AC_DEFINE(HAVE_CLUTTER, 1, 
+			[Define if the video sink should be Clutter])
+	fi
+
 	AM_CONDITIONAL(HAVE_X11, test "x$GRAPHICS_SUBSYSTEM" = "xX11")
 	AM_CONDITIONAL(HAVE_QUARTZ, test "x$GRAPHICS_SUBSYSTEM" = "xQuartz")
+	AM_CONDITIONAL(HAVE_CLUTTER, test "x$enable_clutter" = "xyes")
 
 	AC_SUBST(GRAPHICS_SUBSYSTEM)
 	AC_SUBST(LIBBANSHEE_CFLAGS)

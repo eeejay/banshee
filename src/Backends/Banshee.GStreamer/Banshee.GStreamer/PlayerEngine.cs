@@ -423,19 +423,13 @@ namespace Banshee.GStreamer
             }
         }
         
-        private bool? supports_video = null;
-        public override bool SupportsVideo {
-            get { 
-                if (supports_video == null) {
-                    supports_video = bp_video_is_supported (handle); 
-                }
-                
-                return supports_video.Value;
-            }
+        public override VideoDisplayContextType VideoDisplayContextType {
+            get { return bp_video_get_display_context_type (handle); }
         }
         
-        public override IntPtr VideoWindow {
-            set { bp_video_set_window (handle, value); }
+        public override IntPtr VideoDisplayContext {
+            set { bp_video_set_display_context (handle, value); }
+            get { return bp_video_get_display_context (handle); }
         }
         
         public double AmplifierLevel {
@@ -599,13 +593,16 @@ namespace Banshee.GStreamer
         private static extern void bp_set_application_gdk_window (HandleRef player, IntPtr window);
         
         [DllImport ("libbanshee")]
-        private static extern bool bp_video_is_supported (HandleRef player);
+        private static extern VideoDisplayContextType bp_video_get_display_context_type (HandleRef player);
         
         [DllImport ("libbanshee")]
-        private static extern void bp_video_set_window (HandleRef player, IntPtr window);
+        private static extern void bp_video_set_display_context (HandleRef player, IntPtr displayContext);
         
         [DllImport ("libbanshee")]
-        private static extern void bp_video_window_expose (HandleRef player, IntPtr window, bool direct);
+        private static extern IntPtr bp_video_get_display_context (HandleRef player);
+        
+        [DllImport ("libbanshee")]
+        private static extern void bp_video_window_expose (HandleRef player, IntPtr displayContext, bool direct);
                                                                    
         [DllImport ("libbanshee")]
         private static extern void bp_get_error_quarks (out uint core, out uint library, 

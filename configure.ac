@@ -250,9 +250,11 @@ src/Extensions/Banshee.Torrent/Makefile
 src/Extensions/Banshee.RemoteAudio/Makefile
 ])
 
-echo "
+cat <<EOF
+
 ${PACKAGE}-${VERSION}
 
+  Build Environment
     Install Prefix:    ${prefix}
     Datadir:           ${expanded_datadir}
     Libdir:            ${expanded_libdir}
@@ -261,36 +263,44 @@ ${PACKAGE}-${VERSION}
     Mono C# Compiler:  ${MCS} ${GMCS_FLAGS}
     Mono Runtime:      ${MONO}
 
-    Digital Audio Player (DAP) Support:
-      Mass Storage:    yes
-      MTP:             ${enable_libmtp}
-      iPod:            ${enable_ipodsharp}
-      Karma:           ${enable_karmasharp}
+  Video/Graphics:
+    Graphics System:   ${GRAPHICS_SUBSYSTEM}
+    X11 Video:         ${have_xvidmode}
+    Clutter:           ${enable_clutter} (experimental)
 
+  Operating System/Desktop Environment:
+    GNOME Support:     ${enable_gnome}
+    OSX Support:       ${enable_osx}
+
+  Digital Audio Player (DAP) Support:
+    Mass Storage:      yes
+    MTP:               ${enable_libmtp}
+    iPod:              ${enable_ipodsharp}
+    Karma:             ${enable_karmasharp}
+
+  Extra Features:
     DAAP Support:      ${enable_daap}
     Podcast Support:   ${enable_podcast}
     Boo Scripting:     ${enable_boo}
-    X11 Video Support: ${have_xvidmode}
-    GNOME Support:     ${enable_gnome}
-    OSX Support:       ${enable_osx}
-    Graphics System:   ${GRAPHICS_SUBSYSTEM}
 
-    Unit Tests:        ${do_tests}	(requires nunit >= ${NUNIT_REQUIRED})
+  Build/Development:
+    Unit Tests:        ${do_tests} (requires nunit >= ${NUNIT_REQUIRED})
     Release Build:     ${enable_release}
     Vendor Build ID:   ${vendor_build_id}
-"
+
+EOF
 
 # Unstable/in-development features; only show them if they were manually enabled
-if test "x$enable_moonlight" = "xyes";    then echo "    Moonlight Effects: ${enable_moonlight}"; fi
-if test "x$enable_remote_audio" = "xyes"; then echo "    Remote Audio:      ${enable_remote_audio}"; fi
-if test "x$enable_mediaweb" = "xyes";     then echo "    MediaWeb:          ${enable_mediaweb}"; fi
-if test "x$enable_torrent" = "xyes";      then echo "    Torrent Podcasts:  ${enable_torrent}"; fi
+if test "x$enable_moonlight" = "xyes";    then br=yes; echo "  Moonlight Effects:   ${enable_moonlight}";    fi
+if test "x$enable_remote_audio" = "xyes"; then br=yes; echo "  Remote Audio:        ${enable_remote_audio}"; fi
+if test "x$enable_mediaweb" = "xyes";     then br=yes; echo "  MediaWeb:            ${enable_mediaweb}";     fi
+if test "x$enable_torrent" = "xyes";      then br=yes; echo "  Torrent Podcasts:    ${enable_torrent}";      fi
 
 if test -d ${expanded_libdir}/${PACKAGE}; then
-	echo
-	echo "WARNING: An existing Banshee install is in ${expanded_libdir}/${PACKAGE}"
-	echo "         Remove the existing install before installing this build."
-	echo "         Installing over an existing install will cause conflicts!"
+	if test x$br = xyes; then echo; fi
+	echo "  WARNING: An existing Banshee install is in ${expanded_libdir}/${PACKAGE}"
+	echo "           Remove the existing install before installing this build."
+	echo "           Installing over an existing install will cause conflicts!"
 	echo 
 fi
 

@@ -274,7 +274,7 @@ namespace Banshee.ServiceStack
                         ((IDisposable)service).Dispose ();
                         Log.DebugFormat ("Service disposed ({0})", service.ServiceName);
                     } catch (Exception e) {
-                        Log.Exception ("Service disposal ({0}) threw an exception", e);
+                        Log.Exception (String.Format ("Service disposal ({0}) threw an exception", service.ServiceName), e);
                     }
                 }
                 

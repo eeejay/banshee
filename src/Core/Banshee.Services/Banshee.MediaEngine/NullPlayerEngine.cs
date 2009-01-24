@@ -72,8 +72,8 @@ namespace Banshee.MediaEngine
             get { return false; }
         }
         
-        public override bool SupportsVideo {
-            get { return false; }
+        public override VideoDisplayContextType VideoDisplayContextType {
+            get { return VideoDisplayContextType.Unsupported; }
         }
         
         private static string [] source_capabilities = { "file", "http", "cdda" };

@@ -1,3 +1,55 @@
+2009-01-24  Aaron Bockover  <abock@gnome.org>
+
+	First hacky pass at Clutter integration; nothing to see, and I probably
+	broke some things. trunk is going to be sketchy for a bit...
+
+	* src/Core/Banshee.Services/Banshee.MediaEngine/VideoDisplayContextType.cs:
+	Enum of context types pipelines might support for video (e.g. xoverlay,
+	clutter, cairo, etc.)
+
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/VideoDisplay.cs:
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/NowPlayingContents.cs:
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/IVideoDisplay.cs:
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/XOverlayVideoDisplay.cs:
+	Updated to support the video context API changes in the player engine
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/GtkBaseClient.cs: Temporary
+	clutter initialization, to be moved into the clutter extension
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/ServiceManager.cs:
+	Fix a small string.format bug
+
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngine.cs:
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:
+	Instead of a simple SupportsVideo bool, replace with 
+	VideoDisplayContextType, and change the VideoWindow property to 
+	VideoDisplayContext with both a getter and setter, the meaning of which
+	depends on VideoDisplayContextType
+
+	* src/Core/Banshee.Services/Banshee.MediaEngine/NullPlayerEngine.cs:
+	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs:
+	Implement changes to API above
+
+	* libbanshee/banshee-player-video.c: Implement inital clutter support,
+	and the backend implementation for the new video context API above,
+	providing both xoverlay (GDK) and clutter contexts
+
+	* libbanshee/clutter-gst-shaders.h:
+	* libbanshee/clutter-gst-video-sink.h: 
+	* libbanshee/clutter-gst-video-sink.c: Clutter GStreamer integration
+	from the clutter-gst package; currently I don't want to take the dep
+	as changes might need to be made
+
+	* libbanshee/banshee-player-private.h: Add the clutter texture if we
+	are building with clutter support
+
+	* build/m4/banshee/libbanshee.m4: Check for clutter (optional)
+
+	* configure.ac: Clean up the configure summary, make it nicer and more
+	organized
+
+	* build/m4/banshee/dap-karma.m4: Small fix
+
 2009-01-23  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Makefile.am:

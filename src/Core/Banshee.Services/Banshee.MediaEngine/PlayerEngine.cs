@@ -107,7 +107,7 @@ namespace Banshee.MediaEngine
 
         public abstract void Pause ();
         
-        public virtual void VideoExpose (IntPtr window, bool direct)
+        public virtual void VideoExpose (IntPtr displayContext, bool direct)
         {
             throw new NotImplementedException ("Engine must implement VideoExpose since this method only gets called when SupportsVideo is true");
         }
@@ -251,12 +251,13 @@ namespace Banshee.MediaEngine
             get;
         }
         
-        public abstract bool SupportsVideo {
+        public abstract VideoDisplayContextType VideoDisplayContextType {
             get;
         }
         
-        public virtual IntPtr VideoWindow {
+        public virtual IntPtr VideoDisplayContext {
             set { }
+            get { return IntPtr.Zero; }
         }
     }
 }
