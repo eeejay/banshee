@@ -244,6 +244,7 @@
     <Compile Include="Banshee.Hardware\IUsbDevice.cs" />
     <Compile Include="Banshee.Hardware\VendorProductDeviceNode.cs" />
     <Compile Include="Banshee.Hardware\DeviceCommand.cs" />
+    <Compile Include="Banshee.MediaEngine\VideoDisplayContextType.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Banshee.Services.addin.xml" />
@@ -254,7 +255,6 @@
     <MonoDevelop>
       <Properties>
         <Deployment.LinuxDeployData generateScript="false" />
-        <GtkDesignInfo />
         <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="true" RelativeMakefileName="Makefile.am">
           <BuildFilesVar Sync="true" Name="SOURCES" />
           <DeployFilesVar />

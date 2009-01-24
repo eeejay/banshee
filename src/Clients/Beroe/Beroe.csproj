@@ -57,7 +57,6 @@
   <ProjectExtensions>
     <MonoDevelop>
       <Properties>
-        <GtkDesignInfo />
         <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="true" RelativeMakefileName="Makefile.am" ExecuteTargetName="run">
           <BuildFilesVar Sync="true" Name="SOURCES" />
           <DeployFilesVar />

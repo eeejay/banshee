@@ -82,12 +82,12 @@
     <Compile Include="Banshee.NowPlaying\ScreensaverManager.cs" />
     <Compile Include="Banshee.NowPlaying\NowPlayingContents.cs" />
     <Compile Include="Banshee.NowPlaying\NowPlayingTrackInfoDisplay.cs" />
+    <Compile Include="Banshee.NowPlaying\IVideoDisplay.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <MonoDevelop>
       <Properties>
-        <GtkDesignInfo />
         <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="true" RelativeMakefileName="./Makefile.am">
           <BuildFilesVar Sync="true" Name="SOURCES" />
           <DeployFilesVar />

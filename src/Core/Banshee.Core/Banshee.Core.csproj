@@ -41,7 +41,7 @@
   <ItemGroup>
     <Reference Include="Mono.Posix" />
     <Reference Include="Mono.Addins, Version=0.4.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
-    <Reference Include="taglib-sharp, Version=2.0.3.0, Culture=neutral, PublicKeyToken=db62eba44689b5b0" />
+    <Reference Include="taglib-sharp, Version=2.0.3.1, Culture=neutral, PublicKeyToken=db62eba44689b5b0" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Banshee.Kernel\IInstanceCriticalJob.cs" />
@@ -123,7 +123,6 @@
   <ProjectExtensions>
     <MonoDevelop>
       <Properties>
-        <GtkDesignInfo />
         <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="true" RelativeMakefileName="./Makefile.am">
           <BuildFilesVar Sync="true" Name="SOURCES" />
           <DeployFilesVar />

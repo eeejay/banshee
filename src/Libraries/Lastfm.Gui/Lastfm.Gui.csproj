@@ -30,7 +30,7 @@
     <Reference Include="System" />
     <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <Reference Include="Mono.Posix" />
-    <Reference Include="gnome-sharp, Version=2.20.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gnome-sharp, Version=2.24.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Lastfm\Lastfm.csproj">
@@ -48,7 +48,6 @@
   <ProjectExtensions>
     <MonoDevelop>
       <Properties>
-        <GtkDesignInfo />
         <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="true" RelativeMakefileName="Makefile.am">
           <BuildFilesVar Sync="true" Name="SOURCES" />
           <DeployFilesVar />

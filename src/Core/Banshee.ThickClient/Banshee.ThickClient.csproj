@@ -64,7 +64,7 @@
     <Reference Include="Mono.Addins.Gui, Version=0.4.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
     <Reference Include="Mono.Addins.Setup, Version=0.4.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756" />
     <Reference Include="System.Xml" />
-    <Reference Include="taglib-sharp, Version=2.0.3.0, Culture=neutral, PublicKeyToken=db62eba44689b5b0" />
+    <Reference Include="taglib-sharp, Version=2.0.3.1, Culture=neutral, PublicKeyToken=db62eba44689b5b0" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\browser-album-cover.png">
@@ -228,7 +228,6 @@
     <MonoDevelop>
       <Properties>
         <Deployment.LinuxDeployData generateScript="false" />
-        <GtkDesignInfo />
         <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="true" RelativeMakefileName="Makefile.am">
           <BuildFilesVar Sync="true" Name="SOURCES" />
           <DeployFilesVar />
