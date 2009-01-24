@@ -1,5 +1,19 @@
 2009-01-23  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseImportManager.cs:
+	Move UpdateProgress out of ImportTrack method to avoid triggering the
+	Scanning.. user job when we're directly importing.
+
+	* src/Core/Banshee.Services/Banshee.Services.addin.xml:
+	* src/Core/Banshee.Services/Banshee.Library/ImportSourceManager.cs:
+	* src/Core/Banshee.Services/Makefile.am:
+	* src/Core/Banshee.Services/Banshee.PlayerMigration/RhythmboxPlayerImportSource.cs:
+	* src/Core/Banshee.Services/Banshee.PlayerMigration/AmarokPlayerImportSource.cs:
+	Patch from Paul Lange adding back Rhythmbox import support, and making the
+	migrators into extensions (though still in Core/) fixes (BGO #554511)
+
+2009-01-23  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Dap/Banshee.Dap/Banshee.Dap/DapService.cs: Patch from Félix Velasco
 	removing unnecessary lock that was causing some hangs (BGO #559479)
 

@@ -49,11 +49,7 @@ namespace Banshee.Library
             if (import_sources == null) {
                 import_sources = new List<IImportSource> ();
                 import_sources.Add (new HomeDirectoryImportSource ());
-                
-                if (AmarokPlayerImportSource.CanImport) {
-                    import_sources.Add (new AmarokPlayerImportSource ());
-                }
-            
+
                 foreach (IImportSource source in AddinManager.GetExtensionObjects ("/Banshee/Library/ImportSource")) {
                     if (source.CanImport) {
                         import_sources.Add (source);

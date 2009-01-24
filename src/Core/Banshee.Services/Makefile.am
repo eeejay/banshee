@@ -116,6 +116,7 @@ SOURCES =  \
 	Banshee.PlaybackController/PlaybackRepeatMode.cs \
 	Banshee.PlaybackController/PlaybackShuffleMode.cs \
 	Banshee.PlayerMigration/AmarokPlayerImportSource.cs \
+	Banshee.PlayerMigration/RhythmboxPlayerImportSource.cs \
 	Banshee.Playlist/AbstractPlaylistSource.cs \
 	Banshee.Playlist/PlaylistFileUtil.cs \
 	Banshee.Playlist/PlaylistSource.cs \

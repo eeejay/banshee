@@ -180,7 +180,7 @@ namespace Banshee.PlayerMigration
             }
         }
         
-        public static new bool CanImport {
+        public override bool CanImport {
             get { return Banshee.IO.File.Exists (new SafeUri (amarok_db_path)); }
         }
         

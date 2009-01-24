@@ -128,6 +128,8 @@ namespace Banshee.Collection.Database
                 if (track != null && track.TrackId > 0) {
                     UpdateProgress (String.Format ("{0} - {1}", 
                         track.DisplayArtistName, track.DisplayTrackTitle));
+                } else {
+                    UpdateProgress (null);
                 }
                 
                 OnImportResult (track, path, null);
@@ -154,14 +156,12 @@ namespace Banshee.Collection.Database
         public DatabaseTrackInfo ImportTrack (SafeUri uri)
         {
             if (!IsWhiteListedFile (uri.LocalPath)) {
-                UpdateProgress (null);
                 return null;
             }
 
             if (DatabaseTrackInfo.ContainsUri (uri, Paths.MakePathRelative (uri.AbsolutePath, BaseDirectory) ?? uri.AbsoluteUri, PrimarySourceIds)) {
                 // TODO add DatabaseTrackInfo.SyncedStamp property, and if the file has been
                 // updated since the last sync, fetch its metadata into the db.
-                UpdateProgress (null);
                 return null;
             }
 
