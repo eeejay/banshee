@@ -1,3 +1,10 @@
+2009-01-25  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/FilteredListSourceContents.cs:
+	Enable smooth (kinetic) scrolling of track/artist/album etc lists (all but
+	source list) by default.  Can be disabled by passing --no-smooth-scroll.
+	Please test and give feedback. (BGO #461393)
+
 2009-01-25  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
 	* libbanshee/banshee-player-video.c: Move a typedef so that it builds
