@@ -74,6 +74,24 @@ namespace Clutter
             clutter_actor_get_size (Handle, out width, out height);
         }
         
+        [GLib.Property ("rotation-angle-x")]
+        public double RotationAngleX {
+            get { using (GLib.Value val = GetProperty ("rotation-angle-x")) return (double)val; }
+            set { using (GLib.Value val = new GLib.Value (value)) SetProperty ("rotation-angle-x", val); }
+        }
+        
+        [GLib.Property ("rotation-angle-y")]
+        public double RotationAngleY {
+            get { using (GLib.Value val = GetProperty ("rotation-angle-y")) return (double)val; }
+            set { using (GLib.Value val = new GLib.Value (value)) SetProperty ("rotation-angle-y", val); }
+        }
+        
+        [GLib.Property ("rotation-angle-z")]
+        public double RotationAngleZ {
+            get { using (GLib.Value val = GetProperty ("rotation-angle-z")) return (double)val; }
+            set { using (GLib.Value val = new GLib.Value (value)) SetProperty ("rotation-angle-z", val); }
+        }
+        
         [DllImport ("clutter")]
         private static extern IntPtr clutter_actor_get_type ();
         

@@ -60,6 +60,26 @@ namespace Banshee.NowPlaying.Clutter
             stage.Add (video_texture);
             
             PackStart (display, true, true, 0);
+            
+            HBox rotation_box = new HBox ();
+            rotation_box.Spacing = 10;
+            
+            HScale x_angle = new HScale (0, 360, 1);
+            x_angle.ValueChanged += delegate { video_texture.RotationAngleX = x_angle.Value; };
+            
+            HScale y_angle = new HScale (0, 360, 1);
+            y_angle.ValueChanged += delegate { video_texture.RotationAngleY = y_angle.Value; };
+            
+            HScale z_angle = new HScale (0, 360, 1);
+            z_angle.ValueChanged += delegate { video_texture.RotationAngleZ = z_angle.Value; };
+            
+            rotation_box.PackStart (x_angle, true, true, 0);
+            rotation_box.PackStart (y_angle, true, true, 0);
+            rotation_box.PackStart (z_angle, true, true, 0);
+            rotation_box.ShowAll ();
+            
+            PackStart (rotation_box, false, false, 0);
+            
             Show ();
         }
         
