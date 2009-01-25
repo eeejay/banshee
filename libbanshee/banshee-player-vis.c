@@ -164,7 +164,9 @@ _bp_vis_pipeline_destroy (BansheePlayer *player)
     if (player->vis_buffer != NULL) {
         gst_object_unref (player->vis_buffer);
         player->vis_buffer = NULL;
-        
+    }
+    
+    if (player->spectrum_buffer != NULL) {
         g_free (player->spectrum_buffer);
         player->spectrum_buffer = NULL;
     }

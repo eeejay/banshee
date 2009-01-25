@@ -61,7 +61,7 @@
           <BuildFilesVar Sync="true" Name="libbanshee_la_SOURCES" />
           <DeployFilesVar />
           <ResourcesVar />
-          <OthersVar Sync="true" Name="noinst_HEADERS" />
+          <OthersVar />
           <GacRefVar />
           <AsmRefVar />
           <ProjectRefVar />

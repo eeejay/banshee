@@ -160,7 +160,6 @@
     <Compile Include="Banshee.Query\SmartPlaylistQueryValue.cs" />
     <Compile Include="Banshee.Query\YearQueryValue.cs" />
     <Compile Include="Banshee.MediaEngine\NullPlayerEngine.cs" />
-    <Compile Include="Banshee.PlayerMigration\AmarokPlayerImportSource.cs" />
     <Compile Include="Banshee.Library\ThreadPoolImportSource.cs" />
     <Compile Include="Banshee.ServiceStack\IInitializeService.cs" />
     <Compile Include="Banshee.Query\PlaylistQueryValue.cs" />

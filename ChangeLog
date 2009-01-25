@@ -1,5 +1,35 @@
 2009-01-24  Aaron Bockover  <abock@gnome.org>
 
+	Second pass, working video display and sizing, not hacky at all, just 
+	pure awesome on the way. Super high performance video.
+
+	* src/Extensions/Banshee.NowPlaying.Clutter/Banshee.NowPlaying.Clutter/NowPlayingSource.cs:
+	Bare source for the new clutter now playing extension
+
+	* src/Extensions/Banshee.NowPlaying.Clutter/Banshee.NowPlaying.Clutter/NowPlayingInterface.cs:
+	Basic clutter UI for rendering the video texture from the clutter sink
+	in the media pipeline; simple embed + stage + texture and size/position
+	logic is in place
+
+	* src/Extensions/Banshee.NowPlaying.Clutter/Clutter/Group.cs:
+	* src/Extensions/Banshee.NowPlaying.Clutter/Clutter/Color.cs:
+	* src/Extensions/Banshee.NowPlaying.Clutter/Clutter/Texture.cs:
+	* src/Extensions/Banshee.NowPlaying.Clutter/Clutter/Stage.cs:
+	* src/Extensions/Banshee.NowPlaying.Clutter/Clutter/Actor.cs:
+	* src/Extensions/Banshee.NowPlaying.Clutter/Clutter.Gtk/Embed.cs:
+	Very basic and simple Clutter bindings; just enough for what I need now.
+	These will go away as I work on clutter-sharp and make it a dependency
+	later. I just wanted to get off the ground quickly.
+
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/NowPlayingContents.cs:
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/NowPlayingSource.cs:
+	Move the VideoDisplayContextType detection to the source, throw if it is
+	not valid so the source does not appear
+
+	* libbanshee/banshee-player-vis.c: Fix a double-free bug
+
+2009-01-24  Aaron Bockover  <abock@gnome.org>
+
 	First hacky pass at Clutter integration; nothing to see, and I probably
 	broke some things. trunk is going to be sketchy for a bit...
 

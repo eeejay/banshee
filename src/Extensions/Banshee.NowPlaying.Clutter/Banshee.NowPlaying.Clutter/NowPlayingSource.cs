@@ -4,7 +4,7 @@
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2008 Novell, Inc.
+// Copyright (C) 2008-2009 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -38,27 +38,27 @@ using Banshee.Collection;
 using Banshee.Gui;
 using Banshee.Sources.Gui;
 
-namespace Banshee.NowPlaying
+namespace Banshee.NowPlaying.Clutter
 {
     public class NowPlayingSource : Source, IDisposable
     {
         private TrackInfo transitioned_track;
         private NowPlayingInterface now_playing_interface;
         
-        public NowPlayingSource () : base ("now-playing", Catalog.GetString ("Now Playing"), 10)
+        public NowPlayingSource () : base ("now-playing-clutter", Catalog.GetString ("Now Playing Clutter"), 10)
         {
             if (Banshee.ServiceStack.ServiceManager.PlayerEngine.VideoDisplayContextType != 
-                Banshee.MediaEngine.VideoDisplayContextType.GdkWindow) {
+                Banshee.MediaEngine.VideoDisplayContextType.ClutterTexture) {
                 throw new ApplicationException ("Unsupported video display context");
             }
-        
-            TypeUniqueId = "now-playing";
+            
+            TypeUniqueId = "now-playing-clutter";
             now_playing_interface = new NowPlayingInterface ();
         
             Properties.SetString ("Icon.Name", "applications-multimedia");
             Properties.Set<ISourceContents> ("Nereid.SourceContents", now_playing_interface);
             Properties.Set<bool> ("Nereid.SourceContents.HeaderVisible", false);
-            Properties.SetString ("ActiveSourceUIResource", "ActiveSourceUI.xml");
+            //Properties.SetString ("ActiveSourceUIResource", "ActiveSourceUI.xml");
             
             ServiceManager.SourceManager.AddSource (this);
             

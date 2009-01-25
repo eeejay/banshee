@@ -44,16 +44,8 @@ namespace Banshee.NowPlaying
         {
             NoShowAll = true;
         
-            switch (Banshee.ServiceStack.ServiceManager.PlayerEngine.VideoDisplayContextType) {
-                case Banshee.MediaEngine.VideoDisplayContextType.GdkWindow:
-                    video_display = new XOverlayVideoDisplay ();
-                    break;
-                case Banshee.MediaEngine.VideoDisplayContextType.Unsupported:
-                default:
-                    video_display = null;
-                    break;
-            }
-            
+            video_display = new XOverlayVideoDisplay ();
+
             IVideoDisplay ivideo_display = video_display as IVideoDisplay;
             if (ivideo_display != null) {
                 ivideo_display.IdleStateChanged += OnVideoDisplayIdleStateChanged;
