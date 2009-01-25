@@ -1,3 +1,9 @@
+2009-01-25  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
+	* src/Backends/Banshee.NowPlaying.X11/libbnpx11/bacon-resize.h: Patch
+	from Przemysław Grzegorczyk to clean up gtk includes to use only toplevel
+	headers (BGO #565027).
+
 2009-01-25  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/OverlayWindow.cs:
