@@ -32,16 +32,17 @@
 // Private Functions
 // ---------------------------------------------------------------------------
 
-#ifdef HAVE_CLUTTER
-
-#include <clutter/clutter.h>
-#include "clutter-gst-video-sink.h"
-
 typedef enum {
     BP_VIDEO_DISPLAY_CONTEXT_UNSUPPORTED = 0,
     BP_VIDEO_DISPLAY_CONTEXT_GDK_WINDOW = 1,
     BP_VIDEO_DISPLAY_CONTEXT_CLUTTER_TEXTURE = 2
 } BpVideoDisplayContextType;
+
+#ifdef HAVE_CLUTTER
+
+#include <clutter/clutter.h>
+#include "clutter-gst-video-sink.h"
+
 
 static gboolean
 bp_video_pipeline_setup_clutter (BansheePlayer *player, GstBus *bus)

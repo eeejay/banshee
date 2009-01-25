@@ -1,3 +1,8 @@
+2009-01-25  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
+	* libbanshee/banshee-player-video.c: Move a typedef so that it builds
+	without clutter.
+
 2009-01-24  Aaron Bockover  <abock@gnome.org>
 
 	* src/Extensions/Banshee.NowPlaying.Clutter/Clutter/Actor.cs:
