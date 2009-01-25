@@ -53,7 +53,8 @@ namespace Banshee.Streaming
                     throw new TagLib.UnsupportedFormatException ("File does not contain video or audio");
                 }
                 return file;
-            } catch (Exception) {
+            } catch (Exception e) {
+                Hyena.Log.DebugException (e);
                 return null;
             }
         }

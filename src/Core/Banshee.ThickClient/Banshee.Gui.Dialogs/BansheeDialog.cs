@@ -78,7 +78,7 @@ namespace Banshee.Gui.Dialogs
             AddButton (message, response, false);
         }
         
-        public new void AddStockButton (string stock, ResponseType response)
+        public void AddStockButton (string stock, ResponseType response)
         {
             AddStockButton (stock, response, false);
         }

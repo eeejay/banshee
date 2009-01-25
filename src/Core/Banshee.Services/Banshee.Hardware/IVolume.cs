@@ -37,7 +37,7 @@ namespace Banshee.Hardware
         bool IsReadOnly { get; }
         ulong Capacity { get; }
         long Available { get; }
-        new IBlockDevice Parent { get; }
+        IBlockDevice Parent { get; }
 
         bool ShouldIgnore { get; }
         string FileSystem { get; }

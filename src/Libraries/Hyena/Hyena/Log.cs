@@ -370,6 +370,13 @@ namespace Hyena
         
         #region Public Exception Methods
         
+        public static void DebugException (Exception e)
+        {
+            if (Debugging) {
+                Exception (e);
+            }
+        }
+
         public static void Exception (Exception e)
         {
             Exception (null, e);

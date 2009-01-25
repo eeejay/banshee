@@ -31,14 +31,6 @@ using Gtk;
 
 namespace Banshee.Sources.Gui
 {
-    internal class EditedEventArgs : EventArgs
-    {
-        public TreePath path;
-        public string text;
-    }
-    
-    internal delegate void EditedEventHandler (object o, EditedEventArgs args);
-    
     internal class CellEditEntry : Entry, CellEditable
     {
         public string path;

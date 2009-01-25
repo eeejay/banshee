@@ -1,5 +1,21 @@
 2009-01-25  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/OverlayWindow.cs:
+	* src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapPropertiesDialog.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/BansheeDialog.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/CellEditEntry.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/FilteredListSourceContents.cs:
+	* src/Core/Banshee.Services/Banshee.Hardware/IVolume.cs:
+	* src/Core/Banshee.Core/Banshee.Streaming/StreamTagger.cs:
+	* src/Backends/Banshee.Hal/Banshee.HalBackend/CdromDevice.cs:
+	* src/Backends/Banshee.Hal/Banshee.HalBackend/UsbDevice.cs:
+	* src/Backends/Banshee.Hal/Banshee.HalBackend/DiskDevice.cs:
+	* src/Libraries/Hyena/Hyena/Log.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/SegmentedBar.cs: Fix compilation
+	issues when building with Mono 2.2
+
+2009-01-25  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/FilteredListSourceContents.cs:
 	Enable smooth (kinetic) scrolling of track/artist/album etc lists (all but
 	source list) by default.  Can be disabled by passing --no-smooth-scroll.

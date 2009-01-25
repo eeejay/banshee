@@ -43,10 +43,10 @@ namespace Banshee.Dap
     {
         private DapSource source;
         private Entry nameEntry;
-        private Entry ownerEntry;
+        //private Entry ownerEntry;
         
         private string name_update;
-        private string owner_update;
+        //private string owner_update;
         
         private bool edited;
         
@@ -155,9 +155,9 @@ namespace Banshee.Dap
         
         private void OnEntryChanged(object o, EventArgs args)
         {
-            if(ownerEntry != null) {
+            /*if(ownerEntry != null) {
                 owner_update = ownerEntry.Text;
-            }
+            }*/
             
             if(nameEntry != null) {
                 name_update = nameEntry.Text;
@@ -180,7 +180,7 @@ namespace Banshee.Dap
         
         public string UpdatedOwner {
             get {
-                return owner_update;
+                return null; //owner_update;
             }
         }
     }

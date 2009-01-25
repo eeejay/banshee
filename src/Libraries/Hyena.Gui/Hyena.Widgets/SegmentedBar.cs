@@ -385,7 +385,10 @@ namespace Hyena.Widgets
             ImageSurface s = new ImageSurface (Format.Argb32, w, h);
             Context cr = new Context (s);
             RenderBar (cr, w, h, h / 2);
+// TODO Implement the new ctor - see http://bugzilla.gnome.org/show_bug.cgi?id=561394
+#pragma warning disable 0618 
             Pattern pattern = new Pattern (s);
+#pragma warning restore 0618 
             s.Destroy ();
             ((IDisposable)cr).Dispose ();
             return pattern;

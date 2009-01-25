@@ -70,9 +70,8 @@ namespace Banshee.NowPlaying
             toplevel.SizeAllocated += OnToplevelSizeAllocated;
         }
         
-        private bool can_hide;
         public bool CanHide {
-            get { return can_hide; }
+            get { return false; }
         }
         
         protected override void OnRealized ()

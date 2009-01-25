@@ -36,7 +36,7 @@ namespace Banshee.HalBackend
 {
     public class CdromDevice : BlockDevice, ICdromDevice
     {
-        public new static CdromDevice Resolve (Hal.Manager manager, Hal.Device device)
+        public static CdromDevice Resolve (Hal.Manager manager, Hal.Device device)
         {
             if (device["storage.drive_type"] == "cdrom") {
                 return new CdromDevice (manager, device);

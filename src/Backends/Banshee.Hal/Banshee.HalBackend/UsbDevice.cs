@@ -34,7 +34,7 @@ namespace Banshee.HalBackend
 {
     public class UsbDevice : Device, IUsbDevice
     {
-        public new static UsbDevice Resolve (Hal.Manager manager, Hal.Device device)
+        public static UsbDevice Resolve (Hal.Manager manager, Hal.Device device)
         {
             if (device["info.subsystem"] == "usb_device" && 
                 device.PropertyExists ("usb_device.product_id") && 

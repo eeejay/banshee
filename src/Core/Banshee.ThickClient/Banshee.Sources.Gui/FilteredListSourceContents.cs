@@ -144,6 +144,7 @@ namespace Banshee.Sources.Gui
         
         protected void SetupMainView<T> (ListView<T> main_view)
         {
+            this.main_view = main_view;
             main_scrolled_window = SetupView (main_view);
         }
         

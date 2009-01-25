@@ -36,7 +36,7 @@ namespace Banshee.HalBackend
 {
     public class DiskDevice : BlockDevice, IDiskDevice
     {
-        public new static DiskDevice Resolve (Hal.Manager manager, Hal.Device device)
+        public static DiskDevice Resolve (Hal.Manager manager, Hal.Device device)
         {
             if (device["storage.drive_type"] == "disk") {
                 return new DiskDevice (manager, device);
