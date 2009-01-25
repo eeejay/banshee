@@ -49,6 +49,9 @@ namespace Banshee.NowPlaying.Clutter
         private Stage stage;
         private Texture video_texture;
         
+        private int center_x;
+        private int center_y;
+        
         public NowPlayingInterface ()
         {
             display = new Embed ();
@@ -65,13 +68,13 @@ namespace Banshee.NowPlaying.Clutter
             rotation_box.Spacing = 10;
             
             HScale x_angle = new HScale (0, 360, 1);
-            x_angle.ValueChanged += delegate { video_texture.RotationAngleX = x_angle.Value; };
+            x_angle.ValueChanged += delegate { video_texture.SetRotation (RotateAxis.X, x_angle.Value, center_x, center_y, 0); };
             
             HScale y_angle = new HScale (0, 360, 1);
-            y_angle.ValueChanged += delegate { video_texture.RotationAngleY = y_angle.Value; };
+            y_angle.ValueChanged += delegate { video_texture.SetRotation (RotateAxis.Y, y_angle.Value, center_x, center_y, 0); };
             
             HScale z_angle = new HScale (0, 360, 1);
-            z_angle.ValueChanged += delegate { video_texture.RotationAngleZ = z_angle.Value; };
+            z_angle.ValueChanged += delegate { video_texture.SetRotation (RotateAxis.Z, z_angle.Value, center_x, center_y, 0); };
             
             rotation_box.PackStart (x_angle, true, true, 0);
             rotation_box.PackStart (y_angle, true, true, 0);
@@ -107,6 +110,9 @@ namespace Banshee.NowPlaying.Clutter
                 new_x = (stage_width - new_width) / 2;
                 new_y = 0;
             }
+            
+            center_x = new_width / 2;
+            center_y = new_height / 2;
             
             video_texture.SetPosition (new_x, new_y);
             video_texture.SetSize (new_width, new_height);

@@ -31,6 +31,8 @@ using System.Runtime.InteropServices;
 
 namespace Clutter
 {
+    public enum RotateAxis : int { X, Y, Z }
+
     public class Actor : GLib.InitiallyUnowned
     {
         public Actor (IntPtr raw) : base (raw) 
@@ -72,6 +74,15 @@ namespace Clutter
         public void GetSize (out int width, out int height)
         {
             clutter_actor_get_size (Handle, out width, out height);
+        }
+        
+        [DllImport ("clutter")]
+        private static extern void clutter_actor_set_rotation (IntPtr handle, RotateAxis axis, 
+            double angle, int x, int y, int z);
+            
+        public void SetRotation (RotateAxis axis, double angle, int x, int y, int z)
+        {
+            clutter_actor_set_rotation (Handle, axis, angle, x, y, z);
         }
         
         [GLib.Property ("rotation-angle-x")]

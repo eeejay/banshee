@@ -1,5 +1,11 @@
 2009-01-24  Aaron Bockover  <abock@gnome.org>
 
+	* src/Extensions/Banshee.NowPlaying.Clutter/Clutter/Actor.cs:
+	* src/Extensions/Banshee.NowPlaying.Clutter/Banshee.NowPlaying.Clutter/NowPlayingInterface.cs:
+	More stuff just for fun
+
+2009-01-24  Aaron Bockover  <abock@gnome.org>
+
 	* src/Extensions/Banshee.NowPlaying.Clutter/Clutter/Actor.cs: Added
 	RotationX, RotationY, RotationZ properties just for fun
 
