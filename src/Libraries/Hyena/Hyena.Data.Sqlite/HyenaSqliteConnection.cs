@@ -134,7 +134,7 @@ namespace Hyena.Data.Sqlite
         public IDataReader Query (HyenaSqliteCommand command)
         {
             command.CommandType = HyenaCommandType.Reader;
-            QueueCommand (command, null);
+            QueueCommand (command);
             return command.WaitForResult (this) as SqliteDataReader;
         }
 
@@ -190,7 +190,7 @@ namespace Hyena.Data.Sqlite
         public T Query<T> (HyenaSqliteCommand command)
         {
             command.CommandType = HyenaCommandType.Scalar;
-            QueueCommand (command, null);
+            QueueCommand (command);
             object result = command.WaitForResult (this);
             return (T)SqliteUtils.FromDbFormat (typeof (T), result);
         }
@@ -217,7 +217,7 @@ namespace Hyena.Data.Sqlite
         public int Execute (HyenaSqliteCommand command)
         {
             command.CommandType = HyenaCommandType.Execute;;
-            QueueCommand(command, null);
+            QueueCommand(command);
             return (int) command.WaitForResult (this);
         }
 
@@ -378,9 +378,15 @@ namespace Hyena.Data.Sqlite
             QueueCommand (command, null, args);
         }
 
-        private void QueueCommand(HyenaSqliteCommand command, object arg)
+        // TODO optimize object vs object [] code paths?
+        /*private void QueueCommand(HyenaSqliteCommand command, object arg)
         {
             QueueCommand (command, arg, null);
+        }*/
+
+        private void QueueCommand(HyenaSqliteCommand command)
+        {
+            QueueCommand (command, null, null);
         }
 
         private void QueueCommand(HyenaSqliteCommand command, object arg, object [] args)

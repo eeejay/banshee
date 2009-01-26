@@ -1,5 +1,10 @@
 2009-01-25  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/HyenaSqliteConnection.cs: Fix a
+	warning.
+
+2009-01-25  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* Core/Banshee.ThickClient/Makefile.am:
 	* Core/Banshee.ThickClient/Banshee.Gui.Widgets/TaskStatusButton.cs: New
 	button that is insensitive if there are no background UserJobs registered,
