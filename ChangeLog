@@ -1,5 +1,10 @@
 2009-01-25  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* .gitignore: New file, for those using git-svn at home and to prepare for
+	GNOME's git migration.
+
+2009-01-25  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.Daap/Daap/Client.cs:
 	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapProxyWebServer.cs:
 	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:
