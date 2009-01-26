@@ -1,5 +1,15 @@
 2009-01-25  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs:
+	Don't do any checks about whether the user is a subscriber or not before
+	adding a station to their list.  If they try to access a list they're not
+	authorized to, they'll get that message, and we avoid false negatives.
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs: Add
+	another default station for songs tagged 'Creative Commons'
+
+2009-01-25  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.Podcasting/Makefile.am:
 	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastEpisodePage.cs:
 	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.addin.xml: Add new
