@@ -156,7 +156,7 @@ namespace Banshee.Gui.TrackEditor
             header_image_frame.Add (header_image);
             
             header.Attach (header_image_frame, 0, 1, 0, 3,
-                AttachOptions.Shrink, AttachOptions.Expand, 0, 0);
+                AttachOptions.Fill, AttachOptions.Expand, 0, 0);
             
             AddHeaderRow (header, 0, Catalog.GetString ("Title:"), out header_title_label);
             AddHeaderRow (header, 1, Catalog.GetString ("Artist:"), out header_artist_label);
