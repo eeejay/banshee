@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-26 11:47+0100\n"
-"PO-Revision-Date: 2009-01-26 11:51+0100\n"
+"POT-Creation-Date: 2009-01-26 21:44+0100\n"
+"PO-Revision-Date: 2009-01-26 21:57+0100\n"
 "Last-Translator: Wouter Bolsterlee <wbolster@gnome.org>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
 "MIME-Version: 1.0\n"
@@ -185,13 +185,38 @@ msgstr "Een variable bitrate gebruiken"
 msgid "Windows Media Audio"
 msgstr "Windows Media-audio"
 
-#: ../libbanshee/banshee-ripper.c:268
+#: ../libbanshee/banshee-bpmdetector.c:199 ../libbanshee/banshee-ripper.c:268
 msgid "Could not create pipeline"
-msgstr "Aanmaken pipeline mislukt"
+msgstr "Aanmaken ‘pipeline’ mislukt"
+
+#: ../libbanshee/banshee-bpmdetector.c:205
+msgid "Could not create filesrc element"
+msgstr "Aanmaken ‘filesrc’-element mislukt"
+
+#: ../libbanshee/banshee-bpmdetector.c:211
+msgid "Could not create decodebin plugin"
+msgstr "Aanmaken ‘decodebin’-plugin mislukt"
+
+#: ../libbanshee/banshee-bpmdetector.c:217
+msgid "Could not create audioconvert plugin"
+msgstr "Aanmaken ‘audioconvert’-plugin mislukt"
+
+#: ../libbanshee/banshee-bpmdetector.c:223
+msgid "Could not create bpmdetect plugin"
+msgstr "Aanmaken ‘bpmdetect’-plugin mislukt"
+
+#: ../libbanshee/banshee-bpmdetector.c:229
+msgid "Could not create fakesink plugin"
+msgstr "Aanmaken ‘filesink’-plugin mislukt"
+
+#: ../libbanshee/banshee-bpmdetector.c:238
+#: ../libbanshee/banshee-bpmdetector.c:247 ../libbanshee/banshee-ripper.c:309
+msgid "Could not link pipeline elements"
+msgstr "Koppelen ‘pipeline’-elementen mislukt"
 
 #: ../libbanshee/banshee-ripper.c:274
 msgid "Could not initialize element from cdda URI"
-msgstr "Initialisatie component van cdda-URI mislukt"
+msgstr "Initialisatie element op basis van cdda-uri mislukt"
 
 #: ../libbanshee/banshee-ripper.c:288
 msgid "Could not create encoder pipeline"
@@ -199,15 +224,11 @@ msgstr "Aanmaken encoder-pipeline mislukt"
 
 #: ../libbanshee/banshee-ripper.c:294
 msgid "Could not create queue plugin"
-msgstr "Aanmaken queue-plugin mislukt"
+msgstr "Aanmaken ‘queue’-plugin mislukt"
 
 #: ../libbanshee/banshee-ripper.c:302
 msgid "Could not create filesink plugin"
 msgstr "Aanmaken ‘filesink’-plugin mislukt"
-
-#: ../libbanshee/banshee-ripper.c:309
-msgid "Could not link pipeline elements"
-msgstr "Kon pipeline-elementen niet koppelen"
 
 #: ../libbanshee/banshee-transcoder.c:241
 msgid "Could not create 'filesrc' plugin"
@@ -260,15 +281,19 @@ msgstr "Brasero kon niet gestart worden"
 # Vrij vertaald (Wouter Bolsterlee)
 #: ../src/Backends/Banshee.Gnome/Banshee.GnomeBackend/GnomeScreensaverManager.cs:78
 msgid "Fullscreen video playback active"
-msgstr "Video afgespeeld in volledig scherm"
+msgstr "Een video wordt op het volledige scherm afgespeeld"
 
 #: ../src/Backends/Banshee.GStreamer/Banshee.GStreamer/AudioCdRipper.cs:89
 msgid "Could not find an encoder for ripping."
-msgstr "Kon geen encoder voor rippen vinden."
+msgstr "Encoder voor rippen kon niet gevonden worden."
 
 #: ../src/Backends/Banshee.GStreamer/Banshee.GStreamer/AudioCdRipper.cs:108
 msgid "Could not create CD ripping driver."
-msgstr "Kon geen stuurprogramma voor cd's rippen vinden"
+msgstr "Stuurprogramma voor cd's rippen niet gevonden."
+
+#: ../src/Backends/Banshee.GStreamer/Banshee.GStreamer/BpmDetector.cs:71
+msgid "Could not create BPM detection driver."
+msgstr "Stuurprogramma voor BPM-detectie niet gevonden."
 
 #: ../src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs:131
 msgid "Could not initialize GStreamer library"
@@ -570,11 +595,13 @@ msgstr "_Album afspelen"
 msgid "Add an album to the playlist"
 msgstr "Een album in de afspeellijst zetten"
 
+# Met opzet muziekspeler gebruikt hier, want mediaspeler staat zo raar als er
+# "Banshee-" voor staat (Wouter Bolsterlee)
 #: ../src/Clients/Muinshee/Muinshee/PlayerInterface.cs:72
 #: ../src/Clients/Nereid/Nereid/PlayerInterface.cs:76
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/BaseClientWindow.cs:162
 msgid "Banshee Media Player"
-msgstr "Banshee muziekspeler"
+msgstr "Banshee-muziekspeler"
 
 #: ../src/Clients/Muinshee/Muinshee/PlayerInterface.cs:254
 #, csharp-format
@@ -670,6 +697,7 @@ msgstr "Onbekend genre"
 #: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:490
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastFeedModel.cs:47
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastSource.cs:157
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastEpisodePage.cs:86
 msgid "Podcast"
 msgstr "Podcast"
 
@@ -2626,6 +2654,18 @@ msgstr "_Volledig scherm"
 msgid "Enter or leave fullscreen mode"
 msgstr "Volledig scherm aan- of uitzetten"
 
+#. Translators: the number of jobs running is available for your use via {0}
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TaskStatusButton.cs:90
+#, csharp-format
+msgid "Background Task Running:"
+msgid_plural "Background Tasks Running:"
+msgstr[0] "Een actieve achtergrondtaak"
+msgstr[1] "%d actieve achtergrondtaken"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TaskStatusButton.cs:96
+msgid "No background tasks running"
+msgstr "Er zijn geen achtergrondtaken actief"
+
 #. Translators: {0} and {1} are for markup so ignore them, {2} and {3}
 #. are Podcast Name and Published Date, respectively;
 #. e.g. 'from BBtv published 7/26/2007'
@@ -3443,6 +3483,38 @@ msgstr "Bladwijzer ver_wijderen"
 msgid "{0} ({1}:{2:00})"
 msgstr "{0} ({1}:{2:00})"
 
+#: ../src/Extensions/Banshee.Bpm/Banshee.Bpm/BpmDetectJob.cs:70
+msgid "Detecting BPM"
+msgstr "BPM detecteren"
+
+#: ../src/Extensions/Banshee.Bpm/Banshee.Bpm/BpmEntry.cs:86
+msgid "Detect"
+msgstr "Detecteren"
+
+#: ../src/Extensions/Banshee.Bpm/Banshee.Bpm/BpmEntry.cs:98
+msgid "Tap"
+msgstr "Tikken"
+
+#: ../src/Extensions/Banshee.Bpm/Banshee.Bpm/BpmEntry.cs:106
+msgid "Have Banshee attempt to auto-detect the BPM of this song"
+msgstr "Banshee een poging laten wagen het BPM van dit nummer automatisch te detecteren"
+
+#: ../src/Extensions/Banshee.Bpm/Banshee.Bpm/BpmEntry.cs:108
+msgid "Play this song"
+msgstr "Dit nummer afspelen"
+
+#: ../src/Extensions/Banshee.Bpm/Banshee.Bpm/BpmEntry.cs:111
+msgid "Tap this button to the beat to set the BPM for this song manually"
+msgstr "Klik herhaaldelijk op deze knop om het aantal BPM voor dit nummer in te stellen"
+
+#: ../src/Extensions/Banshee.Bpm/Banshee.Bpm/BpmService.cs:148
+msgid "_Automatically detect BPM for all songs"
+msgstr "_Automatisch BPM voor alle nummers detecteren"
+
+#: ../src/Extensions/Banshee.Bpm/Banshee.Bpm/BpmService.cs:149
+msgid "Detect BPM for all songs that don't already have a value set"
+msgstr "Automatisch BPM detecteren voor alle nummers die nog geen BPM-waarde hebben"
+
 #: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:84
 msgid "Downloading Cover Art"
 msgstr "Albumafbeeldingen downloaden"
@@ -3638,6 +3710,7 @@ msgstr "Auteur"
 
 #: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSource.cs:134
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastSource.cs:158
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastEpisodePage.cs:89
 msgid "Description"
 msgstr "Beschrijving"
 
@@ -4077,7 +4150,7 @@ msgstr "_Mini-modus"
 
 #: ../src/Extensions/Banshee.MiniMode/Banshee.MiniMode/MiniModeWindow.cs:73
 msgid "Banshee Music Player"
-msgstr "Banshee muziekspeler"
+msgstr "Banshee-muziekspeler"
 
 #: ../src/Extensions/Banshee.MiniMode/Banshee.MiniMode/MiniModeWindow.cs:136
 msgid "Switch back to full mode"
@@ -4135,6 +4208,10 @@ msgstr "Dit nummer overslaan"
 msgid "Cannot show notification"
 msgstr "Kan notificatie niet tonen"
 
+#: ../src/Extensions/Banshee.NowPlaying.Clutter/Banshee.NowPlaying.Clutter/NowPlayingSource.cs:48
+msgid "Now Playing Clutter"
+msgstr "Nu aan het afspelen (Clutter)"
+
 #: ../src/Extensions/Banshee.PlayerMigration/Banshee.PlayerMigration/AmarokPlayerImportSource.cs:143
 #, csharp-format
 msgid "Unable to import track: {0}"
@@ -4147,6 +4224,14 @@ msgstr "Importeren van Amarok mislukt"
 #: ../src/Extensions/Banshee.PlayerMigration/Banshee.PlayerMigration/AmarokPlayerImportSource.cs:188
 msgid "Amarok"
 msgstr "Amarok"
+
+#: ../src/Extensions/Banshee.PlayerMigration/Banshee.PlayerMigration/RhythmboxPlayerImportSource.cs:215
+msgid "Unable to import song."
+msgstr "Kon nummer niet importeren."
+
+#: ../src/Extensions/Banshee.PlayerMigration/Banshee.PlayerMigration/RhythmboxPlayerImportSource.cs:349
+msgid "Rhythmbox Music Player"
+msgstr "Rhythmbox-muziekspeler"
 
 #: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueActions.cs:49
 msgid "Add to Play Queue"
@@ -4178,6 +4263,7 @@ msgid "All Podcasts ({0})"
 msgstr "Alle podcasts ({0})"
 
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastSource.cs:157
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastEpisodePage.cs:88
 msgid "Published"
 msgstr "Gepubliceerd"
 
@@ -4314,6 +4400,14 @@ msgstr "Ongeldige URL"
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:315
 msgid "Podcast URL is invalid."
 msgstr "Podcast-url is ongeldig"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastEpisodePage.cs:87
+msgid "Author"
+msgstr "Auteur"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastEpisodePage.cs:109
+msgid "Episode Details"
+msgstr "Afleveringdetails"
 
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastFeedPropertiesDialog.cs:78
 msgid "Last updated:"
@@ -4642,9 +4736,6 @@ msgstr "Onbekende podcast"
 #~ msgid "Play"
 #~ msgstr "Afspelen"
 
-#~ msgid "Automatically set disc number and count"
-#~ msgstr "Automatisch alle schijfnummers en totaal instellen"
-
 #~ msgid "All Columns"
 #~ msgstr "Alle kolommen"
 
@@ -4880,9 +4971,6 @@ msgstr "Onbekende podcast"
 
 #~ msgid "Subscribe to a new podcast feed"
 #~ msgstr "Abonneren op een nieuwe podcast-feed"
-
-#~ msgid "Delete"
-#~ msgstr "Verwijderen"
 
 #~ msgid "Homepage"
 #~ msgstr "Homepage"
