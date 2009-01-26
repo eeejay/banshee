@@ -49,7 +49,7 @@ namespace Banshee.Collection.Database
         
         private long count;
         private string reload_fragment;
-        
+
         private string reload_fragment_format;
         protected string ReloadFragmentFormat {
             get { return reload_fragment_format; }
@@ -57,6 +57,7 @@ namespace Banshee.Collection.Database
         }
         
         protected readonly U select_all_item;
+        private HyenaSqliteConnection connection;
 
         public DatabaseFilterListModel (string name, string label, Banshee.Sources.DatabaseSource source, 
                                         DatabaseTrackListModel trackModel, HyenaSqliteConnection connection, SqliteModelProvider<T> provider, U selectAllItem, string uuid) 
@@ -67,6 +68,7 @@ namespace Banshee.Collection.Database
             FilterLabel = label;
             select_all_item = selectAllItem;
             
+            this.connection = connection;
             cache = new BansheeModelCache <T> (connection, uuid, this, provider);
             cache.HasSelectAllItem = true;
         }
@@ -148,12 +150,16 @@ namespace Banshee.Collection.Database
         {
             GenerateReloadFragment ();
 
-            cache.SaveSelection ();
-            cache.Reload ();
-            cache.UpdateAggregates ();
-            cache.RestoreSelection ();
+            lock (cache) {
+                connection.BeginTransaction ();
+                cache.SaveSelection ();
+                cache.Reload ();
+                cache.UpdateAggregates ();
+                cache.RestoreSelection ();
+                connection.CommitTransaction ();
 
-            count = cache.Count + 1;
+                count = cache.Count + 1;
+            }
             
             UpdateSelectAllItem (count - 1);
 
@@ -166,7 +172,9 @@ namespace Banshee.Collection.Database
                 if (index == 0)
                     return select_all_item;
 
-                return cache.GetValue (index - 1);
+                lock (cache) {
+                    return cache.GetValue (index - 1);
+                }
             }
         }
 
@@ -187,7 +195,11 @@ namespace Banshee.Collection.Database
         }
 
         public int CacheId {
-            get { return (int) cache.CacheId; }
+            get {
+                lock (cache) {
+                    return (int) cache.CacheId;
+                }
+            }
         }
         
         public IEnumerable<object> GetSelectedObjects ()
@@ -199,7 +211,9 @@ namespace Banshee.Collection.Database
 
         public override void InvalidateCache (bool notify)
         {
-            cache.Clear ();
+            lock (cache) {
+                cache.Clear ();
+            }
             if (notify) {
                 OnReloaded ();
             }

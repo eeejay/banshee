@@ -31,6 +31,7 @@ using System.Collections.Generic;
 using Mono.Unix;
 
 using Hyena;
+using Hyena.Data.Sqlite;
 
 using Banshee.Base;
 using Banshee.Collection;
@@ -243,14 +244,23 @@ namespace Banshee.Daap
                     notify_every -= notify_every % 250;
                     
                     int count = 0;
-                    // TODO use transactions when fixed
                     DaapTrackInfo daap_track = null;
+
+                    HyenaSqliteConnection conn = ServiceManager.DbConnection;
+                    conn.BeginTransaction ();
                     foreach (DAAP.Track track in database.Tracks) {
                         daap_track = new DaapTrackInfo (track, this);
                         
                         // Only notify once in a while because otherwise the source Reloading slows things way down
-                        daap_track.Save (++count % notify_every == 0);
+                        if (++count % notify_every == 0) {
+                            conn.CommitTransaction ();
+                            daap_track.Save (true);
+                            conn.BeginTransaction ();
+                        } else {
+                            daap_track.Save (false);
+                        }
                     }
+                    conn.CommitTransaction ();
                     
                     // Save the last track once more to trigger the NotifyTrackAdded
                     if (daap_track != null) {

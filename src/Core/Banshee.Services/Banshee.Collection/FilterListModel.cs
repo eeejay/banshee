@@ -70,6 +70,11 @@ namespace Banshee.Collection
         
         private void HandleSelectionChanged (object sender, EventArgs args)
         {
+            Banshee.Base.ThreadAssist.SpawnFromMain (ReloadBrowsingModel);
+        } 
+
+        private void ReloadBrowsingModel ()
+        {
             browsing_model.Reload (this);
         }
         

@@ -90,7 +90,12 @@ namespace Hyena.Data.Sqlite
         private SqliteConnection connection;
         private string dbpath;
 
+        // These are 'parallel' queues; that is, when a value is pushed or popped to
+        // one, a value is pushed or popped to all three.
         private Queue<HyenaSqliteCommand> command_queue = new Queue<HyenaSqliteCommand>();
+        private Queue<object[]> args_queue = new Queue<object[]>();
+        private Queue<object> arg_queue = new Queue<object>();
+
         private Thread queue_thread;
         private volatile bool dispose_requested = false;
         private volatile int results_ready = 0;
@@ -99,6 +104,12 @@ namespace Hyena.Data.Sqlite
 
         private volatile Thread transaction_thread = null;
         private ManualResetEvent transaction_signal = new ManualResetEvent (true);
+
+        private Thread warn_if_called_from_thread;
+        public Thread WarnIfCalledFromThread {
+            get { return warn_if_called_from_thread; }
+            set { warn_if_called_from_thread = value; }
+        }
 
         internal ManualResetEvent ResultReadySignal {
             get { return result_ready_signal; }
@@ -110,6 +121,7 @@ namespace Hyena.Data.Sqlite
         {
             this.dbpath = dbpath;
             queue_thread = new Thread(ProcessQueue);
+            queue_thread.Name = String.Format ("HyenaSqliteConnection ({0})", dbpath);
             queue_thread.IsBackground = true;
             queue_thread.Start();
         }
@@ -121,18 +133,16 @@ namespace Hyena.Data.Sqlite
         // SELECT multiple column queries
         public IDataReader Query (HyenaSqliteCommand command)
         {
-            lock (command) {
-                command.CommandType = HyenaCommandType.Reader;
-                QueueCommand (command);
-                return command.WaitForResult (this) as SqliteDataReader;
-            }
+            command.CommandType = HyenaCommandType.Reader;
+            QueueCommand (command, null);
+            return command.WaitForResult (this) as SqliteDataReader;
         }
 
         public IDataReader Query (HyenaSqliteCommand command, params object [] param_values)
         {
-            lock (command) {
-                return Query (command.ApplyValues (param_values));
-            }
+            command.CommandType = HyenaCommandType.Reader;
+            QueueCommand (command, param_values);
+            return command.WaitForResult (this) as SqliteDataReader;
         }
 
         public IDataReader Query (string command_str, params object [] param_values)
@@ -158,8 +168,11 @@ namespace Hyena.Data.Sqlite
 
         public IEnumerable<T> QueryEnumerable<T> (HyenaSqliteCommand command, params object [] param_values)
         {
-            lock (command) {
-                return QueryEnumerable<T> (command.ApplyValues (param_values));
+            Type type = typeof (T);
+            using (IDataReader reader = Query (command, param_values)) {
+                while (reader.Read ()) {
+                    yield return (T) SqliteUtils.FromDbFormat (type, reader[0]);
+                }
             }
         }
 
@@ -176,21 +189,18 @@ namespace Hyena.Data.Sqlite
         // SELECT single column, single row queries
         public T Query<T> (HyenaSqliteCommand command)
         {
-            object result = null;
-            lock (command) {
-                command.CommandType = HyenaCommandType.Scalar;
-                QueueCommand (command);
-                result = command.WaitForResult (this);
-            }
-
+            command.CommandType = HyenaCommandType.Scalar;
+            QueueCommand (command, null);
+            object result = command.WaitForResult (this);
             return (T)SqliteUtils.FromDbFormat (typeof (T), result);
         }
 
         public T Query<T> (HyenaSqliteCommand command, params object [] param_values)
         {
-            lock (command) {
-                return Query<T> (command.ApplyValues (param_values));
-            }
+            command.CommandType = HyenaCommandType.Scalar;
+            QueueCommand (command, param_values);
+            object result = command.WaitForResult (this);
+            return (T)SqliteUtils.FromDbFormat (typeof (T), result);
         }
 
         public T Query<T> (string command_str, params object [] param_values)
@@ -206,18 +216,16 @@ namespace Hyena.Data.Sqlite
         // INSERT, UPDATE, DELETE queries
         public int Execute (HyenaSqliteCommand command)
         {
-            lock (command) {
-                command.CommandType = HyenaCommandType.Execute;;
-                QueueCommand(command);
-                return (int) command.WaitForResult (this);
-            }
+            command.CommandType = HyenaCommandType.Execute;;
+            QueueCommand(command, null);
+            return (int) command.WaitForResult (this);
         }
 
         public int Execute (HyenaSqliteCommand command, params object [] param_values)
         {
-            lock (command) {
-                return Execute (command.ApplyValues (param_values));
-            }
+            command.CommandType = HyenaCommandType.Execute;;
+            QueueCommand(command, param_values);
+            return (int) command.WaitForResult (this);
         }
 
         public int Execute (string command_str, params object [] param_values)
@@ -245,7 +253,7 @@ namespace Hyena.Data.Sqlite
         // the command locking and values applied only when we know the calling thread is not blocking by a
         // transaction thread.
         //
-        /*public void BeginTransaction ()
+        public void BeginTransaction ()
         {
             if (transaction_thread == Thread.CurrentThread) {
                 throw new Exception ("Can't start a recursive transaction");
@@ -297,7 +305,7 @@ namespace Hyena.Data.Sqlite
                 // Let any other threads continue
                 transaction_signal.Set (); 
             }
-        }*/
+        }
 
         public bool TableExists (string tableName)
         {
@@ -365,12 +373,28 @@ namespace Hyena.Data.Sqlite
 
 #region Private Queue Methods
 
-        private void QueueCommand(HyenaSqliteCommand command)
+        private void QueueCommand(HyenaSqliteCommand command, object [] args)
         {
+            QueueCommand (command, null, args);
+        }
+
+        private void QueueCommand(HyenaSqliteCommand command, object arg)
+        {
+            QueueCommand (command, arg, null);
+        }
+
+        private void QueueCommand(HyenaSqliteCommand command, object arg, object [] args)
+        {
+            if (warn_if_called_from_thread != null && Thread.CurrentThread == warn_if_called_from_thread) {
+                Hyena.Log.Warning ("HyenaSqliteConnection command issued from the main thread");
+            }
+
             while (true) {
                 lock (command_queue) {
                     if (transaction_thread == null || Thread.CurrentThread == transaction_thread) {
                         command_queue.Enqueue (command);
+                        args_queue.Enqueue (args);
+                        arg_queue.Enqueue (arg);
                         break;
                     }
                 }
@@ -401,11 +425,26 @@ namespace Hyena.Data.Sqlite
             while (!dispose_requested) {
                 while (command_queue.Count > 0) {
                     HyenaSqliteCommand command;
+                    object [] args;
+                    object arg;
                     lock (command_queue) {
                         command = command_queue.Dequeue ();
+                        args = args_queue.Dequeue ();
+                        arg = arg_queue.Dequeue ();
                     }
-                    
-                    command.Execute (this, connection);
+
+                    // Ensure the command is not altered while applying values or executing
+                    lock (command) {
+                        command.WaitIfNotFinished ();
+
+                        if (arg != null) {
+                            command.ApplyValues (arg);
+                        } else if (args != null) {
+                            command.ApplyValues (args);
+                        }
+
+                        command.Execute (this, connection);
+                    }
 
                     lock (command_queue) {
                         results_ready++;

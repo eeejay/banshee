@@ -169,7 +169,7 @@ namespace Banshee.Collection.Database
 
             // TODO note, there is deadlock potential here b/c of locking of shared commands and blocking
             // because of transactions.  Needs to be fixed in HyenaDatabaseConnection.
-            //ServiceManager.DbConnection.BeginTransaction ();
+            ServiceManager.DbConnection.BeginTransaction ();
             try {
                 track = new DatabaseTrackInfo ();
                 track.Uri = uri;
@@ -183,9 +183,9 @@ namespace Banshee.Collection.Database
 
                 track.Save (false);
 
-                //ServiceManager.DbConnection.CommitTransaction ();
+                ServiceManager.DbConnection.CommitTransaction ();
             } catch (Exception) {
-                //ServiceManager.DbConnection.RollbackTransaction ();
+                ServiceManager.DbConnection.RollbackTransaction ();
                 throw;
             }
 

@@ -58,10 +58,11 @@ namespace Hyena.Data.Sqlite
     
     public class HyenaSqliteCommand
     {
-        protected object result = null;
+        private object result = null;
         private Exception execution_exception = null;
         private bool finished = false;
 
+        private ManualResetEvent finished_event = new ManualResetEvent (true);
         private string command;
         private string command_format = null;
         private string command_formatted = null;
@@ -149,6 +150,7 @@ namespace Hyena.Data.Sqlite
                 execution_exception = e;
             }
 
+            finished_event.Reset ();
             finished = true;
         }
 
@@ -164,12 +166,18 @@ namespace Hyena.Data.Sqlite
             finished = false;
 
             conn.ClaimResult ();
+            finished_event.Set ();
 
             if (execution_exception != null) {
                 throw execution_exception;
             }
             
             return ret;
+        }
+
+        internal void WaitIfNotFinished ()
+        {
+            finished_event.WaitOne ();
         }
 
         internal HyenaSqliteCommand ApplyValues (params object [] param_values)
@@ -201,7 +209,7 @@ namespace Hyena.Data.Sqlite
             return this;
         }
 
-        protected static object SqlifyObject (object o)
+        private static object SqlifyObject (object o)
         {
             if (o is string) {
                 return String.Format ("'{0}'", (o as string).Replace ("'", "''"));

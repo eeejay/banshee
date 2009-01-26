@@ -277,12 +277,13 @@ namespace Banshee.Playlist
             HyenaSqliteCommand select_command = new HyenaSqliteCommand (String.Format ("SELECT ItemID FROM CoreCache WHERE ModelID = {0} LIMIT ?, ?", DatabaseTrackModel.CacheId));
             
             // Reorder the selected items
-            // TODO put in transaction
+            ServiceManager.DbConnection.BeginTransaction ();
             foreach (RangeCollection.Range range in TrackModel.Selection.Ranges) {
                 foreach (long entry_id in ServiceManager.DbConnection.QueryEnumerable<long> (select_command, range.Start, range.Count)) {
                     ServiceManager.DbConnection.Execute (update_command, order++, entry_id);
                 }
             }
+            ServiceManager.DbConnection.CommitTransaction ();
             
             Reload ();
         }
@@ -360,12 +361,12 @@ namespace Banshee.Playlist
         {
             if (!temps_cleared) {
                 temps_cleared = true;
+                ServiceManager.DbConnection.BeginTransaction ();
                 ServiceManager.DbConnection.Execute (@"
-                    BEGIN TRANSACTION;
-                        DELETE FROM CorePlaylistEntries WHERE PlaylistID IN (SELECT PlaylistID FROM CorePlaylists WHERE IsTemporary = 1);
-                        DELETE FROM CorePlaylists WHERE IsTemporary = 1;
-                    COMMIT TRANSACTION"
+                    DELETE FROM CorePlaylistEntries WHERE PlaylistID IN (SELECT PlaylistID FROM CorePlaylists WHERE IsTemporary = 1);
+                    DELETE FROM CorePlaylists WHERE IsTemporary = 1;"
                 );
+                ServiceManager.DbConnection.CommitTransaction ();
             }
         }
         
