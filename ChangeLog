@@ -1,5 +1,11 @@
 2009-01-25  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:
+	Make unsubscribe, download episodes, and refresh options work even if
+	multiple podcasts (feeds) selected
+
+2009-01-25  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* libbanshee/Makefile.am:
 	* libbanshee/banshee-bpmdetector.c: 
 	* build/build.environment.mk:

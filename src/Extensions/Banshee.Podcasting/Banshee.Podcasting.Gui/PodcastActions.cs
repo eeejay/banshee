@@ -63,7 +63,7 @@ namespace Banshee.Podcasting.Gui
             AddImportant (
                 new ActionEntry (
                     "PodcastUpdateAllAction", Stock.Refresh,
-                     Catalog.GetString ("Update Podcasts"), null,//"<control><shift>U",
+                     Catalog.GetString ("Check for New Episodes"), null,//"<control><shift>U",
                      Catalog.GetString ("Refresh All Podcasts"), 
                      OnPodcastUpdateAll
                 ),
@@ -87,7 +87,6 @@ namespace Banshee.Podcasting.Gui
                 ),
                 new ActionEntry (
                     "PodcastUpdateFeedAction", Stock.Refresh,
-                     /* Translators: this is a verb used as a button name, not a noun*/
                      Catalog.GetString ("Check for New Episodes"),
                      null, String.Empty, 
                      OnPodcastUpdate
@@ -251,8 +250,14 @@ namespace Banshee.Podcasting.Gui
                 bool all_selected = ActiveFeedModel.Selection.AllSelected;
 
                 UpdateActions (true, has_single_selection && !all_selected,
-                    "PodcastDeleteAction", "PodcastUpdateFeedAction", "PodcastHomepageAction",
+                    "PodcastHomepageAction",
                     "PodcastPropertiesAction"
+                );
+
+                UpdateActions (true, ActiveFeedModel.Selection.Count > 0 && !all_selected,
+                    "PodcastDeleteAction",
+                    "PodcastUpdateFeedAction",
+                    "PodcastDownloadAllAction"
                 );
             }
         }
@@ -436,21 +441,23 @@ namespace Banshee.Podcasting.Gui
         
         private void OnPodcastDelete (object sender, EventArgs e)
         {
-            Feed feed = ActiveFeedModel.FocusedItem;
-            if (feed != null) {
-                feed.Delete (true);
+            foreach (Feed feed in ActiveFeedModel.SelectedItems) {
+                if (feed != null) {
+                    feed.Delete (true);
+                }
             }
         }
         
         private void OnPodcastDownloadAllEpisodes (object sender, EventArgs e)
         {
-            Feed feed = ActiveFeedModel.FocusedItem;
-            if (feed != null) {
-                foreach (FeedItem item in feed.Items) {
-                    item.Enclosure.AsyncDownload ();
+            foreach (Feed feed in ActiveFeedModel.SelectedItems) {
+                if (feed != null) {
+                    foreach (FeedItem item in feed.Items) {
+                        item.Enclosure.AsyncDownload ();
+                    }
                 }
             }
-        }   
+        }
 
         private void OnPodcastItemDeleteFile (object sender, EventArgs e)
         {
