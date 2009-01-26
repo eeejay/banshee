@@ -1,5 +1,13 @@
 2009-01-25  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.Podcasting/Makefile.am:
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastEpisodePage.cs:
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.addin.xml: Add new
+	information tab to the track editor/properties, only shown for podcast
+	episodes, that shows the description, author, published date, etc.
+
+2009-01-25  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:
 	Make unsubscribe, download episodes, and refresh options work even if
 	multiple podcasts (feeds) selected

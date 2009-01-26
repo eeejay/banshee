@@ -19,4 +19,9 @@
   <Extension path="/Banshee/ServiceManager/Service">
     <Service class="Banshee.Podcasting.PodcastService"/>
   </Extension>
+
+  <Extension path="/Banshee/Gui/TrackEditor/NotebookPage">
+    <TrackEditorPage class="Banshee.Podcasting.Gui.PodcastEpisodePage"/>
+  </Extension>
+
 </Addin>

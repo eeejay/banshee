@@ -22,6 +22,7 @@ SOURCES =  \
 	Banshee.Podcasting.Gui/Models/FilterableListModel.cs \
 	Banshee.Podcasting.Gui/Models/ListModel.cs \
 	Banshee.Podcasting.Gui/PodcastActions.cs \
+	Banshee.Podcasting.Gui/PodcastEpisodePage.cs \
 	Banshee.Podcasting.Gui/PodcastFeedView.cs \
 	Banshee.Podcasting.Gui/PodcastItemView.cs \
 	Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastFeedPropertiesDialog.cs \
