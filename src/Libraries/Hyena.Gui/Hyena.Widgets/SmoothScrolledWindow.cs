@@ -54,7 +54,7 @@ namespace Hyena.Widgets
         
         protected virtual double DecelerateCore (double velocity)
         {
-            return velocity - 3;
+            return velocity - Math.Max (3, 0.2 * velocity);
         }
         
         private double TargetValue {
@@ -71,6 +71,7 @@ namespace Hyena.Widgets
             }
         }
         
+        // Smoothly get us to the target value
         private bool OnTimeout ()
         {
             double delta = target_value - value;
@@ -91,9 +92,9 @@ namespace Hyena.Widgets
             }
             
             velocity = hypothetical <= 0 ? Decelerate (velocity) : Accelerate (velocity);
-            
-            // Speed limit: 1 px / 20 ms = 50px / second
-            value = Math.Round (value + Math.Max (velocity, 1) * sign);
+
+            // Minimum speed: 2 px / 20 ms = 100px / second
+            value = Math.Round (value + Math.Max (velocity, 2) * sign);
 
             // Don't go past the target value
             value = (sign == 1) ? Math.Min (value, target_value) : Math.Max (value, target_value);

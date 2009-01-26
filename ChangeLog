@@ -1,5 +1,12 @@
 2009-01-25  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/SmoothScrolledWindow.cs: Improve
+	the smooth scrolling by stopping in a nearly constant amount of
+	time, and avoiding several small (1px) movements at the end of slowing
+	down by making the minimum velocity 2px per cycle
+
+2009-01-25  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* .gitignore: New file, for those using git-svn at home and to prepare for
 	GNOME's git migration.
 
