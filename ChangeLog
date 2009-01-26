@@ -1,5 +1,21 @@
 2009-01-25  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* Core/Banshee.ThickClient/Makefile.am:
+	* Core/Banshee.ThickClient/Banshee.Gui.Widgets/TaskStatusButton.cs: New
+	button that is insensitive if there are no background UserJobs registered,
+	and that animates slowly and lists them in a tooltip when there are.
+
+	* Clients/Nereid/Nereid/PlayerInterface.cs:
+	* Core/Banshee.ThickClient/Resources/core-ui-actions-layout.xml: Add
+	a TaskStatusButton to the the bottom left corner, in the status bar.
+
+	* Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs: Set
+	IsBackground = true.
+
+	* Extensions/Banshee.Bpm/Banshee.Bpm/BpmEntry.cs: Remove using Mono.Addins
+
+2009-01-25  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs:
 	Fix issue with album art and the album/artist/title overlapping in the
 	TrackEditor for tracks w/ long album names.

@@ -30,8 +30,6 @@ using System;
 using Mono.Unix;
 using Gtk;
 
-using Mono.Addins;
-
 using Hyena;
 using Hyena.Gui;
 

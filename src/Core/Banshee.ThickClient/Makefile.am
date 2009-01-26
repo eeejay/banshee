@@ -91,6 +91,7 @@ SOURCES =  \
 	Banshee.Gui.Widgets/TrackInfoDisplay.cs \
 	Banshee.Gui.Widgets/UserJobTile.cs \
 	Banshee.Gui.Widgets/UserJobTileHost.cs \
+	Banshee.Gui.Widgets/TaskStatusButton.cs \
 	Banshee.Gui/BansheeActionGroup.cs \
 	Banshee.Gui/BansheeDbFormatMigratorMonitor.cs \
 	Banshee.Gui/BansheeIconFactory.cs \

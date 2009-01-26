@@ -191,6 +191,8 @@ namespace Nereid
             footer_toolbar.ShowArrow = false;
             footer_toolbar.ToolbarStyle = ToolbarStyle.BothHoriz;
 
+            Widget task_status = new Banshee.Gui.Widgets.TaskStatusButton ();
+
             EventBox status_event_box = new EventBox ();
             status_event_box.ButtonPressEvent += OnStatusBoxButtonPress;
             
@@ -205,6 +207,7 @@ namespace Nereid
                 status_align.LeftPadding = (uint)args.Allocation.Width;
             };
 
+            ActionService.PopulateToolbarPlaceholder (footer_toolbar, "/FooterToolbar/TaskStatus", task_status, false);
             ActionService.PopulateToolbarPlaceholder (footer_toolbar, "/FooterToolbar/StatusBar", status_align, true);
             ActionService.PopulateToolbarPlaceholder (footer_toolbar, "/FooterToolbar/RepeatButton", repeat_button);
 

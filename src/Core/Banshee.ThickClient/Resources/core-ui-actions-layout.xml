@@ -11,6 +11,7 @@
     <placeholder name="VolumeButton"/>
   </toolbar>
   <toolbar name="FooterToolbar">
+    <placeholder name="TaskStatus"/>
     <placeholder name="StatusBar"/>
     <placeholder name="Extensions"/>
     <placeholder name="RepeatButton"/>

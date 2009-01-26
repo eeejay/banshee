@@ -91,6 +91,7 @@ namespace Banshee.CoverArt
                 last_scan = DateTime.Now - TimeSpan.FromDays (300);
             }
 
+            IsBackground = true;
             CanCancel = true;
             DelayShow = true;
 
