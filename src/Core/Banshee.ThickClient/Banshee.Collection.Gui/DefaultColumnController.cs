@@ -84,6 +84,7 @@ namespace Banshee.Collection.Gui
                 DateAddedColumn,
                 UriColumn,
                 MimeTypeColumn,
+                LicenseUriColumn,
                 AlbumArtistColumn,
                 TrackNumberAndCountColumn,
                 DiscNumberAndCountColumn,
@@ -144,6 +145,7 @@ namespace Banshee.Collection.Gui
             uri_column          = Create (BansheeQuery.UriField, 0.15, false, uri_cell);
             
             mime_type_column    = CreateText (BansheeQuery.MimeTypeField, 0.15);
+            license_uri_column  = Create (BansheeQuery.LicenseUriField, 0.15, false, new ColumnCellCreativeCommons (null, true));
 
             last_played_column  = Create (BansheeQuery.LastPlayedField, 0.15, false, new ColumnCellDateTime (null, true));
             last_skipped_column = Create (BansheeQuery.LastSkippedField, 0.15, false, new ColumnCellDateTime (null, true));
@@ -304,6 +306,11 @@ namespace Banshee.Collection.Gui
         private SortableColumn mime_type_column;
         public SortableColumn MimeTypeColumn {
             get { return mime_type_column; }
+        }
+
+        private SortableColumn license_uri_column;
+        public SortableColumn LicenseUriColumn {
+            get { return license_uri_column; }
         }
 
 #endregion

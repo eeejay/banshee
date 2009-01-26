@@ -1,5 +1,21 @@
 2009-01-25  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* Banshee.Services/Banshee.Query/BansheeQuery.cs:
+	* Banshee.ThickClient/Banshee.Collection.Gui/DefaultColumnController.cs:
+	Add LicenseUri as a search and smart playlist field and as a column.
+
+	* Banshee.ThickClient/Makefile.am:
+	* Banshee.ThickClient/ThemeIcons/16x16/emblems/creative-commons-by.png:
+	* Banshee.ThickClient/ThemeIcons/16x16/emblems/creative-commons-nc.png:
+	* Banshee.ThickClient/ThemeIcons/16x16/emblems/creative-commons-nd.png:
+	* Banshee.ThickClient/ThemeIcons/16x16/emblems/creative-commons-pd.png:
+	* Banshee.ThickClient/ThemeIcons/16x16/emblems/creative-commons-sa.png:
+	* Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellCreativeCommons.cs:
+	New cell that detects Creative Commons licenses in the LicenseUri field
+	and render them as images.
+
+2009-01-25  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Libraries/Hyena.Gui/Hyena.Widgets/SmoothScrolledWindow.cs: Improve
 	the smooth scrolling by stopping in a nearly constant amount of
 	time, and avoiding several small (1px) movements at the end of slowing

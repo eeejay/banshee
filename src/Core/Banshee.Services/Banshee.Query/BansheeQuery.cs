@@ -218,6 +218,15 @@ namespace Banshee.Query
             Catalog.GetString ("comment"), "comment"
         );
 
+        public static QueryField LicenseUriField = new QueryField (
+            "licenseuri", "LicenseUri",
+            // Translators: noun
+            Catalog.GetString ("License"), "CoreTracks.LicenseUri", false,
+            // Translators: These are unique search fields (and nouns).  Please, no spaces. Blank ok.
+            Catalog.GetString ("license"), Catalog.GetString ("licensed"), Catalog.GetString ("under"),
+            "license", "licensed", "under"
+        );
+
         public static QueryField RatingField = new QueryField (
             "rating", "SavedRating",
             Catalog.GetString ("Rating"), "CoreTracks.Rating", new Type [] {typeof(RatingQueryValue)},//, typeof(NullQueryValue)},
@@ -314,7 +323,7 @@ namespace Banshee.Query
 
         public static QueryFieldSet FieldSet = new QueryFieldSet (
             ArtistField, AlbumField, AlbumArtistField, TitleField, TrackNumberField, TrackCountField, DiscNumberField, DiscCountField,
-            YearField, GenreField, ComposerField, ConductorField, GroupingField, CommentField, RatingField, PlayCountField,
+            YearField, GenreField, ComposerField, ConductorField, GroupingField, CommentField, LicenseUriField, RatingField, PlayCountField,
             SkipCountField, FileSizeField, UriField, DurationField, MimeTypeField, LastPlayedField, LastSkippedField,
             BpmField, BitRateField, DateAddedField, PlaylistField, SmartPlaylistField
         );
@@ -420,6 +429,7 @@ namespace Banshee.Query
                 case "uri":
                 case "mimetype":
                 case "composer":
+                case "licenseuri":
                 case "comment":
                     sort_query = String.Format (
                         "CoreTracks.{0} {1}, {2}",

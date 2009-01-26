@@ -13,6 +13,7 @@ SOURCES =  \
 	Banshee.Collection.Gui/ArtworkRenderer.cs \
 	Banshee.Collection.Gui/BaseTrackListView.cs \
 	Banshee.Collection.Gui/ColumnCellAlbum.cs \
+	Banshee.Collection.Gui/ColumnCellCreativeCommons.cs \
 	Banshee.Collection.Gui/ColumnCellDateTime.cs \
 	Banshee.Collection.Gui/ColumnCellDiscAndCount.cs \
 	Banshee.Collection.Gui/ColumnCellDuration.cs \
