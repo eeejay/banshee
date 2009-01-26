@@ -11,11 +11,13 @@ data/audio-profiles/wavpack.xml.in
 data/audio-profiles/wav.xml.in
 data/audio-profiles/wma.xml.in
 data/desktop-files/common.desktop
+libbanshee/banshee-bpmdetector.c
 libbanshee/banshee-ripper.c
 libbanshee/banshee-transcoder.c
 src/Backends/Banshee.Gnome/Banshee.GnomeBackend/Brasero.cs
 src/Backends/Banshee.Gnome/Banshee.GnomeBackend/GnomeScreensaverManager.cs
 src/Backends/Banshee.GStreamer/Banshee.GStreamer/AudioCdRipper.cs
+src/Backends/Banshee.GStreamer/Banshee.GStreamer/BpmDetector.cs
 src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs
 src/Backends/Banshee.GStreamer/Banshee.GStreamer/Transcoder.cs
 src/Backends/Banshee.Osx/Banshee.OsxBackend/OsxService.cs
@@ -93,6 +95,7 @@ src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs
 src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs
 src/Core/Banshee.ThickClient/Banshee.Gui/ViewActions.cs
 src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/ConnectedMessageBar.cs
+src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TaskStatusButton.cs
 src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs
 src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTile.cs
 src/Core/Banshee.ThickClient/Banshee.Library.Gui/FileImportSource.cs
@@ -135,6 +138,9 @@ src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdRipper.cs
 src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs
 src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs
 src/Extensions/Banshee.Bookmarks/Banshee.Bookmarks/BookmarksService.cs
+src/Extensions/Banshee.Bpm/Banshee.Bpm/BpmDetectJob.cs
+src/Extensions/Banshee.Bpm/Banshee.Bpm/BpmEntry.cs
+src/Extensions/Banshee.Bpm/Banshee.Bpm/BpmService.cs
 src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs
 src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtService.cs
 src/Extensions/Banshee.Daap/Banshee.Daap/DaapContainerSource.cs
@@ -163,7 +169,9 @@ src/Extensions/Banshee.MiniMode/Resources/minimode.glade
 src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs
 src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/X11NotificationAreaBox.cs
 src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/NowPlayingSource.cs
+src/Extensions/Banshee.NowPlaying.Clutter/Banshee.NowPlaying.Clutter/NowPlayingSource.cs
 src/Extensions/Banshee.PlayerMigration/Banshee.PlayerMigration/AmarokPlayerImportSource.cs
+src/Extensions/Banshee.PlayerMigration/Banshee.PlayerMigration/RhythmboxPlayerImportSource.cs
 src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueActions.cs
 src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs
 src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastFeedModel.cs
@@ -175,6 +183,7 @@ src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellUnheard.cs
 src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellYesNo.cs
 src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/DownloadManager/DownloadUserJob.cs
 src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs
+src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastEpisodePage.cs
 src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastFeedPropertiesDialog.cs
 src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastPropertiesDialog.cs
 src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastSubscribeDialog.cs
