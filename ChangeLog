@@ -1,3 +1,9 @@
+2009-01-26  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.CollectionIndexer/Banshee.Collection.Indexer.RemoteHelper/IndexerClient.cs:
+	Fix bug with getting into a loop, constantly trying to reconnect to an
+	indexer while in the middle of connecting to it.
+
 2009-01-25  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Libraries/Hyena/Hyena.Data.Sqlite/HyenaSqliteConnection.cs: Fix a
