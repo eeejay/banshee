@@ -227,6 +227,7 @@ namespace Banshee.Database
                     Catalog.GetString ("Please wait while your old Banshee database is migrated to the new format."));
             
                 Thread thread = new Thread (MigrateFromLegacyBanshee);
+                thread.Name = "Database Migrator";
                 thread.Start ();
             
                 while (thread.IsAlive) {

@@ -828,6 +828,7 @@ namespace Migo.TaskCore
         private void SpawnExecutionThread ()
         {                     
             Thread t = new Thread (new ThreadStart (PumpQueue));
+            t.Name = GetType ().ToString ();
             t.Priority = ThreadPriority.Normal;
             t.IsBackground = true;
             t.Start ();       

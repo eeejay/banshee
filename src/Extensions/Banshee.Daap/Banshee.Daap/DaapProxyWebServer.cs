@@ -68,6 +68,7 @@ namespace Banshee.Daap
 
             running = true;
             Thread thread = new Thread(ServerLoop);
+            thread.Name = "DAAP Proxy";
             thread.IsBackground = true;
             thread.Start();
         }

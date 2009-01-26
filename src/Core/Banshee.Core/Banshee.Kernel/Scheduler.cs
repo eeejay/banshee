@@ -197,6 +197,7 @@ namespace Banshee.Kernel
                 return;
             } else if(job_thread == null) {
                 job_thread = new Thread(new ThreadStart(ProcessJobThread));
+                job_thread.Name = "Banshee.Kernel Job Thread";
                 job_thread.Priority = ThreadPriority.BelowNormal;
                 job_thread.IsBackground = true;
                 job_thread.Start();

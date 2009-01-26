@@ -512,6 +512,7 @@ namespace Banshee.Dap.Ipod
                     sync_thread_wait = new AutoResetEvent (true);
                 
                     sync_thread = new Thread (new ThreadStart (PerformSyncThread));
+                    sync_thread.Name = "iPod Sync Thread";
                     sync_thread.IsBackground = false;
                     sync_thread.Priority = ThreadPriority.Lowest;
                     sync_thread.Start ();

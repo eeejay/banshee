@@ -1,3 +1,14 @@
+2009-01-25  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.Daap/Daap/Client.cs:
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapProxyWebServer.cs:
+	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:
+	* src/Core/Banshee.Services/Banshee.Base/ThreadAssist.cs:
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	* src/Core/Banshee.Core/Banshee.Kernel/Scheduler.cs:
+	* src/Libraries/Migo/Migo.TaskCore/TaskGroup.cs: Name threads so
+	kill -s QUIT thread dumps are easier to grok.
+
 2009-01-25  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
 	* src/Backends/Banshee.NowPlaying.X11/libbnpx11/bacon-resize.h: Patch

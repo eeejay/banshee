@@ -34,10 +34,15 @@ namespace Banshee.Base
     public static class ThreadAssist
     {
         private static Thread main_thread;
+
+        public static Thread MainThread {
+            get { return main_thread; }
+        }
         
         public static void InitializeMainThread ()
         {
             main_thread = Thread.CurrentThread;
+            main_thread.Name = "Main Thread";
         }
         
         public static bool InMainThread {
@@ -85,6 +90,7 @@ namespace Banshee.Base
         public static Thread Spawn (ThreadStart threadedMethod, bool autoStart)
         {
             Thread thread = new Thread (threadedMethod);
+            thread.Name = String.Format ("Spawned: {0}", threadedMethod);
             thread.IsBackground = true;
             if (autoStart) {
                 thread.Start ();

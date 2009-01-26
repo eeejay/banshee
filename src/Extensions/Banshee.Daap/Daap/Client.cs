@@ -132,6 +132,7 @@ namespace Daap {
                 if (serverInfo.SupportsUpdate) {
                     updateRunning = true;
                     Thread thread = new Thread (UpdateLoop);
+                    thread.Name = "DAAP";
                     thread.IsBackground = true;
                     thread.Start ();
                 }
