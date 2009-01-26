@@ -44,6 +44,7 @@ namespace Banshee.ServiceStack
         private bool is_cancel_requested;
         private bool is_finished;
         private bool delay_show;
+        private bool is_background;
         
         private int update_freeze_ref;
         
@@ -163,6 +164,11 @@ namespace Banshee.ServiceStack
                     OnUpdated (); 
                 }
             }
+        }
+
+        public virtual bool IsBackground {
+            get { return is_background; }
+            set { is_background = value; }
         }
         
         public virtual string CancelMessage {

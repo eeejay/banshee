@@ -28,4 +28,8 @@
     <Transcoder class="Banshee.GStreamer.Transcoder"/>
   </Extension>
 
+  <Extension path="/Banshee/MediaEngine/BpmDetector">
+    <BpmDetector class="Banshee.GStreamer.BpmDetector"/>
+  </Extension>
+
 </Addin>

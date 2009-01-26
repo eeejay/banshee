@@ -1,10 +1,10 @@
-// 
-// IUserJob.cs
+//
+// IBpmDetector.cs
 //
 // Author:
-//   Aaron Bockover <abockover@novell.com>
+//   Gabriel Burt <gburt@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -28,28 +28,17 @@
 
 using System;
 
-using Hyena.Data;
+using Banshee.Base;
+using Banshee.MediaProfiles;
+using Banshee.Collection;
 
-namespace Banshee.ServiceStack
-{   
-    public interface IUserJob
+namespace Banshee.MediaEngine
+{
+    public interface IBpmDetector : IDisposable
     {
-        event EventHandler Finished;
-        event EventHandler Updated;
-        
+        event Action<SafeUri, int> FileFinished;
+
+        void ProcessFile (SafeUri uri);
         void Cancel ();
-        
-        string Title { get; }
-        string Status { get; }
-        double Progress { get; }
-        string [] IconNames { get; }
-        bool IsBackground { get; }
-        
-        string CancelMessage { get; }        
-        bool CanCancel { get; }
-        
-        bool IsFinished { get; }
-        bool IsCancelRequested { get; }
-        bool DelayShow { get; }
     }
 }

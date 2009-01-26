@@ -33,6 +33,10 @@
     <ExtensionNode name="Transcoder"/>
   </ExtensionPoint>
 
+  <ExtensionPoint path="/Banshee/MediaEngine/BpmDetector">
+    <ExtensionNode name="BpmDetector"/>
+  </ExtensionPoint>
+
   <ExtensionPoint path="/Banshee/Platform/HardwareManager">
     <ExtensionNode name="HardwareManager"/>
   </ExtensionPoint>

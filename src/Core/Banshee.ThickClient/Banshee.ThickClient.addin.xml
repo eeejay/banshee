@@ -44,5 +44,10 @@
     <Description>Defines a new notebook page for the track editor.</Description>
     <ExtensionNode name="TrackEditorPage"/>
   </ExtensionPoint>
+
+  <ExtensionPoint path="/Banshee/Gui/TrackEditor/Modifier">
+    <Description>Defines an extension for the track editor that can modify it in some way.</Description>
+    <ExtensionNode name="Modifier"/>
+  </ExtensionPoint>
   
 </Addin>

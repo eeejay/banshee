@@ -2,6 +2,7 @@ SUBDIRS = \
 	Banshee.AudioCd \
 	Banshee.Bookmarks \
 	Banshee.BooScript \
+	Banshee.Bpm \
 	Banshee.CoverArt \
 	Banshee.Daap \
 	Banshee.FileSystemQueue \

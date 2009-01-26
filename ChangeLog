@@ -1,5 +1,45 @@
 2009-01-25  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* libbanshee/Makefile.am:
+	* libbanshee/banshee-bpmdetector.c: 
+	* build/build.environment.mk:
+	* configure.ac:
+	* src/Extensions/Banshee.Bpm/Banshee.Bpm.addin.xml:
+	* src/Extensions/Banshee.Bpm/Banshee.Bpm.csproj:
+	* src/Extensions/Banshee.Bpm/Banshee.Bpm/BpmDetectJob.cs:
+	* src/Extensions/Banshee.Bpm/Banshee.Bpm/BpmEntry.cs:
+	* src/Extensions/Banshee.Bpm/Banshee.Bpm/BpmService.cs:
+	* src/Extensions/Banshee.Bpm/Banshee.Bpm/BpmTapAdapter.cs:
+	* src/Extensions/Banshee.Bpm/Banshee.Bpm/BpmTrackEditorModifier.cs:
+	* src/Extensions/Banshee.Bpm/Makefile.am:
+	* src/Extensions/Makefile.am: New extension that adds a preference (disabled
+	by default) to automatically detect the BPM for all songs, and modified
+	the track editor dialog's BPM entry, adding a button to auto detect the
+	BPM, a button to play the song being edited, and a button to tap out the
+	BPM manually.  This feature uses the GStreamer bpmdetect element.
+
+	* src/Backends/Banshee.GStreamer/Banshee.GStreamer.addin.xml:
+	* src/Backends/Banshee.GStreamer/Banshee.GStreamer/BpmDetector.cs:
+	* src/Backends/Banshee.GStreamer/Makefile.am:
+	* src/Core/Banshee.Services/Makefile.am:
+	* src/Core/Banshee.Services/Banshee.Services.addin.xml:
+	* src/Core/Banshee.Services/Banshee.MediaEngine/IBpmDetector.cs: Support
+	for various backends to provide bpm detection.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTileHost.cs:
+	* src/Core/Banshee.Services/Banshee.ServiceStack/IUserJob.cs:
+	* src/Core/Banshee.Services/Banshee.ServiceStack/UserJob.cs: Add
+	IsBackground property, and if set, don't show such jobs as normal job
+	tiles.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/FieldPage.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/ITrackEditorModifier.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs:
+	* src/Core/Banshee.ThickClient/Banshee.ThickClient.addin.xml:
+	* src/Core/Banshee.ThickClient/Makefile.am: Make the track editor more
+	extensible and modifiable, including the ability to remove fields.
+
+2009-01-25  Gabriel Burt  <gabriel.burt@gmail.com>
 	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellCreativeCommons.cs:
 	Double using, broke the build.
 

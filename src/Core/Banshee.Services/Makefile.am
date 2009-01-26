@@ -76,6 +76,7 @@ SOURCES =  \
 	Banshee.Library/ThreadPoolImportSource.cs \
 	Banshee.Library/VideoLibrarySource.cs \
 	Banshee.MediaEngine/IAudioCdRipper.cs \
+	Banshee.MediaEngine/IBpmDetector.cs \
 	Banshee.MediaEngine/IEqualizer.cs \
 	Banshee.MediaEngine/IPlayerEngineService.cs \
 	Banshee.MediaEngine/ITranscoder.cs \

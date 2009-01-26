@@ -111,6 +111,8 @@ namespace Banshee.Gui.TrackEditor
             BuildHeader ();
             BuildNotebook ();
             BuildFooter ();
+
+            LoadModifiers ();
             
             LoadTrackToEditor ();
         }
@@ -281,6 +283,18 @@ namespace Banshee.Gui.TrackEditor
             
             main_vbox.PackStart (button_box, false, false, 0);
             button_box.ShowAll ();
+        }
+
+        private void LoadModifiers ()
+        {
+            foreach (TypeExtensionNode node in AddinManager.GetExtensionNodes ("/Banshee/Gui/TrackEditor/Modifier")) {
+                try {
+                    ITrackEditorModifier mod = (ITrackEditorModifier)node.CreateInstance ();
+                    mod.Modify (this);
+                } catch (Exception e) {
+                    Hyena.Log.Exception ("Failed to initialize TrackEditor/Modifier extension node. Ensure it implements ITrackEditorModifier.", e);
+                }
+            }
         }
         
         public void ForeachWidget<T> (WidgetAction<T> action) where T : class

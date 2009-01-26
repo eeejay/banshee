@@ -92,6 +92,10 @@ namespace Banshee.Gui.Widgets
         
         private void OnJobAdded (object o, UserJobEventArgs args)
         {
+            if (args.Job.IsBackground) {
+                return;
+            }
+
             ThreadAssist.ProxyToMain (delegate {
                 if (args.Job.DelayShow) {
                     // Give the Job 1 second to become more than 33% complete

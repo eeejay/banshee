@@ -21,6 +21,7 @@ libbanshee_la_SOURCES =  \
 	banshee-player-video.c \
 	banshee-player-vis.c \
 	banshee-ripper.c \
+	banshee-bpmdetector.c \
 	banshee-tagger.c \
 	banshee-transcoder.c
 

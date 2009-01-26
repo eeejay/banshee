@@ -30,7 +30,7 @@ INSTALL
 aclocal.m4
 autom4te.cache/
 bin/
-data/banshee-1.desktop
+data/desktop-files/*.desktop
 install-sh
 libtool
 ltmain.sh

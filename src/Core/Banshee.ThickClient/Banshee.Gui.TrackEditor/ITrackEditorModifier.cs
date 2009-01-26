@@ -1,10 +1,10 @@
-// 
-// IUserJob.cs
+//
+// ITrackEditorModifier.cs
 //
 // Author:
-//   Aaron Bockover <abockover@novell.com>
+//   Gabriel Burt <gburt@novell.com>
 //
-// Copyright (C) 2007 Novell, Inc.
+// Copyright (C) 2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -28,28 +28,10 @@
 
 using System;
 
-using Hyena.Data;
-
-namespace Banshee.ServiceStack
-{   
-    public interface IUserJob
+namespace Banshee.Gui.TrackEditor
+{
+    public interface ITrackEditorModifier
     {
-        event EventHandler Finished;
-        event EventHandler Updated;
-        
-        void Cancel ();
-        
-        string Title { get; }
-        string Status { get; }
-        double Progress { get; }
-        string [] IconNames { get; }
-        bool IsBackground { get; }
-        
-        string CancelMessage { get; }        
-        bool CanCancel { get; }
-        
-        bool IsFinished { get; }
-        bool IsCancelRequested { get; }
-        bool DelayShow { get; }
+        void Modify (TrackEditorDialog dialog);
     }
 }

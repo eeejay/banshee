@@ -53,6 +53,8 @@ namespace Banshee.Gui.TrackEditor
         
         public struct FieldSlot
         {
+            public Widget Parent;
+            public Widget Container;
             public Widget Label;
             public Widget Field;
             public Button SyncButton;
@@ -61,8 +63,12 @@ namespace Banshee.Gui.TrackEditor
             public FieldValueClosure WriteClosure;
         }
         
-        private List<FieldSlot> field_slots = new List<FieldSlot> ();
         private object tooltip_host;
+
+        private List<FieldSlot> field_slots = new List<FieldSlot> ();
+        public IEnumerable<FieldSlot> FieldSlots {
+            get { return field_slots; }
+        }
         
         public FieldPage ()
         {
@@ -121,6 +127,7 @@ namespace Banshee.Gui.TrackEditor
         {
             FieldSlot slot = new FieldSlot ();
             
+            slot.Parent = parent;
             slot.Label = label;
             slot.Field = field;
             slot.LabelClosure = labelClosure;
@@ -137,8 +144,6 @@ namespace Banshee.Gui.TrackEditor
                     });
                 };
             }
-            
-            field_slots.Add (slot);
             
             Table table = new Table (1, 1, false);
             table.ColumnSpacing = 1;
@@ -171,15 +176,23 @@ namespace Banshee.Gui.TrackEditor
             table.ShowAll ();
             
             if ((options & FieldOptions.Shrink) == 0) {
+                slot.Container = table;
                 parent.PackStart (table, false, false, 0);
             } else {
                 HBox shrink = new HBox ();
                 shrink.Show ();
+                slot.Container = shrink;
                 shrink.PackStart (table, false, false, 0);
                 parent.PackStart (shrink, false, false, 0);
             }
             
+            field_slots.Add (slot);
             return slot;
+        }
+
+        public void RemoveField (FieldSlot slot)
+        {
+            field_slots.Remove (slot);
         }
         
         public virtual void LoadTrack (EditorTrackInfo track)

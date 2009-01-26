@@ -231,6 +231,7 @@ src/Extensions/Makefile
 src/Extensions/Banshee.AudioCd/Makefile
 src/Extensions/Banshee.Bookmarks/Makefile
 src/Extensions/Banshee.BooScript/Makefile
+src/Extensions/Banshee.Bpm/Makefile
 src/Extensions/Banshee.CoverArt/Makefile
 src/Extensions/Banshee.Daap/Makefile
 src/Extensions/Banshee.FileSystemQueue/Makefile
