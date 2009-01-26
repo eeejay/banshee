@@ -1,5 +1,10 @@
 2009-01-25  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellCreativeCommons.cs:
+	Double using, broke the build.
+
+2009-01-25  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* Banshee.Services/Banshee.Query/BansheeQuery.cs:
 	* Banshee.ThickClient/Banshee.Collection.Gui/DefaultColumnController.cs:
 	Add LicenseUri as a search and smart playlist field and as a column.

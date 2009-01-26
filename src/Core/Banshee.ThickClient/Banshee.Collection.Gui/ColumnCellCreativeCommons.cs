@@ -32,7 +32,6 @@ using Cairo;
 
 using Hyena.Gui;
 using Hyena.Data.Gui;
-using Hyena.Data.Gui;
 
 using Banshee.Gui;
 using Banshee.Streaming;
