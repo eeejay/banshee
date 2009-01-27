@@ -4,20 +4,20 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.50727</ProductVersion>
-    <ProjectGuid>{12984BDF-C565-4452-AD47-79BD3C440E28}</ProjectGuid>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{471E44F3-B404-413B-8E95-BCCA70C6E834}</ProjectGuid>
     <OutputType>Library</OutputType>
     <UseParentDirectoryAsNamespace>true</UseParentDirectoryAsNamespace>
-    <AssemblyName>Banshee.InternetRadio</AssemblyName>
-    <SchemaVersion>2.0</SchemaVersion>
+    <AssemblyName>Banshee.Bpm</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
+    <ErrorReport>prompt</ErrorReport>
     <Optimize>true</Optimize>
     <OutputPath>..\..\..\bin</OutputPath>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <WarningLevel>4</WarningLevel>
     <CustomCommands>
       <CustomCommands>
         <Command type="Build" command="make" workingdir="${SolutionDir}" />
@@ -27,46 +27,15 @@
     <AssemblyKeyFile>.</AssemblyKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\Banshee.Core\Banshee.Core.csproj">
-      <Project>{2ADB831A-A050-47D0-B6B9-9C19D60233BB}</Project>
-      <Name>Banshee.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Core\Banshee.Services\Banshee.Services.csproj">
-      <Project>{B28354F0-BA87-44E8-989F-B864A3C7C09F}</Project>
-      <Name>Banshee.Services</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Core\Banshee.ThickClient\Banshee.ThickClient.csproj">
-      <Project>{AC839523-7BDF-4AB6-8115-E17921B96EC6}</Project>
-      <Name>Banshee.ThickClient</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Hyena\Hyena.csproj">
-      <Project>{95374549-9553-4C1E-9D89-667755F90E12}</Project>
-      <Name>Hyena</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Mono.Media\Mono.Media.csproj">
-      <Project>{A7566CDC-6033-4A16-9E9D-87D05A627066}</Project>
-      <Name>Mono.Media</Name>
-    </ProjectReference>
+    <Compile Include="Banshee.Bpm\BpmDetectJob.cs" />
+    <Compile Include="Banshee.Bpm\BpmEntry.cs" />
+    <Compile Include="Banshee.Bpm\BpmService.cs" />
+    <Compile Include="Banshee.Bpm\BpmTapAdapter.cs" />
+    <Compile Include="Banshee.Bpm\BpmTrackEditorModifier.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <EmbeddedResource Include="Banshee.Bpm.addin.xml" />
   </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Banshee.InternetRadio.addin.xml" />
-    <EmbeddedResource Include="Resources\ActiveSourceUI.xml">
-      <LogicalName>ActiveSourceUI.xml</LogicalName>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\GlobalUI.xml">
-      <LogicalName>GlobalUI.xml</LogicalName>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Banshee.InternetRadio\InternetRadioSource.cs" />
-    <Compile Include="Banshee.InternetRadio\StationEditor.cs" />
-    <Compile Include="Banshee.InternetRadio\XspfMigrator.cs" />
-    <Compile Include="Banshee.InternetRadio\InternetRadioSourceContents.cs" />
-  </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
     <MonoDevelop>
       <Properties>
@@ -83,4 +52,22 @@
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Libraries\Hyena\Hyena.csproj">
+      <Project>{95374549-9553-4C1E-9D89-667755F90E12}</Project>
+      <Name>Hyena</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Backends\Banshee.GStreamer\Banshee.GStreamer.csproj">
+      <Project>{6171E5DE-5B36-4AE4-8707-F6BEE0AD945B}</Project>
+      <Name>Banshee.GStreamer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core\Banshee.Services\Banshee.Services.csproj">
+      <Project>{B28354F0-BA87-44E8-989F-B864A3C7C09F}</Project>
+      <Name>Banshee.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core\Banshee.ThickClient\Banshee.ThickClient.csproj">
+      <Project>{AC839523-7BDF-4AB6-8115-E17921B96EC6}</Project>
+      <Name>Banshee.ThickClient</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>

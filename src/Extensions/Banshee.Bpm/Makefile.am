@@ -10,8 +10,7 @@ SOURCES =  \
 	Banshee.Bpm/BpmTapAdapter.cs \
 	Banshee.Bpm/BpmTrackEditorModifier.cs
 
-RESOURCES =  \
-	Banshee.Bpm.addin.xml
+RESOURCES = Banshee.Bpm.addin.xml
 
 include $(top_srcdir)/build/build.mk
 

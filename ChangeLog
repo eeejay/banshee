@@ -1,5 +1,12 @@
 2009-01-27  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* Banshee.sln: 
+	* src/Extensions/Banshee.Bpm/Banshee.Bpm.csproj:
+	* src/Extensions/Banshee.Bpm/Makefile.am: Add Banshee.Bpm properly
+	to MonoDevelop.
+
+2009-01-27  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.Bpm/Banshee.Bpm.addin.xml: Put the track editor
 	modifier in a <Module> and specify that it depends on Banshee.ThickClient.
 
