@@ -124,7 +124,7 @@ AM_CONDITIONAL(ENABLE_PODCAST, test "x$enable_podcast" = "xyes")
 AC_ARG_ENABLE(release,
 	AC_HELP_STRING([--enable-release],
 		[Use release configuration]),
-	enable_release=yes, enable_release=`test ! -d .svn && echo "yes" || echo "no"`)
+	enable_release=yes, enable_release=`(test ! -d .svn && test ! -d .git) && echo "yes" || echo "no"`)
 AM_CONDITIONAL(ENABLE_RELEASE, test "x$enable_release" = "xyes")
 ENABLE_RELEASE=$enable_release
 AC_SUBST(ENABLE_RELEASE)
@@ -139,7 +139,7 @@ AC_ARG_WITH(vendor-build-id,
 	AC_HELP_STRING([--with-vendor-build-id=<vendor-build-id>],
 		[Set a vendor build ID, recommended for packagers]),
 	[vendor_build_id="$withval"], [
-		test -d .svn \
+		test -d .svn || test -d .git \
 			&& vendor_build_id="svn-checkout" \
 			|| vendor_build_id="source-tarball"
 	])

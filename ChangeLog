@@ -1,5 +1,10 @@
 2009-01-27  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* configure.ac: Check for .git in addition to .svn to determine whether to
+	set release variable.
+
+2009-01-27  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* libbanshee/Makefile.am:
 	* libbanshee/libbanshee.cproj:
 	* src/Backends/Banshee.GStreamer/Banshee.GStreamer.csproj:
