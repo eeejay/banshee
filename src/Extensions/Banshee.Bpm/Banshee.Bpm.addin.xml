@@ -20,8 +20,14 @@
     <Service class="Banshee.Bpm.BpmService"/>
   </Extension>
 
-  <Extension path="/Banshee/Gui/TrackEditor/Modifier">
-    <Modifier class="Banshee.Bpm.BpmTrackEditorModifier"/>
-  </Extension>
+  <Module>
+    <Dependencies>
+      <Addin id="Banshee.ThickClient" version="1.0"/>
+    </Dependencies>
+
+    <Extension path="/Banshee/Gui/TrackEditor/Modifier">
+      <Modifier class="Banshee.Bpm.BpmTrackEditorModifier"/>
+    </Extension>
+  </Module>
 
 </Addin>
