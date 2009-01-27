@@ -11,6 +11,7 @@ bansheelib_LTLIBRARIES = libbanshee.la
 
 libbanshee_la_LDFLAGS = -avoid-version -module
 libbanshee_la_SOURCES =  \
+	banshee-bpmdetector.c \
 	banshee-gst.c \
 	banshee-player.c \
 	banshee-player-cdda.c \
@@ -21,7 +22,6 @@ libbanshee_la_SOURCES =  \
 	banshee-player-video.c \
 	banshee-player-vis.c \
 	banshee-ripper.c \
-	banshee-bpmdetector.c \
 	banshee-tagger.c \
 	banshee-transcoder.c
 

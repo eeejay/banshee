@@ -11,6 +11,9 @@
     <Language>C</Language>
     <Target>Bin</Target>
     <SchemaVersion>2.0</SchemaVersion>
+    <Packages>
+      <Packages />
+    </Packages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -41,6 +44,7 @@
     <Compile Include="banshee-tagger.c" />
     <Compile Include="banshee-player-replaygain.c" />
     <Compile Include="banshee-player-vis.c" />
+    <Compile Include="banshee-bpmdetector.c" />
   </ItemGroup>
   <ItemGroup>
     <None Include="banshee-player-private.h" />

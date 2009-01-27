@@ -222,6 +222,9 @@
     <Compile Include="Banshee.Collection.Gui\ColumnCellDiscAndCount.cs" />
     <Compile Include="Banshee.Collection.Gui\ColumnCellLocation.cs" />
     <Compile Include="Banshee.Gui.TrackEditor\AlbumArtistEntry.cs" />
+    <Compile Include="Banshee.Collection.Gui\ColumnCellCreativeCommons.cs" />
+    <Compile Include="Banshee.Gui.TrackEditor\ITrackEditorModifier.cs" />
+    <Compile Include="Banshee.Gui.Widgets\TaskStatusButton.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>

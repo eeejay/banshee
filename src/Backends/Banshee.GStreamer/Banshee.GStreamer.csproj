@@ -57,6 +57,7 @@
     <Compile Include="Banshee.GStreamer\AudioCdRipper.cs" />
     <Compile Include="Banshee.GStreamer\TagList.cs" />
     <Compile Include="Banshee.GStreamer\Transcoder.cs" />
+    <Compile Include="Banshee.GStreamer\BpmDetector.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Banshee.GStreamer.addin.xml" />

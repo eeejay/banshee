@@ -65,8 +65,8 @@ SOURCES =  \
 	Banshee.Gui.TrackEditor/HelpPage.cs \
 	Banshee.Gui.TrackEditor/ICanUndo.cs \
 	Banshee.Gui.TrackEditor/IEditorField.cs \
-	Banshee.Gui.TrackEditor/ITrackEditorPage.cs \
 	Banshee.Gui.TrackEditor/ITrackEditorModifier.cs \
+	Banshee.Gui.TrackEditor/ITrackEditorPage.cs \
 	Banshee.Gui.TrackEditor/LyricsPage.cs \
 	Banshee.Gui.TrackEditor/PageNavigationEntry.cs \
 	Banshee.Gui.TrackEditor/PageType.cs \
@@ -88,10 +88,10 @@ SOURCES =  \
 	Banshee.Gui.Widgets/NextButton.cs \
 	Banshee.Gui.Widgets/PlaylistMenuItem.cs \
 	Banshee.Gui.Widgets/RepeatActionButton.cs \
+	Banshee.Gui.Widgets/TaskStatusButton.cs \
 	Banshee.Gui.Widgets/TrackInfoDisplay.cs \
 	Banshee.Gui.Widgets/UserJobTile.cs \
 	Banshee.Gui.Widgets/UserJobTileHost.cs \
-	Banshee.Gui.Widgets/TaskStatusButton.cs \
 	Banshee.Gui/BansheeActionGroup.cs \
 	Banshee.Gui/BansheeDbFormatMigratorMonitor.cs \
 	Banshee.Gui/BansheeIconFactory.cs \
