@@ -1,5 +1,9 @@
 2009-01-27  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* .gitignore: Add *.userprefs
+
+2009-01-27  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* configure.ac: Check for .git in addition to .svn to determine whether to
 	set release variable.
 

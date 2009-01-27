@@ -42,3 +42,4 @@ src/AssemblyInfo.cs
 src/Clients/Booter/banshee-1
 data/audio-profiles/*.xml
 stamp-h1
+*.userprefs
