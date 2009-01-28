@@ -1,5 +1,25 @@
 2009-01-27  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Services.csproj:
+	* src/Core/Banshee.Services/Banshee.Database/QueuedSqliteDatabase.cs:
+	* src/Libraries/Hyena/Makefile.am:
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteUtils.cs:
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/HyenaSqliteArrayDataReader.cs:
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/HyenaSqliteCommand.cs:
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/HyenaSqliteConnection.cs:
+	* docs/Hyena/en/Hyena.Data.Sqlite/ExecutingEventArgs.xml:
+	* build/pkg-config/banshee-1-hyena.pc.in:
+	* build/build.environment.mk:
+	* configure.ac: Patch from John Millikin transitioning us from
+	Mono.Data.SqliteClient to Mono.Data.Sqlite (BGO #568787).  He solved the
+	threading issue I found when I tried about a year ago; SqliteClient read
+	the entire result into an array before handing it back, so we just do that
+	with the M.D.Sqlite results.  This should be all we need to start using
+	prepared SQL statements and custom extension functions in Sqlite.
+
+2009-01-27  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* Banshee.sln: 
 	* src/Extensions/Banshee.Bpm/Banshee.Bpm.csproj:
 	* src/Extensions/Banshee.Bpm/Makefile.am: Add Banshee.Bpm properly

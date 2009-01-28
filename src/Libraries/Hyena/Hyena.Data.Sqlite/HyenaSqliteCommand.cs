@@ -32,11 +32,7 @@ using System.IO;
 using System.Data;
 using System.Text;
 using System.Threading;
-
-// NOTE: Mono.Data.Sqlite has serious threading issues.  You cannot access
-//       its results from any thread but the one the SqliteConnection belongs to.
-//       That is why we still use Mono.Data.SqliteClient.
-using Mono.Data.SqliteClient;
+using Mono.Data.Sqlite;
 
 namespace Hyena.Data.Sqlite
 {
@@ -124,7 +120,9 @@ namespace Hyena.Data.Sqlite
 
                 switch (command_type) {
                     case HyenaCommandType.Reader:
-                        result = sql_command.ExecuteReader ();
+                        using (SqliteDataReader reader = sql_command.ExecuteReader ()) {
+                            result = new HyenaSqliteArrayDataReader (reader);
+                        }
                         break;
 
                     case HyenaCommandType.Scalar:

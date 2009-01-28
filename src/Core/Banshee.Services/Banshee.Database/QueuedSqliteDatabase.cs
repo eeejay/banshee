@@ -29,7 +29,7 @@
 using System;
 using System.Threading;
 using System.Collections.Generic;
-using Mono.Data.SqliteClient;
+using Mono.Data.Sqlite;
 
 namespace Banshee.Database
 {

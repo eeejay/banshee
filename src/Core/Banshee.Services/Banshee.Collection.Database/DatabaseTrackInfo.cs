@@ -121,7 +121,7 @@ namespace Banshee.Collection.Database
             return a != null && b != null && 
                 a.TrackId == b.TrackId && 
                 a.CacheModelId == b.CacheModelId && 
-                (int)a.CacheEntryId == (int)b.CacheEntryId;
+                (long)a.CacheEntryId == (long)b.CacheEntryId;
         }
         
         public DatabaseArtistInfo Artist {

@@ -73,6 +73,9 @@ namespace Hyena.Data.Sqlite
         
         public static object FromDbFormat (Type type, object value)
         {
+            if (Convert.IsDBNull (value))
+                value = null;
+            
             if (type == typeof (DateTime)) {
                 return value == null
                     ? DateTime.MinValue
@@ -90,7 +93,7 @@ namespace Hyena.Data.Sqlite
             } else if (type.IsEnum) {
                 return Enum.ToObject (type, value);
             } else if (type == typeof (bool)) {
-                return ((int)value == 1);
+                return ((long)value == 1);
             } else {
                 return Convert.ChangeType (value, type);
             }

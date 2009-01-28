@@ -21,6 +21,7 @@ SOURCES =  \
 	Hyena.CommandLine/LayoutOption.cs \
 	Hyena.Data.Sqlite/DatabaseColumn.cs \
 	Hyena.Data.Sqlite/DatabaseColumnAttribute.cs \
+	Hyena.Data.Sqlite/HyenaSqliteArrayDataReader.cs \
 	Hyena.Data.Sqlite/HyenaSqliteCommand.cs \
 	Hyena.Data.Sqlite/HyenaSqliteConnection.cs \
 	Hyena.Data.Sqlite/ICacheableDatabaseModel.cs \
