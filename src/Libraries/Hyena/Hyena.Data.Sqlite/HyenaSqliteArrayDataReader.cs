@@ -38,18 +38,21 @@ using Mono.Data.Sqlite;
 
 namespace Hyena.Data.Sqlite
 {
-    /** Adapted from Mono.Data.SqliteClient.SqliteDataReader
+    /*
+     * Adapted from Mono.Data.SqliteClient.SqliteDataReader
      *
      * The new data reader in Mono.Data.Sqlite lazily loads the resultset
      * from the underlying database cursor. This class reads the entire
      * resultset into memory, allowing further queries to be executed before
      * all data readers have been exhausted.
-    **/
+     *
+     */
+
     internal class HyenaSqliteArrayDataReader : MarshalByRefObject, IEnumerable, IDataReader, IDisposable, IDataRecord
     {
         #region Fields
 
-        private ArrayList rows;
+        private System.Collections.Generic.List<object[]> rows;
         private string[] columns;
         private Hashtable column_names_sens, column_names_insens;
         private int current_row;
@@ -63,7 +66,7 @@ namespace Hyena.Data.Sqlite
 
         internal HyenaSqliteArrayDataReader (SqliteDataReader reader)
         {
-            rows = new ArrayList ();
+            rows = new System.Collections.Generic.List<object[]> ();
             column_names_sens = new Hashtable ();
             column_names_insens = new Hashtable (StringComparer.InvariantCultureIgnoreCase);
             closed = false;
@@ -103,9 +106,7 @@ namespace Hyena.Data.Sqlite
 
         #endregion
 
-        #region Internal Methods
-
-        internal void ReadAllRows (SqliteDataReader reader)
+        private void ReadAllRows (SqliteDataReader reader)
         {
             int ii, field_count = reader.FieldCount;
 
@@ -113,12 +114,12 @@ namespace Hyena.Data.Sqlite
             records_affected = reader.RecordsAffected;
 
             decltypes = new string[field_count];
-            for (ii = 0; ii < field_count; ii++)
+            for (ii = 0; ii < field_count; ii++) {
                     decltypes[ii] = reader.GetDataTypeName (ii);
+            }
 
             columns = new string[field_count];
-            for (ii = 0; ii < field_count; ii++)
-            {
+            for (ii = 0; ii < field_count; ii++) {
                     string column_name = reader.GetName (ii);
                     columns[ii] = column_name;
                     column_names_sens[column_name] = ii;
@@ -126,21 +127,18 @@ namespace Hyena.Data.Sqlite
             }
 
             /* Read all rows, store in this->rows */
-            while (reader.Read ())
-            {
+            while (reader.Read ()) {
                 object[] data_row = new object[field_count];
-                for (ii = 0; ii < field_count; ii++)
-                {
+                for (ii = 0; ii < field_count; ii++) {
                         object value = reader.GetValue (ii);
                         if (Convert.IsDBNull (value))
                             value = null;
                         data_row[ii] = value;
                 }
+
                 rows.Add (data_row);
             }
         }
-
-        #endregion
 
         #region  Public Methods
 
@@ -226,7 +224,7 @@ namespace Hyena.Data.Sqlite
         {
             current_row++;
 
-            return (current_row < rows.Count);
+            return current_row < rows.Count;
         }
 
         public bool Read ()
@@ -240,17 +238,17 @@ namespace Hyena.Data.Sqlite
 
         public bool GetBoolean (int i)
         {
-            return Convert.ToBoolean (((object[]) rows[current_row])[i]);
+            return Convert.ToBoolean (rows[current_row][i]);
         }
 
         public byte GetByte (int i)
         {
-            return Convert.ToByte (((object[]) rows[current_row])[i]);
+            return Convert.ToByte (rows[current_row][i]);
         }
 
         public long GetBytes (int i, long fieldOffset, byte[] buffer, int bufferOffset, int length)
         {
-            byte[] data = (byte[])(((object[]) rows[current_row])[i]);
+            byte[] data = (byte[])(rows[current_row][i]);
             if (buffer != null)
                 Array.Copy (data, fieldOffset, buffer, bufferOffset, length);
             return data.LongLength - fieldOffset;
@@ -258,12 +256,12 @@ namespace Hyena.Data.Sqlite
 
         public char GetChar (int i)
         {
-            return Convert.ToChar (((object[]) rows[current_row])[i]);
+            return Convert.ToChar (rows[current_row][i]);
         }
 
         public long GetChars (int i, long fieldOffset, char[] buffer, int bufferOffset, int length)
         {
-            char[] data = (char[])(((object[]) rows[current_row])[i]);
+            char[] data = (char[])(rows[current_row][i]);
             if (buffer != null)
                 Array.Copy (data, fieldOffset, buffer, bufferOffset, length);
             return data.LongLength - fieldOffset;
@@ -283,17 +281,17 @@ namespace Hyena.Data.Sqlite
 
         public DateTime GetDateTime (int i)
         {
-            return Convert.ToDateTime (((object[]) rows[current_row])[i]);
+            return Convert.ToDateTime (rows[current_row][i]);
         }
 
         public decimal GetDecimal (int i)
         {
-            return Convert.ToDecimal (((object[]) rows[current_row])[i]);
+            return Convert.ToDecimal (rows[current_row][i]);
         }
 
         public double GetDouble (int i)
         {
-            return Convert.ToDouble (((object[]) rows[current_row])[i]);
+            return Convert.ToDouble (rows[current_row][i]);
         }
 
         public Type GetFieldType (int i)
@@ -301,7 +299,7 @@ namespace Hyena.Data.Sqlite
             int row = current_row;
             if (row == -1 && rows.Count == 0) return typeof(string);
             if (row == -1) row = 0;
-            object element = ((object[]) rows[row])[i];
+            object element = rows[row][i];
             if (element != null)
                 return element.GetType();
             else
@@ -314,7 +312,7 @@ namespace Hyena.Data.Sqlite
 
         public float GetFloat (int i)
         {
-            return Convert.ToSingle (((object[]) rows[current_row])[i]);
+            return Convert.ToSingle (rows[current_row][i]);
         }
 
         public Guid GetGuid (int i)
@@ -330,17 +328,17 @@ namespace Hyena.Data.Sqlite
 
         public short GetInt16 (int i)
         {
-            return Convert.ToInt16 (((object[]) rows[current_row])[i]);
+            return Convert.ToInt16 (rows[current_row][i]);
         }
 
         public int GetInt32 (int i)
         {
-            return Convert.ToInt32 (((object[]) rows[current_row])[i]);
+            return Convert.ToInt32 (rows[current_row][i]);
         }
 
         public long GetInt64 (int i)
         {
-            return Convert.ToInt64 (((object[]) rows[current_row])[i]);
+            return Convert.ToInt64 (rows[current_row][i]);
         }
 
         public string GetName (int i)
@@ -360,20 +358,20 @@ namespace Hyena.Data.Sqlite
 
         public string GetString (int i)
         {
-            return (((object[]) rows[current_row])[i]).ToString();
+            return rows[current_row][i].ToString();
         }
 
         public object GetValue (int i)
         {
-            return ((object[]) rows[current_row])[i];
+            return rows[current_row][i];
         }
 
         public int GetValues (object[] values)
         {
             int num_to_fill = System.Math.Min (values.Length, columns.Length);
             for (int i = 0; i < num_to_fill; i++) {
-                if (((object[]) rows[current_row])[i] != null) {
-                    values[i] = ((object[]) rows[current_row])[i];
+                if (rows[current_row][i] != null) {
+                    values[i] = rows[current_row][i];
                 } else {
                     values[i] = null;
                 }
@@ -383,7 +381,7 @@ namespace Hyena.Data.Sqlite
 
         public bool IsDBNull (int i)
         {
-            return (((object[]) rows[current_row])[i] == null);
+            return rows[current_row][i] == null;
         }
 
         #endregion

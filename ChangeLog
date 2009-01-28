@@ -1,5 +1,10 @@
 2009-01-27  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/HyenaSqliteArrayDataReader.cs:
+	Convert ArrayList to List<T>.
+
+2009-01-27  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
 	* src/Core/Banshee.Services/Banshee.Services.csproj:
 	* src/Core/Banshee.Services/Banshee.Database/QueuedSqliteDatabase.cs:
