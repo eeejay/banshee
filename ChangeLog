@@ -1,5 +1,10 @@
 2009-01-29  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastFeedPropertiesDialog.cs:
+	Add ability to edit podcasts' names in their properties dialog
+
+2009-01-29  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Clients/Nereid/Nereid/PlayerInterface.cs: Patch from
 	Christoph Burgdorf making it so you have to actually click on the status
 	bar text to change it - clicking on the bar but not on the text no longer

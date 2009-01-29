@@ -42,6 +42,7 @@ namespace Banshee.Podcasting.Gui
     {
         private Feed feed;
         private SyncPreferenceComboBox new_episode_option_combo;
+        private Entry name_entry;
 
         public PodcastFeedPropertiesDialog (Feed feed)
         {
@@ -63,6 +64,10 @@ namespace Banshee.Podcasting.Gui
             box.BorderWidth = 6;
             box.Spacing = 12;
 
+            Button save_button = new Button("gtk-save");
+            save_button.CanDefault = true;
+            save_button.Show();
+
             // For later additions to the dialog.  (I.E. Feed art)
             HBox content_box = new HBox();
             content_box.Spacing = 12;
@@ -78,6 +83,16 @@ namespace Banshee.Podcasting.Gui
             Label last_updated_label = new Label (Catalog.GetString ("Last updated:"));
             last_updated_label.SetAlignment (0f, 0f);
             last_updated_label.Justify = Justification.Left;
+
+            Label name_label = new Label (Catalog.GetString ("Podcast Name:"));
+            name_label.SetAlignment (0f, 0f);
+            name_label.Justify = Justification.Left;
+
+            name_entry = new Entry ();
+            name_entry.Text = feed.Title;
+            name_entry.Changed += delegate {
+                save_button.Sensitive = !String.IsNullOrEmpty (name_entry.Text);
+            };
 
             Label feed_url_label = new Label (Catalog.GetString ("URL:"));
             feed_url_label.SetAlignment (0f, 0f);
@@ -121,42 +136,56 @@ namespace Banshee.Podcasting.Gui
 
             new_episode_option_combo = new SyncPreferenceComboBox (feed.AutoDownload);
 
+            // First column
+            uint i = 0;
             table.Attach (
-                feed_url_label, 0, 1, 0, 1,
+                name_label, 0, 1, i, ++i,
                 AttachOptions.Fill, AttachOptions.Fill, 0, 0
             );
 
             table.Attach (
-                last_updated_label, 0, 1, 1, 2,
+                feed_url_label, 0, 1, i, ++i,
                 AttachOptions.Fill, AttachOptions.Fill, 0, 0
             );
 
             table.Attach (
-                new_episode_option_label, 0, 1, 2, 3,
+                last_updated_label, 0, 1, i, ++i,
                 AttachOptions.Fill, AttachOptions.Fill, 0, 0
             );
 
             table.Attach (
-                description_label, 0, 1, 3, 4,
+                new_episode_option_label, 0, 1, i, ++i,
                 AttachOptions.Fill, AttachOptions.Fill, 0, 0
             );
 
             table.Attach (
-                feed_url_text, 1, 2, 0, 1,
+                description_label, 0, 1, i, ++i,
+                AttachOptions.Fill, AttachOptions.Fill, 0, 0
+            );
+
+            // Second column
+            i = 0;
+            table.Attach (
+                name_entry, 1, 2, i, ++i,
                 AttachOptions.Fill, AttachOptions.Fill, 0, 0
             );
 
             table.Attach (
-                last_updated_text, 1, 2, 1, 2,
+                feed_url_text, 1, 2, i, ++i,
                 AttachOptions.Fill, AttachOptions.Fill, 0, 0
             );
 
             table.Attach (
-                new_episode_option_combo, 1, 2, 2, 3,
+                last_updated_text, 1, 2, i, ++i,
                 AttachOptions.Fill, AttachOptions.Fill, 0, 0
             );
 
-            table.Attach (description_scroller, 1, 2, 3, 4,
+            table.Attach (
+                new_episode_option_combo, 1, 2, i, ++i,
+                AttachOptions.Fill, AttachOptions.Fill, 0, 0
+            );
+
+            table.Attach (description_scroller, 1, 2, i, ++i,
                           AttachOptions.Expand | AttachOptions.Fill,
                           AttachOptions.Expand | AttachOptions.Fill, 0, 0
                          );
@@ -167,10 +196,6 @@ namespace Banshee.Podcasting.Gui
             Button cancel_button = new Button("gtk-cancel");
             cancel_button.CanDefault = true;
             cancel_button.Show();
-
-            Button save_button = new Button("gtk-save");
-            save_button.CanDefault = true;
-            save_button.Show();
 
             AddActionWidget (cancel_button, ResponseType.Cancel);
             AddActionWidget (save_button, ResponseType.Ok);
@@ -188,12 +213,12 @@ namespace Banshee.Podcasting.Gui
         {
             Destroy ();
 
-            if (args.ResponseId == Gtk.ResponseType.Ok)
-            {
+            if (args.ResponseId == Gtk.ResponseType.Ok) {
                 FeedAutoDownload new_sync_pref = new_episode_option_combo.ActiveSyncPreference;
 
-                if (feed.AutoDownload != new_sync_pref) {
+                if (feed.AutoDownload != new_sync_pref || feed.Title != name_entry.Text) {
                     feed.AutoDownload = new_sync_pref;
+                    feed.Title = name_entry.Text;
                     feed.Save ();
                 }
             }
