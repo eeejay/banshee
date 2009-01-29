@@ -58,7 +58,7 @@ namespace Banshee.FileSystemQueue
             Catalog.GetString ("File System Queue"), "file-system-queue", 30)
         {
             TypeUniqueId = "file-system-queue";
-            Properties.SetString ("Icon.Name", "system-file-manager");
+            Properties.SetStringList ("Icon.Name", "system-file-manager");
             Properties.Set<bool> ("AutoAddSource", false);
             IsLocal = true;
             

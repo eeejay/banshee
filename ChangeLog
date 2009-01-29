@@ -1,5 +1,10 @@
 2009-01-27  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.FileSystemQueue/Banshee.FileSystemQueue/FileSystemQueueSource.cs:
+	Fix crash on delete from FSQ (BNC #467377)
+
+2009-01-27  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Libraries/Hyena/Hyena.Data.Sqlite/HyenaSqliteArrayDataReader.cs:
 	Convert ArrayList to List<T>.
 
