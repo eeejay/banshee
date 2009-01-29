@@ -198,9 +198,12 @@ namespace Nereid
             
             status_label = new Label ();
             status_event_box.Add (status_label);
+
+            HBox status_hbox = new HBox (true, 0);
+            status_hbox.PackStart (status_event_box, false, false, 0);
             
             Alignment status_align = new Alignment (0.5f, 0.5f, 1.0f, 1.0f);
-            status_align.Add (status_event_box);
+            status_align.Add (status_hbox);
 
             RepeatActionButton repeat_button = new RepeatActionButton ();
             repeat_button.SizeAllocated += delegate (object o, Gtk.SizeAllocatedArgs args) {
