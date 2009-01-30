@@ -1,5 +1,12 @@
 2009-01-29  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Libraries/Mtp/Mtp/File.cs:
+	* src/Libraries/Mtp/Mtp/Playlist.cs:
+	* src/Libraries/Mtp/Mtp/Track.cs: Fix up the libmtp8 support which was
+	crashing on loading MTP devices due to playlists (BGO #542117, BNC #470722)
+
+2009-01-29  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastFeedPropertiesDialog.cs:
 	Add ability to edit podcasts' names in their properties dialog
 
