@@ -315,12 +315,12 @@ namespace Banshee.Bookmarks
             while (reader.Read()) {
                 try {
                     bookmarks.Add(new Bookmark(
-                        (int) reader[0], (int) reader[1], (uint)(int) reader[2],
+                        reader.GetInt32 (0), reader.GetInt32 (1), Convert.ToUInt32 (reader[2]),
                         DateTimeUtil.ToDateTime(Convert.ToInt64(reader[3]))
                     ));
                 } catch (Exception e) {
                     ServiceManager.DbConnection.Execute(String.Format(
-                        "DELETE FROM Bookmarks WHERE BookmarkID = {0}", (int)reader[0]
+                        "DELETE FROM Bookmarks WHERE BookmarkID = {0}", reader.GetInt32 (0)
                     ));
 
                     Log.Warning("Error Loading Bookmark", e.ToString(), false);

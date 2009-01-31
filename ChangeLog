@@ -1,3 +1,9 @@
+2009-01-31  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
+	* src/Extensions/Banshee.Bookmarks/Banshee.Bookmarks/BookmarksService.cs:
+	Explicitly convert integers coming from the DB, as Mono.Data.Sqlite
+	returns them as Int64 (BGO #569966).
+
 2009-01-30  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs: Show the
