@@ -77,7 +77,7 @@ namespace Banshee.Gui.Widgets
 
         private void Update ()
         {
-            lock (this) {
+            lock (jobs) {
                 if (jobs.Count > 0) {
                     StringBuilder sb = new StringBuilder ();
                     foreach (IUserJob job in jobs) {
@@ -139,42 +139,36 @@ namespace Banshee.Gui.Widgets
 
         private void AddJob (IUserJob job)
         {                
-            lock (this) {    
-                if (job == null || job.IsFinished) {
+            lock (jobs) {    
+                if (job == null || !job.IsBackground || job.IsFinished) {
                     return;
                 }
                 
-                Banshee.Base.ThreadAssist.AssertInMainThread ();
                 jobs.Add (job);
             }
 
-            Update ();
+            ThreadAssist.ProxyToMain (Update);
         }
         
         private void OnJobAdded (object o, UserJobEventArgs args)
         {
-            ThreadAssist.ProxyToMain (delegate {
-                AddJob (args.Job);
-            });
+            AddJob (args.Job);
         }
         
         private void RemoveJob (IUserJob job)
         {
-            lock (this) {
+            lock (jobs) {
                 if (jobs.Contains (job)) {
-                    Banshee.Base.ThreadAssist.AssertInMainThread ();
                     jobs.Remove (job);
                 }
             }
 
-            Update ();
+            ThreadAssist.ProxyToMain (Update);
         }
         
         private void OnJobRemoved (object o, UserJobEventArgs args)
         {
-            ThreadAssist.ProxyToMain (delegate {
-                RemoveJob (args.Job);
-            });
+            RemoveJob (args.Job);
         }
     }
 }
