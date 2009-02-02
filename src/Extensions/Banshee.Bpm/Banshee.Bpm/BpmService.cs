@@ -121,7 +121,7 @@ namespace Banshee.Bpm
             }
 
             job.Finished += delegate { job = null; };
-            job.Start ();
+            job.RunAsync ();
         }
         
         private void OnTracksAdded (Source sender, TrackEventArgs args)

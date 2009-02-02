@@ -41,7 +41,6 @@ using Banshee.Base;
 using Banshee.Collection;
 using Banshee.Collection.Database;
 using Banshee.Sources;
-using Banshee.Kernel;
 using Banshee.Metadata;
 using Banshee.MediaEngine;
 using Banshee.ServiceStack;
@@ -49,84 +48,59 @@ using Banshee.Library;
 
 namespace Banshee.Bpm
 {
-    public class BpmDetectJob : UserJob, IJob
+    public class BpmDetectJob : DbIteratorJob
     {
-        private PrimarySource music_library;
-        private int current_count;
         private int current_track_id;
         private IBpmDetector detector;
+        private PrimarySource music_library;
         
-        private static HyenaSqliteCommand count_query = new HyenaSqliteCommand (
-            "SELECT COUNT(*) FROM CoreTracks WHERE PrimarySourceID = ? AND (BPM = 0 OR BPM IS NULL)");
-
-        private static HyenaSqliteCommand select_query = new HyenaSqliteCommand (@"
-            SELECT DISTINCT Uri, UriType, TrackID
-            FROM CoreTracks
-            WHERE PrimarySourceID = ? AND (BPM = 0 OR BPM IS NULL) LIMIT 1");
-
         private static HyenaSqliteCommand update_query = new HyenaSqliteCommand (
             "UPDATE CoreTracks SET BPM = ?, DateUpdatedStamp = ? WHERE TrackID = ?");
         
         public BpmDetectJob () : base (Catalog.GetString ("Detecting BPM"))
         {
-            music_library = ServiceManager.SourceManager.MusicLibrary;
             IconNames = new string [] {"audio-x-generic"};
             IsBackground = true;
-        }
-        
-        public void Start ()
-        {
-            Register ();
-            Scheduler.Schedule (this, JobPriority.Lowest);
-        }
 
-        private HyenaDataReader RunQuery ()
-        {
-            return new HyenaDataReader (ServiceManager.DbConnection.Query (select_query,
+            music_library = ServiceManager.SourceManager.MusicLibrary;
+
+            CountCommand = new HyenaSqliteCommand (String.Format (
+                "SELECT COUNT(*) FROM CoreTracks WHERE PrimarySourceID = {0} AND (BPM = 0 OR BPM IS NULL)",
                 music_library.DbId
             ));
+
+            SelectCommand = new HyenaSqliteCommand (String.Format (@"
+                SELECT DISTINCT Uri, UriType, TrackID
+                FROM CoreTracks
+                WHERE PrimarySourceID IN ({0}) AND (BPM = 0 OR BPM IS NULL) LIMIT 1",
+                music_library.DbId
+            ));
+
+            Register ();
         }
         
-        public void Run ()
+        protected override void Init ()
         {
-            int total = ServiceManager.DbConnection.Query<int> (count_query, music_library.DbId);
-            if (total > 0) {
-                detector = GetDetector ();
-                detector.FileFinished += OnFileFinished;
+            detector = GetDetector ();
+            detector.FileFinished += OnFileFinished;
+        }
 
-                DetectNext ();
+        protected override void Cleanup ()
+        {
+            Finish ();
+
+            if (detector != null) {
+                detector.Dispose ();
             }
         }
 
-        private void DetectNext ()
+        protected override void IterateCore (HyenaDataReader reader)
         {
-            if (IsCancelRequested) {
-                Hyena.Log.Debug ("BPM detection cancelled");
-                Finish ();
-                detector.Dispose ();
-                return;
-            }
-
-            int total = current_count + ServiceManager.DbConnection.Query<int> (count_query, music_library.DbId);
-            try {
-                using (HyenaDataReader reader = RunQuery ()) {
-                    if (reader.Read ()) {
-                        SafeUri uri = music_library.UriAndTypeToSafeUri (
-                            reader.Get<TrackUriType> (1), reader.Get<string> (0)
-                        );
-                        current_track_id = reader.Get<int> (2);
-                        detector.ProcessFile (uri);
-                    } else {
-                        Finish ();
-                        detector.Dispose ();
-                    }
-                }
-            } catch (Exception e) {
-                Log.Exception (e);
-            } finally {
-                Progress = (double) current_count / (double) total;
-                current_count++;
-            }
+            SafeUri uri = music_library.UriAndTypeToSafeUri (
+                reader.Get<TrackUriType> (1), reader.Get<string> (0)
+            );
+            current_track_id = reader.Get<int> (2);
+            detector.ProcessFile (uri);
         }
 
         private void OnFileFinished (SafeUri uri, int bpm)
@@ -135,9 +109,11 @@ namespace Banshee.Bpm
                 Log.DebugFormat ("Saving BPM of {0} for {1}", bpm, uri);
                 ServiceManager.DbConnection.Execute (update_query, bpm, DateTime.Now, current_track_id);
             } else {
+                ServiceManager.DbConnection.Execute (update_query, -1, DateTime.Now, current_track_id);
                 Log.DebugFormat ("Unable to detect BPM for {0}", uri);
             }
-            DetectNext ();
+
+            Iterate ();
         }
 
         internal static IBpmDetector GetDetector ()

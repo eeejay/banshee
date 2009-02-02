@@ -1,5 +1,14 @@
 2009-02-02  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.Bpm/Banshee.Bpm/BpmDetectJob.cs: Subclass from
+	DbIteratorJob, making this class quite simple, and fixing a bug with
+	getting stuck in an infinite loop processing a given item.
+
+	* src/Extensions/Banshee.Bpm/Banshee.Bpm/BpmService.cs: Use new RunAsync
+	method instead of Start.
+
+2009-02-02  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Makefile.am:
 	* src/Core/Banshee.Services/Banshee.ServiceStack/DbIteratorJob.cs: New
 	subclass of UserJob for use by tasks that need to process N items from the
