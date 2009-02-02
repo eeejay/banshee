@@ -63,13 +63,18 @@ namespace Lastfm.Data
             } catch (Exception) {}
             return default(T);
         }
+        
+        protected string GetUrl (string name)
+        {
+            return Uri.UnescapeDataString (Get<string> (name));
+        }
     }
 
     // Generic types
     public class NamedEntry : DataEntry
     {
         public string Name              { get { return Get<string>   ("name"); } }
-        public string Url               { get { return Get<string>   ("url"); } }
+        public string Url               { get { return GetUrl        ("url"); } }
     }
 
     public class TopTag : NamedEntry
@@ -90,7 +95,7 @@ namespace Lastfm.Data
 
     public class ProfileEntry : DataEntry
     {
-        public string Url               { get { return Get<string>   ("url"); } }
+        public string Url               { get { return GetUrl        ("url"); } }
         public string RealName          { get { return Get<string>   ("realname"); } }
         public string Gender            { get { return Get<string>   ("gender"); } }
         public string Country           { get { return Get<string>   ("country"); } }
@@ -128,7 +133,7 @@ namespace Lastfm.Data
     public class Friend : DataEntry
     {
         public string UserName          { get { return Get<string>   ("username"); } }
-        public string Url               { get { return Get<string>   ("url"); } }
+        public string Url               { get { return GetUrl        ("url"); } }
         public string ImageUrl          { get { return Get<string>   ("image"); } }
     }
 

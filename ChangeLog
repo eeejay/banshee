@@ -1,3 +1,8 @@
+2009-02-02  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
+	* src/Libraries/Lastfm/Lastfm.Data/DataEntry.cs: Patch from John Millikin
+	to unescape URLs returned by Last.fm (BGO #563076).
+
 2009-02-02  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:
