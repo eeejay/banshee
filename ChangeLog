@@ -1,5 +1,10 @@
 2009-02-02  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.ServiceStack/DbIteratorJob.cs: Fix
+	build.
+
+2009-02-02  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.Bpm/Banshee.Bpm/BpmDetectJob.cs: Subclass from
 	DbIteratorJob, making this class quite simple, and fixing a bug with
 	getting stuck in an infinite loop processing a given item.

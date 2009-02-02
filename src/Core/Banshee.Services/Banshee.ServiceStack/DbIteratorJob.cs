@@ -51,7 +51,7 @@ namespace Banshee.ServiceStack
 {
     public abstract class DbIteratorJob : UserJob
     {
-        private Thread thread;
+        //private Thread thread;
 
         private HyenaSqliteCommand count_command;
         private HyenaSqliteCommand select_command;
@@ -71,7 +71,8 @@ namespace Banshee.ServiceStack
 
         public void RunAsync ()
         {
-            thread = ThreadAssist.Spawn (Run);
+            //thread = ThreadAssist.Spawn (Run);
+            ThreadAssist.Spawn (Run);
             //thread.Name = Title;
         }
 
