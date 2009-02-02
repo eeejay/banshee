@@ -148,6 +148,7 @@ SOURCES =  \
 	Banshee.ServiceStack/Application.cs \
 	Banshee.ServiceStack/BatchUserJob.cs \
 	Banshee.ServiceStack/Client.cs \
+	Banshee.ServiceStack/DbIteratorJob.cs \
 	Banshee.ServiceStack/DBusCommandService.cs \
 	Banshee.ServiceStack/DBusConnection.cs \
 	Banshee.ServiceStack/DBusServiceManager.cs \

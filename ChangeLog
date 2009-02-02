@@ -1,5 +1,12 @@
 2009-02-02  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Makefile.am:
+	* src/Core/Banshee.Services/Banshee.ServiceStack/DbIteratorJob.cs: New
+	subclass of UserJob for use by tasks that need to process N items from the
+	database one at a time; eg BPM detection, cover art download, etc.
+
+2009-02-02  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TaskStatusButton.cs:
 	Show only background UserJobs in the task status button.
 
