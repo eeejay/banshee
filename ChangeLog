@@ -1,3 +1,9 @@
+2009-02-03  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
+	* src/Core/Banshee.ThickClient/Banshee.Playlist.Gui/PlaylistExportDialog.cs:
+	Patch from John Millikin to escape the suggested filename when exporting
+	a playlist (BGO #457390).
+
 2009-02-03  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Dap/Banshee.Dap/Banshee.Dap/DapLibrarySync.cs:

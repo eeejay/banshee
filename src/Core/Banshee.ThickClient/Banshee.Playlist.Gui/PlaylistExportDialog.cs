@@ -3,6 +3,7 @@ using System;
 using Mono.Unix;
 using Gtk;
 
+using Banshee.Base;
 using Banshee.Widgets;
 using Banshee.Playlists.Formats;
 
@@ -18,7 +19,7 @@ namespace Banshee.Playlist.Gui
         public PlaylistExportDialog(string name, Window parent) : 
             base(Catalog.GetString("Export Playlist"), parent, FileChooserAction.Save)
         {
-            initial_name = name;
+            initial_name = FileNamePattern.Escape (name);
             playlist = PlaylistFileUtil.GetDefaultExportFormat();             
             CurrentName = System.IO.Path.ChangeExtension(initial_name, playlist.FileExtension);
             DefaultResponse = ResponseType.Ok;
