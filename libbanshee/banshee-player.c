@@ -267,7 +267,7 @@ bp_can_seek (BansheePlayer *player)
     gst_query_parse_seeking (query, NULL, &can_seek, NULL, NULL);
     gst_query_unref (query);
     
-    return can_seek;
+    return can_seek && bp_get_duration (player) > 0;
 }
 
 P_INVOKE void

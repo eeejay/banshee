@@ -1,3 +1,11 @@
+2009-02-03  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* libbanshee/banshee-player.c:
+	* src/Core/Banshee.Widgets/Banshee.Widgets/SeekSlider.cs: Slightly
+	modified patch from Moritz Schallaböck that makes CanSeek always false if
+	the duration is zero, and that imroves the seek slider by letting you
+	scroll-wheel over it or left-click to jump (BGO #565795)
+
 2009-02-02  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
 	* src/Libraries/Lastfm/Lastfm.Data/DataEntry.cs: Patch from John Millikin

@@ -61,7 +61,16 @@ namespace Banshee.Widgets
             can_set_value = false;
             return base.OnButtonPressEvent(evnt);
         }
-        
+
+        protected override bool OnScrollEvent(Gdk.EventScroll evnt) {
+            if (can_seek) {
+                SeekValue += (evnt.Direction.Equals (Gdk.ScrollDirection.Down) ? -1 : 1) * 10000; // skip 10s
+                OnSeekRequested();
+            }
+            
+            return base.OnScrollEvent (evnt);
+        }
+
         protected override bool OnButtonReleaseEvent(Gdk.EventButton evnt)
         {
             can_set_value = true;
@@ -70,7 +79,12 @@ namespace Banshee.Widgets
                 GLib.Source.Remove(timeout);
             }
             
-            OnSeekRequested();
+            if (can_seek) {
+                if (evnt.Button == 1) {
+                    SeekValue = (long) (evnt.X / WidthRequest * Duration); // seek to clicked position
+                }
+                OnSeekRequested();
+            }
             
             return base.OnButtonReleaseEvent(evnt);
         }
