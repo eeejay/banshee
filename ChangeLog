@@ -1,3 +1,8 @@
+2009-02-03  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
+	* configure.ac: Patch from Diego E. Pettenò removing the call to
+	AC_CANONICAL_SYSTEM (BGO #566460).
+
 2009-02-03  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	This patch fixes issues with adding tracks to a MTP device, the symptoms
