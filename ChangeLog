@@ -1,5 +1,14 @@
 2009-02-03  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapLibrarySync.cs:
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapSync.cs: Patch from Andrés G.
+	Aragoneses, moving the removal of DAP playlists from being called on each
+	LibrarySync (eg once for Music, Video, etc) to the overall DapSync, fixing
+	bug where playlists didn't sync to DAPs because they were deleted when the
+	PodcastSource synced (BGO #560970)
+
+2009-02-03  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* libbanshee/banshee-player.c:
 	* src/Core/Banshee.Widgets/Banshee.Widgets/SeekSlider.cs: Slightly
 	modified patch from Moritz Schallaböck that makes CanSeek always false if
