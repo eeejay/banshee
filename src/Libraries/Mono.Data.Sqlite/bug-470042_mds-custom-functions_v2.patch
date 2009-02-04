@@ -1,0 +1,241 @@
+diff --git a/src/Libraries/Mono.Data.Sqlite/Mono.Data.Sqlite/SQLite3.cs b/src/Libraries/Mono.Data.Sqlite/Mono.Data.Sqlite/SQLite3.cs
+index 32c09bb..95f20f4 100644
+--- a/src/Libraries/Mono.Data.Sqlite/Mono.Data.Sqlite/SQLite3.cs
++++ b/src/Libraries/Mono.Data.Sqlite/Mono.Data.Sqlite/SQLite3.cs
+@@ -76,7 +76,6 @@ namespace Mono.Data.Sqlite
+       {
+         int n = UnsafeNativeMethods.sqlite3_close(_sql);
+         if (n > 0) throw new SqliteException(n, SqliteLastError());
+-        SqliteFunction.UnbindFunctions(this, _functionsArray);
+       }
+       _sql = IntPtr.Zero;
+     }
+@@ -511,32 +510,16 @@ namespace Mono.Data.Sqlite
+       return UnsafeNativeMethods.sqlite3_aggregate_count(context);
+     }
+ 
+-    internal override IntPtr CreateFunction(string strFunction, int nArgs, SqliteCallback func, SqliteCallback funcstep, SqliteCallback funcfinal)
++    internal override void CreateFunction(string strFunction, int nArgs, SqliteCallback func, SqliteCallback funcstep, SqliteFinalCallback funcfinal)
+     {
+-      IntPtr nCookie;
+-
+-      // FIXME: Cookie must be allocated in C# and passed as a parameter to the Sqlite function
+-      int n = UnsafeNativeMethods.sqlite3_create_function(_sql, ToUTF8(strFunction), nArgs, 1, func, funcstep, funcfinal, out nCookie);
++      int n = UnsafeNativeMethods.sqlite3_create_function(_sql, ToUTF8(strFunction), nArgs, 1, IntPtr.Zero, func, funcstep, funcfinal);
+       if (n > 0) throw new SqliteException(n, SqliteLastError());
+-
+-      return nCookie;
+     }
+ 
+-    internal override IntPtr CreateCollation(string strCollation, SqliteCollation func)
++    internal override void CreateCollation(string strCollation, SqliteCollation func)
+     {
+-      IntPtr nCookie;
+-
+-      // FIXME: Cookie must be allocated in C# and passed as a parameter to the Sqlite function
+-      int n = UnsafeNativeMethods.sqlite3_create_collation(_sql, ToUTF8(strCollation), 1, 0, func, out nCookie);
++      int n = UnsafeNativeMethods.sqlite3_create_collation(_sql, ToUTF8(strCollation), 1, IntPtr.Zero, func);
+       if (n > 0) throw new SqliteException(n, SqliteLastError());
+-
+-      return nCookie;
+-    }
+-
+-    internal override void FreeFunction(IntPtr nCookie)
+-    {
+-	    // FIXME: must be handled in C#, this function does not exist in the mainstream sqlite3
+-      UnsafeNativeMethods.sqlite3_function_free_callbackcookie(nCookie);
+     }
+ 
+     internal override long GetParamValueBytes(IntPtr p, int nDataOffset, byte[] bDest, int nStart, int nLength)
+diff --git a/src/Libraries/Mono.Data.Sqlite/Mono.Data.Sqlite/SQLite3_UTF16.cs b/src/Libraries/Mono.Data.Sqlite/Mono.Data.Sqlite/SQLite3_UTF16.cs
+index 3b259e5..d109c96 100644
+--- a/src/Libraries/Mono.Data.Sqlite/Mono.Data.Sqlite/SQLite3_UTF16.cs
++++ b/src/Libraries/Mono.Data.Sqlite/Mono.Data.Sqlite/SQLite3_UTF16.cs
+@@ -131,28 +131,16 @@ namespace Mono.Data.Sqlite
+       return ToString(UnsafeNativeMethods.sqlite3_column_table_name16(stmt._sqlite_stmt, index));
+     }
+ 
+-    internal override IntPtr CreateFunction(string strFunction, int nArgs, SqliteCallback func, SqliteCallback funcstep, SqliteCallback funcfinal)
++    internal override void CreateFunction(string strFunction, int nArgs, SqliteCallback func, SqliteCallback funcstep, SqliteFinalCallback funcfinal)
+     {
+-	    // FIXME: the function interface below is not supported in the mainstream version of sqlite. Need to rewrite the C# API to
+-	    // use the mainstream sqlite. The cookie needs to be allocated in C#
+-      IntPtr nCookie;
+-
+-      int n = UnsafeNativeMethods.sqlite3_create_function16(_sql, strFunction, nArgs, 4, func, funcstep, funcfinal, out nCookie);
++      int n = UnsafeNativeMethods.sqlite3_create_function16(_sql, strFunction, nArgs, 4, IntPtr.Zero, func, funcstep, funcfinal);
+       if (n > 0) throw new SqliteException(n, SqliteLastError());
+-
+-      return nCookie;
+     }
+ 
+-    internal override IntPtr CreateCollation(string strCollation, SqliteCollation func)
++    internal override void CreateCollation(string strCollation, SqliteCollation func)
+     {
+-	    // FIXME: the function interface below is not supported in the mainstream version of sqlite. Need to rewrite the C# API to
+-	    // use the mainstream sqlite. The cookie needs to be allocated in C#
+-      IntPtr nCookie;
+-
+-      int n = UnsafeNativeMethods.sqlite3_create_collation16(_sql, strCollation, 4, 0, func, out nCookie);
++      int n = UnsafeNativeMethods.sqlite3_create_collation16(_sql, strCollation, 4, IntPtr.Zero, func);
+       if (n > 0) throw new SqliteException(n, SqliteLastError());
+-
+-      return nCookie;
+     }
+ 
+     internal override string GetParamValueText(IntPtr ptr)
+diff --git a/src/Libraries/Mono.Data.Sqlite/Mono.Data.Sqlite/SQLiteBase.cs b/src/Libraries/Mono.Data.Sqlite/Mono.Data.Sqlite/SQLiteBase.cs
+index ea05065..42d3ad3 100644
+--- a/src/Libraries/Mono.Data.Sqlite/Mono.Data.Sqlite/SQLiteBase.cs
++++ b/src/Libraries/Mono.Data.Sqlite/Mono.Data.Sqlite/SQLiteBase.cs
+@@ -152,9 +152,8 @@ namespace Mono.Data.Sqlite
+     internal abstract DateTime GetDateTime(SqliteStatement stmt, int index);
+     internal abstract bool     IsNull(SqliteStatement stmt, int index);
+ 
+-    internal abstract IntPtr  CreateCollation(string strCollation, SqliteCollation func);
+-    internal abstract IntPtr  CreateFunction(string strFunction, int nArgs, SqliteCallback func, SqliteCallback funcstep, SqliteCallback funcfinal);
+-    internal abstract void FreeFunction(IntPtr cookie);
++    internal abstract void  CreateCollation(string strCollation, SqliteCollation func);
++    internal abstract void  CreateFunction(string strFunction, int nArgs, SqliteCallback func, SqliteCallback funcstep, SqliteFinalCallback funcfinal);
+ 
+     internal abstract int AggregateCount(IntPtr context);
+     internal abstract IntPtr AggregateContext(IntPtr context);
+diff --git a/src/Libraries/Mono.Data.Sqlite/Mono.Data.Sqlite/SQLiteFunction.cs b/src/Libraries/Mono.Data.Sqlite/Mono.Data.Sqlite/SQLiteFunction.cs
+index 67b21a9..5f3a5a6 100644
+--- a/src/Libraries/Mono.Data.Sqlite/Mono.Data.Sqlite/SQLiteFunction.cs
++++ b/src/Libraries/Mono.Data.Sqlite/Mono.Data.Sqlite/SQLiteFunction.cs
+@@ -76,6 +76,11 @@ namespace Mono.Data.Sqlite
+   /// <param name="argsptr">A pointer to the array of argument pointers</param>
+   internal delegate void SqliteCallback(IntPtr context, int nArgs, IntPtr argsptr);
+   /// <summary>
++  /// An internal callback delegate declaration.
++  /// </summary>
++  /// <param name="context">Raw context pointer for the user function</param>
++  internal delegate void SqliteFinalCallback(IntPtr context);
++  /// <summary>
+   /// Internal callback delegate for implementing collation sequences
+   /// </summary>
+   /// <param name="len1">Length of the string pv1</param>
+@@ -109,10 +114,6 @@ namespace Mono.Data.Sqlite
+     /// </summary>
+     private SqliteBase              _base;
+     /// <summary>
+-    /// Used internally to keep track of memory allocated for aggregate functions
+-    /// </summary>
+-    private IntPtr                     _interopCookie;
+-    /// <summary>
+     /// Internal array used to keep track of aggregate function context data
+     /// </summary>
+     private Dictionary<long, object> _contextDataList;
+@@ -128,7 +129,7 @@ namespace Mono.Data.Sqlite
+     /// <summary>
+     /// Holds a reference to the callback function for finalizing an aggregate function
+     /// </summary>
+-    private SqliteCallback  _FinalFunc;
++    private SqliteFinalCallback  _FinalFunc;
+     /// <summary>
+     /// Holds a reference to the callback function for collation sequences
+     /// </summary>
+@@ -380,9 +381,7 @@ namespace Mono.Data.Sqlite
+     /// An internal aggregate Final function callback, which wraps the context pointer and calls the virtual Final() method.
+     /// </summary>
+     /// <param name="context">A raw context pointer</param>
+-    /// <param name="nArgs">Not used, always zero</param>
+-    /// <param name="argsptr">Not used, always zero</param>
+-    internal void FinalCallback(IntPtr context, int nArgs, IntPtr argsptr)
++    internal void FinalCallback(IntPtr context)
+     {
+       long n = (long)_base.AggregateContext(context);
+       object obj = null;
+@@ -524,10 +523,6 @@ namespace Mono.Data.Sqlite
+     /// It is done this way so that all user-defined functions will access the database using the same encoding scheme
+     /// as the connection (UTF-8 or UTF-16).
+     /// </summary>
+-    /// <remarks>
+-    /// The wrapper functions that interop with Sqlite will create a unique cooke value, which internally is a pointer to
+-    /// all the wrapped callback functions.  The interop function uses it to map CDecl callbacks to StdCall callbacks.
+-    /// </remarks>
+     /// <param name="sqlbase">The base object on which the functions are to bind</param>
+     /// <returns>Returns an array of functions which the connection object should retain until the connection is closed.</returns>
+     internal static SqliteFunction[] BindFunctions(SqliteBase sqlbase)
+@@ -541,15 +536,13 @@ namespace Mono.Data.Sqlite
+         f._base = sqlbase;
+         f._InvokeFunc = (pr.FuncType == FunctionType.Scalar) ? new SqliteCallback(f.ScalarCallback) : null;
+         f._StepFunc = (pr.FuncType == FunctionType.Aggregate) ? new SqliteCallback(f.StepCallback) : null;
+-        f._FinalFunc = (pr.FuncType == FunctionType.Aggregate) ? new SqliteCallback(f.FinalCallback) : null;
++        f._FinalFunc = (pr.FuncType == FunctionType.Aggregate) ? new SqliteFinalCallback(f.FinalCallback) : null;
+         f._CompareFunc = (pr.FuncType == FunctionType.Collation) ? new SqliteCollation(f.CompareCallback) : null;
+ 
+         if (pr.FuncType != FunctionType.Collation)
+-          f._interopCookie = sqlbase.CreateFunction(pr.Name, pr.Arguments, f._InvokeFunc, f._StepFunc, f._FinalFunc);
++          sqlbase.CreateFunction(pr.Name, pr.Arguments, f._InvokeFunc, f._StepFunc, f._FinalFunc);
+         else
+-          f._interopCookie = sqlbase.CreateCollation(pr.Name, f._CompareFunc);
+-
+-
++          sqlbase.CreateCollation(pr.Name, f._CompareFunc);
+         lFunctions.Add(f);
+       }
+ 
+@@ -557,28 +550,7 @@ namespace Mono.Data.Sqlite
+       lFunctions.CopyTo(arFunctions, 0);
+ 
+       return arFunctions;
+-    }
+ 
+-    /// <summary>
+-    /// Issued after the base connection is closed, this function cleans up all user-defined functions and disposes of them.
+-    /// </summary>
+-    /// <remarks>
+-    /// Cleaning up here is done mainly because of the interop wrapper.  It allocated memory to hold a reference to all the
+-    /// delegates, and now must free that memory.
+-    /// Freeing is done after the connection is closed to ensure no callbacks get hit after we've freed the cookie.
+-    /// </remarks>
+-    /// <param name="sqlbase">The base Sqlite connection object</param>
+-    /// <param name="ar">An array of user-defined functions for this object</param>
+-    internal static void UnbindFunctions(SqliteBase sqlbase, SqliteFunction[] ar)
+-    {
+-      if (ar == null) return;
+-
+-      int x = ar.Length;
+-      for (int n = 0; n < x; n++)
+-      {
+-        sqlbase.FreeFunction(ar[n]._interopCookie);
+-        ar[n].Dispose();
+-      }
+     }
+   }
+ }
+diff --git a/src/Libraries/Mono.Data.Sqlite/Mono.Data.Sqlite/UnsafeNativeMethods.cs b/src/Libraries/Mono.Data.Sqlite/Mono.Data.Sqlite/UnsafeNativeMethods.cs
+index 51907f9..3ff2498 100644
+--- a/src/Libraries/Mono.Data.Sqlite/Mono.Data.Sqlite/UnsafeNativeMethods.cs
++++ b/src/Libraries/Mono.Data.Sqlite/Mono.Data.Sqlite/UnsafeNativeMethods.cs
+@@ -158,13 +158,10 @@ namespace Mono.Data.Sqlite
+     internal static extern int sqlite3_reset(IntPtr stmt);
+ 
+     [DllImport(SQLITE_DLL)]
+-    internal static extern int sqlite3_create_collation(IntPtr db, byte[] strName, int nType, int nArgs, SqliteCollation func, out IntPtr nCookie);
++    internal static extern int sqlite3_create_collation(IntPtr db, byte[] strName, int eTextRep, IntPtr ctx, SqliteCollation fcompare);
+ 
+     [DllImport(SQLITE_DLL)]
+-    internal static extern int sqlite3_create_function(IntPtr db, byte[] strName, int nArgs, int nType, SqliteCallback func, SqliteCallback fstep, SqliteCallback ffinal, out IntPtr nCookie);
+-
+-    [DllImport(SQLITE_DLL)]
+-    internal static extern void sqlite3_function_free_callbackcookie(IntPtr nCookie);
++    internal static extern int sqlite3_create_function(IntPtr db, byte[] strName, int nArgs, int eTextRep, IntPtr app, SqliteCallback func, SqliteCallback fstep, SqliteFinalCallback ffinal);
+ 
+     [DllImport(SQLITE_DLL)]
+     internal static extern int sqlite3_aggregate_count(IntPtr context);
+@@ -257,10 +254,10 @@ namespace Mono.Data.Sqlite
+     internal static extern IntPtr sqlite3_column_decltype16(IntPtr stmt, int index, out int len);
+ 
+     [DllImport(SQLITE_DLL, CharSet = CharSet.Unicode)]
+-    internal static extern int sqlite3_create_collation16(IntPtr db, string strName, int nType, int nArgs, SqliteCollation func, out IntPtr nCookie);
++    internal static extern int sqlite3_create_collation16(IntPtr db, string strName, int eTextRep, IntPtr ctx, SqliteCollation fcompare);
+ 
+     [DllImport(SQLITE_DLL, CharSet = CharSet.Unicode)]
+-    internal static extern int sqlite3_create_function16(IntPtr db, string strName, int nArgs, int nType, SqliteCallback func, SqliteCallback funcstep, SqliteCallback funcfinal, out IntPtr nCookie);
++    internal static extern int sqlite3_create_function16(IntPtr db, string strName, int nArgs, int eTextRep, IntPtr app, SqliteCallback func, SqliteCallback funcstep, SqliteFinalCallback funcfinal);
+ 
+     [DllImport(SQLITE_DLL)]
+     internal static extern IntPtr sqlite3_value_text16(IntPtr p);

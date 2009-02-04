@@ -320,7 +320,7 @@ namespace Hyena.Data.Sqlite
             object value = GetValue (i);
             if (!(value is Guid)) {
                 if (value is DBNull)
-                    throw new SqliteExecutionException ("Column value must not be null");
+                    throw new SqliteException ("Column value must not be null");
                 throw new InvalidCastException ("Type is " + value.GetType ().ToString ());
             }
             return ((Guid) value);

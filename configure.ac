@@ -41,7 +41,6 @@ SHAMROCK_CHECK_MONO_2_0_GAC_ASSEMBLIES([
 	System.Web
 	System.Web.Services
 	Mono.Cairo
-	Mono.Data.Sqlite
 	Mono.Posix
 	ICSharpCode.SharpZipLib
 ])
@@ -214,6 +213,7 @@ src/Libraries/Hyena.Gui/Makefile
 src/Libraries/Lastfm/Makefile
 src/Libraries/Lastfm.Gui/Makefile
 src/Libraries/Migo/Makefile
+src/Libraries/Mono.Data.Sqlite/Makefile
 src/Libraries/Mono.Media/Makefile
 src/Libraries/Mtp/Makefile
 src/Libraries/Mtp/Mtp.dll.config

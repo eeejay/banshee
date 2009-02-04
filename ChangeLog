@@ -1,3 +1,20 @@
+2009-02-03  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Libraries/Makefile.am:
+	* src/Libraries/Mono.Data.Sqlite/Makefile.am:
+	* src/Libraries/Mono.Data.Sqlite/Mono.Data.Sqlite/*: Add copy of
+	Mono.Data.Sqlite from Mono svn (revision 120995), with a patch from John
+	Millikin that fixes its support for custom functions.
+
+	* src/Libraries/Mono.Data.Sqlite/bug-470042_mds-custom-functions_v2.patch:
+	John's patch as applied to the M.D.S source.
+
+	* build/build.environment.mk:
+	* build/pkg-config/banshee-1-hyena.pc.in:
+	* configure.ac:
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/HyenaSqliteArrayDataReader.cs:
+	Adjust to build/work with the bundled Mono.Data.Sqlite
+
 2009-02-03  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
 	* configure.ac: Patch from Diego E. Pettenò removing the call to

@@ -6,5 +6,5 @@ bansheedir=${libdir}/banshee-1
 Name: Banshee Hyena
 Description: Hyena libraries for the Banshee Media Framework
 Version: @VERSION@
-Libs: -r:System -r:System.Data -r:Mono.Data.Sqlite -r:Mono.Posix -r:${bansheedir}/Hyena.dll
+Libs: -r:System -r:System.Data -r:${bansheedir}/Mono.Data.Sqlite -r:Mono.Posix -r:${bansheedir}/Hyena.dll
 

@@ -10,7 +10,6 @@ EXTENSIONS_INSTALL_DIR = $(DEFAULT_INSTALL_DIR)/Extensions
 # External libraries to link against, generated from configure
 LINK_SYSTEM = -r:System
 LINK_SYSTEM_WEB = -r:System.Web
-LINK_SQLITE = -r:System.Data -r:Mono.Data.Sqlite
 LINK_CAIRO = -r:Mono.Cairo
 LINK_MONO_POSIX = -r:Mono.Posix
 LINK_ICSHARP_ZIP_LIB = -r:ICSharpCode.SharpZipLib
@@ -32,6 +31,10 @@ LINK_MONO_ADDINS_SETUP_DEPS = $(MONO_ADDINS_SETUP_LIBS)
 LINK_MONO_ADDINS_GUI_DEPS = $(MONO_ADDINS_GUI_LIBS)
 
 DIR_BIN = $(top_builddir)/bin
+
+# Mono.Data
+REF_SQLITE = -r:System -r:System.Data -r:System.Transactions
+LINK_SQLITE = -r:System.Data -r:$(DIR_BIN)/Mono.Data.Sqlite.dll
 
 # Hyena
 REF_HYENA = $(LINK_SYSTEM) $(LINK_SQLITE) $(LINK_MONO_POSIX)
