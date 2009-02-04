@@ -263,6 +263,15 @@ namespace Banshee.Collection
             } 
         }
 
+        public string DisplayAlbumArtistName {
+            get {
+                string name = AlbumArtist == null ? null : AlbumArtist.Trim ();
+                return String.IsNullOrEmpty (name)
+                    ? DisplayArtistName
+                    : name;
+            }
+        }
+
         public string DisplayAlbumTitle { 
             get { 
                 string title = AlbumTitle == null ? null : AlbumTitle.Trim ();

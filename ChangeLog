@@ -1,3 +1,14 @@
+2009-02-04  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:
+	* src/Core/Banshee.Core/Banshee.Collection/ITrackInfo.cs:
+	* src/Core/Banshee.Core/Banshee.Configuration.Schema/LibrarySchema.cs:
+	* src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs: Patch from John
+	Millikin adding support for %album_artist% as a variable for file/folder
+	name patterns.  This also changes the existing pattern code to treat
+	%artist% as album_artist, so that compilation albums will be stored in a
+	single directory now (BGO #570298)
+
 2009-02-03  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Libraries/Makefile.am:

@@ -84,10 +84,22 @@ namespace Banshee.Base
         {
             conversion_table = new SortedList<string, Conversion> ();
             
-            AddConversion ("artist", Catalog.GetString ("Artist"),  
+            AddConversion ("track_artist", Catalog.GetString ("Track Artist"),
                 delegate (ITrackInfo t, object r) {
                     return Escape (t == null ? (string)r : t.DisplayArtistName);
             });
+
+            AddConversion ("album_artist", Catalog.GetString ("Album Artist"),
+                delegate (ITrackInfo t, object r) {
+                    return Escape (t == null ? (string)r : t.DisplayAlbumArtistName);
+            });
+
+            // Alias for %album_artist%
+            AddConversion ("artist", Catalog.GetString ("Album Artist"),
+                delegate (ITrackInfo t, object r) {
+                    return Escape (t == null ? (string)r : t.DisplayAlbumArtistName);
+            });
+
                         
             AddConversion ("genre", Catalog.GetString ("Genre"),  
                 delegate (ITrackInfo t, object r) {
@@ -140,7 +152,7 @@ namespace Banshee.Base
         }
         
         public static string DefaultFolder {
-            get { return "%artist%%path_sep%%album%"; }
+            get { return "%album_artist%%path_sep%%album%"; }
         }
         
         public static string DefaultFile {
@@ -153,11 +165,11 @@ namespace Banshee.Base
         
         private static string [] suggested_folders = new string [] {
             DefaultFolder,
-            "%artist%%path_sep%%artist% - %album%",
-            "%artist%%path_sep%%album% (%year%)",
-            "%artist% - %album%",
+            "%album_artist%%path_sep%%album_artist% - %album%",
+            "%album_artist%%path_sep%%album% (%year%)",
+            "%album_artist% - %album%",
             "%album%",
-            "%artist%"
+            "%album_artist%"
         };
         
         public static string [] SuggestedFolders {
@@ -166,10 +178,10 @@ namespace Banshee.Base
     
         private static string [] suggested_files = new string [] {
             DefaultFile,
-            "%track_number%. %artist% - %title%",
-            "%artist% - %title%",
-            "%artist% - %track_number% - %title%",
-            "%artist% (%album%) - %track_number% - %title%",
+            "%track_number%. %track_artist% - %title%",
+            "%track_artist% - %title%",
+            "%track_artist% - %track_number% - %title%",
+            "%track_artist% (%album%) - %track_number% - %title%",
             "%title%"
         };
         
