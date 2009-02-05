@@ -1,3 +1,7 @@
+2009-02-05  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* configure.ac: Require Mono 1.9.1 - C# 3.0 here we come!
+
 2009-02-04  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:
