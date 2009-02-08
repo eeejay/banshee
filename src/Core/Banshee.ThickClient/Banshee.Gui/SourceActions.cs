@@ -269,6 +269,7 @@ namespace Banshee.Gui
             if (source == null) {
                 return;
             }
+            source.Activate ();
 
             PlaylistExportDialog chooser = new PlaylistExportDialog (source.Name, PrimaryWindow);
 
@@ -292,7 +293,6 @@ namespace Banshee.Gui
                 SafeUri suri = new SafeUri (uri);
                 if (suri.IsLocalPath) {
                     playlist.BaseUri = new Uri (System.IO.Path.GetDirectoryName (suri.LocalPath));
-                    Console.WriteLine (playlist.BaseUri.LocalPath);
                 }
                 playlist.Save (Banshee.IO.File.OpenWrite (new SafeUri (uri), true), source);
             } catch (Exception e) {

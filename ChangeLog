@@ -1,3 +1,9 @@
+2009-02-08  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs: Patch from
+	John Millikin fixing the export of a playlist that was never browsed
+	(BGO #570842).
+
 2009-02-05  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* configure.ac: Require Mono 1.9.1 - C# 3.0 here we come!
