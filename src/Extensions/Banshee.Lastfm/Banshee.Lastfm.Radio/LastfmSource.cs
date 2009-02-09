@@ -98,6 +98,7 @@ namespace Banshee.Lastfm.Radio
             UpdateUI ();
 
             Properties.SetString ("ActiveSourceUIResource", "ActiveSourceUI.xml");
+            Properties.Set<bool> ("ActiveSourceUIResourcePropagate", true);
             Properties.SetString ("GtkActionPath", "/LastfmSourcePopup");
             Properties.SetString ("Icon.Name", "lastfm-audioscrobbler");
             Properties.SetString ("SourcePropertiesActionLabel", Catalog.GetString ("Edit Last.fm Settings"));

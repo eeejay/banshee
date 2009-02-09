@@ -1,12 +1,4 @@
 <ui>
-    <menubar name="MainMenu" action="MainMenuAction">
-      <menu name="MediaMenu" action="MediaMenuAction">
-        <placeholder name="BelowOpenLocation">
-          <menuitem name="PodcastAdd" action="PodcastAddAction" />
-        </placeholder>
-      </menu>
-    </menubar>
-
     <popup name="PodcastSourcePopup" action="PodcastSourcePopupAction">
         <menuitem name="PodcastAdd" action="PodcastAddAction" />
         <menuitem name="PodcastUpdateAll" action="PodcastUpdateAllAction"/>

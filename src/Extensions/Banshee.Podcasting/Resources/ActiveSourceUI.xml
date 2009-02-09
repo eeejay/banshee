@@ -7,6 +7,12 @@
   </toolbar>
 
   <menubar name="MainMenu" action="MainMenuAction">
+    <menu name="MediaMenu" action="MediaMenuAction">
+      <placeholder name="BelowOpenLocation">
+        <menuitem name="PodcastAdd" action="PodcastAddAction" />
+      </placeholder>
+    </menu>
+
     <menu name="EditMenu" action="EditMenuAction">
       <placeholder name="BelowAddToPlaylist">
         <separator />

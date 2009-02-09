@@ -4,4 +4,12 @@
         <toolitem name="LastfmAdd" action="LastfmAddAction"/>
     </placeholder>
   </toolbar>
+
+  <menubar name="MainMenu" action="MainMenuAction">
+    <menu name="MediaMenu" action="MediaMenuAction">
+      <placeholder name="BelowOpenLocation">
+        <menuitem name="LastfmAdd" action="LastfmAddAction" />
+      </placeholder>
+    </menu>
+  </menubar>
 </ui>

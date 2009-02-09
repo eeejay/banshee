@@ -71,6 +71,9 @@ namespace Banshee.InternetRadio
             ui_id = uia_service.UIManager.AddUiFromResource ("GlobalUI.xml");
             
             Properties.SetString ("ActiveSourceUIResource", "ActiveSourceUI.xml");
+            Properties.Set<bool> ("ActiveSourceUIResourcePropagate", true);
+            Properties.Set<System.Reflection.Assembly> ("ActiveSourceUIResource.Assembly", typeof(InternetRadioSource).Assembly);
+
             Properties.SetString ("GtkActionPath", "/InternetRadioContextMenu");
             
             source_contents = new InternetRadioSourceContents ();

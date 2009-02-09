@@ -1,5 +1,22 @@
 2009-02-09  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:
+	Remove illogical setting of IsImporting.
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs:
+	* src/Extensions/Banshee.Lastfm/Resources/ActiveSourceUI.xml:
+	* src/Extensions/Banshee.InternetRadio/Resources/ActiveSourceUI.xml:
+	* src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSource.cs:
+	Set source actions to propagate to child playlists, and show Add Station
+	action in the Media menu when selected (BGO #539019)
+
+	* src/Extensions/Banshee.Podcasting/Resources/ActiveSourceUI.xml:
+	* src/Extensions/Banshee.Podcasting/Resources/GlobalUI.xml: Only show
+	Subscribe to Podcast action when the Podcasts source (or a child) is
+	selected.
+
+2009-02-09  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Header.cs:
 	Check for a very small change in the remaining width in the column size
 	calculation to avoid an infinite loop.

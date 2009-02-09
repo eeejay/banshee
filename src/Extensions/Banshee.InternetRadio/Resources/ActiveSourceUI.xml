@@ -1,7 +1,15 @@
 <ui>
-    <toolbar name="HeaderToolbar">
-        <placeholder name="SourceActions">
-            <toolitem action="AddRadioStationAction" />
-        </placeholder>
-    </toolbar>
+  <menubar name="MainMenu" action="MainMenuAction">
+    <menu name="MediaMenu" action="MediaMenuAction">
+      <placeholder name="BelowOpenLocation">
+        <menuitem action="AddRadioStationAction" />
+      </placeholder>
+    </menu>
+  </menubar>
+
+  <toolbar name="HeaderToolbar">
+      <placeholder name="SourceActions">
+          <toolitem action="AddRadioStationAction" />
+      </placeholder>
+  </toolbar>
 </ui>
