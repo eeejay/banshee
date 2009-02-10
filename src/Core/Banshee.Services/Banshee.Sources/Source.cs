@@ -633,6 +633,7 @@ namespace Banshee.Sources
             CurrentStatusFormat = new_status_format;
         }
 
+        private const string STATUS_BAR_SEPARATOR = " \u2013 ";
         public virtual string GetStatusText ()
         {
             StringBuilder builder = new StringBuilder ();
@@ -646,14 +647,14 @@ namespace Banshee.Sources
             builder.AppendFormat (Catalog.GetPluralString ("{0} item", "{0} items", count), count);
             
             if (this is IDurationAggregator && StatusFormatsCount > 0) {
-                builder.Append (", ");
+                builder.Append (STATUS_BAR_SEPARATOR);
                 duration_status_formatters[CurrentStatusFormat] (builder, ((IDurationAggregator)this).Duration);
             }
 
             if (this is IFileSizeAggregator) {
                 long bytes = (this as IFileSizeAggregator).FileSize;
                 if (bytes > 0) {
-                    builder.Append (", ");
+                    builder.Append (STATUS_BAR_SEPARATOR);
                     builder.AppendFormat (new FileSizeQueryValue (bytes).ToUserQuery ());
                 }
             }
