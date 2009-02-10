@@ -282,7 +282,7 @@ namespace Notifications {
 		}
 
 		public void AddAction (string action, string label, ActionHandler handler) {
-			if (Notifications.Global.Capabilities &&
+			if (Notifications.Global.Capabilities != null &&
 			    Array.IndexOf (Notifications.Global.Capabilities, "actions") > -1) {
 				lock (action_map) {
 					action_map[action] = new ActionTuple (label, handler);
