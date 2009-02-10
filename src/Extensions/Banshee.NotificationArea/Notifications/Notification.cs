@@ -282,10 +282,12 @@ namespace Notifications {
 		}
 
 		public void AddAction (string action, string label, ActionHandler handler) {
-			lock (action_map) {
-				action_map[action] = new ActionTuple (label, handler);
+			if (Array.IndexOf (Notifications.Global.Capabilities, "actions") > -1) {
+				lock (action_map) {
+					action_map[action] = new ActionTuple (label, handler);
+				}
+				Update ();
 			}
-			Update ();
 		}
 
 		public void RemoveAction (string action) {

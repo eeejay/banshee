@@ -1,3 +1,9 @@
+2009-02-10  Cody Russell  <bratsche@gnome.org>
+
+	* src/Extensions/Banshee.NotificationArea/Notifications/Notification.cs:
+	When adding a new action, first check that the notification daemon supports
+	actions. (BGO #571177)
+
 2009-02-09  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:
