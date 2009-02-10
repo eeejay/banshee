@@ -1,3 +1,9 @@
+2009-02-10  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs: Patch from William
+	Pettersson catching exceptions thrown when trying to get the battery level
+	(BGO #571022)
+
 2009-02-10  Cody Russell  <bratsche@gnome.org>
 
 	* src/Extensions/Banshee.NotificationArea/Notifications/Notification.cs:
