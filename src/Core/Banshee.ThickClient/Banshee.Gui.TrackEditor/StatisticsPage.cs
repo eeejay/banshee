@@ -57,7 +57,6 @@ namespace Banshee.Gui.TrackEditor
             
             CellRendererText value_renderer = new CellRendererText ();
             value_renderer.Ellipsize = Pango.EllipsizeMode.End;
-            value_renderer.Editable = true;
             value_renderer.Scale = Pango.Scale.Small;
             
             view.AppendColumn (Catalog.GetString ("Name"), name_renderer, "text", 0);

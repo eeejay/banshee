@@ -1,5 +1,11 @@
 2009-02-10  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:
+	Patch from John Millikin setting the values of the stats tab as not
+	editable (BGO #562792)
+
+2009-02-10  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Sources/Source.cs: In the status bar
 	use ndashes instead of ", " to separate the elements (BGO #551650)
 
