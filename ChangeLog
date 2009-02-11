@@ -1,5 +1,48 @@
 2009-02-10  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	Patch from John Millikin adding support for full/proper case-insensitive
+	unicode search, and additional support for fuzzy searching where n matches
+	ñ etc - NonSpacingMarks are stripped from a-z chars (BGO #528498)
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseArtistInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	Instead of calling ToLower on *Lowered properties, use the new
+	Hyena.StringUtil.SearchKey that also strips accents from Latin chars.
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	Update the existing *Lowered values by using the new HYENA_SEARCH_KEY
+	custom Sqlite method that just calls SearchKey.
+
+	* src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs: Mark MimeType,
+	License, and Location as ExactStringQueryValue fields (as opposed to the
+	new default which strips accents and lowercases).
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteUtils.cs: New custom
+	HYENA_SEARCH_KEY sqlite method.
+
+	* src/Libraries/Hyena/Hyena.Query/QueryField.cs: Get rid of the old/hacky
+	Sqlite-LOWER workaround, replacing it with the custom HYENA_SEARCH_KEY
+	method where appropriate.
+
+	* src/Libraries/Hyena/Hyena.Query/StringQueryValue.cs: In ToSql return the
+	value passed through SearchKey.
+
+	* src/Libraries/Hyena/Hyena.Query/Tests/QueryTests.cs: Test the new fuzzy
+	and exact string matching.
+
+	* src/Libraries/Hyena/Makefile.am:
+	* src/Libraries/Hyena/Hyena/StringUtil.cs: New SearchKey method that
+	lowercases and strips accents of a-z chars.
+
+	* src/Libraries/Hyena/Hyena/Tests/StringUtilTests.cs: Test the SearchKey
+	method.
+
+	* src/Libraries/Hyena/Hyena.Query/ExactStringQueryValue.cs: New
+	StringQueryValue subclass that doesn't pass the value through SearchKey.
+
+2009-02-10  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	Patch from John Millikin adding support for sort values for artist, album,
 	title, and album artist.  They are read in and written out using TagLib#,
 	but are not yet editable in the track editor.  Actually, they are not yet

@@ -135,7 +135,7 @@ namespace Banshee.Collection.Database
 
         [DatabaseColumn(Select = false)]
         protected string NameLowered {
-            get { return Name == null ? null : Name.ToLower (); }
+            get { return Hyena.StringUtil.SearchKey (Name); }
         }
 
         [DatabaseColumn]

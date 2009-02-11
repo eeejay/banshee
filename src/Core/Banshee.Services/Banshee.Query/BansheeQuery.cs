@@ -221,7 +221,7 @@ namespace Banshee.Query
         public static QueryField LicenseUriField = new QueryField (
             "licenseuri", "LicenseUri",
             // Translators: noun
-            Catalog.GetString ("License"), "CoreTracks.LicenseUri", false,
+            Catalog.GetString ("License"), "CoreTracks.LicenseUri", typeof(ExactStringQueryValue),
             // Translators: These are unique search fields (and nouns).  Please, no spaces. Blank ok.
             Catalog.GetString ("license"), Catalog.GetString ("licensed"), Catalog.GetString ("under"),
             "license", "licensed", "under"
@@ -261,7 +261,7 @@ namespace Banshee.Query
 
         public static QueryField UriField = new QueryField (
             "uri", "Uri",
-            Catalog.GetString ("File Location"), "CoreTracks.Uri",
+            Catalog.GetString ("File Location"), "CoreTracks.Uri", typeof(ExactStringQueryValue),
             // Translators: These are unique search fields.  Please, no spaces. Blank ok.
             Catalog.GetString ("uri"), Catalog.GetString ("path"), Catalog.GetString ("file"), Catalog.GetString ("location"),
             "uri", "path", "file", "location"
@@ -277,7 +277,7 @@ namespace Banshee.Query
 
         public static QueryField MimeTypeField = new QueryField (
             "mimetype", "MimeType",
-            Catalog.GetString ("Mime Type"), "CoreTracks.MimeType {0} OR CoreTracks.Uri {0}",
+            Catalog.GetString ("Mime Type"), "CoreTracks.MimeType {0} OR CoreTracks.Uri {0}", typeof(ExactStringQueryValue),
             // Translators: These are unique search fields.  Please, no spaces. Blank ok.
             Catalog.GetString ("type"), Catalog.GetString ("mimetype"), Catalog.GetString ("format"), Catalog.GetString ("ext"),
             "type", "mimetype", "format", "ext", "mime"

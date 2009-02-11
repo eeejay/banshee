@@ -150,6 +150,92 @@ andunix"));
 href=http://lkjdflkjdflkjj>baz foo< /a> bar"));
         }
     }
+    
+    [TestFixture]
+    public class SearchKeyTests
+    {
+        private void AssertSearchKey (string before, string after)
+        {
+            Assert.AreEqual (after, StringUtil.SearchKey (before));
+        }
+        
+        [Test]
+        public void TestEmpty ()
+        {
+            AssertSearchKey ("", "");
+            AssertSearchKey (null, null);
+        }
+        
+        // Test that resulting search keys are in lower-case
+        [Test]
+        public void TestLowercase ()
+        {
+            AssertSearchKey ("A", "a");
+            AssertSearchKey ("\u0104", "a");
+        }
+        
+        // Test that combining diacritics are removed from Latin characters.
+        [Test]
+        public void TestRemoveDiacritics ()
+        {
+            AssertSearchKey ("\u00e9", "e");
+            AssertSearchKey ("e\u0301", "e");
+            
+            AssertSearchKey ("\u014d", "o");
+            AssertSearchKey ("o\u0304", "o");
+
+            AssertSearchKey ("Español", "espanol");
+            AssertSearchKey ("30 años de la revolución iraní", "30 anos de la revolucion irani");
+            AssertSearchKey ("FRANCÉS", "frances");
+
+            // Polish letters
+            AssertSearchKey ("ą", "a");
+            AssertSearchKey ("Ą", "a");
+            AssertSearchKey ("ć", "c");
+            AssertSearchKey ("Ć", "c");
+            AssertSearchKey ("ę", "e");
+            AssertSearchKey ("Ę", "e");
+            AssertSearchKey ("ł", "l");
+            AssertSearchKey ("Ł", "l");
+            AssertSearchKey ("ń", "n");
+            AssertSearchKey ("Ń", "n");
+            AssertSearchKey ("ó", "o");
+            AssertSearchKey ("Ó", "o");
+            AssertSearchKey ("ś", "s");
+            AssertSearchKey ("Ś", "s");
+            AssertSearchKey ("ź", "z");
+            AssertSearchKey ("Ź", "z");
+            AssertSearchKey ("ż", "z");
+            AssertSearchKey ("Ż", "z");
+        }
+        
+        // Test that combining diacritics are preserved, and combined, for non-Latin characters.
+        [Test]
+        public void TestPreserveDiacritics ()
+        {
+            AssertSearchKey ("\u304c", "\u304c");
+            AssertSearchKey ("\u304b\u3099", "\u304c");
+        }
+        
+        // Test that some non-Latin characters are converted to Latin counterparts.
+        [Test]
+        public void TestEquivalents ()
+        {
+            AssertSearchKey ("\u00f8", "o");
+            AssertSearchKey ("\u0142", "l");
+        }
+        
+        // Test that some kinds of punctuation are removed.
+        [Test]
+        public void TestRemovePunctuation ()
+        {
+            AssertSearchKey ("'", "");
+            AssertSearchKey ("\"", "");
+            AssertSearchKey ("!", "");
+            AssertSearchKey ("?", "");
+            AssertSearchKey ("/", "");
+        }
+    }
 }
 
 #endif

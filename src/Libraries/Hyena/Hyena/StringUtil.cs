@@ -27,6 +27,7 @@
 //
 
 using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Globalization;
 using System.Text.RegularExpressions;
@@ -159,6 +160,49 @@ namespace Hyena
                 return (int)num;
             else
                 return (int)num + 1;
+        }
+        
+        // A mapping of non-Latin characters to be considered the same as
+        // a Latin equivalent.
+        private static Dictionary<char, char> BuildSpecialCases ()
+        {
+            Dictionary<char, char> dict = new Dictionary<char, char> ();
+            dict['\u00f8'] = 'o';
+            dict['\u0142'] = 'l';
+            return dict;
+        }
+        private static Dictionary<char, char> ignored_special_cases = BuildSpecialCases ();
+        
+        //  Removes accents from Latin characters, and some kinds of punctuation.
+        public static string SearchKey (string val)
+        {
+            if (String.IsNullOrEmpty (val)) {
+                return val;
+            }
+            
+            val = val.ToLower ();
+            StringBuilder sb = new StringBuilder ();
+            UnicodeCategory category;
+            bool previous_was_latin = false;
+            
+            // Normalizing to KD splits into (base, combining) so we can check for Latin
+            // characters and then strip off any NonSpacingMarks following them
+            foreach (char c in val.Normalize (NormalizationForm.FormKD)) {
+                category = Char.GetUnicodeCategory (c);
+
+                if (ignored_special_cases.ContainsKey (c)) {
+                    sb.Append (ignored_special_cases[c]);
+                } else if (category == UnicodeCategory.OtherPunctuation) {
+                    // Skip punctuation
+                } else if (!(previous_was_latin && category == UnicodeCategory.NonSpacingMark)) {
+                    sb.Append (c);
+                }
+
+                // Can ignore A-Z because we've already lowercased the char
+                previous_was_latin = (c >= 'a' && c <= 'z');
+            }
+            
+            return sb.ToString ().Normalize (NormalizationForm.FormKC);
         }
         
         private static string invalid_path_characters = "\"\\:'~`!@#$%^&*_-+|?/><[]";

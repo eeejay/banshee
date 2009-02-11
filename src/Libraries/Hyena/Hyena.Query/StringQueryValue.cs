@@ -79,7 +79,9 @@ namespace Hyena.Query
 
         public override string ToSql ()
         {
-            return String.IsNullOrEmpty (value) ? null : value.Replace ("'", "''");
+            // SearchKey() removes ' anyway, but it's escaped again so proper
+            // SQL behavior isn't dependent on search behavior.
+            return Hyena.StringUtil.SearchKey (value).Replace ("'", "''");
         }
     }
 }

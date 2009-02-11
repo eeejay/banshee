@@ -58,6 +58,7 @@ SOURCES =  \
 	Hyena.Json/TokenType.cs \
 	Hyena.Query/AliasedObjectSet.cs \
 	Hyena.Query/DateQueryValue.cs \
+	Hyena.Query/ExactStringQueryValue.cs \
 	Hyena.Query/FileSizeQueryValue.cs \
 	Hyena.Query/IntegerKeyedObjectQueryValue.cs \
 	Hyena.Query/IntegerQueryValue.cs \

@@ -29,6 +29,7 @@
 using System;
 using System.Reflection;
 using System.Text;
+using Mono.Data.Sqlite;
 
 namespace Hyena.Data.Sqlite
 {
@@ -120,6 +121,14 @@ namespace Hyena.Data.Sqlite
                 builder.Append (default_value);
             }
             return builder.ToString ();
+        }
+    }
+    
+    [SqliteFunction (Name = "HYENA_SEARCH_KEY", FuncType = FunctionType.Scalar, Arguments = 1)]
+    internal class SearchKeyFunction : SqliteFunction
+    {
+        public override object Invoke (object[] args) {
+            return Hyena.StringUtil.SearchKey (args[0] as string);
         }
     }
 }

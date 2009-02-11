@@ -86,6 +86,16 @@ namespace Hyena.Query.Tests
             qv = new StringQueryValue (); qv.ParseUserQuery ("foo 'bar'");
             Assert.AreEqual ("foo 'bar'", qv.Value);
             Assert.AreEqual ("foo 'bar'", qv.ToUserQuery ());
+            Assert.AreEqual ("foo bar", qv.ToSql ());
+
+            qv = new StringQueryValue (); qv.ParseUserQuery ("Foo Baño");
+            Assert.AreEqual ("Foo Baño", qv.Value);
+            Assert.AreEqual ("Foo Baño", qv.ToUserQuery ());
+            Assert.AreEqual ("foo bano", qv.ToSql ());
+    
+            qv = new ExactStringQueryValue (); qv.ParseUserQuery ("foo 'bar'");
+            Assert.AreEqual ("foo 'bar'", qv.Value);
+            Assert.AreEqual ("foo 'bar'", qv.ToUserQuery ());
             Assert.AreEqual ("foo ''bar''", qv.ToSql ());
     
             qv = new IntegerQueryValue (); qv.ParseUserQuery ("22");

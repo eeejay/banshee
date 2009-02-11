@@ -214,12 +214,12 @@ namespace Banshee.Collection.Database
 
         [DatabaseColumn(Select = false)]
         protected string TitleLowered {
-            get { return Title == null ? null : Title.ToLower (); }
+            get { return Hyena.StringUtil.SearchKey (Title); }
         }
 
         [DatabaseColumn(Select = false)]
         protected string ArtistNameLowered {
-            get { return ArtistName == null ? null : ArtistName.ToLower (); }
+            get { return Hyena.StringUtil.SearchKey (ArtistName); }
         }
 
         public override string ToString ()

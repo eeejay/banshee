@@ -150,23 +150,11 @@ namespace Hyena.Query
             StringBuilder sb = new StringBuilder ();
 
             if (no_custom_format) {
-                if (qv is StringQueryValue) {
-                    if (column_lowered) {
-                        // The column is pre-lowered, no need to call lower() in SQL
-                        sb.AppendFormat ("{0} {1}", Column, String.Format (op.SqlFormat, value.ToLower ()));
-                    } else {
-                        // Match string values literally and against a lower'd version.  Mostly a workaround
-                        // the fact that Sqlite's lower() method only works for ASCII (meaning even with this,
-                        // we're not getting 100% case-insensitive matching).
-                        sb.AppendFormat ("({0} {1} {3} LOWER({0}) {2})", Column,
-                            String.Format (op.SqlFormat, value),
-                            String.Format (op.SqlFormat, value.ToLower ()),
-                            op.IsNot ? "AND" : "OR"
-                        );
-                    }
-                } else {
-                    sb.AppendFormat ("{0} {1}", Column, String.Format (op.SqlFormat, value));
+                string column_with_key = Column;
+                if (qv is StringQueryValue && !(column_lowered || qv is ExactStringQueryValue)) {
+                    column_with_key = String.Format ("HYENA_SEARCH_KEY({0})", Column);
                 }
+                sb.AppendFormat ("{0} {1}", column_with_key, String.Format (op.SqlFormat, value));
 
                 if (op.IsNot) {
                     return String.Format ("({0} OR {1} IS NULL)", sb.ToString (), Column);

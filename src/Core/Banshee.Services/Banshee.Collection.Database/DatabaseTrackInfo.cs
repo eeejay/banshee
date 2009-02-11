@@ -458,7 +458,7 @@ namespace Banshee.Collection.Database
         
         [DatabaseColumn(Select = false)]
         protected string TitleLowered {
-            get { return TrackTitle == null ? null : TrackTitle.ToLower (); }
+            get { return Hyena.StringUtil.SearchKey (TrackTitle); }
         }
 
         [DatabaseColumn(Select = false)]
