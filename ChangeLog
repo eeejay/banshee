@@ -1,3 +1,10 @@
+2009-02-11  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/Column.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ColumnCellText.cs: Patch from
+	John Millikin (with some style fixups added in by me) that right-aligns
+	the header text for right-aligned columns (BGO #560918)
+
 2009-02-10  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	Patch from Andrés G. Aragoneses fixing bug with string matching functions

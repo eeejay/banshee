@@ -41,8 +41,8 @@ namespace Hyena.Data.Gui
         private ColumnCell header_cell;
         private List<ColumnCell> cells = new List<ColumnCell> ();
         
-        private int minWidth = 0;
-        private int maxWidth = Int32.MaxValue;
+        private int min_width = 0;
+        private int max_width = Int32.MaxValue;
         
         public Column (ColumnDescription description) :
             this (description, new ColumnCellText (description.Property, true))
@@ -62,26 +62,32 @@ namespace Hyena.Data.Gui
         public Column (string title, ColumnCell cell, double width, bool visible) 
             : this (null, title, cell, width, visible)
         {
-            this.header_cell = new ColumnHeaderCellText (HeaderCellDataHandler);
         }
         
-        public Column (ColumnCell header_cell, string title, ColumnCell cell, double width)
-            : this (header_cell, title, cell, width, true)
+        public Column (ColumnCell headerCell, string title, ColumnCell cell, double width)
+            : this (headerCell, title, cell, width, true)
         {
         }
         
-        public Column (ColumnCell header_cell, string title, ColumnCell cell, double width, bool visible)
-            : this (header_cell, title, cell, width, visible, 0, Int32.MaxValue)
+        public Column (ColumnCell headerCell, string title, ColumnCell cell, double width, bool visible)
+            : this (headerCell, title, cell, width, visible, 0, Int32.MaxValue)
         {
         }
         
-        public Column (ColumnCell header_cell, string title, ColumnCell cell, double width, bool visible, int minWidth, int maxWidth)
+        public Column (ColumnCell headerCell, string title, ColumnCell cell, double width, bool visible, int minWidth, int maxWidth)
             : base (cell.Property, title, width, visible)
         {
-            this.minWidth = minWidth;
-            this.maxWidth = maxWidth;
-            this.header_cell = header_cell;
-            PackStart(cell);
+            min_width = minWidth;
+            max_width = maxWidth;
+            header_cell = headerCell ?? new ColumnHeaderCellText (HeaderCellDataHandler);
+
+            ColumnCellText header_text = header_cell as ColumnCellText;
+            ColumnCellText cell_text = cell as ColumnCellText;
+            if (header_text != null && cell_text != null) {
+                header_text.Alignment = cell_text.Alignment;
+            }
+
+            PackStart (cell);
         }
         
         private Column HeaderCellDataHandler ()
@@ -166,21 +172,21 @@ namespace Hyena.Data.Gui
         }
         
         public int MinWidth {
-            get { return minWidth; }
+            get { return min_width; }
             set {
-                minWidth = value;
-                if (value > maxWidth) {
-                    maxWidth = value;
+                min_width = value;
+                if (value > max_width) {
+                    max_width = value;
                 }
             }
         }
         
         public int MaxWidth {
-            get { return maxWidth; }
+            get { return max_width; }
             set {
-                maxWidth = value;
-                if (value < minWidth) {
-                    minWidth = value;
+                max_width = value;
+                if (value < min_width) {
+                    min_width = value;
                 }
             }
         }

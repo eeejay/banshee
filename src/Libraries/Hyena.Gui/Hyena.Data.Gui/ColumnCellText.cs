@@ -139,7 +139,7 @@ namespace Hyena.Data.Gui
             set { text_format = value; }
         }
         
-        protected Pango.Alignment Alignment {
+        public Pango.Alignment Alignment {
             get { return alignment; }
             set { alignment = value; }
         }
