@@ -78,7 +78,7 @@ namespace Hyena.Query
             node.SetAttribute ("type", "rel");
         }
 
-        public override string ToSql ()
+        public override string ToSql (Operator op)
         {
             return DateTimeUtil.FromDateTime (DateTime.Now + TimeSpan.FromSeconds ((double) offset)).ToString (System.Globalization.CultureInfo.InvariantCulture);
         }

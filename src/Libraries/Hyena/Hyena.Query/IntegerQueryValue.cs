@@ -102,7 +102,7 @@ namespace Hyena.Query
             get { return Int64.MaxValue; }
         }
 
-        public override string ToSql ()
+        public override string ToSql (Operator op)
         {
             return Convert.ToString (value, System.Globalization.CultureInfo.InvariantCulture);
         }

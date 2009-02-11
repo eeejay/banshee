@@ -38,12 +38,14 @@ namespace Hyena.Query
 {
     public class StringQueryValue : QueryValue
     {
-        public static readonly Operator Contains       = new Operator ("contains", Catalog.GetString ("contains"), "LIKE '%{0}%'", ":");
-        public static readonly Operator DoesNotContain = new Operator ("doesNotContain", Catalog.GetString ("doesn't contain"), "NOT LIKE '%{0}%'", true, "!:");
+        private const string ESCAPE_CLAUSE = " ESCAPE '\\'";
+
+        public static readonly Operator Contains       = new Operator ("contains", Catalog.GetString ("contains"), "LIKE '%{0}%'" + ESCAPE_CLAUSE, ":");
+        public static readonly Operator DoesNotContain = new Operator ("doesNotContain", Catalog.GetString ("doesn't contain"), "NOT LIKE '%{0}%'" + ESCAPE_CLAUSE, true, "!:");
         public static readonly Operator Equal          = new Operator ("equals", Catalog.GetString ("is"), "= '{0}'", "==");
         public static readonly Operator NotEqual       = new Operator ("notEqual", Catalog.GetString ("is not"), "!= '{0}'", true, "!=");
-        public static readonly Operator StartsWith     = new Operator ("startsWith", Catalog.GetString ("starts with"), "LIKE '{0}%'", "=");
-        public static readonly Operator EndsWith       = new Operator ("endsWith", Catalog.GetString ("ends with"), "LIKE '%{0}'", ":=");
+        public static readonly Operator StartsWith     = new Operator ("startsWith", Catalog.GetString ("starts with"), "LIKE '{0}%'" + ESCAPE_CLAUSE, "=");
+        public static readonly Operator EndsWith       = new Operator ("endsWith", Catalog.GetString ("ends with"), "LIKE '%{0}'" + ESCAPE_CLAUSE, ":=");
 
         protected string value;
 
@@ -77,11 +79,30 @@ namespace Hyena.Query
             ParseUserQuery (str);
         }
 
-        public override string ToSql ()
+        public override string ToSql (Operator op)
         {
+            if (String.IsNullOrEmpty (value))
+                return null;
+
+            string ret = null;
+
             // SearchKey() removes ' anyway, but it's escaped again so proper
             // SQL behavior isn't dependent on search behavior.
-            return Hyena.StringUtil.SearchKey (value).Replace ("'", "''");
+            ret = Hyena.StringUtil.SearchKey (value).Replace ("'", "''");
+
+            if (op == Contains   || op == DoesNotContain ||
+                op == StartsWith || op == EndsWith) {
+                ret = EscapeLike (ret);
+            }
+
+            return ret;
+        }
+
+        private static string EscapeLike (string orig)
+        {
+            return orig.Replace ("\\", "\\\\")
+                       .Replace ("%", "\\%")
+                       .Replace ("_", "\\_");
         }
     }
 }

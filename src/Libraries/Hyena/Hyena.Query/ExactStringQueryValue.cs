@@ -31,7 +31,7 @@ namespace Hyena.Query
     // A query value that requires the string match exactly
     public class ExactStringQueryValue : StringQueryValue
     {
-        public override string ToSql ()
+        public override string ToSql (Operator op)
         {
             return String.IsNullOrEmpty (value) ? null : value.Replace ("'", "''").ToLower ();
         }

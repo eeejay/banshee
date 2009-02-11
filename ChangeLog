@@ -1,5 +1,26 @@
 2009-02-10  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	Patch from Andrés G. Aragoneses fixing bug with string matching functions
+	that use the SQL 'like' command not escaping % and _ properly.
+
+	* DateQueryValue.cs:
+	* ExactStringQueryValue.cs:
+	* IntegerQueryValue.cs:
+	* NullQueryValue.cs:
+	* RelativeTimeSpanQueryValue.cs:
+	* TimeSpanQueryValue.cs: Change all to override the ToSql (op) instead of
+	ToSql () method.
+
+	* QueryField.cs: Call ToSql w/ the op we already have at hand.
+
+	* QueryValue.cs: Add new abstract ToSql (op) method and change the ToSql
+	method to call it with a null op.
+
+	* StringQueryValue.cs: Fix bug with not escaping % and _ characters which
+	are treated specially by SQLite in LIKE expressions (BGO #570312)
+
+2009-02-10  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* build/m4/banshee/taglib.m4: Bump requirement to 2.0.3.2 (taglib-sharp
 	trunk atm)
 

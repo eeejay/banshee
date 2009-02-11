@@ -141,6 +141,11 @@ namespace Hyena.Query
             return Value.ToString ();
         }
 
-        public abstract string ToSql ();
+        public string ToSql ()
+        {
+            return ToSql (null);
+        }
+
+        public abstract string ToSql (Operator op);
     }
 }

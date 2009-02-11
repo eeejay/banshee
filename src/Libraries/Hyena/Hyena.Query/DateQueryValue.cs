@@ -106,7 +106,7 @@ namespace Hyena.Query
             }
         }
 
-        public override string ToSql ()
+        public override string ToSql (Operator op)
         {
             return DateTimeUtil.FromDateTime (value).ToString (System.Globalization.CultureInfo.InvariantCulture);
         }

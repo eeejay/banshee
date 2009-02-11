@@ -158,7 +158,7 @@ namespace Hyena.Query
             node.SetAttribute ("factor", factor.ToString ());
         }
 
-        public override string ToSql ()
+        public override string ToSql (Operator op)
         {
             return Convert.ToString (offset * 1000, System.Globalization.CultureInfo.InvariantCulture);
         }

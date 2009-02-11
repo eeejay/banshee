@@ -143,7 +143,7 @@ namespace Hyena.Query
 
         public string ToSql (Operator op, QueryValue qv)
         {
-            string value = qv.ToSql () ?? String.Empty;
+            string value = qv.ToSql (op) ?? String.Empty;
 
             if (op == null) op = qv.OperatorSet.First;
 
