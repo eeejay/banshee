@@ -1,5 +1,10 @@
 2009-02-10  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* build/m4/banshee/taglib.m4: Bump requirement to 2.0.3.2 (taglib-sharp
+	trunk atm)
+
+2009-02-10  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	Patch from John Millikin adding support for full/proper case-insensitive
 	unicode search, and additional support for fuzzy searching where n matches
 	ñ etc - NonSpacingMarks are stripped from a-z chars (BGO #528498)
