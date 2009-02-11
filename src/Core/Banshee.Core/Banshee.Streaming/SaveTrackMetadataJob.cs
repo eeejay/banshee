@@ -68,13 +68,17 @@ namespace Banshee.Streaming
             }
             
             file.Tag.Performers = new string [] { track.ArtistName };
+            file.Tag.PerformersSort = new string [] { track.ArtistNameSort };
             file.Tag.Album = track.AlbumTitle;
+            file.Tag.AlbumSort = track.AlbumTitleSort;
             file.Tag.AlbumArtists = track.AlbumArtist == null ? new string [0] : new string [] {track.AlbumArtist};
+            file.Tag.AlbumArtistsSort = (track.AlbumArtistSort == null ? new string [0] : new string [] {track.AlbumArtistSort});
             // Bug in taglib-sharp-2.0.3.0: Crash if you send it a genre of "{ null }"
             // on a song with both ID3v1 and ID3v2 metadata. It's happy with "{}", though.
             // (see http://forum.taglib-sharp.com/viewtopic.php?f=5&t=239 )
             file.Tag.Genres = (track.Genre == null) ? new string[] {} : new string [] { track.Genre };
             file.Tag.Title = track.TrackTitle;
+            file.Tag.TitleSort = track.TrackTitleSort;
             file.Tag.Track = (uint)track.TrackNumber;
             file.Tag.TrackCount = (uint)track.TrackCount;
             file.Tag.Composers = new string [] { track.Composer };

@@ -55,12 +55,6 @@ namespace Banshee.Collection.Database
             (String.IsNullOrEmpty (provider.Where) ? "1=1" : provider.Where)
         ));
 
-        private enum Column : int {
-            AlbumID,
-            Title,
-            ArtistName
-        }
-
         private static int last_artist_id;
         private static string last_title;
         private static DatabaseAlbumInfo last_album;
@@ -72,10 +66,11 @@ namespace Banshee.Collection.Database
             last_album = null;
         }
 
-        public static DatabaseAlbumInfo FindOrCreate (DatabaseArtistInfo artist, string title, bool isCompilation)
+        public static DatabaseAlbumInfo FindOrCreate (DatabaseArtistInfo artist, string title, string title_sort, bool isCompilation)
         {
             DatabaseAlbumInfo album = new DatabaseAlbumInfo ();
             album.Title = title;
+            album.TitleSort = title_sort;
             album.IsCompilation = isCompilation;
             return FindOrCreate (artist, album);
         }
@@ -101,6 +96,18 @@ namespace Banshee.Collection.Database
                         save = true;
                     }
                     
+                    // Ditto artist sort name
+                    if (last_album.ArtistNameSort != artist.NameSort) {
+                        last_album.ArtistNameSort = artist.NameSort;
+                        save = true;
+                    }
+
+                    // And album sort name
+                    if (last_album.TitleSort != album.TitleSort) {
+                        last_album.TitleSort = album.TitleSort;
+                        save = true;
+                    }
+
                     // If the album IsCompilation status has changed, update the saved album info
                     if (last_album.IsCompilation != album.IsCompilation) {
                         last_album.IsCompilation = album.IsCompilation;
@@ -113,6 +120,7 @@ namespace Banshee.Collection.Database
                 } else {
                     album.ArtistId = artist.DbId;
                     album.ArtistName = artist.Name;
+                    album.ArtistNameSort = artist.NameSort;
                     album.Save ();
                     last_album = album;
                 }
@@ -129,7 +137,9 @@ namespace Banshee.Collection.Database
             if (found != album) {
                 // Overwrite the found album
                 album.Title = found.Title;
+                album.TitleSort = found.TitleSort;
                 album.ArtistName = found.ArtistName;
+                album.ArtistNameSort = found.ArtistNameSort;
                 album.IsCompilation = found.IsCompilation;
                 album.dbid = found.DbId;
                 album.ArtistId = found.ArtistId;
@@ -184,15 +194,27 @@ namespace Banshee.Collection.Database
             set { base.Title = value; }
         }
         
-        [DatabaseColumn(Select = false)]
-        protected string TitleLowered {
-            get { return Title == null ? null : Title.ToLower (); }
+        [DatabaseColumn]
+        public override string TitleSort {
+            get { return base.TitleSort; }
+            set { base.TitleSort = value; }
         }
-
+        
         [DatabaseColumn]
         public override string ArtistName {
             get { return base.ArtistName; }
             set { base.ArtistName = value; }
+        }
+
+        [DatabaseColumn]
+        public override string ArtistNameSort {
+            get { return base.ArtistNameSort; }
+            set { base.ArtistNameSort = value; }
+        }
+
+        [DatabaseColumn(Select = false)]
+        protected string TitleLowered {
+            get { return Title == null ? null : Title.ToLower (); }
         }
 
         [DatabaseColumn(Select = false)]

@@ -31,15 +31,17 @@ namespace Banshee.Collection
     public class ArtistInfo : CacheableItem
     {
         private string name;
+        private string name_sort;
         private string musicbrainz_id;
         
         public ArtistInfo ()
         {
         }
         
-        public ArtistInfo(string name)
+        public ArtistInfo(string name, string name_sort)
         {
             this.name = name;
+            this.name_sort = name_sort;
         }
                 
         public virtual string MusicBrainzId {
@@ -50,6 +52,11 @@ namespace Banshee.Collection
         public virtual string Name {
             get { return name; }
             set { name = value; }
+        }
+        
+        public virtual string NameSort {
+            get { return name_sort; }
+            set { name_sort = value; }
         }
     }
 }

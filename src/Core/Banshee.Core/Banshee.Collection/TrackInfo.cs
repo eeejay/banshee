@@ -67,10 +67,14 @@ namespace Banshee.Collection
         private long file_mtime;
 
         private string artist_name;
+        private string artist_name_sort;
         private string album_title;
+        private string album_title_sort;
         private string album_artist;
+        private string album_artist_sort;
         private bool is_compilation;
         private string track_title;
+        private string track_title_sort;
         private string genre;
         private string composer;
         private string conductor;
@@ -204,16 +208,34 @@ namespace Banshee.Collection
             set { artist_name = value; }
         }
 
+        [Exportable (ExportName = "artistsort")]
+        public virtual string ArtistNameSort {
+            get { return artist_name_sort; }
+            set { artist_name_sort = value; }
+        }
+
         [Exportable (ExportName = "album")]
         public virtual string AlbumTitle {
             get { return album_title; }
             set { album_title = value; }
         }
 
+        [Exportable (ExportName = "albumsort")]
+        public virtual string AlbumTitleSort {
+            get { return album_title_sort; }
+            set { album_title_sort = value; }
+        }
+
         [Exportable]
         public virtual string AlbumArtist {
             get { return IsCompilation ? album_artist ?? Catalog.GetString ("Various Artists") : ArtistName; }
             set { album_artist = value; }
+        }
+        
+        [Exportable]
+        public virtual string AlbumArtistSort {
+            get { return album_artist_sort; }
+            set { album_artist_sort = value; }
         }
         
         [Exportable]
@@ -226,6 +248,12 @@ namespace Banshee.Collection
         public virtual string TrackTitle {
             get { return track_title; }
             set { track_title = value; }
+        }
+        
+        [Exportable (ExportName = "namesort")]
+        public virtual string TrackTitleSort {
+            get { return track_title_sort; }
+            set { track_title_sort = value; }
         }
         
         [Exportable]

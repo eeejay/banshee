@@ -125,11 +125,11 @@ namespace Banshee.Collection.Database
         }
         
         public DatabaseArtistInfo Artist {
-            get { return DatabaseArtistInfo.FindOrCreate (ArtistName); }
+            get { return DatabaseArtistInfo.FindOrCreate (ArtistName, ArtistNameSort); }
         }
 
         public DatabaseAlbumInfo Album {
-            get { return DatabaseAlbumInfo.FindOrCreate (DatabaseArtistInfo.FindOrCreate (AlbumArtist), AlbumTitle, IsCompilation); }
+            get { return DatabaseAlbumInfo.FindOrCreate (DatabaseArtistInfo.FindOrCreate (AlbumArtist, AlbumArtistSort), AlbumTitle, AlbumTitleSort, IsCompilation); }
         }
 
         private static bool notify_saved = true;
@@ -241,6 +241,24 @@ namespace Banshee.Collection.Database
             }
         }
 
+        [VirtualDatabaseColumn ("NameSort", "CoreArtists", "ArtistID", "ArtistID")]
+        protected string ArtistNameSortField {
+            get { return ArtistNameSort; }
+            set { base.ArtistNameSort = value; }
+        }
+
+        public override string ArtistNameSort {
+            get { return base.ArtistNameSort; }
+            set {
+                value = CleanseString (value, ArtistNameSort);
+                if (value == null)
+                    return;
+
+                base.ArtistNameSort = value;
+                artist_changed = true;
+            }
+        }
+
         [VirtualDatabaseColumn ("Title", "CoreAlbums", "AlbumID", "AlbumID")]
         protected string AlbumTitleField {
             get { return AlbumTitle; }
@@ -259,6 +277,24 @@ namespace Banshee.Collection.Database
             }
         }
 
+        [VirtualDatabaseColumn ("TitleSort", "CoreAlbums", "AlbumID", "AlbumID")]
+        protected string AlbumTitleSortField {
+            get { return AlbumTitleSort; }
+            set { base.AlbumTitleSort = value; }
+        }
+
+        public override string AlbumTitleSort {
+            get { return base.AlbumTitleSort; }
+            set {
+                value = CleanseString (value, AlbumTitleSort);
+                if (value == null)
+                    return;
+
+                base.AlbumTitleSort = value;
+                album_changed = true;
+            }
+        }
+
         [VirtualDatabaseColumn ("ArtistName", "CoreAlbums", "AlbumID", "AlbumID")]
         protected string AlbumArtistField {
             get { return AlbumArtist; }
@@ -273,6 +309,24 @@ namespace Banshee.Collection.Database
                     return;
 
                 base.AlbumArtist = value;
+                album_changed = true;
+            }
+        }
+        
+        [VirtualDatabaseColumn ("ArtistNameSort", "CoreAlbums", "AlbumID", "AlbumID")]
+        protected string AlbumArtistSortField {
+            get { return AlbumArtistSort; }
+            set { base.AlbumArtistSort = value; }
+        }
+
+        public override string AlbumArtistSort {
+            get { return base.AlbumArtistSort; }
+            set {
+                value = CleanseString (value, AlbumArtistSort);
+                if (value == null)
+                    return;
+
+                base.AlbumArtistSort = value;
                 album_changed = true;
             }
         }
@@ -394,6 +448,12 @@ namespace Banshee.Collection.Database
         public override string TrackTitle {
             get { return base.TrackTitle; }
             set { base.TrackTitle = value; }
+        }
+        
+        [DatabaseColumn]
+        public override string TrackTitleSort {
+            get { return base.TrackTitleSort; }
+            set { base.TrackTitleSort = value; }
         }
         
         [DatabaseColumn(Select = false)]

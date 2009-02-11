@@ -52,8 +52,8 @@ namespace Banshee.Database
         // NOTE: Whenever there is a change in ANY of the database schema,
         //       this version MUST be incremented and a migration method
         //       MUST be supplied to match the new version number
-        protected const int CURRENT_VERSION = 22;
-        protected const int CURRENT_METADATA_VERSION = 4;
+        protected const int CURRENT_VERSION = 23;
+        protected const int CURRENT_METADATA_VERSION = 5;
         
 #region Migration Driver
         
@@ -551,6 +551,21 @@ namespace Banshee.Database
         
 #endregion
 
+#region Version 23
+
+        [DatabaseVersion (23)]
+        private bool Migrate_23 ()
+        {
+            Execute ("ALTER TABLE CoreArtists ADD COLUMN NameSort TEXT");
+            Execute ("ALTER TABLE CoreAlbums ADD COLUMN ArtistNameSort TEXT");
+            Execute ("ALTER TABLE CoreAlbums ADD COLUMN TitleSort TEXT");
+            Execute ("ALTER TABLE CoreTracks ADD COLUMN TitleSort TEXT");
+
+            return true;
+        }
+        
+#endregion
+
 #pragma warning restore 0169
         
 #region Fresh database setup
@@ -615,6 +630,7 @@ namespace Banshee.Database
                     
                     Title               TEXT,
                     TitleLowered        TEXT,
+                    TitleSort           TEXT,
                     TrackNumber         INTEGER,
                     TrackCount          INTEGER,
                     Disc                INTEGER,
@@ -658,6 +674,7 @@ namespace Banshee.Database
 
                     Title               TEXT,
                     TitleLowered        TEXT,
+                    TitleSort           TEXT,
 
                     ReleaseDate         INTEGER,
                     Duration            INTEGER,
@@ -666,6 +683,7 @@ namespace Banshee.Database
                     
                     ArtistName          TEXT,
                     ArtistNameLowered   TEXT,
+                    ArtistNameSort      TEXT,
                     
                     Rating              INTEGER
                 )
@@ -680,6 +698,7 @@ namespace Banshee.Database
                     MusicBrainzID       TEXT,
                     Name                TEXT,
                     NameLowered         TEXT,
+                    NameSort            TEXT,
                     Rating              INTEGER
                 )
             ");

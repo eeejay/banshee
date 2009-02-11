@@ -33,8 +33,11 @@ namespace Banshee.Streaming
     public sealed class CommonTags 
     {
         public const string Title             = "title";
+        public const string TitleSortName     = "title-sortname";
         public const string Artist            = "artist";
+        public const string ArtistSortName    = "artist-sortname";
         public const string Album             = "album";
+        public const string AlbumSortName     = "album-sortname";
         public const string Date              = "date";
         public const string Genre             = "genre";
         public const string Disc              = "disc";
@@ -77,5 +80,8 @@ namespace Banshee.Streaming
         public const string MusicBrainzArtistId = "musicbrainz-artistid";
         public const string MusicBrainzAlbumId = "musicbrainz-albumid";
         public const string MusicBrainzDiscId = "musicbrainz-discid";
+        
+        // Deprecated by MB, replaced by ArtistSortName. Kept for compatibility only.
+        public const string MusicBrainzSortName = "musicbrainz-sortname";
     }
 }

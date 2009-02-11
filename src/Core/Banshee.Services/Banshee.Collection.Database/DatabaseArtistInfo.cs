@@ -55,11 +55,6 @@ namespace Banshee.Collection.Database
             (String.IsNullOrEmpty (provider.Where) ? "1=1" : provider.Where)
         ));
 
-        private enum Column : int {
-            ArtistID,
-            Name
-        }
-
         private static string last_artist_name = null;
         private static DatabaseArtistInfo last_artist = null;
 
@@ -69,10 +64,11 @@ namespace Banshee.Collection.Database
             last_artist = null;
         }
         
-        public static DatabaseArtistInfo FindOrCreate (string artistName)
+        public static DatabaseArtistInfo FindOrCreate (string artistName, string artistNameSort)
         {
             DatabaseArtistInfo artist = new DatabaseArtistInfo ();
             artist.Name = artistName;
+            artist.NameSort = artistNameSort;
             return FindOrCreate (artist);
         }
 
@@ -89,6 +85,10 @@ namespace Banshee.Collection.Database
             using (IDataReader reader = ServiceManager.DbConnection.Query (select_command, artist.Name)) {
                 if (reader.Read ()) {
                     last_artist = provider.Load (reader);
+                    if (last_artist.NameSort != artist.NameSort) {
+                        last_artist.NameSort = artist.NameSort;
+                        last_artist.Save ();
+                    }
                 } else {
                     artist.Save ();
                     last_artist = artist;
@@ -105,13 +105,14 @@ namespace Banshee.Collection.Database
             if (found != artist) {
                 // Overwrite the found artist
                 artist.Name = found.Name;
+                artist.NameSort = found.NameSort;
                 artist.dbid = found.DbId;
                 artist.Save ();
             }
             return artist;
         }
         
-        public DatabaseArtistInfo () : base (null)
+        public DatabaseArtistInfo () : base (null, null)
         {
         }
 
@@ -131,18 +132,24 @@ namespace Banshee.Collection.Database
             get { return base.Name; }
             set { base.Name = value; }
         }
-               
+
+        [DatabaseColumn(Select = false)]
+        protected string NameLowered {
+            get { return Name == null ? null : Name.ToLower (); }
+        }
+
+        [DatabaseColumn]
+        public override string NameSort {
+            get { return base.NameSort; }
+            set { base.NameSort = value; }
+        }
+
         [DatabaseColumn("MusicBrainzID")]
         public override string MusicBrainzId {
             get { return base.MusicBrainzId; }
             set { base.MusicBrainzId = value; }
         }
         
-        [DatabaseColumn(Select = false)]
-        protected string NameLowered {
-            get { return Name == null ? null : Name.ToLower (); }
-        }
-
         public override string ToString ()
         {
             return String.Format ("DatabaseArtistInfo<DbId: {0}, Name: {1}>", DbId, Name);

@@ -36,7 +36,9 @@ namespace Banshee.Collection
     public class AlbumInfo : CacheableItem
     {
         private string title;
+        private string title_sort;
         private string artist_name;
+        private string artist_name_sort;
         private bool is_compilation;
         private string artwork_id;
         private DateTime release_date = DateTime.MinValue;
@@ -56,9 +58,19 @@ namespace Banshee.Collection
             set { artist_name = value; }
         }
         
+        public virtual string ArtistNameSort {
+            get { return artist_name_sort; }
+            set { artist_name_sort = value; }
+        }
+        
         public virtual string Title {
             get { return title; }
             set { title = value; }
+        }
+        
+        public virtual string TitleSort {
+            get { return title_sort; }
+            set { title_sort = value; }
         }
         
         public virtual bool IsCompilation {

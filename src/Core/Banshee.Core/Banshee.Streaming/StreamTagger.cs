@@ -140,11 +140,15 @@ namespace Banshee.Streaming
                 FindTrackMediaAttributes (track, file);
     
                 track.ArtistName = Choose (file.Tag.JoinedPerformers, track.ArtistName, preferTrackInfo);
+                track.ArtistNameSort = Choose (file.Tag.JoinedPerformersSort, track.ArtistNameSort, preferTrackInfo);
                 track.AlbumTitle = Choose (file.Tag.Album, track.AlbumTitle, preferTrackInfo);
+                track.AlbumTitleSort = Choose (file.Tag.AlbumSort, track.AlbumTitleSort, preferTrackInfo);
                 track.AlbumArtist = Choose (file.Tag.FirstAlbumArtist, track.AlbumArtist, preferTrackInfo);
+                track.AlbumArtistSort = Choose (file.Tag.FirstAlbumArtistSort, track.AlbumArtistSort, preferTrackInfo);
                 track.IsCompilation = IsCompilation (file.Tag);
                 
                 track.TrackTitle = Choose (file.Tag.Title, track.TrackTitle, preferTrackInfo);
+                track.TrackTitleSort = Choose (file.Tag.TitleSort, track.TrackTitleSort, preferTrackInfo);
                 track.Genre = Choose (file.Tag.FirstGenre, track.Genre, preferTrackInfo);
                 track.Composer = Choose (file.Tag.FirstComposer, track.Composer, preferTrackInfo);
                 track.Conductor = Choose (file.Tag.Conductor, track.Conductor, preferTrackInfo);
@@ -210,6 +214,10 @@ namespace Banshee.Streaming
                     case CommonTags.Artist:
                         track.ArtistName = Choose ((string)tag.Value, track.ArtistName);
                         break;
+                    case CommonTags.ArtistSortName:
+                    case CommonTags.MusicBrainzSortName:
+                        track.ArtistNameSort = Choose ((string)tag.Value, track.ArtistNameSort);
+                        break;
                     case CommonTags.Title:
                         //track.TrackTitle = Choose ((string)tag.Value, track.TrackTitle);
                         string title = Choose ((string)tag.Value, track.TrackTitle);
@@ -234,8 +242,14 @@ namespace Banshee.Streaming
                             track.TrackTitle = title;
                         }
                         break;
+                    case CommonTags.TitleSortName:
+                        track.TrackTitleSort = Choose ((string)tag.Value, track.TrackTitleSort);
+                        break;
                     case CommonTags.Album:
                         track.AlbumTitle = Choose ((string)tag.Value, track.AlbumTitle);
+                        break;
+                    case CommonTags.AlbumSortName:
+                        track.AlbumTitleSort = Choose ((string)tag.Value, track.AlbumTitleSort);
                         break;
                     case CommonTags.Disc:
                     case CommonTags.AlbumDiscNumber:

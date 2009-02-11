@@ -1,5 +1,31 @@
 2009-02-10  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	Patch from John Millikin adding support for sort values for artist, album,
+	title, and album artist.  They are read in and written out using TagLib#,
+	but are not yet editable in the track editor.  Actually, they are not yet
+	used for sorting either, that will come in a subsequent patch.
+
+	* src/Core/Banshee.Core/Banshee.Collection/AlbumInfo.cs:
+	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:
+	* src/Core/Banshee.Core/Banshee.Collection/ArtistInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseArtistInfo.cs:
+	Add *Sort properties.
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	Add columns for new *Sort properties, and trigger a metadata refresh to
+	read them in from the files in the library.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseArtistListModel.cs: 
+
+	* src/Core/Banshee.Core/Banshee.Streaming/SaveTrackMetadataJob.cs:
+	* src/Core/Banshee.Core/Banshee.Streaming/StreamTagger.cs:
+	* src/Core/Banshee.Core/Banshee.Streaming/CommonTags.cs: Handle reading
+	and writing the *Sort values from/to files.
+
+2009-02-10  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	Patch from John Millikin fixing issue with downloading some podcasts.
 
 	* Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:
