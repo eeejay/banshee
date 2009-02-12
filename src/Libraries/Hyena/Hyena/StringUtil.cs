@@ -205,22 +205,39 @@ namespace Hyena
             return sb.ToString ().Normalize (NormalizationForm.FormKC);
         }
         
-        private static string invalid_path_characters = "\"\\:'~`!@#$%^&*_-+|?/><[]";
-        private static Regex invalid_path_regex;
+        private static Regex invalid_path_regex = BuildInvalidPathRegex ();
+
+        private static Regex BuildInvalidPathRegex ()
+        {
+            char [] invalid_path_characters = new char [] {
+                // Control characters: there's no reason to ever have one of these in a track name anyway,
+                // and they're invalid in all Windows filesystems.
+                '\x00', '\x01', '\x02', '\x03', '\x04', '\x05', '\x06', '\x07',
+                '\x08', '\x09', '\x0A', '\x0B', '\x0C', '\x0D', '\x0E', '\x0F',
+                '\x10', '\x11', '\x12', '\x13', '\x14', '\x15', '\x16', '\x17',
+                '\x18', '\x19', '\x1A', '\x1B', '\x1C', '\x1D', '\x1E', '\x1F',
+                
+                // Invalid in FAT32 / NTFS: " \ / : * | ? < >
+                // Invalid in HFS   :
+                // Invalid in ext3  /
+                '"', '\\', '/', ':', '*', '|', '?', '<', '>'
+            };
+
+            string regex_str = "[";
+            for (int i = 0; i < invalid_path_characters.Length; i++) {
+                regex_str += "\\" + invalid_path_characters[i];
+            }
+            regex_str += "]+";
+            
+            return new Regex (regex_str, RegexOptions.Compiled);
+        }
         
         public static string EscapeFilename (string input)
         {
-            if (invalid_path_regex == null) {
-                string regex_str = "[";
-                for (int i = 0; i < invalid_path_characters.Length; i++) {
-                    regex_str += "\\" + invalid_path_characters[i];
-                }
-                regex_str += "]+";
-                
-                invalid_path_regex = new Regex (regex_str, RegexOptions.Compiled);
-            }
+            if (input == null)
+                return "";
             
-            return invalid_path_regex.Replace (input, String.Empty);
+            return invalid_path_regex.Replace (input, "_");
         }
     }
 }

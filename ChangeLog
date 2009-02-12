@@ -1,3 +1,14 @@
+2009-02-12  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Libraries/Hyena/Hyena/StringUtil.cs: Patch from John Millikin
+	revamping the illegal_chars array, removing a bunch of chars that should
+	be fine, and making sure it escapes all chars that are invalid in FAT32,
+	HFS, and ext3 (BGO #458224).  Changes by me to handle null input, and move
+	the Regex creation to static init instead of lazy load.
+
+	* src/Libraries/Hyena/Hyena/Tests/StringUtilTests.cs: Tests for the
+	revamped EscapeFilename method.
+
 2009-02-11  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/Column.cs:

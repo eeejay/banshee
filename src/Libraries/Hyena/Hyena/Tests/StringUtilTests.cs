@@ -236,6 +236,49 @@ href=http://lkjdflkjdflkjj>baz foo< /a> bar"));
             AssertSearchKey ("/", "");
         }
     }
+
+    [TestFixture]
+    public class EscapeFilenameTests
+    {
+        private void AssertProduces (string input, string output)
+        {
+            Assert.AreEqual (output, StringUtil.EscapeFilename (input));
+        }
+
+        private void AssertProducesSame (string input)
+        {
+            AssertProduces (input, input);
+        }
+        
+        [Test]
+        public void TestEmpty ()
+        {
+            AssertProduces (null,   "");
+            AssertProduces ("",     "");
+            AssertProduces (" ",    " ");
+            AssertProduces ("   ",  "   ");
+        }
+
+        [Test]
+        public void TestNotChanged ()
+        {
+            AssertProducesSame ("a");
+            AssertProducesSame ("aaa");
+            AssertProducesSame ("Foo Bar");
+            AssertProducesSame ("03-Nur geträumt");
+            AssertProducesSame ("你好");
+            AssertProducesSame ("nǐ hǎo");
+        }
+
+        [Test]
+        public void TestStripped ()
+        {
+            AssertProduces ("Foo*bar", "Foo_bar");
+            AssertProduces ("</foo:bar?>", "_foo_bar_");
+            AssertProduces ("</:?>", "_");
+            AssertProduces ("Greetings! -* 你好?", "Greetings! -_ 你好_");
+        }
+    }
 }
 
 #endif
