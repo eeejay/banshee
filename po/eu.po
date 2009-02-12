@@ -1,0 +1,4985 @@
+# translation of banshee.po to Basque
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>, 2008.
+msgid ""
+msgstr ""
+"Project-Id-Version: banshee\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-02-12 23:44+0100\n"
+"PO-Revision-Date: 2008-12-16 23:53+0100\n"
+"Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
+"Language-Team: Basque <itzulpena@euskalgnu.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
+"X-Generator: KBabel 1.11.4\n"
+
+#: ../data/audio-profiles/base.xml.in.h:1
+msgid "Channels"
+msgstr "Kanalak"
+
+#: ../data/audio-profiles/flac.xml.in.h:1
+msgid "Free Lossless Audio Codec"
+msgstr "Galerarik gabeko audio-kodek librea"
+
+#: ../data/audio-profiles/flac.xml.in.h:2
+msgid ""
+"Free Lossless Audio Codec (FLAC) is an open source codec that compresses but "
+"does not degrade audio quality."
+msgstr ""
+"Galerarik gabeko audio-kodek librea (GGAKL) iturburu irekiko kodek bat da, "
+"eta audioa konprimitzen du kalitatea galdu gabe."
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:1
+#: ../data/audio-profiles/mp3-xing.xml.in.h:1
+msgid ""
+"A proprietary and older, but also popular, lossy audio format that produces "
+"larger files at lower bitrates."
+msgstr ""
+"Galeradun audio-formatu pribatua eta ezaguna, zaharragoa, fitxategi "
+"handiagoak sortzen dituena, eta bit-emari apalagoa duena."
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:2
+msgid "Average Bitrate"
+msgstr "Batez besteko bit-emaria"
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:3
+#: ../data/audio-profiles/vorbis.xml.in.h:2
+#: ../data/audio-profiles/wavpack.xml.in.h:2
+#: ../data/audio-profiles/wma.xml.in.h:3
+msgid "Best"
+msgstr "Onena"
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:4
+#: ../data/audio-profiles/mp3-xing.xml.in.h:2
+#: ../data/audio-profiles/wavpack.xml.in.h:3
+#: ../data/audio-profiles/wma.xml.in.h:4
+msgid "Bitrate"
+msgstr "Bit-emaria"
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:5
+msgid "Constant Bitrate"
+msgstr "Bit-emari konstantea"
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:6
+msgid "MP3 (LAME Encoder)"
+msgstr "MP3 (LAME kodetzailea)"
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:7
+msgid "VBR Mode"
+msgstr "VBR modua"
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:8
+msgid "VBR Quality"
+msgstr "VBR kalitatea"
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:9
+msgid "Variable Bitrate"
+msgstr "Bit-emari aldagarria"
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:10
+#: ../data/audio-profiles/vorbis.xml.in.h:5
+#: ../data/audio-profiles/wavpack.xml.in.h:11
+#: ../data/audio-profiles/wma.xml.in.h:7
+msgid "Worst"
+msgstr "Txarrena"
+
+#: ../data/audio-profiles/mp3-xing.xml.in.h:3
+msgid "MP3 (Xing Encoder)"
+msgstr "MP3 (Xing kodetzailea)"
+
+#: ../data/audio-profiles/vorbis.xml.in.h:1
+msgid "Audio quality"
+msgstr "Audio-kalitatea"
+
+#: ../data/audio-profiles/vorbis.xml.in.h:3
+msgid "Ogg Vorbis"
+msgstr "Ogg Vorbis"
+
+#: ../data/audio-profiles/vorbis.xml.in.h:4
+msgid ""
+"Vorbis is an open source, lossy audio codec with high quality output at a "
+"lower file size than MP3."
+msgstr ""
+"Iturburu irekiko galeradun audio-kodeka da Vorbis, kalitate handiko irteera "
+"duena, eta MP3 fitxategien tamaina baino txikiagoa."
+
+#: ../data/audio-profiles/wavpack.xml.in.h:1
+msgid ""
+"A fast and efficient open source audio format offering lossless and high-"
+"quality lossy encoding with great dynamic range."
+msgstr ""
+"Iturburu irekiko audio-formatu bizkor eta eraginkorra, galerarik gabeko eta "
+"kalitate handiko galeradun kodeketak eskaintzen dituena, tarte dinamiko oso "
+"handiarekin."
+
+#: ../data/audio-profiles/wavpack.xml.in.h:4
+msgid "Default"
+msgstr "Lehenetsia"
+
+#: ../data/audio-profiles/wavpack.xml.in.h:5
+msgid "Extra processing"
+msgstr "Prozesatze osagarria"
+
+#: ../data/audio-profiles/wavpack.xml.in.h:6
+msgid "Highest"
+msgstr "Handiena"
+
+#: ../data/audio-profiles/wavpack.xml.in.h:7
+msgid "Lossy mode"
+msgstr "Galeradun modua"
+
+#: ../data/audio-profiles/wavpack.xml.in.h:8
+msgid "Mode"
+msgstr "Modua"
+
+#: ../data/audio-profiles/wavpack.xml.in.h:9
+msgid "Store MD5 sum in the file"
+msgstr "Gorde MD5 batura fitxategian"
+
+#: ../data/audio-profiles/wavpack.xml.in.h:10
+msgid "Wavpack"
+msgstr "Wavpack"
+
+#: ../data/audio-profiles/wav.xml.in.h:1
+msgid ""
+"WAV+PCM is a lossless format that holds uncompressed, raw pulse-code "
+"modulated (PCM) audio."
+msgstr ""
+"WAV+PCM galerarik gabeko formatua da, pultsu kodetuen bidez modulatutako "
+"(PKM) konprimitu gabeko audio gordina duena."
+
+#: ../data/audio-profiles/wav.xml.in.h:2
+msgid "Waveform PCM"
+msgstr "Waveform PKM"
+
+#: ../data/audio-profiles/wma.xml.in.h:1
+msgid ""
+"A proprietary lossy audio format with high quality output at a lower file "
+"size than MP3. A 96 kbps WMA is equivalent to a 128 kbps MP3."
+msgstr ""
+"Galeradun audio-formatu pribatua, kalitate handiko irteera duena, eta "
+"tamaina MP3 fitxategiena baino txikiagoa. 128 kb/s-ko MP3aren baliokidea da "
+"96 kb/s-ko WMA."
+
+#: ../data/audio-profiles/wma.xml.in.h:2
+msgid "Audio Quality"
+msgstr "Audio-kalitatea"
+
+#: ../data/audio-profiles/wma.xml.in.h:5
+msgid "Use a variable bitrate"
+msgstr "Erabili bit-emari aldagarria"
+
+#: ../data/audio-profiles/wma.xml.in.h:6
+msgid "Windows Media Audio"
+msgstr "Windows Media Audio"
+
+#: ../libbanshee/banshee-bpmdetector.c:199 ../libbanshee/banshee-ripper.c:268
+msgid "Could not create pipeline"
+msgstr "Ezin izan da kanalizazioa sortu."
+
+#: ../libbanshee/banshee-bpmdetector.c:205
+#, fuzzy
+msgid "Could not create filesrc element"
+msgstr "Ezin izan da sortu 'filesrc' plugina"
+
+#: ../libbanshee/banshee-bpmdetector.c:211
+#, fuzzy
+msgid "Could not create decodebin plugin"
+msgstr "Ezin izan da sortu 'decodebin' plugina"
+
+#: ../libbanshee/banshee-bpmdetector.c:217
+#, fuzzy
+msgid "Could not create audioconvert plugin"
+msgstr "Ezin izan da sortu 'audioconvert' plugina"
+
+#: ../libbanshee/banshee-bpmdetector.c:223
+#, fuzzy
+msgid "Could not create bpmdetect plugin"
+msgstr "Ezin izan da sortu itxaronilararen plugina"
+
+#: ../libbanshee/banshee-bpmdetector.c:229
+#, fuzzy
+msgid "Could not create fakesink plugin"
+msgstr "Ezin izan da sortu 'filesink' plugina"
+
+#: ../libbanshee/banshee-bpmdetector.c:238
+#: ../libbanshee/banshee-bpmdetector.c:247 ../libbanshee/banshee-ripper.c:309
+msgid "Could not link pipeline elements"
+msgstr "Ezin izan dira kanalizazioko elementuak estekatu"
+
+#: ../libbanshee/banshee-ripper.c:274
+msgid "Could not initialize element from cdda URI"
+msgstr "Ezin izan da hasieratu CDDA URIko elementua"
+
+#: ../libbanshee/banshee-ripper.c:288
+msgid "Could not create encoder pipeline"
+msgstr "Ezin izan da sortu kodetzailearen kanalizazioa."
+
+#: ../libbanshee/banshee-ripper.c:294
+msgid "Could not create queue plugin"
+msgstr "Ezin izan da sortu itxaronilararen plugina"
+
+#: ../libbanshee/banshee-ripper.c:302
+msgid "Could not create filesink plugin"
+msgstr "Ezin izan da sortu 'filesink' plugina"
+
+#: ../libbanshee/banshee-transcoder.c:241
+msgid "Could not create 'filesrc' plugin"
+msgstr "Ezin izan da sortu 'filesrc' plugina"
+
+#: ../libbanshee/banshee-transcoder.c:247
+msgid "Could not create 'decodebin' plugin"
+msgstr "Ezin izan da sortu 'decodebin' plugina"
+
+#: ../libbanshee/banshee-transcoder.c:253
+msgid "Could not create 'filesink' plugin"
+msgstr "Ezin izan da sortu 'filesink' plugina"
+
+#: ../libbanshee/banshee-transcoder.c:259
+msgid "Could not create 'sinkben' plugin"
+msgstr "Ezin izan da sortu 'sinkben' plugina"
+
+#: ../libbanshee/banshee-transcoder.c:265
+msgid "Could not create 'audioconvert' plugin"
+msgstr "Ezin izan da sortu 'audioconvert' plugina"
+
+#: ../libbanshee/banshee-transcoder.c:271
+msgid "Could not create encoding pipeline"
+msgstr "Ezin izan da sortu kodeketa-kanalizazioa"
+
+#: ../libbanshee/banshee-transcoder.c:277
+msgid "Could not get sink pad from encoder"
+msgstr "Ezin izan da kodetzaileko kolektore pada lortu"
+
+#: ../libbanshee/banshee-transcoder.c:345
+msgid "Could not construct pipeline"
+msgstr "Ezin izan da kanalizazioa eraiki."
+
+#: ../src/Backends/Banshee.Gnome/Banshee.GnomeBackend/Brasero.cs:64
+msgid "Write CD..."
+msgstr "Grabatu CDa..."
+
+#: ../src/Backends/Banshee.Gnome/Banshee.GnomeBackend/Brasero.cs:65
+msgid "Write selected tracks to an audio CD"
+msgstr "Grabatu hautatutako pistak Audio CD batean"
+
+#: ../src/Backends/Banshee.Gnome/Banshee.GnomeBackend/Brasero.cs:103
+msgid "Could not write CD"
+msgstr "Ezin izan da CDa grabatu"
+
+#: ../src/Backends/Banshee.Gnome/Banshee.GnomeBackend/Brasero.cs:104
+msgid "Brasero could not be started"
+msgstr "Ezin izan da Brasero abiarazi"
+
+#: ../src/Backends/Banshee.Gnome/Banshee.GnomeBackend/GnomeScreensaverManager.cs:78
+msgid "Fullscreen video playback active"
+msgstr ""
+
+#: ../src/Backends/Banshee.GStreamer/Banshee.GStreamer/AudioCdRipper.cs:89
+msgid "Could not find an encoder for ripping."
+msgstr "Ezin izan da kodetzailerik aurkitu erauzteko."
+
+#: ../src/Backends/Banshee.GStreamer/Banshee.GStreamer/AudioCdRipper.cs:108
+msgid "Could not create CD ripping driver."
+msgstr "Ezin izan da CD erauzlea sortu."
+
+#: ../src/Backends/Banshee.GStreamer/Banshee.GStreamer/BpmDetector.cs:71
+#, fuzzy
+msgid "Could not create BPM detection driver."
+msgstr "Ezin izan da CD erauzlea sortu."
+
+#: ../src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs:131
+msgid "Could not initialize GStreamer library"
+msgstr "Ezin izan da GStreamer liburutegia hasieratu"
+
+#: ../src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs:259
+msgid "Unknown Error"
+msgstr "Errore ezezaguna"
+
+#: ../src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs:501
+#, fuzzy
+msgid "_Enable ReplayGain Correction"
+msgstr "_Gaitu kanten berri ematea"
+
+#: ../src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs:502
+msgid ""
+"For tracks that have ReplayGain data, automatically scale (normalize) "
+"playback volume."
+msgstr ""
+
+#: ../src/Backends/Banshee.GStreamer/Banshee.GStreamer/Transcoder.cs:63
+msgid "Could not create transcoder"
+msgstr "Ezin izan da transkodetzailea sortu"
+
+#: ../src/Backends/Banshee.Osx/Banshee.OsxBackend/OsxService.cs:87
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:116
+msgid "_Close"
+msgstr "It_xi"
+
+#: ../src/Backends/Banshee.Osx/Banshee.OsxBackend/OsxService.cs:88
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:117
+msgid "Close"
+msgstr "Itxi"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:146
+msgid "Help Options"
+msgstr "Laguntzaren aukerak"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:147
+msgid "Show this help"
+msgstr "Erakutsi laguntza hau"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:148
+msgid "Show options for controlling playback"
+msgstr "Erakutsi aukerak erreprodukzioa kontrolatzeko"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:149
+msgid "Show options for querying the playing track"
+msgstr "Erakutsi aukerak erreprodukzioko pistak kontsultatzeko"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:150
+msgid "Show options for querying the playing engine"
+msgstr "Erakutsi aukerak erreproduzkio-motorra kontsultatzeko"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:151
+msgid "Show options for the user interface"
+msgstr "Erakutsi erabiltzaile-interfazearen aukerak"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:152
+msgid "Show options for developers and debugging"
+msgstr "Erakutsi garatzaileen eta arazketaren aukerak"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:153
+msgid "Show all option groups"
+msgstr "Erakutsi aukeren talde guztia"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:154
+msgid "Show version information"
+msgstr "Erakutsi bertsio-informazioa"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:157
+msgid "Playback Control Options"
+msgstr "Erreprodukzio-kontrolaren aukerak"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:158
+msgid ""
+"Play the next track, optionally restarting if the 'restart' value is set"
+msgstr ""
+"Erreproduzitu hurrengo pista, aukeran berrabiaraztea 'berrabiarazi' ezartzen "
+"bada"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:159
+msgid ""
+"Play the previous track, optionally restarting if the 'restart value is set"
+msgstr ""
+"Erreproduzitu aurreko pista, aukeran berrabiaraztea 'berrabiarazi' ezartzen "
+"bada"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:160
+msgid "Automatically start playing any tracks enqueued on the command line"
+msgstr ""
+"Hasi komando-lerroan ilaratutako edozein pista automatikoki erreproduzitzen"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:161
+msgid "Start playback"
+msgstr "Hasi erreprodukzioa"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:162
+msgid "Pause playback"
+msgstr "Gelditu erreprodukzioa"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:163
+#, fuzzy
+msgid "Toggle playback"
+msgstr "Gelditu erreprodukzioa"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:164
+msgid "Completely stop playback"
+msgstr "Gelditu erabat erreprodukzioa"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:166
+msgid ""
+"Enable or disable playback stopping after the currently playing track (value "
+"should be either 'true' or 'false')"
+msgstr ""
+"Gaitu edo desgaitu erreprodukzioa gelditzea uneko pista erreproduzitu "
+"ondoren (balioa 'true' edo 'false' izan daiteke)"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:167
+msgid "Set the playback volume (0-100)"
+msgstr "Ezarri erreprodukzioaren bolumena (0-100)"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:168
+msgid "Seek to a specific point (seconds, float)"
+msgstr "Joan puntu zehatz batera (segundoak, mugikorra)"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:171
+msgid "Player Engine Query Options"
+msgstr "Erreprodukzio-motorraren kontsulten aukerak"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:172
+msgid "Current player state"
+msgstr "Uneko erreproduzitzailearen egoera"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:173
+msgid "Last player state"
+msgstr "Azkeneko erreproduzitzailearen egoera"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:174
+msgid "Query whether the player can be paused"
+msgstr "Kontsultatu erreproduzitzailea pausarazi daitekeen edo ez"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:175
+msgid "Query whether the player can seek"
+msgstr "Kontsultatu erreproduzitzaileak posizio batera joan daitekeen edo ez"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:176
+msgid "Player volume"
+msgstr "Erreproduzitzailearen bolumena"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:177
+msgid "Player position in currently playing track"
+msgstr "Erreproduzitzailearen posizioa uneko erreprodukzioko pistan"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:180
+msgid "Playing Track Metadata Query Options"
+msgstr "Erreprodukzio-pistaren metadatuen kontsultaren aukerak"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:181
+msgid "URI"
+msgstr "URIa"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:182
+#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:140
+msgid "Artist Name"
+msgstr "Artistaren izena"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:183
+#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:141
+msgid "Album Title"
+msgstr "Albumaren izenburua"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:184
+#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:139
+msgid "Track Title"
+msgstr "Pistaren izenburua"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:185
+msgid "Duration"
+msgstr "Iraupena"
+
+#. Translators: noun
+#: ../src/Clients/Booter/Booter/Entry.cs:186
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:137
+msgid "Track Number"
+msgstr "Pista-zenbakia"
+
+#. Translators: noun
+#: ../src/Clients/Booter/Booter/Entry.cs:187
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:146
+msgid "Track Count"
+msgstr "Pistaren kontagailua"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:188
+msgid "Disc Number"
+msgstr "Disko-zenbakia"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:189
+#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:143
+#: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:116
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:179
+msgid "Year"
+msgstr "Urtea"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:190
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:232
+msgid "Rating"
+msgstr "Balorazioa"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:193
+msgid "User Interface Options"
+msgstr "Erabiltzaile-interfazearen aukerak"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:194
+msgid "Present the user interface on the active workspace"
+msgstr "Agertu erabiltzaile-interfazea laneko area aktiboan"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:195
+msgid "Hide the user interface"
+msgstr "Ezkutatu erabiltzaile-interfazea"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:196
+msgid "Do not present the user interface, regardless of any other options"
+msgstr "Ez agertu erabiltzaile-interfazea, beste aukerak kontutan hartu gabe"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:199
+msgid "Debugging and Development Options"
+msgstr "Arazketa eta garapenerako aukerak"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:200
+msgid "Enable general debugging features"
+msgstr "Gaitu arazketaren eginbide orokorrak"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:201
+msgid "Enable debugging output of SQL queries"
+msgstr "Gaitu SQL kontsulten irteera araztea"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:202
+msgid "Enable debugging output of Mono.Addins"
+msgstr "Gaitu Mono.Addins-en irteera araztea"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:203
+msgid "Specify an alternate database to use"
+msgstr "Zehaztu bestelako datu-basea erabiltzeko"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:204
+msgid ""
+"Optimize instance for running uninstalled; most notably, this will create an "
+"alternate Mono.Addins database in the working directory"
+msgstr ""
+"Optimizatu instantzia instalatu gabe exekutatzeko. Honek beste Mono.Addins "
+"datu-basea sortuko du laneko direktorioan"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:206
+msgid "Disable DBus support completely"
+msgstr "Desgaitu DBus euskarria erabat"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:208
+#, csharp-format
+msgid "Skip loading a custom gtkrc file ({0}) if it exists"
+msgstr ""
+"Saltatut gtkrc fitxategi ({0}) pertsonalizatua kargatzea existitzen bada"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:239
+#, csharp-format
+msgid "The following help arguments are invalid: {0}"
+msgstr "Honako laguntza-argumentuak ez dira baliozkoak: {0}"
+
+#: ../src/Clients/Muinshee/Muinshee/AlbumDialog.cs:77
+#, fuzzy
+msgid "Play Album"
+msgstr "Erreproduzitzailearen bolumena"
+
+#: ../src/Clients/Muinshee/Muinshee/BaseDialog.cs:83
+msgid "En_queue"
+msgstr ""
+
+#: ../src/Clients/Muinshee/Muinshee/BaseDialog.cs:86
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:66
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:196
+msgid "_Play"
+msgstr "_Erreproduzitu"
+
+#: ../src/Clients/Muinshee/Muinshee/MuinsheeActions.cs:47
+#, fuzzy
+msgid "Play _Song"
+msgstr "Kontagailua"
+
+#: ../src/Clients/Muinshee/Muinshee/MuinsheeActions.cs:48
+#, fuzzy
+msgid "Add a song to the playlist"
+msgstr "Erreproduzitu kantak ausaz erreprodukzio-zerrendatik"
+
+#: ../src/Clients/Muinshee/Muinshee/MuinsheeActions.cs:52
+#, fuzzy
+msgid "Play _Album"
+msgstr "Erreproduzitzailearen bolumena"
+
+#: ../src/Clients/Muinshee/Muinshee/MuinsheeActions.cs:53
+#, fuzzy
+msgid "Add an album to the playlist"
+msgstr "Gehi_tu erreprodukzio-zerrendara"
+
+#: ../src/Clients/Muinshee/Muinshee/PlayerInterface.cs:72
+#: ../src/Clients/Nereid/Nereid/PlayerInterface.cs:76
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/BaseClientWindow.cs:162
+msgid "Banshee Media Player"
+msgstr "Banshee musika-erreproduzitzailea"
+
+#: ../src/Clients/Muinshee/Muinshee/PlayerInterface.cs:254
+#, fuzzy, csharp-format
+msgid "{0} remaining"
+msgstr "Minutu {0}"
+
+#: ../src/Clients/Muinshee/Muinshee/SongDialog.cs:53
+#, fuzzy
+msgid "Play Song"
+msgstr "Kontagailua"
+
+#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:88
+msgid "_Search:"
+msgstr "_Bilatu:"
+
+#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:138
+#, fuzzy
+msgid "Artist, Album, or Title"
+msgstr "Albumaren izenburua"
+
+#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:142
+#: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:101
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:67
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:187
+msgid "Genre"
+msgstr "Generoa"
+
+#. Translators: this is a verb (command), not a noun (things)
+#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:164
+#, csharp-format
+msgid "Filter Results"
+msgstr "Iragazi emaitzak"
+
+#: ../src/Core/Banshee.Core/Banshee.Base/CoverArtSpec.cs:39
+#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:289
+#: ../src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseArtistInfo.cs:82
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdDiscModel.cs:99
+#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:165
+msgid "Unknown Artist"
+msgstr "Artista ezezaguna"
+
+#: ../src/Core/Banshee.Core/Banshee.Base/CoverArtSpec.cs:41
+#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:307
+#: ../src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumInfo.cs:85
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdDiscModel.cs:100
+#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:164
+msgid "Unknown Album"
+msgstr "Album ezezaguna"
+
+#: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:84
+#, fuzzy
+msgid "Track Artist"
+msgstr "Pistaren izenburua"
+
+#. Alias for %album_artist%
+#: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:89
+#: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:95
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:102
+#, fuzzy
+msgid "Album Artist"
+msgstr "Albumaren izenburua"
+
+#: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:106
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:63
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:112
+msgid "Album"
+msgstr "Albuma"
+
+#: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:111
+msgid "Title"
+msgstr "Izenburua"
+
+#: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:121
+msgid "Count"
+msgstr "Kopurua"
+
+#: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:126
+msgid "Number"
+msgstr "Zenbakia"
+
+#: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:131
+msgid "Count (unsorted)"
+msgstr "Kopurua (ordenatu gabe)"
+
+#: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:136
+msgid "Number (unsorted)"
+msgstr "Zenbakia (ordenatu gabe)"
+
+#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:231
+#, fuzzy
+msgid "Various Artists"
+msgstr "artistak"
+
+#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:316
+msgid "Unknown Title"
+msgstr "Izenburu ezezaguna"
+
+#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:325
+#, fuzzy
+msgid "Unknown Genre"
+msgstr "Ezezaguna"
+
+#. TODO turn this into a PrimarySource-owned delegate?
+#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:527
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastFeedModel.cs:47
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastSource.cs:157
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastEpisodePage.cs:86
+msgid "Podcast"
+msgstr "Podcasta"
+
+#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:528
+#: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapInfoBar.cs:68
+msgid "Video"
+msgstr "Bideoa"
+
+#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:529
+#, fuzzy
+msgid "Song"
+msgstr "noiz"
+
+#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:530
+#, fuzzy
+msgid "Item"
+msgstr "elementuak"
+
+#: ../src/Core/Banshee.Core/Banshee.Streaming/SaveTrackMetadataJob.cs:42
+#, csharp-format
+msgid "Saving tags for {0}"
+msgstr "Honen etiketak gordetzen: {0}"
+
+#: ../src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumListModel.cs:68
+#, csharp-format
+msgid "All Albums ({0})"
+msgstr "Album guztiak ({0})"
+
+#: ../src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseArtistListModel.cs:67
+#, csharp-format
+msgid "All Artists ({0})"
+msgstr "Artista guztiak ({0})"
+
+#: ../src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs:136
+msgid "Scanning for media"
+msgstr "Euskarria eskaneatzen"
+
+#: ../src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs:184
+#: ../src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:965
+msgid "Scanning..."
+msgstr "Eskaneatzea..."
+
+#: ../src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs:200
+#, csharp-format
+msgid "Scanning ({0} files)..."
+msgstr "Eskaneatzen ({0} fitxategi)..."
+
+#: ../src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs:234
+msgid "Importing Media"
+msgstr "Euskarria inportatzen"
+
+#: ../src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs:241
+#: ../src/Core/Banshee.Services/Banshee.Library/ThreadPoolImportSource.cs:115
+msgid "The import process is currently running. Would you like to stop it?"
+msgstr "Inportatze-prozesua martxan dago une honetan. Geldiarazi nahi duzu?"
+
+#: ../src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs:247
+#: ../src/Core/Banshee.Services/Banshee.Library/ThreadPoolImportSource.cs:77
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdRipper.cs:179
+#, csharp-format
+msgid "Importing {0} of {1}"
+msgstr "Inportatzen: {0} / {1}"
+
+#: ../src/Core/Banshee.Services/Banshee.Collection/MoveOnInfoSaveJob.cs:44
+#, fuzzy, csharp-format
+msgid "Renaming {0}"
+msgstr "{0} kargatzen"
+
+#: ../src/Core/Banshee.Services/Banshee.Collection/RescanPipeline.cs:77
+#, fuzzy, csharp-format
+msgid "Rescanning {0} of {1}"
+msgstr "BIhurtzen: {0} / {1}"
+
+#: ../src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:226
+msgid "Upgrading your Banshee Database"
+msgstr "Zure Banshee datu-basea eguneratzen"
+
+#: ../src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:227
+msgid ""
+"Please wait while your old Banshee database is migrated to the new format."
+msgstr "Itxaron Banshee-ren datu-base zaharra formatu berrira migratu arte."
+
+#: ../src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:964
+msgid "Refreshing Metadata"
+msgstr "Metadatuak freskatzen"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/HomeDirectoryImportSource.cs:48
+msgid "Home Directory"
+msgstr "Karpeta nagusia"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/LibrarySource.cs:52
+msgid "Remove From Library"
+msgstr "Kendu liburutegitik"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:42
+#: ../src/Core/Banshee.Services/Banshee.Preferences/Page.cs:56
+msgid "Music Library"
+msgstr "Musika-liburutegia"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:59
+#: ../src/Core/Banshee.Services/Banshee.Library/VideoLibrarySource.cs:80
+msgid "Favorites"
+msgstr "Gogokoak"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:60
+msgid "Songs rated four and five stars"
+msgstr "Lau eta bost izar dituzten kantak"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:64
+msgid "Recent Favorites"
+msgstr "Azken gogokoak"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:65
+msgid "Songs listened to often in the past week"
+msgstr "Azken astean askotan entzundako kantak"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:69
+msgid "Recently Added"
+msgstr "Oraintsuen gehitutakoak"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:70
+msgid "Songs imported within the last week"
+msgstr "Azken astean inportatutako kantak"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:74
+msgid "Unheard"
+msgstr "Entzun gabeak"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:75
+msgid "Songs that have not been played or skipped"
+msgstr "Erreproduzitu ez diren edo saltatu diren kantak"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:81
+msgid "Neglected Favorites"
+msgstr "Jaramonik egin ez zaien gogokoak"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:82
+msgid "Favorites not played in over two weeks"
+msgstr "Bi aste baino gehiagotan erreproduzitu ez diren gogokoak"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:86
+msgid "Least Favorite"
+msgstr "Gutxieneko gogokoak"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:87
+msgid "Songs rated one or two stars or that you have frequently skipped"
+msgstr "Izar bat edo bi dituzten kantak, edo askotan saltatutakoak"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:91
+msgid "700 MB of Favorites"
+msgstr "Gogokoen 700 MB"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:92
+msgid "A data CD worth of favorite songs"
+msgstr "Datuen CDa gogoko kantekin osatua"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:97
+msgid "80 Minutes of Favorites"
+msgstr "Gogokoen 80 minutu"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:98
+msgid "An audio CD worth of favorite songs"
+msgstr "Audio CDa gogoko kantekin osatua"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:103
+msgid "Unrated"
+msgstr "Baloratu gabea"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:104
+msgid "Songs that haven't been rated"
+msgstr "Baloratu ez diren kantak"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/ThreadPoolImportSource.cs:54
+msgid "Importing Songs"
+msgstr "Kantak inportatzea"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/ThreadPoolImportSource.cs:109
+#, fuzzy, csharp-format
+msgid "Importing From {0}"
+msgstr "Kantak hemendik inportatzen: {0}"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/VideoLibrarySource.cs:42
+msgid "Video Library"
+msgstr "Bideo-liburutegia"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/VideoLibrarySource.cs:63
+msgid "Produced By"
+msgstr "Ekoizlea:"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/VideoLibrarySource.cs:81
+msgid "Videos rated four and five stars"
+msgstr "Lau eta bost izar dituzten bideoak"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/VideoLibrarySource.cs:85
+msgid "Unwatched"
+msgstr "Ikusi gabeak"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/VideoLibrarySource.cs:86
+msgid "Videos that haven't been played yet"
+msgstr "Oraindik erreproduzitu ez diren bideoak"
+
+#: ../src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:95
+msgid "Default player engine"
+msgstr "Erreproduzigailu lehenetsia"
+
+#: ../src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:102
+msgid ""
+"No player engines were found. Please ensure Banshee has been cleanly "
+"installed."
+msgstr ""
+"Ez da erreproduzigailurik aurkitu. Begiratu Banshee ondo instalatua dagoen."
+
+#: ../src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:287
+msgid "Problem with Player Engine"
+msgstr "Arazoa dago erreproduzigailuarekin"
+
+#: ../src/Core/Banshee.Services/Banshee.MediaEngine/TranscoderService.cs:132
+#, csharp-format
+msgid "Converting {0} of {1}"
+msgstr "BIhurtzen: {0} / {1}"
+
+#: ../src/Core/Banshee.Services/Banshee.MediaEngine/TranscoderService.cs:132
+msgid "Initializing"
+msgstr "Hasieratzen"
+
+#: ../src/Core/Banshee.Services/Banshee.MediaEngine/TranscoderService.cs:133
+msgid ""
+"Files are currently being converted to another format. Would you like to "
+"stop this?"
+msgstr ""
+"Fitxategiak beste formatu batera bihurtzen ari dira. Prozesua geldiarazi "
+"nahi duzu?"
+
+#: ../src/Core/Banshee.Services/Banshee.Networking/Network.cs:52
+msgid "There is no available network connection"
+msgstr "Ez dago sare-konexio erabilgarririk"
+
+#: ../src/Core/Banshee.Services/Banshee.Networking/Network.cs:78
+msgid "Cannot connect to NetworkManager"
+msgstr "Ezin da NetworkManager-era konektatu"
+
+#: ../src/Core/Banshee.Services/Banshee.Networking/Network.cs:79
+msgid "An available, working network connection will be assumed"
+msgstr "Sare-konexio erabilgarri bat martxan dagoela onartuko da"
+
+#: ../src/Core/Banshee.Services/Banshee.Networking/Network.cs:150
+msgid "_Disable features requiring Internet access"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Networking/Network.cs:151
+msgid ""
+"Some features require a broadband Internet connection such as Last.fm or "
+"cover art fetching"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs:59
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:311
+msgid "Playlist"
+msgstr "Erreprodukzio-zerrenda"
+
+#: ../src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs:131
+msgid "Remove From Playlist"
+msgstr "Kendu erreprodukzio-zerrendatik"
+
+#: ../src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs:132
+msgid "Delete Playlist"
+msgstr "Ezabatu erreprodukzio-zerrenda"
+
+#: ../src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs:387
+#: ../src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs:393
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:88
+#: ../src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs:448
+#: ../src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView_DragAndDrop.cs:211
+msgid "New Playlist"
+msgstr "Erreprodukzio-zerrenda berria"
+
+#: ../src/Core/Banshee.Services/Banshee.Playlists.Formats/AsxPlaylistFormat.cs:46
+msgid "Windows Media ASX (*.asx)"
+msgstr "Windows Media ASX (*.asx)"
+
+#: ../src/Core/Banshee.Services/Banshee.Playlists.Formats/M3uPlaylistFormat.cs:44
+msgid "MPEG Version 3.0 Extended (*.m3u)"
+msgstr "MPEG 3.0 bertsio hedatua (*.m3u)"
+
+#: ../src/Core/Banshee.Services/Banshee.Playlists.Formats/PlsPlaylistFormat.cs:51
+msgid "Shoutcast Playlist version 2 (*.pls)"
+msgstr "Shoutcast Playlist 2 bertsioa (*.pls)"
+
+#: ../src/Core/Banshee.Services/Banshee.Preferences/Page.cs:52
+msgid "General"
+msgstr "Orokorra"
+
+#: ../src/Core/Banshee.Services/Banshee.Preferences/Page.cs:61
+msgid "Co_py files to media folders when importing"
+msgstr "_Inportatzean kopiatu fitxategiak multimedia karpetan"
+
+#: ../src/Core/Banshee.Services/Banshee.Preferences/Page.cs:64
+msgid "Write _metadata to files"
+msgstr "Idatzi _metadatuak fitxategietan"
+
+#: ../src/Core/Banshee.Services/Banshee.Preferences/Page.cs:65
+msgid ""
+"Enable this option to save tags and other metadata inside supported audio "
+"files."
+msgstr ""
+"Gaitu aukera hori onartutako audio-fitxategien barruan etiketak eta "
+"bestelako metadatuak gordetzeko"
+
+#: ../src/Core/Banshee.Services/Banshee.Preferences/Page.cs:68
+msgid "_Update file and folder names"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Preferences/Page.cs:69
+msgid ""
+"Enabling this option ensures that files and folders are renamed according to "
+"the metadata."
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Preferences/Page.cs:73
+msgid "File System Organization"
+msgstr "Fitxategi-sistemaren antolaketa"
+
+#: ../src/Core/Banshee.Services/Banshee.Preferences/Page.cs:76
+msgid "Folder hie_rarchy"
+msgstr "Karpeta-hie_rarkia"
+
+#: ../src/Core/Banshee.Services/Banshee.Preferences/Page.cs:79
+msgid "File _name"
+msgstr "Fitxategi-ize_na"
+
+#: ../src/Core/Banshee.Services/Banshee.Preferences/Page.cs:81
+msgid "Miscellaneous"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Preferences/Page.cs:83
+msgid "Extensions"
+msgstr "Hedapenak"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:59
+msgid "Random"
+msgstr "Ausazkoa"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:64
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:94
+msgid "Artist"
+msgstr "Artista"
+
+#. Translators: noun
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:66
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:171
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:62
+msgid "Name"
+msgstr "Izena"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:69
+msgid "Highest Rating"
+msgstr "Balorazio handiena"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:70
+msgid "Lowest Rating"
+msgstr "Balorazio txikiena"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:72
+msgid "Most Often Played"
+msgstr "Erreprodukzio-maiztasun handiena dutenak"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:73
+msgid "Least Often Played"
+msgstr "Erreprodukzio-maiztasun txikiena dutenak"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:75
+msgid "Most Recently Played"
+msgstr "Oraintsuen erreproduzitutakoak"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:76
+msgid "Least Recently Played"
+msgstr "Aspaldien erreproduzitutakoak"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:78
+msgid "Most Recently Added"
+msgstr "Oraintsuen gehitutakoak"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:79
+msgid "Least Recently Added"
+msgstr "Aspaldien gehitutakoak"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:83
+msgid "items"
+msgstr "elementuak"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:84
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/TimeSpanQueryValueEntry.cs:60
+msgid "minutes"
+msgstr "minutu"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:85
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/TimeSpanQueryValueEntry.cs:61
+msgid "hours"
+msgstr "ordu"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:86
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/FileSizeQueryValueEntry.cs:63
+msgid "MB"
+msgstr "MB"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:87
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/FileSizeQueryValueEntry.cs:64
+msgid "GB"
+msgstr "GB"
+
+#. Translators: These are unique search aliases for "artist".  Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:96
+msgid "artist"
+msgstr "artista"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:96
+msgid "by"
+msgstr "nork:"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:96
+msgid "artists"
+msgstr "artistak"
+
+#. Translators: These are unique search aliases for "album artist".  Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:104
+#, fuzzy
+msgid "albumartist"
+msgstr "artista"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:104
+msgid "compilationartist"
+msgstr ""
+
+#. Translators: These are unique search aliases for "album".  Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:114
+msgid "album"
+msgstr "albuma"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:114
+msgid "on"
+msgstr "noiz"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:114
+msgid "from"
+msgstr "-"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:120
+msgid "Disc"
+msgstr "Diskoa"
+
+#. Translators: These are unique search fields (and nouns).  Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:122
+msgid "disc"
+msgstr "diskoa"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:122
+msgid "cd"
+msgstr "cda"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:122
+msgid "discnum"
+msgstr "disko-zbkia"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:128
+#, fuzzy
+msgid "Disc Count"
+msgstr "Saltatze kopurua"
+
+#. Translators: These are unique search fields (and nouns).  Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:130
+#, fuzzy
+msgid "discs"
+msgstr "diskoa"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:130
+#, fuzzy
+msgid "cds"
+msgstr "cda"
+
+#. Translators: These are unique search fields.  Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:139
+#, fuzzy
+msgid "track"
+msgstr "Pista"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:139
+#, fuzzy
+msgid "trackno"
+msgstr "Pista"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:139
+#, fuzzy
+msgid "tracknum"
+msgstr "Pista"
+
+#. Translators: These are unique search fields.  Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:148
+#, fuzzy
+msgid "tracks"
+msgstr "Pista"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:148
+#, fuzzy
+msgid "trackcount"
+msgstr "Pistaren kontagailua"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:154
+msgid "Beats per Minute"
+msgstr ""
+
+#. Translators: These are unique search fields.  Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:156
+msgid "bpm"
+msgstr ""
+
+#. Translators: noun
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:163
+#, fuzzy
+msgid "Bit Rate"
+msgstr "Bit-emaria"
+
+#. Translators: These are unique search fields.  Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:165
+#, fuzzy
+msgid "bitrate"
+msgstr "Bit-emaria"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:165
+msgid "kbs"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:165
+#, fuzzy
+msgid "kps"
+msgstr "saltoak"
+
+#. Translators: These are unique search fields.  Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:173
+msgid "title"
+msgstr "izenburua"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:173
+msgid "titled"
+msgstr "izenburuarekin"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:173
+msgid "name"
+msgstr "izena"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:173
+msgid "named"
+msgstr "izendatua"
+
+#. Translators: These are unique search fields.  Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:181
+msgid "year"
+msgstr "urtea"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:181
+msgid "released"
+msgstr "argitaratua"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:181
+msgid "yr"
+msgstr "urt"
+
+#. Translators: These are unique search fields.  Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:189
+msgid "genre"
+msgstr "generoa"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:194
+msgid "Composer"
+msgstr "Konpositorea"
+
+#. Translators: These are unique search fields.  Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:196
+msgid "composer"
+msgstr "konpositorea"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:201
+#, fuzzy
+msgid "Conductor"
+msgstr "Kolaboratzaileak"
+
+#. Translators: These are unique search fields.  Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:203
+#, fuzzy
+msgid "conductor"
+msgstr "Produktua"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:208
+#, fuzzy
+msgid "Grouping"
+msgstr "Taldea"
+
+#. Translators: These are unique search fields.  Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:210
+#, fuzzy
+msgid "grouping"
+msgstr "Taldea"
+
+#. Translators: noun
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:216
+#, fuzzy
+msgid "Comment"
+msgstr "Kopurua"
+
+#. Translators: These are unique search fields (and nouns).  Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:218
+#, fuzzy
+msgid "comment"
+msgstr "Gomendatu:"
+
+#. Translators: noun
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:224
+msgid "License"
+msgstr ""
+
+#. Translators: These are unique search fields (and nouns).  Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:226
+#, fuzzy
+msgid "license"
+msgstr "entzunaldiak"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:226
+#, fuzzy
+msgid "licensed"
+msgstr "entzunaldiak"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:226
+msgid "under"
+msgstr ""
+
+#. , typeof(NullQueryValue)},
+#. Translators: These are unique search fields.  Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:234
+msgid "rating"
+msgstr "balorazioa"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:234
+msgid "stars"
+msgstr "izarrak"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:240
+msgid "Play Count"
+msgstr "Kontagailua"
+
+#. Translators: These are unique search fields (and nouns).  Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:242
+msgid "plays"
+msgstr "erreprodukzioak"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:242
+msgid "playcount"
+msgstr "kontagailua"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:242
+msgid "listens"
+msgstr "entzunaldiak"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:248
+msgid "Skip Count"
+msgstr "Saltatze kopurua"
+
+#. Translators: These are unique search fields (and nouns).  Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:250
+msgid "skips"
+msgstr "saltoak"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:250
+msgid "skipcount"
+msgstr "saltatze kopurua"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:256
+msgid "File Size"
+msgstr "Fitxategi-tamaina"
+
+#. Translators: These are unique search fields (and nouns).  Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:258
+msgid "size"
+msgstr "tamaina"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:258
+msgid "filesize"
+msgstr "fitxategi-tamaina"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:264
+msgid "File Location"
+msgstr "Fitxategiaren kokalekua"
+
+#. Translators: These are unique search fields.  Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:266
+msgid "uri"
+msgstr "URIa"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:266
+msgid "path"
+msgstr "bide-izena"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:266
+msgid "file"
+msgstr "fitxategia"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:266
+msgid "location"
+msgstr "kokalekua"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:272
+#, fuzzy
+msgid "Time"
+msgstr "denbora"
+
+#. Translators: These are unique search fields.  Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:274
+msgid "duration"
+msgstr "iraupena"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:274
+msgid "length"
+msgstr "luzera"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:274
+msgid "time"
+msgstr "denbora"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:280
+msgid "Mime Type"
+msgstr "MIME mota"
+
+#. Translators: These are unique search fields.  Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:282
+msgid "type"
+msgstr "mota"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:282
+msgid "mimetype"
+msgstr "mime mota"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:282
+msgid "format"
+msgstr "formatua"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:282
+msgid "ext"
+msgstr "luzp"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:288
+msgid "Last Played"
+msgstr "Azkenekoz erreproduzitua"
+
+#. Translators: These are unique search fields.  Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:290
+msgid "lastplayed"
+msgstr "azkenerreproduzitua"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:290
+msgid "played"
+msgstr "erreproduzitua"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:290
+msgid "playedon"
+msgstr "erreproduzitua"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:296
+msgid "Last Skipped"
+msgstr "Azken saltatutakoa"
+
+#. Translators: These are unique search fields.  Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:298
+msgid "lastskipped"
+msgstr "azkensaltatua"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:298
+msgid "skipped"
+msgstr "saltatua"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:298
+msgid "skippedon"
+msgstr "saltatuta"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:304
+msgid "Date Added"
+msgstr "Gehitze-data:"
+
+#. Translators: These are unique search fields.  Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:306
+msgid "added"
+msgstr "gehitua"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:306
+msgid "imported"
+msgstr "inportatua"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:306
+msgid "addedon"
+msgstr "gehituta"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:306
+msgid "dateadded"
+msgstr "gehitze-data"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:306
+msgid "importedon"
+msgstr "inportatua"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:317
+#: ../src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:66
+msgid "Smart Playlist"
+msgstr "Erreprodukzio-zerrenda azkarra"
+
+#. Translators: noun
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:335
+msgid "BPM"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:336
+#, fuzzy
+msgid "Skips"
+msgstr "saltoak"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:337
+#, fuzzy
+msgid "Plays"
+msgstr "erreprodukzioak"
+
+#: ../src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs:307
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:138
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:140
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:142
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:376
+msgid "Unknown"
+msgstr "Ezezaguna"
+
+#: ../src/Core/Banshee.Services/Banshee.SmartPlaylist/Migrator.cs:79
+msgid "Unable to Migrate Smart Playlists"
+msgstr "Ezin da erreprodukzio-zerrenda azkarra migratu"
+
+#: ../src/Core/Banshee.Services/Banshee.SmartPlaylist/Migrator.cs:80
+#, csharp-format
+msgid "Please file a bug with this error: {0}"
+msgstr "Mesedez, eman errore honi buruz berri: {0}"
+
+#: ../src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:67
+#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/Editor.cs:51
+msgid "Edit Smart Playlist"
+msgstr "Editatu erreprodukzio-zerrenda azkarra"
+
+#: ../src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:229
+msgid "Delete Smart Playlist"
+msgstr "Ezabatu erreprodukzio-zerrenda azkarra"
+
+#: ../src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs:147
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSource.cs:157
+#, fuzzy, csharp-format
+msgid "All Genres ({0})"
+msgstr "Artista guztiak ({0})"
+
+#: ../src/Core/Banshee.Services/Banshee.Sources/DurationStatusFormatters.cs:64
+#: ../src/Core/Banshee.Services/Banshee.Sources/DurationStatusFormatters.cs:89
+#: ../src/Core/Banshee.Services/Banshee.Sources/DurationStatusFormatters.cs:139
+#, csharp-format
+msgid "{0} day"
+msgid_plural "{0} days"
+msgstr[0] "Egun {0}"
+msgstr[1] "{0} egun"
+
+#: ../src/Core/Banshee.Services/Banshee.Sources/DurationStatusFormatters.cs:68
+#: ../src/Core/Banshee.Services/Banshee.Sources/DurationStatusFormatters.cs:94
+#: ../src/Core/Banshee.Services/Banshee.Sources/DurationStatusFormatters.cs:141
+#, csharp-format
+msgid "{0} hour"
+msgid_plural "{0} hours"
+msgstr[0] "Ordu {0}"
+msgstr[1] "{0} ordu"
+
+#: ../src/Core/Banshee.Services/Banshee.Sources/DurationStatusFormatters.cs:72
+#: ../src/Core/Banshee.Services/Banshee.Sources/DurationStatusFormatters.cs:98
+#: ../src/Core/Banshee.Services/Banshee.Sources/DurationStatusFormatters.cs:143
+#, csharp-format
+msgid "{0} minute"
+msgid_plural "{0} minutes"
+msgstr[0] "Minutu {0}"
+msgstr[1] "{0} minutu"
+
+#: ../src/Core/Banshee.Services/Banshee.Sources/DurationStatusFormatters.cs:100
+#: ../src/Core/Banshee.Services/Banshee.Sources/DurationStatusFormatters.cs:145
+#, csharp-format
+msgid "{0} second"
+msgid_plural "{0} seconds"
+msgstr[0] "Segundo {0}"
+msgstr[1] "{0} segundo"
+
+#: ../src/Core/Banshee.Services/Banshee.Sources/ErrorSource.cs:50
+msgid "Close Error Report"
+msgstr "Itxi errore-txostena"
+
+#: ../src/Core/Banshee.Services/Banshee.Sources/ErrorSource.cs:82
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:6
+msgid "Error"
+msgstr "Errorea"
+
+#: ../src/Core/Banshee.Services/Banshee.Sources/ErrorSource.cs:83
+msgid "Details"
+msgstr "Xehetasunak"
+
+#: ../src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs:163
+msgid "Errors"
+msgstr "Erroreak"
+
+#. Translators: this is a noun, referring to the harddisk
+#: ../src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs:221
+msgid "Drive"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs:673
+#, csharp-format
+msgid "Adding {0} of {1} to {2}"
+msgstr "Gehitzen {0} / {1} {2}(r)i"
+
+#: ../src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs:690
+#, csharp-format
+msgid "Deleting {0} of {1} From {2}"
+msgstr "Kentzen {0} / {1} {2}(e)tik"
+
+#: ../src/Core/Banshee.Services/Banshee.Sources/Source.cs:647
+#, csharp-format
+msgid "{0} item"
+msgid_plural "{0} items"
+msgstr[0] "Elementu {0}"
+msgstr[1] "{0} elementu"
+
+#: ../src/Core/Banshee.Services/Banshee.Streaming/RadioTrackInfo.cs:82
+#: ../src/Core/Banshee.Services/Banshee.Streaming/RadioTrackInfo.cs:91
+msgid "Error opening stream"
+msgstr "Errorea gertatu da korrontea irekitzean"
+
+#: ../src/Core/Banshee.Services/Banshee.Streaming/RadioTrackInfo.cs:83
+msgid "Could not open stream or playlist"
+msgstr "Ezin izan da korrontea edo erreprodukzio-zerrenda ireki"
+
+#: ../src/Core/Banshee.Services/Banshee.Streaming/RadioTrackInfo.cs:92
+msgid "Problem parsing playlist"
+msgstr "Arazoa dago erreprodukzio-zerrenda analizatzean"
+
+#: ../src/Core/Banshee.Services/Banshee.Web/Browser.cs:61
+msgid "Could not launch URL"
+msgstr "Ezin izan da URLa abiarazi"
+
+#: ../src/Core/Banshee.Services/Banshee.Web/Browser.cs:62
+#, csharp-format
+msgid ""
+"{0} could not be opened: {1}\n"
+"\n"
+" Check your 'Preferred Applications' settings."
+msgstr ""
+"Ezin izan da {0} ireki: {1}\n"
+"\n"
+" Begiratu 'Hobetsitako aplikazioak' ezarpenak."
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Addins.Gui/AddinDetailsDialog.cs:69
+msgid "Version:"
+msgstr "Bertsioa:"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Addins.Gui/AddinDetailsDialog.cs:72
+#: ../src/Core/Banshee.ThickClient/Banshee.Addins.Gui/AddinTile.cs:98
+msgid "Authors:"
+msgstr "Egileak:"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Addins.Gui/AddinDetailsDialog.cs:75
+msgid "Copyright/License:"
+msgstr "Copyright-a/Lizentzia:"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Addins.Gui/AddinDetailsDialog.cs:79
+msgid "Extension Dependencies:"
+msgstr "Hedapenaren mendekotasunak:"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Addins.Gui/AddinTile.cs:183
+msgid "Disable"
+msgstr "Desgaitu"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Addins.Gui/AddinTile.cs:184
+msgid "Enable"
+msgstr "Gaitu"
+
+#. Translators: this is {disc number} of {disc count}
+#. Translators: this is {track number} of {track count}
+#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellDiscAndCount.cs:40
+#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellTrackAndCount.cs:40
+#: ../src/Core/Banshee.Widgets/Banshee.Widgets/StreamPositionLabel.cs:172
+#: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapPropertiesDialog.cs:148
+#, csharp-format
+msgid "{0} of {1}"
+msgstr "{0} / {1}"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/DefaultColumnController.cs:122
+#, fuzzy
+msgid "Track #"
+msgstr "Pista"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/DefaultColumnController.cs:123
+#, fuzzy
+msgid "Track & Count"
+msgstr "Pistaren kontagailua"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/DefaultColumnController.cs:127
+#, fuzzy
+msgid "Disc #"
+msgstr "Diskoa"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/DefaultColumnController.cs:128
+#, fuzzy
+msgid "Disc & Count"
+msgstr "Saltatze kopurua"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/DefaultColumnController.cs:131
+#, fuzzy, csharp-format
+msgid "{0} kbps"
+msgstr "{0} erreprodukzio"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Equalizer.Gui/EqualizerWindow.cs:52
+msgid "Equalizer"
+msgstr "Ekualizadorea"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Equalizer.Gui/EqualizerWindow.cs:81
+msgid "Enabled"
+msgstr "Gaituta"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Equalizer.Gui/EqualizerWindow.cs:158
+#, fuzzy
+msgid "New Preset"
+msgstr "Erreprodukzio-zerrenda berria"
+
+#. Translators: this is the window title when a track is playing
+#. {0} is the track title, {1} is the artist name
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/BaseClientWindow.cs:159
+#, csharp-format
+msgid "{0} by {1}"
+msgstr "{0} / {1}"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:54
+msgid "Primary Development"
+msgstr "Garapen nagusia"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:62
+msgid "Contributors"
+msgstr "Kolaboratzaileak"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:96
+msgid "Extraordinary Multimedia Management and Playback"
+msgstr "Multimedia-kudeatzea eta -erreproduzitzea."
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:98
+#, fuzzy, csharp-format
+msgid ""
+"Copyright © 2005–{0} Novell, Inc.\n"
+"Copyright © 2005–{0} Others\n"
+"Copyright © 2005 Aaron Bockover"
+msgstr ""
+"Copyright © 2005–2008 Novell, Inc.\n"
+"Copyright © 2005 Aaron Bockover"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:104
+#, fuzzy
+msgid "Banshee Website"
+msgstr "Banshee Wikia"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/ConfirmShutdownDialog.cs:45
+msgid "Important tasks are running"
+msgstr "Ataza garrantzitsuak exekutatzen ari dira"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/ConfirmShutdownDialog.cs:47
+msgid ""
+"Closing Banshee now will cancel any currently running tasks. They cannot be "
+"resumed automatically the next time Banshee is run."
+msgstr ""
+"Banshee orain ixten baduzu, une honetan exekutatzen ari diren atazak bertan "
+"behera utziko ditu. Eta ezin izango zaie automatikoki berrekin Banshee "
+"exekutatzen den hurrengo aldian."
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/ConfirmShutdownDialog.cs:54
+msgid "Quit anyway"
+msgstr "Irten hala ere"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/ConfirmShutdownDialog.cs:55
+msgid "Continue running"
+msgstr "Jarraitu exekutatzen"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/DefaultApplicationHelperDialog.cs:69
+#, fuzzy
+msgid "Make Banshee the default media player?"
+msgstr "Banshee musika-erreproduzitzailea"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/DefaultApplicationHelperDialog.cs:70
+msgid ""
+"Currently another program is configured as the default media player.  Would "
+"you prefer Banshee to be the default?"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/DefaultApplicationHelperDialog.cs:72
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:412
+#, csharp-format
+msgid "Do not ask me this again"
+msgstr "Ez galdetu hori berriro."
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/DefaultApplicationHelperDialog.cs:86
+msgid "Make Banshee the Default"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/ImageFileChooserDialog.cs:39
+msgid "Select album cover image"
+msgstr "Hautatu albumaren azalaren irudia"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/ImageFileChooserDialog.cs:47
+msgid "All image files"
+msgstr "Irudi-fitxategi guztiak"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/ImageFileChooserDialog.cs:54
+msgid "JPEG image files"
+msgstr "JPEG irudi-fitxategiak"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/ImageFileChooserDialog.cs:59
+msgid "PNG image files"
+msgstr "PNG irudi-fitxategiak"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/OpenLocationDialog.cs:54
+msgid "Browse..."
+msgstr "Arakatu..."
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/OpenLocationDialog.cs:98
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:9
+msgid "Open Location"
+msgstr "Ireki kokalekua"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:50
+msgid "_Media"
+msgstr "_Ertaina"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:53
+msgid "Import _Media..."
+msgstr "_Multimedia inportatzea..."
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:54
+msgid "Import media from a variety of sources"
+msgstr "Inportatu multimedia zenbait iturburutatik"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:57
+#, fuzzy
+msgid "Import Playlist..."
+msgstr "Erreprodukzio-zerrenda esportatzea..."
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:58
+#, fuzzy
+msgid "Import a playlist"
+msgstr "Esportatu erreprodukzio-zerrenda"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:61
+#, fuzzy
+msgid "Rescan Music Library"
+msgstr "Musika-liburutegia"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:62
+msgid "Rescan the Music Library folder"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:67
+msgid "Open _Location..."
+msgstr "Kokalekua _irekitzea..."
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:68
+msgid "Open a remote location for playback"
+msgstr "Ireki urruneko kokaleku bat, erreproduzitzeko"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:71
+msgid "_Quit"
+msgstr "Irte_n"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:72
+msgid "Quit Banshee"
+msgstr "Irten Banshee-tik"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:76
+msgid "_Edit"
+msgstr "_Editatu"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:79
+msgid "_Preferences"
+msgstr "_Hobespenak"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:80
+msgid "Modify your personal preferences"
+msgstr "Aldatu zure hobespen pertsonalak"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:83
+msgid "Manage _Extensions"
+msgstr "Kudeatu _hedapenak"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:84
+msgid "Manage extensions to add new features to Banshee"
+msgstr "Kudeatu hedapenak eginbide berriak gehitzeko Banshee-ri"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:88
+msgid "_Tools"
+msgstr "Tresn_ak"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:92
+msgid "_Help"
+msgstr "La_guntza"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:95
+msgid "_Web Resources"
+msgstr "_Web-baliabideak"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:98
+msgid "Banshee _User Guide (Wiki)"
+msgstr "Banshee _erabiltzaile-gida (wikia)"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:99
+msgid "Learn about how to use Banshee"
+msgstr "Banshee-ri buruzko informazioa"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:104
+msgid "Advanced Collection Searching"
+msgstr "Bilduma bilaketa aurreratua"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:105
+msgid "Learn advanced ways to search your media collection"
+msgstr "Ikasi bide aurreratuak zure multimedia bilduma bilatzeko"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:110
+msgid "Banshee _Home Page"
+msgstr "Banshee-ren etxeko orria"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:111
+msgid "Visit the Banshee Home Page"
+msgstr "Ikusi Banshee-ren etxeko orria"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:116
+msgid "_Get Involved"
+msgstr "_Parte hartu"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:117
+msgid "Become a contributor to Banshee"
+msgstr "Izan Banshee-ren laguntzaile"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:122
+#, fuzzy
+msgid "_Version Information"
+msgstr "_Bertsio-informazioa..."
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:123
+msgid "View detailed version and configuration information"
+msgstr "Ikusi bertsioaren eta konfigurazioaren informazio xehatua"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:163
+#, fuzzy
+msgid "Import Playlist"
+msgstr "Esportatu erreprodukzio-zerrenda"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:170
+#, fuzzy
+msgid "Playlists"
+msgstr "Erreprodukzio-zerrenda"
+
+#. Translators: verb
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:177
+#, fuzzy
+msgid "Import"
+msgstr "CDa inportatzea"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:67
+msgid "Play or pause the current item"
+msgstr "Uneko elementua erreproduzitzea edo pausaraztea"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:70
+msgid "_Next"
+msgstr "_Hurrengoa"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:71
+msgid "Play the next item"
+msgstr "Hurrengo elementua erreproduzitzea"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:74
+msgid "Pre_vious"
+msgstr "Aurre_koa"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:75
+msgid "Play the previous item"
+msgstr "Aurreko elementua erreproduzitzea"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:78
+msgid "Seek _to..."
+msgstr "Joan _hona..."
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:79
+msgid "Seek to a specific location in current item"
+msgstr "Uneko elementuaren kokaleku jakin batera joatea"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:82
+msgid "_Jump to Playing Song"
+msgstr "_Joan erreproduzitzen ari den kantara"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:83
+msgid "Jump to the currently playing item"
+msgstr "Joan une honetan erreproduzitzen ari den elementura"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:86
+msgid "_Restart Song"
+msgstr "_Berrabiarazi kanta"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:87
+msgid "Restart the current item"
+msgstr "Berrabiarazi uneko elementua"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:92
+msgid "_Stop When Finished"
+msgstr "_Gelditu amaitzean"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:93
+msgid "Stop playback after the current item finishes playing"
+msgstr "Uneko elementua erreproduzitzen amaitzean erreprodukzioa gelditzea"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:99
+msgid "_Playback"
+msgstr "_Erreproduzitzea"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:166
+#, fuzzy, csharp-format
+msgid "_Restart {0}"
+msgstr "_Berrabiarazi kanta"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:167
+#, fuzzy, csharp-format
+msgid "_Jump to Playing {0}"
+msgstr "_Joan erreproduzitzen ari den kantara"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:190
+msgid "_Pause"
+msgstr "_Pausarazi"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:202
+#, fuzzy
+msgid "Sto_p"
+msgstr "Gelditu {0}"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackRepeatActions.cs:73
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackRepeatActions.cs:74
+msgid "Repeat"
+msgstr "Errepikatu"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackRepeatActions.cs:79
+msgid "Repeat _Off"
+msgstr "E_z errepikatu"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackRepeatActions.cs:80
+msgid "Do not repeat playlist"
+msgstr "Ez errepikatu erreprodukzio-zerrenda"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackRepeatActions.cs:84
+msgid "Repeat _All"
+msgstr "Errepikatu _denak"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackRepeatActions.cs:85
+msgid "Play all songs before repeating playlist"
+msgstr "Erreproduzitu kanta guztiak erreprodukzio-zerrenda errepikatu aurretik"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackRepeatActions.cs:89
+msgid "Repeat Singl_e"
+msgstr "Errepikatu _bat"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackRepeatActions.cs:90
+msgid "Repeat the current playing song"
+msgstr "Errepikatu une honetan erreproduzitzen ari den kanta"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackShuffleActions.cs:76
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackShuffleActions.cs:77
+msgid "Shuffle"
+msgstr "Ausaz"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackShuffleActions.cs:82
+msgid "Shuffle _Off"
+msgstr "E_z ausaz"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackShuffleActions.cs:83
+msgid "Do not shuffle playlist"
+msgstr "Ez ausaz erreproduzitu zerrenda"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackShuffleActions.cs:87
+msgid "Shuffle by _Song"
+msgstr "Ausaz _kantaren arabera"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackShuffleActions.cs:88
+msgid "Play songs randomly from the playlist"
+msgstr "Erreproduzitu kantak ausaz erreprodukzio-zerrendatik"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackShuffleActions.cs:92
+msgid "Shuffle by A_rtist"
+msgstr "Ausaz a_rtistaren arabera"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackShuffleActions.cs:93
+msgid "Play all songs by an artist, then randomly choose another artist"
+msgstr ""
+"Erreproduzitu artista baten kantak guztiak, gero ausaz aukeratu beste "
+"artista bat"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackShuffleActions.cs:97
+msgid "Shuffle by A_lbum"
+msgstr "Ausaz a_lbumaren arabera"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackShuffleActions.cs:98
+msgid "Play all songs from an album, then randomly choose another album"
+msgstr ""
+"Erreproduzitu album bateko kanta guztiak, gero aukeratu ausaz beste album bat"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:73
+msgid "_New Playlist"
+msgstr "Erreprodukzio-zerrenda _berria"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:74
+msgid "Create a new empty playlist"
+msgstr "Sortu erreprodukzio-zerrenda berri bat"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:77
+msgid "New _Smart Playlist"
+msgstr "Erreprodukzio-zerrenda _azkar berria"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:78
+msgid "Create a new smart playlist"
+msgstr "Sortu erreprodukzio-zerrenda azkar berri bat"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:88
+msgid "Import to Library"
+msgstr "Inportatu liburutegira"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:89
+msgid "Import source to library"
+msgstr "Inportatu iturburua liburutegira"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:92
+msgid "Rename"
+msgstr "Aldatu izena"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:95
+msgid "Export Playlist..."
+msgstr "Erreprodukzio-zerrenda esportatzea..."
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:96
+msgid "Export a playlist"
+msgstr "Esportatu erreprodukzio-zerrenda"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:99
+msgid "Unmap"
+msgstr "Desestekatu"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:102
+msgid "Source Properties"
+msgstr "Iturburuaren propietateak"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:111
+msgid "Refresh"
+msgstr "Freskatu"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:112
+msgid "Refresh this randomly sorted smart playlist"
+msgstr "Freskatu ausaz ordenatutako erreprodukzio-zerrenda azkarra"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:117
+msgid "Sort Children"
+msgstr "Ordenatu umeak"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:120
+msgid "Name Ascending"
+msgstr "Izenaren arabera, gorantz"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:124
+msgid "Name Descending"
+msgstr "Izenaren arabera, beherantz"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:128
+msgid "Size Ascending"
+msgstr "Tamainaren arabera, gorantz"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:132
+msgid "Size Descending"
+msgstr "Tamainaren arabera, beherantz"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:300
+msgid "Could not export playlist"
+msgstr "Ezin izan da erreprodukzio-zerrenda esportatu"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:403
+#, csharp-format
+msgid "Are you sure you want to delete this {0}?"
+msgstr "Ziur zaude {0} hau ezabatu nahi duzula?"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:67
+msgid "Select _All"
+msgstr "Hautatu _denak"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:68
+msgid "Select all tracks"
+msgstr "Hautatu pista denak"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:71
+msgid "Select _None"
+msgstr "Ez hautatu _bat ere"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:72
+msgid "Unselect all tracks"
+msgstr "Desautatu pista denak"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:75
+msgid "_Edit Track Information"
+msgstr "_Editatu pistaren informazioa"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:76
+msgid "Edit information on selected tracks"
+msgstr "Editatu hautatutako pisten informazioa"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:79
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:171
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:108
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:150
+msgid "Properties"
+msgstr "Propietateak"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:80
+#, fuzzy
+msgid "View information on selected tracks"
+msgstr "Editatu hautatutako pisten informazioa"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:83
+msgid "Add _to Playlist"
+msgstr "Gehi_tu erreprodukzio-zerrendara"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:84
+msgid "Append selected items to playlist or create new playlist from selection"
+msgstr ""
+"Erantsi hautatutako elementuak erreprodukzio-zerrendari, edo sortu "
+"erreprodukzio-zerrenda berri bat hautapenarekin"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:89
+msgid "Create new playlist from selected tracks"
+msgstr "Sortu hautatutako pisten erreprodukzio-zerrenda berria"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:93
+msgid "_Remove"
+msgstr "_Kendu"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:94
+msgid "Remove selected track(s) from this source"
+msgstr "Kendu hautatutako pista(k) iturburu honetatik"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:97
+msgid "Remove From _Library"
+msgstr "Kendu _liburutegitik"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:98
+msgid "Remove selected track(s) from library"
+msgstr "Kendu hautatutako pista(k) liburutegitik"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:101
+msgid "_Delete From Drive"
+msgstr "_Ezabatu unitatetik"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:102
+msgid "Permanently delete selected item(s) from medium"
+msgstr "Betiko ezabatu hautatutako elementua(k) euskarritik"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:108
+msgid "_Search"
+msgstr "_Bilatu"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:109
+msgid "Search for items matching certain criteria"
+msgstr "Bilatu irizpide jakin batzuekin bat datozen elementuak"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:112
+msgid "By Matching _Album"
+msgstr "_Albumaren arabera"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:113
+msgid "Search all songs of this album"
+msgstr "Bilatu album honetako kanta guztiak:"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:116
+msgid "By Matching A_rtist"
+msgstr "Artistaren arabera"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:117
+msgid "Search all songs of this artist"
+msgstr "Bilatu artista honen kanta guztiak:"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:239
+#, fuzzy, csharp-format
+msgid "_Delete From {0}"
+msgstr "Ezabatu {0}(e)tik"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:456
+#, csharp-format
+msgid "Are you sure you want to permanently delete this item?"
+msgid_plural ""
+"Are you sure you want to permanently delete the selected {0} items?"
+msgstr[0] ""
+"Ziur zaude hautatutako elementu {0} behin betiko ezabatu nahi duzula?"
+msgstr[1] "Ziur zaude hautatutako {0} elementuak betiko ezabatu nahi dituzula?"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:460
+msgid "If you delete the selection, it will be permanently lost."
+msgstr "Hautapena ezabatzen baduzu, betiko galduko da."
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:463
+#, csharp-format
+msgid "Remove selection from {0}?"
+msgstr "Kendu hautapena {0}(e)tik?"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:466
+#, csharp-format
+msgid "Are you sure you want to remove the selected item from your {1}?"
+msgid_plural ""
+"Are you sure you want to remove the selected {0} items from your {1}?"
+msgstr[0] "Ziur zaude hautatutako elementua {1}(e)tik kendu nahi duzula?"
+msgstr[1] "Ziur zaude hautatutako {0} elementu {1}(e)tik kendu nahi dituzula?"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/AlbumArtistEntry.cs:55
+msgid "Compilation Album Artist:"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/AlbumArtistEntry.cs:58
+msgid ""
+"Check this if this track is part of an album with tracks by various artists"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/AlbumArtistEntry.cs:60
+msgid ""
+"This value will affect how this album is sorted; if you enter 'Various "
+"Artists' then the album will located with other albums that start with 'V'."
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:44
+#, fuzzy
+msgid "Basic Details"
+msgstr "Xehetasunak"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:69
+#, fuzzy
+msgid "Track Title:"
+msgstr "Pistaren izenburua"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:77
+#, fuzzy
+msgid "Set all track artists to this value"
+msgstr "Ezarri balio hau artista guztiei"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:78
+#, fuzzy
+msgid "Track Artist:"
+msgstr "Pistaren izenburua"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:86
+#, fuzzy
+msgid "Set all compilation album artists to these values"
+msgstr "Ezarri balio hau artista guztiei"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:100
+#, fuzzy
+msgid "Set all album titles to this value"
+msgstr "Ezarri balio hau album guztiei"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:101
+#, fuzzy
+msgid "Album Title:"
+msgstr "Albumaren izenburua"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:107
+msgid "Set all genres to this value"
+msgstr "Ezarri balio hau genero guztiei"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:108
+#, fuzzy
+msgid "Genre:"
+msgstr "Generoa"
+
+#. Right
+#. Translators: "of" is the word beteen a track/disc number and the total count.
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:116
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:148
+msgid "of"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:132
+#, fuzzy
+msgid "Automatically set track number and count"
+msgstr "Automatikoki jarri goranzko ordenan pista-zenbaki guztiak"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:134
+#, fuzzy
+msgid "Track Number:"
+msgstr "Pista-zenbakia"
+
+#. Catalog.GetString ("Automatically set disc number and count"),
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:150
+#, fuzzy
+msgid "Set all disc numbers and counts to these values"
+msgstr "Ezarri disko-zenbaki guztiak balio honekin"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:151
+#, fuzzy
+msgid "Disc Number:"
+msgstr "Disko-zenbakia"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:172
+msgid "Set all years to this value"
+msgstr "Ezarri balio hau urte guztiei"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:173
+#, fuzzy
+msgid "Year:"
+msgstr "Urtea"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:180
+msgid "Set all ratings to this value"
+msgstr "Ezarri balio hau balorazio guztiei"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:181
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/StationEditor.cs:128
+#: ../src/Libraries/Hyena.Gui/Hyena.Widgets/RatingMenuItem.cs:48
+msgid "Rating:"
+msgstr "Balorazioa:"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/ExtraTrackDetailsPage.cs:44
+msgid "Extra"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/ExtraTrackDetailsPage.cs:50
+#, fuzzy
+msgid "Set all composers to this value"
+msgstr "Ezarri balio hau urte guztiei"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/ExtraTrackDetailsPage.cs:51
+#, fuzzy
+msgid "Composer:"
+msgstr "Konpositorea"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/ExtraTrackDetailsPage.cs:57
+#, fuzzy
+msgid "Set all conductors to this value"
+msgstr "Ezarri balio hau genero guztiei"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/ExtraTrackDetailsPage.cs:58
+#, fuzzy
+msgid "Conductor:"
+msgstr "Baldintza:"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/ExtraTrackDetailsPage.cs:69
+#, fuzzy
+msgid "Set all groupings to this value"
+msgstr "Ezarri balio hau balorazio guztiei"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/ExtraTrackDetailsPage.cs:70
+#, fuzzy
+msgid "Grouping:"
+msgstr "Taldea"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/ExtraTrackDetailsPage.cs:80
+#, fuzzy
+msgid "Set all beats per minute to this value"
+msgstr "Ezarri balio hau artista guztiei"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/ExtraTrackDetailsPage.cs:81
+msgid "Beats Per Minute:"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/ExtraTrackDetailsPage.cs:88
+#, fuzzy
+msgid "Set all copyrights to this value"
+msgstr "Ezarri balio hau artista guztiei"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/ExtraTrackDetailsPage.cs:89
+#, fuzzy
+msgid "Copyright:"
+msgstr "Copyright-a/Lizentzia:"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/ExtraTrackDetailsPage.cs:95
+#, fuzzy
+msgid "Set all comments to this value"
+msgstr "Ezarri balio hau genero guztiei"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/ExtraTrackDetailsPage.cs:96
+#, fuzzy
+msgid "Comment:"
+msgstr "Kopurua"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/HelpPage.cs:69
+#, fuzzy
+msgid "Help"
+msgstr "La_guntza"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/LyricsPage.cs:46
+msgid "Lyrics"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:63
+#, fuzzy
+msgid "Value"
+msgstr "albuma"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:94
+#, fuzzy
+msgid "File Name:"
+msgstr "Fitxategi-ize_na"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:95
+#, fuzzy
+msgid "Directory:"
+msgstr "Karpeta nagusia"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:96
+msgid "Full Path:"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:102
+#, fuzzy
+msgid "URI:"
+msgstr "URIa"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:111
+#, fuzzy
+msgid "Duration:"
+msgstr "Iraupena"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:114
+#, fuzzy
+msgid "Audio Bitrate:"
+msgstr "Bit-emaria"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:116
+msgid "Audio Sample Rate:"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:118
+#, fuzzy
+msgid "Audio Channels:"
+msgstr "Kanalak"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:121
+msgid "Video Dimensions:"
+msgstr ""
+
+#. Translators: {0} is the description of the codec
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:128
+#, fuzzy, csharp-format
+msgid "{0} Codec:"
+msgstr "Segundo {0}"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:133
+msgid "Container Formats:"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:137
+#, fuzzy
+msgid "Imported On:"
+msgstr "inportatua"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:139
+#, fuzzy
+msgid "Last Played:"
+msgstr "Azkenekoz erreproduzitua"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:141
+#, fuzzy
+msgid "Last Skipped:"
+msgstr "Azken saltatutakoa"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:143
+#, fuzzy
+msgid "Play Count:"
+msgstr "Kontagailua"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:144
+#, fuzzy
+msgid "Skip Count:"
+msgstr "Saltatze kopurua"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:150
+#, fuzzy
+msgid "File Size:"
+msgstr "Fitxategi-tamaina"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:151
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/FileSizeQueryValueEntry.cs:61
+msgid "bytes"
+msgstr "byte"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs:84
+#, fuzzy
+msgid "Track Editor"
+msgstr "Pistaren izenburua"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs:84
+#, fuzzy
+msgid "Track Properties"
+msgstr "Iturburuaren propietateak"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs:132
+#, fuzzy
+msgid "Show the previous track"
+msgstr "Aurreko elementua erreproduzitzea"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs:138
+msgid "Show the next track"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs:161
+#, fuzzy
+msgid "Title:"
+msgstr "Izenburua"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs:162
+#, fuzzy
+msgid "Artist:"
+msgstr "Artista"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs:163
+#, fuzzy
+msgid "Album:"
+msgstr "Albuma"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs:266
+msgid "Sync all field values"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs:271
+#, fuzzy
+msgid ""
+"Apply the values of all common fields set for this track to all of the "
+"tracks selected in this editor"
+msgstr ""
+"Editore honetan hautatutako pista guztiei ezartzen dizkie pista honen eremu-"
+"balio hauek: artista, albumaren izenburua, generoa, pista-kontagailua, urtea "
+"eta balorazioa."
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs:365
+#, fuzzy, csharp-format
+msgid "<i>Editing {0} of {1} items</i>"
+msgstr "{0} / {1} elementua editatzen"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs:609
+#, csharp-format
+msgid "Save the changes made to the open track?"
+msgid_plural "Save the changes made to {0} of {1} open tracks?"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs:626
+msgid "Close _without Saving"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs:662
+#, fuzzy, csharp-format
+msgid "If you don't save, changes from the last {0} will be permanently lost."
+msgstr "Hautapena ezabatzen baduzu, betiko galduko da."
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/ViewActions.cs:62
+msgid "_View"
+msgstr "_Ikusi"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/ViewActions.cs:65
+#, fuzzy
+msgid "_Equalizer"
+msgstr "Ekualizadorea"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/ViewActions.cs:66
+msgid "View the graphical equalizer"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/ViewActions.cs:71
+msgid "_Fullscreen"
+msgstr "_Pantaila osoa"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/ViewActions.cs:72
+#, fuzzy
+msgid "Enter or leave fullscreen mode"
+msgstr "Txandakatu pantaila osoaren modua"
+
+#. Translators: the number of jobs running is available for your use via {0}
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TaskStatusButton.cs:90
+#, csharp-format
+msgid "Background Task Running:"
+msgid_plural "Background Tasks Running:"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TaskStatusButton.cs:96
+#, fuzzy
+msgid "No background tasks running"
+msgstr "Ataza garrantzitsuak exekutatzen ari dira"
+
+#. Translators: {0} and {1} are for markup so ignore them, {2} and {3}
+#. are Podcast Name and Published Date, respectively;
+#. e.g. 'from BBtv published 7/26/2007'
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:437
+#, csharp-format
+msgid "{0}from{1} {2} {0}published{1} {3}"
+msgstr "{0}hemendik:{1} {2}. {0}argitaratua:{1} {3}"
+
+#. simply: "Chicago Public Radio" or whatever the artist name is
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:450
+#, fuzzy
+msgid "Unknown Stream"
+msgstr "Izenburu ezezaguna"
+
+#. Translators: {0} and {1} are markup so ignore them, {2} is the name of the radio station
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:453
+#, fuzzy, csharp-format
+msgid "{0}on{1} {2}"
+msgstr "{0}albuma:{1} {2}"
+
+#. Translators: {0} is the "from {album} by {artist}" type string, and {1} is the "on {radio station name}" string
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:456
+#, fuzzy, csharp-format
+msgid "{0} {1}"
+msgstr "{0} - {1}"
+
+#. Translators: {0} and {1} are for markup so ignore them, {2} and {3}
+#. are Artist Name and Album Title, respectively;
+#. e.g. 'by Parkway Drive from Killing with a Smile'
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:492
+#, csharp-format
+msgid "{0}by{1} {2} {0}from{1} {3}"
+msgstr "{0}egilea:{1} {2}. {0}albuma:{1} {3}"
+
+#. Translators: {0} and {1} are for markup so ignore them, {2} is for Album Title;
+#. e.g. 'from Killing with a Smile'
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:496
+#, csharp-format
+msgid "{0}from{1} {2}"
+msgstr "{0}albuma:{1} {2}"
+
+#. Translators: {0} and {1} are for markup so ignore them, {2} is for Artist Name;
+#. e.g. 'by Parkway Drive'
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:500
+#, csharp-format
+msgid "{0}by{1} {2}"
+msgstr "{0}egilea:{1} {2}"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTile.cs:136
+msgid "Stop Operation"
+msgstr "Gelditu eragiketa"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTile.cs:137
+#, csharp-format
+msgid "Stop {0}"
+msgstr "Gelditu {0}"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTile.cs:140
+msgid "This operation is still performing work. Would you like to stop it?"
+msgstr "Eragiketa hau oraindik lanean ari da.  Geldiarazi nahi duzu?"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTile.cs:142
+#, csharp-format
+msgid ""
+"The '{0}' operation is still performing work. Would you like to stop it?"
+msgstr "{0} eragiketa oraindik lanean ari da.  Geldiarazi nahi duzu?"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTile.cs:146
+msgid "Continue"
+msgstr "Jarraitu"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTile.cs:147
+#, csharp-format
+msgid "Continue {0}"
+msgstr "Jarraitu {0}"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTile.cs:182
+#, fuzzy
+msgid "Stopping..."
+msgstr "Eskaneatzea..."
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Library.Gui/FileImportSource.cs:46
+msgid "Import Files to Library"
+msgstr "Inportatu fitxategiak liburutegira"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Library.Gui/FileImportSource.cs:52
+#, fuzzy
+msgid "Media Files"
+msgstr "Musika-erreproduzitzailea"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Library.Gui/FileImportSource.cs:66
+msgid "Local Files"
+msgstr "Fitxategi lokalak"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Library.Gui/FolderImportSource.cs:44
+msgid "Import Folder to Library"
+msgstr "Inportatu karpeta liburutegira"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Library.Gui/FolderImportSource.cs:61
+msgid "Local Folder"
+msgstr "Karpeta lokala"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Library.Gui/PhotoFolderImportSource.cs:67
+msgid "Videos from Photos Folder"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.MediaProfiles.Gui/ProfileComboBox.cs:86
+msgid "No available profiles"
+msgstr "Ez dago profil erabilgarririk"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.MediaProfiles.Gui/ProfileConfigurationDialog.cs:72
+msgid "Advanced"
+msgstr "Aurreratua"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Playlist.Gui/PlaylistExportDialog.cs:20
+msgid "Export Playlist"
+msgstr "Esportatu erreprodukzio-zerrenda"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Playlist.Gui/PlaylistExportDialog.cs:29
+msgid "Export"
+msgstr "Esportatu"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Playlist.Gui/PlaylistExportDialog.cs:54
+msgid "Select Format: "
+msgstr "Hautatu formatua: "
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/DefaultPreferenceWidgets.cs:101
+msgid "Select library location"
+msgstr "Hautatu liburutegiaren kokalekua"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/DefaultPreferenceWidgets.cs:109
+msgid "Reset"
+msgstr "Berrezarri"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/PreferenceDialog.cs:50
+msgid "Preferences"
+msgstr "Hobespenak"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/PreferenceDialog.cs:55
+msgid "Could not show preferences"
+msgstr "Ezin izan dira hobespenak erakutsi"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/PreferenceDialog.cs:56
+msgid "The preferences service could not be found."
+msgstr "Hobespenen zerbitzua ezin izan da aurkitu."
+
+#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/Editor.cs:82
+msgid "New Smart Playlist"
+msgstr "Erreprodukzio-zerrenda azkar berria"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Sources.Gui/FilteredListSourceContents.cs:109
+msgid "Browser on Left"
+msgstr "Arakatu ezkerrean"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Sources.Gui/FilteredListSourceContents.cs:110
+msgid "Show the artist/album browser to the left of the track list"
+msgstr "Erakutsi artistaren/albumaren arakatzailea pista-zerrendaren ezkerrean"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Sources.Gui/FilteredListSourceContents.cs:113
+msgid "Browser on Top"
+msgstr "Arakatu goian"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Sources.Gui/FilteredListSourceContents.cs:114
+msgid "Show the artist/album browser above the track list"
+msgstr "Erakutsi artistaren/albumaren arakatzailea pista-zerrendaren goian"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Sources.Gui/FilteredListSourceContents.cs:119
+msgid "Show Browser"
+msgstr "Erakutsi arakatzailea"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Sources.Gui/FilteredListSourceContents.cs:120
+msgid "Show or hide the artist/album browser"
+msgstr "Erakutsi edo ezkutatu artistaren/albumaren arakatzailea"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:1
+msgid "<b>Details</b>"
+msgstr "<b>Xehetasunak</b>"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:2
+msgid "<big><b>Import Media to Library</b></big>"
+msgstr "<big><b>Inportatu multimedia liburutegira</b></big>"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:3
+msgid "Choose an import source:"
+msgstr "Hautatu inportatze-iturburua:"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:4
+msgid "Do not show this dialog again"
+msgstr "Ez erakutsi elkarrizketa-koadro hau aurrerantzean"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:5
+msgid "Enter the address of the file you would like to open:"
+msgstr "Idatzi ireki nahi duzun fitxategiaren helbidea:"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:7
+msgid "Import Media Source"
+msgstr "Multimedia inportatzeko iturburua"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:8
+msgid "Import Media to Library"
+msgstr "Inportatu multimedia liburutegira"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:10
+msgid "Open in editor"
+msgstr "Ireki editorean"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:11
+msgid "Playlist _Name: "
+msgstr "Erreprodukzio-zerrendaren _izena: "
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:12
+msgid "Predefined Smart Playlists"
+msgstr "Aurrez zehaztutako erreprodukzio-zerrenda azkarrak"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:13
+msgid "Seek to Position"
+msgstr "Joan posizio batera"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:14
+msgid "Select for use"
+msgstr "Hautatu erabiltzeko"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:15
+msgid ""
+"Your media library is empty. You may import new music and videos into your "
+"library now, or choose to do so later."
+msgstr ""
+"Multimedia-liburutegia hutsik dago. Musika eta bideo berriak orain inporta "
+"ditzakezu liburutegira, edo, bestela, geroago ere egin dezakezu hori."
+
+#: ../src/Core/Banshee.Widgets/Banshee.Widgets/DiscUsageDisplay.cs:189
+msgid ""
+"Insert\n"
+"Disc"
+msgstr ""
+"Sartu\n"
+"diskoa"
+
+#: ../src/Core/Banshee.Widgets/Banshee.Widgets/StreamPositionLabel.cs:148
+msgid "Idle"
+msgstr "Inaktiboa"
+
+#: ../src/Core/Banshee.Widgets/Banshee.Widgets/StreamPositionLabel.cs:149
+msgid "Contacting..."
+msgstr "Kontaktatzen..."
+
+#: ../src/Core/Banshee.Widgets/Banshee.Widgets/StreamPositionLabel.cs:159
+msgid "Buffering"
+msgstr "Bufferreratzen"
+
+#: ../src/Core/Banshee.Widgets/Banshee.Widgets/VolumeButton.cs:549
+msgid "Muted"
+msgstr "Mutututa"
+
+#: ../src/Core/Banshee.Widgets/Banshee.Widgets/VolumeButton.cs:551
+msgid "Full Volume"
+msgstr "Bolumen handiena"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapLibrarySync.cs:123
+#, fuzzy, csharp-format
+msgid "Sync {0}"
+msgstr "Gelditu {0}"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:165
+msgid "Device Properties"
+msgstr "Gailuaren propietateak"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:182
+msgid "Media Player"
+msgstr "Musika-erreproduzitzailea"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:189
+msgid "Product"
+msgstr "Produktua"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:190
+msgid "Vendor"
+msgstr "Hornitzailea"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:277
+#, csharp-format
+msgid "Loading {0}"
+msgstr "{0} kargatzen"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:357
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellYesNo.cs:37
+msgid "Yes"
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:357
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellYesNo.cs:38
+#, fuzzy
+msgid "No"
+msgstr "Bat ere ez"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:378
+#, fuzzy, csharp-format
+msgid ""
+"The {0} format is not supported by the device, and no converter was found to "
+"convert it"
+msgstr ""
+"Gailuak ez du {0} formatua onartzen, eta ez da bihurtzailerik aurkitu hura "
+"bihurtzeko."
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:384
+#, fuzzy
+msgid "File format conversion support is not available"
+msgstr "Gailu honek ez du fitxategi-formatuaren bihurketa onartzen."
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:410
+#, fuzzy
+msgid "Error converting file"
+msgstr "Errorea gertatu da korrontea irekitzean"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSync.cs:116
+msgid "Manually manage this device"
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSync.cs:117
+msgid ""
+"Manually managing your device means you can drag and drop items onto the "
+"device, and manually remove them."
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSync.cs:121
+msgid ""
+"Automatically sync the device when plugged in or when the libraries change"
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSync.cs:122
+msgid ""
+"Begin synchronizing the device as soon as the device is plugged in or the "
+"libraries change."
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSync.cs:125
+#, fuzzy
+msgid "Sync Preferences"
+msgstr "Hobespenak"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapActions.cs:50
+msgid "Synchronize"
+msgstr ""
+
+#. Translators: {0} is the name of the digital audio player
+#: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapActions.cs:88
+#, csharp-format
+msgid "Synchronize {0}"
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapInfoBar.cs:67
+msgid "Audio"
+msgstr "Audioa"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapInfoBar.cs:69
+msgid "Other"
+msgstr "Bestelakoa"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapInfoBar.cs:70
+msgid "Free Space"
+msgstr "Leku librea"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapInfoBar.cs:96
+msgid "None"
+msgstr "Bat ere ez"
+
+#. Translators: {0} is the name assigned to a Digital Audio Player by its owner
+#: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapPropertiesDialog.cs:55
+#, csharp-format
+msgid "{0} Properties"
+msgstr "{0}-(r)en propietateak"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapPropertiesDialog.cs:78
+#: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapPropertiesDialog.cs:81
+msgid "Device name"
+msgstr "Gailuaren izena"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapPropertiesDialog.cs:99
+msgid "Encode to"
+msgstr "Kodetu hona:"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapPropertiesDialog.cs:109
+msgid "Capacity used"
+msgstr "Erabilitako lekua"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapPropertiesDialog.cs:121
+msgid "Advanced details"
+msgstr "Xehetasun aurreratuak"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/PurchasedMusicActions.cs:53
+msgid "Import Purchased Music"
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/MediaGroupSource.cs:56
+#, csharp-format
+msgid "Delete From {0}"
+msgstr "Ezabatu {0}(e)tik"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/MusicGroupSource.cs:38
+msgid "Music"
+msgstr "Musika"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/PodcastGroupSource.cs:38
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastSource.cs:93
+msgid "Podcasts"
+msgstr "Podcastak"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/RemovableSource.cs:71
+#, csharp-format
+msgid "Eject {0}"
+msgstr "Egotzi {0}"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/RemovableSource.cs:104
+#, csharp-format
+msgid "Ejecting {0}..."
+msgstr "{0} egozten..."
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/RemovableSource.cs:111
+#, csharp-format
+msgid "Could not eject {0}: {1}"
+msgstr "Ezin izan da {0} egotzi: {1}"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/VideoGroupSource.cs:38
+msgid "Videos"
+msgstr "Bideoak"
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/DatabaseRebuilder.cs:91
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/DatabaseRebuilder.cs:92
+msgid "Rebuilding Database"
+msgstr "Datu-basea berreraikitzea"
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/DatabaseRebuilder.cs:93
+msgid "Scanning iPod..."
+msgstr "iPoda eskaneatzen..."
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/DatabaseRebuilder.cs:128
+msgid "Processing Tracks..."
+msgstr "Pistak prozesatzen..."
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/DatabaseRebuilder.cs:144
+msgid "Ordering Tracks..."
+msgstr "Pistak ordenatzen..."
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/DatabaseRebuilder.cs:215
+msgid "Saving new database..."
+msgstr "Datu-base berria gordetzen..."
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/DatabaseRebuilder.cs:227
+msgid "Error rebuilding iPod database"
+msgstr "Errorea gertatu da iPod datu-basea berreraikitzean"
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:98
+#, fuzzy
+msgid "Device"
+msgstr "Gailuaren izena"
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:99
+#, fuzzy
+msgid "Color"
+msgstr "Konpositorea"
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:100
+#, fuzzy
+msgid "Generation"
+msgstr "Orokorra"
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:101
+#, fuzzy
+msgid "Capacity"
+msgstr "Erabilitako lekua"
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:102
+#: ../src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:144
+#, fuzzy
+msgid "Serial number"
+msgstr "Pista-zenbakia"
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:103
+#, fuzzy
+msgid "Produced on"
+msgstr "Ekoizlea:"
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:104
+#, fuzzy
+msgid "Firmware"
+msgstr "Aurrera"
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:108
+msgid "Capabilities"
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:109
+#, fuzzy
+msgid "Supports cover art"
+msgstr "Erakutsi _albumaren azala"
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:110
+msgid "Supports photos"
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:632
+msgid "Out of space on device"
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:632
+msgid "Please manually remove some songs"
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:661
+msgid "Syncing iPod"
+msgstr "iPoda sinkronizatzea"
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:662
+msgid "Preparing to synchronize..."
+msgstr "Sinkronizatzeko prestatzen..."
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:683
+msgid "Updating..."
+msgstr "Eguneratzea..."
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:687
+msgid "Flushing to disk..."
+msgstr "Diskora eramaten..."
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:59
+msgid "Unable to read your iPod"
+msgstr "Ezin da iPoda irakurri"
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:75
+msgid ""
+"You have used this iPod with a version of iTunes that saves a version of the "
+"song database for your iPod that is too new for Banshee to recognize.\n"
+"\n"
+"Banshee can rebuild your database, but some settings might be lost. Using "
+"Banshee and iTunes with the same iPod is not recommended."
+msgstr ""
+"iPod horrekin erabili duzun iTunes bertsioak iPod-arentzat gorde duen "
+"kantuen datu-basearen bertsioa berriegia da Banshee-k ezagutzeko. \n"
+"\n"
+"Banshee-k datu-basea berreraiki dezake, baina ezarpen batzuk gal daitezke. "
+"Banshee eta iTunes iPod batekin erabiltzea ez da komenigarria."
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:86
+msgid "Learn more about Banshee's iPod support"
+msgstr "Ikasi gehiago Banshee-ren iPod euskarriari buruz"
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:94
+msgid ""
+"An iPod database could not be found on this device.\n"
+"\n"
+"Banshee can build a new database for you."
+msgstr ""
+"Ezin izan da iPod datu-baserik aurkitu gailu horretan.\n"
+"\n"
+"Banshee-k datu-base berria eraiki dezake."
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:102
+msgid "What is the reason for this?"
+msgstr "Zein da horren arrazoia?"
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:115
+msgid "Your iPod is mounted read only. Banshee can not restore your iPod."
+msgstr ""
+"Zure iPod-a irakurtzeko soilik muntatuta dago. Banshee-k ezin du zure iPod-a "
+"berreskuratu."
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:123
+msgid "Rebuild iPod Database..."
+msgstr "Berreraiki iPod datu-basea..."
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:131
+msgid "Confirm Rebuild iPod Database"
+msgstr "iPod datu-basea berreraikitzeko berrespena"
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:137
+msgid ""
+"Rebuilding your iPod database may take some time. Also note that any "
+"playlists you have on your iPod will be lost.\n"
+"\n"
+"Are you sure you want to rebuild your iPod database?"
+msgstr ""
+"iPod datu-basea berreraikitzeak luze jo dezake. Kontuan izan, gainera, iPod-"
+"ean dituzun erreprodukzio-zerrendak galdu egingo direla.\n"
+"\n"
+"Ziur zaude iPod datu-basea berreraiki nahi duzula?"
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:141
+msgid "Rebuild Database"
+msgstr "Berreraiki datu-basea"
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:155
+msgid "Rebuilding iPod Database..."
+msgstr "iPod datu-basea berreraikitzea..."
+
+#: ../src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/AndroidDevice.cs:153
+#, fuzzy
+msgid "Purchased Music"
+msgstr "Musika partekatua"
+
+#: ../src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:114
+#, csharp-format
+msgid "Audio Folder"
+msgid_plural "Audio Folders"
+msgstr[0] "Audio-karpeta"
+msgstr[1] "Audio-karpetak"
+
+#: ../src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:120
+msgid "Required Folder Depth"
+msgstr "Beharrezko karpeta-sakonera"
+
+#: ../src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:123
+#, fuzzy
+msgid "Supports Playlists"
+msgstr "Esportatu erreprodukzio-zerrenda"
+
+#: ../src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:78
+#: ../src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:117
+msgid "MTP Support Ignoring Device"
+msgstr "MTP euskarriak gailuari ez ikusi egin dio"
+
+#: ../src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:79
+#: ../src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:118
+msgid ""
+"Banshee's MTP audio player support can only handle one device at a time."
+msgstr ""
+"Banshee-ren MTP audio-erreproduzitzailearen euskarriak gailu bat soilik "
+"kudea dezake aldi berean."
+
+#: ../src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:91
+msgid "Error Initializing MTP Device Support"
+msgstr "Errorea MTP gailuaren euskarria hasieratzean"
+
+#: ../src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:92
+msgid ""
+"There was an error intializing MTP device support.  See http://www.banshee-"
+"project.org/Guide/DAPs/MTP for more information."
+msgstr ""
+"Errore bat gertatu da MTP gailuaren euskarria hasieratzean: Ikus http://www."
+"banshee-project.org/Guide/DAPs/MTP xehetasun gehiagorako."
+
+#: ../src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:103
+msgid "Error Finding MTP Device Support"
+msgstr "Errorea MTP gailuaren euskarria bilatzeko"
+
+#: ../src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:104
+msgid ""
+"An MTP device was detected, but Banshee was unable to load support for it."
+msgstr ""
+"MTP gailua detektatu da, baina Banshee-k ezin du dagokion euskarria kargatu."
+
+#: ../src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:145
+#: ../src/Libraries/Hyena.Gui/Hyena.Gui.Dialogs/VersionInformationDialog.cs:66
+msgid "Version"
+msgstr "Bertsioa"
+
+#: ../src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:147
+msgid "Battery level"
+msgstr ""
+
+#. user_event.Progress = (double)current / total;
+#. Translators: {0} is the name of the MTP audio device (eg Gabe's Zen Player), {1} is the
+#. track currently being loaded, and {2} is the total # of tracks that will be loaded.
+#: ../src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:163
+#, csharp-format
+msgid "Loading {0} - {1} of {2}"
+msgstr "{0} kargatzen: {1} / {2}"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdDiscModel.cs:76
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:232
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:55
+msgid "Audio CD"
+msgstr "Audio CDa"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdDiscModel.cs:101
+#, csharp-format
+msgid "Track {0}"
+msgstr "{0}. pista"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdRipper.cs:117
+msgid "Importing Audio CD"
+msgstr "Audio CDa inportatzea"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdRipper.cs:118
+msgid "Initializing Drive"
+msgstr "Unitatea hasieratzen"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdRipper.cs:120
+#, csharp-format
+msgid ""
+"<i>{0}</i> is still being imported into the music library. Would you like to "
+"stop it?"
+msgstr ""
+"<i>{0}</i> musika-liburutegira inportatzen ari da oraindik. Gelditu nahi "
+"duzu?"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdRipper.cs:241
+msgid "Cannot Import CD"
+msgstr "Ezin da CDa inportatu"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:236
+msgid "Audio CD Importing"
+msgstr "Audio CDa inportatzen"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:238
+msgid "_Import format"
+msgstr "_Inportatze-formatua"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:242
+msgid "_Automatically import audio CDs when inserted"
+msgstr "_Automatikoki inportatu Audio CDa sartzean"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:243
+msgid ""
+"When an audio CD is inserted, automatically begin importing it if metadata "
+"can be found and it is not already in the library."
+msgstr ""
+"Audio CD bat sartzen denean, automatikoki hasi inportatzen metadatuak "
+"aurkitzen badira bertan eta liburutegian ez badago."
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:247
+msgid "_Eject when done importing"
+msgstr "_Egotzi inportatu ondoren"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:248
+msgid "When an audio CD has been imported, automatically eject it."
+msgstr "Audio CD bat inportatu ondoren, automatikoki egotzi."
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:251
+msgid "Use error correction when importing"
+msgstr "Erabili errore-zuzenketa inportatzean"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:252
+msgid ""
+"Error correction tries to work around problem areas on a disc, such as "
+"surface scratches, but will slow down importing substantially."
+msgstr ""
+"Diskoan arazoak dituzten areak konpontzen saiatzen da errore-zuzenketa "
+"(adibidez, urradurak), baina horrek nabarmen moteltzen du inportatzea."
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:320
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:427
+msgid "Import CD"
+msgstr "CDa inportatzea"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:321
+msgid "Import this audio CD to the library"
+msgstr "Inportatu Audio CDa liburutegira"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:327
+msgid "Duplicate CD"
+msgstr "Bikoiztu CDa"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:328
+msgid "Duplicate this audio CD"
+msgstr "Bikoiztu Audio CD hau"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:130
+msgid "Searching for CD metadata..."
+msgstr "CDaren metadatuak bilatzen..."
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:163
+msgid "Could not fetch metadata for CD."
+msgstr "Ezin dira CDaren metadatuak eskuratu."
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:191
+msgid "Automatic import off since this album is already in the Music Library."
+msgstr ""
+"Inprotatze automatikoa desaktibatu album hau jadanik musikaren liburutegian "
+"badago."
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:214
+msgid "Could not import CD"
+msgstr "Ezin izan da CDa inportatu"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:231
+msgid "Could not duplicate audio CD"
+msgstr "Ezin izan da Audio CDa bikoiztu"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:351
+msgid "Ejecting audio CD..."
+msgstr "Audio CDa egozten..."
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:369
+#, csharp-format
+msgid "Could not eject audio CD: {0}"
+msgstr "Ezin izan da Audio CDa egotzi: {0}"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:402
+msgid "Eject Disc"
+msgstr "Egotzi diskoa"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:426
+#, csharp-format
+msgid "Import ‟{0}”"
+msgstr "Inportatu '{0}'"
+
+#: ../src/Extensions/Banshee.Bookmarks/Banshee.Bookmarks/BookmarksService.cs:84
+msgid "_Bookmarks"
+msgstr "Laster-_markak"
+
+#: ../src/Extensions/Banshee.Bookmarks/Banshee.Bookmarks/BookmarksService.cs:87
+msgid "_Add Bookmark"
+msgstr "_Gehitu laster-marka"
+
+#: ../src/Extensions/Banshee.Bookmarks/Banshee.Bookmarks/BookmarksService.cs:88
+msgid "Bookmark the Position in the Current Track"
+msgstr "Egin uneko pistako posizioaren laster-marka"
+
+#: ../src/Extensions/Banshee.Bookmarks/Banshee.Bookmarks/BookmarksService.cs:100
+msgid "_Remove Bookmark"
+msgstr "_Kendu laster-marka"
+
+#. Translators: This is used to generate bookmark names. {0} is track title, {1} is minutes
+#. (possibly more than two digits) and {2} is seconds (between 00 and 60).
+#: ../src/Extensions/Banshee.Bookmarks/Banshee.Bookmarks/BookmarksService.cs:210
+#, csharp-format
+msgid "{0} ({1}:{2:00})"
+msgstr "{0} ({1}:{2:00})"
+
+#: ../src/Extensions/Banshee.Bpm/Banshee.Bpm/BpmDetectJob.cs:60
+msgid "Detecting BPM"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Bpm/Banshee.Bpm/BpmEntry.cs:86
+msgid "Detect"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Bpm/Banshee.Bpm/BpmEntry.cs:98
+#, fuzzy
+msgid "Tap"
+msgstr "Etiketa"
+
+#: ../src/Extensions/Banshee.Bpm/Banshee.Bpm/BpmEntry.cs:106
+msgid "Have Banshee attempt to auto-detect the BPM of this song"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Bpm/Banshee.Bpm/BpmEntry.cs:108
+msgid "Play this song"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Bpm/Banshee.Bpm/BpmEntry.cs:111
+msgid "Tap this button to the beat to set the BPM for this song manually"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Bpm/Banshee.Bpm/BpmService.cs:148
+msgid "_Automatically detect BPM for all songs"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Bpm/Banshee.Bpm/BpmService.cs:149
+msgid "Detect BPM for all songs that don't already have a value set"
+msgstr ""
+
+#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:84
+msgid "Downloading Cover Art"
+msgstr "Azala deskargatzen"
+
+#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:118
+msgid "Preparing..."
+msgstr "Prestatzen..."
+
+#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:147
+#, csharp-format
+msgid "{0} - {1}"
+msgstr "{0} - {1}"
+
+#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtService.cs:106
+msgid "_Cover Art"
+msgstr "Albumaren _azala"
+
+#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtService.cs:107
+msgid "Manage cover art"
+msgstr "Kudeatu azala"
+
+#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtService.cs:109
+msgid "_Download Cover Art"
+msgstr "_Deskargatu azala"
+
+#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtService.cs:110
+msgid "Download cover art for all tracks"
+msgstr "Deskargatu pista guztien azala"
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapContainerSource.cs:41
+msgid "Shared Music"
+msgstr "Musika partekatua"
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapErrorView.cs:73
+msgid "Disconnected from music share"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapErrorView.cs:74
+msgid "Unable to connect to music share"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapErrorView.cs:88
+msgid "Back"
+msgstr "Atzera"
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapErrorView.cs:101
+msgid ""
+"iTunes® 7 introduced new compatibility issues and currently only works with "
+"other iTunes® 7 clients.\n"
+"\n"
+"No third-party clients can connect to iTunes® music shares anymore. This is "
+"an intentional limitation by Apple in iTunes® 7 and we apologize for the "
+"unfortunate inconvenience."
+msgstr ""
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapErrorView.cs:111
+msgid "Common reasons for connection failures:"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapErrorView.cs:117
+#, fuzzy
+msgid "The provided login credentials are invalid"
+msgstr "Honako laguntza-argumentuak ez dira baliozkoak: {0}"
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapErrorView.cs:118
+msgid "The login process was canceled"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapErrorView.cs:119
+msgid "Too many users are connected to this share"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapErrorView.cs:121
+msgid "You are no longer connected to this music share"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapErrorView.cs:125
+msgid "Try connecting again"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapErrorView.cs:139
+msgid "The music share is hosted by iTunes® 7"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapLoginDialog.cs:47
+msgid "Login to Music Share"
+msgstr "Hasi musika-partekatzearen saioa"
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapLoginDialog.cs:80
+msgid "Authentication Required"
+msgstr "Autentifikazioa behar da"
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapLoginDialog.cs:104
+#: ../src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginForm.cs:57
+msgid "Username:"
+msgstr "Erabiltzaile-izena:"
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapLoginDialog.cs:112
+#: ../src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginForm.cs:64
+msgid "Password:"
+msgstr "Pasahitza:"
+
+#. Translators: this is a verb used as a button label, not a noun
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapLoginDialog.cs:124
+msgid "Login"
+msgstr "Hasi saioa"
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs:60
+msgid "Music Share"
+msgstr "Musika partekatzea"
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs:64
+msgid "Disconnect"
+msgstr "Deskonektatu"
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs:106
+#, csharp-format
+msgid "Connecting to {0}"
+msgstr "Konektatu hona: {0}"
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs:202
+#, fuzzy, csharp-format
+msgid "Logging in to {0}."
+msgstr "Hasi saioa hemen: {0}"
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs:238
+#, fuzzy, csharp-format
+msgid "Loading {0} track"
+msgid_plural "Loading {0} tracks"
+msgstr[0] "{0} kargatzen"
+msgstr[1] "{0} kargatzen"
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs:270
+#, fuzzy
+msgid "Loading playlists"
+msgstr "Arazoa dago erreprodukzio-zerrenda analizatzean"
+
+#: ../src/Extensions/Banshee.FileSystemQueue/Banshee.FileSystemQueue/FileSystemQueueSource.cs:57
+#: ../src/Extensions/Banshee.FileSystemQueue/Banshee.FileSystemQueue/FileSystemQueueSource.cs:58
+msgid "File System Queue"
+msgstr "Fitxategi-sistemaren ilara"
+
+#: ../src/Extensions/Banshee.FileSystemQueue/Banshee.FileSystemQueue/FileSystemQueueSource.cs:72
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueActions.cs:56
+msgid "Clear"
+msgstr "Garbitu"
+
+#: ../src/Extensions/Banshee.FileSystemQueue/Banshee.FileSystemQueue/FileSystemQueueSource.cs:73
+msgid "Remove all tracks from the file system queue"
+msgstr "Kendu pista guztiak fitxategi-sistemako ilaratik"
+
+#: ../src/Extensions/Banshee.FileSystemQueue/Banshee.FileSystemQueue/FileSystemQueueSource.cs:79
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueActions.cs:63
+msgid "Clear on Quit"
+msgstr "Garbitu irtetzean"
+
+#: ../src/Extensions/Banshee.FileSystemQueue/Banshee.FileSystemQueue/FileSystemQueueSource.cs:80
+msgid "Clear the file system queue when quitting"
+msgstr "Garbitu fitxategi-sistemako ilara irtetzean"
+
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSourceContents.cs:62
+msgid "Not Set"
+msgstr ""
+
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSource.cs:55
+#, fuzzy
+msgid "Radio"
+msgstr "Ausazkoa"
+
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSource.cs:66
+#, fuzzy
+msgid "Add Station"
+msgstr "_Gehitu estazioa"
+
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSource.cs:67
+#, fuzzy
+msgid "Add a new Internet Radio station or playlist"
+msgstr "Gehitu Last.fm-ko irrati-estazio berria"
+
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSource.cs:83
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationEditor.cs:64
+msgid "Edit Station"
+msgstr "Editatu estazioa"
+
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSource.cs:135
+#, fuzzy
+msgid "Station"
+msgstr "Estazio berria"
+
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSource.cs:136
+#, fuzzy
+msgid "Creator"
+msgstr "Garbitu"
+
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSource.cs:137
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastSource.cs:158
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastEpisodePage.cs:89
+#, fuzzy
+msgid "Description"
+msgstr "Azalpena:"
+
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSource.cs:237
+msgid "Please provide a valid station URI"
+msgstr ""
+
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSource.cs:250
+msgid "Please provide a station genre"
+msgstr ""
+
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSource.cs:258
+msgid "Please provide a station title"
+msgstr ""
+
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/StationEditor.cs:67
+#, fuzzy
+msgid "Add new radio station"
+msgstr "Gehitu Last.fm-ko irrati-estazio berria"
+
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/StationEditor.cs:68
+#, fuzzy
+msgid "Edit radio station"
+msgstr "Editatu estazioa"
+
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/StationEditor.cs:97
+msgid ""
+"Enter the Genre, Title and URL of the radio station you wish to add. A "
+"description is optional."
+msgstr ""
+
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/StationEditor.cs:118
+#, fuzzy
+msgid "Station Genre:"
+msgstr "Estazio _mota:"
+
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/StationEditor.cs:120
+#, fuzzy
+msgid "Station Name:"
+msgstr "Estazioaren izena"
+
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/StationEditor.cs:121
+msgid "Stream URL:"
+msgstr ""
+
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/StationEditor.cs:122
+#, fuzzy
+msgid "Station Creator:"
+msgstr "Estazio _mota:"
+
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/StationEditor.cs:123
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastFeedPropertiesDialog.cs:79
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastPropertiesDialog.cs:89
+msgid "Description:"
+msgstr "Azalpena:"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:125
+msgid "_Last.fm"
+msgstr "_Last.fm"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:126
+msgid "Configure the Audioscrobbler plugin"
+msgstr "Konfiguratu Audioscrobbler plugina"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:129
+msgid "Visit _User Profile Page"
+msgstr "Bisitatu _erabiltzailearen profil-orria"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:130
+msgid "Visit Your Last.fm Profile Page"
+msgstr "Bisitatu Last.fm-ko zure profil-orria"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:133
+msgid "_Configure..."
+msgstr "Kon_figuratu..."
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:134
+msgid "Configure the Last.fm Extension"
+msgstr "Konfiguratu Last.fm hedapena"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:139
+msgid "_Enable Song Reporting"
+msgstr "_Gaitu kanten berri ematea"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:140
+msgid "Enable song reporting"
+msgstr "Gaitu kanten berri ematea"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:66
+msgid "_Add Station"
+msgstr "_Gehitu estazioa"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:67
+msgid "Add a new Last.fm radio station"
+msgstr "Gehitu Last.fm-ko irrati-estazio berria"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:74
+msgid "Connect"
+msgstr "Konektatu"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:79
+msgid "Sort Stations by"
+msgstr "Ordenatu estazioak:"
+
+#. Translators: {0} is a type of Last.fm station, eg "Fans of" or "Similar to".
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:85
+#, csharp-format
+msgid "Listen to {0} Station"
+msgstr "Entzun {0} irrati-estazioa"
+
+#. Translators: {0} is a type of Last.fm station, eg "Fans of" or "Similar to".
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:87
+#, csharp-format
+msgid "Listen to the Last.fm {0} station for this artist"
+msgstr "Entzun Last.fm-ko {0} estazioa artista honentzako"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:92
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:126
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:151
+msgid "View on Last.fm"
+msgstr "Ikusi Last.fm-en"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:93
+msgid "View this artist's Last.fm page"
+msgstr "Ikusi artista hau Last.fm-en"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:96
+msgid "View Artist on Wikipedia"
+msgstr "Ikusi artista Wikipedian"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:97
+msgid "Find this artist on Wikipedia"
+msgstr "Bilatu artista hau Wikipedian"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:104
+msgid "View Artist's Videos"
+msgstr "Ikusi artistaren bideoak"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:105
+msgid "Find videos by this artist"
+msgstr "Bilatu bideoak artista honen arabera"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:108
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:109
+msgid "Fans of"
+msgstr "Jarraitzaileak:"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:113
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:114
+msgid "Similar to"
+msgstr "Antzekoa:"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:118
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:134
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:155
+msgid "Recommend to"
+msgstr "Gomendatu:"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:119
+msgid "Recommend this artist to someone"
+msgstr "Gomendatu artista hau norbaiti"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:127
+msgid "View this album's Last.fm page"
+msgstr "Ikusi album honen last.fm-ko orria"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:135
+msgid "Recommend this album to someone"
+msgstr "Gomendatu album hau norbaiti"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:142
+msgid "Love Track"
+msgstr "Pista maitea"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:143
+msgid "Mark current track as loved"
+msgstr "Markatu uneko pista maitea gisa"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:147
+msgid "Ban Track"
+msgstr "Debekatu pista"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:148
+msgid "Mark current track as banned"
+msgstr "Markatu uneko pista debekatua gisa"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:152
+msgid "View this track's Last.fm page"
+msgstr "Ikusi pista honen last.fm-ko orria"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:156
+msgid "Recommend this track to someone"
+msgstr "Gomendatu pista hau norbaiti"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:166
+msgid "Station Name"
+msgstr "Estazioaren izena"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:171
+msgid "Total Play Count"
+msgstr "Erreprodukzio totalaren kontagailua"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:176
+msgid "Station Type"
+msgstr "Estazio mota"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:258
+#, csharp-format
+msgid "http://last.fm/music/{0}"
+msgstr "http://last.fm/music/{0}"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:266
+#, csharp-format
+msgid "http://last.fm/music/{0}/{1}"
+msgstr "http://last.fm/music/{0}/{1}"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:274
+#, csharp-format
+msgid "http://last.fm/music/{0}/_/{1}"
+msgstr "http://last.fm/music/{0}/_/{1}"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:282
+#, csharp-format
+msgid "http://www.last.fm/music/{0}/+videos"
+msgstr "http://www.last.fm/music/{0}/+videos"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:290
+#, csharp-format
+msgid "http://en.wikipedia.org/wiki/{0}"
+msgstr "http://en.wikipedia.org/wiki/{0}"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:324
+#, csharp-format
+msgid "Fans of {0}"
+msgstr "{0}(r)en jarraitzaileak"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:345
+#, csharp-format
+msgid "Similar to {0}"
+msgstr "{0}(r)en antzekoa"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSourceContents.cs:124
+msgid "Recently Loved Tracks"
+msgstr "Oraintsuen pista maiteak"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSourceContents.cs:125
+msgid "Recently Played Tracks"
+msgstr "Oraintsuen erreproduzitutako pistak"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSourceContents.cs:126
+msgid "My Top Artists"
+msgstr "Nire artista onenak"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSourceContents.cs:206
+#, csharp-format
+msgid "{0} plays"
+msgstr "{0} erreprodukzio"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs:104
+msgid "Edit Last.fm Settings"
+msgstr "Editatu Last.fm-ko ezarpenak"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs:317
+msgid "Account Settings"
+msgstr "Kontuaren ezarpenak"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs:319
+msgid "Join Last.fm"
+msgstr "Batu Last.fm-ra"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationEditor.cs:72
+msgid "New Station"
+msgstr "Estazio berria"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:57
+msgid "Last.fm Station"
+msgstr "Last.fm estazioa"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:147
+msgid "Edit Last.fm Station"
+msgstr "Editatu Last.fm estazioa"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:148
+msgid "Delete Last.fm Station"
+msgstr "Ezabatu Last.fm estazioa"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:235
+#, csharp-format
+msgid "Tuning Last.fm to {0}."
+msgstr "Last.fm {0}(e)n sintonizatzen."
+
+#. Translators: {0} is an error message sentence from RadioConnection.cs.
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:245
+#, csharp-format
+msgid "Failed to tune in station. {0}"
+msgstr "Huts egin du estazioa sintonizatzean. {0}"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:346
+#, csharp-format
+msgid "Getting new songs for {0}."
+msgstr "Kanta berriak {0}(e)ndik lortzen."
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:353
+#, csharp-format
+msgid "No new songs available for {0}."
+msgstr "Ez dago {0}(r)en kanta berririk eskuragarri."
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:379
+#, csharp-format
+msgid "Failed to get new songs for {0}."
+msgstr "Huts egin du {0}(r)en kanta berriak lortzean."
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:440
+#, csharp-format
+msgid "{0} song played"
+msgid_plural "{0} songs played"
+msgstr[0] "Kanta {0} erreproduzituta"
+msgstr[1] "{0} kanta erreproduzituta"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:564
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:84
+msgid "Recommended"
+msgstr "Gomendatua"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:565
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:93
+msgid "Personal"
+msgstr "Pertsonala"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:566
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:102
+msgid "Loved"
+msgstr "Maitea"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:567
+msgid "Banshee Group"
+msgstr "Banshee taldea"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:568
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:111
+msgid "Neighbors"
+msgstr "Auzotarrak"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:569
+msgid "Creative Commons"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:85
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:94
+msgid "For User:"
+msgstr "Erabiltzailearentzako:"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:103
+msgid "By User:"
+msgstr "Erabiltzailearen arabera:"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:112
+msgid "Of User:"
+msgstr "Erabiltzailearena:"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:120
+msgid "Group"
+msgstr "Taldea"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:121
+msgid "Group Name:"
+msgstr "Taldearen izena:"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:129
+msgid "Tag"
+msgstr "Etiketa"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:130
+msgid "Tag Name:"
+msgstr "Etiketaren izena:"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:138
+msgid "Fan"
+msgstr "Jarraitzailea"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:139
+msgid "Fans of:"
+msgstr "Honen jarraitzaileak:"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:147
+msgid "Similar"
+msgstr "Antzekoa"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:148
+msgid "Similar to:"
+msgstr "Honen antzekoa:"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:156
+msgid "lastfm:// URL"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:157
+msgid "lastfm://"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Recommendations/RecommendationActions.cs:66
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Recommendations/RecommendationActions.cs:67
+#, fuzzy
+msgid "Show Recommendations"
+msgstr "Gomendatu:"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Recommendations/RecommendationPane.cs:79
+#, fuzzy, csharp-format
+msgid "Top Albums by {0}"
+msgstr "Album guztiak ({0})"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Recommendations/RecommendationPane.cs:80
+#, fuzzy, csharp-format
+msgid "Top Tracks by {0}"
+msgstr "{0}. pista"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Recommendations/RecommendationPane.cs:161
+#, fuzzy
+msgid "Recommended Artists"
+msgstr "Gomendatua"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Recommendations/RecommendationPane.cs:188
+msgid "No similar artists found"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Recommendations/SimilarArtistTile.cs:60
+#, fuzzy, csharp-format
+msgid "{0}% Similarity"
+msgstr "Antzekoa:"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Recommendations/SimilarArtistTile.cs:62
+#, fuzzy
+msgid "Unknown Similarity"
+msgstr "Artista ezezaguna"
+
+#: ../src/Extensions/Banshee.Lastfm/Resources/lastfm.glade.h:1
+msgid "Station _Type:"
+msgstr "Estazio _mota:"
+
+#: ../src/Extensions/Banshee.MiniMode/Banshee.MiniMode/MiniModeService.cs:25
+msgid "_Mini Mode"
+msgstr "_Mini-modua"
+
+#: ../src/Extensions/Banshee.MiniMode/Banshee.MiniMode/MiniModeWindow.cs:73
+msgid "Banshee Music Player"
+msgstr "Banshee musika-erreproduzitzailea"
+
+#: ../src/Extensions/Banshee.MiniMode/Banshee.MiniMode/MiniModeWindow.cs:136
+msgid "Switch back to full mode"
+msgstr "Itzuli osoko modura"
+
+#: ../src/Extensions/Banshee.MiniMode/Banshee.MiniMode/MiniModeWindow.cs:137
+msgid "Change repeat playback mode"
+msgstr "Aldatu erreprodukzio errepikatuaren modua"
+
+#: ../src/Extensions/Banshee.MiniMode/Resources/minimode.glade.h:1
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/X11NotificationAreaBox.cs:64
+msgid "Banshee"
+msgstr "Banshee"
+
+#: ../src/Extensions/Banshee.MiniMode/Resources/minimode.glade.h:2
+msgid "Current source:"
+msgstr "Uneko iturburua:"
+
+#: ../src/Extensions/Banshee.MiniMode/Resources/minimode.glade.h:3
+msgid "Full Mode"
+msgstr "Osoko modua"
+
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:123
+msgid "_Show Notifications"
+msgstr "_Erakutsi jakinarazpenak"
+
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:124
+msgid "Show notifications when item changes"
+msgstr "Erakutsi jakinarazpenak elementua aldatzean"
+
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:299
+msgid "Still Running"
+msgstr "Oraindik martxan dago"
+
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:300
+msgid ""
+"Banshee was closed to the notification area. Use the <i>Quit</i> option to "
+"end your session."
+msgstr ""
+"Jakinarazpen-arean itxi da Banshee. Erabili <i>Irten</i> aukera saioa "
+"amaitzeko."
+
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:404
+#: ../src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/NowPlayingSource.cs:48
+msgid "Now Playing"
+msgstr "Orain erreproduzitzen"
+
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:409
+msgid "Skip this item"
+msgstr "Saltatu elementu hau"
+
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:415
+msgid "Cannot show notification"
+msgstr "Ezin da jakinarazpena erakutsi"
+
+#: ../src/Extensions/Banshee.NowPlaying.Clutter/Banshee.NowPlaying.Clutter/NowPlayingSource.cs:48
+#, fuzzy
+msgid "Now Playing Clutter"
+msgstr "Orain erreproduzitzen"
+
+#: ../src/Extensions/Banshee.PlayerMigration/Banshee.PlayerMigration/AmarokPlayerImportSource.cs:143
+#, csharp-format
+msgid "Unable to import track: {0}"
+msgstr ""
+
+#: ../src/Extensions/Banshee.PlayerMigration/Banshee.PlayerMigration/AmarokPlayerImportSource.cs:177
+msgid "Importing from Amarok failed"
+msgstr ""
+
+#: ../src/Extensions/Banshee.PlayerMigration/Banshee.PlayerMigration/AmarokPlayerImportSource.cs:188
+msgid "Amarok"
+msgstr "Amarok"
+
+#: ../src/Extensions/Banshee.PlayerMigration/Banshee.PlayerMigration/RhythmboxPlayerImportSource.cs:215
+#, fuzzy
+msgid "Unable to import song."
+msgstr "Gaitu kanten berri ematea"
+
+#: ../src/Extensions/Banshee.PlayerMigration/Banshee.PlayerMigration/RhythmboxPlayerImportSource.cs:349
+#, fuzzy
+msgid "Rhythmbox Music Player"
+msgstr "Banshee musika-erreproduzitzailea"
+
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueActions.cs:49
+msgid "Add to Play Queue"
+msgstr "Gehitu erreprodukzio-ilarara"
+
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueActions.cs:50
+msgid "Append selected songs to the play queue"
+msgstr "Erantsi hautatutako kantak erreprodukzio-ilarari"
+
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueActions.cs:57
+msgid "Remove all tracks from the play queue"
+msgstr "Kendu pista guztiak erreprodukzio-ilaratik"
+
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueActions.cs:64
+msgid "Clear the play queue when quitting"
+msgstr "Garbitu erreprodukzio-ilara irtetzean"
+
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:63
+msgid "Play Queue"
+msgstr "Erreprodukzio-ilara"
+
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:72
+msgid "Remove From Play Queue"
+msgstr "Kendu erreprodukzio-ilaratik"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastFeedModel.cs:69
+#, csharp-format
+msgid "All Podcasts ({0})"
+msgstr "Podcast guztiak ({0})"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastSource.cs:157
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastEpisodePage.cs:88
+msgid "Published"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastSource.cs:157
+msgid "New"
+msgstr "Berria"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastSource.cs:158
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellDownloadStatus.cs:57
+msgid "Downloaded"
+msgstr "Deskargatuta"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellDownloadStatus.cs:58
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellUnheard.cs:58
+msgid "All Items"
+msgstr "Elementu guztiak"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellDownloadStatus.cs:59
+#, fuzzy
+msgid "Not Downloaded"
+msgstr "Deskargatuta"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellPodcast.cs:113
+msgid "Never updated"
+msgstr "Inoiz ere eguneratu gabea"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellPodcast.cs:115
+#, csharp-format
+msgid "Updated at {0}"
+msgstr "Eguneratua: {0}"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellPodcast.cs:117
+#, csharp-format
+msgid "Updated {0}"
+msgstr "{0} eguneratua"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellUnheard.cs:57
+msgid "New Items"
+msgstr "Elementu berriak"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellUnheard.cs:59
+msgid "Old Items"
+msgstr "Elementu zaharrak"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/DownloadManager/DownloadUserJob.cs:46
+msgid "Downloads"
+msgstr "Deskargak"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/DownloadManager/DownloadUserJob.cs:50
+#, fuzzy
+msgid "Downloading Podcast(s)"
+msgstr "Deskargatu Podcastak"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/DownloadManager/DownloadUserJob.cs:51
+msgid "Initializing..."
+msgstr "Hasieratzen..."
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/DownloadManager/DownloadUserJob.cs:52
+#, fuzzy
+msgid "Cancel all podcast downloads?"
+msgstr "Utzi deskargak"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/DownloadManager/DownloadUserJob.cs:120
+#, fuzzy, csharp-format
+msgid "Transfering {0} file at {1} KB/s"
+msgid_plural "Transfering {0} of {2} files at {1} KB/s"
+msgstr[0] "Une honetan fitxategi {0} transferitzen ari da. Abiadura: {1} kB/s"
+msgstr[1] ""
+"Une honetan {0} fitxategi transferitzen ari dira. Abiadura: {1} kB/s"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/DownloadManager/DownloadUserJob.cs:133
+msgid "Canceling Downloads"
+msgstr "Deskargak bertan behera uztea"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/DownloadManager/DownloadUserJob.cs:135
+msgid "Waiting for downloads to terminate..."
+msgstr "Deskargak amaitzeko zain..."
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:66
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:90
+msgid "Check for New Episodes"
+msgstr "Begiratu pasarte berriak"
+
+#. "<control><shift>U",
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:67
+msgid "Refresh All Podcasts"
+msgstr "Freskatu Podcast guztiak"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:72
+msgid "Subscribe to Podcast"
+msgstr "Harpidetu Podcasta"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:73
+msgid "Subscribe to a new podcast"
+msgstr "Podcast berri bat harpidetzen du"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:84
+msgid "Unsubscribe and Delete"
+msgstr "Harpidetza kendu eta ezabatu"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:96
+msgid "Download All Episodes"
+msgstr "Deskargatu pasarte guztiak"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:102
+msgid "Visit Podcast Homepage"
+msgstr "Bisitatu Podcast-aren gune nagusia"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:114
+msgid "Mark as New"
+msgstr "Markatu berria gisa"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:120
+msgid "Mark as Old"
+msgstr "Markatu zaharra gisa"
+
+#. Translators: this is a verb used as a button name, not a noun
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:126
+msgid "Download Podcast(s)"
+msgstr "Deskargatu Podcastak"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:132
+msgid "Cancel Download"
+msgstr "Utzi deskargak"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:138
+msgid "Remove Downloaded File(s)"
+msgstr "Kendu deskargatutako fitxategiak"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:144
+msgid "Visit Website"
+msgstr "Bisitatu webgunea"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:314
+msgid "Invalid URL"
+msgstr "URL baliogabea"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:315
+msgid "Podcast URL is invalid."
+msgstr "Podcast-aren URLa ez da baliozkoa."
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastEpisodePage.cs:87
+#, fuzzy
+msgid "Author"
+msgstr "Egileak:"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastEpisodePage.cs:109
+#, fuzzy
+msgid "Episode Details"
+msgstr "Errorearen xehetasunak"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastFeedPropertiesDialog.cs:83
+msgid "Last updated:"
+msgstr "Azken eguneratzea:"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastFeedPropertiesDialog.cs:87
+#, fuzzy
+msgid "Podcast Name:"
+msgstr "Podcasta:"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastFeedPropertiesDialog.cs:97
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastPropertiesDialog.cs:85
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastSubscribeDialog.cs:146
+msgid "URL:"
+msgstr "URLa:"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastFeedPropertiesDialog.cs:101
+msgid "When feed is updated:"
+msgstr "Jarioa noiz eguneratu:"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastFeedPropertiesDialog.cs:117
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastPropertiesDialog.cs:105
+msgid "No description available"
+msgstr "Ez dago azalpenik erabilgarri."
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastPropertiesDialog.cs:77
+msgid "Podcast:"
+msgstr "Podcasta:"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastPropertiesDialog.cs:81
+msgid "Date:"
+msgstr "Data:"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastSubscribeDialog.cs:61
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastSubscribeDialog.cs:170
+msgid "Subscribe"
+msgstr "Harpidetu"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastSubscribeDialog.cs:92
+msgid "Subscribe to New Podcast"
+msgstr "Harpidetu Podcast berria"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastSubscribeDialog.cs:100
+msgid ""
+"Please enter the URL of the podcast to which you would like to subscribe."
+msgstr "Idatzi harpidetzen ari zaren podcast-aren URLa."
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastSubscribeDialog.cs:112
+msgid "When new episodes are available:  "
+msgstr "Saio berriak eskuragarri daudenean:  "
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/SyncPreferenceComboBox.cs:41
+msgid "Download all episodes"
+msgstr "deskargatu saio guztiak"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/SyncPreferenceComboBox.cs:42
+msgid "Download the most recent episode"
+msgstr "deskargatu saio berrienak"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/SyncPreferenceComboBox.cs:43
+msgid "Let me decide which episodes to download"
+msgstr "nik erabakiko du zein saio deskargatu"
+
+#: ../src/Extensions/Banshee.RemoteAudio/Banshee.RemoteAudio/RemoteSpeakersWidget.cs:51
+#, fuzzy
+msgid "_Speaker:"
+msgstr "_Bilatu:"
+
+#: ../src/Extensions/Banshee.Sample/Banshee.Sample/SampleSource.cs:40
+msgid "Sample"
+msgstr "Lagina"
+
+#: ../src/Extensions/Banshee.SqlDebugConsole/Banshee.SqlDebugConsole/SqlActions.cs:59
+msgid "Show SQL Console"
+msgstr ""
+
+#: ../src/Extensions/Banshee.SqlDebugConsole/Banshee.SqlDebugConsole/SqlActions.cs:64
+msgid "Start SQL Monitoring"
+msgstr ""
+
+#: ../src/Extensions/Banshee.SqlDebugConsole/Banshee.SqlDebugConsole/SqlActions.cs:69
+msgid "Stop SQL Monitoring"
+msgstr ""
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Header.cs:517
+#, fuzzy, csharp-format
+msgid "Hide <i>{0}</i>"
+msgstr "Gorde {0}"
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Gui.Dialogs/ExceptionDialog.cs:52
+msgid "Banshee Encountered a Fatal Error"
+msgstr "Banshee-k errore larria topatu du"
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Gui.Dialogs/ExceptionDialog.cs:89
+msgid "Error Details"
+msgstr "Errorearen xehetasunak"
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Gui.Dialogs/ExceptionDialog.cs:133
+msgid "An unhandled exception was thrown: "
+msgstr "Maneiatu gabeko salbuespen bat gertatu da: "
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Gui.Dialogs/VersionInformationDialog.cs:58
+msgid "Assembly Version Information"
+msgstr "Mihiztaketaren bertsioaren informazioa"
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Gui.Dialogs/VersionInformationDialog.cs:64
+msgid "Assembly Name"
+msgstr "Mihiztaketaren izena"
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/FileSizeQueryValueEntry.cs:62
+msgid "KB"
+msgstr "KB"
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryBox.cs:86
+msgid "Condition:"
+msgstr "Baldintza:"
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryBox.cs:104
+msgid "_Match"
+msgstr "_Parekatu"
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryBox.cs:111
+msgid "all"
+msgstr "denak"
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryBox.cs:112
+msgid "any"
+msgstr "edozein"
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryBox.cs:117
+msgid "of the following:"
+msgstr "honako hauena:"
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryLimitBox.cs:58
+msgid "_Limit to"
+msgstr "_Mugatu hona:"
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryLimitBox.cs:82
+msgid "selected by"
+msgstr "honek hautatua"
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/RelativeTimeSpanQueryValueEntry.cs:42
+msgid "ago"
+msgstr "lehenago"
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/TimeSpanQueryValueEntry.cs:59
+msgid "seconds"
+msgstr "segundo"
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/TimeSpanQueryValueEntry.cs:62
+msgid "days"
+msgstr "egun"
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/TimeSpanQueryValueEntry.cs:63
+msgid "weeks"
+msgstr "aste"
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/TimeSpanQueryValueEntry.cs:64
+msgid "months"
+msgstr "hilabete"
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/TimeSpanQueryValueEntry.cs:65
+msgid "years"
+msgstr "urte"
+
+#. public static readonly Operator Equal              = new Operator ("equals", "= {0}", "==", "=", ":");
+#. public static readonly Operator NotEqual           = new Operator ("notEqual", "!= {0}", true, "!=", "!:");
+#. public static readonly Operator LessThanEqual      = new Operator ("lessThanEquals", "<= {0}", "<=");
+#. public static readonly Operator GreaterThanEqual   = new Operator ("greaterThanEquals", ">= {0}", ">=");
+#: ../src/Libraries/Hyena/Hyena.Query/DateQueryValue.cs:47
+msgid "before"
+msgstr "honen aurrekoa da"
+
+#: ../src/Libraries/Hyena/Hyena.Query/DateQueryValue.cs:48
+msgid "after"
+msgstr "honen ondorengoa da"
+
+#: ../src/Libraries/Hyena/Hyena.Query/IntegerQueryValue.cs:41
+#: ../src/Libraries/Hyena/Hyena.Query/StringQueryValue.cs:45
+msgid "is"
+msgstr "da"
+
+#: ../src/Libraries/Hyena/Hyena.Query/IntegerQueryValue.cs:42
+#: ../src/Libraries/Hyena/Hyena.Query/StringQueryValue.cs:46
+msgid "is not"
+msgstr "ez da"
+
+#: ../src/Libraries/Hyena/Hyena.Query/IntegerQueryValue.cs:43
+#: ../src/Libraries/Hyena/Hyena.Query/RelativeTimeSpanQueryValue.cs:47
+msgid "at most"
+msgstr "hau da gehienez"
+
+#: ../src/Libraries/Hyena/Hyena.Query/IntegerQueryValue.cs:44
+#: ../src/Libraries/Hyena/Hyena.Query/RelativeTimeSpanQueryValue.cs:46
+msgid "at least"
+msgstr "hau da gutxienez"
+
+#: ../src/Libraries/Hyena/Hyena.Query/IntegerQueryValue.cs:45
+#: ../src/Libraries/Hyena/Hyena.Query/RelativeTimeSpanQueryValue.cs:45
+msgid "less than"
+msgstr "hau baino gutxiago"
+
+#. The SQL operators in these Operators are reversed from normal on purpose
+#: ../src/Libraries/Hyena/Hyena.Query/IntegerQueryValue.cs:46
+#: ../src/Libraries/Hyena/Hyena.Query/RelativeTimeSpanQueryValue.cs:44
+msgid "more than"
+msgstr "hau baino gehiago"
+
+#: ../src/Libraries/Hyena/Hyena.Query/NullQueryValue.cs:41
+msgid "empty"
+msgstr ""
+
+#: ../src/Libraries/Hyena/Hyena.Query/RelativeTimeSpanQueryValue.cs:89
+#, csharp-format
+msgid "{0} ago"
+msgstr "Duela {0}"
+
+#: ../src/Libraries/Hyena/Hyena.Query/StringQueryValue.cs:43
+msgid "contains"
+msgstr "hau dauka"
+
+#: ../src/Libraries/Hyena/Hyena.Query/StringQueryValue.cs:44
+msgid "doesn't contain"
+msgstr "hau ez dauka"
+
+#: ../src/Libraries/Hyena/Hyena.Query/StringQueryValue.cs:47
+msgid "starts with"
+msgstr "honela hasten da"
+
+#: ../src/Libraries/Hyena/Hyena.Query/StringQueryValue.cs:48
+msgid "ends with"
+msgstr "honela amaitzen da"
+
+#: ../src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginDialog.cs:49
+msgid "Log in to Last.fm"
+msgstr "Hasi saioa Last.fm-en"
+
+#: ../src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginDialog.cs:76
+msgid "Last.fm Account Login"
+msgstr "Last.fm kontuaren identifikatzailea"
+
+#: ../src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginDialog.cs:79
+msgid "Please enter your Last.fm account credentials."
+msgstr "Sartu zure Last.fm kontuaren kredentzialak."
+
+#: ../src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginDialog.cs:105
+msgid "Save and Log In"
+msgstr "Gorde eta hasi saioa"
+
+#: ../src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginForm.cs:113
+msgid "Sign up for Last.fm"
+msgstr "Sinatu Last.fm-en"
+
+#: ../src/Libraries/Lastfm/Lastfm/AudioscrobblerConnection.cs:439
+#: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:458
+msgid "Last.fm username or password is invalid."
+msgstr "Last.fm-eko erabiltzaile-izena edo pasahitza baliogabea da."
+
+#: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:301
+msgid "Failed to Login to Last.fm"
+msgstr "Huts egin du Last.fm-en saioa hastean"
+
+#: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:302
+msgid "Either your username or password is invalid."
+msgstr "Erabiltzaile-izena edo pasahitza baliogabea da."
+
+#: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:440
+msgid "There is not enough content to play this station."
+msgstr "Ez dago nahikoa edukirik estazio hau erreproduzitzeko."
+
+#: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:441
+msgid "This group does not have enough members for radio."
+msgstr "Talde honek ez dauka nahikoa kide irratian."
+
+#: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:442
+msgid "This artist does not have enough fans for radio."
+msgstr "Artista honek ez dauka nahikoa jarraitzaile irratian."
+
+#: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:443
+msgid "This station is not available."
+msgstr "Estazio hau ez dago erabilgarri."
+
+#: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:444
+msgid "This station is only available to subscribers."
+msgstr "Estazio hau harpidetuentzako soilik dago erabilgarri."
+
+#: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:445
+msgid "There are not enough neighbours for this station."
+msgstr "Ez dago nahikoa auzotarrik estazioarentzako."
+
+#: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:446
+msgid ""
+"The streaming system is offline for maintenance, please try again later."
+msgstr ""
+"Sistemako korrontea lineaz kanpo dago konponketak direla eta, saiatu "
+"beranduago."
+
+#: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:447
+msgid "There was an unknown error."
+msgstr "Errore ezezaguna gertatu da."
+
+#: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:455
+msgid "Not connected to Last.fm."
+msgstr "Ez dago Last.fm-ra konektatuta."
+
+#: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:456
+msgid "Account details are needed before you can connect to Last.fm"
+msgstr "Kontuaren xehetasunak behar dira Last.fm-ra konektatzeko."
+
+#: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:457
+msgid "No network connection detected."
+msgstr "Ez da sareko konexiorik detektatu."
+
+#: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:459
+msgid "Connecting to Last.fm."
+msgstr "Last.fm-ra konektatzen."
+
+#: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:460
+msgid "Connected to Last.fm."
+msgstr "Last-fm-ra konektatuta"
+
+#: ../src/Libraries/Migo/Migo.Syndication/Feed.cs:149
+msgid "Unknown Podcast"
+msgstr "Podcast ezezaguna"
+
+#~ msgid "All Columns"
+#~ msgstr "Zutabe guztiak"
+
+#~ msgid "Cannot Convert File"
+#~ msgstr "Ezin da fitxategia bihurtu"
+
+#~ msgid "Last Played Date"
+#~ msgstr "Azken erreprodukzioaren data"
+
+#~ msgid "Last Skipped Date"
+#~ msgstr "Azken saltatutako data"
+
+#~ msgid "GenericName"
+#~ msgstr "IzenOrokorra"
+
+#~ msgid "FilterQuery"
+#~ msgstr "IragaziKontsulta"
+
+#~ msgid "Location"
+#~ msgstr "Kokalekua"
+
+#~ msgid "TrackView.ColumnControllerXml"
+#~ msgstr "TrackView.ColumnControllerXml"
+
+#~ msgid "Set all track counts to this value"
+#~ msgstr "Ezarri balio hau pista-kontagailu guztiei"
+
+#~ msgid "Never played"
+#~ msgstr "Inoiz ere erreproduzitu gabea"
+
+#~ msgid "Editing {0}"
+#~ msgstr "{0} editatzen"
+
+#~ msgid "ActiveSourceUIResource"
+#~ msgstr "ActiveSourceUIResource"
+
+#~ msgid "_Restart Video"
+#~ msgstr "_Berrabiarazi bideoa"
+
+#~ msgid "_Jump to Playing Video"
+#~ msgstr "_Joan erreproduzitzen ari den bideora"
+
+#~ msgid "GtkActionPath"
+#~ msgstr "GtkActionPath"
+
+#~ msgid "Toggle display of album cover art"
+#~ msgstr "Txandakatu albumaren azala bistaratzeko modua"
+
+#~ msgid "0"
+#~ msgstr "0"
+
+#~ msgid "0 MB"
+#~ msgstr "0 MB"
+
+#~ msgid "0:00"
+#~ msgstr "0:00"
+
+#~ msgid "<b>Albu_m:</b>"
+#~ msgstr "<b>Albu_ma:</b>"
+
+#~ msgid "<b>Album Cover:</b>"
+#~ msgstr "<b>Albumaren azala:</b>"
+
+#~ msgid "<b>Bitrate:</b>"
+#~ msgstr "<b>Bit-emaria:</b>"
+
+#~ msgid "<b>Channels:</b>"
+#~ msgstr "<b>Kanalak:</b>"
+
+#~ msgid "<b>Duration:</b>"
+#~ msgstr "<b>Iraupena:</b>"
+
+#~ msgid "<b>File name:</b>"
+#~ msgstr "<b>Fitxategi-izena:</b>"
+
+#~ msgid "<b>File size:</b>"
+#~ msgstr "<b>Fitxategiaren tamaina:</b>"
+
+#~ msgid "<b>Imported on:</b>"
+#~ msgstr "<b>Inportatze-data:</b>"
+
+#~ msgid "<b>Last played:</b>"
+#~ msgstr "<b>Azken erreprodukzioa:</b>"
+
+#~ msgid "<b>Location:</b>"
+#~ msgstr "<b>Kokalekua:</b>"
+
+#~ msgid "<b>Play count:</b>"
+#~ msgstr "<b>Kontagailua:</b>"
+
+#~ msgid "<b>Sample rate:</b>"
+#~ msgstr "<b>Lagintze-maiztasun:</b>"
+
+#~ msgid "<b>Session Information</b>"
+#~ msgstr "<b>Saio-informazioa</b>"
+
+#~ msgid "<b>Track _count:</b>"
+#~ msgstr "<b>Pista _kopurua:</b>"
+
+#~ msgid "<b>Track _number:</b>"
+#~ msgstr "<b>Pista-_zenbakia:</b>"
+
+#~ msgid "<b>Write Options</b>"
+#~ msgstr "<b>Idazketa-aukerak</b>"
+
+#~ msgid "<b>_Artist:</b>"
+#~ msgstr "<b>_Artista:</b>"
+
+#~ msgid "<b>_Disc:</b>"
+#~ msgstr "<b>_Diskoa:</b>"
+
+#~ msgid "<b>_Genre:</b>"
+#~ msgstr "<b>_Generoa:</b>"
+
+#~ msgid "<b>_Rating:</b>"
+#~ msgstr "<b>_Balorazioa:</b>"
+
+#~ msgid "<b>_Title:</b>"
+#~ msgstr "<b>_Izenburua:</b>"
+
+#~ msgid "<b>_Year:</b>"
+#~ msgstr "<b>_Urtea:</b>"
+
+#~ msgid "Apply common field values to all tracks"
+#~ msgstr "Aplikatu eremu-balio komunak pista guztietan"
+
+#~ msgid "Artwork"
+#~ msgstr "Irudiak"
+
+#~ msgid "Copy to all"
+#~ msgstr "Kopiatu dena"
+
+#~ msgid "Disc Options"
+#~ msgstr "Diskoaren aukerak"
+
+#~ msgid "Disc format:"
+#~ msgstr "Diskoaren formatua:"
+
+#~ msgid "Disc name:"
+#~ msgstr "Diskoaren izena:"
+
+#~ msgid "Eject disc after writing"
+#~ msgstr "Egotzi diskoa grabatu ondoren"
+
+#~ msgid "Embed directly in song"
+#~ msgstr "Sartu kantan zuzenean"
+
+#~ msgid "Enter Next"
+#~ msgstr "Sartu hurrengoa"
+
+#~ msgid "Metadata"
+#~ msgstr "Metadatuak"
+
+#~ msgid "Save to song directory"
+#~ msgstr "Gorde kanta-direktorioan"
+
+#~ msgid "Write disc to:"
+#~ msgstr "Grabatu diskoa hemen:"
+
+#~ msgid "Write speed:"
+#~ msgstr "Grabazio-abiadura:"
+
+#~ msgid "_Write"
+#~ msgstr "I_datzi"
+
+#~ msgid "Last.fm (Disconnected)"
+#~ msgstr "Last.fm (deskonektatuta)"
+
+#~ msgid "Downloading"
+#~ msgstr "Deskargatzen"
+
+#~ msgid "Waiting to download"
+#~ msgstr "Deskargatzeko itxoiten"
+
+#~ msgid "Download paused"
+#~ msgstr "Deskarga pausarazita"
+
+#~ msgid "Download failed"
+#~ msgstr "Huts egin du deskargatzean"
+
+#~ msgid "Stream Available"
+#~ msgstr "Korrontea eskuragarri"
+
+#~ msgid "Watched"
+#~ msgstr "Ikusita"
+
+#~ msgid "Heard"
+#~ msgstr "Entzunda"
+
+#~ msgid "Are you sure that you'd like to cancel all downloads?"
+#~ msgstr "Ziur zaude deskarga guztiak bertan behera uztea nahi dituzula?"
+
+#~ msgid "Update Podcasts"
+#~ msgstr "Eguneratu Podcastak"
