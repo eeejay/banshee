@@ -1,5 +1,10 @@
 2009-02-12  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Core/Banshee.Base/Tests/FileNamePatternTests.cs: Remove
+	old EscapeFilename test.
+
+2009-02-12  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Libraries/Hyena/Hyena/StringUtil.cs: Patch from John Millikin
 	revamping the illegal_chars array, removing a bunch of chars that should
 	be fine, and making sure it escapes all chars that are invalid in FAT32,

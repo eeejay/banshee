@@ -70,13 +70,6 @@ namespace Banshee.Base.Tests
                 track.TrackNumber, track.TrackCount),
                 built);
         }
-    
-        [Test]
-        public void Escape()
-        {
-            Assert.AreEqual("_ _ _ _ _ _ _", 
-                FileNamePattern.Escape("/ \\ $ % ? * :"));
-        }
     }
 }
 
