@@ -1,3 +1,9 @@
+2009-02-16  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
+	* src/Backends/Banshee.Gnome/Banshee.GnomeBackend/GConfConfigurationClient.cs:
+	Log exceptions raised when reading a GConf key, if they are not a
+	NoSuchKeyException.
+
 2009-02-12  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Core/Banshee.Base/Tests/FileNamePatternTests.cs: Remove

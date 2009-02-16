@@ -110,7 +110,10 @@ namespace Banshee.GnomeBackend
             
             try {
                 return (T)client.Get (CreateKey (@namespace, key));
-            } catch {
+            } catch (GConf.NoSuchKeyException) {
+                return fallback;
+            } catch (Exception e) {
+                Log.Exception (String.Format ("Could no read GConf key {0}.{1}", @namespace, key), e);
                 return fallback;
             }
         }
