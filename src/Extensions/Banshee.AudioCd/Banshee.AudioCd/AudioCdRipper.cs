@@ -201,6 +201,8 @@ namespace Banshee.AudioCd
             track.Uri = args.Uri;
             
             track.FileSize = Banshee.IO.File.GetSize (track.Uri);
+            track.FileModifiedStamp = Banshee.IO.File.GetModifiedTime (track.Uri);
+            track.LastSyncedStamp = DateTime.Now;
             
             track.Save ();
 

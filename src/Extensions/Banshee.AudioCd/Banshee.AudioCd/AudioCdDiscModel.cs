@@ -156,7 +156,9 @@ namespace Banshee.AudioCd
             
             DatabaseArtistInfo artist = new DatabaseArtistInfo ();
             artist.Name = release.Artist.Name;
+            artist.NameSort = release.Artist.SortName;
             artist.MusicBrainzId = release.Artist.Id;
+            bool is_compilation = false;
             
             DatabaseAlbumInfo album = new DatabaseAlbumInfo ();
             album.Title = release.Title;
@@ -165,7 +167,7 @@ namespace Banshee.AudioCd
             album.ReleaseDate = release_date;
             
             i = 0;
-            
+
             foreach (Track track in release.Tracks) {
                 AudioCdTrackInfo model_track = (AudioCdTrackInfo)this[i++];
                 
@@ -174,14 +176,29 @@ namespace Banshee.AudioCd
                 model_track.ArtistName = track.Artist.Name;
                 model_track.AlbumTitle = release.Title;
                 model_track.DiscNumber = disc_number;
-                
                 model_track.Album = album;
+
                 model_track.Artist = new DatabaseArtistInfo ();
                 model_track.Artist.Name = track.Artist.Name;
+                model_track.Artist.NameSort = track.Artist.SortName;
                 model_track.Artist.MusicBrainzId = track.Artist.Id;
                 
                 if (!release_date.Equals (DateTime.MinValue)) {
                     model_track.Year = release_date.Year;
+                }
+
+                if (!is_compilation && track.Artist.Id != artist.MusicBrainzId) {
+                    is_compilation = true;
+                }
+            }
+
+            if (is_compilation) {
+                album.IsCompilation = true;
+                for (i = 0; i < release.Tracks.Count; i++) {
+                    AudioCdTrackInfo model_track = (AudioCdTrackInfo)this[i++];
+                    model_track.IsCompilation = true;
+                    model_track.AlbumArtist = artist.Name;
+                    model_track.AlbumArtistSort = artist.NameSort;
                 }
             }
             

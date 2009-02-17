@@ -1,3 +1,13 @@
+2009-02-17  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdDiscModel.cs: Use
+	the SortName information from MusicBrainz, and detect if an album is a
+	compilation album and set the album and all the tracks appropriate if it
+	is.
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdRipper.cs: Set the
+	FileModifiedStamp and LastSyncedStamp when a track is ripped.
+
 2009-02-16  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
 	* src/Backends/Banshee.Gnome/Banshee.GnomeBackend/GConfConfigurationClient.cs:
