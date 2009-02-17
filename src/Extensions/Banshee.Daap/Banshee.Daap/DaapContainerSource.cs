@@ -31,6 +31,7 @@ using Mono.Unix;
 
 using Banshee.Base;
 using Banshee.Collection;
+using Banshee.Configuration;
 using Banshee.Sources;
 using Banshee.ServiceStack;
 
@@ -45,9 +46,14 @@ namespace Banshee.Daap
         }
         
         public override bool? AutoExpand {
-            get { return true; }
+            get { return ExpandedSchema.Get (); }
         }
-        
+
+        public override bool Expanded {
+            get { return ExpandedSchema.Get (); }
+            set { ExpandedSchema.Set (value); }
+        }
+
         public override bool CanActivate {
             get { return false; }
         }
@@ -55,5 +61,9 @@ namespace Banshee.Daap
         public override bool CanRename {
             get { return false; }
         }
+
+        public static readonly SchemaEntry<bool> ExpandedSchema = new SchemaEntry<bool> (
+            "plugins.daap", "expanded", true, "Shared Music expanded", "Shared Music expanded"
+        );
     }
 }

@@ -1,5 +1,11 @@
 2009-02-17  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.Daap/Banshee.Daap/DaapContainerSource.cs: Patch
+	from Alexander Kojevnikov making the Shared Music source remember whether
+	the user had it expanded or not (BGO #561931)
+
+2009-02-17  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs:
 	Patch from Alexander Kojevnikov making the header labels in the track
 	editor ellipsize (BGO #569442)
