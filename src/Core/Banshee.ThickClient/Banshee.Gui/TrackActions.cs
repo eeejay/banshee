@@ -475,8 +475,9 @@ namespace Banshee.Gui
                 DialogFlags.DestroyWithParent, delete ? MessageType.Warning : MessageType.Question,
                 ButtonsType.None, header, message
             );
-            md.AddButton ("gtk-cancel", ResponseType.No, false);
-            md.AddButton (button_label, ResponseType.Yes, false);
+            // Delete from Disk defaults to Cancel and the others to OK/Confirm.
+            md.AddButton ("gtk-cancel", ResponseType.No, delete);
+            md.AddButton (button_label, ResponseType.Yes, !delete);
             
             try {
                 if (md.Run () == (int) ResponseType.Yes) {

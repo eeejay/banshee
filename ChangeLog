@@ -1,5 +1,11 @@
 2009-02-17  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs: Patch from
+	Alexander Kojevnikov making Delete from Disk still default to Cancel but
+	the Remove actions to OK/Confirm (BGO #569870)
+
+2009-02-17  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdDiscModel.cs: Use
 	the SortName information from MusicBrainz, and detect if an album is a
 	compilation album and set the album and all the tracks appropriate if it
