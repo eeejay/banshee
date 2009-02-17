@@ -1,5 +1,11 @@
 2009-02-17  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs:
+	Patch from Alexander Kojevnikov making the header labels in the track
+	editor ellipsize (BGO #569442)
+
+2009-02-17  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs: Patch from
 	Alexander Kojevnikov making Delete from Disk still default to Cancel but
 	the Remove actions to OK/Confirm (BGO #569870)

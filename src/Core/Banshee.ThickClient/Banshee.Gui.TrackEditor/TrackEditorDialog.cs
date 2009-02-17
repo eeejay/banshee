@@ -176,6 +176,7 @@ namespace Banshee.Gui.TrackEditor
             
             label = new Label ();
             label.Xalign = 0.0f;
+            label.Ellipsize = Pango.EllipsizeMode.End;
             header.Attach (label, 2, 3, row, row + 1, 
                 AttachOptions.Fill | AttachOptions.Expand, AttachOptions.Expand, 0, 0);
         }
