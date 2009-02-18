@@ -1,3 +1,9 @@
+2009-02-18  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* data/audio-profiles/wavpack.xml.in:
+	* src/Core/Banshee.ThickClient/Banshee.MediaProfiles.Gui/ProfileConfigurationDialog.cs:
+	Fix localization issues (BNC #449788)
+
 2009-02-18  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
 	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Recommendations/RecommendationActions.cs:

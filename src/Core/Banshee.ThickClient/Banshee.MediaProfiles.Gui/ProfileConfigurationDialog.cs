@@ -170,7 +170,7 @@ namespace Banshee.MediaProfiles.Gui
 
         private void LoadProfile()
         {
-            Title = Catalog.GetString(String.Format("Configuring {0}", profile.Name));
+            Title = String.Format (Catalog.GetString ("Configuring {0}"), profile.Name);
             header_label.Markup = String.Format("<big><b>{0}</b></big>", 
                 GLib.Markup.EscapeText(profile.Name));
             description_label.Text = profile.Description;

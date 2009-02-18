@@ -32,10 +32,10 @@
           <control-type>combo</control-type>
           <default-value>2</default-value>
           <possible-values>
-            <value value="1">Fast Compression</value>
-            <value value="2">Default Compression</value>
-            <value value="3">High Compression</value>
-            <value value="4">Very High Compression</value>
+            <_value value="1">Fast Compression</_value>
+            <_value value="2">Default Compression</_value>
+            <_value value="3">High Compression</_value>
+            <_value value="4">Very High Compression</_value>
           </possible-values>
         </variable>
         <variable id="lossy_mode" enables="bitrate">
