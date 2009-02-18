@@ -1,3 +1,9 @@
+2009-02-18  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/ExtraTrackDetailsPage.cs:
+	Patch from Alexander Kojevnikov fixing auto-growing of the Comment 
+	text box on the Edit Track dialog (BGO #553581).
+
 2009-02-18  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* data/audio-profiles/wavpack.xml.in:

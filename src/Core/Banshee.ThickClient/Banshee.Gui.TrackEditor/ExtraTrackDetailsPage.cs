@@ -90,8 +90,11 @@ namespace Banshee.Gui.TrackEditor
                 delegate (EditorTrackInfo track, Widget widget) { ((TextEntry)widget).Text = track.Copyright; },
                 delegate (EditorTrackInfo track, Widget widget) { track.Copyright = ((TextEntry)widget).Text; }
             );
-            
-            AddField (this, new TextViewEntry (), 
+
+            TextViewEntry comment_entry = new TextViewEntry ();
+            comment_entry.HscrollbarPolicy = PolicyType.Automatic;
+            comment_entry.TextView.WrapMode = WrapMode.WordChar;
+            AddField (this, comment_entry, 
                 Catalog.GetString ("Set all comments to this value"),
                 delegate { return Catalog.GetString ("Comment:"); },
                 delegate (EditorTrackInfo track, Widget widget) { ((TextViewEntry)widget).Text = track.Comment; },
