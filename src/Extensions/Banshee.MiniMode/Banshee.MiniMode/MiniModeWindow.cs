@@ -46,7 +46,7 @@ using Banshee.Widgets;
 
 namespace Banshee.MiniMode
 { 
-    public class MiniMode : Window
+    public class MiniMode : Banshee.Gui.BaseClientWindow
     {
         [Widget] private Gtk.Box SeekContainer;
         [Widget] private Gtk.Box VolumeContainer;
@@ -64,80 +64,68 @@ namespace Banshee.MiniMode
         private ConnectedSeekSlider seek_slider;
         private object tooltip_host;
 
-        private InterfaceActionService interface_action_service;
-        private GtkElementsService elements_service;
         private BaseClientWindow default_main_window;
 
         private Glade.XML glade;
 
-        public MiniMode() : base(Catalog.GetString("Banshee Music Player"))
+        public MiniMode (BaseClientWindow defaultMainWindow) : base (Catalog.GetString ("Banshee Media Player"), "minimode", 0, 0)
         {
-            elements_service = ServiceManager.Get<GtkElementsService>();
-            interface_action_service = ServiceManager.Get<InterfaceActionService>();
+            default_main_window = defaultMainWindow;
             
-            default_main_window = elements_service.PrimaryWindow;
-            
-            glade = new Glade.XML(System.Reflection.Assembly.GetExecutingAssembly(), "minimode.glade", "MiniModeWindow", null);
-            glade.Autoconnect(this);
+            glade = new Glade.XML (System.Reflection.Assembly.GetExecutingAssembly (), "minimode.glade", "MiniModeWindow", null);
+            glade.Autoconnect (this);
             
             Widget child = glade["mini_mode_contents"];
-            (child.Parent as Container).Remove(child);
-            Add(child);
+            (child.Parent as Container).Remove (child);
+            Add (child);
             BorderWidth = 12;
             Resizable = false;
 
-            DeleteEvent += delegate {
-                interface_action_service.GlobalActions["QuitAction"].Activate();
-            };
-            
             // Playback Buttons
-            Widget previous_button = interface_action_service.PlaybackActions["PreviousAction"].CreateToolItem ();
+            Widget previous_button = ActionService.PlaybackActions["PreviousAction"].CreateToolItem ();
             
-            Widget playpause_button = interface_action_service.PlaybackActions["PlayPauseAction"].CreateToolItem ();
+            Widget playpause_button = ActionService.PlaybackActions["PlayPauseAction"].CreateToolItem ();
             
-            Widget button = interface_action_service.PlaybackActions["NextAction"].CreateToolItem ();
-            Menu menu = interface_action_service.PlaybackActions.ShuffleActions.CreateMenu ();
+            Widget button = ActionService.PlaybackActions["NextAction"].CreateToolItem ();
+            Menu menu = ActionService.PlaybackActions.ShuffleActions.CreateMenu ();
             MenuButton next_button = new MenuButton (button, menu, true);
             
-            PlaybackBox.PackStart(previous_button, false, false, 0);
-            PlaybackBox.PackStart(playpause_button, false, false, 0);
-            PlaybackBox.PackStart(next_button, false, false, 0);
-            PlaybackBox.ShowAll();
+            PlaybackBox.PackStart (previous_button, false, false, 0);
+            PlaybackBox.PackStart (playpause_button, false, false, 0);
+            PlaybackBox.PackStart (next_button, false, false, 0);
+            PlaybackBox.ShowAll ();
             
             // Seek Slider/Position Label
-            seek_slider = new ConnectedSeekSlider();
+            seek_slider = new ConnectedSeekSlider ();
             
-            SeekContainer.PackStart(seek_slider, false, false, 0);
-            SeekContainer.ShowAll();
+            SeekContainer.PackStart (seek_slider, false, false, 0);
+            SeekContainer.ShowAll ();
 
             // Volume button
-            volume_button = new ConnectedVolumeButton();
-            VolumeContainer.PackStart(volume_button, false, false, 0);
-            volume_button.Show();
+            volume_button = new ConnectedVolumeButton ();
+            VolumeContainer.PackStart (volume_button, false, false, 0);
+            volume_button.Show ();
             
             // Source combobox
-            source_combo_box = new SourceComboBox();
-            SourceBox.PackStart(source_combo_box, true, true, 0);
-            source_combo_box.Show();
+            source_combo_box = new SourceComboBox ();
+            SourceBox.PackStart (source_combo_box, true, true, 0);
+            source_combo_box.Show ();
             
             // Track info
             track_info_display = new ClassicTrackInfoDisplay ();
             track_info_display.Show ();
-            CoverBox.PackStart(track_info_display, true, true, 0);
+            CoverBox.PackStart (track_info_display, true, true, 0);
 
             // Repeat button
             RepeatActionButton repeat_toggle_button = new RepeatActionButton ();
             
-            LowerButtonsBox.PackEnd(repeat_toggle_button, false, false, 0);
-            LowerButtonsBox.ShowAll();
+            LowerButtonsBox.PackEnd (repeat_toggle_button, false, false, 0);
+            LowerButtonsBox.ShowAll ();
             
             tooltip_host = TooltipSetter.CreateHost ();
 
-            SetTip(fullmode_button, Catalog.GetString("Switch back to full mode"));
-            SetTip(repeat_toggle_button, Catalog.GetString("Change repeat playback mode"));
-            
-            // Use the hotkeys from the main window.
-            AddAccelGroup(interface_action_service.UIManager.AccelGroup);
+            SetTip (fullmode_button, Catalog.GetString ("Switch back to full mode"));
+            SetTip (repeat_toggle_button, Catalog.GetString ("Change repeat playback mode"));
             
             // Hook up everything
             ServiceManager.PlayerEngine.ConnectEvent (OnPlayerEvent, 
@@ -145,45 +133,51 @@ namespace Banshee.MiniMode
                 PlayerEvent.StateChange |
                 PlayerEvent.TrackInfoUpdated);
             
-            SetHeightLimit();
+            SetHeightLimit ();
         }
 
-        private void SetTip(Widget widget, string tip)
+        protected override void Initialize ()
+        {
+        }
+
+        private void SetTip (Widget widget, string tip)
         {
             TooltipSetter.Set (tooltip_host, widget, tip);
         }
 
-        private void SetHeightLimit()
+        private void SetHeightLimit ()
         {
-            Gdk.Geometry limits = new Gdk.Geometry();
+            Gdk.Geometry limits = new Gdk.Geometry ();
             
             limits.MinHeight = -1;
             limits.MaxHeight = -1;
-            limits.MinWidth = SizeRequest().Width;
+            limits.MinWidth = SizeRequest ().Width;
             limits.MaxWidth = Gdk.Screen.Default.Width;
 
-            SetGeometryHints(this, limits, Gdk.WindowHints.MaxSize | Gdk.WindowHints.MinSize);
+            SetGeometryHints (this, limits, Gdk.WindowHints.MaxSize | Gdk.WindowHints.MinSize);
         }
 
-        public new void Show()
+        public void Enable ()
         {
-            source_combo_box.UpdateActiveSource();
-            UpdateMetaDisplay();
+            source_combo_box.UpdateActiveSource ();
+            UpdateMetaDisplay ();
 
-            default_main_window.Hide();
-            
-            base.Show();
+            default_main_window.Hide ();
+
+            Show ();
         }
 
-        public new void Hide()
+        public void Disable ()
         {
-            base.Hide();
-            default_main_window.Show();
+            Hide ();
+            default_main_window.Show ();
         }
-        
-        public void Hide(object o, EventArgs a)
+
+        // Called when the user clicks the fullmode_button
+        public void Hide (object o, EventArgs a)
         {
-            Hide();
+            ElementsService.PrimaryWindow = default_main_window;
+            Disable ();
         }
 
         // ---- Player Event Handlers ----
@@ -209,11 +203,11 @@ namespace Banshee.MiniMode
             }
         }
 
-        protected void UpdateMetaDisplay()
+        protected void UpdateMetaDisplay ()
         {
             TrackInfo track = ServiceManager.PlayerEngine.CurrentTrack;
             
-            if(track == null) {
+            if (track == null) {
                 InfoBox.Visible = false;
                 return;
             }
@@ -221,8 +215,8 @@ namespace Banshee.MiniMode
             InfoBox.Visible = true;
             
             try {
-                SetHeightLimit();
-            } catch(Exception) {
+                SetHeightLimit ();
+            } catch (Exception) {
             }
         }        
     }

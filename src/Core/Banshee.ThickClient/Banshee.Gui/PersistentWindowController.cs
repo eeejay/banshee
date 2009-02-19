@@ -136,10 +136,21 @@ namespace Banshee.Gui
             }
         }
 
+        private int x, y, width, height;
+        private bool maximized;
+
         public void Save ()
         {
+            if (window == null || !window.Visible || !window.IsMapped || window.GdkWindow == null) {
+                return;
+            }
+
+            maximized = (window.GdkWindow.State & Gdk.WindowState.Maximized) != 0;
+            window.GetPosition (out x, out y);
+            window.GetSize (out width, out height);
+
             if (timer_id == 0) {
-                timer_id = GLib.Timeout.Add (500, OnTimeout);
+                timer_id = GLib.Timeout.Add (250, OnTimeout);
             } else {
                 pending_changes = true;
             }
@@ -148,6 +159,7 @@ namespace Banshee.Gui
         private bool OnTimeout ()
         {
             if (pending_changes) {
+                // Wait another 250ms to see if we've stopped getting updates yet
                 pending_changes = false;
                 return true;
             } else {
@@ -159,18 +171,14 @@ namespace Banshee.Gui
 
         private void InnerSave ()
         {
-            if (window == null || window.GdkWindow == null)
-                return;
-
-            int x, y, width, height;
-
-            if ((window.GdkWindow.State & Gdk.WindowState.Maximized) != 0) {
+            if (maximized) {
                 MaximizedSchema.Set (true);
                 return;
             }
             
-            window.GetPosition (out x, out y);
-            window.GetSize (out width, out height);
+            if (x < 0 || y < 0 || width <= 0 || height <= 0) {
+                 return;
+            }
 
             MaximizedSchema.Set (false);
             XPosSchema.Set (x);

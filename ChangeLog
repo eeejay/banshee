@@ -1,4 +1,23 @@
-2009-02-18  Gabriel Burt  <gabriel.burt@gmail.com>
+2009-02-19  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	This patch fixes support for hiding/restoring from the notification icon
+	properly even if you hid the window via the X/close button, and even if
+	you're in MiniMode (BGO #437938)
+
+	* src/Extensions/Banshee.MiniMode/Banshee.MiniMode/MiniModeWindow.cs:
+	Subclass from BaseClientWindow so we can set the Minimode window as the
+	PrimaryWindow when it's enabled.
+
+	* src/Extensions/Banshee.MiniMode/Banshee.MiniMode/MiniModeService.cs:
+	When entering Minimode, initialize the window w/ the current
+	PrimaryWindow, set it as the new one, and call the new Enable method.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/PersistentWindowController.cs:
+	Check that the window is in an ok state before saving or restoring its
+	size/position.  Speed up the save timeout, and grab the size/pos
+	immediately instead of after the timeout.
+
+2009-02-19  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/NextButton.cs: Patch
 	from Alexander Kojevnikov setting tooltip (BGO #572336)
