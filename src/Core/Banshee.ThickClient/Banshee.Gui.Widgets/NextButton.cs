@@ -48,6 +48,8 @@ namespace Banshee.Gui.Widgets
             menu = shuffle_actions.CreateMenu ();
             Construct (button, menu, true);
 
+            TooltipText = actionService.PlaybackActions["NextAction"].Tooltip;
+
             shuffle_actions.Changed += OnActionsChanged;
         }
 

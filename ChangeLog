@@ -1,3 +1,8 @@
+2009-02-18  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/NextButton.cs: Patch
+	from Alexander Kojevnikov setting tooltip (BGO #572336)
+
 2009-02-18  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
 	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/ExtraTrackDetailsPage.cs:
