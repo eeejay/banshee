@@ -1,3 +1,8 @@
+2009-02-20  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
+	* src/Extensions/Banshee.NotificationArea/Notifications/Notification.cs:
+	Fix compilation of the in-tree notify-sharp.
+
 2009-02-20  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/AlbumArtistEntry.cs:
