@@ -66,7 +66,7 @@ namespace Banshee.Gui.TrackEditor
 
             PageNavigationEntry title_entry = new PageNavigationEntry (Dialog);
             AddField (left, title_entry, null,
-                delegate { return Catalog.GetString ("Track Title:"); },
+                delegate { return Catalog.GetString ("Track _Title:"); },
                 delegate (EditorTrackInfo track, Widget widget) { ((PageNavigationEntry)widget).Text = track.TrackTitle; },
                 delegate (EditorTrackInfo track, Widget widget) { track.TrackTitle = ((PageNavigationEntry)widget).Text; },
                 FieldOptions.NoSync
@@ -75,7 +75,7 @@ namespace Banshee.Gui.TrackEditor
             PageNavigationEntry track_artist_entry = new PageNavigationEntry (Dialog, "CoreArtists", "Name");
             FieldPage.FieldSlot track_artist_slot = AddField (left, track_artist_entry, 
                 Catalog.GetString ("Set all track artists to this value"),
-                delegate { return Catalog.GetString ("Track Artist:"); },
+                delegate { return Catalog.GetString ("Track _Artist:"); },
                 delegate (EditorTrackInfo track, Widget widget) { ((PageNavigationEntry)widget).Text = track.ArtistName; },
                 delegate (EditorTrackInfo track, Widget widget) { track.ArtistName = ((PageNavigationEntry)widget).Text; }
             );
@@ -98,14 +98,14 @@ namespace Banshee.Gui.TrackEditor
 
             AddField (left, new TextEntry ("CoreAlbums", "Title"), 
                 Catalog.GetString ("Set all album titles to this value"),
-                delegate { return Catalog.GetString ("Album Title:"); },
+                delegate { return Catalog.GetString ("Albu_m Title:"); },
                 delegate (EditorTrackInfo track, Widget widget) { ((TextEntry)widget).Text = track.AlbumTitle; },
                 delegate (EditorTrackInfo track, Widget widget) { track.AlbumTitle = ((TextEntry)widget).Text; }
             );
 
             AddField (left, new GenreEntry (), 
                 Catalog.GetString ("Set all genres to this value"),
-                delegate { return Catalog.GetString ("Genre:"); },
+                delegate { return Catalog.GetString ("_Genre:"); },
                 delegate (EditorTrackInfo track, Widget widget) { ((GenreEntry)widget).Value = track.Genre; },
                 delegate (EditorTrackInfo track, Widget widget) { track.Genre = ((GenreEntry)widget).Value; }
             );
@@ -131,7 +131,7 @@ namespace Banshee.Gui.TrackEditor
                     }
                 }, Catalog.GetString ("Automatically set track number and count")), 
                 null,
-                delegate { return Catalog.GetString ("Track Number:"); },
+                delegate { return Catalog.GetString ("Track _Number:"); },
                 delegate (EditorTrackInfo track, Widget widget) {
                     RangeEntry entry = (RangeEntry)widget;
                     entry.From.Value = track.TrackNumber;
@@ -148,7 +148,7 @@ namespace Banshee.Gui.TrackEditor
             AddField (right, new RangeEntry (Catalog.GetString ("of")), 
                 // Catalog.GetString ("Automatically set disc number and count"),
                 Catalog.GetString ("Set all disc numbers and counts to these values"),
-                delegate { return Catalog.GetString ("Disc Number:"); },
+                delegate { return Catalog.GetString ("_Disc Number:"); },
                 delegate (EditorTrackInfo track, Widget widget) {
                     RangeEntry entry = (RangeEntry)widget;
                     entry.From.Value = track.DiscNumber;
@@ -170,7 +170,7 @@ namespace Banshee.Gui.TrackEditor
             year_entry.Numeric = true;
             AddField (right, year_label, year_entry,
                 Catalog.GetString ("Set all years to this value"),
-                delegate { return Catalog.GetString ("Year:"); },
+                delegate { return Catalog.GetString ("_Year:"); },
                 delegate (EditorTrackInfo track, Widget widget) { ((SpinButtonEntry)widget).Value = track.Year; },
                 delegate (EditorTrackInfo track, Widget widget) { track.Year = ((SpinButtonEntry)widget).ValueAsInt; },
                 FieldOptions.Shrink
@@ -178,7 +178,7 @@ namespace Banshee.Gui.TrackEditor
 
             AddField (right, new RatingEntry (), 
                 Catalog.GetString ("Set all ratings to this value"),
-                delegate { return Catalog.GetString ("Rating:"); },
+                delegate { return Catalog.GetString ("_Rating:"); },
                 delegate (EditorTrackInfo track, Widget widget) { ((RatingEntry)widget).Value = track.Rating; },
                 delegate (EditorTrackInfo track, Widget widget) { track.Rating = ((RatingEntry)widget).Value; },
                 FieldOptions.Shrink | FieldOptions.NoSync

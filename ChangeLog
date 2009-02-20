@@ -1,3 +1,17 @@
+2009-02-20  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/AlbumArtistEntry.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/EditorUtilities.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/ExtraTrackDetailsPage.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/FieldPage.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/PageNavigationEntry.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/RangeEntry.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TextViewEntry.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs:
+	* src/Extensions/Banshee.Bpm/Banshee.Bpm/BpmEntry.cs: Patch from Alexander
+	Kojevnikov adding mnemonics for track editor fields (BGO #563606)
+
 2009-02-19  Eoin Hennessy <eoin@randomrules.org>
 
 	* build/osx/targets/bundle-40-managed-libs.targets: Bump taglib# version.

@@ -38,8 +38,7 @@ namespace Banshee.Gui.TrackEditor
                 
         public static Label CreateLabel (string text)
         {
-            Label label = new Label ();
-            label.Text = text;
+            Label label = new Label (text);
             label.Xalign = 0.0f;
             return label;
         }

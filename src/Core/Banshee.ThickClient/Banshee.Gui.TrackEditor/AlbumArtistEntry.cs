@@ -52,7 +52,8 @@ namespace Banshee.Gui.TrackEditor
             title_entry = titleEntry;
             track_artist_entry = trackArtistEntry;
         
-            enable_compilation.Label = Catalog.GetString ("Compilation Album Artist:");
+            enable_compilation.Label = Catalog.GetString ("Com_pilation Album Artist:");
+            enable_compilation.UseUnderline = true;
 
             Hyena.Gui.TooltipSetter.Set (tooltip_host, enable_compilation,
                 Catalog.GetString ("Check this if this track is part of an album with tracks by various artists"));

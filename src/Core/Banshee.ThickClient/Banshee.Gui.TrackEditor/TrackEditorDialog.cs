@@ -264,7 +264,7 @@ namespace Banshee.Gui.TrackEditor
                 HBox box = new HBox ();
                 box.Spacing = 2;
                 box.PackStart (new Image (Stock.Copy, IconSize.Button), false, false, 0);
-                box.PackStart (new Label (Catalog.GetString ("Sync all field values")), false, false, 0);
+                box.PackStart (new Label (Catalog.GetString ("Sync all field _values")), false, false, 0);
                 alignment.Add (box);
                 sync_all_button.Add (alignment);
                 

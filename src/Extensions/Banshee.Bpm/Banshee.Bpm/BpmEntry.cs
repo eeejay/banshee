@@ -83,7 +83,7 @@ namespace Banshee.Bpm
             Add (bpm_entry);
 
             if (detector != null) {
-                detect_button = new Button (Catalog.GetString ("Detect"));
+                detect_button = new Button (Catalog.GetString ("D_etect"));
                 detect_button.Clicked += OnDetectClicked;
                 Add (detect_button);
             }
@@ -95,7 +95,7 @@ namespace Banshee.Bpm
             play_button.Clicked += OnPlayClicked;
             Add (play_button);
 
-            Button tap_button = new Button (Catalog.GetString ("Tap"));
+            Button tap_button = new Button (Catalog.GetString ("T_ap"));
             tap_adapter = new BpmTapAdapter (tap_button);
             tap_adapter.BpmChanged += OnTapBpmChanged;
             Add (tap_button);
@@ -128,6 +128,10 @@ namespace Banshee.Bpm
         public int Bpm {
             get { return bpm_entry.ValueAsInt; }
             set { bpm_entry.Value = value; }
+        }
+
+        protected override bool OnMnemonicActivated (bool group_cycling) {
+            return bpm_entry.MnemonicActivate(group_cycling);
         }
 
         private void OnChanged (object o, EventArgs args)

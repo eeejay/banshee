@@ -96,6 +96,10 @@ namespace Banshee.Gui.TrackEditor
                 handler (this, EventArgs.Empty);
             }
         }
+
+        protected override bool OnMnemonicActivated (bool group_cycling) {
+            return entry.MnemonicActivate(group_cycling);
+        }
     
         public TextEntry Entry {
             get { return entry; }

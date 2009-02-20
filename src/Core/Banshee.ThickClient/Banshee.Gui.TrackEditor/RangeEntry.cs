@@ -76,6 +76,10 @@ namespace Banshee.Gui.TrackEditor
             to_entry.ValueChanged += OnChanged;
         }
         
+        protected override bool OnMnemonicActivated (bool group_cycling) {
+            return from_entry.MnemonicActivate(group_cycling);
+        }
+
         private class AutoOrderButton : Button
         {
             public AutoOrderButton () 

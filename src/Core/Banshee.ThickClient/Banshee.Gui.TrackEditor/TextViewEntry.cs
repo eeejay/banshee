@@ -82,6 +82,10 @@ namespace Banshee.Gui.TrackEditor
             undo_adapter.ConnectUndo (entry, track);
         }
                 
+        protected override bool OnMnemonicActivated (bool group_cycling) {
+            return entry.MnemonicActivate(group_cycling);
+        }
+
         private void OnChanged (object o, EventArgs args)
         {
             EventHandler handler = Changed;

@@ -168,6 +168,9 @@ namespace Banshee.Gui.TrackEditor
             }
 
             if (label != null) {
+                if (label is Label) {
+                    ((Label)label).MnemonicWidget = field;
+                }
                 table.Attach (label, 0, table.NColumns, 0, 1,
                     AttachOptions.Fill | AttachOptions.Expand, 
                     AttachOptions.Fill, 0, 0);
@@ -212,7 +215,7 @@ namespace Banshee.Gui.TrackEditor
             Label label = slot.Label as Label;
             if (label != null && slot.LabelClosure != null) {
                 string value = slot.LabelClosure (track, slot.Label);
-                label.Text = value ?? String.Empty;
+                label.TextWithMnemonic = value ?? String.Empty;
             }
         }
     }
