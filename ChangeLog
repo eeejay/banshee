@@ -1,5 +1,21 @@
 2009-02-20  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	Patch from John Millikin removing some cruft and changing the podcast
+	cache location.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting/PodcastService.cs:
+	Store partially downloaded episodes in
+	~/.cache/banshee-1/extensions/podcasting/partial-downloads/ instead of
+	under ~/.config (BGO #569436).  Migration path included.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting/PodcastService_Interface.cs:
+	Fix header.
+
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting/PodcastCore.cs:
+	Remove unused file.
+
+2009-02-20  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Widgets/Banshee.Widgets/Tile.cs:
 	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Recommendations/RecommendationPane.cs:
 	Patch from Chris Jones fixing theming issue (BGO #558656)

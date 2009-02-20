@@ -75,7 +75,7 @@ namespace Banshee.Podcasting
             // TODO translate Podcasts folder?
             // If changed, change HACK in src/Core/Banshee.Services/Banshee.Collection/RescanPipeline.cs too
             tmp_enclosure_path = Path.Combine (Paths.LibraryLocation, "Podcasts");
-            tmp_download_path = Path.Combine (Paths.ApplicationData, "downloads");
+            tmp_download_path = Paths.Combine (Paths.ExtensionCacheRoot, "podcasting", "partial-downloads");
             Migo.Net.AsyncWebClient.DefaultUserAgent = Banshee.Web.Browser.UserAgent;
             
             download_manager = new DownloadManager (2, tmp_download_path);
@@ -203,7 +203,20 @@ namespace Banshee.Podcasting
                 DatabaseConfigurationClient.Client.Set<int> ("Podcast", "Version", 6);
             }
         }
-
+        
+        private void MigrateDownloadCache ()
+        {
+            string old_download_dir = Path.Combine (Paths.ApplicationData, "downloads");
+            if (Directory.Exists (old_download_dir)) {
+                foreach (string old_subdir in Directory.GetDirectories (old_download_dir)) {
+                    string subdir_name = Path.GetFileName (old_subdir);
+                    string new_subdir = Path.Combine (tmp_download_path, subdir_name);
+                    Directory.Move (old_subdir, new_subdir);
+                }
+                Directory.Delete (old_download_dir);
+            }
+        }
+        
         private void ReplaceNewlines (string table, string column)
         {
             string cmd = String.Format ("UPDATE {0} SET {1}=replace({1}, ?, ?)", table, column);
@@ -221,6 +234,13 @@ namespace Banshee.Podcasting
             // Migrate data from 0.13.2 podcast tables, if they exist
             MigrateLegacyIfNeeded ();
 
+            // Move incomplete downloads to the new cache location
+            try {
+                MigrateDownloadCache ();
+            } catch (Exception e) {
+                Hyena.Log.Exception ("Couldn't migrate podcast download cache", e);
+            }
+            
             feeds_manager.FeedManager.ItemAdded += OnItemAdded;
             feeds_manager.FeedManager.ItemChanged += OnItemChanged;
             feeds_manager.FeedManager.ItemRemoved += OnItemRemoved;

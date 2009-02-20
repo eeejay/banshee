@@ -1,5 +1,5 @@
 /*************************************************************************** 
- *  PodcastCoreInterface.cs
+ *  PodcastService_Interface.cs
  *
  *  Copyright (C) 2008 Michael C. Urbanski
  *  Written by Mike Urbanski <michael.c.urbanski@gmail.com>
