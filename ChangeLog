@@ -1,3 +1,7 @@
+2009-02-19  Eoin Hennessy <eoin@randomrules.org>
+
+	* build/osx/targets/bundle-40-managed-libs.targets: Bump taglib# version.
+
 2009-02-19  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	This patch fixes support for hiding/restoring from the notification icon

@@ -4,6 +4,6 @@ TARGETS=(
     # name (%n)        version (%v)  dir (%d)  file (%f)   download uri                               configure args 
     "ndesk-dbus        0.6.0         %n-%v     %d.tar.gz   ${NDBUS_DOWNLOAD_URI}"
     "ndesk-dbus-glib   0.4.1         %n-%v     %d.tar.gz   ${NDBUS_DOWNLOAD_URI}"
-    "taglib-sharp      2.0.3.1       %n-%v     %d.tar.gz   http://download.banshee-project.org/taglib-sharp/%v/%f    --disable-docs"
+    "taglib-sharp      2.0.3.2       %n-%v     %d.tar.gz   http://download.banshee-project.org/taglib-sharp/%v/%f    --disable-docs"
     "ige-mac-integration-sharp 0.8.2 %n-%v     %d.tar.gz   http://randomrules.org/files/%f"
 )
