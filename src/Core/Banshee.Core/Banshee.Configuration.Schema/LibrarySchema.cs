@@ -47,7 +47,7 @@ namespace Banshee.Configuration.Schema
             "Format for creating a track folder inside the library. Do not create an absolute path. " +
                 "Location here is relative to the Banshee music directory. See LibraryLocation. Legal tokens: " +
                 "%album_artist%, %track_artist%, %album%, %genre%, %title%, %track_number%, %track_count%, " +
-                "%track_number_nz% (No prefixed zero), %track_count_nz% (No prefixed zero), " +
+                "%track_number_nz% (No prefixed zero), %track_count_nz% (No prefixed zero), %album_artist_initial%," +
                 "%path_sep% (portable directory separator (/)), %artist% (deprecated, use %album_artist%)."
         );
 
@@ -58,7 +58,7 @@ namespace Banshee.Configuration.Schema
             "Format for creating a track filename inside the library. Do not use path tokens/characters here. " +
                 "See LibraryFolderPattern. Legal tokens: %album_artist%, %track_artist%, %album%, %genre%, %title%, %track_number%, " +
                 "%track_count%, %track_number_nz% (No prefixed zero), %track_count_nz% (No prefixed zero), " +
-                "%artist% (deprecated, use %album_artist%)."
+                "%album_artist_initial%, %artist% (deprecated, use %album_artist%)."
         );
 
         public static readonly SchemaEntry<int> SortColumn = new SchemaEntry<int>(

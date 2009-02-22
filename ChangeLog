@@ -1,3 +1,11 @@
+2009-02-23  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
+	* src/Core/Banshee.Core/Banshee.Configuration.Schema/LibrarySchema.cs:
+	* src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs: Add support
+	for %album_artist_initial% as a variable for file/folder name patterns.
+	Initial patch from aquavitae69, improved by Alexander Kojevnikov and me
+	(BGO #562786).
+
 2009-02-21  Eoin Hennessy <eoin@randomrules.org>
 
 	* src/run-banshee: Enable running uninstalled on OSX and make sure that the value

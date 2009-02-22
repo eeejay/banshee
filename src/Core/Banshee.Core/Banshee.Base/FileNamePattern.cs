@@ -97,7 +97,11 @@ namespace Banshee.Base
                     return Escape (t == null ? (string)r : t.DisplayAlbumArtistName);
             });
 
-                        
+            AddConversion ("album_artist_initial", Catalog.GetString("Album Artist Initial"),
+                delegate (ITrackInfo t, object r) {
+                    return Escape (t == null ? (string)r : t.DisplayAlbumArtistName.Substring(0, 1));
+            });
+
             AddConversion ("genre", Catalog.GetString ("Genre"),  
                 delegate (ITrackInfo t, object r) {
                     return Escape (t == null ? (string)r : t.DisplayGenre);
