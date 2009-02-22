@@ -1,3 +1,14 @@
 #!/bin/bash
 
-BANSHEE_DEV_OPTIONS="--db $PWD/banshee.db2" make run
+if [ $(uname) == "Darwin" ]
+then
+    MONO_FRAMEWORK_PATH=/Library/Frameworks/Mono.framework/Versions/Current
+    BUNDLE_DEPS_PATH=../build/osx/deps/bundle-install
+ 
+    export GST_REGISTRY_FORK=no
+    export GST_PLUGIN_SYSTEM_PATH=$BUNDLE_DEPS_PATH/lib/gstreamer-0.10
+    export MONO_GAC_PREFIX=$BUNDLE_DEPS_PATH
+    export DYLD_FALLBACK_LIBRARY_PATH=$BUNDLE_DEPS_PATH/lib:$MONO_FRAMEWORK_PATH/lib:/usr/lib:/lib${DYLD_FALLBACK_LIBRARY_PATH+:$DYLD_FALLBACK_LIBRARY_PATH}
+fi
+
+BANSHEE_DEV_OPTIONS="--db=$PWD/banshee.db2" make run

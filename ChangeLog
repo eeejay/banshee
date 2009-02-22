@@ -1,3 +1,10 @@
+2009-02-21  Eoin Hennessy <eoin@randomrules.org>
+
+	* src/run-banshee: Enable running uninstalled on OSX and make sure that the value
+	for 'db' is actually used.
+
+	* build/osx/build.env: Taglib# is now installed into /share, add it to build env.
+
 2009-02-20  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	Patch from John Millikin removing some cruft and changing the podcast
