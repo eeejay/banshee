@@ -168,6 +168,10 @@ namespace Banshee.Sources.Gui
 
             max_title_layout_width = cell_area.Width - (icon == null ? 0 : icon.Width) - count_layout_width - 10;
             
+            if (!hide_counts && max_title_layout_width < 0) {
+                hide_counts = true;
+            }
+			
             title_layout.FontDescription = fd;
             title_layout.Width = (int)(max_title_layout_width * Pango.Scale.PangoScale);
             title_layout.Ellipsize = EllipsizeMode.End;

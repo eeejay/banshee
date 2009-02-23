@@ -1,5 +1,11 @@
 2009-02-23  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceRowRenderer.cs:
+	Fix a visual glitch when sidebar is very narrow. Patch from Neil Loknath
+	with code formatting fixes by me (BGO #524705).
+
+2009-02-23  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
 	* src/Core/Banshee.Core/Banshee.Configuration.Schema/LibrarySchema.cs:
 	* src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs: Add support
 	for %album_artist_initial% as a variable for file/folder name patterns.
