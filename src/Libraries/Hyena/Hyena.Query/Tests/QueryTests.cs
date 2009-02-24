@@ -153,7 +153,7 @@ namespace Hyena.Query.Tests
             val.ParseUserQuery ("mp3");
     
             Assert.AreEqual (
-                "(CoreTracks.MimeType LIKE '%mp3%' OR CoreTracks.Uri LIKE '%mp3%')",
+                "(CoreTracks.MimeType LIKE '%mp3%' ESCAPE '\\' OR CoreTracks.Uri LIKE '%mp3%' ESCAPE '\\')",
                 MimeTypeField.ToSql (StringQueryValue.Contains, val)
             );
         }

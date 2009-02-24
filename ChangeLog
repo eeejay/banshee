@@ -1,3 +1,8 @@
+2009-02-24  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
+	* src/Libraries/Hyena/Hyena.Query/Tests/QueryTests.cs: Fix a test by
+	adding the SQL escape clause that is now used.
+
 2009-02-23  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
 	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceRowRenderer.cs:
