@@ -89,7 +89,10 @@ namespace Halie
                 switch (arg.Key) {
                     case "show":
                     case "present": present = true; break;
-                    case "hide": window.Hide (); break;
+                    case "hide":
+                        present = false;
+                        window.Hide ();
+                        break;
                 }
             }
             

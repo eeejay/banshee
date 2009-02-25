@@ -108,7 +108,7 @@ namespace Muinshee
 
                 track_view.SetModel (play_queue.TrackModel);
 
-                Show ();
+                InitialShowPresent ();
             }
         }
 

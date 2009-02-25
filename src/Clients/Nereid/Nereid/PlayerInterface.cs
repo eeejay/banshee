@@ -86,7 +86,7 @@ namespace Nereid
             
             composite_view.TrackView.HasFocus = true;
             
-            Show ();
+            InitialShowPresent ();
         }
         
 #region System Overrides 

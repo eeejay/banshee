@@ -1,5 +1,17 @@
 2009-02-25  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Clients/Halie/Halie/Client.cs: Fix bug where the --hide command
+	would call .Hide () on the window, but then it would get Presented which
+	Shows it (BGO #540172)
+
+	* src/Clients/Muinshee/Muinshee/PlayerInterface.cs:
+	* src/Clients/Nereid/Nereid/PlayerInterface.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/BaseClientWindow.cs: Add
+	protected InitialShowPresent method that subclasses can use when they are
+	ready to be shown/presented, but that respects the command line options.
+
+2009-02-25  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Header.cs:
 	* src/Libraries/Hyena/Hyena.Data/ColumnDescription.cs: Fix another freeze
 	in the RecalculateColumnSize code due to some values getting set to NaN.

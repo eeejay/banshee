@@ -30,6 +30,7 @@ using System;
 using Gtk;
 using Mono.Unix;
 
+using Banshee.Base;
 using Banshee.ServiceStack;
 using Banshee.MediaEngine;
 using Banshee.Collection;
@@ -73,6 +74,20 @@ namespace Banshee.Gui
             
             InitializeWindow ();
         }
+
+		protected void InitialShowPresent ()
+		{
+			bool hide = ApplicationContext.CommandLine.Contains ("hide");
+			bool present = !hide && !ApplicationContext.CommandLine.Contains ("no-present");
+
+			if (!hide) {
+				Show ();
+			}
+
+			if (present) {
+				Present ();
+			}
+		}
 
         public virtual Box ViewContainer { get { return null; } }
         
