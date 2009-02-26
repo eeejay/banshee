@@ -1,5 +1,11 @@
 2009-02-26  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
+	* src/Libraries/Hyena/Hyena.Query/AliasedObjectSet.cs: Move the ToLower
+	call added in my previous commit outside of the loop. Let's not waste
+	CPU cycles.
+
+2009-02-26  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
 	* src/Libraries/Hyena/Hyena.Query/AliasedObjectSet.cs: Make search
 	fields not case sensitive, so that "Search by Matching Album" works
 	with german locale (BGO #573268).

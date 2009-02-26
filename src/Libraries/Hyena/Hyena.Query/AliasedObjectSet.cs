@@ -71,8 +71,9 @@ namespace Hyena.Query
 
         public string FindAlias (string input)
         {
+            input = input.ToLower ();
             foreach (string alias in aliases) {
-                if (input.ToLower ().Contains (alias)) {
+                if (input.Contains (alias)) {
                     return alias;
                 }
             }
