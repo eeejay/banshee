@@ -1,3 +1,9 @@
+2009-02-26  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
+	* src/Libraries/Hyena/Hyena.Query/AliasedObjectSet.cs: Make search
+	fields not case sensitive, so that "Search by Matching Album" works
+	with german locale (BGO #573268).
+
 2009-02-26  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Database/SortKeyUpdater.cs: Slightly
