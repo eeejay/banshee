@@ -45,5 +45,6 @@ namespace Banshee.Playlists.Formats
         List<Dictionary<string, object>> Elements { get; }
         
         Uri BaseUri { get; set; }
+        string Title { get; set; }
     }
 }

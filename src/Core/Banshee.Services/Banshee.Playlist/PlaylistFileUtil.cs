@@ -40,12 +40,14 @@ namespace Banshee.Playlist
         
         private static PlaylistFormatDescription [] export_formats = new PlaylistFormatDescription [] {
             M3uPlaylistFormat.FormatDescription,
-            PlsPlaylistFormat.FormatDescription
+            PlsPlaylistFormat.FormatDescription,
+            XspfPlaylistFormat.FormatDescription
         };
         
         public static readonly string [] PlaylistExtensions = new string [] {
             M3uPlaylistFormat.FormatDescription.FileExtension,
-            PlsPlaylistFormat.FormatDescription.FileExtension
+            PlsPlaylistFormat.FormatDescription.FileExtension,
+            XspfPlaylistFormat.FormatDescription.FileExtension
         };
         
         public static PlaylistFormatDescription [] ExportFormats {
@@ -197,7 +199,7 @@ namespace Banshee.Playlist
                     }
                     
                     ImportPlaylistWorker worker = new ImportPlaylistWorker (
-                        System.IO.Path.GetFileNameWithoutExtension (uri.LocalPath), 
+                        parser.Title, 
                         uris.ToArray (), source, importer);
                     worker.Import ();
                 }

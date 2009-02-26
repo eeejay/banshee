@@ -56,21 +56,76 @@ namespace Media.Playlists.Xspf
         {
         }
         
+        private static XmlNamespaceManager BuildNamespaceManager (XmlDocument doc)
+        {
+            XmlNamespaceManager xmlns = new XmlNamespaceManager (doc.NameTable);
+            xmlns.AddNamespace ("xspf", XspfNamespace);
+            return xmlns;
+        }
+        
+        private static XmlNode FindPlaylistNode (XmlDocument doc, XmlNamespaceManager xmlns)
+        {
+            XmlNode playlist_node = doc.SelectSingleNode ("/xspf:playlist", xmlns);
+            if (playlist_node == null) {
+                // Hack to work with files that don't have a namespace on the <playlist> node
+                xmlns.AddNamespace ("xspf", String.Empty);
+                playlist_node = doc.SelectSingleNode ("/xspf:playlist", xmlns);
+            }
+            return playlist_node;
+        }
+        
+        private static bool Sniff (XmlDocument doc)
+        {
+            XmlNamespaceManager xmlns = BuildNamespaceManager (doc);
+            XmlNode playlist_node = FindPlaylistNode (doc, xmlns);
+            
+            if (playlist_node != null) {
+                XmlAttribute version_attr = playlist_node.Attributes["version"];
+                if (!(version_attr == null || version_attr.Value == null)) {
+                    try {
+                        int version = Int32.Parse (version_attr.Value);
+                        if (version == 0 || version == 1) { return true; }
+                    } catch (FormatException) { }
+                }
+            }
+            return false;
+        }
+        
+        public static bool Sniff (string path)
+        {
+            XmlDocument doc = new XmlDocument ();
+            doc.Load (path);
+            return Sniff (doc);
+        }
+        
+        public static bool Sniff (XmlReader reader)
+        {
+            XmlDocument doc = new XmlDocument ();
+            doc.Load (reader);
+            return Sniff (doc);
+        }
+        
+        public static bool Sniff (TextReader reader)
+        {
+            XmlDocument doc = new XmlDocument ();
+            doc.Load (reader);
+            return Sniff (doc);
+        }
+        
+        public static bool Sniff (Stream stream)
+        {
+            XmlDocument doc = new XmlDocument ();
+            doc.Load (stream);
+            return Sniff (doc);
+        }
+        
         private void Load(XmlDocument doc)
         {
-            XmlNamespaceManager xmlns = new XmlNamespaceManager(doc.NameTable);
-            xmlns.AddNamespace("xspf", XspfNamespace);
-            
-            XmlNode playlist_node = doc.SelectSingleNode("/xspf:playlist", xmlns);
+            XmlNamespaceManager xmlns = BuildNamespaceManager (doc);
+            XmlNode playlist_node = FindPlaylistNode (doc, xmlns);
 
-            if(playlist_node == null) {
-                // Hack to work with files that don't have a namespace on the <playlist> node, like Last.fm
-                xmlns.AddNamespace("xspf", String.Empty);
-                playlist_node = doc.SelectSingleNode("/xspf:playlist", xmlns);
-
-                if(playlist_node == null) {
-                    throw new ApplicationException("Not a valid XSPF playlist");
-                }
+            if (playlist_node == null) {
+                throw new ApplicationException ("Not a valid XSPF playlist");
             }
 
             XmlAttribute version_attr = playlist_node.Attributes["version"];
@@ -160,6 +215,10 @@ namespace Media.Playlists.Xspf
             writer.WriteAttributeString("version", "1");
             
             SaveBase(writer);
+            
+            if (Date.Ticks > 0) {
+                writer.WriteElementString ("date", Date.ToUniversalTime ().ToString ("o"));
+            }
             
             writer.WriteStartElement("trackList");
             foreach(Track track in tracks) {

@@ -41,11 +41,13 @@ namespace Banshee.Playlists.Formats
         private static PlaylistFormatDescription [] playlist_formats = new PlaylistFormatDescription [] {
             M3uPlaylistFormat.FormatDescription,
             PlsPlaylistFormat.FormatDescription,
-            AsxPlaylistFormat.FormatDescription
+            AsxPlaylistFormat.FormatDescription,
+            XspfPlaylistFormat.FormatDescription
         };
         
         private List<Dictionary<string, object>> elements;
         private Uri base_uri = new Uri (Environment.CurrentDirectory);
+        private string title = null;
         
         public PlaylistParser ()
         {
@@ -134,6 +136,7 @@ namespace Banshee.Playlists.Formats
                 stream.Dispose ();
                 
                 elements = playlist.Elements;
+                Title = playlist.Title ?? Path.GetFileNameWithoutExtension (uri.LocalPath);
                 return true;
             }
         }
@@ -145,6 +148,11 @@ namespace Banshee.Playlists.Formats
         public Uri BaseUri {
             get { return base_uri; }
             set { base_uri = value; }
+        }
+        
+        public string Title {
+            get { return title; }
+            set { title = value; }
         }
     }
 }

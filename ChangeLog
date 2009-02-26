@@ -1,5 +1,18 @@
 2009-02-26  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistFileUtil.cs:
+	* src/Core/Banshee.Services/Banshee.Playlists.Formats/IPlaylistFormat.cs:
+	* src/Core/Banshee.Services/Banshee.Playlists.Formats/PlaylistFormatBase.cs:
+	* src/Core/Banshee.Services/Banshee.Playlists.Formats/PlaylistParser.cs:
+	* src/Core/Banshee.Services/Banshee.Playlists.Formats/XspfPlaylistFormat.cs:
+	* src/Core/Banshee.Services/Makefile.am:
+	* src/Libraries/Mono.Media/Media.Playlists.Xspf/Playlist.cs:
+	* src/Libraries/Mono.Media/Media.Playlists.Xspf/Track.cs:
+	Patch from John Millikin adding support for importing and exporting XSPF
+	playlist files (BGO #389537)
+
+2009-02-26  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	Massive, awesomely-well-done patch by John Millikin adding proper support
 	for unicode-compatibile, case-insensitive, current-culture-aware
 	collation/sorting (BGO #499650)

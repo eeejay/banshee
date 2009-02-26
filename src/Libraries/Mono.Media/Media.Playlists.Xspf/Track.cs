@@ -89,8 +89,14 @@ namespace Media.Playlists.Xspf
                 writer.WriteElementString("album", album);
             }
             
+            // Only write valid (ie non-0) track numbers
+            if (TrackNumber > 0) {
+                writer.WriteElementString ("trackNum", TrackNumber.ToString ());
+            }
+            
             foreach(Uri uri in locations) {
-                writer.WriteElementString("location", uri.AbsoluteUri);
+                string escaped = uri.IsAbsoluteUri? uri.AbsoluteUri : Uri.EscapeUriString (uri.ToString ());
+                writer.WriteElementString ("location", escaped);
             }
         }
         

@@ -40,6 +40,7 @@ namespace Banshee.Playlists.Formats
         private Dictionary<string, object> attributes = new Dictionary<string, object>();
         private List<Dictionary<string, object>> elements = new List<Dictionary<string, object>>();
         private Uri base_uri = new Uri(Environment.CurrentDirectory);
+        private string title = null;
         
         public PlaylistFormatBase()
         {
@@ -117,6 +118,11 @@ namespace Banshee.Playlists.Formats
                 }
                 base_uri = value;
             }
+        }
+        
+        public virtual string Title {
+            get { return title; }
+            set { title = value; }
         }
     }
 }
