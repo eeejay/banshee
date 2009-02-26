@@ -134,7 +134,7 @@ namespace Banshee.Collection.Database
         }
 
         [DatabaseColumn(Select = false)]
-        protected string NameLowered {
+        internal string NameLowered {
             get { return Hyena.StringUtil.SearchKey (Name); }
         }
 
@@ -144,6 +144,11 @@ namespace Banshee.Collection.Database
             set { base.NameSort = value; }
         }
 
+        [DatabaseColumn(Select = false)]
+        internal byte[] NameSortKey {
+            get { return Hyena.StringUtil.SortKey (NameSort ?? Name); }
+        }
+        
         [DatabaseColumn("MusicBrainzID")]
         public override string MusicBrainzId {
             get { return base.MusicBrainzId; }

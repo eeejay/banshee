@@ -450,14 +450,19 @@ namespace Banshee.Collection.Database
             set { base.TrackTitle = value; }
         }
         
-        [DatabaseColumn]
+        [DatabaseColumn ("TitleSort")]
         public override string TrackTitleSort {
             get { return base.TrackTitleSort; }
             set { base.TrackTitleSort = value; }
         }
         
+        [DatabaseColumn("TitleSortKey", Select = false)]
+        internal byte[] TrackTitleSortKey {
+            get { return Hyena.StringUtil.SortKey (TrackTitleSort ?? TrackTitle); }
+        }
+        
         [DatabaseColumn(Select = false)]
-        protected string TitleLowered {
+        internal string TitleLowered {
             get { return Hyena.StringUtil.SearchKey (TrackTitle); }
         }
 

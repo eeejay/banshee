@@ -23,6 +23,7 @@
   <Extension path="/Banshee/Gui/TrackEditor/NotebookPage">
     <TrackEditorPage class="Banshee.Gui.TrackEditor.BasicTrackDetailsPage"/>
     <TrackEditorPage class="Banshee.Gui.TrackEditor.ExtraTrackDetailsPage"/>
+    <TrackEditorPage class="Banshee.Gui.TrackEditor.SortingPage"/>
     <!--<TrackEditorPage class="Banshee.Gui.TrackEditor.LyricsPage"/>-->
     <TrackEditorPage class="Banshee.Gui.TrackEditor.StatisticsPage"/>
     <!--<TrackEditorPage class="Banshee.Gui.TrackEditor.HelpPage"/>-->

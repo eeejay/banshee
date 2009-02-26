@@ -42,6 +42,8 @@ namespace Hyena.Data.Sqlite
             } else if (type == typeof (int) || type == typeof (long) || type == typeof (bool)
                 || type == typeof (DateTime) || type == typeof (TimeSpan) || type.IsEnum) {
                 return "INTEGER";
+            } else if (type == typeof (byte[])) {
+                return "BLOB";
             } else {
                 throw new Exception (String.Format (
                     "The type {0} cannot be bound to a database column.", type.Name));
@@ -123,11 +125,21 @@ namespace Hyena.Data.Sqlite
             return builder.ToString ();
         }
     }
+        
+    [SqliteFunction (Name = "HYENA_COLLATION_KEY", FuncType = FunctionType.Scalar, Arguments = 1)]
+    internal class CollationKeyFunction : SqliteFunction
+    {
+        public override object Invoke (object[] args)
+        {
+            return Hyena.StringUtil.SortKey (args[0] as string);
+        }
+    }
     
     [SqliteFunction (Name = "HYENA_SEARCH_KEY", FuncType = FunctionType.Scalar, Arguments = 1)]
     internal class SearchKeyFunction : SqliteFunction
     {
-        public override object Invoke (object[] args) {
+        public override object Invoke (object[] args)
+        {
             return Hyena.StringUtil.SearchKey (args[0] as string);
         }
     }

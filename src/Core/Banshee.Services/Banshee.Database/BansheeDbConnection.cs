@@ -71,6 +71,9 @@ namespace Banshee.Database
             lock (this) {
                 migrator.Migrate ();
                 migrator = null;
+
+                // Update cached sorting keys
+                SortKeyUpdater.Update ();
             }
         }
 

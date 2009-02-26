@@ -106,6 +106,62 @@ namespace Hyena.Data.Sqlite.Tests
             return tf.GetValue (cmd, null) as string;
         }
     }
+    
+    [TestFixture]
+    public class ObjectToSqlTests
+    {
+        protected void AssertToSql (object o, object expected)
+        {
+            Assert.AreEqual (expected, HyenaSqliteCommand.SqlifyObject (o));
+        }
+        
+        [Test]
+        public void TestNull ()
+        {
+            AssertToSql (null, "NULL");
+        }
+        
+        [Test]
+        public void TestBool ()
+        {
+            AssertToSql (false, "0");
+            AssertToSql (true, "1");
+        }
+        
+        [Test]
+        public void TestString ()
+        {
+            AssertToSql ("", "''");
+            AssertToSql ("test", "'test'");
+            AssertToSql ("te'st", "'te''st'");
+        }
+        
+        [Test]
+        public void TestByteArray ()
+        {
+            // BLOB notation
+            AssertToSql (new byte[] {}, "X''");
+            AssertToSql (new byte[] {0x10, 0x20, 0x30}, "X'102030'");
+        }
+        
+        [Test]
+        public void TestOtherArray ()
+        {
+            AssertToSql (new object[] {}, "");
+            AssertToSql (new object[] {"a"}, "'a'");
+            AssertToSql (new object[] {"a", "b"}, "'a','b'");
+        }
+        
+        [Test]
+        public void TestDateTime ()
+        {
+            // Returned using local time, not UTC
+            AssertToSql (new DateTime (2000, 1, 2), 946792800);
+            
+            // Disregards milliseconds
+            AssertToSql (new DateTime (2000, 1, 2, 10, 9, 8, 7), 946829348);
+        }
+    }
 }
 
 #endif

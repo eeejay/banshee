@@ -279,6 +279,35 @@ href=http://lkjdflkjdflkjj>baz foo< /a> bar"));
             AssertProduces ("Greetings! -* 你好?", "Greetings! -_ 你好_");
         }
     }
+    
+    [TestFixture]
+    public class SortKeyTests
+    {
+        private void AssertSortKey (string before, object after)
+        {
+            Assert.AreEqual (after, StringUtil.SortKey (before));
+        }
+        
+        [Test]
+        public void TestNull ()
+        {
+            AssertSortKey (null, null);
+        }
+        
+        [Test]
+        public void TestEmpty ()
+        {
+            AssertSortKey ("", new byte[] {1, 1, 1, 1, 0});
+        }
+        
+        [Test]
+        public void TestSortKey ()
+        {
+            AssertSortKey ("a", new byte[] {14, 2, 1, 1, 1, 1, 0});
+            AssertSortKey ("A", new byte[] {14, 2, 1, 1, 1, 1, 0});
+            AssertSortKey ("\u0104", new byte[] {14, 2, 1, 27, 1, 1, 1, 0,});
+        }
+    }
 }
 
 #endif

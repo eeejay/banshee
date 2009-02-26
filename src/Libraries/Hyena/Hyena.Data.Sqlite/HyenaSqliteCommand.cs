@@ -207,7 +207,7 @@ namespace Hyena.Data.Sqlite
             return this;
         }
 
-        private static object SqlifyObject (object o)
+        public static object SqlifyObject (object o)
         {
             if (o is string) {
                 return String.Format ("'{0}'", (o as string).Replace ("'", "''"));
@@ -217,6 +217,9 @@ namespace Hyena.Data.Sqlite
                 return ((bool)o) ? "1" : "0";
             } else if (o == null) {
                 return "NULL";
+            } else if (o is byte[]) {
+                string hex = BitConverter.ToString (o as byte[]).Replace ("-", "");
+                return String.Format ("X'{0}'", hex);
             } else if (o is Array) {
                 StringBuilder sb = new StringBuilder ();
                 bool first = true;

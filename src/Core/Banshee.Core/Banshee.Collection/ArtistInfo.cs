@@ -26,6 +26,8 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
+using System;
+
 namespace Banshee.Collection
 {
     public class ArtistInfo : CacheableItem
@@ -56,7 +58,7 @@ namespace Banshee.Collection
         
         public virtual string NameSort {
             get { return name_sort; }
-            set { name_sort = value; }
+            set { name_sort = String.IsNullOrEmpty (value) ? null : value; }
         }
     }
 }

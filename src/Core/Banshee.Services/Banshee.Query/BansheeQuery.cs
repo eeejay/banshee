@@ -337,7 +337,7 @@ namespace Banshee.Query
             PlayCountField.ShortLabel   = Catalog.GetString ("Plays");
         }
 
-        private const string default_sort = @"CoreAlbums.ArtistNameLowered ASC, CoreAlbums.TitleLowered ASC, CoreTracks.Disc ASC, CoreTracks.TrackNumber ASC";
+        private const string default_sort = @"CoreAlbums.ArtistNameSortKey ASC, CoreAlbums.TitleSortKey ASC, CoreTracks.Disc ASC, CoreTracks.TrackNumber ASC";
         public static string GetSort (string key)
         {
             return GetSort (key, false);
@@ -353,40 +353,40 @@ namespace Banshee.Query
                 case "track":
                 case "grouping":
                     sort_query = String.Format (@"
-                        CoreAlbums.ArtistNameLowered ASC, 
-                        CoreAlbums.TitleLowered ASC, 
+                        CoreAlbums.ArtistNameSortKey ASC, 
+                        CoreAlbums.TitleSortKey ASC, 
                         CoreTracks.Disc ASC,
                         CoreTracks.TrackNumber {0}", ascDesc); 
                     break;
 
                 case "albumartist":
                     sort_query = String.Format (@"
-                        CoreAlbums.ArtistNameLowered {0}, 
-                        CoreAlbums.TitleLowered ASC, 
+                        CoreAlbums.ArtistNameSortKey {0}, 
+                        CoreAlbums.TitleSortKey ASC, 
                         CoreTracks.Disc ASC,
                         CoreTracks.TrackNumber ASC", ascDesc); 
                     break;
 
                 case "artist":
                     sort_query = String.Format (@"
-                        CoreArtists.NameLowered {0}, 
-                        CoreAlbums.TitleLowered ASC,
+                        CoreArtists.NameSortKey {0}, 
+                        CoreAlbums.TitleSortKey ASC,
                         CoreTracks.Disc ASC,
                         CoreTracks.TrackNumber ASC", ascDesc); 
                     break;
 
                 case "album":
                     sort_query = String.Format (@"
-                        CoreAlbums.TitleLowered {0},
+                        CoreAlbums.TitleSortKey {0},
                         CoreTracks.Disc ASC,
                         CoreTracks.TrackNumber ASC", ascDesc); 
                     break;
 
                 case "title":
                     sort_query = String.Format (@"
-                        CoreTracks.TitleLowered {0},
-                        CoreAlbums.ArtistNameLowered ASC, 
-                        CoreAlbums.TitleLowered ASC", ascDesc); 
+                        CoreTracks.TitleSortKey {0},
+                        CoreAlbums.ArtistNameSortKey ASC, 
+                        CoreAlbums.TitleSortKey ASC", ascDesc); 
                     break;
 
                 case "random":
@@ -395,8 +395,8 @@ namespace Banshee.Query
 
                 case "disc":
                     sort_query = String.Format (@"
-                        CoreAlbums.ArtistNameLowered ASC, 
-                        CoreAlbums.TitleLowered ASC, 
+                        CoreAlbums.ArtistNameSortKey ASC, 
+                        CoreAlbums.TitleSortKey ASC, 
                         CoreTracks.Disc {0},
                         CoreTracks.TrackNumber ASC", ascDesc);
                     break;
@@ -406,18 +406,26 @@ namespace Banshee.Query
                 case "lastplayed":
                 case "lastskipped":
                     column = String.Format ("{0}stamp", key);
-                    goto case "comment";
+                    goto case "year";
                 case "added":
                     column = "dateaddedstamp";
-                    goto case "comment";
+                    goto case "year";
+
+                case "conductor":
+                case "genre":
+                case "composer":
+                case "comment":
+                    sort_query = String.Format (
+                        "HYENA_COLLATION_KEY(CoreTracks.{0}) {1}, {2}",
+                        column ?? key, ascDesc, default_sort
+                    );
+                    break;
 
                 case "year":
                 case "bitrate":
                 case "bpm":
-                case "conductor":
                 case "trackcount":
                 case "disccount":
-                case "genre":
                 case "duration":
                 case "rating":
                 case "playcount":
@@ -428,9 +436,7 @@ namespace Banshee.Query
                 case "dateaddedstamp":
                 case "uri":
                 case "mimetype":
-                case "composer":
                 case "licenseuri":
-                case "comment":
                     sort_query = String.Format (
                         "CoreTracks.{0} {1}, {2}",
                         column ?? key, ascDesc, default_sort

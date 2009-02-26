@@ -31,6 +31,7 @@ SOURCES =  \
 	Hyena.Data.Sqlite/Tests/DbBoundType.cs \
 	Hyena.Data.Sqlite/Tests/SqliteCommandTests.cs \
 	Hyena.Data.Sqlite/Tests/SqliteModelProviderTests.cs \
+	Hyena.Data.Sqlite/Tests/SqliteUtilTests.cs \
 	Hyena.Data/ArrayModelCache.cs \
 	Hyena.Data/ColumnDescription.cs \
 	Hyena.Data/DictionaryModelCache.cs \

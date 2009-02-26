@@ -52,7 +52,7 @@ namespace Banshee.Database
         // NOTE: Whenever there is a change in ANY of the database schema,
         //       this version MUST be incremented and a migration method
         //       MUST be supplied to match the new version number
-        protected const int CURRENT_VERSION = 24;
+        protected const int CURRENT_VERSION = 25;
         protected const int CURRENT_METADATA_VERSION = 5;
         
 #region Migration Driver
@@ -578,6 +578,20 @@ namespace Banshee.Database
         }
 #endregion
 
+#region Version 25
+
+        [DatabaseVersion (25)]
+        private bool Migrate_25 ()
+        {
+            Execute ("ALTER TABLE CoreArtists ADD COLUMN NameSortKey BLOB");
+            Execute ("ALTER TABLE CoreAlbums ADD COLUMN ArtistNameSortKey BLOB");
+            Execute ("ALTER TABLE CoreAlbums ADD COLUMN TitleSortKey BLOB");
+            Execute ("ALTER TABLE CoreTracks ADD COLUMN TitleSortKey BLOB");
+            return true;
+        }
+        
+#endregion
+
 #pragma warning restore 0169
         
 #region Fresh database setup
@@ -643,6 +657,7 @@ namespace Banshee.Database
                     Title               TEXT,
                     TitleLowered        TEXT,
                     TitleSort           TEXT,
+                    TitleSortKey        BLOB,
                     TrackNumber         INTEGER,
                     TrackCount          INTEGER,
                     Disc                INTEGER,
@@ -687,6 +702,7 @@ namespace Banshee.Database
                     Title               TEXT,
                     TitleLowered        TEXT,
                     TitleSort           TEXT,
+                    TitleSortKey        BLOB,
 
                     ReleaseDate         INTEGER,
                     Duration            INTEGER,
@@ -696,6 +712,7 @@ namespace Banshee.Database
                     ArtistName          TEXT,
                     ArtistNameLowered   TEXT,
                     ArtistNameSort      TEXT,
+                    ArtistNameSortKey   BLOB,
                     
                     Rating              INTEGER
                 )
@@ -711,6 +728,7 @@ namespace Banshee.Database
                     Name                TEXT,
                     NameLowered         TEXT,
                     NameSort            TEXT,
+                    NameSortKey         BLOB,
                     Rating              INTEGER
                 )
             ");

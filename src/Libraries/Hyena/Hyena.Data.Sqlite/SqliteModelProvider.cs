@@ -43,6 +43,7 @@ namespace Hyena.Data.Sqlite
         private DatabaseColumn key;
         private int key_select_column_index;
         private HyenaSqliteConnection connection;
+        private bool check_table = true;
         
         private HyenaSqliteCommand create_command;
         private HyenaSqliteCommand insert_command;
@@ -86,15 +87,20 @@ namespace Hyena.Data.Sqlite
         public HyenaSqliteConnection Connection {
             get { return connection; }
         }
-        
+
         protected SqliteModelProvider (HyenaSqliteConnection connection)
         {
             this.connection = connection;
         }
+
+        public SqliteModelProvider (HyenaSqliteConnection connection, string table_name) : this (connection, table_name, true)
+        {
+        }
         
-        public SqliteModelProvider (HyenaSqliteConnection connection, string table_name) : this (connection)
+        public SqliteModelProvider (HyenaSqliteConnection connection, string table_name, bool checkTable) : this (connection)
         {
             this.table_name = table_name;
+            this.check_table = checkTable;
             Init ();
         }
 
@@ -126,8 +132,10 @@ namespace Hyena.Data.Sqlite
             
             key_select_column_index = select_columns.IndexOf (key);
             
-            CheckVersion ();
-            CheckTable ();
+            if (check_table) {
+                CheckVersion ();
+                CheckTable ();
+            }
         }
         
         protected virtual void CheckVersion ()

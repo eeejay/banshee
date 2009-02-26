@@ -232,6 +232,13 @@ namespace Hyena
             return new Regex (regex_str, RegexOptions.Compiled);
         }
         
+        private static CompareInfo culture_compare_info = CultureInfo.CurrentCulture.CompareInfo;
+        public static byte[] SortKey (string orig)
+        {
+            if (orig == null) { return null; }
+            return culture_compare_info.GetSortKey (orig, CompareOptions.IgnoreCase).KeyData;
+        }
+        
         public static string EscapeFilename (string input)
         {
             if (input == null)

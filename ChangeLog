@@ -1,3 +1,73 @@
+2009-02-26  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	Massive, awesomely-well-done patch by John Millikin adding proper support
+	for unicode-compatibile, case-insensitive, current-culture-aware
+	collation/sorting (BGO #499650)
+
+	* src/Core/Banshee.Core/Banshee.Collection/AlbumInfo.cs:
+	* src/Core/Banshee.Core/Banshee.Collection/ArtistInfo.cs:
+	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs: Save
+	String.Empty as null for *Sort properties.
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseArtistInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	Add internal *SortKey properties that run their respective *Sort values
+	through Hyena.StringUtil.SortKey.  Change *Lowered properties to internal.
+
+
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumListModel.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseArtistListModel.cs:
+	* src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:
+	Sort by the new *SortKey columns instead of the *Lowered columns, and use
+	the custom SQLite collation method (HYENA_COLLATION_KEY) for columns
+	without cached collation keys.
+
+	* src/Core/Banshee.Services/Makefile.am:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/Tests/DatabaseAlbumInfoTests.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/Tests/DatabaseArtistInfoTests.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/Tests/DatabaseTrackInfoTests.cs:
+	Test the *Lowered, *Sort, and *SortKey properties.
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbConnection.cs:
+	* src/Core/Banshee.Services/Banshee.Database/SortKeyUpdater.cs: If the
+	locale is different than the last run, regenerate the cached SortKey
+	values.
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	Add *SortKey columns for album/artist/title values.  Since these columns
+	are very commonly sorted on, having the proper collation-key values
+	already generated gives us a performance win.
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeModelProvider.cs:
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteModelProvider.cs: Allow
+	turning of the table checking (that adds columns automatically).
+
+	* src/Core/Banshee.ThickClient/Makefile.am:
+	* src/Core/Banshee.ThickClient/Banshee.ThickClient.addin.xml:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/SortingPage.cs:
+	Simple new tab in the track editor for modifying the *Sort properties.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/HyenaSqliteCommand.cs: Handle
+	sqlifying byte[] as blobs.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/SqliteUtils.cs: Recognize byte[]
+	as blobs, and add new HYENA_COLLATION_KEY custom SQLite function that uses
+	Hyena.StringUtils.SortKey.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/Tests/SqliteCommandTests.cs: Test
+	the sqlifying of various object types.
+
+	* src/Libraries/Hyena/Makefile.am:
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/Tests/SqliteUtilTests.cs: Test the
+	collation and search custom methods.
+
+	* src/Libraries/Hyena/Hyena/StringUtil.cs: Add SortKey method that
+	generates a case-insensitive, current-culture-aware byte[] collation key.
+
+	* src/Libraries/Hyena/Hyena/Tests/StringUtilTests.cs: Test the new SortKey
+	method.
+
 2009-02-25  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Clients/Halie/Halie/Client.cs: Fix bug where the --hide command

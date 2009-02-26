@@ -51,7 +51,7 @@ namespace Banshee.Collection.Database
                         (SELECT CoreTracks.AlbumID FROM CoreTracks, CoreCache{0}
                             WHERE CoreCache.ModelID = {1} AND
                                   CoreCache.ItemId = {2} {3})
-                    ORDER BY CoreAlbums.TitleLowered, CoreAlbums.ArtistNameLowered";
+                    ORDER BY CoreAlbums.TitleSortKey, CoreAlbums.ArtistNameSortKey";
         }
         
         public override string FilterColumn {

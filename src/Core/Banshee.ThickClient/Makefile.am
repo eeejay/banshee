@@ -72,6 +72,7 @@ SOURCES =  \
 	Banshee.Gui.TrackEditor/PageType.cs \
 	Banshee.Gui.TrackEditor/RangeEntry.cs \
 	Banshee.Gui.TrackEditor/RatingEntry.cs \
+	Banshee.Gui.TrackEditor/SortingPage.cs \
 	Banshee.Gui.TrackEditor/SpinButtonEntry.cs \
 	Banshee.Gui.TrackEditor/StatisticsPage.cs \
 	Banshee.Gui.TrackEditor/SyncButton.cs \

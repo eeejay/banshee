@@ -211,7 +211,7 @@ namespace Banshee.Collection
         [Exportable (ExportName = "artistsort")]
         public virtual string ArtistNameSort {
             get { return artist_name_sort; }
-            set { artist_name_sort = value; }
+            set { artist_name_sort = String.IsNullOrEmpty (value) ? null : value; }
         }
 
         [Exportable (ExportName = "album")]
@@ -223,7 +223,7 @@ namespace Banshee.Collection
         [Exportable (ExportName = "albumsort")]
         public virtual string AlbumTitleSort {
             get { return album_title_sort; }
-            set { album_title_sort = value; }
+            set { album_title_sort = String.IsNullOrEmpty (value) ? null : value; }
         }
 
         [Exportable]
@@ -235,7 +235,7 @@ namespace Banshee.Collection
         [Exportable]
         public virtual string AlbumArtistSort {
             get { return album_artist_sort; }
-            set { album_artist_sort = value; }
+            set { album_artist_sort = String.IsNullOrEmpty (value) ? null : value; }
         }
         
         [Exportable]
@@ -253,7 +253,7 @@ namespace Banshee.Collection
         [Exportable (ExportName = "namesort")]
         public virtual string TrackTitleSort {
             get { return track_title_sort; }
-            set { track_title_sort = value; }
+            set { track_title_sort = String.IsNullOrEmpty (value) ? null : value; }
         }
         
         [Exportable]

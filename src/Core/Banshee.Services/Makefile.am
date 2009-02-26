@@ -22,6 +22,9 @@ SOURCES =  \
 	Banshee.Collection.Database/IDatabaseTrackModelCache.cs \
 	Banshee.Collection.Database/IDatabaseTrackModelProvider.cs \
 	Banshee.Collection.Database/QueryFilterInfo.cs \
+	Banshee.Collection.Database/Tests/DatabaseAlbumInfoTests.cs \
+	Banshee.Collection.Database/Tests/DatabaseArtistInfoTests.cs \
+	Banshee.Collection.Database/Tests/DatabaseTrackInfoTests.cs \
 	Banshee.Collection.Indexer/CollectionIndexer.cs \
 	Banshee.Collection.Indexer/CollectionIndexerService.cs \
 	Banshee.Collection.Indexer/ICollectionIndexer.cs \
@@ -48,6 +51,7 @@ SOURCES =  \
 	Banshee.Database/BansheeDbFormatMigrator.cs \
 	Banshee.Database/BansheeModelCache.cs \
 	Banshee.Database/BansheeModelProvider.cs \
+	Banshee.Database/SortKeyUpdater.cs \
 	Banshee.Equalizer/EqualizerManager.cs \
 	Banshee.Equalizer/EqualizerSetting.cs \
 	Banshee.Equalizer/EqualizerSettingEvent.cs \

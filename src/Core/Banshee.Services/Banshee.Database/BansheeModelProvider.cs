@@ -36,10 +36,16 @@ using Banshee.Configuration;
 
 namespace Banshee.Database
 {
+    // Used for disabling table-checks during testing
+    internal static class BansheeDatabaseSettings
+    {
+        internal static bool CheckTables = true;
+    }
+
     public class BansheeModelProvider<T> : SqliteModelProvider<T> where T : new ()
     {
         public BansheeModelProvider (BansheeDbConnection connection, string table_name)
-            : base (connection, table_name)
+            : base (connection, table_name, BansheeDatabaseSettings.CheckTables)
         {
         }
         

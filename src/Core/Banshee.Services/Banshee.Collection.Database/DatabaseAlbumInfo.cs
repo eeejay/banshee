@@ -200,6 +200,16 @@ namespace Banshee.Collection.Database
             set { base.TitleSort = value; }
         }
         
+        [DatabaseColumn(Select = false)]
+        internal byte[] TitleSortKey {
+            get { return Hyena.StringUtil.SortKey (TitleSort ?? Title); }
+        }
+
+        [DatabaseColumn(Select = false)]
+        internal string TitleLowered {
+            get { return Hyena.StringUtil.SearchKey (Title); }
+        }
+
         [DatabaseColumn]
         public override string ArtistName {
             get { return base.ArtistName; }
@@ -213,12 +223,12 @@ namespace Banshee.Collection.Database
         }
 
         [DatabaseColumn(Select = false)]
-        protected string TitleLowered {
-            get { return Hyena.StringUtil.SearchKey (Title); }
+        internal byte[] ArtistNameSortKey {
+            get { return Hyena.StringUtil.SortKey (ArtistNameSort ?? ArtistName); }
         }
-
+        
         [DatabaseColumn(Select = false)]
-        protected string ArtistNameLowered {
+        internal string ArtistNameLowered {
             get { return Hyena.StringUtil.SearchKey (ArtistName); }
         }
 

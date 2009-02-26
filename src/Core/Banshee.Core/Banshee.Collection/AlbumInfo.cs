@@ -60,7 +60,7 @@ namespace Banshee.Collection
         
         public virtual string ArtistNameSort {
             get { return artist_name_sort; }
-            set { artist_name_sort = value; }
+            set { artist_name_sort = String.IsNullOrEmpty (value) ? null : value; }
         }
         
         public virtual string Title {
@@ -70,7 +70,7 @@ namespace Banshee.Collection
         
         public virtual string TitleSort {
             get { return title_sort; }
-            set { title_sort = value; }
+            set { title_sort = String.IsNullOrEmpty (value) ? null : value; }
         }
         
         public virtual bool IsCompilation {
