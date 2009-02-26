@@ -36,8 +36,8 @@ namespace Banshee.Database
         public static void Update ()
         {
             string locale = CultureInfo.CurrentCulture.Name;
-            Hyena.Log.DebugFormat ("locale = {0}, previous = {1}", locale, PreviousLocale);
             if (locale != PreviousLocale) {
+                Hyena.Log.DebugFormat ("Updating collation keys for locale {0} (was {1})", locale, PreviousLocale);
                 ForceUpdate (locale);
             }
         }

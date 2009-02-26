@@ -1,5 +1,10 @@
 2009-02-26  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Database/SortKeyUpdater.cs: Slightly
+	nicer debug output.
+
+2009-02-26  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistFileUtil.cs:
 	* src/Core/Banshee.Services/Banshee.Playlists.Formats/IPlaylistFormat.cs:
 	* src/Core/Banshee.Services/Banshee.Playlists.Formats/PlaylistFormatBase.cs:
