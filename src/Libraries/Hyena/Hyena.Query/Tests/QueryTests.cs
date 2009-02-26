@@ -64,7 +64,7 @@ namespace Hyena.Query.Tests
         );
 
         private static QueryField MimeTypeField = new QueryField (
-            "mimetype", "MimeType", "Mime Type", "CoreTracks.MimeType {0} OR CoreTracks.Uri {0}",
+            "mimetype", "MimeType", "Mime Type", "CoreTracks.MimeType {0} OR CoreTracks.Uri {0}", typeof(ExactStringQueryValue),
             // Translators: These are unique search fields.  Please, no spaces. Blank ok.
             "type", "mimetype", "format", "ext", "mime"
         );
@@ -154,6 +154,66 @@ namespace Hyena.Query.Tests
     
             Assert.AreEqual (
                 "(CoreTracks.MimeType LIKE '%mp3%' ESCAPE '\\' OR CoreTracks.Uri LIKE '%mp3%' ESCAPE '\\')",
+                MimeTypeField.ToSql (StringQueryValue.Contains, val)
+            );
+        }
+
+        [Test]
+        public void EscapeSingleQuotes ()
+        {
+            QueryValue val = new StringQueryValue ();
+            val.ParseUserQuery ("Kelli O'Hara");
+
+            Assert.AreEqual (
+                "(CoreArtists.NameLowered LIKE '%kelli ohara%' ESCAPE '\\' AND CoreArtists.NameLowered IS NOT NULL)",
+                ArtistField.ToSql (StringQueryValue.Contains, val)
+            );
+        }
+
+        [Test] // http://bugzilla.gnome.org/show_bug.cgi?id=570312
+        public void EscapeSqliteWildcards1 ()
+        {
+            QueryValue val = new StringQueryValue ();
+            val.ParseUserQuery ("100% Techno");
+
+            Assert.AreEqual (
+                "(CoreAlbums.TitleLowered LIKE '%100 techno%' ESCAPE '\\' AND CoreAlbums.TitleLowered IS NOT NULL)",
+                AlbumField.ToSql (StringQueryValue.Contains, val)
+            );
+        }
+
+        [Test] // http://bugzilla.gnome.org/show_bug.cgi?id=570312
+        public void EscapeSqliteWildcards2 ()
+        {
+            QueryValue val = new StringQueryValue ();
+            val.ParseUserQuery ("-_-");
+
+            Assert.AreEqual (
+                "(CoreAlbums.TitleLowered LIKE '%-\\_-%' ESCAPE '\\' AND CoreAlbums.TitleLowered IS NOT NULL)",
+                AlbumField.ToSql (StringQueryValue.Contains, val)
+            );
+        }
+
+        [Test] // http://bugzilla.gnome.org/show_bug.cgi?id=570312
+        public void EscapeSqliteWildcards3 ()
+        {
+            QueryValue val = new StringQueryValue ();
+            val.ParseUserQuery ("Metallic/\\");
+
+            Assert.AreEqual (
+                "(CoreAlbums.TitleLowered LIKE '%metallic%' ESCAPE '\\' AND CoreAlbums.TitleLowered IS NOT NULL)",
+                AlbumField.ToSql (StringQueryValue.Contains, val)
+            );
+        }
+
+        [Test] // http://bugzilla.gnome.org/show_bug.cgi?id=570312
+        public void EscapeSqliteWildcards4Real ()
+        {
+            QueryValue val = new ExactStringQueryValue ();
+            val.ParseUserQuery ("/\\_%`'");
+
+            Assert.AreEqual (
+                "(CoreTracks.MimeType LIKE '%/\\\\\\_\\%`''%' ESCAPE '\\' OR CoreTracks.Uri LIKE '%/\\\\\\_\\%`''%' ESCAPE '\\')",
                 MimeTypeField.ToSql (StringQueryValue.Contains, val)
             );
         }

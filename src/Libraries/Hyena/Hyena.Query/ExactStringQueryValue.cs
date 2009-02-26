@@ -33,7 +33,7 @@ namespace Hyena.Query
     {
         public override string ToSql (Operator op)
         {
-            return String.IsNullOrEmpty (value) ? null : value.Replace ("'", "''").ToLower ();
+            return String.IsNullOrEmpty (value) ? null : EscapeString (op, value.ToLower ());
         }
     }
 }

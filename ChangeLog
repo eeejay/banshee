@@ -1,3 +1,13 @@
+2009-02-26  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Libraries/Hyena/Hyena.Query/ExactStringQueryValue.cs:
+	* src/Libraries/Hyena/Hyena.Query/StringQueryValue.cs: Patch from Andrés
+	G. Aragoneses and John Millikin fixing the wildcard escaping
+	ExactStringQueryValues in LIKE queries (BGO #570312)
+
+	* src/Libraries/Hyena/Hyena.Query/Tests/QueryTests.cs: New tests Andrés
+	testing the behavior for Exact and non LIKE queries.
+
 2009-02-26  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
 	* src/Libraries/Hyena/Hyena.Query/AliasedObjectSet.cs: Move the ToLower

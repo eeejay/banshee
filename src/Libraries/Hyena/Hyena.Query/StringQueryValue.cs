@@ -81,28 +81,21 @@ namespace Hyena.Query
 
         public override string ToSql (Operator op)
         {
-            if (String.IsNullOrEmpty (value))
-                return null;
+            return String.IsNullOrEmpty (value) ? null : EscapeString (op, Hyena.StringUtil.SearchKey (value));
+        }
 
-            string ret = null;
-
-            // SearchKey() removes ' anyway, but it's escaped again so proper
-            // SQL behavior isn't dependent on search behavior.
-            ret = Hyena.StringUtil.SearchKey (value).Replace ("'", "''");
+        protected static string EscapeString (Operator op, string orig)
+        {
+            orig = orig.Replace ("'", "''");
 
             if (op == Contains   || op == DoesNotContain ||
                 op == StartsWith || op == EndsWith) {
-                ret = EscapeLike (ret);
+                return orig.Replace ("\\", "\\\\")
+                           .Replace ("%", "\\%")
+                           .Replace ("_", "\\_");
             }
-
-            return ret;
-        }
-
-        private static string EscapeLike (string orig)
-        {
-            return orig.Replace ("\\", "\\\\")
-                       .Replace ("%", "\\%")
-                       .Replace ("_", "\\_");
+            
+            return orig;
         }
     }
 }
