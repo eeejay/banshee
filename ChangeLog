@@ -1,5 +1,11 @@
 2009-02-27  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Recommendations/RecommendationPane.cs:
+	Patch from Alexander Kojevnikov to ignore/not fetch recommendations for
+	Unknown etc artists (BGO #560722)
+
+2009-02-27  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:
 	Patch from Alexander Kojevnikov making it so that even if the statistics
 	TreeView is focused you can still use ctrl-pageup/down to switch tabs in

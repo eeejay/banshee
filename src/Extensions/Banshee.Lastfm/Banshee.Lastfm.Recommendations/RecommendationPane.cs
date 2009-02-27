@@ -78,6 +78,17 @@ namespace Banshee.Lastfm.Recommendations
 
         private static string album_title_format = Catalog.GetString ("Top Albums by {0}");
         private static string track_title_format = Catalog.GetString ("Top Tracks by {0}");
+
+        private static string[] special_artists = new string[] {
+            "Unknown",
+            "Unknown Artists",
+            "Unknown Artist",
+            "Various Artists",
+            "[unknown]",
+            "[no artist]",
+            Catalog.GetString ("Unknown Artist"),
+            Catalog.GetString ("Various Artists")
+        };
         
         private bool ready = false;
         private bool refreshing = false;
@@ -113,14 +124,21 @@ namespace Banshee.Lastfm.Recommendations
                 }
                 
                 ready = false;
-                if (String.IsNullOrEmpty (value)) {
-                    Hide ();
-                    return;
+                artist = value;
+
+                foreach (string special_artist in special_artists) {
+                    if (String.Compare (artist, special_artist, true) == 0) {
+                        artist = null;
+                        break;
+                    }
                 }
                 
-                artist = value;
-                HideWithTimeout ();
-                RefreshRecommendations ();
+                if (String.IsNullOrEmpty (artist)) {
+                    Hide ();
+                } else {
+                    HideWithTimeout ();
+                    RefreshRecommendations ();
+                }
             }
         }
         
