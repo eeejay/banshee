@@ -1,3 +1,10 @@
+2009-02-26  Eoin Hennessy <eoin@randomrules.org>
+
+	* src/Libraries/Mono.Media/Media.Playlists.Xspf/Playlist.cs: The current
+	path is not gauranteed to be a valid Uri (especially when running from a
+	bundle on OSX). If creating the default base Uri from the current path
+	fails, set it to Location.
+
 2009-02-26  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:
