@@ -1,3 +1,15 @@
+2009-02-27  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
+	* src/Core/Banshee.Core/Banshee.Base/Tests/TaglibReadWriteTests.cs:
+	Initialize the AddinManager before running tests. Original patch by
+	John Millikin (BGO #568046).
+
+	* tests/data/test.mp3: Add a sample mp3 file required by the taglib-sharp
+	tests.
+
+	* tests/Makefile.am: Run nunit-console2 with -noshadow so that tests
+	can find the sample mp3 file.
+
 2009-02-26  Eoin Hennessy <eoin@randomrules.org>
 
 	* src/Libraries/Mono.Media/Media.Playlists.Xspf/Playlist.cs: The current

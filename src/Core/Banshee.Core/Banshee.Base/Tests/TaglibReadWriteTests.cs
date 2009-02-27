@@ -51,6 +51,8 @@ namespace Banshee.Base.Tests
         [TestFixtureSetUp]
         public void Setup ()
         {
+            Mono.Addins.AddinManager.Initialize (BinDir);
+            
             files = new string [] {
                 BinDir + "/../tests/data/test.mp3",
             };
