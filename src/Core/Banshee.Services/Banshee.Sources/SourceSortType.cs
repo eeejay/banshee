@@ -48,17 +48,26 @@ namespace Banshee.Sources
 {
     public class SourceSortType
     {
+        private SourceComparer comparer;
         private string id;
         private string label;
         private SortType sort_type;
-        private IComparer<Source> comparer;
-        
+
         public SourceSortType (string id, string label, SortType sortType, IComparer<Source> comparer)
         {
             this.id = id;
             this.label = label;
             this.sort_type = sortType;
-            this.comparer = comparer;
+
+            this.comparer = new SourceComparer ();
+            this.comparer.Comparer = comparer;
+            this.comparer.Descending = sort_type == SortType.Descending;
+        }
+
+        public void Sort (List<Source> sources, bool separateTypes)
+        {
+            this.comparer.SeparateTypes = separateTypes;
+            sources.Sort (comparer);
         }
         
         public string Id {
@@ -73,8 +82,35 @@ namespace Banshee.Sources
             get { return sort_type; }
         }
         
-        public IComparer<Source> Comparer {
-            get { return comparer; }
+        private class SourceComparer : IComparer<Source>
+        {
+            private IComparer name_comparer = new CaseInsensitiveComparer ();
+
+            public bool SeparateTypes;
+            public bool Descending;
+            public IComparer<Source> Comparer;
+
+            public int Compare (Source a, Source b)
+            {
+                int comp;
+
+                // First separate out by type
+                if (SeparateTypes) {
+                    comp = a.TypeName.CompareTo (b.TypeName);
+                    if (comp != 0)
+                        return comp;
+                }
+
+                // Compare by the special comparer, if any
+                if (Comparer != null) {
+                    comp = Comparer.Compare (a, b);
+                    if (comp != 0)
+                        return Descending ? -comp : comp;
+                }
+
+                // If still equal, then order by name
+                return name_comparer.Compare (a.Name, b.Name);
+            }
         }
     }
 }

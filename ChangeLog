@@ -1,5 +1,29 @@
 2009-02-27  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs: Rename
+	SortTypes to ChildSortTypes.
+
+	* src/Core/Banshee.Services/Banshee.Sources/Source.cs: Add configuration
+	for separate children by type, get rid of "Ascending" in Name sort option,
+	add a TypeName property that defaults to GetType ().Name that is used by
+	the separate-by-type sort option.
+
+	* src/Core/Banshee.Services/Banshee.Sources/SourceSortType.cs: Add a Sort
+	method that uses an internal IComparer to separate by type if desired,
+	sort by the main function (size, etc), and then fallback to sorting by
+	name.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs: Add
+	separate-by-type option.
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs: Get
+	rid of 'Station Type' sort option since now redundant.
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:
+	Override TypeName to replicate old Station Type sort behavior.
+
+2009-02-27  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:
 	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:
 	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:

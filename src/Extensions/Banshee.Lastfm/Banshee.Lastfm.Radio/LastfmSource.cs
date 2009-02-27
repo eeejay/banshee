@@ -145,36 +145,19 @@ namespace Banshee.Lastfm.Radio
             {
                 StationSource a = sa as StationSource;
                 StationSource b = sb as StationSource;
-                int c = a.PlayCount.CompareTo (b.PlayCount);
-                return c == 0 ? -(a.Name.CompareTo (b.Name)) : c; 
+                return a.PlayCount.CompareTo (b.PlayCount);
             }
         }
 
-        // Order by the type of station, then by the station name
-        public class TypeComparer : IComparer<Source>
-        {
-            public int Compare (Source sa, Source sb)
-            {
-                StationSource a = sa as StationSource;
-                StationSource b = sb as StationSource;
-                int c = a.Type.Name.CompareTo (b.Type.Name);
-                return c == 0 ? (a.Name.CompareTo (b.Name)) : c; 
-            }
-        }
-        
         private static SourceSortType[] sort_types = new SourceSortType[] {
             SortNameAscending,
             new SourceSortType (
                 "LastfmTotalPlayCount",
                 Catalog.GetString ("Total Play Count"),
-                SortType.Descending, new PlayCountComparer ()),
-            new SourceSortType (
-                "LastfmStationType",
-                Catalog.GetString ("Station Type"),
-                SortType.Ascending, new TypeComparer ())
+                SortType.Descending, new PlayCountComparer ())
         };
         
-        public override SourceSortType[] SortTypes {
+        public override SourceSortType[] ChildSortTypes {
             get { return sort_types; }
         }
         

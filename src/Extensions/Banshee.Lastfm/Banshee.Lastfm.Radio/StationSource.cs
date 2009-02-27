@@ -96,6 +96,10 @@ namespace Banshee.Lastfm.Radio
             }
         }
 
+        public override string TypeName {
+            get { return Type.Name; }
+        }
+
         private string arg;
         public string Arg {
             get { return arg; }

@@ -375,7 +375,7 @@ namespace Banshee.Gui
             }
             
             if (source != null) {
-                UpdateAction ("SortChildrenAction", source.SortTypes.Length > 0 && source.Children.Count > 1, true, source);
+                UpdateAction ("SortChildrenAction", source.ChildSortTypes.Length > 0 && source.Children.Count > 1, true, source);
             }
 
             Action<Source> handler = Updated;
@@ -427,18 +427,34 @@ namespace Banshee.Gui
             }
         }
 
-        private static Menu BuildSortMenu (Source source)
+        private Menu BuildSortMenu (Source source)
         {
             Menu menu = new Menu ();
             GLib.SList group = null;
-            foreach (SourceSortType sort_type in source.SortTypes) {
+            foreach (SourceSortType sort_type in source.ChildSortTypes) {
                 RadioMenuItem item = new RadioMenuItem (group, sort_type.Label);
                 group = item.Group;
                 item.Active = (sort_type == source.ActiveChildSort);
                 item.Toggled += BuildSortChangedHandler (source, sort_type);
                 menu.Append (item);
             }
+
+            menu.Append (new SeparatorMenuItem ());
+
+            CheckMenuItem sort_types_item = new CheckMenuItem (Catalog.GetString ("Separate by Type"));
+            sort_types_item.Active = source.SeparateChildrenByType;
+            sort_types_item.Toggled += OnSeparateTypesChanged;
+            menu.Append (sort_types_item);
+
             return menu;
+        }
+
+        private void OnSeparateTypesChanged (object o, EventArgs args)
+        {
+            CheckMenuItem item = o as CheckMenuItem;
+            if (item != null) {
+                ActionSource.SeparateChildrenByType = item.Active;
+            }
         }
 
         private static EventHandler BuildSortChangedHandler (Source source, SourceSortType sort_type)

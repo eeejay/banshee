@@ -181,7 +181,7 @@ namespace Banshee.Sources
             SortSizeDescending
         };
         
-        public override SourceSortType[] SortTypes {
+        public override SourceSortType[] ChildSortTypes {
             get { return sort_types; }
         }
         

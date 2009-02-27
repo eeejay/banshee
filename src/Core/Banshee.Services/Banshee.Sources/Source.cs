@@ -58,6 +58,7 @@ namespace Banshee.Sources
         private SourceSortType child_sort;
         private bool sort_children = true;
         private SchemaEntry<string> child_sort_schema;
+        private SchemaEntry<bool> separate_by_type_schema;
 
         public event EventHandler Updated;
         public event EventHandler UserNotifyUpdated;
@@ -236,16 +237,7 @@ namespace Banshee.Sources
             }
         }
 
-        public class NameComparer : IComparer<Source>
-        {
-            static IComparer inner_cmp = new CaseInsensitiveComparer ();
-            public int Compare (Source a, Source b)
-            {
-                return inner_cmp.Compare (a.Name, b.Name);
-            }
-        }
-
-        public class SizeComparer : IComparer<Source>
+        private class SizeComparer : IComparer<Source>
         {
             public int Compare (Source a, Source b)
             {
@@ -271,10 +263,7 @@ namespace Banshee.Sources
             
             if (child_sort.SortType != SortType.None) {
                 lock (Children) {
-                    child_sources.Sort (child_sort.Comparer);
-                    if (child_sort.SortType == SortType.Descending) {
-                        child_sources.Reverse ();
-                    }
+                    child_sort.Sort (child_sources, SeparateChildrenByType);
 
                     int i = 0;
                     foreach (Source child in child_sources) {
@@ -287,7 +276,7 @@ namespace Banshee.Sources
         
         private void LoadSortSchema ()
         {
-            if (SortTypes.Length == 0) {
+            if (ChildSortTypes.Length == 0) {
                 return;
             }
 
@@ -298,12 +287,14 @@ namespace Banshee.Sources
             
             child_sort_schema = CreateSchema<string> ("child_sort_id", DefaultChildSort.Id, "", "");
             string child_sort_id = child_sort_schema.Get ();
-            foreach (SourceSortType sort_type in SortTypes) {
+            foreach (SourceSortType sort_type in ChildSortTypes) {
                 if (sort_type.Id == child_sort_id) {
                     child_sort = sort_type;
                     break;
                 }
             }
+
+            separate_by_type_schema = CreateSchema<bool> ("separate_by_type", false, "", "");
             SortChildSources ();
         }
 
@@ -543,6 +534,10 @@ namespace Banshee.Sources
         public Source Parent {
             get { return parent; }
         }
+
+        public virtual string TypeName {
+            get { return GetType ().Name; }
+        }
         
         private string unique_id;
         public string UniqueId {
@@ -657,8 +652,8 @@ namespace Banshee.Sources
         
         public static readonly SourceSortType SortNameAscending = new SourceSortType (
             "NameAsc",
-            Catalog.GetString ("Name Ascending"),
-            SortType.Ascending, new NameComparer ());
+            Catalog.GetString ("Name"),
+            SortType.Ascending, null); // null comparer b/c we already fall back to sorting by name
         
         public static readonly SourceSortType SortSizeAscending = new SourceSortType (
             "SizeAsc",
@@ -671,7 +666,7 @@ namespace Banshee.Sources
             SortType.Descending, new SizeComparer ());
         
         private static SourceSortType[] sort_types = new SourceSortType[] {};
-        public virtual SourceSortType[] SortTypes {
+        public virtual SourceSortType[] ChildSortTypes {
             get { return sort_types; }
         }
         
@@ -681,6 +676,14 @@ namespace Banshee.Sources
         
         public virtual SourceSortType DefaultChildSort {
             get { return null; }
+        }
+
+        public bool SeparateChildrenByType {
+            get { return separate_by_type_schema.Get (); }
+            set {
+                separate_by_type_schema.Set (value);
+                SortChildSources ();
+            }
         }
         
 #endregion
