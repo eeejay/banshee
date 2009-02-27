@@ -5,13 +5,7 @@
         <separator/>
         <menuitem name="NewPlaylist" action="NewPlaylistAction"/>
         <menuitem name="NewSmartPlaylist" action="NewSmartPlaylistAction"/>
-        <separator/>
-        <menu name="SortChildren" action="SortChildrenAction">
-          <menuitem name="SortChildrenNameAsc" action="SortChildrenNameAscAction"/>
-          <menuitem name="SortChildrenNameDesc" action="SortChildrenNameDescAction"/>
-          <menuitem name="SortChildrenSizeAsc" action="SortChildrenSizeAscAction"/>
-          <menuitem name="SortChildrenSizeDesc" action="SortChildrenSizeDescAction"/>
-        </menu>
+        <menu name="SortChildren" action="SortChildrenAction" />
     </popup>
 
     <popup name="PodcastAllFeedsContextMenu" action="PodcastAllFeedsContextMenuAction">

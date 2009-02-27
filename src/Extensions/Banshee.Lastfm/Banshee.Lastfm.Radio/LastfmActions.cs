@@ -73,11 +73,6 @@ namespace Banshee.Lastfm.Radio
                     "LastfmConnectAction", null,
                      Catalog.GetString ("Connect"),
                      null, String.Empty, OnConnect
-                ),
-                new ActionEntry (
-                    "LastfmSortAction", "gtk-sort-descending",
-                    Catalog.GetString ("Sort Stations by"),
-                    null, String.Empty, null
                 )
             });
 
@@ -158,31 +153,6 @@ namespace Banshee.Lastfm.Radio
 
             this["LastfmLoveAction"].IconName = "face-smile";
             this["LastfmHateAction"].IconName = "face-sad";
-
-            Add (
-                new RadioActionEntry [] {
-                    new RadioActionEntry (
-                        "LastfmSortStationsByNameAction", null,
-                         Catalog.GetString ("Station Name"),
-                         null, "", 0
-                    ),
-                    new RadioActionEntry (
-                        "LastfmSortStationsByPlayCountAction", null,
-                         Catalog.GetString ("Total Play Count"),
-                         null, "", 1
-                    ),
-                    new RadioActionEntry (
-                        "LastfmSortStationsByTypeAction", null,
-                         Catalog.GetString ("Station Type"),
-                         null, "", 2
-                    )
-                },
-                Array.IndexOf (LastfmSource.ChildComparers, lastfm.ChildComparer),
-                delegate (object sender, ChangedArgs args) {
-                    lastfm.ChildComparer = LastfmSource.ChildComparers[args.Current.Value];
-                    lastfm.SortChildSources ();
-                }
-            );
 
             this["LastfmLoveAction"].IsImportant = true;
             this["LastfmHateAction"].IsImportant = true;
@@ -362,7 +332,7 @@ namespace Banshee.Lastfm.Radio
         private void OnTrackRecommend (object sender, EventArgs args)
         {
         }
-
+        
 #endregion
 
         private string artist;
@@ -415,7 +385,6 @@ namespace Banshee.Lastfm.Radio
 
             bool have_user = (lastfm.Account != null && lastfm.Account.UserName != null);
             this["LastfmAddAction"].Sensitive = have_user;
-            this["LastfmSortAction"].Sensitive = have_user;
             this["LastfmConnectAction"].Visible = lastfm.Connection.State == ConnectionState.Disconnected;
 
             TrackInfo current_track = ServiceManager.PlayerEngine.CurrentTrack;

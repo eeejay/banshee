@@ -106,27 +106,16 @@
   <popup name="LibraryContextMenu" action="LibraryContextMenuAction">
     <menuitem name="NewPlaylist" action="NewPlaylistAction"/>
     <menuitem name="NewSmartPlaylist" action="NewSmartPlaylistAction"/>
+    <menu name="SortChildren" action="SortChildrenAction" />
     <separator/>
     <menuitem name="Import" action="ImportAction"/>
     <separator/>
-    <menu name="SortChildren" action="SortChildrenAction">
-      <menuitem name="SortChildrenNameAsc" action="SortChildrenNameAscAction"/>
-      <menuitem name="SortChildrenNameDesc" action="SortChildrenNameDescAction"/>
-      <menuitem name="SortChildrenSizeAsc" action="SortChildrenSizeAscAction"/>
-      <menuitem name="SortChildrenSizeDesc" action="SortChildrenSizeDescAction"/>
-    </menu>
   </popup>
 
   <popup name="RemovableSourceContextMenu" action="RemovableSourceContextMenuAction">
     <menuitem name="NewPlaylist" action="NewPlaylistAction"/>
     <menuitem name="NewSmartPlaylist" action="NewSmartPlaylistAction"/>
-    <separator/>
-    <menu name="SortChildren" action="SortChildrenAction">
-      <menuitem name="SortChildrenNameAsc" action="SortChildrenNameAscAction"/>
-      <menuitem name="SortChildrenNameDesc" action="SortChildrenNameDescAction"/>
-      <menuitem name="SortChildrenSizeAsc" action="SortChildrenSizeAscAction"/>
-      <menuitem name="SortChildrenSizeDesc" action="SortChildrenSizeDescAction"/>
-    </menu>
+    <menu name="SortChildren" action="SortChildrenAction" />
     <separator/>
     <placeholder name="AboveImportSource"/>
     <menuitem name="ImportSource" action="ImportSourceAction"/>

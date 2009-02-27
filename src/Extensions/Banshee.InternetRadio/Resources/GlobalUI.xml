@@ -4,5 +4,6 @@
         <separator/>
         <menuitem name="NewPlaylist" action="NewPlaylistAction"/>
         <menuitem name="NewSmartPlaylist" action="NewSmartPlaylistAction"/>
+        <menu name="SortChildren" action="SortChildrenAction" />
     </popup>
 </ui>

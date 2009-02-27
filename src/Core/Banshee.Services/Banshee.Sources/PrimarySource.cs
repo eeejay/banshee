@@ -174,6 +174,20 @@ namespace Banshee.Sources
             get { return is_local; }
             protected set { is_local = value; }
         }
+        
+        private static SourceSortType[] sort_types = new SourceSortType[] {
+            SortNameAscending,
+            SortSizeAscending,
+            SortSizeDescending
+        };
+        
+        public override SourceSortType[] SortTypes {
+            get { return sort_types; }
+        }
+        
+        public override SourceSortType DefaultChildSort {
+            get { return SortNameAscending; }
+        }
 
         public delegate void TrackEventHandler (Source sender, TrackEventArgs args);
 
@@ -210,6 +224,7 @@ namespace Banshee.Sources
 
         protected PrimarySource (string generic_name, string name, string id, int order) : base (generic_name, name, id, order)
         {
+            Properties.SetString ("SortChildrenActionLabel", Catalog.GetString ("Sort Playlists by"));
             PrimarySourceInitialize ();
         }
 

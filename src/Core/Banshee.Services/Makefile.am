@@ -194,6 +194,7 @@ SOURCES =  \
 	Banshee.Sources/SourceManager.cs \
 	Banshee.Sources/SourceMergeType.cs \
 	Banshee.Sources/SourceMessage.cs \
+	Banshee.Sources/SourceSortType.cs \
 	Banshee.Streaming/RadioTrackInfo.cs \
 	Banshee.Web/Browser.cs \
 	Banshee.Web/HttpRequest.cs

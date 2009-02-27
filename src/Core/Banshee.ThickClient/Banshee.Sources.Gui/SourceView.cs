@@ -61,6 +61,7 @@ namespace Banshee.Sources.Gui
         private SourceModel store;
         private int current_timeout = -1;
         private bool editing_row = false;
+        private bool need_resort = false;
 
         public SourceView ()
         {
@@ -110,7 +111,7 @@ namespace Banshee.Sources.Gui
                     lock (args.Source) {
                         TreeIter iter = store.FindSource (args.Source);
                         if (!TreeIter.Zero.Equals (iter)) {
-                            store.SetValue (iter, 1, args.Source.Order);
+                            need_resort = true;
                             QueueDraw ();
                         }
                     }
@@ -222,6 +223,21 @@ namespace Banshee.Sources.Gui
         
         protected override bool OnExposeEvent (Gdk.EventExpose evnt)
         {
+            if (need_resort) {
+                need_resort = false;
+                
+                // Resort the tree store. This is performed in an event handler
+                // known not to conflict with gtk_tree_view_bin_expose() to prevent
+                // errors about corrupting the TreeView's internal state.
+                foreach (Source dsource in ServiceManager.SourceManager.Sources) {
+                    TreeIter iter = store.FindSource (dsource);
+                    if (!TreeIter.Zero.Equals (iter)) {
+                        store.SetValue (iter, 1, dsource.Order);
+                    }
+                }
+                QueueDraw ();
+            }
+            
             try {
                 cr = Gdk.CairoHelper.Create (evnt.Window);
                 return base.OnExposeEvent (evnt);

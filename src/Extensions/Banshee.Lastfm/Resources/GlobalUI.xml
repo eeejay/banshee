@@ -1,12 +1,8 @@
 <ui>
     <popup name="LastfmSourcePopup" action="LastfmSourcePopupAction">
         <menuitem name="LastfmAdd" action="LastfmAddAction" />
-        <menu name='SortPlaylist' action='LastfmSortAction'>
-            <menuitem name='SortStationByName' action='LastfmSortStationsByNameAction' />
-            <menuitem name='SortStationByPlayCount' action='LastfmSortStationsByPlayCountAction' />
-            <menuitem name='SortStationByType' action='LastfmSortStationsByTypeAction' />
-        </menu>
         <menuitem name="Connect" action="LastfmConnectAction" />
+        <menu name='SortChildren' action='SortChildrenAction' />
         <separator />
         <menuitem name="SourceProperties" action="SourcePropertiesAction" />
     </popup>

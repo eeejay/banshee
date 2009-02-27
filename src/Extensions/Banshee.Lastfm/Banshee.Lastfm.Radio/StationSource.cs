@@ -111,11 +111,10 @@ namespace Banshee.Lastfm.Radio
         private int dbid;
         
         // For StationSources that already exist in the db
-        protected StationSource (LastfmSource lastfm, int dbId, string name, string type, string arg, int playCount) : base (generic_name, name, 150)
+        protected StationSource (LastfmSource lastfm, int dbId, string name, string type, string arg, int playCount) : base (generic_name, name, 150, dbId.ToString ())
         {
             this.lastfm = lastfm;
             dbid = dbId;
-            TypeUniqueId = dbid.ToString ();
             Type = StationType.FindByName (type);
             Arg = arg;
             PlayCount = playCount;

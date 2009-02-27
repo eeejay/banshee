@@ -45,14 +45,13 @@ namespace Banshee.NowPlaying
         private TrackInfo transitioned_track;
         private NowPlayingInterface now_playing_interface;
         
-        public NowPlayingSource () : base ("now-playing", Catalog.GetString ("Now Playing"), 10)
+        public NowPlayingSource () : base ("now-playing", Catalog.GetString ("Now Playing"), 10, "now-playing")
         {
             if (Banshee.ServiceStack.ServiceManager.PlayerEngine.VideoDisplayContextType != 
                 Banshee.MediaEngine.VideoDisplayContextType.GdkWindow) {
                 throw new ApplicationException ("Unsupported video display context");
             }
         
-            TypeUniqueId = "now-playing";
             now_playing_interface = new NowPlayingInterface ();
         
             Properties.SetString ("Icon.Name", "applications-multimedia");

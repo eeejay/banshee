@@ -100,11 +100,16 @@ namespace Banshee.Gui
                     
                 new ActionEntry ("SourcePropertiesAction", null,
                     Catalog.GetString ("Source Properties"), null, null, OnSourceProperties),
+                    
+                new ActionEntry ("SortChildrenAction", Stock.SortDescending, 
+                    Catalog.GetString ("Sort Children by"), null, null,
+                    OnSortChildrenMenu)
             });
 
             this["NewPlaylistAction"].IconName = Stock.New;
             this["UnmapSourceAction"].IconName = Stock.Delete;
             this["SourcePropertiesAction"].IconName = Stock.Properties;
+            this["SortChildrenAction"].HideIfEmpty = false;
 
             AddImportant (
                 new ActionEntry ("RefreshSmartPlaylistAction", Stock.Refresh,
@@ -112,27 +117,6 @@ namespace Banshee.Gui
                     Catalog.GetString ("Refresh this randomly sorted smart playlist"), OnRefreshSmartPlaylist)
             );
             
-            Add (new Gtk.ActionEntry [] {
-                new Gtk.ActionEntry ("SortChildrenAction", null, 
-                    Catalog.GetString ("Sort Children"), null, null, null),
-                    
-                new Gtk.ActionEntry ("SortChildrenNameAscAction", null, 
-                    Catalog.GetString ("Name Ascending"), null, null, 
-                    delegate { ActionSource.SortChildSources (new Source.NameComparer (), true); }),
-                    
-                new Gtk.ActionEntry ("SortChildrenNameDescAction", null, 
-                    Catalog.GetString ("Name Descending"), null, null, 
-                    delegate { ActionSource.SortChildSources (new Source.NameComparer (), false); }),
-                    
-                new Gtk.ActionEntry ("SortChildrenSizeAscAction", null, 
-                    Catalog.GetString ("Size Ascending"), null, null, 
-                    delegate { ActionSource.SortChildSources (new Source.SizeComparer (), true); }),
-                    
-                new Gtk.ActionEntry ("SortChildrenSizeDescAction", null, 
-                    Catalog.GetString ("Size Descending"), null, null, 
-                    delegate { ActionSource.SortChildSources (new Source.SizeComparer (), false); })
-            });
-                
             //ServiceManager.SourceManager.SourceUpdated += OnPlayerEngineStateChanged;
             //ServiceManager.SourceManager.SourceViewChanged += OnPlayerEngineStateChanged;
             //ServiceManager.SourceManager.SourceAdded += OnPlayerEngineStateChanged;
@@ -331,6 +315,19 @@ namespace Banshee.Gui
             }
         }
 
+        private void OnSortChildrenMenu (object o, EventArgs args)
+        {
+            foreach (Widget proxy_widget in this["SortChildrenAction"].Proxies) {
+                MenuItem menu = proxy_widget as MenuItem;
+                if (menu == null)
+                    continue;
+
+                Menu submenu = BuildSortMenu (ActionSource);
+                menu.Submenu = submenu;
+                submenu.ShowAll ();
+            }
+        }
+
 #endregion
 
 #region Utility Methods
@@ -377,7 +374,7 @@ namespace Banshee.Gui
             }
             
             if (source != null) {
-                UpdateAction ("SortChildrenAction", source.Children.Count > 1, true, null);
+                UpdateAction ("SortChildrenAction", source.SortTypes.Length > 0 && source.Children.Count > 1, true, source);
             }
 
             Action<Source> handler = Updated;
@@ -427,6 +424,30 @@ namespace Banshee.Gui
             } finally {
                 dialog.Destroy ();
             }
+        }
+
+        private static Menu BuildSortMenu (Source source)
+        {
+            Menu menu = new Menu ();
+            GLib.SList group = null;
+            foreach (SourceSortType sort_type in source.SortTypes) {
+                RadioMenuItem item = new RadioMenuItem (group, sort_type.Label);
+                group = item.Group;
+                item.Active = (sort_type == source.ActiveChildSort);
+                item.Toggled += BuildSortChangedHandler (source, sort_type);
+                menu.Append (item);
+            }
+            return menu;
+        }
+
+        private static EventHandler BuildSortChangedHandler (Source source, SourceSortType sort_type)
+        {
+            return delegate (object sender, EventArgs args) {
+                RadioMenuItem item = sender as RadioMenuItem;
+                if (item != null && item.Active) {
+                    source.SortChildSources (sort_type);
+                }
+            };
         }
 
 #endregion

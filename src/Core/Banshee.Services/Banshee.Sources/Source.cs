@@ -55,6 +55,10 @@ namespace Banshee.Sources
         private List<Source> child_sources = new List<Source> ();
         private ReadOnlyCollection<Source> read_only_children;
 
+        private SourceSortType child_sort;
+        private bool sort_children = true;
+        private SchemaEntry<string> child_sort_schema;
+
         public event EventHandler Updated;
         public event EventHandler UserNotifyUpdated;
         public event EventHandler MessageNotify;
@@ -67,7 +71,7 @@ namespace Banshee.Sources
         {
         }
 
-        protected Source (string generic_name, string name, int order, string type_unique_id)
+        protected Source (string generic_name, string name, int order, string type_unique_id) : this ()
         {
             GenericName = generic_name;
             Name = name;
@@ -79,6 +83,7 @@ namespace Banshee.Sources
 
         protected Source ()
         {
+            child_sort = DefaultChildSort;
         }
 
         // This method is chained to subclasses intialize methods,
@@ -103,6 +108,8 @@ namespace Banshee.Sources
             if (ApplicationContext.Debugging && ApplicationContext.CommandLine.Contains ("test-source-messages")) {
                 TestMessages ();
             }
+
+            LoadSortSchema ();
         }
         
         protected void OnSetupComplete ()
@@ -132,6 +139,16 @@ namespace Banshee.Sources
                     ServiceManager.SourceManager.RemoveSource (this);
                 }
             }
+        }
+        
+        protected void PauseSorting ()
+        {
+            sort_children = false;
+        }
+        
+        protected void ResumeSorting ()
+        {
+            sort_children = true;
         }
 
 #region Public Methods
@@ -221,9 +238,10 @@ namespace Banshee.Sources
 
         public class NameComparer : IComparer<Source>
         {
+            static IComparer inner_cmp = new CaseInsensitiveComparer ();
             public int Compare (Source a, Source b)
             {
-                return a.Name.CompareTo (b.Name);
+                return inner_cmp.Compare (a.Name, b.Name);
             }
         }
 
@@ -235,19 +253,58 @@ namespace Banshee.Sources
             }
         }
 
-        public virtual void SortChildSources (IComparer<Source> comparer, bool asc)
+        public virtual void SortChildSources (SourceSortType sort_type)
         {
-            lock (Children) {
-                child_sources.Sort (comparer);
-                if (!asc) {
-                    child_sources.Reverse ();
-                }
+            child_sort = sort_type;
+            child_sort_schema.Set (child_sort.Id);
+            SortChildSources ();
+        }
 
-                int i = 0;
-                foreach (Source child in child_sources) {
-                    child.Order = i++;
+        public virtual void SortChildSources ()
+        {
+            lock (this) {
+                if (!sort_children) {
+                    return;
+                }
+                sort_children = false;
+            }
+            
+            if (child_sort.SortType != SortType.None) {
+                lock (Children) {
+                    child_sources.Sort (child_sort.Comparer);
+                    if (child_sort.SortType == SortType.Descending) {
+                        child_sources.Reverse ();
+                    }
+
+                    int i = 0;
+                    foreach (Source child in child_sources) {
+                        child.Order = i++;
+                    }
                 }
             }
+            sort_children = true;
+        }
+        
+        private void LoadSortSchema ()
+        {
+            if (SortTypes.Length == 0) {
+                return;
+            }
+
+            if (unique_id == null && type_unique_id == null) {
+                Hyena.Log.WarningFormat ("Trying to LoadSortSchema, but source's id not set! {0}", UniqueId);
+                return;
+            }
+            
+            child_sort_schema = CreateSchema<string> ("child_sort_id", DefaultChildSort.Id, "", "");
+            string child_sort_id = child_sort_schema.Get ();
+            foreach (SourceSortType sort_type in SortTypes) {
+                if (sort_type.Id == child_sort_id) {
+                    child_sort = sort_type;
+                    break;
+                }
+            }
+            SortChildSources ();
         }
 
         public T GetProperty<T> (string name, bool propagate)
@@ -409,6 +466,8 @@ namespace Banshee.Sources
     
         protected virtual void OnChildSourceAdded (Source source)
         {
+            SortChildSources ();
+            source.Updated += OnChildSourceUpdated;
             ThreadAssist.ProxyToMain (delegate {
                 SourceEventHandler handler = ChildSourceAdded;
                 if (handler != null) {
@@ -421,6 +480,7 @@ namespace Banshee.Sources
         
         protected virtual void OnChildSourceRemoved (Source source)
         {
+            source.Updated -= OnChildSourceUpdated;
             ThreadAssist.ProxyToMain (delegate {
                 SourceEventHandler handler = ChildSourceRemoved;
                 if (handler != null) {
@@ -437,6 +497,11 @@ namespace Banshee.Sources
             if (handler != null) {
                 handler (this, EventArgs.Empty);
             }
+        }
+        
+        protected virtual void OnChildSourceUpdated (object o, EventArgs args)
+        {
+            SortChildSources ();
         }
 
         public void NotifyUser ()
@@ -587,6 +652,34 @@ namespace Banshee.Sources
         public virtual int FilteredCount { get { return Count; } }
                 
         public virtual string TrackModelPath {
+            get { return null; }
+        }
+        
+        public static readonly SourceSortType SortNameAscending = new SourceSortType (
+            "NameAsc",
+            Catalog.GetString ("Name Ascending"),
+            SortType.Ascending, new NameComparer ());
+        
+        public static readonly SourceSortType SortSizeAscending = new SourceSortType (
+            "SizeAsc",
+            Catalog.GetString ("Size Ascending"),
+            SortType.Ascending, new SizeComparer ());
+        
+        public static readonly SourceSortType SortSizeDescending = new SourceSortType (
+            "SizeDesc",
+            Catalog.GetString ("Size Descending"),
+            SortType.Descending, new SizeComparer ());
+        
+        private static SourceSortType[] sort_types = new SourceSortType[] {};
+        public virtual SourceSortType[] SortTypes {
+            get { return sort_types; }
+        }
+        
+        public SourceSortType ActiveChildSort {
+            get { return child_sort; }
+        }
+        
+        public virtual SourceSortType DefaultChildSort {
             get { return null; }
         }
         

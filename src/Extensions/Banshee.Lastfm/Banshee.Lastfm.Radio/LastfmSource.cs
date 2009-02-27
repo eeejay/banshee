@@ -34,7 +34,6 @@ using Mono.Unix;
 
 using Lastfm;
 using Hyena.Data;
-using SortType = Hyena.Data.SortType;
 
 using Banshee.Base;
 using Banshee.Collection;
@@ -69,9 +68,8 @@ namespace Banshee.Lastfm.Radio
             get { return actions; }
         }
 
-        public LastfmSource () : base (lastfm, lastfm, 210)
+        public LastfmSource () : base (lastfm, lastfm, 210, lastfm)
         {
-            TypeUniqueId = lastfm;
             account = LastfmCore.Account;
 
             // We don't automatically connect to Last.fm, but load the last Last.fm
@@ -102,6 +100,7 @@ namespace Banshee.Lastfm.Radio
             Properties.SetString ("GtkActionPath", "/LastfmSourcePopup");
             Properties.SetString ("Icon.Name", "lastfm-audioscrobbler");
             Properties.SetString ("SourcePropertiesActionLabel", Catalog.GetString ("Edit Last.fm Settings"));
+            Properties.SetString ("SortChildrenActionLabel", Catalog.GetString ("Sort Stations by"));
             Properties.Set<LastfmColumnController> ("TrackView.ColumnController", new LastfmColumnController ());
 
             // FIXME this is temporary until we split the GUI part from the non-GUI part
@@ -139,20 +138,6 @@ namespace Banshee.Lastfm.Radio
             }
         }
 
-        /*public override void AddChildSource (ChildSource source)
-        {
-            base.AddChildSource (source);
-            SortChildSources ();
-            source.Updated += HandleChildUpdated;
-        }
-
-        public override void RemoveChildSource (ChildSource source)
-        {
-            base.RemoveChildSource (source);
-            source.Updated -= HandleChildUpdated;
-        }*/
-
-
         // Order by the playCount of a station, then by inverted name
         public class PlayCountComparer : IComparer<Source>
         {
@@ -176,51 +161,27 @@ namespace Banshee.Lastfm.Radio
                 return c == 0 ? (a.Name.CompareTo (b.Name)) : c; 
             }
         }
-
-        public static IComparer<Source> [] ChildComparers = new IComparer<Source> [] {
-            new NameComparer (), new PlayCountComparer (), new TypeComparer ()
+        
+        private static SourceSortType[] sort_types = new SourceSortType[] {
+            SortNameAscending,
+            new SourceSortType (
+                "LastfmTotalPlayCount",
+                Catalog.GetString ("Total Play Count"),
+                SortType.Descending, new PlayCountComparer ()),
+            new SourceSortType (
+                "LastfmStationType",
+                Catalog.GetString ("Station Type"),
+                SortType.Ascending, new TypeComparer ())
         };
-        public static SortType [] child_orders = new SortType [] {
-            SortType.Ascending, SortType.Descending, SortType.Ascending
-        };
-
-        public IComparer<Source> ChildComparer {
-            get {
-                if (child_comparer == null) {
-                    int i = (int) StationSortSchema.Get ();
-                    ChildComparer = ChildComparers [i];
-                }
-                return child_comparer;
-            }
-            set {
-                child_comparer = value;
-                int i = Array.IndexOf (ChildComparers, child_comparer);
-                child_order = child_orders[i];
-                StationSortSchema.Set (i);
-            }
+        
+        public override SourceSortType[] SortTypes {
+            get { return sort_types; }
         }
-
-        private bool sorting = false;
-        private IComparer<Source> child_comparer;
-        private SortType child_order;
-        public override void SortChildSources (IComparer<Source> comparer, bool asc)
-        {
-            lock (this) {
-                if (sorting)
-                    return;
-                sorting = true;
-            }
-
-            base.SortChildSources (comparer, asc);
-            ChildComparer = comparer;
-            sorting = false;
+        
+        public override SourceSortType DefaultChildSort {
+            get { return SortNameAscending; }
         }
-
-        public void SortChildSources  ()
-        {
-            SortChildSources (ChildComparer, child_order == SortType.Ascending);
-        }
-
+        
         private string last_username;
         private bool last_was_subscriber = false;
         public void SetUserName (string username)
@@ -230,11 +191,11 @@ namespace Banshee.Lastfm.Radio
                 last_was_subscriber = Connection.Subscriber;
                 LastfmSource.LastUserSchema.Set (last_username);
                 ClearChildSources ();
-                sorting = true;
+                PauseSorting ();
                 foreach (StationSource child in StationSource.LoadAll (this, Account.UserName)) {
                     AddChildSource (child);
                 }
-                sorting = false;
+                ResumeSorting ();
                 SortChildSources ();
             }
         }
@@ -268,11 +229,6 @@ namespace Banshee.Lastfm.Radio
         {
             UpdateUI ();
         }
-
-        /*private void HandleChildUpdated (object sender, EventArgs args)
-        {
-            SortChildSources ();
-        }*/
 
         private void UpdateUI ()
         {
@@ -324,10 +280,6 @@ namespace Banshee.Lastfm.Radio
 
         public static readonly SchemaEntry<bool> EnabledSchema = new SchemaEntry<bool> (
             "plugins.lastfm", "enabled", false, "Extension enabled", "Last.fm extension enabled"
-        );
-
-        public static readonly SchemaEntry<int> StationSortSchema = new SchemaEntry<int> (
-            "plugins.lastfm", "station_sort", 0, "Station sort criteria", "Last.fm station sort criteria. 0 = name, 1 = play count, 2 = type"
         );
 
         public static readonly SchemaEntry<string> LastUserSchema = new SchemaEntry<string> (

@@ -1,10 +1,10 @@
 //
-// CellEdit.cs
+// SourceSortType.cs
 //
 // Author:
-//   Aaron Bockover <abockover@novell.com>
+//   John Millikin <jmillikin@gmail.com>
 //
-// Copyright (C) 2005-2008 Novell, Inc.
+// Copyright (C) 2009 John Millikin
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -27,33 +27,54 @@
 //
 
 using System;
-using Gtk;
+using System.Reflection;
+using System.Text;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
-namespace Banshee.Sources.Gui
+using Mono.Unix;
+
+using Hyena;
+using Hyena.Data;
+using Hyena.Query;
+
+using Banshee.Base;
+using Banshee.Collection;
+using Banshee.Configuration;
+using Banshee.ServiceStack;
+
+namespace Banshee.Sources
 {
-    internal class CellEditEntry : Entry, CellEditable
+    public class SourceSortType
     {
-        public string path;
-        private bool fired_edit_done = false;
-    
-        public CellEditEntry () : base ()
+        private string id;
+        private string label;
+        private SortType sort_type;
+        private IComparer<Source> comparer;
+        
+        public SourceSortType (string id, string label, SortType sortType, IComparer<Source> comparer)
         {
-            MaxLength = 256;
+            this.id = id;
+            this.label = label;
+            this.sort_type = sortType;
+            this.comparer = comparer;
         }
         
-        protected override bool OnFocusOutEvent (Gdk.EventFocus focus)
-        {
-            if (!fired_edit_done) {
-                FinishEditing ();
-            }
-            RemoveWidget ();
-            return base.OnFocusOutEvent (focus);
+        public string Id {
+            get { return id; }
         }
         
-        protected override void OnEditingDone ()
-        {
-            fired_edit_done = true;
-            base.OnEditingDone ();
+        public string Label {
+            get { return label; }
+        }
+        
+        public SortType SortType {
+            get { return sort_type; }
+        }
+        
+        public IComparer<Source> Comparer {
+            get { return comparer; }
         }
     }
 }

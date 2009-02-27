@@ -1,5 +1,54 @@
 2009-02-27  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	Patch from John Millikin, with a few enhancements by me, adding support
+	for sorting sources in real time and saving/restoring the preference for each
+	primary source, in a general way so that sources can add their own sort
+	options (BGO #556976)
+
+	* src/Core/Banshee.Services/Makefile.am:
+	* src/Core/Banshee.Services/Banshee.Sources/SourceSortType.cs: New class
+	for defining sort types, giving them a name, id, and comparer.
+
+	* src/Core/Banshee.Services/Banshee.Sources/Source.cs: Add new properties
+	for defining how the children of a source can be sorted (if applicable),
+	listening for the Updated event on all child sources and resorting when
+	changed (so if sorted by size and a playlist gets a new item, it will be
+	resorted immediately).  Save and restore the sort type configuration.
+
+	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs: Override the
+	child sort properties, adding name and size asc/desc options.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs: Dynamically
+	generate the Sort by menu from the SortTypes a given source has (if any).
+	Allow overriding its label.
+
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/CellEditEntry.cs: Fix
+	firing the EditingDone event twice.
+
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs: Handle
+	resorting a little differently.
+
+	* src/Core/Banshee.ThickClient/Resources/core-ui-actions-layout.xml:
+	* src/Extensions/Banshee.InternetRadio/Resources/GlobalUI.xml:
+	* src/Extensions/Banshee.Podcasting/Resources/GlobalUI.xml:
+	* src/Extensions/Banshee.Lastfm/Resources/GlobalUI.xml: Use the new
+	SortChildrenAction in the context menu for these types.
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:
+	Instead of using a totally custom menu for sorting Last.fm stations, use
+	the new, generic Source SortTypes method for defining them.
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs:
+	Remove custom sort logic since now handled upstream of us, customize the
+	SortChildrenAction label, pass the typeUniqueId to the base ctor.
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/NowPlayingSource.cs:
+	Pass the typeUniqueId to the base ctor so it's set that much earlier.
+	Really should clarify/enforce a sensible API here.
+
+2009-02-27  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Recommendations/RecommendationPane.cs:
 	Patch from Alexander Kojevnikov to ignore/not fetch recommendations for
 	Unknown etc artists (BGO #560722)
