@@ -1,3 +1,10 @@
+2009-02-27  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:
+	Patch from Alexander Kojevnikov making it so that even if the statistics
+	TreeView is focused you can still use ctrl-pageup/down to switch tabs in
+	the track editor (BGO #565438)
+
 2009-02-27  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
 	* src/Core/Banshee.Core/Banshee.Base/Tests/TaglibReadWriteTests.cs:

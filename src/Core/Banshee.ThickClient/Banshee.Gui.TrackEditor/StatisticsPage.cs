@@ -33,6 +33,22 @@ using Gtk;
 
 namespace Banshee.Gui.TrackEditor
 {
+    internal class FixedTreeView : TreeView
+    {
+        public FixedTreeView (ListStore model) : base (model)
+        {
+        }
+
+        protected override bool OnKeyPressEvent (Gdk.EventKey evnt)
+        {
+            if ((evnt.State & Gdk.ModifierType.ControlMask) != 0 &&
+                (evnt.Key == Gdk.Key.Page_Up || evnt.Key == Gdk.Key.Page_Down)) {
+                return false;
+            }
+            return base.OnKeyPressEvent (evnt);
+        }
+    }
+
     public class StatisticsPage : ScrolledWindow, ITrackEditorPage
     {
         private CellRendererText name_renderer;
@@ -45,7 +61,7 @@ namespace Banshee.Gui.TrackEditor
             VscrollbarPolicy = PolicyType.Automatic;
             HscrollbarPolicy = PolicyType.Never;
             
-            view = new TreeView (model);
+            view = new FixedTreeView (model);
             view.HeadersVisible = false;
             view.RowSeparatorFunc = new TreeViewRowSeparatorFunc (RowSeparatorFunc);
             
