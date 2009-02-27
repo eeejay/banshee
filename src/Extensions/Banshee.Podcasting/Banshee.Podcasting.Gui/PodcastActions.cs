@@ -69,7 +69,7 @@ namespace Banshee.Podcasting.Gui
                 ),
                 new ActionEntry (
                     "PodcastAddAction", Stock.Add,
-                     Catalog.GetString ("Subscribe to Podcast"),"<control><shift>F", 
+                     Catalog.GetString ("Subscribe to Podcast..."),"<control><shift>F", 
                      Catalog.GetString ("Subscribe to a new podcast"),
                      OnPodcastAdd
                 )         
@@ -152,6 +152,8 @@ namespace Banshee.Podcasting.Gui
                      OnPodcastItemProperties
                 )
             );
+
+            this["PodcastAddAction"].ShortLabel = Catalog.GetString ("Subscribe to Podcast");
             
             actions_id = Actions.UIManager.AddUiFromResource ("GlobalUI.xml");
             Actions.AddActionGroup (this);

@@ -74,7 +74,7 @@ namespace Banshee.Gui
                     Catalog.GetString ("Create a new empty playlist"), OnNewPlaylist),
 
                 new ActionEntry ("NewSmartPlaylistAction", null,
-                    Catalog.GetString ("New _Smart Playlist"), null,
+                    Catalog.GetString ("New _Smart Playlist..."), null,
                     Catalog.GetString ("Create a new smart playlist"), OnNewSmartPlaylist),
 
                 /*new ActionEntry ("NewSmartPlaylistFromSearchAction", null,
@@ -106,6 +106,7 @@ namespace Banshee.Gui
                     OnSortChildrenMenu)
             });
 
+            this["NewSmartPlaylistAction"].ShortLabel = Catalog.GetString ("New _Smart Playlist");
             this["NewPlaylistAction"].IconName = Stock.New;
             this["UnmapSourceAction"].IconName = Stock.Delete;
             this["SourcePropertiesAction"].IconName = Stock.Properties;

@@ -1,3 +1,11 @@
+2009-02-27  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:
+	Add ellipses to the end of some action labels, and add short labels
+	without them for use in toolbars.
+
 2009-02-27  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
 	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:

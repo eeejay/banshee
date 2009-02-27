@@ -63,7 +63,7 @@ namespace Banshee.Lastfm.Radio
             AddImportant (
                 new ActionEntry (
                     "LastfmAddAction", Stock.Add,
-                     Catalog.GetString ("_Add Station"),
+                     Catalog.GetString ("_Add Station..."),
                      null, Catalog.GetString ("Add a new Last.fm radio station"), OnAddStation
                 )
             );
@@ -385,6 +385,7 @@ namespace Banshee.Lastfm.Radio
 
             bool have_user = (lastfm.Account != null && lastfm.Account.UserName != null);
             this["LastfmAddAction"].Sensitive = have_user;
+            this["LastfmAddAction"].ShortLabel = Catalog.GetString ("_Add Station");
             this["LastfmConnectAction"].Visible = lastfm.Connection.State == ConnectionState.Disconnected;
 
             TrackInfo current_track = ServiceManager.PlayerEngine.CurrentTrack;
