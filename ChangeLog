@@ -1,3 +1,9 @@
+2009-02-27  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
+	* src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:
+	Patch from Valentin Sawadski removing the Skip button from notifications
+	when playing from a radio station (BGO #572971).
+
 2009-02-27  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	Patch from John Millikin, with a few enhancements by me, adding support

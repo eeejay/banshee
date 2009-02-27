@@ -405,7 +405,7 @@ namespace Banshee.NotificationArea
                     message, image, notif_area.Widget);
                 nf.Urgency = Urgency.Low;
                 nf.Timeout = 4500;
-                if (interface_action_service.PlaybackActions["NextAction"].Sensitive) {
+                if (!current_track.IsLive && interface_action_service.PlaybackActions["NextAction"].Sensitive) {
                     nf.AddAction ("skip-song", Catalog.GetString("Skip this item"), OnSongSkipped);
                 }
                 nf.Show ();
