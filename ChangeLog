@@ -1,5 +1,12 @@
 2009-02-26  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/IListView.cs:  Patch from
+	Alexander Kojevnikov moving the focus to the list of songs when
+	jumping (Ctrl-J) to the currently playing song (BGO #558940)
+
+2009-02-26  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Libraries/Hyena/Hyena.Query/ExactStringQueryValue.cs:
 	* src/Libraries/Hyena/Hyena.Query/StringQueryValue.cs: Patch from Andrés
 	G. Aragoneses and John Millikin fixing the wildcard escaping

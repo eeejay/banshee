@@ -35,6 +35,7 @@ namespace Hyena.Data.Gui
         
         void ScrollTo (int index);
         void CenterOn (int index);
+        void GrabFocus ();
         ColumnController ColumnController { get; set; }
     }
     

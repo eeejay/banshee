@@ -256,6 +256,7 @@ namespace Banshee.Gui
                         track_src.TrackModel.Selection.Select (i);
                         track_src.TrackModel.Selection.FocusedIndex = i;
                         track_list.CenterOn (i);
+                        track_list.GrabFocus ();
                     }
                 }
             }
