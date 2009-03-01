@@ -314,7 +314,12 @@ namespace Banshee.ServiceStack
         
         private static string GetCustomAssemblyMetadata (string attrName, string field)
         {
-            foreach (Attribute attribute in Assembly.GetEntryAssembly ().GetCustomAttributes (false)) {
+            Assembly assembly = Assembly.GetEntryAssembly ();
+            if (assembly == null) {
+                return null;
+            }
+            
+            foreach (Attribute attribute in assembly.GetCustomAttributes (false)) {
                 Type type = attribute.GetType ();
                 PropertyInfo property = type.GetProperty (field);
                 if (type.Name == attrName && property != null && 

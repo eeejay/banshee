@@ -29,6 +29,7 @@
 #if ENABLE_TESTS
 
 using System;
+using System.IO;
 using System.Reflection;
 using NUnit.Framework;
 
@@ -54,7 +55,7 @@ namespace Banshee.Base.Tests
             Mono.Addins.AddinManager.Initialize (BinDir);
             
             files = new string [] {
-                BinDir + "/../tests/data/test.mp3",
+                Path.Combine (TestsDir, "data/test.mp3")
             };
         }
     
@@ -91,7 +92,7 @@ namespace Banshee.Base.Tests
             try {
                 AssertForEach<string> (files, delegate (string uri) {
                     string extension = System.IO.Path.GetExtension (uri);
-                    newuri = new SafeUri (BinDir + "/../tests/data/test_write." + extension);
+                    newuri = new SafeUri (Path.Combine (TestsDir, "data/test_write." + extension));
     
                     Banshee.IO.File.Copy (new SafeUri (uri), newuri, true);
     

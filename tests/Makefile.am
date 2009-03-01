@@ -6,6 +6,7 @@ TEST_ASSEMBLIES = \
 	Hyena.dll \
 	Hyena.Gui.dll \
 	Migo.dll \
+	Mono.Media.dll \
 	Banshee.Core.dll \
 	Banshee.Services.dll \
 	Banshee.Dap.Mtp.dll

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<playlist xml:based="http://abock.org/apples/kobbler/"
+<playlist xml:base="http://abock.org/apples/kobbler/"
 	version="1" 
 	xmlns="http://xspf.org/ns/0/">
 	<title>Playlist Title</title>

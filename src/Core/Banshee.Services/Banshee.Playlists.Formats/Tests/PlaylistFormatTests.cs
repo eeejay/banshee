@@ -37,20 +37,26 @@ using NUnit.Framework;
 using Banshee.Base;
 using Banshee.Playlists.Formats;
 
+using Hyena.Tests;
+
 namespace Banshee.Playlists.Formats.Tests
 {
     [TestFixture]
-    public class PlaylistFormatsTest
+    public class PlaylistFormatsTest : TestBase
     {
 
 #region Setup
 
         private static Uri BaseUri = new Uri("/iamyourbase/");
         private List<Dictionary<string, object>> elements = new List<Dictionary<string, object>>();
+        private string playlists_dir;
 
         [TestFixtureSetUp]
         public void Init()
         {
+            Mono.Addins.AddinManager.Initialize (BinDir);
+            
+            playlists_dir = Path.Combine (TestsDir, "Banshee.Services/playlist-data");
             IPlaylistFormat playlist = LoadPlaylist(new M3uPlaylistFormat(), "extended.m3u");            
             foreach(Dictionary<string, object> element in playlist.Elements) {
                 elements.Add(element);
@@ -103,7 +109,7 @@ namespace Banshee.Playlists.Formats.Tests
             PlaylistParser parser = new PlaylistParser();
             parser.BaseUri = BaseUri;
 
-            foreach(string path in Directory.GetFiles("Banshee.Services/playlist-data")) {
+            foreach(string path in Directory.GetFiles(playlists_dir)) {
                 parser.Parse(new SafeUri(Path.Combine(Environment.CurrentDirectory, path)));
                 AssertTest(parser.Elements);
             }
@@ -119,7 +125,7 @@ namespace Banshee.Playlists.Formats.Tests
         private IPlaylistFormat LoadPlaylist(IPlaylistFormat playlist, string filename)
         {
             playlist.BaseUri = BaseUri;
-            playlist.Load(File.OpenRead(Path.Combine("Banshee.Services", Path.Combine("playlist-data", filename))), true);
+            playlist.Load(File.OpenRead(Path.Combine(playlists_dir, filename)), true);
             return playlist;
         }
 

@@ -74,6 +74,11 @@ namespace Hyena.Tests
         public string BinDir {
             get { return bin_dir ?? (bin_dir = Path.GetDirectoryName (Assembly.GetExecutingAssembly ().Location)); }
         }
+        
+        private string tests_dir;
+        public string TestsDir {
+            get { return tests_dir ?? (tests_dir = Path.Combine (Path.GetDirectoryName (BinDir), "tests")); }
+        }
     
         public static void AssertForEach<T> (IEnumerable<T> objects, Action<T> runner)
         {

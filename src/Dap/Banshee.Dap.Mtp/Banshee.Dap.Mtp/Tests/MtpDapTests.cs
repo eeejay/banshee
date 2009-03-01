@@ -90,8 +90,6 @@ namespace Banshee.Dap.Mtp
             Assert.AreEqual (13, track.TrackNumber);
             Assert.AreEqual (2003, track.Year);
 
-            Console.WriteLine ("WOO, done!");
-
             //track.ReleaseDate = "00000101T0000.00";
             //track_info = new MtpTrackInfo (track);
             //Assert.AreEqual (0, track_info.Year);

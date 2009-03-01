@@ -1,3 +1,31 @@
+2009-03-01  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
+	Various fixes to the unit tests. There are still a few failures left,
+	but at least they don't seem to be caused by the test system itself.
+
+	* src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/Tests/MtpDapTests.cs: Remove
+	a celebratory Console.WriteLine.
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs: Do not
+	crash when there's no entry assembly. This happens when running the unit
+	tests.
+
+	* src/Libraries/Hyena/Hyena/Tests/TestBase.cs: Add a TestsDir property 
+	to help	find the test data files.
+
+	* src/Core/Banshee.Services/Banshee.Playlists.Formats/Tests/PlaylistFormatTests.cs:
+	Use TestsDir and initialize the AddinManager.
+
+	* src/Core/Banshee.Core/Banshee.Base/Tests/TaglibReadWriteTests.cs: Use
+	TestsDir.
+
+	* src/Libraries/Mono.Media/Media.Playlists.Xspf/Tests/XspfTests.cs: Fix
+	the path to the test files.
+
+	* tests/Mono.Media/xspf/complete.xml: Fix typo.
+
+	* tests/Makefile.am: Add Mono.Media to the list of assemblies to test.
+
 2009-02-27  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs: Rename
