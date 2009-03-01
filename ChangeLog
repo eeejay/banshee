@@ -1,5 +1,10 @@
 2009-03-01  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Playlists.Formats/XspfPlaylistFormat.cs:
+	Do not throw an exception when trying to sniff an invalid file.
+
+2009-03-01  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
 	Various fixes to the unit tests. There are still a few failures left,
 	but at least they don't seem to be caused by the test system itself.
 

@@ -48,7 +48,11 @@ namespace Banshee.Playlists.Formats
         
         public static bool MagicHandler (StreamReader stream)
         {
-            return Xspf.Playlist.Sniff (stream);
+            try {
+                return Xspf.Playlist.Sniff (stream);
+            } catch {
+                return false;
+            }
         }
         
         public XspfPlaylistFormat ()
