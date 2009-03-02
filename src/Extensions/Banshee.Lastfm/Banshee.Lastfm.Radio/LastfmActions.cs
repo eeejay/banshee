@@ -70,6 +70,12 @@ namespace Banshee.Lastfm.Radio
 
             Add (new ActionEntry [] {
                 new ActionEntry (
+                    "RefreshSourceAction", Stock.Refresh,
+                     Catalog.GetString ("Refresh"), null,
+                     String.Empty, OnRefreshSource
+                ),
+
+                new ActionEntry (
                     "LastfmConnectAction", null,
                      Catalog.GetString ("Connect"),
                      null, String.Empty, OnConnect
@@ -200,6 +206,14 @@ namespace Banshee.Lastfm.Radio
             } else if (source is StationSource) {
                 StationEditor editor = new StationEditor (lastfm, source as StationSource);
                 editor.RunDialog ();
+            }
+        }
+
+        private void OnRefreshSource (object o, EventArgs args)
+        {
+            StationSource source = Actions.SourceActions.ActionSource as StationSource;
+            if (source != null) {
+                source.Refresh();
             }
         }
 

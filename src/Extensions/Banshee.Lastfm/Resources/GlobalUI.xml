@@ -8,6 +8,8 @@
     </popup>
 
     <popup name="LastfmStationSourcePopup" action="LastfmStationSourcePopupAction">
+        <menuitem name="RefreshSource" action="RefreshSourceAction" />
+        <separator />
         <menuitem name="RenameSource" action="RenameSourceAction" />
         <menuitem name="UnmapSource" action="UnmapSourceAction" />
         <separator />

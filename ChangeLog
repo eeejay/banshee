@@ -1,3 +1,10 @@
+2009-03-02  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:
+	* src/Extensions/Banshee.Lastfm/Resources/GlobalUI.xml: Patch from
+	Alexander Kojevnikov adding a refresh action in the context menu for
+	Last.fm stations (BGO #536655).
+
 2009-03-01  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Playlists.Formats/XspfPlaylistFormat.cs:
