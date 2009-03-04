@@ -1,3 +1,9 @@
+2009-03-03  John Millikin  <jmillikin@gmail.com>
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdDiscModel.cs:
+	Only increment the loop counter once when setting compilation
+	properties on tracks from the Audio CD model.
+
 2009-03-02  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
 	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:

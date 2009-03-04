@@ -195,7 +195,7 @@ namespace Banshee.AudioCd
             if (is_compilation) {
                 album.IsCompilation = true;
                 for (i = 0; i < release.Tracks.Count; i++) {
-                    AudioCdTrackInfo model_track = (AudioCdTrackInfo)this[i++];
+                    AudioCdTrackInfo model_track = (AudioCdTrackInfo)this[i];
                     model_track.IsCompilation = true;
                     model_track.AlbumArtist = artist.Name;
                     model_track.AlbumArtistSort = artist.NameSort;
