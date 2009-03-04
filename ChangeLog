@@ -1,3 +1,10 @@
+2009-03-04  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs: Patch
+	from Alexander Kojevnikov that makes the Previous button go to the
+	previous track only if position is less than 4 seconds, otherwise it
+	restarts the current song (BGO #539085).
+
 2009-03-04  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Core/Resources/contributors.xml: Add a bunch of people
