@@ -79,7 +79,7 @@ namespace Banshee.Library
         private static SmartPlaylistDefinition [] non_default_smart_playlists = new SmartPlaylistDefinition [] {
             new SmartPlaylistDefinition (
                 Catalog.GetString ("Neglected Favorites"),
-                Catalog.GetString ("Favorites not played in over two weeks"),
+                Catalog.GetString ("Favorites not played in over two months"),
                 "rating>=4 played>=\"2 months ago\""),
 
             new SmartPlaylistDefinition (

@@ -1,3 +1,8 @@
+2009-03-04  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs: Fix
+	mistake in default smart playlist name.
+
 2009-03-03  John Millikin  <jmillikin@gmail.com>
 
 	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdDiscModel.cs:
