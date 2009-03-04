@@ -261,7 +261,7 @@ namespace Banshee.Sources
                 sort_children = false;
             }
             
-            if (child_sort.SortType != SortType.None) {
+            if (child_sort != null && child_sort.SortType != SortType.None) {
                 lock (Children) {
                     child_sort.Sort (child_sources, SeparateChildrenByType);
 
