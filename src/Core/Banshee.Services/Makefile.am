@@ -132,8 +132,8 @@ SOURCES =  \
 	Banshee.Playlists.Formats/PlaylistFormatDescription.cs \
 	Banshee.Playlists.Formats/PlaylistParser.cs \
 	Banshee.Playlists.Formats/PlsPlaylistFormat.cs \
-	Banshee.Playlists.Formats/XspfPlaylistFormat.cs \
 	Banshee.Playlists.Formats/Tests/PlaylistFormatTests.cs \
+	Banshee.Playlists.Formats/XspfPlaylistFormat.cs \
 	Banshee.Preferences/Collection.cs \
 	Banshee.Preferences/Page.cs \
 	Banshee.Preferences/Preference.cs \
