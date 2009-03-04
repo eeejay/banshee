@@ -1,5 +1,11 @@
 2009-03-04  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Core/Resources/contributors.xml: Add a bunch of people
+	as developers and contributors, most of whom should have been in here for
+	some time.
+
+2009-03-04  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs: Fix
 	mistake in default smart playlist name.
 

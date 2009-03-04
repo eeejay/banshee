@@ -1,17 +1,21 @@
 <people>
   <author role="Maintainer">Aaron Bockover</author>
   <author role="Maintainer">Gabriel Burt</author>
+  <author role="Developer">Bertrand Lorentz</author>
+  <author role="Developer">John Millikin</author>
   <author role="Developer">Scott Peterson</author>
   <contributor>Alan McGovern</contributor>
   <contributor>Alex Kloss</contributor>
   <contributor>Alexander Hixon</contributor>
+  <contributor>Alexander Kojevnikov</contributor>
   <contributor>Alexandros Frantzis</contributor>
   <contributor>Alp Toker</contributor>
   <contributor>Andrew Conkling</contributor>
+  <contributor>Andrés G. Aragoneses</contributor>
   <contributor>Andy Midgette</contributor>
   <contributor>Aydemir Ulaş Şahin</contributor>
   <contributor>Ben Maurer</contributor>
-  <contributor>Bertrand Lorentz</contributor>
+  <contributor>Benjamín Valero Espinosa</contributor>
   <contributor>Bill Dawson</contributor>
   <contributor>Bob Copeland</contributor> 
   <contributor>Bojan Rajkovic</contributor>
@@ -22,13 +26,15 @@
   <contributor>Chris Turchin</contributor>
   <contributor>Christian Krause</contributor>
   <contributor>Christopher Halse Rogers</contributor>
+  <contributor>Cosmin Banu</contributor>
   <contributor>Dan Wilson</contributor>
   <contributor>Dan Winship</contributor>
   <contributor>Daniel Munkton</contributor>
   <contributor>David Spreen</contributor>
+  <contributor>Eoin Hennessy</contributor>
   <contributor>Eric Butler</contributor>
-  <contributor>Fredrik Hedberg</contributor>
   <contributor>Félix Velasco</contributor>
+  <contributor>Fredrik Hedberg</contributor>
   <contributor>Hans Petter Jansson</contributor>
   <contributor>Igor Guerrero Fonseca</contributor>
   <contributor>Ilya Konstantinov</contributor>
@@ -49,6 +55,7 @@
   <contributor>Nicholas Parker</contributor>
   <contributor>Oscar Forero</contributor>
   <contributor>Patrick van Staveren</contributor> 
+  <contributor>Paul Lange</contributor> 
   <contributor>Pepijn van de Geer</contributor>
   <contributor>Peter de Kraker</contributor>
   <contributor>Ruben Vermeersch</contributor>
@@ -57,6 +64,7 @@
   <contributor>Tim Yamin</contributor>
   <contributor>Trey Ethridge</contributor>
   <contributor>Will Farrington</contributor>
+  <contributor>William Pettersson</contributor>
   <contributor>Wouter Bolsterlee</contributor>
   <!-- Artists have their own markup because of the GtkAboutBox design -->
   <artist>Garrett LeSage</artist>
