@@ -1,7 +1,14 @@
 2009-03-05  John Millikin  <jmillikin@gmail.com>
 
+	* src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryLimitBox.cs:
+	Patch from Alexander Kojevnikov: Change "limit to" entry in the smart
+	playlist editor to a SpinButton (BGO #557321).
+
+2009-03-05  John Millikin  <jmillikin@gmail.com>
+
 	* src/Libraries/Hyena/Hyena/Log.cs:
-	Change the color used for warning messages to dark yellow (BGO #546647).
+	Patch from Neil Loknath: Change the color used for warning messages to
+	dark yellow (BGO #546647).
 
 2009-03-05  John Millikin  <jmillikin@gmail.com>
 

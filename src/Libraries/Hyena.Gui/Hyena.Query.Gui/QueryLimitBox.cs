@@ -41,7 +41,7 @@ namespace Hyena.Query.Gui
     public class QueryLimitBox : HBox
     {
         private CheckButton enabled_checkbox;
-        private Entry count_entry;
+        private SpinButton count_spin;
         private ComboBox limit_combo;
         private ComboBox order_combo;
 
@@ -58,8 +58,11 @@ namespace Hyena.Query.Gui
             enabled_checkbox = new CheckButton (Catalog.GetString ("_Limit to"));
             enabled_checkbox.Toggled += OnEnabledToggled;
             
-            count_entry = new Entry ("25");
-            count_entry.SetSizeRequest (50, -1);
+            count_spin = new SpinButton (0, Double.MaxValue, 1);
+            count_spin.Numeric = true;
+            count_spin.Digits = 0;
+            count_spin.Value = 25;
+            count_spin.SetSizeRequest (60, -1);
             
             limit_combo = ComboBox.NewText ();
             foreach (QueryLimit limit in limits) {
@@ -77,7 +80,7 @@ namespace Hyena.Query.Gui
             }
 
             PackStart (enabled_checkbox, false, false, 0);
-            PackStart (count_entry, false, false, 0);
+            PackStart (count_spin, false, false, 0);
             PackStart (limit_combo, false, false, 0);
             PackStart (new Label (Catalog.GetString ("selected by")), false, false, 0);
             PackStart (order_combo, false, false, 0);
@@ -110,13 +113,13 @@ namespace Hyena.Query.Gui
                     return null;
 
                 IntegerQueryValue val = new IntegerQueryValue ();
-                val.ParseUserQuery (count_entry.Text);
-                return val.IsEmpty ? null : val;
+                val.SetValue (count_spin.ValueAsInt);
+                return val;
             }
 
             set {
                 if (value != null && !value.IsEmpty)
-                    count_entry.Text = value.ToSql ();
+                    count_spin.Value = value.IntValue;
             }
         }
 
@@ -131,7 +134,7 @@ namespace Hyena.Query.Gui
 
         private void OnEnabledToggled (object o, EventArgs args)
         {
-            count_entry.Sensitive = enabled_checkbox.Active;
+            count_spin.Sensitive = enabled_checkbox.Active;
             limit_combo.Sensitive = enabled_checkbox.Active;
             order_combo.Sensitive = enabled_checkbox.Active;
         }
