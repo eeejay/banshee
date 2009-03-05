@@ -1,3 +1,11 @@
+2009-03-05  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs: Fix
+	parameter order for the SourcePreferences action entry.
+
+	* src/Core/Banshee.ThickClient/Resources/core-ui-actions-layout.xml:
+	Move misplaced SourcePreferences menu item.
+
 2009-03-05  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/DefaultPreferenceWidgets.cs:
@@ -9,7 +17,7 @@
 	* src/Core/Banshee.Services/Banshee.Preferences/PreferenceService.cs: Name
 	the file-related prefs section File Policies and show the label. Add a
 	source-specific tab and remove music-library prefs. Move Banshee-specific
-	preferences from Page to the PrefrenceService.  Add ChildPages and
+	preferences from Page to the PreferenceService.  Add ChildPages and
 	IconName properties to Page class, allowing Pages to have child Pages.
 
 	* src/Core/Banshee.Services/Makefile.am:
@@ -17,7 +25,7 @@
 	convenience subclass of Page that adds a source-specific page.
 
 	* src/Core/Banshee.Services/Banshee.Sources/Source.cs: Add virtual
-	PreferencePageId property that if !null will mean the
+	PreferencesPageId property that if !null will mean the
 	SourcePreferencesAction will appear in the source's context menu, and will
 	open the Preferences dialog to the relevant souce-specific section. Add
 	PreferencesPage property that creates a source-specific prefs page for this

@@ -109,6 +109,7 @@
     <menu name="SortChildren" action="SortChildrenAction" />
     <separator/>
     <menuitem name="Import" action="ImportAction"/>
+    <menuitem name="SourcePreferences" action="SourcePreferencesAction"/>
     <separator/>
   </popup>
 
@@ -136,7 +137,6 @@
     <menuitem name="RenameSource" action="RenameSourceAction"/>
     <menuitem name="RefreshSmartPlaylist" action="RefreshSmartPlaylistAction"/>
     <menuitem name="ExportPlaylist" action="ExportPlaylistAction"/>
-    <menuitem name="SourcePreferences" action="SourcePreferencesAction"/>
     <menuitem name="UnmapSource" action="UnmapSourceAction"/>
     <separator/>
     <menuitem name="SourceProperties" action="SourcePropertiesAction"/>
