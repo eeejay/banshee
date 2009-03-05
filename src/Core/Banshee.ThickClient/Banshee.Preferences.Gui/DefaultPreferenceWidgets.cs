@@ -30,13 +30,16 @@ using System;
 using Mono.Unix;
 using Gtk;
 
+
+using Hyena;
+using Hyena.Widgets;
+
 using Banshee.Base;
 using Banshee.Library;
 using Banshee.Preferences;
 using Banshee.Collection;
+using Banshee.ServiceStack;
 
-using Hyena;
-using Hyena.Widgets;
 using Banshee.Widgets;
 using Banshee.Gui.Widgets;
 
@@ -46,18 +49,18 @@ namespace Banshee.Preferences.Gui
     {
         public static void Load (PreferenceService service)
         {
-            Page general = service["general"];
+            Page music = ServiceManager.SourceManager.MusicLibrary.PreferencesPage;
         
-            PreferenceBase library_location = general["music-library"]["library-location"];
+            PreferenceBase library_location = music["library-location"]["library-location"];
             library_location.DisplayWidget = new LibraryLocationButton (library_location);
             
-            PreferenceBase folder_pattern = general["file-system"]["folder_pattern"];
+            PreferenceBase folder_pattern = music["file-system"]["folder_pattern"];
             folder_pattern.DisplayWidget = new PatternComboBox (folder_pattern, FileNamePattern.SuggestedFolders);
             
-            PreferenceBase file_pattern = general["file-system"]["file_pattern"];
+            PreferenceBase file_pattern = music["file-system"]["file_pattern"];
             file_pattern.DisplayWidget = new PatternComboBox (file_pattern, FileNamePattern.SuggestedFiles);
             
-            PreferenceBase pattern_display = general["file-system"].FindOrAdd (new VoidPreference ("file_folder_pattern"));
+            PreferenceBase pattern_display = music["file-system"].FindOrAdd (new VoidPreference ("file_folder_pattern"));
             pattern_display.DisplayWidget = new PatternDisplay (folder_pattern.DisplayWidget, file_pattern.DisplayWidget);
             
             // Set up the extensions tab UI

@@ -125,6 +125,7 @@ SOURCES =  \
 	Banshee.Preferences.Gui/DefaultPreferenceWidgets.cs \
 	Banshee.Preferences.Gui/DescriptionLabel.cs \
 	Banshee.Preferences.Gui/NotebookPage.cs \
+	Banshee.Preferences.Gui/PageComboBox.cs \
 	Banshee.Preferences.Gui/PreferenceDialog.cs \
 	Banshee.Preferences.Gui/SectionBox.cs \
 	Banshee.Preferences.Gui/WidgetFactory.cs \

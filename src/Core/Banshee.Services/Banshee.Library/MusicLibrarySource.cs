@@ -34,6 +34,8 @@ using Mono.Unix;
 
 using Banshee.Collection;
 using Banshee.SmartPlaylist;
+using Banshee.Preferences;
+using Banshee.Configuration.Schema;
 
 namespace Banshee.Library
 {
@@ -44,6 +46,27 @@ namespace Banshee.Library
             MediaTypes = TrackMediaAttributes.Music | TrackMediaAttributes.AudioStream;
             NotMediaTypes = TrackMediaAttributes.Podcast | TrackMediaAttributes.VideoStream | TrackMediaAttributes.AudioBook;
             Properties.SetStringList ("Icon.Name", "audio-x-generic", "source-library");
+            Properties.SetString ("SourcePreferencesActionLabel", Catalog.GetString ("Music Library Preferences"));
+
+            Section library_section = PreferencesPage.Add (new Section ("library-location", 
+                Catalog.GetString ("Music Library Folder"), 2));
+
+            library_section.Add (new LibraryLocationPreference ());
+
+            Section file_system = PreferencesPage.Add (new Section ("file-system", 
+                Catalog.GetString ("File System Organization"), 5));
+
+            file_system.Add (new SchemaPreference<string> (LibrarySchema.FolderPattern, 
+                Catalog.GetString ("Folder hie_rarchy")));
+            
+            file_system.Add (new SchemaPreference<string> (LibrarySchema.FilePattern,     
+                Catalog.GetString ("File _name")));
+
+            PreferencesPage.Add (new Section ("misc", Catalog.GetString ("Miscellaneous"), 10));
+        }
+
+        public override string PreferencesPageId {
+            get { return UniqueId; }
         }
 
         public override IEnumerable<SmartPlaylistDefinition> DefaultSmartPlaylists {

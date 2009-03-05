@@ -63,6 +63,30 @@ namespace Banshee.Preferences.Gui
                 foreach (Section section in page) {
                     AddSection (section);
                 }
+
+                if (page.ChildPages.Count > 0) {
+                    Notebook notebook = new Notebook ();
+                    notebook.ShowBorder = false;
+                    notebook.ShowTabs = false;
+                    notebook.Show ();
+
+                    PageComboBox page_combo = new PageComboBox (page.ChildPages, notebook);
+                    PackStart (page_combo, false, false, 0);
+
+                    HSeparator sep = new HSeparator ();
+                    sep.Show ();
+                    PackStart (sep, false, false, 0);
+
+                    foreach (Page child_page in page.ChildPages) {
+                        NotebookPage page_ui = new NotebookPage (child_page);
+                        page_ui.BorderWidth = 0;
+                        page_ui.Spacing = 0;
+                        page_ui.Show ();
+                        notebook.AppendPage (page_ui, null);
+                    }
+
+                    PackStart (notebook, true, true, 0);
+                }
             }
         }
         

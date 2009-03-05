@@ -144,22 +144,17 @@ namespace Banshee.Bpm
                 return;
             }
             
-            enabled_pref = service["general"]["misc"].Add (new SchemaPreference<bool> (EnabledSchema, 
-                Catalog.GetString ("_Automatically detect BPM for all songs"),
-                Catalog.GetString ("Detect BPM for all songs that don't already have a value set"),
-                delegate { Enabled = EnabledSchema.Get (); }
-            ));
+            enabled_pref = ServiceManager.SourceManager.MusicLibrary.PreferencesPage["misc"].Add (
+                new SchemaPreference<bool> (EnabledSchema, 
+                    Catalog.GetString ("_Automatically detect BPM for all songs"),
+                    Catalog.GetString ("Detect BPM for all songs that don't already have a value set"),
+                    delegate { Enabled = EnabledSchema.Get (); })
+            );
         }
         
         private void UninstallPreferences ()
         {
-            PreferenceService service = ServiceManager.Get<PreferenceService> ();
-            if (service == null) {
-                return;
-            }
-            
-            service["general"]["misc"].Remove (enabled_pref);
-            enabled_pref = null;
+            ServiceManager.SourceManager.MusicLibrary.PreferencesPage["misc"].Remove (enabled_pref);
         }
         
 #endregion

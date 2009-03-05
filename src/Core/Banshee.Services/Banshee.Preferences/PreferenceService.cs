@@ -27,8 +27,11 @@
 //
 
 using System;
+using Mono.Unix;
 
 using Banshee.ServiceStack;
+using Banshee.Library;
+using Banshee.Configuration.Schema;
 
 namespace Banshee.Preferences
 {
@@ -42,7 +45,27 @@ namespace Banshee.Preferences
     
         public PreferenceService ()
         {
-            Page.SetupDefaults (this);
+            // Pages (tabs)
+            Page general = Add (new Page ("general", Catalog.GetString ("General"), 0));
+            Add (new Page ("source-specific", Catalog.GetString ("Source Specific"), 1));
+            Add (new Page ("extensions", Catalog.GetString ("Extensions"), 10));
+
+            // General policies
+            Section policies = general.Add (new Section ("policies", Catalog.GetString ("File Policies"), 0));
+            
+            policies.Add (new SchemaPreference<bool> (LibrarySchema.CopyOnImport, 
+                Catalog.GetString ("Co_py files to media folders when importing")));
+            
+            policies.Add (new SchemaPreference<bool> (LibrarySchema.WriteMetadata, 
+                Catalog.GetString ("Write _metadata to files"),
+                Catalog.GetString ("Enable this option to save tags and other metadata inside supported audio files.")));
+
+            policies.Add (new SchemaPreference<bool> (LibrarySchema.MoveOnInfoSave,
+                Catalog.GetString ("_Update file and folder names"),
+                Catalog.GetString ("Enabling this option ensures that files and folders are renamed according to the metadata.")));
+            
+            // Misc section
+            general.Add (new Section ("misc", Catalog.GetString ("Miscellaneous"), 20));
         }
         
         public void RequestWidgetAdapters ()

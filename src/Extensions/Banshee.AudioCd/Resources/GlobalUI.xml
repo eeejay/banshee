@@ -2,6 +2,7 @@
     <popup name="AudioCdContextMenu">
         <menuitem name="RipDisc" action="RipDiscAction"/>
         <menuitem name="DuplicateDisc" action="DuplicateDiscAction"/>
+        <menuitem name="SourcePreferences" action="SourcePreferencesAction"/>
         <separator/>
         <menuitem name="UnmapSource" action="UnmapSourceAction"/>
     </popup>

@@ -120,6 +120,7 @@
     <placeholder name="AboveImportSource"/>
     <menuitem name="ImportSource" action="ImportSourceAction"/>
     <menuitem name="RenameSource" action="RenameSourceAction"/>
+    <menuitem name="SourcePreferences" action="SourcePreferencesAction"/>
     <menuitem name="UnmapSource" action="UnmapSourceAction"/>
     <separator/>
     <menuitem name="SourceProperties" action="SourcePropertiesAction"/>
@@ -135,9 +136,11 @@
     <menuitem name="RenameSource" action="RenameSourceAction"/>
     <menuitem name="RefreshSmartPlaylist" action="RefreshSmartPlaylistAction"/>
     <menuitem name="ExportPlaylist" action="ExportPlaylistAction"/>
+    <menuitem name="SourcePreferences" action="SourcePreferencesAction"/>
     <menuitem name="UnmapSource" action="UnmapSourceAction"/>
     <separator/>
     <menuitem name="SourceProperties" action="SourcePropertiesAction"/>
+    <menuitem name="SourcePreferences" action="SourcePreferencesAction"/>
   </popup>
 
   <popup name="TrackContextMenu" action="TrackContextMenuAction">

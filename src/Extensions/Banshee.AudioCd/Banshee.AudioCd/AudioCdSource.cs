@@ -265,6 +265,10 @@ namespace Banshee.AudioCd
             get { return disc_model.Count; }
         }
 
+        public override string PreferencesPageId {
+            get { return "audio-cd"; }
+        }
+
         public override bool HasEditableTrackProperties {
             get { return true; }
         }
@@ -399,6 +403,7 @@ namespace Banshee.AudioCd
         private void SetupGui ()
         {                                       
             Properties.SetStringList ("Icon.Name", "media-cdrom", "gnome-dev-cdrom-audio", "source-cd-audio");
+            Properties.SetString ("SourcePreferencesActionLabel", Catalog.GetString ("Audio CD Preferences"));
             Properties.SetString ("UnmapSourceActionLabel", Catalog.GetString ("Eject Disc"));
             Properties.SetString ("UnmapSourceActionIconName", "media-eject");
             Properties.SetString ("ActiveSourceUIResource", "ActiveSourceUI.xml");

@@ -64,6 +64,23 @@ namespace Banshee.Preferences.Gui
             BuildDialog ();
             LoadPages ();
         }
+
+        public void ShowSourcePageId (string id)
+        {
+            if (pages.ContainsKey ("source-specific")) {
+                NotebookPage notebook_page  = pages["source-specific"];
+                notebook.CurrentPage = notebook.PageNum (notebook_page);
+
+                PageComboBox page_combo;
+                foreach (Widget child in notebook_page.Children) {
+                    page_combo = child as PageComboBox;
+                    if (page_combo != null) {
+                        page_combo.ActivePageId = id;
+                        break;
+                    }
+                }
+            }
+        }
         
         private void BuildDialog ()
         {

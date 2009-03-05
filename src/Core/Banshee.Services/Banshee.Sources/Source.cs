@@ -133,6 +133,10 @@ namespace Banshee.Sources
 
         protected void Remove ()
         {
+            if (prefs_page != null) {
+                prefs_page.Dispose ();
+            }
+
             if (ServiceManager.SourceManager.ContainsSource (this)) {
                 if (this.Parent != null) {
                     this.Parent.RemoveChildSource (this);
@@ -718,7 +722,18 @@ namespace Banshee.Sources
         {
             return new SchemaEntry<T> (String.Format ("sources.{0}.{1}", ParentConfigurationId, ns), name, defaultValue, shortDescription, longDescription); 
         }
-        
+
+        public virtual string PreferencesPageId {
+            get { return null; }
+        }
+
+        private Banshee.Preferences.SourcePage prefs_page;
+        public Banshee.Preferences.Page PreferencesPage {
+            get {
+                return prefs_page ?? (prefs_page = new Banshee.Preferences.SourcePage (this));
+            }
+        }
+
         public void CycleStatusFormat ()
         {
             int new_status_format = CurrentStatusFormat + 1;

@@ -1,10 +1,10 @@
 //
-// Page.cs
+// SourcePage.cs
 //
 // Author:
-//   Aaron Bockover <abockover@novell.com>
+//   Gabriel Burt <gburt@novell.com>
 //
-// Copyright (C) 2008 Novell, Inc.
+// Copyright (C) 2009 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -28,31 +28,31 @@
 
 using System;
 
+using Banshee.ServiceStack;
+using Banshee.Sources;
+
 namespace Banshee.Preferences
 {
-    public class Page : Collection<Section>
+    public class SourcePage : Page, IDisposable
     {
-        private Collection<Page> child_pages;
-        public Collection<Page> ChildPages {
-            get { return child_pages; }
+        public SourcePage (Source source) : this (source.UniqueId, source.Name, null, source.Order)
+        {
+            if (source.Properties.GetType ("Icon.Name") == typeof(string)) {
+                IconName = source.Properties.Get<string> ("Icon.Name");
+            } else if (source.Properties.GetType ("Icon.Name") == typeof(string[])) {
+                IconName = source.Properties.Get<string[]> ("Icon.Name")[0];
+            }
         }
 
-        private string icon_name;
-        public string IconName {
-            get { return icon_name; }
-            set { icon_name = value; }
+        public SourcePage (string uniqueId, string name, string iconName, int order) : base (uniqueId, name, order)
+        {
+            IconName = iconName;
+            ServiceManager.Get<Banshee.Preferences.PreferenceService> ()["source-specific"].ChildPages.Add (this);
         }
 
-        public Page ()
+        public void Dispose ()
         {
-            child_pages = new Collection<Page> ();
-        }
-        
-        public Page (string id, string name, int order) : this ()
-        {
-            Id = id;
-            Name = name;
-            Order = order;
+            ServiceManager.Get<Banshee.Preferences.PreferenceService> ()["source-specific"].ChildPages.Remove (this);
         }
     }
 }

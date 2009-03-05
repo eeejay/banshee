@@ -103,7 +103,11 @@ namespace Banshee.Gui
                     
                 new ActionEntry ("SortChildrenAction", Stock.SortDescending, 
                     Catalog.GetString ("Sort Children by"), null, null,
-                    OnSortChildrenMenu)
+                    OnSortChildrenMenu),
+
+                new ActionEntry ("SourcePreferencesAction", null, String.Empty,
+                    Catalog.GetString ("Edit preferences related to this source"), null, OnSourcePreferences),
+
             });
 
             this["NewSmartPlaylistAction"].ShortLabel = Catalog.GetString ("New _Smart Playlist");
@@ -111,6 +115,7 @@ namespace Banshee.Gui
             this["UnmapSourceAction"].IconName = Stock.Delete;
             this["SourcePropertiesAction"].IconName = Stock.Properties;
             this["SortChildrenAction"].HideIfEmpty = false;
+            this["SourcePreferencesAction"].IconName = Stock.Preferences;
 
             AddImportant (
                 new ActionEntry ("RefreshSmartPlaylistAction", Stock.Refresh,
@@ -329,6 +334,17 @@ namespace Banshee.Gui
             }
         }
 
+        private void OnSourcePreferences (object o, EventArgs args)
+        {
+            try {
+                Banshee.Preferences.Gui.PreferenceDialog dialog = new Banshee.Preferences.Gui.PreferenceDialog ();
+                dialog.ShowSourcePageId (ActionSource.PreferencesPageId);
+                dialog.Run ();
+                dialog.Destroy ();
+            } catch (ApplicationException) {
+            }
+        }
+
 #endregion
 
 #region Utility Methods
@@ -354,6 +370,7 @@ namespace Banshee.Gui
                 UpdateAction ("ImportSourceAction", import_source != null, import_source != null && import_source.CanImport, source);
                 UpdateAction ("ExportPlaylistAction", source is AbstractPlaylistSource, true, source);
                 UpdateAction ("SourcePropertiesAction", source.HasProperties, true, source);
+                UpdateAction ("SourcePreferencesAction", source.PreferencesPageId != null, true, source);
                 UpdateAction ("RefreshSmartPlaylistAction", smart_playlist != null && smart_playlist.CanRefresh, true, source);
 
                 bool playlists_writable = primary_source != null && primary_source.SupportsPlaylists && !primary_source.PlaylistsReadOnly;

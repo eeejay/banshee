@@ -44,7 +44,7 @@ namespace Banshee.AudioCd
     {
         private Dictionary<string, AudioCdSource> sources;
         private List<DeviceCommand> unhandled_device_commands;
-        private Page pref_page;
+        private SourcePage pref_page;
         private Section pref_section;
         private uint global_interface_id;
         
@@ -89,7 +89,7 @@ namespace Banshee.AudioCd
                 sources = null;
                 
                 DisposeActions ();
-            }    
+            }
         }
         
         private void MapCdromDevice (ICdromDevice device)
@@ -229,11 +229,10 @@ namespace Banshee.AudioCd
             
             service.InstallWidgetAdapters += OnPreferencesServiceInstallWidgetAdapters;
             
-            pref_page = new Page ("audio-cd", Catalog.GetString ("Audio CD"), 3);
-            service.Add (pref_page);
+            pref_page = new Banshee.Preferences.SourcePage ("audio-cd", Catalog.GetString ("Audio CDs"), "media-cdrom", 400);
             
-            pref_section = pref_page.Add (new Section ("audio-cd", 
-                Catalog.GetString ("Audio CD Importing"), 20));
+            pref_section = pref_page.Add (new Section ("audio-cd", Catalog.GetString ("Audio CD Importing"), 20));
+            pref_section.ShowLabel = false;
 
             pref_section.Add (new VoidPreference ("import-profile",  Catalog.GetString ("_Import format")));
             pref_section.Add (new VoidPreference ("import-profile-desc"));
@@ -262,7 +261,7 @@ namespace Banshee.AudioCd
             
             service.InstallWidgetAdapters -= OnPreferencesServiceInstallWidgetAdapters;
             
-            service.Remove (pref_page);
+            pref_page.Dispose ();
             pref_page = null;
             pref_section = null;
         }
@@ -328,7 +327,7 @@ namespace Banshee.AudioCd
                     Catalog.GetString ("Duplicate this audio CD"),
                     OnDuplicateDisc)
             );
-            
+
             global_interface_id = uia_service.UIManager.AddUiFromResource ("GlobalUI.xml");
         }
         
@@ -343,7 +342,7 @@ namespace Banshee.AudioCd
             uia_service.GlobalActions.Remove ("DuplicateDiscAction");
             uia_service.UIManager.RemoveUi (global_interface_id);
         }
-        
+
         private void OnImportDisc (object o, EventArgs args)
         {
             ImportOrDuplicateDisc (true);

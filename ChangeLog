@@ -1,3 +1,55 @@
+2009-03-05  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/DefaultPreferenceWidgets.cs:
+	* src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs: Move
+	the folder selector into its own section, add a new misc section, and
+	override the label for the new SourcePreferences action. Add the
+	music-library prefs that were defined in PreferenceService.
+
+	* src/Core/Banshee.Services/Banshee.Preferences/PreferenceService.cs: Name
+	the file-related prefs section File Policies and show the label. Add a
+	source-specific tab and remove music-library prefs. Move Banshee-specific
+	preferences from Page to the PrefrenceService.  Add ChildPages and
+	IconName properties to Page class, allowing Pages to have child Pages.
+
+	* src/Core/Banshee.Services/Makefile.am:
+	* src/Core/Banshee.Services/Banshee.Preferences/SourcePage.cs: New
+	convenience subclass of Page that adds a source-specific page.
+
+	* src/Core/Banshee.Services/Banshee.Sources/Source.cs: Add virtual
+	PreferencePageId property that if !null will mean the
+	SourcePreferencesAction will appear in the source's context menu, and will
+	open the Preferences dialog to the relevant souce-specific section. Add
+	PreferencesPage property that creates a source-specific prefs page for this
+	source, and Dispose it when the source is Removed.
+
+	* src/Core/Banshee.ThickClient/Resources/core-ui-actions-layout.xml:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs: Add new
+	SourcePreferences action as described elsewhere.
+
+	* src/Core/Banshee.ThickClient/Makefile.am:
+	* src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/PageComboBox.cs:
+	New ComboBox subclass to switch a Notebook between Pages, with the ability
+	to set the active source-specific page via its Id.
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs: Pass
+	the appropriate Order to the prefs ctor. Add the new Audio CDs page as a
+	source-specific page so it appears in the Source Specific preferences tab,
+	instead of its own tab.
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:
+	Override PreferencesPageId and the SourcePreference label.
+
+	* src/Extensions/Banshee.AudioCd/Resources/GlobalUI.xml: Show the
+	SourcePreferencesAction in the audio cd context menu.
+
+	* src/Extensions/Banshee.Bpm/Banshee.Bpm/BpmService.cs: Add the BPM pref
+	to the Music source-specific section instead of the Generic tab.
+
+	* src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/NotebookPage.cs: If
+	a page has ChildPages, create a PageComboBox and Notebook to
+	contain/switch between them.
+
 2009-03-04  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Sources/Source.cs: Fix a crash on
