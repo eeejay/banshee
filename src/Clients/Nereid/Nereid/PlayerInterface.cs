@@ -191,7 +191,7 @@ namespace Nereid
             footer_toolbar.ShowArrow = false;
             footer_toolbar.ToolbarStyle = ToolbarStyle.BothHoriz;
 
-            Widget task_status = new Banshee.Gui.Widgets.TaskStatusButton ();
+            Widget task_status = new Banshee.Gui.Widgets.TaskStatusIcon ();
 
             EventBox status_event_box = new EventBox ();
             status_event_box.ButtonPressEvent += OnStatusBoxButtonPress;

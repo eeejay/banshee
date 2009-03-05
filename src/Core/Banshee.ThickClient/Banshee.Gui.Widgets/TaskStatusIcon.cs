@@ -1,5 +1,5 @@
 // 
-// TaskStatusButton.cs
+// TaskStatusIcon.cs
 //
 // Author:
 //   Gabriel Burt <gburt@novell.com>
@@ -42,30 +42,23 @@ using Banshee.ServiceStack;
 
 namespace Banshee.Gui.Widgets
 {
-    public class TaskStatusButton : Gtk.Button
+    public class TaskStatusIcon : AnimatedImage
     {
-        private AnimatedImage image;
         //private Dictionary<IUserJob, UserJobTile> job_tiles = new Dictionary<IUserJob, UserJobTile> ();
         private List<IUserJob> jobs = new List<IUserJob> ();
 
-        public TaskStatusButton ()
+        public TaskStatusIcon ()
         {
             // Setup widgetry
-            Relief = ReliefStyle.None;
-            Sensitive = false;
-
-            image = new AnimatedImage ();
             try {
-                image.Pixbuf = Gtk.IconTheme.Default.LoadIcon ("process-working", 22, IconLookupFlags.NoSvg);
-                image.FrameHeight = 22;
-                image.FrameWidth = 22;
-                image.Load ();
-                image.Active = false;
+                Pixbuf = Gtk.IconTheme.Default.LoadIcon ("process-working", 22, IconLookupFlags.NoSvg);
+                FrameHeight = 22;
+                FrameWidth = 22;
+                Load ();
+                TaskActive = false;
             } catch (Exception e) {
                 Hyena.Log.Exception (e);
             }
-
-            Child = image;
 
             // Listen for jobs
             UserJobManager job_manager = ServiceManager.Get<UserJobManager> ();
@@ -91,26 +84,25 @@ namespace Banshee.Gui.Widgets
                             jobs.Count
                         ), sb.ToString ()
                     );
-                    Active = true;
+                    TaskActive = true;
                 } else {
                     TooltipText = Catalog.GetString ("No background tasks running");
-                    Active = false;
+                    TaskActive = false;
                 }
             }
         }
 
         private bool first = true;
-        private bool active = false;
-        private bool Active {
+        private bool task_active = false;
+        private bool TaskActive {
             set {
-                if (!first && active == value)
+                if (!first && task_active == value)
                     return;
 
                 first = false;
-                active = value;
-                Sensitive = active;
+                task_active = value;
 
-                if (active) {
+                if (task_active) {
                     TurnOn ();
                 } else {
                     TurnOff ();
@@ -120,8 +112,8 @@ namespace Banshee.Gui.Widgets
 
         private bool TurnOn ()
         {
-            if (active) {
-                image.Active = true;
+            if (task_active) {
+                Active = true;
                 Banshee.ServiceStack.Application.RunTimeout (1000, TurnOff);
             }
             return false;
@@ -129,9 +121,9 @@ namespace Banshee.Gui.Widgets
 
         private bool TurnOff ()
         {
-            image.Active = false;
+            Active = false;
 
-            if (active) {
+            if (task_active) {
                 Banshee.ServiceStack.Application.RunTimeout (5000, TurnOn);
             }
             return false;
