@@ -1,5 +1,10 @@
 2009-03-05  John Millikin  <jmillikin@gmail.com>
 
+	* src/Libraries/Hyena/Hyena/Log.cs:
+	Change the color used for warning messages to dark yellow (BGO #546647).
+
+2009-03-05  John Millikin  <jmillikin@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Database/QueuedSqliteDatabase.cs:
 	Removed dead code.
 
