@@ -1,5 +1,10 @@
 2009-03-08  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceRowRenderer.cs:
+	Set the source name as the text of the renderer, for a11y.
+
+2009-03-08  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs: Patch from
 	Alexander Kojevnikov fixing a localization issue with the "Delete From
 	Drive" action (BGO #560455).
