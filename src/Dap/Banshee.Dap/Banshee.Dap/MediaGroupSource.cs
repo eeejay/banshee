@@ -52,9 +52,6 @@ namespace Banshee.Dap
             Properties.Set<Gtk.Widget> ("Nereid.SourceContents.FooterWidget", 
                 parent.Properties.Get<Gtk.Widget> ("Nereid.SourceContents.FooterWidget"));
             
-            Properties.Set<string> ("DeleteTracksFromDriveActionLabel", 
-                String.Format (Catalog.GetString ("Delete From {0}"), parent.Name));
-                
             if (this is IPurchasedMusicSource) {
                 PurchasedMusicActions.Create ();
                 

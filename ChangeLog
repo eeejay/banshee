@@ -1,5 +1,14 @@
 2009-03-08  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
+	* src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs: Patch from
+	Alexander Kojevnikov fixing a localization issue with the "Delete From
+	Drive" action (BGO #560455).
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/MediaGroupSource.cs: Do not set the
+	"Delete From Drive" label, it's overwritten in TrackActions anyway.
+
+2009-03-08  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:
 	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs: Fix
 	localization issues in Playback menu by having separate string for each
