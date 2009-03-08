@@ -524,22 +524,40 @@ namespace Banshee.Collection
         }
 
         // TODO turn this into a PrimarySource-owned delegate?
-        private static string type_podcast = Catalog.GetString ("Podcast");
-        private static string type_video = Catalog.GetString ("Video");
-        private static string type_song = Catalog.GetString ("Song");
-        private static string type_item = Catalog.GetString ("Item");
-        public string MediaTypeName {
+        private static readonly string restart_podcast = Catalog.GetString ("_Restart Podcast");
+        private static readonly string restart_video = Catalog.GetString ("_Restart Video");
+        private static readonly string restart_song = Catalog.GetString ("_Restart Song");
+        private static readonly string restart_item = Catalog.GetString ("_Restart Item");
+
+        public string RestartLabel {
             get {
                 if (HasAttribute (TrackMediaAttributes.Podcast))
-                    return type_podcast;
+                    return restart_podcast;
                 if (HasAttribute (TrackMediaAttributes.VideoStream))
-                    return type_video;
+                    return restart_video;
                 if (HasAttribute (TrackMediaAttributes.Music))
-                    return type_song;
-                return type_item;
+                    return restart_song;
+                return restart_item;
             }
         }
-        
+
+        private static readonly string jump_to_podcast = Catalog.GetString ("_Jump to Playing Podcast");
+        private static readonly string jump_to_video = Catalog.GetString ("_Jump to Playing Video");
+        private static readonly string jump_to_song = Catalog.GetString ("_Jump to Playing Song");
+        private static readonly string jump_to_item = Catalog.GetString ("_Jump to Playing Item");
+
+        public string JumpToLabel {
+            get {
+                if (HasAttribute (TrackMediaAttributes.Podcast))
+                    return jump_to_podcast;
+                if (HasAttribute (TrackMediaAttributes.VideoStream))
+                    return jump_to_video;
+                if (HasAttribute (TrackMediaAttributes.Music))
+                    return jump_to_song;
+                return jump_to_item;
+            }
+        }
+
 #region Exportable Properties
         
         public static void ExportableMerge (TrackInfo source, TrackInfo dest)

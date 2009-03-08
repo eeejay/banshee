@@ -1,3 +1,11 @@
+2009-03-08  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:
+	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs: Fix
+	localization issues in Playback menu by having separate string for each
+	media type. Original patch from Alexander Kojevnikov, modified by me
+	(BGO #570546).
+
 2009-03-05  John Millikin  <jmillikin@gmail.com>
 
 	* src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryLimitBox.cs:

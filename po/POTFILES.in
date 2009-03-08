@@ -54,7 +54,9 @@ src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs
 src/Core/Banshee.Services/Banshee.Playlists.Formats/AsxPlaylistFormat.cs
 src/Core/Banshee.Services/Banshee.Playlists.Formats/M3uPlaylistFormat.cs
 src/Core/Banshee.Services/Banshee.Playlists.Formats/PlsPlaylistFormat.cs
+src/Core/Banshee.Services/Banshee.Playlists.Formats/XspfPlaylistFormat.cs
 src/Core/Banshee.Services/Banshee.Preferences/Page.cs
+src/Core/Banshee.Services/Banshee.Preferences/PreferenceService.cs
 src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs
 src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs
 src/Core/Banshee.Services/Banshee.SmartPlaylist/Migrator.cs
@@ -91,11 +93,12 @@ src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs
 src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/ExtraTrackDetailsPage.cs
 src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/HelpPage.cs
 src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/LyricsPage.cs
+src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/SortingPage.cs
 src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs
 src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs
 src/Core/Banshee.ThickClient/Banshee.Gui/ViewActions.cs
 src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/ConnectedMessageBar.cs
-src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TaskStatusButton.cs
+src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TaskStatusIcon.cs
 src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs
 src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTile.cs
 src/Core/Banshee.ThickClient/Banshee.Library.Gui/FileImportSource.cs

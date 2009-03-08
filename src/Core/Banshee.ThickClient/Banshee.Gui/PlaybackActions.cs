@@ -163,8 +163,8 @@ namespace Banshee.Gui
                 this["SeekToAction"].Sensitive = !track.IsLive;
                 this["RestartSongAction"].Sensitive = !track.IsLive;
 
-                this["RestartSongAction"].Label = String.Format (Catalog.GetString ("_Restart {0}"), track.MediaTypeName);
-                this["JumpToPlayingTrackAction"].Label = String.Format (Catalog.GetString ("_Jump to Playing {0}"), track.MediaTypeName);
+                this["RestartSongAction"].Label = track.RestartLabel;
+                this["JumpToPlayingTrackAction"].Label = track.JumpToLabel;
                 this["JumpToPlayingTrackAction"].Sensitive = true;
             } else {
                 this["JumpToPlayingTrackAction"].Sensitive = false;
