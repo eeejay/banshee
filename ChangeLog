@@ -1,6 +1,12 @@
 2009-03-08  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
 	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceRowRenderer.cs:
+	Move the line added in my previous commit, to prevent a crash when
+	switching to the Mini Mode.
+
+2009-03-08  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceRowRenderer.cs:
 	Set the source name as the text of the renderer, for a11y.
 
 2009-03-08  Bertrand Lorentz  <bertrand.lorentz@gmail.com>

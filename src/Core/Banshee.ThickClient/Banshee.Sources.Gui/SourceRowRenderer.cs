@@ -52,12 +52,12 @@ namespace Banshee.Sources.Gui
             
             renderer.Source = source;
             renderer.Path = model.GetPath (iter);
-            renderer.Text = source.Name;
             
             if (source == null) {
                 return;
             }
             
+            renderer.Text = source.Name;
             renderer.Sensitive = source.CanActivate;
         }
         
