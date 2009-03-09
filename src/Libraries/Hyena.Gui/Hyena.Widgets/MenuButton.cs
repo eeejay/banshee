@@ -61,7 +61,7 @@ namespace Hyena.Widgets
             toggle_button.Parent = this;
             toggle_button.FocusOnClick = false;
             toggle_button.Relief = ReliefStyle.None;
-            toggle_button.Pressed += delegate { toggle_button.Active = true; ShowMenu (); };
+            toggle_button.Pressed += delegate { ShowMenu (); toggle_button.Active = true; };
             toggle_button.Activated += delegate { ShowMenu (); };
             
             box.Parent = this;
