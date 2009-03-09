@@ -1,3 +1,9 @@
+2009-03-09  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Extensions/Banshee.FileSystemQueue/Banshee.FileSystemQueue/FileSystemQueueSource.cs:
+	Don't switch to the FSQ source when some files are loaded if the playing
+	item is a video (BGO #570382)
+
 2009-03-09  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
 	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Recommendations/RecommendationService.cs:

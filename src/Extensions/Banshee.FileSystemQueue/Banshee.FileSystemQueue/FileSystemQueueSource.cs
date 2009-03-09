@@ -141,7 +141,11 @@ namespace Banshee.FileSystemQueue
                     importer.Finished += delegate {
                         if (visible) {
                             Banshee.Base.ThreadAssist.ProxyToMain (delegate {
-                                ServiceManager.SourceManager.SetActiveSource (this);
+                                TrackInfo current_track = ServiceManager.PlaybackController.CurrentTrack;
+                                // Don't switch to FSQ if the current item is a video
+                                if (current_track == null || !current_track.HasAttribute (TrackMediaAttributes.VideoStream)) {
+                                	ServiceManager.SourceManager.SetActiveSource (this);
+                                }
                             });
                         }
                     };
