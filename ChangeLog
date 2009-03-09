@@ -1,5 +1,11 @@
 2009-03-09  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Recommendations/RecommendationService.cs:
+	Patch from Christoph Burgdorf to update the recommendation pane when
+	the track info is updated (BGO #574628).
+
+2009-03-09  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
 	* src/Libraries/Hyena.Gui/Hyena.Widgets/MenuButton.cs: Patch from
 	Alexander Kojevnikov fixing the Next button so that its pressed state
 	is always displayed properly (BGO #554685).

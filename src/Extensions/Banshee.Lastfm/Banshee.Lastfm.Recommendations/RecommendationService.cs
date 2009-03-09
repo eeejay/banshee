@@ -73,7 +73,7 @@ namespace Banshee.Lastfm.Recommendations
 
             ServiceManager.PlaybackController.SourceChanged += OnSourceChanged;
             ServiceManager.SourceManager.ActiveSourceChanged += OnActiveSourceChanged;
-            ServiceManager.PlayerEngine.ConnectEvent (OnPlayerEvent, PlayerEvent.StartOfStream | PlayerEvent.EndOfStream);
+            ServiceManager.PlayerEngine.ConnectEvent (OnPlayerEvent, PlayerEvent.EndOfStream | PlayerEvent.TrackInfoUpdated);
         }
 
         public void Dispose ()
