@@ -1,3 +1,9 @@
+2009-03-09  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
+	* src/Core/Banshee.ThickClient/Banshee.Addins.Gui/AddinView.cs: Patch
+	from Alexander Kojevnikov fixing a visual glitch in the extension
+	manager (BGO #531575).
+
 2009-03-08  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
 	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceRowRenderer.cs:

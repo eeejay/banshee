@@ -118,13 +118,14 @@ namespace Banshee.Addins.Gui
                 Allocation.Width, Parent.Allocation.Height);
             
             if (!va.Contains (ta)) {
-                double y_pos = scroll.Vadjustment.Value + (ta.Top > va.Top ? ta.Height : -ta.Height);
-                /*if (y_pos > Parent.Allocation.Height) {
-                    y_pos = scroll.Vadjustment.Upper;
-                } else if (y_pos < scroll.Vadjustment.Lower) {
-                    y_pos = scroll.Vadjustment.Lower;
-                }*/
-                scroll.Vadjustment.Value = y_pos;
+                double delta = 0.0;
+                if (ta.Bottom > va.Bottom) {
+                    delta = ta.Bottom - va.Bottom;
+                } else if (ta.Top < va.Top) {
+                    delta = ta.Top - va.Top;
+                }
+                scroll.Vadjustment.Value += delta;
+                QueueDraw();
             }
         }
         
