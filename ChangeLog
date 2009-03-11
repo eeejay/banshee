@@ -1,3 +1,8 @@
+2009-03-11  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* Makefile.am: Add 'make csharp' target that references Gtk#, Hyena,
+	Banshee etc for convenient/quick shell usage.
+
 2009-03-09  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Extensions/Banshee.FileSystemQueue/Banshee.FileSystemQueue/FileSystemQueueSource.cs:
