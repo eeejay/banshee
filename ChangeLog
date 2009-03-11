@@ -1,5 +1,12 @@
 2009-03-11  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* Banshee.sln:
+	* libbanshee/libbanshee.cproj:
+	* *.csproj: Updated by MonoDevelop, removing empty elements and saving
+	some per-project preferences like use-spaces-for-tabs etc.
+
+2009-03-11  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* Makefile.am: Add 'make csharp' target that references Gtk#, Hyena,
 	Banshee etc for convenient/quick shell usage.
 

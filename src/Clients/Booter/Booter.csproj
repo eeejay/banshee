@@ -9,6 +9,7 @@
     <AssemblyName>Banshee</AssemblyName>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{4B890CB0-F5C8-4B1B-A1B8-3813BF5126C0}</ProjectGuid>
+    <ApplicationIcon>.</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -18,8 +19,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
-    <StartupObject />
-    <ApplicationIcon>.</ApplicationIcon>
     <AssemblyKeyFile>.</AssemblyKeyFile>
     <CustomCommands>
       <CustomCommands>

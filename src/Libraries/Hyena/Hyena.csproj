@@ -137,6 +137,9 @@
     <Compile Include="Hyena.Json\Tests\DeserializerTests.cs" />
     <Compile Include="Hyena\Delegates.cs" />
     <Compile Include="Hyena.Collections\LruCache.cs" />
+    <Compile Include="Hyena.Data.Sqlite\HyenaSqliteArrayDataReader.cs" />
+    <Compile Include="Hyena.Data.Sqlite\Tests\SqliteUtilTests.cs" />
+    <Compile Include="Hyena.Query\ExactStringQueryValue.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>

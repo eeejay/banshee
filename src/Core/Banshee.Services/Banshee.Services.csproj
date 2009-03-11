@@ -203,7 +203,6 @@
     <Compile Include="Banshee.Preferences\PreferenceService.cs" />
     <Compile Include="Banshee.Preferences\Page.cs" />
     <Compile Include="Banshee.Preferences\SchemaPreference.cs" />
-    <Compile Include="Banshee.Library\LibraryLocationPreference.cs" />
     <Compile Include="Banshee.Preferences\VoidPreference.cs" />
     <Compile Include="Banshee.Hardware\ICustomDeviceProvider.cs" />
     <Compile Include="Banshee.Collection.Database\DatabaseTrackModelCache.cs" />
@@ -245,6 +244,14 @@
     <Compile Include="Banshee.Hardware\DeviceCommand.cs" />
     <Compile Include="Banshee.MediaEngine\VideoDisplayContextType.cs" />
     <Compile Include="Banshee.MediaEngine\IBpmDetector.cs" />
+    <Compile Include="Banshee.Collection.Database\Tests\DatabaseAlbumInfoTests.cs" />
+    <Compile Include="Banshee.Collection.Database\Tests\DatabaseArtistInfoTests.cs" />
+    <Compile Include="Banshee.Collection.Database\Tests\DatabaseTrackInfoTests.cs" />
+    <Compile Include="Banshee.Database\SortKeyUpdater.cs" />
+    <Compile Include="Banshee.Playlists.Formats\XspfPlaylistFormat.cs" />
+    <Compile Include="Banshee.Preferences\SourcePage.cs" />
+    <Compile Include="Banshee.ServiceStack\DbIteratorJob.cs" />
+    <Compile Include="Banshee.Sources\SourceSortType.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Banshee.Services.addin.xml" />

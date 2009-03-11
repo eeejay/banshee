@@ -268,11 +268,19 @@ Global
 		{9C7B8E9C-A4E6-4459-A2C4-3D2D199EA919} = {4F47D6F1-4047-4A89-AE85-3AE5EF9F2961}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		name = Banshee
 		version = 1.3
 		outputpath = .
 		StartupItem = src\Clients\Nereid\Nereid.csproj
-		MonoDevelop.ChangeLogAddIn.ChangeLogInfo = $0
-		$0.policy = UpdateNearestChangeLog
+		Policies = $0
+		$0.TextStylePolicy = $1
+		$1.FileWidth = 120
+		$1.TabWidth = 4
+		$1.TabsToSpaces = True
+		$1.NoTabsAfterNonTabs = False
+		$1.RemoveTrailingWhitespace = True
+		$1.EolMarker = Native
+		name = Banshee
+		MonoDevelop.ChangeLogAddIn.ChangeLogInfo = $2
+		$2.policy = UpdateNearestChangeLog
 	EndGlobalSection
 EndGlobal

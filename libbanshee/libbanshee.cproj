@@ -11,9 +11,6 @@
     <Language>C</Language>
     <Target>Bin</Target>
     <SchemaVersion>2.0</SchemaVersion>
-    <Packages>
-      <Packages />
-    </Packages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
