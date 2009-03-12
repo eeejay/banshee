@@ -81,7 +81,7 @@ bt_tag_list_free (GstTagList *list)
 void
 bt_tag_list_add_value (GstTagList *list, const gchar *tag_name, const GValue *value)
 {
-    gst_tag_list_add_values (list, GST_TAG_MERGE_REPLACE_ALL, tag_name, value, NULL);
+    gst_tag_list_add_values (list, GST_TAG_MERGE_REPLACE, tag_name, value, NULL);
 }
 
 void
@@ -97,7 +97,7 @@ bt_tag_list_add_date (GstTagList *list, gint year, gint month, gint day)
     g_date_clear (date, 1);
     g_date_set_dmy (date, day, month, year);
     
-    gst_tag_list_add (list, GST_TAG_MERGE_REPLACE_ALL, GST_TAG_DATE, date, NULL);
+    gst_tag_list_add (list, GST_TAG_MERGE_REPLACE, GST_TAG_DATE, date, NULL);
 }
 
 void

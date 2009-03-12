@@ -1,5 +1,11 @@
 2009-03-12  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
+	* libbanshee/banshee-tagger.c: Patch from Roderich Schupp setting the
+	right merge mode, so that tags are not lost when importing a CD with
+	GStreamer 0.10.22 (BGO #573813).
+
+2009-03-12  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
 	* build/TranslatorExtractor.cs: Update the special case for sr@latin,
 	as the po file was renamed.
 
