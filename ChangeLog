@@ -1,3 +1,14 @@
+2009-03-12  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
+	* build/TranslatorExtractor.cs: Update the special case for sr@latin,
+	as the po file was renamed.
+
+	* build/Makefile.am: Fix typo that caused translators credits not to be
+	updated.
+
+	* src/Core/Banshee.Core/Resources/translators.xml: Updated, long
+	overdue because of the above bug.
+
 2009-03-11  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* Banshee.sln:

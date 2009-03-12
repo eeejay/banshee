@@ -99,7 +99,7 @@ public class TranslatorExtractor
         // hack for banshee, remove if used elsewhere
         if(language_code == "sr") {
             return;
-        } else if(language_code == "sr@Latn") {
+        } else if(language_code == "sr@latin") {
             language_code = "sr";
         }
         // end special
