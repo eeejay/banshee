@@ -1,3 +1,7 @@
+2009-03-12  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
+	* LINGUAS: Add back 'eu' (Basque) entry.
+
 2009-03-10  Wouter Bolsterlee  <wbolster@svn.gnome.org>
 
 	* nl.po: Updated Dutch translation by Wouter Bolsterlee.
