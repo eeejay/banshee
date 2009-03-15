@@ -51,7 +51,11 @@ test -z "$srcdir" && srcdir=.
 }
 
 # MacPorts on OS X only seems to have glibtoolize
-LIBTOOLIZE=$(basename $(which libtoolize || which glibtoolize))
+WHICHLIBTOOLIZE=$(which libtoolize || which glibtoolize)
+if [ x"$WHICHLIBTOOLIZE" == x"" ]; then
+	error "libtool is required to configure $PROJECT"
+fi
+LIBTOOLIZE=$(basename $WHICHLIBTOOLIZE)
 
 check_autotool_version aclocal 1.9
 check_autotool_version automake 1.9
