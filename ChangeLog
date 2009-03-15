@@ -1,3 +1,9 @@
+2009-03-14  John Millikin  <jmillikin@gmail.com>
+
+	* src/Core/Banshee.Core/Makefile.am:
+	* src/Core/Banshee.Core/Banshee.Base/Tests/CoverArtSpecTests.cs:
+	Add tests for escaping cover art filename fragments.
+
 2009-03-12  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
 	* libbanshee/banshee-tagger.c: Patch from Roderich Schupp setting the
