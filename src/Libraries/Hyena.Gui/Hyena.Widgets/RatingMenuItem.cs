@@ -75,6 +75,9 @@ namespace Hyena.Widgets
 
         protected override bool OnButtonReleaseEvent (Gdk.EventButton evnt)
         {
+            if (evnt.X == 0 && evnt.Y == 0) {
+                return false;
+            }
             entry.SetValueFromPosition (TransformX (evnt.X));
             return true;
         }

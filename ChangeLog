@@ -1,5 +1,11 @@
 2009-03-15  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/RatingMenuItem.cs: Patch from
+	Alexander Kojevnikov fixing the bug where right-clicking on a track in
+	the Play Queue would clear its rating (BGO #575384).
+
+2009-03-15  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
 	* autogen.sh: Print a proper error message when (g)libtoolize is not
 	found. Patch from Andreas Neustifter, with a small change by me
 	(BGO #563839).
