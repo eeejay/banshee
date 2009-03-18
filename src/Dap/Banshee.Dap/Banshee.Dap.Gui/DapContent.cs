@@ -43,8 +43,6 @@ namespace Banshee.Dap.Gui
     {
         private DapSource dap;
         
-        //private WrapLabel dap_stats;
-
         // Ugh, this is to avoid the GLib.MissingIntPtrCtorException seen by some; BGO #552169
         protected DapContent (IntPtr ptr) : base (ptr)
         {
@@ -82,17 +80,7 @@ namespace Banshee.Dap.Gui
             
             Add (split_box);
             ShowAll ();
-            
-            /*dap_stats = new WrapLabel ();
-            dap.Sync.Updated += delegate { Banshee.Base.ThreadAssist.ProxyToMain (UpdateStatus); };
-            dap_stats.Text = dap.Sync.ToString ();
-            vbox.PackStart (dap_stats, false, false, 0);*/
         }
-
-        /*private void UpdateStatus ()
-        {
-            //dap_stats.Text = dap.Sync.ToString ();
-        }*/
 
         private void BuildActions ()
         {

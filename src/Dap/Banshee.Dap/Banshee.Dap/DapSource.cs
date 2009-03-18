@@ -227,15 +227,6 @@ namespace Banshee.Dap
             }
         }
         
-        /*public override void AddChildSource (Source child)
-        {
-            if (child is Banshee.Playlist.AbstractPlaylistSource && !(child is MediaGroupSource)) {
-                Log.Information ("Note: playlists added to digital audio players within Banshee are not yet saved to the device.", true);
-            }
-            
-            base.AddChildSource (child);
-        }*/
-
         // Force to zero so that count doesn't show up
         public override int Count {
             get { return 0; }

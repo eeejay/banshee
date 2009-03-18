@@ -249,7 +249,6 @@ namespace Banshee.Dap
                 library_sync.CalculateSync ();
             }
 
-            Log.Information (ToString ());
             OnUpdated ();
         }
 

@@ -1,4 +1,12 @@
-2009-03-15  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+2009-03-18  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapContent.cs:
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapLibrarySync.cs:
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapSync.cs: Remove cruft and unnecessary
+	logging.
+
+2009-03-15	* src/Dap/Banshee.Dap/  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
 	* src/Libraries/Hyena.Gui/Hyena.Widgets/RatingMenuItem.cs: Patch from
 	Alexander Kojevnikov fixing the bug where right-clicking on a track in
