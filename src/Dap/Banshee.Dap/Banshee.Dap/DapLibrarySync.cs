@@ -52,6 +52,7 @@ namespace Banshee.Dap
         private string conf_ns;
         private SchemaEntry<bool> enabled, sync_entire_library;
         private SchemaEntry<string[]> playlist_ids;
+        private SchemaPreference<bool> enabled_pref;
         private SmartPlaylistSource sync_src, to_add, to_remove;
         private Section library_prefs_section;
         
@@ -129,7 +130,9 @@ namespace Banshee.Dap
                 "If sync_entire_library is false, this contains a list of playlist ids specifically to sync", "");
 
             library_prefs_section = new Section (String.Format ("{0} sync", library.Name), library.Name, 0);
-            library_prefs_section.Add<bool> (enabled);
+            enabled_pref = library_prefs_section.Add<bool> (enabled);
+            enabled_pref.ShowDescription = true;
+            enabled_pref.ShowLabel = false;
         }
 
         private void BuildSyncLists ()
@@ -182,6 +185,9 @@ namespace Banshee.Dap
             sync_src.RefreshAndReload ();
             to_add.RefreshAndReload ();
             to_remove.RefreshAndReload ();
+            enabled_pref.Name = String.Format ("{0} ({1})",
+                enabled.ShortDescription,
+                String.Format (Catalog.GetString ("{0} to add, {1} to remove"), to_add.Count, to_remove.Count));
         }
 
         public override string ToString ()
@@ -194,17 +200,11 @@ namespace Banshee.Dap
         {
             if (Enabled) {
                 Banshee.Base.ThreadAssist.AssertNotInMainThread ();
-                if (to_remove.Count > 0) {
-                    //Log.DebugFormat ("deleting items for {0} - {1} items; to_remove is smartplaylist {2}, with cachid {3}", library.Name, to_remove.Count, to_remove.DbId, to_remove.DatabaseTrackModel.CacheId);
-                    sync.Dap.DeleteAllTracks (to_remove);
-                }
 
-                if (to_add.Count > 0) {
-                    sync.Dap.AddAllTracks (to_add);
-                }
+                sync.Dap.DeleteAllTracks (to_remove);
+                sync.Dap.AddAllTracks (to_add);
 
                 if (library.SupportsPlaylists && sync.Dap.SupportsPlaylists) {
-                    
                     // Now create the playlists, taking snapshots of smart playlists and saving them
                     // as normal playlists
                     IList<AbstractPlaylistSource> playlists = GetSyncPlaylists ();

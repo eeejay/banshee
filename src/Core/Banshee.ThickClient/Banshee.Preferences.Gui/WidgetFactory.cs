@@ -50,31 +50,45 @@ namespace Banshee.Preferences.Gui
         
         private static Widget GetWidget (PreferenceBase preference, Type type)
         {
+            Widget pref_widget = null;
             Widget widget = null;
             if (type == typeof (bool)) {
-                widget = new PreferenceCheckButton (preference);
+                pref_widget = new PreferenceCheckButton (preference);
             } else if (type == typeof (string)) {
-                widget = new PreferenceEntry (preference);
+                pref_widget = new PreferenceEntry (preference);
             }
 
-            if (widget != null) {
-                preference.Changed += delegate (Root pref) {
-                    widget.Sensitive = pref.Sensitive;
-                    widget.Visible = pref.Visible;
-                };
+            if (pref_widget != null) {
+                pref_widget.Sensitive = preference.Sensitive;
+                pref_widget.Visible = preference.Visible;
 
-                widget.Sensitive = preference.Sensitive;
-                widget.Visible = preference.Visible;
-
+                DescriptionLabel label = null;
                 if (preference.ShowDescription) {
                     VBox box = new VBox ();
-                    box.PackStart (widget, false, false, 0);
-                    new DescriptionLabel (preference.Description).PackInto (box, false);
+                    box.PackStart (pref_widget, false, false, 0);
+                    label = new DescriptionLabel (preference.Description);
+                    label.Visible = !String.IsNullOrEmpty (preference.Description);
+                    label.PackInto (box, false);
                     widget = box;
                 }
+
+                preference.Changed += delegate (Root pref) {
+                    Banshee.Base.ThreadAssist.ProxyToMain (delegate {
+                        pref_widget.Sensitive = pref.Sensitive;
+                        pref_widget.Visible = pref.Visible;
+                        /*if (label != null) {
+                            label.Text = pref.Description;
+                            label.Visible = !String.IsNullOrEmpty (preference.Description);
+                        }*/
+
+                        if (pref_widget is PreferenceCheckButton) {
+                            (pref_widget as PreferenceCheckButton).Label = pref.Name;
+                        }
+                    });
+                };
             }
             
-            return widget;
+            return widget ?? pref_widget;
         }
 
         public static Widget GetMnemonicWidget (PreferenceBase preference)

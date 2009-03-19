@@ -471,6 +471,9 @@ namespace Banshee.Sources
                 Log.WarningFormat ("Cannot delete all tracks from {0} via primary source {1}", source, this);
                 return;
             }
+
+            if (source.Count < 1)
+                return;
             
             ThreadAssist.SpawnFromMain (delegate {
                 CachedList<DatabaseTrackInfo> list = CachedList<DatabaseTrackInfo>.CreateFromModel (source.DatabaseTrackModel);
@@ -480,7 +483,7 @@ namespace Banshee.Sources
 
         protected override void DeleteSelectedTracks (DatabaseTrackListModel model)
         {
-            if (model == null) {
+            if (model == null || model.Count < 1) {
                 return;
             }
             

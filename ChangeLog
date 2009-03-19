@@ -1,5 +1,16 @@
 2009-03-18  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Preferences/Root.cs:
+	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/WidgetFactory.cs:
+	Handle the Name/ShortDescription of a pref changing.
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapLibrarySync.cs: Update the Name of
+	each library sync option when we recaculate the sync, showing the # items
+	to add and remove.
+
+2009-03-18  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapContent.cs:
 	* src/Dap/Banshee.Dap/Banshee.Dap/DapLibrarySync.cs:
 	* src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:

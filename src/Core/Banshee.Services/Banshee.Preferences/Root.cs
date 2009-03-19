@@ -66,12 +66,18 @@ namespace Banshee.Preferences
         
         public string Name {
             get { return name; }
-            set { name = value; }
+            set {
+                name = value;
+                OnChanged ();
+            }
         }
         
         public string Description {
             get { return description; }
-            set { description = value; }
+            set {
+                description = value;
+                OnChanged ();
+            }
         }
         
         public int Order {
