@@ -15,7 +15,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=banshee&component=general\n"
 "POT-Creation-Date: 2009-03-19 00:36+0000\n"
-"PO-Revision-Date: 2009-03-19 14:27+0100\n"
+"PO-Revision-Date: 2009-03-19 14:30+0100\n"
 "Last-Translator: Benjamín Valero Espinosa <benjavalero@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -3463,8 +3463,8 @@ msgid ""
 "When an audio CD is inserted, automatically begin importing it if metadata "
 "can be found and it is not already in the library."
 msgstr ""
-"Al insertar un CD de sonido, comienza a importar automáticamente si se "
-"pueden encontrar metadatos y no está ya en la fonoteca."
+"Al insertar un CD de sonido comienza a importar automáticamente si se pueden "
+"encontrar metadatos y no está ya en la fonoteca."
 
 #: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:246
 msgid "_Eject when done importing"
@@ -3472,7 +3472,7 @@ msgstr "E_xpulsar al terminar la importación"
 
 #: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:247
 msgid "When an audio CD has been imported, automatically eject it."
-msgstr "Cuando un CD de sonido se ha importado, lo expulsa automáticamente."
+msgstr "Cuando un CD de sonido se ha importado lo expulsa automáticamente."
 
 #: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:250
 msgid "Use error correction when importing"
@@ -3483,7 +3483,7 @@ msgid ""
 "Error correction tries to work around problem areas on a disc, such as "
 "surface scratches, but will slow down importing substantially."
 msgstr ""
-"La corrección de errores trata de esquivar las zonas problemáticas de un "
+"La corrección de errores trata de evitar las zonas problemáticas de un "
 "disco, como los arañazos en la superficie, pero ralentiza mucho la "
 "importación."
 
@@ -3820,7 +3820,7 @@ msgstr "Proporcione un título para la emisora"
 
 #: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/StationEditor.cs:67
 msgid "Add new radio station"
-msgstr "Añadir emisora nueva de radio"
+msgstr "Añadir emisora de radio nueva"
 
 #: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/StationEditor.cs:68
 msgid "Edit radio station"
