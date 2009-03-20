@@ -1,3 +1,11 @@
+2009-03-20  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/Editor.cs:
+	* src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade: Patch from
+	Alexander Kojevnikov fixing bug with predefined smart playlists'
+	descriptions being so wide they caused ugly horizontal scrolling (BGO
+	#556887)
+
 2009-03-19  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Database/SortKeyUpdater.cs: When the

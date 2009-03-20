@@ -96,14 +96,16 @@ namespace Banshee.SmartPlaylist
             bool have_any_predefined = false;
             foreach (SmartPlaylistDefinition def in primary_source.PredefinedSmartPlaylists) {
                 list_model.AppendValues (
-                    String.Format ("<b>{0}</b>\n<i>{1}</i>", def.Name, def.Description), def
+                    String.Format ("<b>{0}</b>\n<small>{1}</small>", def.Name, def.Description), def
                 );
                 have_any_predefined = true;
             }
 
             adv_tree_view.Selection.Mode = SelectionMode.Multiple;
             adv_tree_view.Model = list_model;
-            adv_tree_view.AppendColumn ("title", new CellRendererText (), "markup", 0);
+            CellRendererText renderer = new CellRendererText ();
+            renderer.Ellipsize = Pango.EllipsizeMode.End;
+            adv_tree_view.AppendColumn ("title", renderer, "markup", 0);
             adv_tree_view.Selection.Changed += HandleAdvSelectionChanged;
 
             UpdateAdvButtons (0);
