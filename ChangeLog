@@ -1,5 +1,11 @@
 2009-03-20  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Rendering.cs:
+	Patch from Alexander Kojevnikov fixing a dragged column rendering glitch
+	when hscroll position is non-zero (BGO #536853)
+
+2009-03-20  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Interaction.cs:
 	Patch from Alexander Kojevnikov fixing mouse interactions with ListView's
 	cells (such as the rating) when hscroll position is non-zero (BGO #538535)

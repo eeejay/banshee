@@ -339,7 +339,8 @@ namespace Hyena.Data.Gui
             
             if (pressed_column_is_dragging && pressed_column_index >= 0) {
                 cell_area.Width = column_cache[pressed_column_index].Width;
-                cell_area.X = pressed_column_x_drag + list_rendering_alloc.X - list_interaction_alloc.X;
+                cell_area.X = pressed_column_x_drag + list_rendering_alloc.X -
+                    list_interaction_alloc.X - HadjustmentValue;
                 PaintCell (item, pressed_column_index, row_index, cell_area, sensitive, bold, state, true);
             }
         }
