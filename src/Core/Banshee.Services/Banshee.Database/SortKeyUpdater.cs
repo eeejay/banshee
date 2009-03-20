@@ -26,6 +26,8 @@
 
 using System;
 using System.Globalization;
+
+using Banshee.Collection;
 using Banshee.Configuration;
 using Banshee.ServiceStack;
 
@@ -49,15 +51,29 @@ namespace Banshee.Database
         
         protected static void ForceUpdate (string new_locale)
         {
-            BansheeDbConnection db = ServiceManager.DbConnection;
-            db.Execute ("BEGIN");
-            db.Execute (@"UPDATE CoreArtists SET NameSortKey = HYENA_COLLATION_KEY(IFNULL(NameSort,Name))");
-            db.Execute (@"UPDATE CoreAlbums SET TitleSortKey = HYENA_COLLATION_KEY(IFNULL(TitleSort,Title)),
-                                                ArtistNameSortKey = HYENA_COLLATION_KEY(IFNULL(ArtistNameSort, ArtistName))");
-            db.Execute (@"UPDATE CoreTracks SET TitleSortKey = HYENA_COLLATION_KEY(IFNULL(TitleSort,Title))");
-            
+            ServiceManager.DbConnection.Execute (@"
+                    BEGIN;
+                    UPDATE CoreArtists SET
+                        NameSortKey       = HYENA_COLLATION_KEY(COALESCE(NameSort, Name, ?)),
+                        NameLowered       = HYENA_SEARCH_KEY(COALESCE(Name, ?));
+
+                    UPDATE CoreAlbums SET
+                        TitleSortKey      = HYENA_COLLATION_KEY(COALESCE(TitleSort, Title, ?)),
+                        ArtistNameSortKey = HYENA_COLLATION_KEY(COALESCE(ArtistName, ?)),
+                        TitleLowered      = HYENA_SEARCH_KEY(COALESCE(Title, ?)),
+                        ArtistNameLowered = HYENA_SEARCH_KEY(COALESCE(ArtistName, ?));
+
+                    UPDATE CoreTracks SET
+                        TitleSortKey      = HYENA_COLLATION_KEY(COALESCE(TitleSort, Title, ?)),
+                        TitleLowered      = HYENA_SEARCH_KEY(COALESCE(Title, ?));
+                    COMMIT",
+                ArtistInfo.UnknownArtistName, ArtistInfo.UnknownArtistName,
+                AlbumInfo.UnknownAlbumTitle, ArtistInfo.UnknownArtistName,
+                AlbumInfo.UnknownAlbumTitle, ArtistInfo.UnknownArtistName,
+                TrackInfo.UnknownTitle, TrackInfo.UnknownTitle
+            );
+
             DatabaseConfigurationClient.Client.Set<string> ("SortKeyLocale", new_locale);
-            db.Execute ("COMMIT");
         }
         
         protected static string PreviousLocale {

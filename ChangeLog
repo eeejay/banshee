@@ -1,5 +1,10 @@
 2009-03-19  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Database/SortKeyUpdater.cs: When the
+	locale has changed, update the SearchKeys as well.
+
+2009-03-19  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
 	Update the MetadataHash for tracks that have an unknown artist, album,
 	and/or title, fixing a problem where such items got removed and readded to
