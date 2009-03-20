@@ -27,11 +27,15 @@
 //
 
 using System;
+using Mono.Unix;
+using Hyena;
 
 namespace Banshee.Collection
 {
     public class ArtistInfo : CacheableItem
     {
+        public static readonly string UnknownArtistName = Catalog.GetString ("Unknown Artist");
+        
         private string name;
         private string name_sort;
         private string musicbrainz_id;
@@ -59,6 +63,10 @@ namespace Banshee.Collection
         public virtual string NameSort {
             get { return name_sort; }
             set { name_sort = String.IsNullOrEmpty (value) ? null : value; }
+        }
+        
+        public string DisplayName {
+            get { return StringUtil.MaybeFallback (Name, UnknownArtistName); }
         }
     }
 }

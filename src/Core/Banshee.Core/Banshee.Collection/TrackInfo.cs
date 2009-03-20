@@ -44,7 +44,9 @@ namespace Banshee.Collection
     public class TrackInfo : CacheableItem, ITrackInfo
     {
         public const string ExportVersion = "1.0";
-    
+
+        public static readonly string UnknownTitle = Catalog.GetString ("Unknown Title");
+
         public class ExportableAttribute : Attribute
         {
             private string export_name;
@@ -59,7 +61,7 @@ namespace Banshee.Collection
 
         public delegate void PlaybackFinishedHandler (TrackInfo track, double percentComplete);
         public static event PlaybackFinishedHandler PlaybackFinished;
-            
+
         private SafeUri uri;
         private SafeUri more_info_uri;
         private string mimetype;
@@ -283,49 +285,29 @@ namespace Banshee.Collection
         }
         
         public string DisplayArtistName { 
-            get {
-                string name = ArtistName == null ? null : ArtistName.Trim ();
-                return String.IsNullOrEmpty (name)
-                    ? Catalog.GetString ("Unknown Artist") 
-                    : name; 
-            } 
+            get { return StringUtil.MaybeFallback (ArtistName, ArtistInfo.UnknownArtistName); } 
         }
 
         public string DisplayAlbumArtistName {
-            get {
-                string name = AlbumArtist == null ? null : AlbumArtist.Trim ();
-                return String.IsNullOrEmpty (name)
-                    ? DisplayArtistName
-                    : name;
-            }
+            get { return StringUtil.MaybeFallback (AlbumArtist, DisplayArtistName); }
         }
 
         public string DisplayAlbumTitle { 
-            get { 
-                string title = AlbumTitle == null ? null : AlbumTitle.Trim ();
-                return String.IsNullOrEmpty (title) 
-                    ? Catalog.GetString ("Unknown Album") 
-                    : title; 
-            } 
+            get { return StringUtil.MaybeFallback (AlbumTitle, AlbumInfo.UnknownAlbumTitle); } 
         }
 
         public string DisplayTrackTitle { 
-            get { 
-                string title = TrackTitle == null ? null : TrackTitle.Trim ();
-                return String.IsNullOrEmpty (title) 
-                    ? Catalog.GetString ("Unknown Title") 
-                    : title; 
-            } 
-        }     
+            get { return StringUtil.MaybeFallback (TrackTitle, UnknownTitle); } 
+        }
 
         public string DisplayGenre { 
             get { 
                 string genre = Genre == null ? null : Genre.Trim ();
-                return String.IsNullOrEmpty (genre) 
-                    ? Catalog.GetString ("Unknown Genre") 
-                    : genre; 
-            } 
-        }     
+                return String.IsNullOrEmpty (genre)
+                    ? String.Empty
+                    : genre;
+            }
+        }
         
         [Exportable (ExportName = "artwork-id")]
         public virtual string ArtworkId { 

@@ -90,7 +90,7 @@ namespace Banshee.Query
 #region QueryField Definitions
 
         public static QueryField ArtistField = new QueryField (
-            "artist", "ArtistName",
+            "artist", "DisplayArtistName",
             Catalog.GetString ("Artist"), "CoreArtists.NameLowered", true,
             // Translators: These are unique search aliases for "artist".  Please, no spaces. Blank ok.
             Catalog.GetString ("artist"), Catalog.GetString ("by"), Catalog.GetString ("artists"),
@@ -98,7 +98,7 @@ namespace Banshee.Query
         );
 
         public static QueryField AlbumArtistField = new QueryField (
-            "albumartist", "AlbumArtist",
+            "albumartist", "DisplayAlbumArtistName",
             Catalog.GetString ("Album Artist"), "CoreAlbums.ArtistNameLowered", true,
             // Translators: These are unique search aliases for "album artist".  Please, no spaces. Blank ok.
             Catalog.GetString ("albumartist"), Catalog.GetString ("compilationartist"),
@@ -108,7 +108,7 @@ namespace Banshee.Query
         // TODO add IsCompilationField
 
         public static QueryField AlbumField = new QueryField (
-            "album", "AlbumTitle",
+            "album", "DisplayAlbumTitle",
             Catalog.GetString ("Album"), "CoreAlbums.TitleLowered", true,
             // Translators: These are unique search aliases for "album".  Please, no spaces. Blank ok.
             Catalog.GetString ("album"), Catalog.GetString ("on"), Catalog.GetString ("from"),
@@ -167,7 +167,7 @@ namespace Banshee.Query
         );
 
         public static QueryField TitleField = new QueryField (
-            "title", "TrackTitle",
+            "title", "DisplayTrackTitle",
             Catalog.GetString ("Name"), "CoreTracks.TitleLowered", true,
             // Translators: These are unique search fields.  Please, no spaces. Blank ok.
             Catalog.GetString ("title"), Catalog.GetString ("titled"), Catalog.GetString ("name"), Catalog.GetString ("named"),

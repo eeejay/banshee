@@ -95,7 +95,7 @@ namespace Banshee.Collection.Gui
             // Compute the layout sizes for both lines for centering on the cell
             int old_size = layout.FontDescription.Size;
             
-            layout.SetText (album.Title);
+            layout.SetText (album.DisplayTitle);
             layout.GetPixelSize (out fl_width, out fl_height);
             
             if (!String.IsNullOrEmpty (album.ArtistName)) {
@@ -118,12 +118,12 @@ namespace Banshee.Collection.Gui
             }
             
             // Render the first line, resetting the state
-            layout.SetText (album.Title);
+            layout.SetText (album.DisplayTitle);
             layout.FontDescription.Weight = Pango.Weight.Bold;
             layout.FontDescription.Size = old_size;
             layout.FontDescription.Style = Pango.Style.Normal;
             
-            layout.SetText (album.Title);
+            layout.SetText (album.DisplayTitle);
             
             context.Context.MoveTo (x, y);
             text_color.A = 1;

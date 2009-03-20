@@ -41,7 +41,7 @@ namespace Banshee.Collection.Gui
     {
         public ArtistListView () : base ()
         {
-            column_controller.Add (new Column ("Artist", new ColumnCellText ("Name", true), 1.0));
+            column_controller.Add (new Column ("Artist", new ColumnCellText ("DisplayName", true), 1.0));
             ColumnController = column_controller;
         }
 

@@ -28,6 +28,7 @@
 
 using NUnit.Framework;
 using Banshee.Collection.Database;
+using Banshee.Collection;
 
 namespace Banshee.Collection.Database.Tests
 {
@@ -71,7 +72,7 @@ namespace Banshee.Collection.Database.Tests
         [Test]
         public void TestWithoutTitleSortKey ()
         {
-            AssertTitleSort ("", null,  new byte[] {1, 1, 1, 1, 0});
+            AssertTitleSort ("", null,  Hyena.StringUtil.SortKey (AlbumInfo.UnknownAlbumTitle));
             AssertTitleSort ("a", null, new byte[] {14, 2, 1, 1, 1, 1, 0});
             AssertTitleSort ("a", "",   new byte[] {14, 2, 1, 1, 1, 1, 0});
             AssertTitleSort ("A", null, new byte[] {14, 2, 1, 1, 1, 1, 0});
@@ -87,7 +88,7 @@ namespace Banshee.Collection.Database.Tests
         [Test]
         public void TestTitleLowered ()
         {
-            AssertTitleLowered ("", "");
+            AssertTitleLowered ("", AlbumInfo.UnknownAlbumTitle.ToLower ());
             AssertTitleLowered ("A", "a");
             AssertTitleLowered ("\u0104", "a");
         }
@@ -95,7 +96,7 @@ namespace Banshee.Collection.Database.Tests
         [Test]
         public void TestWithoutArtistNameSortKey ()
         {
-            AssertArtistNameSort ("", null, new byte[] {1, 1, 1, 1, 0});
+            AssertArtistNameSort ("", null, Hyena.StringUtil.SortKey (ArtistInfo.UnknownArtistName));
             AssertArtistNameSort ("a", null, new byte[] {14, 2, 1, 1, 1, 1, 0});
             AssertArtistNameSort ("A", null, new byte[] {14, 2, 1, 1, 1, 1, 0});
 
@@ -112,7 +113,7 @@ namespace Banshee.Collection.Database.Tests
         [Test]
         public void TestArtistNameLowered ()
         {
-            AssertArtistNameLowered ("", "");
+            AssertArtistNameLowered ("", ArtistInfo.UnknownArtistName.ToLower ());
             AssertArtistNameLowered ("A", "a");
             AssertArtistNameLowered ("\u0104", "a");
         }

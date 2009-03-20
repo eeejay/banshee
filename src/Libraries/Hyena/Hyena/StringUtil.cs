@@ -246,5 +246,11 @@ namespace Hyena
             
             return invalid_path_regex.Replace (input, "_");
         }
+        
+        public static string MaybeFallback (string input, string fallback)
+        {
+            string trimmed = input == null ? null : input.Trim ();
+            return String.IsNullOrEmpty (trimmed) ? fallback : trimmed;
+        }
     }
 }

@@ -52,7 +52,7 @@ namespace Banshee.Database
         // NOTE: Whenever there is a change in ANY of the database schema,
         //       this version MUST be incremented and a migration method
         //       MUST be supplied to match the new version number
-        protected const int CURRENT_VERSION = 25;
+        protected const int CURRENT_VERSION = 26;
         protected const int CURRENT_METADATA_VERSION = 5;
         
 #region Migration Driver
@@ -587,6 +587,36 @@ namespace Banshee.Database
             Execute ("ALTER TABLE CoreAlbums ADD COLUMN ArtistNameSortKey BLOB");
             Execute ("ALTER TABLE CoreAlbums ADD COLUMN TitleSortKey BLOB");
             Execute ("ALTER TABLE CoreTracks ADD COLUMN TitleSortKey BLOB");
+            return true;
+        }
+        
+#endregion
+
+#region Version 26
+
+        [DatabaseVersion (26)]
+        private bool Migrate_26 ()
+        {
+            string unknown_artist = "Unknown Artist";
+            string unknown_album = "Unknown Album";
+            string unknown_title = "Unknown Title";
+
+            connection.Execute ("UPDATE CoreArtists SET Name = NULL, NameLowered = HYENA_SEARCH_KEY(?)" +
+                                " WHERE Name  IN ('', ?, ?) OR Name IS NULL", 
+                                ArtistInfo.UnknownArtistName, unknown_artist, ArtistInfo.UnknownArtistName);
+
+            connection.Execute ("UPDATE CoreAlbums SET ArtistName = NULL, ArtistNameLowered = HYENA_SEARCH_KEY(?)" +
+                                " WHERE ArtistName IN ('', ?, ?) OR ArtistName IS NULL",
+                                ArtistInfo.UnknownArtistName, unknown_artist, ArtistInfo.UnknownArtistName);
+
+            connection.Execute ("UPDATE CoreAlbums SET Title = NULL, TitleLowered = HYENA_SEARCH_KEY(?)" +
+                                " WHERE Title IN ('', ?, ?) OR Title IS NULL",
+                                AlbumInfo.UnknownAlbumTitle, unknown_album, AlbumInfo.UnknownAlbumTitle);
+
+            connection.Execute ("UPDATE CoreTracks SET Title = NULL, TitleLowered = HYENA_SEARCH_KEY(?)" +
+                                " WHERE Title IN ('', ?, ?) OR Title IS NULL",
+                                TrackInfo.UnknownTitle, unknown_title, TrackInfo.UnknownTitle);
+
             return true;
         }
         

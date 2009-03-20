@@ -49,12 +49,18 @@ namespace Banshee.Collection.Database
             get { return provider; }
         }
 
-        private static HyenaSqliteCommand select_command = new HyenaSqliteCommand (String.Format (
+        private static HyenaSqliteCommand default_select_command = new HyenaSqliteCommand (String.Format (
             "SELECT {0} FROM {1} WHERE {2} AND CoreArtists.Name = ?",
             provider.Select, provider.From,
             (String.IsNullOrEmpty (provider.Where) ? "1=1" : provider.Where)
         ));
 
+        private static HyenaSqliteCommand null_select_command = new HyenaSqliteCommand (String.Format (
+            "SELECT {0} FROM {1} WHERE {2} AND CoreArtists.Name IS NULL",
+            provider.Select, provider.From,
+            (String.IsNullOrEmpty (provider.Where) ? "1=1" : provider.Where)
+        ));
+        
         private static string last_artist_name = null;
         private static DatabaseArtistInfo last_artist = null;
 
@@ -71,7 +77,16 @@ namespace Banshee.Collection.Database
             artist.NameSort = artistNameSort;
             return FindOrCreate (artist);
         }
-
+        
+        private static IDataReader FindExistingArtists (string name)
+        {
+            HyenaSqliteConnection db = ServiceManager.DbConnection;
+            if (name == null) {
+                return db.Query (null_select_command);
+            }
+            return db.Query (default_select_command, name);
+        }
+        
         public static DatabaseArtistInfo FindOrCreate (DatabaseArtistInfo artist)
         {
             if (artist.Name == last_artist_name && last_artist != null) {
@@ -79,10 +94,10 @@ namespace Banshee.Collection.Database
             }
 
             if (String.IsNullOrEmpty (artist.Name) || artist.Name.Trim () == String.Empty) {
-                artist.Name = Catalog.GetString ("Unknown Artist");
+                artist.Name = null;
             }
-
-            using (IDataReader reader = ServiceManager.DbConnection.Query (select_command, artist.Name)) {
+            
+            using (IDataReader reader = FindExistingArtists (artist.Name)) {
                 if (reader.Read ()) {
                     last_artist = provider.Load (reader);
                     if (last_artist.NameSort != artist.NameSort) {
@@ -135,7 +150,7 @@ namespace Banshee.Collection.Database
 
         [DatabaseColumn(Select = false)]
         internal string NameLowered {
-            get { return Hyena.StringUtil.SearchKey (Name); }
+            get { return Hyena.StringUtil.SearchKey (DisplayName); }
         }
 
         [DatabaseColumn]
@@ -146,7 +161,7 @@ namespace Banshee.Collection.Database
 
         [DatabaseColumn(Select = false)]
         internal byte[] NameSortKey {
-            get { return Hyena.StringUtil.SortKey (NameSort ?? Name); }
+            get { return Hyena.StringUtil.SortKey (NameSort ?? DisplayName); }
         }
         
         [DatabaseColumn("MusicBrainzID")]

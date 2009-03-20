@@ -1,3 +1,24 @@
+2009-03-19  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Core/Banshee.Collection/AlbumInfo.cs:
+	* src/Core/Banshee.Core/Banshee.Collection/ArtistInfo.cs:
+	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseArtistInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/Tests/DatabaseAlbumInfoTests.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/Tests/DatabaseArtistInfoTests.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/Tests/DatabaseTrackInfoTests.cs:
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	* src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ArtistListView.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellAlbum.cs:
+	* src/Libraries/Hyena/Hyena/StringUtil.cs: Patch from Andrés G.
+	Aragoneses with input from John Millikin to keep displaying and sorting
+	unknown artist/albums/tracks as "Unknown .." but to keep the actual
+	value of the artist/album/title in the database (and written back to
+	files) null (BGO #528493)
+
 2009-03-18  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Preferences/Root.cs:

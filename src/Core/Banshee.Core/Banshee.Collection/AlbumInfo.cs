@@ -28,13 +28,17 @@
 
 using System;
 using System.Text.RegularExpressions;
+using Mono.Unix;
 
+using Hyena;
 using Banshee.Base;
 
 namespace Banshee.Collection
 {
     public class AlbumInfo : CacheableItem
     {
+        public static readonly string UnknownAlbumTitle = Catalog.GetString ("Unknown Album");
+        
         private string title;
         private string title_sort;
         private string artist_name;
@@ -96,6 +100,14 @@ namespace Banshee.Collection
                 
                 return artwork_id;
             }
+        }
+        
+        public string DisplayArtistName {
+            get { return StringUtil.MaybeFallback (ArtistName, ArtistInfo.UnknownArtistName); }
+        }
+        
+        public string DisplayTitle {
+            get { return StringUtil.MaybeFallback (Title, UnknownAlbumTitle); }
         }
     }
 }

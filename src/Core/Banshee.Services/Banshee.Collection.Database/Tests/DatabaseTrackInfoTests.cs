@@ -28,6 +28,7 @@
 
 using NUnit.Framework;
 using Banshee.Collection.Database;
+using Banshee.Collection;
 
 namespace Banshee.Collection.Database.Tests
 {
@@ -56,7 +57,7 @@ namespace Banshee.Collection.Database.Tests
         [Test]
         public void TestWithoutTitleSortKey ()
         {
-            AssertTitleSort ("", null, new byte[] {1, 1, 1, 1, 0});
+            AssertTitleSort ("", null, Hyena.StringUtil.SortKey (TrackInfo.UnknownTitle));
             AssertTitleSort ("a", null, new byte[] {14, 2, 1, 1, 1, 1, 0});
             AssertTitleSort ("A", null, new byte[] {14, 2, 1, 1, 1, 1, 0});
 
@@ -73,7 +74,7 @@ namespace Banshee.Collection.Database.Tests
         [Test]
         public void TestTitleLowered ()
         {
-            AssertTitleLowered ("", "");
+            AssertTitleLowered ("", TrackInfo.UnknownTitle.ToLower ());
             AssertTitleLowered ("A", "a");
             AssertTitleLowered ("\u0104", "a");
         }

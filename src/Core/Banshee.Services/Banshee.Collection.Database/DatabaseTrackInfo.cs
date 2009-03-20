@@ -458,12 +458,12 @@ namespace Banshee.Collection.Database
         
         [DatabaseColumn("TitleSortKey", Select = false)]
         internal byte[] TrackTitleSortKey {
-            get { return Hyena.StringUtil.SortKey (TrackTitleSort ?? TrackTitle); }
+            get { return Hyena.StringUtil.SortKey (TrackTitleSort ?? DisplayTrackTitle); }
         }
         
         [DatabaseColumn(Select = false)]
         internal string TitleLowered {
-            get { return Hyena.StringUtil.SearchKey (TrackTitle); }
+            get { return Hyena.StringUtil.SearchKey (DisplayTrackTitle); }
         }
 
         [DatabaseColumn(Select = false)]
