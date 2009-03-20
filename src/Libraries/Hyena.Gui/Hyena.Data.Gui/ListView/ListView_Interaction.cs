@@ -282,7 +282,7 @@ namespace Hyena.Data.Gui
 
             // Turn the view-absolute coordinates into cell-relative coordinates
             CachedColumn cached_column = GetCachedColumnForColumn (column);
-            x -= cached_column.X1;
+            x -= cached_column.X1 - HadjustmentValue;
             int page_offset = VadjustmentValue % RowHeight;
             y = (y + page_offset) % RowHeight;
 
