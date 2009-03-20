@@ -52,7 +52,7 @@ namespace Banshee.Database
         // NOTE: Whenever there is a change in ANY of the database schema,
         //       this version MUST be incremented and a migration method
         //       MUST be supplied to match the new version number
-        protected const int CURRENT_VERSION = 26;
+        protected const int CURRENT_VERSION = 27;
         protected const int CURRENT_METADATA_VERSION = 5;
         
 #region Migration Driver
@@ -616,6 +616,27 @@ namespace Banshee.Database
             connection.Execute ("UPDATE CoreTracks SET Title = NULL, TitleLowered = HYENA_SEARCH_KEY(?)" +
                                 " WHERE Title IN ('', ?, ?) OR Title IS NULL",
                                 TrackInfo.UnknownTitle, unknown_title, TrackInfo.UnknownTitle);
+
+            return true;
+        }
+        
+#endregion
+
+#region Version 27
+
+        [DatabaseVersion (27)]
+        private bool Migrate_27 ()
+        {
+            // One time fixup to MetadataHash now that our unknown metadata is handled properly
+            var tracks_needing_new_hash = DatabaseTrackInfo.Provider.FetchAllMatching (
+                "(CoreTracks.Title IS NULL OR CoreArtists.Name IS NULL OR CoreAlbums.Title IS NULL)"
+            );
+
+            var cmd = new HyenaSqliteCommand ("UPDATE CoreTracks SET MetadataHash = ? WHERE TrackID = ?");
+
+            foreach (DatabaseTrackInfo track in tracks_needing_new_hash) {
+                connection.Execute (cmd, track.MetadataHash, track.TrackId);
+            }
 
             return true;
         }

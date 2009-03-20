@@ -1,5 +1,12 @@
 2009-03-19  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	Update the MetadataHash for tracks that have an unknown artist, album,
+	and/or title, fixing a problem where such items got removed and readded to
+	devices on every sync (BGO #569379)
+
+2009-03-19  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Core/Banshee.Collection/AlbumInfo.cs:
 	* src/Core/Banshee.Core/Banshee.Collection/ArtistInfo.cs:
 	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:
