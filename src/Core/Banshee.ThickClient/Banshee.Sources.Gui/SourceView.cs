@@ -231,7 +231,7 @@ namespace Banshee.Sources.Gui
                 // errors about corrupting the TreeView's internal state.
                 foreach (Source dsource in ServiceManager.SourceManager.Sources) {
                     TreeIter iter = store.FindSource (dsource);
-                    if (!TreeIter.Zero.Equals (iter)) {
+                    if (!TreeIter.Zero.Equals (iter) && (int)store.GetValue (iter, 1) != dsource.Order) {
                         store.SetValue (iter, 1, dsource.Order);
                     }
                 }

@@ -1,5 +1,11 @@
 2009-03-20  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs: Patch
+	from Alexander Kojevnikov fixing focus loss when renaming non-active
+	source (BGO #527508)
+
+2009-03-20  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Rendering.cs:
 	Patch from Alexander Kojevnikov fixing a dragged column rendering glitch
 	when hscroll position is non-zero (BGO #536853)
