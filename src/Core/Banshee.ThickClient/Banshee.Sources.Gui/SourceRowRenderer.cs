@@ -163,7 +163,7 @@ namespace Banshee.Sources.Gui
             if (!hide_counts) {
                 count_layout = new Pango.Layout (widget.PangoContext);
                 count_layout.FontDescription = fd;
-                count_layout.SetMarkup (String.Format ("<span size=\"small\">({0})</span>", source.Count));
+                count_layout.SetMarkup (String.Format ("<span size=\"small\">{0}</span>", source.Count));
                 count_layout.GetPixelSize (out count_layout_width, out count_layout_height);
             }
 
