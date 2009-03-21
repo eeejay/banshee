@@ -651,7 +651,7 @@ namespace Banshee.Database
             // Update search keys for new space-stripping behavior.
             connection.Execute ("UPDATE CoreArtists SET NameLowered = HYENA_SEARCH_KEY(IFNULL(Name, ?))",
                                 ArtistInfo.UnknownArtistName);
-            connection.Execute ("UPDATE CoreAlbums SET ArtistNameLowered = HYENA_SEARCH_KEY(IFNULL(ArtistName, ?))" +
+            connection.Execute ("UPDATE CoreAlbums SET ArtistNameLowered = HYENA_SEARCH_KEY(IFNULL(ArtistName, ?))," +
                                 "                      TitleLowered = HYENA_SEARCH_KEY(IFNULL(Title, ?))",
                                 ArtistInfo.UnknownArtistName, AlbumInfo.UnknownAlbumTitle);
             connection.Execute ("UPDATE CoreTracks SET TitleLowered = HYENA_SEARCH_KEY(IFNULL(Title, ?))",
