@@ -37,7 +37,7 @@ namespace Banshee.Collection.Gui
     public class ColumnCellTrackAndCount : ColumnCellText
     {
         // Translators: this is {track number} of {track count}
-        private static string format = Catalog.GetString ("{0} of {1}");
+        private static readonly string format = Catalog.GetString ("{0} of {1}");
 
         public ColumnCellTrackAndCount (string property, bool expand) : base (property, expand)
         {
@@ -49,11 +49,12 @@ namespace Banshee.Collection.Gui
         protected override string GetText (object obj)
         {
             Banshee.Collection.TrackInfo track = BoundObjectParent as Banshee.Collection.TrackInfo;
-            if (track == null) {
+            if (track == null || track.TrackNumber == 0) {
                 return String.Empty;
             }
-
-            return String.Format (format, track.TrackNumber, track.TrackCount);
+            return track.TrackCount != 0
+                ? String.Format (format, track.TrackNumber, track.TrackCount)
+                : track.TrackNumber.ToString ();
         }
     }
 }
