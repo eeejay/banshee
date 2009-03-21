@@ -52,7 +52,7 @@ namespace Banshee.Database
         // NOTE: Whenever there is a change in ANY of the database schema,
         //       this version MUST be incremented and a migration method
         //       MUST be supplied to match the new version number
-        protected const int CURRENT_VERSION = 27;
+        protected const int CURRENT_VERSION = 28;
         protected const int CURRENT_METADATA_VERSION = 5;
         
 #region Migration Driver
@@ -641,6 +641,24 @@ namespace Banshee.Database
             return true;
         }
         
+#endregion
+
+#region Version 28
+
+        [DatabaseVersion (28)]
+        private bool Migrate_28 ()
+        {
+            // Update search keys for new space-stripping behavior.
+            connection.Execute ("UPDATE CoreArtists SET NameLowered = HYENA_SEARCH_KEY(IFNULL(Name, ?))",
+                                ArtistInfo.UnknownArtistName);
+            connection.Execute ("UPDATE CoreAlbums SET ArtistNameLowered = HYENA_SEARCH_KEY(IFNULL(ArtistName, ?))" +
+                                "                      TitleLowered = HYENA_SEARCH_KEY(IFNULL(Title, ?))",
+                                ArtistInfo.UnknownArtistName, AlbumInfo.UnknownAlbumTitle);
+            connection.Execute ("UPDATE CoreTracks SET TitleLowered = HYENA_SEARCH_KEY(IFNULL(Title, ?))",
+                                TrackInfo.UnknownTitle);
+            return true;
+        }
+
 #endregion
 
 #pragma warning restore 0169

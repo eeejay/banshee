@@ -171,7 +171,7 @@ namespace Hyena
             dict['\u0142'] = 'l';
             return dict;
         }
-        private static Dictionary<char, char> ignored_special_cases = BuildSpecialCases ();
+        private static Dictionary<char, char> searchkey_special_cases = BuildSpecialCases ();
         
         //  Removes accents from Latin characters, and some kinds of punctuation.
         public static string SearchKey (string val)
@@ -184,20 +184,36 @@ namespace Hyena
             StringBuilder sb = new StringBuilder ();
             UnicodeCategory category;
             bool previous_was_latin = false;
+            bool got_space = false;
             
             // Normalizing to KD splits into (base, combining) so we can check for Latin
             // characters and then strip off any NonSpacingMarks following them
-            foreach (char c in val.Normalize (NormalizationForm.FormKD)) {
+            foreach (char orig_c in val.TrimStart ().Normalize (NormalizationForm.FormKD)) {
+                
+                // Check for a special case *before* whitespace. This way, if
+                // a special case is ever added that maps to ' ' or '\t', it
+                // won't cause a run of whitespace in the result.
+                char c = orig_c;
+                if (searchkey_special_cases.ContainsKey (c)) {
+                    c = searchkey_special_cases[c];
+                }
+                
+                if (c == ' ' || c == '\t') {
+                    got_space = true;
+                    continue;
+                }
+                
                 category = Char.GetUnicodeCategory (c);
-
-                if (ignored_special_cases.ContainsKey (c)) {
-                    sb.Append (ignored_special_cases[c]);
-                } else if (category == UnicodeCategory.OtherPunctuation) {
+                if (category == UnicodeCategory.OtherPunctuation) {
                     // Skip punctuation
                 } else if (!(previous_was_latin && category == UnicodeCategory.NonSpacingMark)) {
+                    if (got_space) {
+                        sb.Append (" ");
+                        got_space = false;
+                    }
                     sb.Append (c);
                 }
-
+                
                 // Can ignore A-Z because we've already lowercased the char
                 previous_was_latin = (c >= 'a' && c <= 'z');
             }

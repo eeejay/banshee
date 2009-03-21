@@ -235,6 +235,19 @@ href=http://lkjdflkjdflkjj>baz foo< /a> bar"));
             AssertSearchKey ("?", "");
             AssertSearchKey ("/", "");
         }
+        
+        [Test] // http://bugzilla.gnome.org/show_bug.cgi?id=573484
+        public void TestCollapseSpaces ()
+        {
+            AssertSearchKey ("  a  \t  b  ", "a b");
+            AssertSearchKey ("100 % techno", "100 techno");
+            
+            // Character in the set of special overrides
+            AssertSearchKey ("a \u00f8", "a o");
+            
+            // Invalid combining character
+            AssertSearchKey ("a \u0301", "a");
+        }
     }
 
     [TestFixture]

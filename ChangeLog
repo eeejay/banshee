@@ -1,5 +1,13 @@
 2009-03-20  John Millikin  <jmillikin@gmail.com>
 
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	* src/Libraries/Hyena/Hyena/Tests/StringUtilTests.cs:
+	* src/Libraries/Hyena/Hyena/StringUtil.cs:
+	Collapse runs of spaces into a single space when searching for
+	strings. (BGO #573484)
+
+2009-03-20  John Millikin  <jmillikin@gmail.com>
+
 	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellTrackAndCount.cs:
 	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellDiscAndCount.cs:
 	If the total disc or track count is 0, display only the disc/track
