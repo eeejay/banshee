@@ -69,6 +69,9 @@ namespace Banshee.Query
             CreateQueryOrder ("Rating",     desc, Catalog.GetString ("Highest Rating"), RatingField),
             CreateQueryOrder ("Rating",     asc,  Catalog.GetString ("Lowest Rating"), RatingField),
             null,
+            CreateQueryOrder ("Score",      desc, Catalog.GetString ("Highest Score"), ScoreField),
+            CreateQueryOrder ("Score",      asc,  Catalog.GetString ("Lowest Score"), ScoreField),
+            null,
             CreateQueryOrder ("PlayCount",  desc, Catalog.GetString ("Most Often Played"), PlayCountField),
             CreateQueryOrder ("PlayCount",  asc,  Catalog.GetString ("Least Often Played"), PlayCountField),
             null,
@@ -318,6 +321,14 @@ namespace Banshee.Query
             "CoreTracks.TrackID {2} IN (SELECT TrackID FROM CoreSmartPlaylistEntries WHERE SmartPlaylistID = {1})", typeof(SmartPlaylistQueryValue),
             "smartplaylistid", "smartplaylist"
         );
+
+        public static QueryField ScoreField = new QueryField (
+            "score", "Score",
+            Catalog.GetString ("Score"), "CoreTracks.Score", typeof(IntegerQueryValue),
+            //Translators: These are unique search fields (and nouns). Please, no spaces. Blank ok.
+            Catalog.GetString ("score"),
+            "score"
+        );
         
 #endregion
 
@@ -325,7 +336,7 @@ namespace Banshee.Query
             ArtistField, AlbumField, AlbumArtistField, TitleField, TrackNumberField, TrackCountField, DiscNumberField, DiscCountField,
             YearField, GenreField, ComposerField, ConductorField, GroupingField, CommentField, LicenseUriField, RatingField, PlayCountField,
             SkipCountField, FileSizeField, UriField, DurationField, MimeTypeField, LastPlayedField, LastSkippedField,
-            BpmField, BitRateField, DateAddedField, PlaylistField, SmartPlaylistField
+            BpmField, BitRateField, DateAddedField, PlaylistField, SmartPlaylistField, ScoreField
         );
 
         // Type Initializer
@@ -428,6 +439,7 @@ namespace Banshee.Query
                 case "disccount":
                 case "duration":
                 case "rating":
+                case "score":
                 case "playcount":
                 case "skipcount":
                 case "filesize":

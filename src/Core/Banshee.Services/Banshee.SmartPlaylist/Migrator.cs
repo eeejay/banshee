@@ -92,6 +92,8 @@ namespace Banshee.SmartPlaylist
             order_hash.Add ("Title",                BansheeQuery.FindOrder ("Title", true));
             order_hash.Add ("Rating DESC",          BansheeQuery.FindOrder ("Rating", false));
             order_hash.Add ("Rating ASC",           BansheeQuery.FindOrder ("Rating", true));
+            order_hash.Add ("Score DESC",           BansheeQuery.FindOrder ("Score", false));
+            order_hash.Add ("Score ASC",            BansheeQuery.FindOrder ("Score", true));
             order_hash.Add ("NumberOfPlays DESC",   BansheeQuery.FindOrder ("PlayCount", false));
             order_hash.Add ("NumberOfPlays ASC",    BansheeQuery.FindOrder ("PlayCount", true));
             order_hash.Add ("DateAddedStamp DESC",  BansheeQuery.FindOrder ("DateAddedStamp", false));

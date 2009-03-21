@@ -52,7 +52,7 @@ namespace Banshee.Database
         // NOTE: Whenever there is a change in ANY of the database schema,
         //       this version MUST be incremented and a migration method
         //       MUST be supplied to match the new version number
-        protected const int CURRENT_VERSION = 28;
+        protected const int CURRENT_VERSION = 29;
         protected const int CURRENT_METADATA_VERSION = 5;
         
 #region Migration Driver
@@ -640,7 +640,7 @@ namespace Banshee.Database
 
             return true;
         }
-        
+
 #endregion
 
 #region Version 28
@@ -656,6 +656,22 @@ namespace Banshee.Database
                                 ArtistInfo.UnknownArtistName, AlbumInfo.UnknownAlbumTitle);
             connection.Execute ("UPDATE CoreTracks SET TitleLowered = HYENA_SEARCH_KEY(IFNULL(Title, ?))",
                                 TrackInfo.UnknownTitle);
+            return true;
+        }
+
+#endregion
+
+#region Version 29
+
+        [DatabaseVersion (29)]
+        private bool Migrate_29 ()
+        {
+            Execute ("ALTER TABLE CoreTracks ADD COLUMN Score INTEGER DEFAULT 0");
+            Execute (@"
+                UPDATE CoreTracks
+                SET Score = CAST(ROUND(100.00 * PlayCount / (PlayCount + SkipCount)) AS INTEGER)
+                WHERE PlayCount + SkipCount > 0
+            ");
             return true;
         }
 
@@ -742,6 +758,7 @@ namespace Banshee.Database
 
                     Comment             TEXT,
                     Rating              INTEGER,
+                    Score               INTEGER,
                     PlayCount           INTEGER,
                     SkipCount           INTEGER,
                     LastPlayedStamp     INTEGER,
@@ -925,6 +942,7 @@ namespace Banshee.Database
                         Genre,
                         NULL, NULL, NULL, NULL, NULL, NULL,
                         Rating,
+                        0,
                         NumberOfPlays,
                         0,
                         LastPlayedStamp,

@@ -158,6 +158,7 @@ namespace Banshee.Gui.TrackEditor
                 ? track.LastSkipped.ToString () : Catalog.GetString ("Unknown"));
             AddItem (Catalog.GetString ("Play Count:"), track.PlayCount);
             AddItem (Catalog.GetString ("Skip Count:"), track.SkipCount);
+            AddItem (Catalog.GetString ("Score:"), track.Score);
         }
         
         private void AddFileSizeItem (long bytes)

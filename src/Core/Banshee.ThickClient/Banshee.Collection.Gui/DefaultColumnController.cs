@@ -72,6 +72,7 @@ namespace Banshee.Collection.Gui
                 AlbumColumn,
                 CommentColumn,
                 RatingColumn,
+                ScoreColumn,
                 DurationColumn,
                 GenreColumn,
                 YearColumn,
@@ -132,6 +133,7 @@ namespace Banshee.Collection.Gui
             bitrate_column      = Create (BansheeQuery.BitRateField, 0.10, false, br_cell);
             
             rating_column       = Create (BansheeQuery.RatingField, 0.15, false, new ColumnCellRating (null, true));
+            score_column        = Create (BansheeQuery.ScoreField, 0.15, false, new ColumnCellPositiveInt (null, true, 2, 5));
             composer_column     = CreateText (BansheeQuery.ComposerField, 0.25);
             conductor_column    = CreateText (BansheeQuery.ConductorField, 0.25);
             grouping_column     = CreateText (BansheeQuery.GroupingField, 0.25);
@@ -253,6 +255,11 @@ namespace Banshee.Collection.Gui
             get { return rating_column; }
         }
         
+        private SortableColumn score_column;
+        public SortableColumn ScoreColumn {
+            get { return score_column; }
+        }
+
         private SortableColumn last_played_column;
         public SortableColumn LastPlayedColumn {
             get { return last_played_column; }

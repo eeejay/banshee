@@ -179,9 +179,9 @@ namespace Banshee.Podcasting.Data
             TrackInfo.PlaybackFinished += OnPlaybackFinished;
         }
 
-        private static void OnPlaybackFinished (TrackInfo track, double percentComplete)
+        private static void OnPlaybackFinished (TrackInfo track, double percentCompleted)
         {
-            if (percentComplete > 0.5 && track.PlayCount > 0) {
+            if (percentCompleted > 0.5 && track.PlayCount > 0) {
                 PodcastTrackInfo pi = PodcastTrackInfo.From (track);
                 if (pi != null && !pi.Item.IsRead) {
                     pi.Item.IsRead = true;

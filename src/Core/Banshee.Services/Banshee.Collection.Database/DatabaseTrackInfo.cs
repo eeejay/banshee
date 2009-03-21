@@ -78,19 +78,12 @@ namespace Banshee.Collection.Database
             Provider.Copy (original, this);
         }
 
-        public override void IncrementPlayCount ()
+        public override void OnPlaybackFinished (double percentCompleted)
         {
-            if (ProviderRefresh ()) {
-                base.IncrementPlayCount ();
-                Save (true, BansheeQuery.PlayCountField, BansheeQuery.LastPlayedField);
-            }
-        }
-
-        public override void IncrementSkipCount ()
-        {
-            if (ProviderRefresh ()) {
-                base.IncrementSkipCount ();
-                Save (true, BansheeQuery.SkipCountField, BansheeQuery.LastSkippedField);
+            if (ProviderRefresh()) {
+                base.OnPlaybackFinished (percentCompleted);
+                Save (true, BansheeQuery.ScoreField, BansheeQuery.SkipCountField, BansheeQuery.LastSkippedField, 
+                    BansheeQuery.PlayCountField, BansheeQuery.LastPlayedField);
             }
         }
 
@@ -566,6 +559,12 @@ namespace Banshee.Collection.Database
         public override int Rating {
             get { return rating; }
             set { rating = value; }
+        }
+
+        [DatabaseColumn]
+        public override int Score {
+            get { return base.Score; }
+            set { base.Score = value; }
         }
 
         public int SavedRating {

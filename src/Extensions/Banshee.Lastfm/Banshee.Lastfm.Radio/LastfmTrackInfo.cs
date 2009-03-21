@@ -80,16 +80,16 @@ namespace Banshee.Lastfm.Radio
             CanSaveToDatabase = false;
         }
 
-        public override void IncrementPlayCount ()
+        public override void OnPlaybackFinished (double percentCompleted)
         {
-            base.IncrementPlayCount ();
+            base.OnPlaybackFinished (percentCompleted);
 
             station.PlayCount++;
             station.Save ();
         }
 
-		public void Love () 
-		{
+        public void Love ()
+        {
             loved = true; hated = false;
             ThreadAssist.Spawn (delegate {
                 try {
@@ -98,10 +98,10 @@ namespace Banshee.Lastfm.Radio
                     Hyena.Log.Warning ("Got Exception Trying to Love Song", e.ToString (), false);
                 }
             });
-		}
+        }
 
-		public void Ban () 
-		{
+        public void Ban ()
+        {
             loved = false; hated = true;
             ThreadAssist.Spawn (delegate {
                 try {
@@ -110,6 +110,6 @@ namespace Banshee.Lastfm.Radio
                     Hyena.Log.Warning ("Got Exception Trying to Ban Song", e.ToString (), false);
                 }
             });
-		}
+        }
     }
 }

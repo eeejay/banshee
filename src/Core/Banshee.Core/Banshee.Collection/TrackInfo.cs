@@ -59,7 +59,7 @@ namespace Banshee.Collection
         public delegate bool IsPlayingHandler (TrackInfo track);
         public static IsPlayingHandler IsPlayingMethod;
 
-        public delegate void PlaybackFinishedHandler (TrackInfo track, double percentComplete);
+        public delegate void PlaybackFinishedHandler (TrackInfo track, double percentCompleted);
         public static event PlaybackFinishedHandler PlaybackFinished;
 
         private SafeUri uri;
@@ -92,6 +92,7 @@ namespace Banshee.Collection
         private int disc_count;
         private int year;
         private int rating;
+        private int score;
         private int bpm;
         private int bit_rate;
 
@@ -111,25 +112,26 @@ namespace Banshee.Collection
         {
         }
 
-        public virtual void IncrementPlayCount ()
+        public virtual void OnPlaybackFinished (double percentCompleted)
         {
-            LastPlayed = DateTime.Now;
-            PlayCount++;
-            OnPlaybackFinished (1.0);
-        }
+            double total_plays = PlayCount + SkipCount;
+            if (total_plays <= 0) {
+                Score = (int) Math.Floor ((Score + (percentCompleted * 100)) / 2);
+            } else {
+                Score = (int) Math.Floor ((((double)Score * total_plays) + (percentCompleted * 100)) / (total_plays + 1));
+            }
 
-        public virtual void IncrementSkipCount ()
-        {
-            LastSkipped = DateTime.Now;
-            SkipCount++;
-            OnPlaybackFinished (0.0);
-        }
+            if (percentCompleted <= 0.5) {
+                LastSkipped = DateTime.Now;
+                SkipCount++;
+            } else {
+                LastPlayed = DateTime.Now;
+                PlayCount++;
+            }
 
-        private void OnPlaybackFinished (double percentComplete)
-        {
             PlaybackFinishedHandler handler = PlaybackFinished;
             if (handler != null) {
-                handler (this, percentComplete);
+                handler (this, percentCompleted);
             }
         }
 
@@ -392,6 +394,12 @@ namespace Banshee.Collection
             set { rating = value; }
         }
         
+        [Exportable]
+        public virtual int Score {
+            get { return score; }
+            set {score = value; }
+        }
+
         [Exportable]
         public virtual int Bpm {
             get { return bpm; }

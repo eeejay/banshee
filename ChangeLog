@@ -1,3 +1,22 @@
+2009-03-20  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Clients/Booter/Booter/Entry.cs:
+	* src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	* src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:
+	* src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:
+	* src/Core/Banshee.Services/Banshee.SmartPlaylist/Migrator.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Collection.Gui/DefaultColumnController.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:
+	* src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmTrackInfo.cs:
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastTrackInfo.cs:
+	Patch from Brian Lucas and Alexander Kojevnikov adding a score
+	column/field that is updated automatically based on how far a song was
+	played before it was skipped (or over).  It has a value of 0 to 100, where
+	100 would mean that every time you played the song you listened to the
+	whole thing (BGO #555116)
+
 2009-03-20  John Millikin  <jmillikin@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
