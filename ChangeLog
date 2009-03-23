@@ -1,5 +1,20 @@
 2009-03-23  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/AlbumArtistEntry.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/PageNavigationEntry.cs:
+	Make the track artist sync button not sensitive when IsCompilation, and
+	don't change the title forward button's sensitivity.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/SortingPage.cs:
+	Make the title sort field NoSync.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/ExtraTrackDetailsPage.cs:
+	* src/Core/Banshee.ThickClient/Makefile.am:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/LicenseEntry.cs:
+	Add a combo entry for editing the LicenseURI field.
+
+2009-03-23  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/PageNavigationEntry.cs:
 	Set a tooltip on the next/arrow button, and make sure the title entry is
 	focused after we switch tracks.

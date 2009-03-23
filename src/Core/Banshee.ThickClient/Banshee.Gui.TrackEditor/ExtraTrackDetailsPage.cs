@@ -83,12 +83,24 @@ namespace Banshee.Gui.TrackEditor
                 delegate (EditorTrackInfo track, Widget widget) { track.Bpm = ((SpinButtonEntry)widget).ValueAsInt; },
                 FieldOptions.Shrink | FieldOptions.NoSync
             );
+
+            HBox copyright_box = new HBox ();
+            copyright_box.Spacing = 12;
+            copyright_box.Show ();
+            PackStart (copyright_box, true, true, 0);
             
-            AddField (this, new TextEntry (), 
+            AddField (copyright_box, new TextEntry (),
                 Catalog.GetString ("Set all copyrights to this value"),
                 delegate { return Catalog.GetString ("Copyrig_ht:"); },
                 delegate (EditorTrackInfo track, Widget widget) { ((TextEntry)widget).Text = track.Copyright; },
                 delegate (EditorTrackInfo track, Widget widget) { track.Copyright = ((TextEntry)widget).Text; }
+            );
+
+            AddField (copyright_box, new LicenseEntry (),
+                Catalog.GetString ("Set all licenses to this value"),
+                delegate { return Catalog.GetString ("_License URI:"); },
+                delegate (EditorTrackInfo track, Widget widget) { ((LicenseEntry)widget).Value = track.LicenseUri; },
+                delegate (EditorTrackInfo track, Widget widget) { track.LicenseUri = ((LicenseEntry)widget).Value; }
             );
 
             TextViewEntry comment_entry = new TextViewEntry ();

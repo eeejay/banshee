@@ -68,8 +68,6 @@ namespace Banshee.Gui.TrackEditor
             if (dialog.TrackCount > 1) {
                 dialog.Navigated += delegate { 
                     forward_button.Sensitive = dialog.CanGoForward; 
-                    entry.HasFocus = true;
-                    entry.SelectRegion (0, entry.Text.Length);
                 };
                 forward_button = EditorUtilities.CreateSmallStockButton (Stock.GoForward);
                 object tooltip_host = Hyena.Gui.TooltipSetter.CreateHost ();

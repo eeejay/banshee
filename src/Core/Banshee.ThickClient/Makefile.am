@@ -67,6 +67,7 @@ SOURCES =  \
 	Banshee.Gui.TrackEditor/IEditorField.cs \
 	Banshee.Gui.TrackEditor/ITrackEditorModifier.cs \
 	Banshee.Gui.TrackEditor/ITrackEditorPage.cs \
+	Banshee.Gui.TrackEditor/LicenseEntry.cs \
 	Banshee.Gui.TrackEditor/LyricsPage.cs \
 	Banshee.Gui.TrackEditor/PageNavigationEntry.cs \
 	Banshee.Gui.TrackEditor/PageType.cs \

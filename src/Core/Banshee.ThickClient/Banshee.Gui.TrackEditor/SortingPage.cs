@@ -48,7 +48,8 @@ namespace Banshee.Gui.TrackEditor
                 Catalog.GetString ("Set all sort track titles to this value"),
                 delegate { return Catalog.GetString ("Sort Track Title:"); },
                 delegate (EditorTrackInfo track, Widget widget) { ((TextEntry)widget).Text = track.TrackTitleSort; },
-                delegate (EditorTrackInfo track, Widget widget) {  track.TrackTitleSort = ((TextEntry)widget).Text; }
+                delegate (EditorTrackInfo track, Widget widget) {  track.TrackTitleSort = ((TextEntry)widget).Text; },
+                FieldOptions.NoSync
             );
             
             AddField (this, new TextEntry (),
