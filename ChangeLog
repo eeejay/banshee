@@ -1,3 +1,9 @@
+2009-03-23  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/PageNavigationEntry.cs:
+	Set a tooltip on the next/arrow button, and make sure the title entry is
+	focused after we switch tracks.
+
 2009-03-20  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Clients/Booter/Booter/Entry.cs:

@@ -27,6 +27,7 @@
 //
 
 using System;
+using Mono.Unix;
 using Gtk;
 
 namespace Banshee.Gui.TrackEditor
@@ -36,6 +37,7 @@ namespace Banshee.Gui.TrackEditor
         public event EventHandler Changed;
         
         private TextEntry entry;
+        private TrackEditorDialog dialog;
         private Button forward_button;
         public Button ForwardButton {
             get { return forward_button; }
@@ -47,17 +49,15 @@ namespace Banshee.Gui.TrackEditor
         
         public PageNavigationEntry (TrackEditorDialog dialog, string completionTable, string completionColumn)
         {
+            this.dialog = dialog;
             entry = new TextEntry (completionTable, completionColumn);
             entry.Changed += OnChanged;
-            entry.Activated += delegate { 
-                if (dialog.CanGoForward) {
-                    dialog.NavigateForward ();
-                }
-            };
+            entry.Activated += EditNextTitle;
             entry.KeyPressEvent += delegate (object o, KeyPressEventArgs args) {
                 if ((args.Event.Key == Gdk.Key.Return || args.Event.Key == Gdk.Key.KP_Enter) && 
                     (args.Event.State & Gdk.ModifierType.ControlMask) != 0 && dialog.CanGoBackward) {
                     dialog.NavigateBackward ();
+                    entry.GrabFocus ();
                 }
             };
             entry.Show ();
@@ -72,10 +72,20 @@ namespace Banshee.Gui.TrackEditor
                     entry.SelectRegion (0, entry.Text.Length);
                 };
                 forward_button = EditorUtilities.CreateSmallStockButton (Stock.GoForward);
+                object tooltip_host = Hyena.Gui.TooltipSetter.CreateHost ();
+                Hyena.Gui.TooltipSetter.Set (tooltip_host, forward_button, Catalog.GetString ("Advance to the next track and edit its title"));
                 forward_button.Sensitive = dialog.CanGoForward;
                 forward_button.Show ();
-                forward_button.Clicked += delegate { dialog.NavigateForward (); };
+                forward_button.Clicked += EditNextTitle;
                 PackStart (forward_button, false, false, 0);
+            }
+        }
+
+        private void EditNextTitle (object o, EventArgs args)
+        {
+            if (dialog.CanGoForward) {
+                dialog.NavigateForward ();
+                entry.GrabFocus ();
             }
         }
         
