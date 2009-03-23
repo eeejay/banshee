@@ -553,55 +553,58 @@ namespace Banshee.Dap.MassStorage
             string file_path = null;
             
             if (track.HasAttribute (TrackMediaAttributes.Podcast)) {
-                string album = FileNamePattern.Escape (track.AlbumTitle);
-                string title = FileNamePattern.Escape (track.TrackTitle);
+                string album = FileNamePattern.Escape (track.DisplayAlbumTitle);
+                string title = FileNamePattern.Escape (track.DisplayTrackTitle);
                 file_path = System.IO.Path.Combine ("Podcasts", album);
                 file_path = System.IO.Path.Combine (file_path, title);
             } else if (ms_device == null || !ms_device.GetTrackPath (track, out file_path)) {
-                file_path = FileNamePattern.CreateFromTrackInfo (track);
+                // If the folder_depth property exists, we have to put the files in a hiearchy of
+                // the exact given depth (not including the mount point/audio_folder).
+                if (FolderDepth != -1) {
+                    int depth = FolderDepth;
+                    string album_artist = FileNamePattern.Escape (track.DisplayAlbumArtistName);
+                    string track_album  = FileNamePattern.Escape (track.DisplayAlbumTitle);
+                    string track_number = FileNamePattern.Escape (Convert.ToString (track.TrackNumber));
+                    string track_title  = FileNamePattern.Escape (track.DisplayTrackTitle);
+    
+                    if (depth == 0) {
+                        // Artist - Album - 01 - Title
+                        string track_artist = FileNamePattern.Escape (track.DisplayArtistName);
+                        file_path = String.Format ("{0} - {1} - {2} - {3}", track_artist, track_album, track_number, track_title);
+                    } else if (depth == 1) {
+                        // Artist - Album/01 - Title
+                        file_path = String.Format ("{0} - {1}", album_artist, track_album);
+                        file_path = System.IO.Path.Combine (file_path, String.Format ("{0} - {1}", track_number, track_title));
+                    } else if (depth == 2) {
+                        // Artist/Album/01 - Title
+                        file_path = album_artist;
+                        file_path = System.IO.Path.Combine (file_path, track_album);
+                        file_path = System.IO.Path.Combine (file_path, String.Format ("{0} - {1}", track_number, track_title));
+                    } else {
+                        // If the *required* depth is more than 2..go nuts!
+                        for (int i = 0; i < depth - 2; i++) {
+                            if (i == 0) {
+                                file_path = album_artist.Substring (0, Math.Min (i+1, album_artist.Length)).Trim ();
+                            } else {
+                                file_path = System.IO.Path.Combine (file_path, album_artist.Substring (0, Math.Min (i+1, album_artist.Length)).Trim ());
+                            }                                        
+                            
+                        }
+    
+                        // Finally add on the Artist/Album/01 - Track
+                        file_path = System.IO.Path.Combine (file_path, album_artist);
+                        file_path = System.IO.Path.Combine (file_path, track_album);
+                        file_path = System.IO.Path.Combine (file_path, String.Format ("{0} - {1}", track_number, track_title));
+                    }
+                } else {
+                    file_path = FileNamePattern.CreateFromTrackInfo (track);
+                }
             }
-
+            
             file_path = System.IO.Path.Combine (WritePath, file_path);
             file_path += ext;
-
-            return file_path;
             
-            /*string artist = FileNamePattern.Escape (track.ArtistName);
-            string album = FileNamePattern.Escape (track.AlbumTitle);
-            string number_title = FileNamePattern.Escape (track.TrackNumberTitle);
-
-            // If the folder_depth property exists, we have to put the files in a hiearchy of
-            // the exact given depth (not including the mount point/audio_folder).
-            if (FolderDepth != -1) {
-                int depth = FolderDepth;
-
-                if (depth == 0) {
-                    // Artist - Album - 01 - Title
-                    file_path = System.IO.Path.Combine (file_path, String.Format ("{0} - {1} - {2}", artist, album, number_title));
-                } else if (depth == 1) {
-                    // Artist - Album/01 - Title
-                    file_path = System.IO.Path.Combine (file_path, String.Format ("{0} - {1}", artist, album));
-                    file_path = System.IO.Path.Combine (file_path, number_title);
-                } else if (depth == 2) {
-                    // Artist/Album/01 - Title
-                    file_path = System.IO.Path.Combine (file_path, artist);
-                    file_path = System.IO.Path.Combine (file_path, album);
-                    file_path = System.IO.Path.Combine (file_path, number_title);
-                } else {
-                    // If the *required* depth is more than 2..go nuts!
-                    for (int i = 0; i < depth - 2; i++) {
-                        file_path = System.IO.Path.Combine (file_path, artist.Substring (0, Math.Min (i, artist.Length)).Trim ());
-                    }
-
-                    // Finally add on the Artist/Album/01 - Track
-                    file_path = System.IO.Path.Combine (file_path, artist);
-                    file_path = System.IO.Path.Combine (file_path, album);
-                    file_path = System.IO.Path.Combine (file_path, number_title);
-                }
-            } else {
-                file_path = System.IO.Path.Combine (file_path, FileNamePattern.CreateFromTrackInfo (track));
-            }
-            */
+            return file_path;
         }
     }
 }

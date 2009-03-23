@@ -1,5 +1,11 @@
 2009-03-23  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:
+	Patch from Brian Lucas reenabling and updating the old folder_depth
+	handling code (BGO #537367)
+
+2009-03-23  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/AlbumArtistEntry.cs:
 	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/PageNavigationEntry.cs:
 	Make the track artist sync button not sensitive when IsCompilation, and
