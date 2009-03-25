@@ -39,7 +39,7 @@ namespace Banshee.Database
     // Used for disabling table-checks during testing
     internal static class BansheeDatabaseSettings
     {
-        internal static bool CheckTables = true;
+        internal static bool CheckTables = false;
     }
 
     public class BansheeModelProvider<T> : SqliteModelProvider<T> where T : new ()

@@ -29,6 +29,7 @@
 using System;
 using System.Data;
 using System.Reflection;
+using System.Text;
 using System.Threading;
 using Mono.Unix;
 
@@ -628,14 +629,33 @@ namespace Banshee.Database
         private bool Migrate_27 ()
         {
             // One time fixup to MetadataHash now that our unknown metadata is handled properly
-            var tracks_needing_new_hash = DatabaseTrackInfo.Provider.FetchAllMatching (
-                "(CoreTracks.Title IS NULL OR CoreArtists.Name IS NULL OR CoreAlbums.Title IS NULL)"
-            );
+            string sql_select = @"
+                SELECT t.TrackID, al.Title, ar.Name, t.Duration,
+                t.Genre, t.Title, t.TrackNumber, t.Year
+                FROM CoreTracks AS t
+                JOIN CoreAlbums AS al ON al.AlbumID=t.AlbumID
+                JOIN CoreArtists AS ar ON ar.ArtistID=t.ArtistID
+                WHERE t.Title IS NULL OR ar.Name IS NULL OR al.Title IS NULL
+            ";
 
-            var cmd = new HyenaSqliteCommand ("UPDATE CoreTracks SET MetadataHash = ? WHERE TrackID = ?");
+            HyenaSqliteCommand sql_update = new HyenaSqliteCommand (@"
+                UPDATE CoreTracks SET MetadataHash = ? WHERE TrackID = ?
+            ");
 
-            foreach (DatabaseTrackInfo track in tracks_needing_new_hash) {
-                connection.Execute (cmd, track.MetadataHash, track.TrackId);
+            StringBuilder sb = new StringBuilder ();
+            using (var reader = new HyenaDataReader (connection.Query (sql_select))) {
+                while (reader.Read ()) {
+                    sb.Length = 0;
+                    sb.Append (reader.Get<string> (1));
+                    sb.Append (reader.Get<string> (2));
+                    sb.Append ((int)reader.Get<TimeSpan> (3).TotalSeconds);
+                    sb.Append (reader.Get<string> (4));
+                    sb.Append (reader.Get<string> (5));
+                    sb.Append (reader.Get<int> (6));
+                    sb.Append (reader.Get<int> (7));
+                    string hash = Hyena.CryptoUtil.Md5Encode (sb.ToString (), System.Text.Encoding.UTF8);
+                    connection.Execute (sql_update, hash, reader.Get<int> (0));
+                }
             }
 
             return true;

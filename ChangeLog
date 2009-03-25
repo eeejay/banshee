@@ -1,3 +1,11 @@
+2009-03-24  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	* src/Core/Banshee.Services/Banshee.Database/BansheeModelProvider.cs:
+	Patch from Alexander Kojevnikov and myself fixing an issue with migration
+	caused by using a SqliteModelProvider within the migrations which assume
+	the schema has already been updated.
+
 2009-03-23  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:
