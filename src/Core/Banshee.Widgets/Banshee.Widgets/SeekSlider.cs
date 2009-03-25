@@ -81,7 +81,7 @@ namespace Banshee.Widgets
             
             if (can_seek) {
                 if (evnt.Button == 1) {
-                    SeekValue = (long) (evnt.X / WidthRequest * Duration); // seek to clicked position
+                    SeekValue = (long) (evnt.X / Allocation.Width * Duration); // seek to clicked position
                 }
                 OnSeekRequested();
             }
