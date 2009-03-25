@@ -50,7 +50,7 @@ namespace Banshee.Torrent
         private Bus bus;
         private IEngine engine;
         private ITorrentService service;
-        private IEngineSettings settings;
+        /*private IEngineSettings settings;
         
         public int MaxDownloadSpeed {
             get { return settings.GetGlobalMaxDownloadSpeed (); }
@@ -60,7 +60,7 @@ namespace Banshee.Torrent
         public int MaxUploadSpeed {
             get { return settings.GetGlobalMaxUploadSpeed (); }
             set { settings.SetGlobalMaxUploadSpeed (value); }
-        }
+        }*/
 
         public string ServiceName {
             get { return "TorrentService"; }
@@ -88,7 +88,9 @@ namespace Banshee.Torrent
         public void Dispose ()
         {
             if (service != null) {
-                service.DestroyEngine (EngineName);
+                try {
+                    service.DestroyEngine (EngineName);
+                } catch {}
                 service = null;
             }
         }
@@ -100,7 +102,7 @@ namespace Banshee.Torrent
         public void DelayedInitialize ()
         {
             bus = Bus.Session;
-                        
+
             try {
                 // Get the service and call a method on it to ensure that it is
                 // running and able to answer queries.

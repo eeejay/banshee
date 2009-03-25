@@ -6,7 +6,7 @@ AC_DEFUN([BANSHEE_CHECK_TORRENT],
         PKG_CHECK_MODULES(MONOTORRENT_DBUS, monotorrent-dbus >= 0.2);
 		asms="`$PKG_CONFIG --variable=Libraries monotorrent` `$PKG_CONFIG --variable=Libraries monotorrent-dbus`"
 		for asm in $asms; do
-			MONOTORRENT_ASSEMBLIES="$MONOTORRENT_ASSEMBLIES $asm $asm.mdb"
+			MONOTORRENT_ASSEMBLIES="$MONOTORRENT_ASSEMBLIES $asm"
 		done
         AC_SUBST(MONOTORRENT_DBUS_LIBS)
 		AC_SUBST(MONOTORRENT_ASSEMBLIES)

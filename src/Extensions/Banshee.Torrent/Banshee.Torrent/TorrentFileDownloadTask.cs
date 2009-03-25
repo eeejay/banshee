@@ -33,96 +33,93 @@ using MonoTorrent.DBus;
 
 namespace Banshee.Torrent
 {
-	public class TorrentFileDownloadTask : Migo.DownloadCore.HttpFileDownloadTask
-	{
-		private MonoTorrent.DBus.IDownloader downloader;
-		private MonoTorrent.DBus.ITorrent torrent;
-		
-		public TorrentFileDownloadTask(string remoteUri, string localPath, object userState)
-			: base (remoteUri, localPath.Substring(0, localPath.Length - 8), userState)
-		{
-			Console.WriteLine ("Torrent file download task!");
-		}
-		
-		public override long BytesReceived {
-			get 
-			{
-				if (downloader == null)
+    public class TorrentFileDownloadTask : Migo.DownloadCore.HttpFileDownloadTask
+    {
+        private MonoTorrent.DBus.IDownloader downloader;
+        private MonoTorrent.DBus.ITorrent torrent;
+        
+        public TorrentFileDownloadTask (string remoteUri, string localPath, object userState)
+            : base (remoteUri, localPath.Substring (0, localPath.Length - 8), userState)
+        {
+        }
+        
+        public override long BytesReceived {
+            get {
+                if (downloader == null)
                     return 0;
                 
-				return (long)(downloader.GetProgress () / 100.0 * torrent.GetSize ()); 
-			}
-		}
-		
-		public override void CancelAsync ()
-		{
-			if (downloader == null)
+                return (long)(downloader.GetProgress () / 100.0 * torrent.GetSize ()); 
+            }
+        }
+        
+        public override void CancelAsync ()
+        {
+            if (downloader == null)
                 return;
             
-			downloader.Stop ();
-			SetStatus (TaskStatus.Cancelled);
+            downloader.Stop ();
+            SetStatus (TaskStatus.Cancelled);
             OnTaskCompleted (null, true);
-		}
+        }
 
-		public override void ExecuteAsync ()
-		{
-			Console.WriteLine ("Running!");
-			SetStatus (TaskStatus.Running);
-			TorrentService s = (TorrentService) Banshee.ServiceStack.ServiceManager.Get<TorrentService>("TorrentService");
-			downloader = s.Download (this.RemoteUri.ToString(), Path.GetDirectoryName(this.LocalPath));
-			torrent = TorrentService.Bus.GetObject <ITorrent> (TorrentService.BusName, this.downloader.GetTorrent ());
-			
-			this.downloader.StateChanged += delegate {
-				if (downloader.GetState () == TorrentState.Seeding)
-				{
-					Console.WriteLine("Progress");
-					SetProgress(100);
-					SetStatus (TaskStatus.Succeeded);
-					OnTaskCompleted (null, false);
-				}
-			};
-			
-			// There are no events on the torrent IDownloader to indicate when the stats have updated
-			// I need to manually ping the SetProgress event otherwise migo never notices progress changing
-			System.Threading.ThreadPool.QueueUserWorkItem ((System.Threading.WaitCallback)delegate {
-				while (base.Progress != 100 && 
-				       (Status == TaskStatus.Running || Status == TaskStatus.Paused || Status == TaskStatus.Running))
-				{
-					
-					Console.WriteLine("Progress");
-					Hyena.Log.Debug ("Torrent Tick");
-					System.Threading.Thread.Sleep (2000);
-					SetProgress((int)downloader.GetProgress ());
-				}
-			});
-		}
+        public override void ExecuteAsync ()
+        {
+            SetStatus (TaskStatus.Running);
+            TorrentService s = Banshee.ServiceStack.ServiceManager.Get<TorrentService> ();
+            downloader = s.Download (RemoteUri.ToString (), Path.GetDirectoryName (LocalPath));
+            torrent = TorrentService.Bus.GetObject <ITorrent> (TorrentService.BusName, downloader.GetTorrent ());
+            
+            downloader.StateChanged += OnDownloaderStateChanged;
+            
+            // There are no events on the torrent IDownloader to indicate when the stats have updated
+            // Manually ping the SetProgress event, otherwise migo never notices progress changing
+            System.Threading.ThreadPool.QueueUserWorkItem (UpdateProgress);
+        }
 
-		public override void Pause ()
-		{
-			if (downloader == null)
+        public override void Pause ()
+        {
+            if (downloader == null)
                 return;
             
-			SetStatus (TaskStatus.Paused);
-			downloader.Pause ();
-		}
-		
-		public override void Resume ()
-		{
-			if (downloader == null)
+            SetStatus (TaskStatus.Paused);
+            downloader.Pause ();
+        }
+        
+        public override void Resume ()
+        {
+            if (downloader == null)
                 return;
             
-			SetStatus (TaskStatus.Running);
-			downloader.Stop ();
-		}
+            SetStatus (TaskStatus.Running);
+            downloader.Stop ();
+        }
 
-		public override void Stop ()
-		{
-			if (downloader == null)
+        public override void Stop ()
+        {
+            if (downloader == null)
                 return;
             
-			SetStatus (TaskStatus.Stopped);
-			OnTaskCompleted (null, false);
-			downloader.Stop ();
-		}
-	}
+            SetStatus (TaskStatus.Stopped);
+            OnTaskCompleted (null, false);
+            downloader.Stop ();
+        }
+
+        private void OnDownloaderStateChanged (NDesk.DBus.ObjectPath path, TorrentState from, TorrentState to)
+        {
+            if (downloader.GetState () == TorrentState.Seeding) {
+                SetProgress (100);
+                SetStatus (TaskStatus.Succeeded);
+                OnTaskCompleted (null, false);
+            }
+        }
+
+        private void UpdateProgress (object o)
+        {
+            while (Progress != 100 && 
+                   (Status == TaskStatus.Running || Status == TaskStatus.Paused || Status == TaskStatus.Running)) {
+                System.Threading.Thread.Sleep (2000);
+                SetProgress ((int)downloader.GetProgress ());
+            }
+        }
+    }
 }

@@ -1,5 +1,12 @@
 2009-03-24  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* build/m4/banshee/torrent.m4:
+	* src/Extensions/Banshee.Torrent/Banshee.Torrent/TorrentFileDownloadTask.cs:
+	* src/Extensions/Banshee.Torrent/Banshee.Torrent/TorrentService.cs: Some
+	cleanup and build fixes.
+
+2009-03-24  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
 	* src/Core/Banshee.Services/Banshee.Database/BansheeModelProvider.cs:
 	Patch from Alexander Kojevnikov and myself fixing an issue with migration
