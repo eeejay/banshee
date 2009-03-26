@@ -37,12 +37,17 @@ using Hyena.Data.Sqlite;
 
 using Banshee.Base;
 using Banshee.ServiceStack;
+using Banshee.Configuration;
 
 namespace Banshee.Database
 {
     public sealed class BansheeDbConnection : HyenaSqliteConnection, IInitializeService, IRequiredService
     {
         private BansheeDbFormatMigrator migrator;
+        private DatabaseConfigurationClient configuration;
+        public DatabaseConfigurationClient Configuration {
+            get { return configuration; }
+        }
 
         public BansheeDbConnection () : base (DatabaseFile)
         {
@@ -59,6 +64,7 @@ namespace Banshee.Database
             Log.DebugFormat ("Opened SQLite connection to {0}", DatabaseFile);
 
             migrator = new BansheeDbFormatMigrator (this);
+            configuration = new DatabaseConfigurationClient (this);
             
             if (Banshee.Base.ApplicationContext.CommandLine.Contains ("debug-sql")) {
                 Hyena.Data.Sqlite.HyenaSqliteCommand.LogAll = true;
@@ -72,11 +78,48 @@ namespace Banshee.Database
                 migrator.Migrate ();
                 migrator = null;
 
+                try {
+                    OptimizeDatabase ();
+                } catch (Exception e) {
+                    Log.Exception ("Error determining if ANALYZE is necessary", e);
+                }
+                
                 // Update cached sorting keys
                 SortKeyUpdater.Update ();
             }
         }
 
+        private void OptimizeDatabase ()
+        {
+            bool needs_analyze = false;
+            long analyze_threshold = configuration.Get<long> ("Database", "AnalyzeThreshold", 100);
+            string [] tables_with_indexes = {"CoreTracks", "CoreArtists", "CoreAlbums",
+                "CorePlaylistEntries", "CoreSmartPlaylistEntries", "PodcastItems", "PodcastEnclosures",
+                "PodcastSyndications", "CoverArtDownloads"};
+            
+            if (TableExists ("sqlite_stat1")) {
+                foreach (string table_name in tables_with_indexes) {
+                    long count = Query<long> (String.Format ("SELECT COUNT(*) FROM {0}", table_name));
+                    string stat = Query<string> ("SELECT stat FROM sqlite_stat1 WHERE tbl = ? LIMIT 1", table_name);
+                    // stat contains space-separated integers,
+                    // the first is the number of records in the table
+                    long items_indexed = long.Parse (stat.Split (' ')[0]);
+                    
+                    if (Math.Abs (count - items_indexed) > analyze_threshold) {
+                        needs_analyze = true;
+                        break;
+                    }
+                }
+            } else {
+                needs_analyze = true;
+            }
+            
+            if (needs_analyze) {
+                Log.DebugFormat ("Running ANALYZE against database to improve performance");
+                Execute ("ANALYZE");
+            }
+        }
+ 
         public BansheeDbFormatMigrator Migrator {
             get { lock (this) { return migrator; } }
         }

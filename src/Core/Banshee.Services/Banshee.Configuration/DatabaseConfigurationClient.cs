@@ -37,11 +37,8 @@ namespace Banshee.Configuration
 {
     public class DatabaseConfigurationClient : IConfigurationClient
     {
-        private static DatabaseConfigurationClient instance = new DatabaseConfigurationClient (
-            ServiceManager.DbConnection);
-        
         public static DatabaseConfigurationClient Client {
-            get { return instance; }
+            get { return ServiceManager.DbConnection.Configuration; }
         }
         
         private readonly BansheeDbConnection connection;

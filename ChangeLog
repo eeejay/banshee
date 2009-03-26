@@ -1,3 +1,11 @@
+2009-03-26  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbConnection.cs:
+	* src/Core/Banshee.Services/Banshee.Configuration/DatabaseConfigurationClient.cs:
+	Automatically analyze the database when the number of records in a 
+	table has changed significantly since last analysis. This should ensure
+	optimal use of the indices (BGO #555937).
+
 2009-03-26  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
