@@ -1,3 +1,11 @@
+2009-03-26  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.Core/Resources/translators.xml: Updated
+
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/FilteredListSourceContents.cs:
+	Disable smooth-scroll by default (pass --smooth-scroll at runtime to
+	enable) since still not ready.
+
 2009-03-25  John Millikin  <jmillikin@gmail.com>
 
 	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/LargeTrackInfoDisplay.cs:
