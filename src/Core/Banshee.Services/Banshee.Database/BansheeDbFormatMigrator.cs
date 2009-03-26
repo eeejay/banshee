@@ -53,7 +53,7 @@ namespace Banshee.Database
         // NOTE: Whenever there is a change in ANY of the database schema,
         //       this version MUST be incremented and a migration method
         //       MUST be supplied to match the new version number
-        protected const int CURRENT_VERSION = 29;
+        protected const int CURRENT_VERSION = 30;
         protected const int CURRENT_METADATA_VERSION = 5;
         
 #region Migration Driver
@@ -697,6 +697,24 @@ namespace Banshee.Database
 
 #endregion
 
+#region Version 30
+
+        [DatabaseVersion (30)]
+        private bool Migrate_30 ()
+        {
+            Execute ("DROP INDEX IF EXISTS CoreAlbumsIndex");
+            Execute ("DROP INDEX IF EXISTS CoreAlbumsArtistIndex");
+            Execute ("DROP INDEX IF EXISTS CoreArtistsIndex");
+            Execute ("CREATE INDEX CoreAlbumsIndex ON CoreAlbums(ArtistID, TitleSortKey)");
+            Execute ("CREATE INDEX CoreAlbumsArtistIndex ON CoreAlbums(TitleSortKey, ArtistNameSortKey)");
+            Execute ("CREATE INDEX CoreArtistsIndex ON CoreArtists(NameSortKey)");
+            Execute ("ANALYZE");
+            return true;
+        }
+
+#endregion
+
+
 #pragma warning restore 0169
         
 #region Fresh database setup
@@ -791,6 +809,7 @@ namespace Banshee.Database
                     FileModifiedStamp   INTEGER
                 )
             ", (int)TrackMediaAttributes.Default, (int)StreamPlaybackError.None));
+
             Execute("CREATE INDEX CoreTracksPrimarySourceIndex ON CoreTracks(ArtistID, AlbumID, PrimarySourceID, Disc, TrackNumber, Uri)");
             Execute("CREATE INDEX CoreTracksAggregatesIndex ON CoreTracks(FileSize, Duration)");
             Execute("CREATE INDEX CoreTracksExternalIDIndex ON CoreTracks(PrimarySourceID, ExternalID)");
@@ -823,8 +842,8 @@ namespace Banshee.Database
                     Rating              INTEGER
                 )
             ");
-            Execute("CREATE INDEX CoreAlbumsIndex       ON CoreAlbums(ArtistID, TitleLowered)");
-            Execute("CREATE INDEX CoreAlbumsArtistIndex       ON CoreAlbums(TitleLowered, ArtistNameLowered)");
+            Execute ("CREATE INDEX CoreAlbumsIndex ON CoreAlbums(ArtistID, TitleSortKey)");
+            Execute ("CREATE INDEX CoreAlbumsArtistIndex ON CoreAlbums(TitleSortKey, ArtistNameSortKey)");
 
             Execute(@"
                 CREATE TABLE CoreArtists (
@@ -838,7 +857,7 @@ namespace Banshee.Database
                     Rating              INTEGER
                 )
             ");
-            Execute("CREATE INDEX CoreArtistsIndex ON CoreArtists(NameLowered)");
+            Execute ("CREATE INDEX CoreArtistsIndex ON CoreArtists(NameSortKey)");
             
             Execute(@"
                 CREATE TABLE CorePlaylists (
