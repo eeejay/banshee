@@ -1,3 +1,11 @@
+2009-03-25  John Millikin  <jmillikin@gmail.com>
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/LargeTrackInfoDisplay.cs:
+	* src/Libraries/Hyena/Hyena/Tests/StringUtilTests.cs:
+	* src/Libraries/Hyena/Hyena/StringUtil.cs:
+	When splitting the "Now playing" info text into lines, only split
+	if there are at least two info sections (BGO #560886).
+
 2009-03-25  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
 	* src/Core/Banshee.Widgets/Banshee.Widgets/SeekSlider.cs: Patch from

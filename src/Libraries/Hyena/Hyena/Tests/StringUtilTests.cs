@@ -321,6 +321,37 @@ href=http://lkjdflkjdflkjj>baz foo< /a> bar"));
             AssertSortKey ("\u0104", new byte[] {14, 2, 1, 27, 1, 1, 1, 0,});
         }
     }
+    
+    [TestFixture]
+    public class SubstringCountTests
+    {
+        private void AssertCount (string haystack, string needle, uint expected)
+        {
+            Assert.AreEqual (expected, StringUtil.SubstringCount (haystack, needle));
+        }
+        
+        [Test]
+        public void TestEmpty ()
+        {
+            AssertCount ("", "a", 0);
+            AssertCount ("a", "", 0);
+        }
+        
+        [Test]
+        public void TestNoMatches ()
+        {
+            AssertCount ("a", "b", 0);
+            AssertCount ("with needle in", "long needle", 0);
+        }
+        
+        [Test]
+        public void TestMatches ()
+        {
+            AssertCount ("abbcbba", "a", 2);
+            AssertCount ("abbcbba", "b", 4);
+            AssertCount ("with needle in", "needle", 1);
+        }
+    }
 }
 
 #endif

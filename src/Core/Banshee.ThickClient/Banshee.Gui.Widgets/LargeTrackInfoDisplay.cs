@@ -32,6 +32,7 @@ using System.Collections.Generic;
 using Gtk;
 using Cairo;
 
+using Hyena;
 using Hyena.Gui;
 using Banshee.Collection;
 using Banshee.Collection.Gui;
@@ -192,7 +193,11 @@ namespace Banshee.Gui.Widgets
             string line = GetSecondLineText (track);
             string second_line = line, third_line = line;
             int split_pos = line.LastIndexOf ("<span");
-            if (split_pos >= 0) {
+            if (split_pos >= 0
+                // Check that there are at least 3 spans in the string, else this
+                // will break for tracks with missing artist or album info.
+                && StringUtil.SubstringCount (line, "<span") >= 3) {
+                
                 second_line = line.Substring (0, Math.Max (0, split_pos - 1)) + "</span>";
                 third_line = String.Format ("<span color=\"{0}\">{1}",
                     CairoExtensions.ColorGetHex (TextColor, false),

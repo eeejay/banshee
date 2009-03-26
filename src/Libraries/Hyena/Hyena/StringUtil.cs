@@ -268,5 +268,23 @@ namespace Hyena
             string trimmed = input == null ? null : input.Trim ();
             return String.IsNullOrEmpty (trimmed) ? fallback : trimmed;
         }
+        
+        public static uint SubstringCount (string haystack, string needle)
+        {
+            if (String.IsNullOrEmpty (haystack) || String.IsNullOrEmpty (needle)) {
+                return 0;
+            }
+            
+            int position = 0;
+            uint count = 0;
+            while (true) {
+                int index = haystack.IndexOf (needle, position);
+                if (index < 0) {
+                    return count;
+                }
+                count++;
+                position = index + 1;
+            }
+        }
     }
 }
