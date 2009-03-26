@@ -103,7 +103,7 @@ namespace Banshee.Database
                     string stat = Query<string> ("SELECT stat FROM sqlite_stat1 WHERE tbl = ? LIMIT 1", table_name);
                     // stat contains space-separated integers,
                     // the first is the number of records in the table
-                    long items_indexed = long.Parse (stat.Split (' ')[0]);
+                    long items_indexed = stat != null ? long.Parse (stat.Split (' ')[0]) : 0;
                     
                     if (Math.Abs (count - items_indexed) > analyze_threshold) {
                         needs_analyze = true;

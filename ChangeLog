@@ -1,6 +1,12 @@
 2009-03-26  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Database/BansheeDbConnection.cs:
+	Fix my previous patch to properly handle the case when a table is not
+	in sqlite_stat1.
+
+2009-03-26  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbConnection.cs:
 	* src/Core/Banshee.Services/Banshee.Configuration/DatabaseConfigurationClient.cs:
 	Automatically analyze the database when the number of records in a 
 	table has changed significantly since last analysis. This should ensure
