@@ -252,6 +252,8 @@
     <Compile Include="Banshee.Preferences\SourcePage.cs" />
     <Compile Include="Banshee.ServiceStack\DbIteratorJob.cs" />
     <Compile Include="Banshee.Sources\SourceSortType.cs" />
+    <Compile Include="Banshee.Library\LibraryLocationPreference.cs" />
+    <Compile Include="Banshee.Playlists.Formats\AsfReferencePlaylistFormat.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Banshee.Services.addin.xml" />

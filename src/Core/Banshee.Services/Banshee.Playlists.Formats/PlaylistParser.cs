@@ -42,6 +42,7 @@ namespace Banshee.Playlists.Formats
             M3uPlaylistFormat.FormatDescription,
             PlsPlaylistFormat.FormatDescription,
             AsxPlaylistFormat.FormatDescription,
+            AsfReferencePlaylistFormat.FormatDescription,
             XspfPlaylistFormat.FormatDescription
         };
         

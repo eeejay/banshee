@@ -1,3 +1,12 @@
+2009-03-29  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Playlists.Formats/PlaylistParser.cs:
+	* src/Core/Banshee.Services/Banshee.Playlists.Formats/AsfReferencePlaylistFormat.cs:
+	* src/Core/Banshee.Services/Banshee.Services.csproj:
+	* src/Core/Banshee.Services/Makefile.am: Patch from Félix Velasco
+	adding support for ASF reference playlists, with small changes by me
+	(BGO #545646).
+
 2009-03-26  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Database/BansheeDbConnection.cs:

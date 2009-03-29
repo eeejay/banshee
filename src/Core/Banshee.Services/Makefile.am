@@ -124,6 +124,7 @@ SOURCES =  \
 	Banshee.Playlist/AbstractPlaylistSource.cs \
 	Banshee.Playlist/PlaylistFileUtil.cs \
 	Banshee.Playlist/PlaylistSource.cs \
+	Banshee.Playlists.Formats/AsfReferencePlaylistFormat.cs \
 	Banshee.Playlists.Formats/AsxPlaylistFormat.cs \
 	Banshee.Playlists.Formats/InvalidPlaylistException.cs \
 	Banshee.Playlists.Formats/IPlaylistFormat.cs \
