@@ -37,4 +37,17 @@ namespace Banshee.PlaybackController
         Artist,
         Album
     }
+
+    public class ShuffleModeChangedEventArgs : EventArgs
+    {
+        private PlaybackShuffleMode shuffle_mode;
+        public PlaybackShuffleMode ShuffleMode {
+            get { return shuffle_mode; }
+        }
+
+        public ShuffleModeChangedEventArgs (PlaybackShuffleMode shuffle_mode)
+        {
+            this.shuffle_mode = shuffle_mode;
+        }
+    }
 }

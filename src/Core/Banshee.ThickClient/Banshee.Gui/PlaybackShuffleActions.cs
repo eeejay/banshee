@@ -49,9 +49,7 @@ namespace Banshee.Gui
             get { return active_action; }
             set {
                 active_action = value;
-                ShuffleMode.Set (active_action == null ? String.Empty : ActionNameToConfigId (active_action.Name));
                 ServiceManager.PlaybackController.ShuffleMode = (PlaybackShuffleMode)active_action.Value;
-                OnChanged ();
             }
         }
 
@@ -106,6 +104,8 @@ namespace Banshee.Gui
             this["ShuffleArtistAction"].Sensitive = false;
             this["ShuffleAlbumAction"].Sensitive = false;
 
+            ServiceManager.PlaybackController.ShuffleModeChanged += OnShuffleModeChanged;
+
             Gtk.Action action = this[ConfigIdToActionName (ShuffleMode.Get ())];
             if (action is RadioAction) {
                 active_action = (RadioAction)action;
@@ -114,6 +114,23 @@ namespace Banshee.Gui
             }
             
             Active.Activate ();
+        }
+
+        private void OnShuffleModeChanged (object o, ShuffleModeChangedEventArgs args)
+        {
+            if (active_action.Value != (int)args.ShuffleMode) {
+                // This happens only when changing the mode using DBus.
+                // In this case we need to locate the action by its value.
+                foreach (RadioAction action in this) {
+                    if (action.Value == (int)args.ShuffleMode) {
+                        active_action = action;
+                        break;
+                    }
+                }
+            }
+
+            ShuffleMode.Set (ActionNameToConfigId (active_action.Name));
+            OnChanged();
         }
 
         private void OnActionChanged (object o, ChangedArgs args)

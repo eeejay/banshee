@@ -48,9 +48,7 @@ namespace Banshee.Gui
             get { return active_action; }
             set {
                 active_action = value;
-                RepeatMode.Set (active_action == null ? String.Empty : ActionNameToConfigId (active_action.Name));
                 ServiceManager.PlaybackController.RepeatMode = (PlaybackRepeatMode)active_action.Value;
-                OnChanged ();
             }
         }
         
@@ -95,6 +93,8 @@ namespace Banshee.Gui
             this["RepeatAllAction"].IconName = "media-repeat-all";
             this["RepeatSingleAction"].IconName = "media-repeat-single";
 
+            ServiceManager.PlaybackController.RepeatModeChanged += OnRepeatModeChanged;
+
             Gtk.Action action = this[ConfigIdToActionName (RepeatMode.Get ())];
             if (action is RadioAction) {
                 active_action = (RadioAction)action;
@@ -103,6 +103,23 @@ namespace Banshee.Gui
             }
             
             Active.Activate ();
+        }
+
+        private void OnRepeatModeChanged (object o, RepeatModeChangedEventArgs args)
+        {
+            if (active_action.Value != (int)args.RepeatMode) {
+                // This happens only when changing the mode using DBus.
+                // In this case we need to locate the action by its value.
+                foreach (RadioAction action in this) {
+                    if (action.Value == (int)args.RepeatMode) {
+                        active_action = action;
+                        break;
+                    }
+                }
+            }
+
+            RepeatMode.Set (ActionNameToConfigId (active_action.Name));
+            OnChanged();
         }
 
         private void OnActionChanged (object o, ChangedArgs args)

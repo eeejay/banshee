@@ -36,4 +36,17 @@ namespace Banshee.PlaybackController
         RepeatAll,
         RepeatSingle
     }
+
+    public class RepeatModeChangedEventArgs : EventArgs
+    {
+        private PlaybackRepeatMode repeat_mode;
+        public PlaybackRepeatMode RepeatMode {
+            get { return repeat_mode; }
+        }
+
+        public RepeatModeChangedEventArgs (PlaybackRepeatMode repeat_mode)
+        {
+            this.repeat_mode = repeat_mode;
+        }
+    }
 }
