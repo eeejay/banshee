@@ -68,6 +68,20 @@ namespace Banshee.Playlists.Formats.Tests
 #region Tests
 
         [Test]
+        public void ReadAsfReferenceLocal()
+        {
+            IPlaylistFormat pl = LoadPlaylist(new AsfReferencePlaylistFormat(), "reference_local.asx");
+            Assert.AreEqual(elements[2]["uri"], pl.Elements[0]["uri"]);
+        }
+
+        [Test]
+        public void ReadAsfReferenceRemote()
+        {
+            IPlaylistFormat pl = LoadPlaylist(new AsfReferencePlaylistFormat(), "reference_remote.asx");
+            Assert.AreEqual(elements[0]["uri"], pl.Elements[0]["uri"]);
+        }
+
+        [Test]
         public void ReadAsxSimple()
         {
             LoadTest(new AsxPlaylistFormat(), "simple.asx");

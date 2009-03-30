@@ -1,3 +1,12 @@
+2009-03-30  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
+	* src/Core/Banshee.Services/Banshee.Playlists.Formats/Tests/PlaylistFormatTests.cs:
+	* tests/Banshee.Services/playlist-data/reference_local.asx:
+	* tests/Banshee.Services/playlist-data/reference_remote.asx: Add some
+	unit tests for ASF reference playlists. The remote test, like all
+	ASX tests with a remote URL, is broken because we have to change
+	http://	to mmsh://.
+
 2009-03-30  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs: Patch from Andrés G.

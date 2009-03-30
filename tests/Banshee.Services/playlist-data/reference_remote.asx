@@ -1,0 +1,3 @@
+[Reference]
+Ref01 = http://remote/remote.mp3
+Ref02 = should_not_read_this

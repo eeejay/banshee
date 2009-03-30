@@ -1,0 +1,3 @@
+[reference]
+ref01=relative/local.mp3
+ref02=should_not_read_this
