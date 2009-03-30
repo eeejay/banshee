@@ -108,6 +108,9 @@ namespace Banshee.Dap
             /*Properties.Remove ("Nereid.SourceContents");
             dap_properties_display.Destroy ();
             dap_properties_display = null;*/
+
+            if (sync != null)
+                sync.Dispose ();
         }
         
         private void PurgeTemporaryPlaylists ()

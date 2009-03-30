@@ -1,3 +1,9 @@
+2009-03-30  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs: Patch from Andrés G.
+	Aragoneses disposing the sync object when the dap is disposed, fixing a
+	crash if automatic-sync was enabled (BGO #577072)
+
 2009-03-29  Alexander Kojevnikov  <alexander@kojevnikov.com>
 
 	* src/Core/Banshee.Services/Banshee.PlaybackController/PlaybackControllerService.cs:
