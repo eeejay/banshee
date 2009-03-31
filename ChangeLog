@@ -1,3 +1,8 @@
+2009-03-31  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
+	* src/Core/Banshee.Core/Banshee.Base/Localization.cs: Reduce startup
+	time by compiling and caching XPath expressions (BGO #577100).
+
 2009-03-30  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
 	* src/Core/Banshee.Services/Banshee.Playlists.Formats/Tests/PlaylistFormatTests.cs:

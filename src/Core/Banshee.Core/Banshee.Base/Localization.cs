@@ -28,6 +28,7 @@
  
 using System;
 using System.Xml;
+using System.Xml.XPath;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
@@ -38,6 +39,7 @@ namespace Banshee.Base
         private static string [] default_languages = { "C" };
         private static string [] instance_languages = null;
         private static string [] instance_xml_languages = null;
+        private static XPathExpression [] instance_xpath_expressions = null;
         
         public static string [] Languages {
             get {
@@ -79,17 +81,35 @@ namespace Banshee.Base
                 return instance_xml_languages;
             }
         }
+
+        public static XPathExpression [] XPathExpressions {
+            get {
+                if(instance_xpath_expressions != null) {
+                    return instance_xpath_expressions;
+                }
+
+                List<XPathExpression> xpath_exps = new List<XPathExpression>();
+                foreach(string xml_lang in XmlLanguages) {
+                    xpath_exps.Add(XPathExpression.Compile(String.Format("self::node()[lang('{0}')]", xml_lang)));
+                }
+
+                instance_xpath_expressions = xpath_exps.ToArray();
+
+                return instance_xpath_expressions;
+            }
+        }
         
         public static XmlNode SelectSingleNode(XmlNode parent, string query)
         {
             XmlNodeList list = parent.SelectNodes(query);
             XmlNode result = null;
             
-            foreach(string language in XmlLanguages) {
+            foreach(XPathExpression xpath_exp in XPathExpressions) {
                 foreach(XmlNode child in list) {
-                    XmlNode lang_child = child.SelectSingleNode(String.Format("self::node()[lang('{0}')]", language));
-                    if(lang_child != null) {
-                        result = lang_child;
+                    XPathNavigator nav = child.CreateNavigator();
+                    XPathNavigator lang_child = nav.SelectSingleNode(xpath_exp);
+                    if(lang_child != null && lang_child is IHasXmlNode) {
+                        result = ((IHasXmlNode)lang_child).GetNode();
                         break;
                     }
                 }
@@ -107,11 +127,12 @@ namespace Banshee.Base
             XmlNodeList list = parent.SelectNodes(query);
             List<XmlNode> result = new List<XmlNode>();
             
-            foreach(string language in XmlLanguages) {
+            foreach(XPathExpression xpath_exp in XPathExpressions) {
                 foreach(XmlNode child in list) {
-                    XmlNode lang_child = child.SelectSingleNode(String.Format("self::node()[lang('{0}')]", language));
-                    if(lang_child != null) {
-                        result.Add(lang_child);
+                    XPathNavigator nav = child.CreateNavigator();
+                    XPathNavigator lang_child = nav.SelectSingleNode(xpath_exp);
+                    if(lang_child != null && lang_child is IHasXmlNode) {
+                        result.Add(((IHasXmlNode)lang_child).GetNode());
                     }
                 }
             }
