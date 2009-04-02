@@ -222,7 +222,7 @@ namespace Hyena.Data.Gui
             
             single_list_alloc.X = list_rendering_alloc.X - HadjustmentValue;
             single_list_alloc.Y = offset;
-            single_list_alloc.Width = list_rendering_alloc.Width;
+            single_list_alloc.Width = list_rendering_alloc.Width + HadjustmentValue;
             single_list_alloc.Height = RowHeight;
             
             int selection_height = 0;

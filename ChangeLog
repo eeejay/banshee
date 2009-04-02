@@ -1,9 +1,16 @@
 2009-04-02  Alexander Kojevnikov  <alexander@kojevnikov.com>
 
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Rendering.cs:
+	Fixed row rendering glitch when hscroll position is non-zero
+	(BGO #548526)
+
+2009-04-02  Alexander Kojevnikov  <alexander@kojevnikov.com>
+
 	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ColumnCellRating.cs:
 	* src/Libraries/Hyena.Gui/Hyena.Gui/RatingRenderer.cs:
 	* src/Libraries/Hyena.Gui/Hyena.Widgets/RatingEntry.cs: Changed the
-	RatingEntry widget to make it easier to edit and reset the ratings.
+	RatingEntry widget to make it easier to edit and reset the ratings
+	(BGO #572260)
 
 2009-04-02  Gabriel Burt  <gabriel.burt@gmail.com>
 
