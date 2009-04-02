@@ -1,3 +1,8 @@
+2009-04-02  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade: Improve
+	language for smart playlists predefined button.
+
 2009-04-02  Alexander Kojevnikov  <alexander@kojevnikov.com>
 
 	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Rendering.cs:
