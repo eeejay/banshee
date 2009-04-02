@@ -1,6 +1,4 @@
-#region License
-
-// LinuxDisc.cs
+// DiscLinux.cs
 //
 // Copyright (c) 2008 Scott Peterson <lunchtimemama@gmail.com>
 //
@@ -22,14 +20,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#endregion
-
 using System;
 using System.Runtime.InteropServices;
 
 namespace MusicBrainz
 {
-    internal sealed class LinuxDisc : LocalDisc
+    internal sealed class DiscLinux : LocalDisc
     {
         const int O_RDONLY = 0x0;
         const int O_NONBLOCK = 0x4000;
@@ -41,7 +37,7 @@ namespace MusicBrainz
         const int CD_FRAMES = 75;
         const int XA_INTERVAL = ((60 + 90 + 2) * CD_FRAMES);
         
-        [DllImport ("libc.so.6")]
+        [DllImport ("libc.so.6", CharSet = CharSet.Auto)]
         static extern int open (string path, int flags);
         
         [DllImport ("libc.so.6")]
@@ -99,18 +95,18 @@ namespace MusicBrainz
             
             if (ret < 0) return ret;
             
-            FirstTrack = th.cdth_trk0;
-            LastTrack = th.cdth_trk1;
+            first_track = th.cdth_trk0;
+            last_track = th.cdth_trk1;
             
             ms.addr_format = CDROM_LBA;
             ret = read_multisession (fd, ref ms);
             
-            if(ms.xa_flag != 0) LastTrack--;
+            if(ms.xa_flag != 0) last_track--;
             
             return ret;
         }
         
-        int ReadTocEntry (int fd, byte track_number, ref ulong lba)
+        static int ReadTocEntry (int fd, byte track_number, ref ulong lba)
         {
             cdrom_tocentry te = new cdrom_tocentry ();
             te.cdte_track = track_number;
@@ -138,23 +134,23 @@ namespace MusicBrainz
             return ReadTocEntry (fd, CDROM_LEADOUT, ref lba);
         }
         
-        internal LinuxDisc (string device)
+        internal DiscLinux (string device)
         {
             int fd = open (device, O_RDONLY | O_NONBLOCK);
             
-            if (fd < 0) throw new Exception (String.Format ("Cannot open device '{0}'", device));
+            if (fd < 0) throw new LocalDiscException (String.Format ("Cannot open device '{0}'", device));
             
             try {
-                if (ReadTocHeader(fd) < 0) throw new Exception ("Cannot read table of contents");
-                if (LastTrack == 0) throw new Exception ("This disc has no tracks");
+                if (ReadTocHeader (fd) < 0) throw new LocalDiscException ("Cannot read table of contents");
+                if (last_track == 0) throw new LocalDiscException ("This disc has no tracks");
                 
                 ulong lba = 0;
                 ReadLeadout (fd, ref lba);
-                TrackOffsets [0] = (int)lba + 150;
+                track_offsets [0] = (int)lba + 150;
                 
-                for (byte i = FirstTrack; i <= LastTrack; i++) {
+                for (byte i = first_track; i <= last_track; i++) {
                     ReadTocEntry (fd, i, ref lba);
-                    TrackOffsets[i] = (int)lba + 150;
+                    track_offsets[i] = (int)lba + 150;
                 }
             } finally {
                 close (fd);

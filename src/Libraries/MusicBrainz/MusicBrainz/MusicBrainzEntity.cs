@@ -1,5 +1,3 @@
-#region License
-
 // MusicBrainzEntity.cs
 //
 // Copyright (c) 2008 Scott Peterson <lunchtimemama@gmail.com>
@@ -21,8 +19,6 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -49,7 +45,7 @@ namespace MusicBrainz
         
         #region Constructors
         
-        internal MusicBrainzEntity (string mbid, string parameters) : base (mbid, parameters)
+        internal MusicBrainzEntity (string id, string parameters) : base (id, parameters)
         {
         }
 
@@ -61,41 +57,34 @@ namespace MusicBrainz
         
         #region Protected
 
-        protected override void CreateIncCore (StringBuilder builder)
+        internal override void CreateIncCore (StringBuilder builder)
         {
             if (aliases == null) AppendIncParameters (builder, "aliases");
             base.CreateIncCore (builder);
         }
 
-        protected void LoadMissingDataCore (MusicBrainzEntity entity)
+        internal void LoadMissingDataCore (MusicBrainzEntity entity)
         {
-            name = entity.Name;
-            sort_name = entity.SortName;
-            disambiguation = entity.Disambiguation;
-            begin_date = entity.BeginDate;
-            end_date = entity.EndDate;
-            if (aliases == null) aliases = entity.Aliases;
+            name = entity.GetName ();
+            sort_name = entity.GetSortName ();
+            disambiguation = entity.GetDisambiguation ();
+            begin_date = entity.GetBeginDate ();
+            end_date = entity.GetEndDate ();
+            if (aliases == null) aliases = entity.GetAliases ();
             base.LoadMissingDataCore (entity);
         }
 
-        protected override bool ProcessXml (XmlReader reader)
+        internal override void ProcessXmlCore (XmlReader reader)
         {
-            bool result = true;
             switch (reader.Name) {
             case "name":
-                reader.Read ();
-                if (reader.NodeType == XmlNodeType.Text)
-                    name = reader.ReadContentAsString ();
+                name = reader.ReadString ();
                 break;
             case "sort-name":
-                reader.Read ();
-                if (reader.NodeType == XmlNodeType.Text)
-                    sort_name = reader.ReadContentAsString ();
+                sort_name = reader.ReadString ();
                 break;
             case "disambiguation":
-                reader.Read ();
-                if (reader.NodeType == XmlNodeType.Text)
-                    disambiguation = reader.ReadContentAsString ();
+                disambiguation = reader.ReadString ();
                 break;
             case "life-span":
                 begin_date = reader ["begin"];
@@ -104,62 +93,63 @@ namespace MusicBrainz
             case "alias-list":
                 if (reader.ReadToDescendant ("alias")) {
                     List<string> aliases = new List<string> ();
-                    do {
-                        reader.Read ();
-                        if (reader.NodeType == XmlNodeType.Text)
-                            aliases.Add (reader.ReadContentAsString ());
-                    } while (reader.ReadToNextSibling ("alias"));
+                    do aliases.Add (reader.ReadString ());
+                    while (reader.ReadToNextSibling ("alias"));
                     this.aliases = aliases.AsReadOnly ();
                 }
                 break;
             default:
-                result = false;
+                base.ProcessXmlCore (reader);
                 break;
             }
-            return result;
         }
         
-        protected static string CreateNameParameter (string name)
+        internal static string CreateNameParameter (string name)
         {
-            return "&name=" + Utils.PercentEncode (name);
+            StringBuilder builder = new StringBuilder (name.Length + 6);
+            builder.Append ("&name=");
+            Utils.PercentEncode (builder, name);
+            return builder.ToString ();
         }
         
-        #endregion
-
-        #region Properties
-
-        public virtual string Name {
-            get { return GetPropertyOrNull (ref name); }
-        }
-
-        [Queryable]
-        public virtual string SortName {
-            get { return GetPropertyOrNull (ref sort_name); }
-        }
-
-        [Queryable ("comment")]
-        public virtual string Disambiguation {
-            get { return GetPropertyOrNull (ref disambiguation); }
-        }
-
-        [Queryable ("begin")]
-        public virtual string BeginDate {
-            get { return GetPropertyOrNull (ref begin_date); }
-        }
-
-        [Queryable ("end")]
-        public virtual string EndDate {
-            get { return GetPropertyOrNull (ref end_date); }
-        }
-
-        [QueryableMember ("Contains", "alias")]
-        public virtual ReadOnlyCollection<string> Aliases {
-            get { return GetPropertyOrNew (ref aliases); }
-        }
-
         #endregion
 
         #region Public
+
+        public virtual string GetName ()
+        {
+            return GetPropertyOrNull (ref name);
+        }
+
+        [Queryable ("sortname")]
+        public virtual string GetSortName ()
+        {
+            return GetPropertyOrNull (ref sort_name);
+        }
+
+        [Queryable ("comment")]
+        public virtual string GetDisambiguation ()
+        {
+            return GetPropertyOrNull (ref disambiguation);
+        }
+
+        [Queryable ("begin")]
+        public virtual string GetBeginDate ()
+        {
+            return GetPropertyOrNull (ref begin_date);
+        }
+
+        [Queryable ("end")]
+        public virtual string GetEndDate ()
+        {
+            return GetPropertyOrNull (ref end_date);
+        }
+
+        [QueryableMember ("Contains", "alias")]
+        public virtual ReadOnlyCollection<string> GetAliases ()
+        {
+            return GetPropertyOrNew (ref aliases);
+        }
         
         public override string ToString ()
         {

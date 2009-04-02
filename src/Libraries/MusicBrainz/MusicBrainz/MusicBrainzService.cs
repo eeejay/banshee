@@ -1,5 +1,3 @@
-#region License
-
 // MusicBrainzService.cs
 //
 // Copyright (c) 2008 Scott Peterson <lunchtimemama@gmail.com>
@@ -22,8 +20,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#endregion
-
 using System;
 using System.Net.Cache;
 
@@ -31,14 +27,27 @@ namespace MusicBrainz
 {
     public static class MusicBrainzService
     {
-        public static string ServiceUrl = @"http://musicbrainz.org/ws/1/";
-        public static RequestCachePolicy CachePolicy;
+        static Uri service_url = new Uri (@"http://musicbrainz.org/ws/1/");
+        public static Uri ServiceUrl {
+            get { return service_url; }
+            set {
+                if (value == null) throw new ArgumentNullException ("value");
+                service_url = value;
+            }
+        }
+        
+        static RequestCachePolicy cache_policy;
+        public static RequestCachePolicy CachePolicy {
+            get { return cache_policy; }
+            set { cache_policy = value; }
+        }
+        
         public static event EventHandler<XmlRequestEventArgs> XmlRequest;
         
         internal static void OnXmlRequest (string url, bool fromCache)
         {
             EventHandler<XmlRequestEventArgs> handler = XmlRequest;
-            if (handler != null) handler (null, new XmlRequestEventArgs (url, fromCache));
+            if (handler != null) handler (null, new XmlRequestEventArgs (new Uri (url), fromCache));
         }
     }
 }

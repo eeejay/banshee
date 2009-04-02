@@ -1,5 +1,15 @@
 2009-04-02  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	Updated to latest MusicBrainz# courtesy of Scott Peterson and Tom Corner.
+
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdDiscModel.cs:
+	Use the new MB# API.
+
+	* src/Libraries/MusicBrainz/*: Updated to latest from musicbrainz.org.  I
+	did comment out the DiscWin32NT references in LocalDisc.
+
+2009-04-02  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodTrackInfo.cs: Patch from
 	Andrés G. Aragoneses fixing bug with ratings not getting transferred to
 	iPods (BGO #577396)

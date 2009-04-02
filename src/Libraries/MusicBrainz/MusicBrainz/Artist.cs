@@ -1,5 +1,3 @@
-#region License
-
 // Artist.cs
 //
 // Copyright (c) 2008 Scott Peterson <lunchtimemama@gmail.com>
@@ -21,8 +19,6 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -47,16 +43,12 @@ namespace MusicBrainz
         
         #region Constructors
 
-        Artist (string mbid) : base (mbid, null)
+        Artist (string id) : base (id, null)
         {
         }
 
-        Artist (string mbid, string parameters) : base (mbid, parameters)
-        {
-        }
-
-        Artist (string mbid, ArtistReleaseType artist_release_type)
-            : this (mbid, "&inc=" + artist_release_type.ToString ())
+        Artist (string id, ArtistReleaseType artist_release_type)
+            : base (id, "&inc=" + artist_release_type.ToString ())
         {
             have_all_releases = true;
             this.artist_release_type = artist_release_type;
@@ -70,24 +62,24 @@ namespace MusicBrainz
         
         #region Protected
         
-        protected override string UrlExtension {
+        internal override string UrlExtension {
             get { return EXTENSION; }
         }
 
-        protected override void CreateIncCore (StringBuilder builder)
+        internal override void CreateIncCore (StringBuilder builder)
         {
             AppendIncParameters (builder, artist_release_type.ToString ());
             base.CreateIncCore (builder);
         }
 
-        protected override void LoadMissingDataCore ()
+        internal override void LoadMissingDataCore ()
         {
-            Artist artist = new Artist (Id, CreateInc ());
-            type = artist.Type;
+            Artist artist = new Artist (Id);
+            type = artist.GetArtistType ();
             base.LoadMissingDataCore (artist);
         }
 
-        protected override bool ProcessAttributes (XmlReader reader)
+        internal override void ProcessAttributes (XmlReader reader)
         {
             switch (reader ["type"]) {
             case "Group":
@@ -97,44 +89,44 @@ namespace MusicBrainz
                 type = ArtistType.Person;
                 break;
             }
-            return type != ArtistType.Unknown;
         }
 
-        protected override bool ProcessXml (XmlReader reader)
+        internal override void ProcessXmlCore (XmlReader reader)
         {
-            reader.Read ();
-            bool result = base.ProcessXml (reader);
-            if (!result) {
-                result = true;
-                switch (reader.Name) {
-                case "release-list":
-                    if (reader.ReadToDescendant ("release")) {
-                        List<Release> releases = new List<Release> ();
-                        do releases.Add (new Release (reader.ReadSubtree ()));
-                        while (reader.ReadToNextSibling ("release"));
-                        this.releases = releases.AsReadOnly ();
-                    }
-                    break;
-                default:
-                    reader.Skip (); // FIXME this is a workaround for Mono bug 334752
-                    result = false;
-                    break;
+            switch (reader.Name) {
+            case "release-list":
+                if (reader.ReadToDescendant ("release")) {
+                    List<Release> releases = new List<Release> ();
+                    do releases.Add (new Release (reader.ReadSubtree ()));
+                    while (reader.ReadToNextSibling ("release"));
+                    this.releases = releases.AsReadOnly ();
                 }
+                break;
+            default:
+                base.ProcessXmlCore (reader);
+                break;
             }
-            reader.Close ();
-            return result;
         }
         
         #endregion
 
-        #region Properties
+        #region Public
         
-        public static ArtistReleaseType DefaultArtistReleaseType =
-            new ArtistReleaseType (ReleaseStatus.Official, false);
+        static ArtistReleaseType default_artist_release_type = new ArtistReleaseType (ReleaseStatus.Official, ReleaseArtistType.SingleArtist);
+        public static ArtistReleaseType DefaultArtistReleaseType {
+            get { return default_artist_release_type; }
+            set {
+                if (value == null) throw new ArgumentNullException ("value");
+                default_artist_release_type = value;
+            }
+        }
         
         public ArtistReleaseType ArtistReleaseType {
             get { return artist_release_type; }
             set {
+                if (artist_release_type == value) {
+                    return;
+                }
                 artist_release_type = value;
                 releases = null;
                 have_all_releases = false;
@@ -147,43 +139,49 @@ namespace MusicBrainz
         }
 
         [Queryable ("artist")]
-        public override string Name {
-            get { return base.Name; }
+        public override string GetName ()
+        {
+            return base.GetName ();
         }
 
         [Queryable ("artype")]
-        public ArtistType Type {
-            get { return GetPropertyOrDefault (ref type, ArtistType.Unknown); }
+        public ArtistType GetArtistType ()
+        {
+            return GetPropertyOrDefault (ref type, ArtistType.Unknown);
+        }
+        
+        public ReadOnlyCollection<Release> GetReleases ()
+        {
+            return releases ?? (have_all_releases
+                ? releases = new ReadOnlyCollection<Release> (new Release [0])
+                : new Artist (Id, ArtistReleaseType).GetReleases ());
         }
 
-        public ReadOnlyCollection<Release> Releases {
-            get {
-                return releases ?? (have_all_releases
-                    ? releases = new ReadOnlyCollection<Release> (new Release [0])
-                    : new Artist (Id, artist_release_type).Releases);
-            }
+        public ReadOnlyCollection<Release> GetReleases (ArtistReleaseType artistReleaseType)
+        {
+            return new Artist (Id, artistReleaseType).GetReleases ();
         }
 
         #endregion
         
         #region Static
 
-        public static Artist Get (string mbid)
+        public static Artist Get (string id)
         {
-            if (mbid == null) throw new ArgumentNullException ("mbid");
-            return new Artist (mbid);
+            if (id == null) throw new ArgumentNullException ("id");
+            return new Artist (id);
         }
 
         public static Query<Artist> Query (string name)
         {
             if (name == null) throw new ArgumentNullException ("name");
-            return new Query<Artist> (EXTENSION, QueryLimit, CreateNameParameter (name));
+            return new Query<Artist> (EXTENSION, CreateNameParameter (name));
         }
 
         public static Query<Artist> QueryLucene (string luceneQuery)
         {
             if (luceneQuery == null) throw new ArgumentNullException ("luceneQuery");
-            return new Query<Artist> (EXTENSION, QueryLimit, CreateLuceneParameter (luceneQuery));
+            return new Query<Artist> (EXTENSION, CreateLuceneParameter (luceneQuery));
         }
 
         public static implicit operator string (Artist artist)
@@ -204,37 +202,43 @@ namespace MusicBrainz
         Person
     }
     
+    public enum ReleaseArtistType
+    {
+        VariousArtists,
+        SingleArtist
+    }
+    
     public sealed class ArtistReleaseType
     {
         string str;
 
-        public ArtistReleaseType (ReleaseType type, bool various) : this ((Enum)type, various)
+        public ArtistReleaseType (ReleaseType type, ReleaseArtistType artistType) : this ((Enum)type, artistType)
         {
         }
 
-        public ArtistReleaseType (ReleaseStatus status, bool various) : this ((Enum)status, various)
+        public ArtistReleaseType (ReleaseStatus status, ReleaseArtistType artistType) : this ((Enum)status, artistType)
         {
         }
         
-        public ArtistReleaseType (ReleaseType type, ReleaseStatus status, bool various)
+        public ArtistReleaseType (ReleaseType type, ReleaseStatus status, ReleaseArtistType artistType)
         {
             StringBuilder builder = new StringBuilder ();
-            Format (builder, type, various);
+            Format (builder, type, artistType);
             builder.Append ('+');
-            Format (builder, status, various);
+            Format (builder, status, artistType);
             str = builder.ToString ();
         }
 
-        ArtistReleaseType (Enum enumeration, bool various)
+        ArtistReleaseType (Enum enumeration, ReleaseArtistType artistType)
         {
             StringBuilder builder = new StringBuilder ();
-            Format (builder, enumeration, various);
+            Format (builder, enumeration, artistType);
             str = builder.ToString ();
         }
         
-        void Format (StringBuilder builder, Enum enumeration, bool various)
+        static void Format (StringBuilder builder, Enum enumeration, ReleaseArtistType artistType)
         {
-            builder.Append (various ? "va-" : "sa-");
+            builder.Append (artistType == ReleaseArtistType.VariousArtists ? "va-" : "sa-");
             Utils.EnumToString (builder, enumeration.ToString ());
         }
 
@@ -243,6 +247,28 @@ namespace MusicBrainz
             return str;
         }
 
+        public override bool Equals (object o)
+        {
+            return this == o as ArtistReleaseType;
+        }
+        
+        public static bool operator ==(ArtistReleaseType artistReleaseType1, ArtistReleaseType artistReleaseType2)
+        {
+            if (Object.ReferenceEquals (artistReleaseType1, null)) {
+                return Object.ReferenceEquals (artistReleaseType2, null);
+            }
+            return !Object.ReferenceEquals (artistReleaseType2, null) && artistReleaseType1.str == artistReleaseType2.str;
+        }
+        
+        public static bool operator !=(ArtistReleaseType artistReleaseType1, ArtistReleaseType artistReleaseType2)
+        {
+            return !(artistReleaseType1 == artistReleaseType2);
+        }
+        
+        public override int GetHashCode ()
+        {
+            return str.GetHashCode ();
+        }
     }
     
     #endregion

@@ -1,5 +1,3 @@
-#region License
-
 // Query.cs
 //
 // Copyright (c) 2008 Scott Peterson <lunchtimemama@gmail.com>
@@ -22,8 +20,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#endregion
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -35,10 +31,12 @@ namespace MusicBrainz
     {
         
         #region Private
+
+        const int default_limit = 100;
         
         string parameters;
         string url_extension;
-        byte limit;
+        int limit = default_limit;
         
         int offset;
         int? count;
@@ -47,9 +45,14 @@ namespace MusicBrainz
         List<T> ResultsWindow {
             get {
                 if (results == null)
-                    results = MusicBrainzObject.Query<T> (url_extension, limit, offset, parameters, out count);
+                    LoadResults ();
                 return results;
             }
+        }
+
+        void LoadResults ()
+        {
+            results = MusicBrainzObject.Query<T> (url_extension, limit, offset, parameters, out count);
         }
 
         Dictionary<int, WeakReference> weak_references = new Dictionary<int, WeakReference> ();
@@ -67,7 +70,7 @@ namespace MusicBrainz
                 if (weak_references.ContainsKey (offset)) {
                     WeakReference weak_reference = weak_references [offset];
                     if (weak_reference.IsAlive)
-                        results = weak_reference.Target as List<T>;
+                        results = (List<T>)weak_reference.Target;
                 }
             }
         }
@@ -76,10 +79,9 @@ namespace MusicBrainz
 
         #region Constructors
         
-        internal Query (string url_extension, byte limit, string parameters)
+        internal Query (string url_extension, string parameters)
         {
             this.url_extension = url_extension;
-            this.limit = limit;
             this.parameters = parameters;
         }
         
@@ -89,23 +91,24 @@ namespace MusicBrainz
         
         public int Count {
             get {
-                if(count == null && ResultsWindow == null) { } // just accessing ResultsWindow will give count a value
+                if (count == null)
+                    LoadResults ();
                 return count.Value;
             }
         }
 
-        public T this [int i] {
+        public T this [int index] {
             get {
-                if (i < 0 || i >= Count) throw new IndexOutOfRangeException ();
-                if (i <= offset || i >= offset + limit) 
-                    Offset = i;
-                return ResultsWindow [i - offset];
+                if (index < 0 || index >= Count) throw new ArgumentOutOfRangeException ("index");
+                if (index < offset || index >= offset + limit)
+                    Offset = index;
+                return ResultsWindow[index - offset];
             }
         }
         
         public T First ()
         {
-            byte tmp_limit = limit;
+            int tmp_limit = limit;
             limit = 1;
             T result = Count > 0 ? this [0] : null;
             limit = tmp_limit;
@@ -114,7 +117,7 @@ namespace MusicBrainz
         
         public T PerfectMatch ()
         {
-            byte tmp_limit = limit;
+            int tmp_limit = limit;
             limit = 2;
             T result1 = Count > 0 ? this [0] : null;
             T result2 = Count > 1 ? this [1] : null;
@@ -129,31 +132,12 @@ namespace MusicBrainz
             return Best (100);
         }
         
-        public IEnumerable<T> Best (int score_threshold)
+        public IEnumerable<T> Best (int scoreThreshold)
         {
             foreach (T result in this) {
-                if (result.Score < score_threshold) yield break;
+                if (result.Score < scoreThreshold) yield break;
                 yield return result;
             }
-        }
-        
-        public List<T> ToList ()
-        {
-            return ToList (0);
-        }
-        
-        public List<T> ToList (int score_threshold)
-        {
-            List<T> list = new List<T> (score_threshold == 0 ? Count : 0);
-            foreach (T result in Best(score_threshold)) list.Add (result);
-            return list;
-        }
-        
-        public T [] ToArray ()
-        {
-            T [] array = new T [Count];
-            for(int i = 0; i < Count; i++) array [i] = this [i];
-            return array;
         }
         
         public IEnumerator<T> GetEnumerator ()
@@ -175,31 +159,39 @@ namespace MusicBrainz
         
     }
 
-    [AttributeUsage (AttributeTargets.Property)]
+    [AttributeUsage (AttributeTargets.Method | AttributeTargets.Property)]
     internal sealed class QueryableAttribute : Attribute
     {
-        public readonly string Name;
-        
-        public QueryableAttribute ()
-        {
-        }
+        readonly string name;
         
         public QueryableAttribute (string name)
         {
-            Name = name;
+            this.name = name;
+        }
+        
+        public string Name {
+            get { return name; }
         }
     }
 
-    [AttributeUsage (AttributeTargets.Property)]
+    [AttributeUsage (AttributeTargets.Method | AttributeTargets.Property)]
     internal sealed class QueryableMemberAttribute : Attribute
     {
-        public readonly string Name;
-        public readonly string Member;
+        readonly string member;
+        readonly string name;
         
         public QueryableMemberAttribute (string member, string name)
         {
-            Member = member;
-            Name = name;
+            this.member = member;
+            this.name = name;
+        }
+        
+        public string Member {
+            get { return member; }
+        }
+        
+        public string Name {
+            get { return name; }
         }
     }
 }

@@ -33,7 +33,6 @@
     <Compile Include="MusicBrainz\Disc.cs" />
     <Compile Include="MusicBrainz\Event.cs" />
     <Compile Include="MusicBrainz\Label.cs" />
-    <Compile Include="MusicBrainz\LinuxDisc.cs" />
     <Compile Include="MusicBrainz\LocalDisc.cs" />
     <Compile Include="MusicBrainz\MusicBrainzEntity.cs" />
     <Compile Include="MusicBrainz\MusicBrainzException.cs" />
@@ -45,8 +44,9 @@
     <Compile Include="MusicBrainz\Release.cs" />
     <Compile Include="MusicBrainz\Track.cs" />
     <Compile Include="MusicBrainz\Utils.cs" />
-    <Compile Include="MusicBrainz\Win32Disc.cs" />
     <Compile Include="MusicBrainz\XmlRequestEventArgs.cs" />
+    <Compile Include="MusicBrainz\DiscLinux.cs" />
+    <Compile Include="MusicBrainz\DiscWin32.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>

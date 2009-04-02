@@ -1,5 +1,3 @@
-#region License
-
 // MusicBrainzObject.cs
 //
 // Copyright (c) 2008 Scott Peterson <lunchtimemama@gmail.com>
@@ -21,8 +19,6 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -67,10 +63,10 @@ namespace MusicBrainz
         
         #region Constructors
 
-        internal MusicBrainzObject (string mbid, string parameters)
+        internal MusicBrainzObject (string id, string parameters)
         {
             all_data_loaded = true;
-            CreateFromMbid (mbid, parameters ?? CreateInc ());
+            CreateFromId (id, parameters ?? CreateInc ());
         }
 
         internal MusicBrainzObject (XmlReader reader, bool all_rels_loaded)
@@ -82,11 +78,18 @@ namespace MusicBrainz
         #endregion
         
         #region Private Methods
+
+        string CreateInc ()
+        {
+            StringBuilder builder = new StringBuilder ();
+            CreateIncCore (builder);
+            return builder.ToString ();
+        }
         
-        void CreateFromMbid (string mbid, string parameters)
+        void CreateFromId (string id, string parameters)
         {
             XmlProcessingClosure (
-                CreateUrl (UrlExtension, mbid, parameters),
+                CreateUrl (UrlExtension, id, parameters),
                 delegate (XmlReader reader) {
                     reader.ReadToFollowing ("metadata");
                     reader.Read ();
@@ -107,45 +110,19 @@ namespace MusicBrainz
                     all_rels_loaded = true;
                     switch (reader ["target-type"]) {
                     case "Artist":
-                        List<Relation<Artist>> artist_rels = new List<Relation<Artist>> ();
-                        CreateRelation (reader.ReadSubtree (), artist_rels);
-                        this.artist_rels = artist_rels.AsReadOnly ();
+                        artist_rels = CreateRelation<Artist> (reader.ReadSubtree ());
                         break;
                     case "Release":
-                        List<Relation<Release>> release_rels = new List<Relation<Release>> ();
-                        CreateRelation (reader.ReadSubtree (), release_rels);
-                        this.release_rels = release_rels.AsReadOnly ();
+                        release_rels = CreateRelation<Release> (reader.ReadSubtree ());
                         break;
                     case "Track":
-                        List<Relation<Track>> track_rels = new List<Relation<Track>> ();
-                        CreateRelation (reader.ReadSubtree (), track_rels);
-                        this.track_rels = track_rels.AsReadOnly ();
+                        track_rels = CreateRelation<Track> (reader.ReadSubtree ());
                         break;
                     case "Label":
-                        List<Relation<Label>> label_rels = new List<Relation<Label>> ();
-                        CreateRelation (reader.ReadSubtree (), label_rels);
-                        this.label_rels = label_rels.AsReadOnly ();
+                        label_rels = CreateRelation<Label> (reader.ReadSubtree ());
                         break;
                     case "Url":
-                        if (!reader.ReadToDescendant ("relation")) break;
-                        List<UrlRelation> url_rels = new List<UrlRelation> ();
-                        do {
-                            RelationDirection direction = RelationDirection.Forward;
-                            string direction_string = reader ["direction"];
-                            if (direction_string != null && direction_string == "backward")
-                                direction = RelationDirection.Backward;
-                            string attributes_string = reader ["attributes"];
-                            string [] attributes = attributes_string == null
-                                ? null : attributes_string.Split (' ');
-                            url_rels.Add (new UrlRelation (
-                                reader ["type"],
-                                reader ["target"],
-                                direction,
-                                reader ["begin"],
-                                reader ["end"],
-                                attributes));
-                        } while (reader.ReadToNextSibling ("relation"));
-                        this.url_rels = url_rels.AsReadOnly ();
+                        url_rels = CreateUrlRelation (reader.ReadSubtree ());
                         break;
                     }
                 } else
@@ -153,40 +130,40 @@ namespace MusicBrainz
             }
             reader.Close ();
         }
+
+        void ProcessXml (XmlReader reader)
+        {
+            reader.Read ();
+            ProcessXmlCore (reader);
+            reader.Close ();
+        }
         
         #endregion
         
         #region Protected
         
-        protected bool AllDataLoaded {
+        internal bool AllDataLoaded {
             get { return all_data_loaded; }
         }
         
-        protected bool AllRelsLoaded {
+        internal bool AllRelsLoaded {
             get { return all_rels_loaded; }
             set { all_rels_loaded = value; }
         }
         
-        protected string CreateInc ()
-        {
-            StringBuilder builder = new StringBuilder ();
-            CreateIncCore (builder);
-            return builder.ToString ();
-        }
-        
-        protected virtual void CreateIncCore (StringBuilder builder)
+        internal virtual void CreateIncCore (StringBuilder builder)
         {
             if (!all_rels_loaded)
                 AppendIncParameters (builder, rels_params);
         }
         
-        protected void AppendIncParameters (StringBuilder builder, string parameter)
+        internal static void AppendIncParameters (StringBuilder builder, string parameter)
         {
             builder.Append (builder.Length == 0 ? "&inc=" : "+");
             builder.Append (parameter);
         }
         
-        protected void AppendIncParameters (StringBuilder builder, string parameter1, string parameter2)
+        internal static void AppendIncParameters (StringBuilder builder, string parameter1, string parameter2)
         {
             builder.Append (builder.Length == 0 ? "&inc=" : "+");
             builder.Append (parameter1);
@@ -194,13 +171,13 @@ namespace MusicBrainz
             builder.Append (parameter2);
         }
 
-        protected void AppendIncParameters (StringBuilder builder, string [] parameters)
+        internal static void AppendIncParameters (StringBuilder builder, string [] parameters)
         {
             foreach (string parameter in parameters)
                 AppendIncParameters (builder, parameter);
         }
         
-        protected void LoadMissingData ()
+        internal void LoadMissingData ()
         {
             if (!all_data_loaded) {
                 LoadMissingDataCore ();
@@ -208,48 +185,60 @@ namespace MusicBrainz
             }
         }
 
-        protected void LoadMissingDataCore (MusicBrainzObject obj)
+        internal void LoadMissingDataCore (MusicBrainzObject obj)
         {
             if (!all_rels_loaded) {
-                artist_rels = obj.ArtistRelations;
-                release_rels = obj.ReleaseRelations;
-                track_rels = obj.TrackRelations;
-                label_rels = obj.LabelRelations;
-                url_rels = obj.UrlRelations;
+                artist_rels = obj.GetArtistRelations ();
+                release_rels = obj.GetReleaseRelations ();
+                track_rels = obj.GetTrackRelations ();
+                label_rels = obj.GetLabelRelations ();
+                url_rels = obj.GetUrlRelations ();
             }
         }
         
-        protected abstract void LoadMissingDataCore ();
-        protected abstract bool ProcessAttributes (XmlReader reader);
-        protected abstract bool ProcessXml (XmlReader reader);
-        protected abstract string UrlExtension { get; }
-        
-        #endregion
-        
-        #region Properties
-        
-        protected T GetPropertyOrNull<T> (ref T field_reference) where T : class
+        internal T GetPropertyOrNull<T> (ref T field_reference) where T : class
         {
             if (field_reference == null) LoadMissingData ();
             return field_reference;
         }
+
+        internal T GetPropertyOrDefault<T> (ref T? field_reference) where T : struct
+        {
+            return GetPropertyOrDefault (ref field_reference, default (T));
+        }
         
-        protected T GetPropertyOrDefault<T> (ref T? field_reference, T default_value) where T : struct
+        internal T GetPropertyOrDefault<T> (ref T? field_reference, T default_value) where T : struct
         {
             if (field_reference == null) LoadMissingData ();
             return field_reference ?? default_value;
         }
         
-        protected ReadOnlyCollection<T> GetPropertyOrNew<T> (ref ReadOnlyCollection<T> field_reference)
+        internal ReadOnlyCollection<T> GetPropertyOrNew<T> (ref ReadOnlyCollection<T> field_reference)
         {
             return GetPropertyOrNew (ref field_reference, true);
         }
         
-        protected ReadOnlyCollection<T> GetPropertyOrNew<T> (ref ReadOnlyCollection<T> field_reference, bool condition)
+        internal ReadOnlyCollection<T> GetPropertyOrNew<T> (ref ReadOnlyCollection<T> field_reference, bool condition)
         {
             if (field_reference == null && condition) LoadMissingData ();
             return field_reference ?? new ReadOnlyCollection<T> (new T [0]);
         }
+
+        internal virtual void ProcessXmlCore (XmlReader reader)
+        {
+            reader.Skip (); // FIXME this is a workaround for Mono bug 334752
+        }
+
+        internal virtual void ProcessAttributes (XmlReader reader)
+        {
+        }
+        
+        internal abstract void LoadMissingDataCore ();
+        internal abstract string UrlExtension { get; }
+        
+        #endregion
+        
+        #region Public
 
         public virtual string Id {
             get { return id; }
@@ -259,34 +248,47 @@ namespace MusicBrainz
             get { return score; }
         }
 
-        public virtual ReadOnlyCollection<Relation<Artist>> ArtistRelations {
-            get { return GetPropertyOrNew (ref artist_rels, !all_rels_loaded); }
+        public virtual ReadOnlyCollection<Relation<Artist>> GetArtistRelations ()
+        {
+            return GetPropertyOrNew (ref artist_rels, !all_rels_loaded);
         }
 
-        public virtual ReadOnlyCollection<Relation<Release>> ReleaseRelations {
-            get { return GetPropertyOrNew (ref release_rels, !all_rels_loaded); }
+        public virtual ReadOnlyCollection<Relation<Release>> GetReleaseRelations ()
+        {
+            return GetPropertyOrNew (ref release_rels, !all_rels_loaded);
         }
 
-        public virtual ReadOnlyCollection<Relation<Track>> TrackRelations {
-            get { return GetPropertyOrNew (ref track_rels, !all_rels_loaded); }
+        public virtual ReadOnlyCollection<Relation<Track>> GetTrackRelations ()
+        {
+            return GetPropertyOrNew (ref track_rels, !all_rels_loaded);
         }
 
-        public virtual ReadOnlyCollection<Relation<Label>> LabelRelations {
-            get { return GetPropertyOrNew (ref label_rels, !all_rels_loaded); }
+        public virtual ReadOnlyCollection<Relation<Label>> GetLabelRelations ()
+        {
+            return GetPropertyOrNew (ref label_rels, !all_rels_loaded);
         }
 
-        public virtual ReadOnlyCollection<UrlRelation> UrlRelations {
-            get { return GetPropertyOrNew (ref url_rels, !all_rels_loaded); }
+        public virtual ReadOnlyCollection<UrlRelation> GetUrlRelations ()
+        {
+            return GetPropertyOrNew (ref url_rels, !all_rels_loaded);
         }
-
-        #endregion
-        
-        #region Public
         
         public override bool Equals (object obj)
         {
-            MusicBrainzObject mbobj = obj as MusicBrainzObject;
-            return mbobj != null && mbobj.GetType ().Equals (GetType ()) && mbobj.Id == Id;
+            return this == obj as MusicBrainzObject;
+        }
+        
+        public static bool operator ==(MusicBrainzObject obj1, MusicBrainzObject obj2)
+        {
+            if (Object.ReferenceEquals (obj1, null)) {
+                return Object.ReferenceEquals (obj2, null);
+            }
+            return !Object.ReferenceEquals (obj2, null) && obj1.GetType () == obj2.GetType () && obj1.Id == obj2.Id;
+        }
+        
+        public static bool operator !=(MusicBrainzObject obj1, MusicBrainzObject obj2)
+        {
+            return !(obj1 == obj2);
         }
 
         public override int GetHashCode ()
@@ -298,8 +300,9 @@ namespace MusicBrainz
 
         #region Static
 
-        static void CreateRelation<T> (XmlReader reader, List<Relation<T>> relations) where T : MusicBrainzObject
+        static ReadOnlyCollection<Relation<T>> CreateRelation<T> (XmlReader reader) where T : MusicBrainzObject
         {
+            List<Relation<T>> relations = new List<Relation<T>> ();
             while (reader.ReadToFollowing ("relation")) {
                 string type = reader ["type"];
                 RelationDirection direction = RelationDirection.Forward;
@@ -322,6 +325,29 @@ namespace MusicBrainz
                     attributes));
             }
             reader.Close ();
+            return relations.AsReadOnly ();
+        }
+
+        static ReadOnlyCollection<UrlRelation> CreateUrlRelation (XmlReader reader)
+        {
+            List<UrlRelation> url_rels = new List<UrlRelation> ();
+            while (reader.ReadToDescendant ("relation")) {
+                RelationDirection direction = RelationDirection.Forward;
+                string direction_string = reader["direction"];
+                if (direction_string != null && direction_string == "backward")
+                    direction = RelationDirection.Backward;
+                string attributes_string = reader["attributes"];
+                string[] attributes = attributes_string == null
+                    ? null : attributes_string.Split (' ');
+                url_rels.Add (new UrlRelation (
+                    reader["type"],
+                    reader["target"],
+                    direction,
+                    reader["begin"],
+                    reader["end"],
+                    attributes));
+            }
+            return url_rels.AsReadOnly ();
         }
 
         static string CreateUrl (string url_extension, int limit, int offset, string parameters)
@@ -339,14 +365,14 @@ namespace MusicBrainz
             return CreateUrl (url_extension, string.Empty, builder.ToString ());
         }
 
-        static string CreateUrl (string url_extension, string mbid, string parameters)
+        static string CreateUrl (string url_extension, string id, string parameters)
         {
             StringBuilder builder = new StringBuilder (
-                MusicBrainzService.ServiceUrl.Length + mbid.Length + parameters.Length + 9);
-            builder.Append (MusicBrainzService.ServiceUrl);
+                MusicBrainzService.ServiceUrl.AbsoluteUri.Length + id.Length + parameters.Length + 9);
+            builder.Append (MusicBrainzService.ServiceUrl.AbsoluteUri);
             builder.Append (url_extension);
             builder.Append ('/');
-            builder.Append (mbid);
+            builder.Append (id);
             builder.Append ("?type=xml");
             builder.Append (parameters);
             return builder.ToString ();
@@ -361,7 +387,7 @@ namespace MusicBrainz
             if (min_interval > time)
                 Thread.Sleep ((min_interval - time).Milliseconds);
 
-            HttpWebRequest request = WebRequest.Create (url) as HttpWebRequest;
+            WebRequest request = WebRequest.Create (url);
             bool cache_implemented = false;
             
             try {
@@ -372,7 +398,7 @@ namespace MusicBrainz
             HttpWebResponse response = null;
             
             try {
-                response = request.GetResponse () as HttpWebResponse;
+                response = (HttpWebResponse)request.GetResponse ();
             } catch (WebException e) {
                 response = (HttpWebResponse)e.Response;
             }
@@ -393,9 +419,9 @@ namespace MusicBrainz
 
             bool from_cache = cache_implemented && response.IsFromCache;
 
-            MusicBrainzService.OnXmlRequest (url, from_cache);
-
             if (from_cache) Monitor.Exit (server_mutex);
+
+            MusicBrainzService.OnXmlRequest (url, from_cache);
 
             // Should we read the stream into a memory stream and run the XmlReader off of that?
             code (new XmlTextReader (response.GetResponseStream ()));
@@ -411,17 +437,16 @@ namespace MusicBrainz
 
         #region Query
 
-        protected static byte QueryLimit {
-            get { return 100; }
-        }
-
-        protected static string CreateLuceneParameter (string query)
+        internal static string CreateLuceneParameter (string query)
         {
-            return "&query=" + Utils.PercentEncode (query);
+            StringBuilder builder = new StringBuilder (query.Length + 7);
+            builder.Append ("&query=");
+            Utils.PercentEncode (builder, query);
+            return builder.ToString ();
         }
 
         internal static List<T> Query<T> (string url_extension,
-                                          byte limit, int offset,
+                                          int limit, int offset,
                                           string parameters,
                                           out int? count) where T : MusicBrainzObject
         {

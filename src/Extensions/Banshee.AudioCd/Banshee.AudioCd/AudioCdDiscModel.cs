@@ -89,17 +89,18 @@ namespace Banshee.AudioCd
             if (mb_disc == null) {
                 throw new ApplicationException ("Could not read contents of the disc. Platform may not be supported.");
             }
-            
-            for (int i = 0, n = mb_disc.TrackDurations.Length; i < n; i++) {
+
+            TimeSpan[] durations = mb_disc.GetTrackDurations ();
+            for (int i = 0, n = durations.Length; i < n; i++) {
                 AudioCdTrackInfo track = new AudioCdTrackInfo (this, volume.DeviceNode, i);
                 track.TrackNumber = i + 1;
                 track.TrackCount = n;
                 track.DiscNumber = 1;
-                track.Duration = TimeSpan.FromSeconds (mb_disc.TrackDurations[i]);
+                track.Duration = durations[i];
                 track.ArtistName = Catalog.GetString ("Unknown Artist");
                 track.AlbumTitle = Catalog.GetString ("Unknown Album");
                 track.TrackTitle = String.Format (Catalog.GetString ("Track {0}"), track.TrackNumber);
-                track.FileSize = mb_disc.TrackDurations[i] * PCM_FACTOR;
+                track.FileSize = PCM_FACTOR * (uint)track.Duration.TotalSeconds;
                 Add (track);
                 
                 duration += track.Duration;
@@ -120,81 +121,81 @@ namespace Banshee.AudioCd
             OnMetadataQueryStarted (mb_disc);
             
             Release release = Release.Query (mb_disc).PerfectMatch ();
-            if (release == null || release.Tracks.Count != Count) {
+
+            var tracks = release.GetTracks ();
+            if (release == null || tracks.Count != Count) {
                 OnMetadataQueryFinished (false);
                 return;
             }
                         
-            disc_title = release.Title;
+            disc_title = release.GetTitle ();
             
             int disc_number = 1;
             int i = 0;
             
-            foreach (Disc disc in release.Discs) {
+            foreach (Disc disc in release.GetDiscs ()) {
                 i++;
                 if (disc.Id == mb_disc.Id) {
                     disc_number = i;
                 }
             }
             
-            DateTime release_date = DateTime.MinValue;
-            int release_event_index = -1;
-            
-            for (i = 0; i < release.Events.Count; i++) {
-                // FIXME: This is sort of lame, but from what I've seen, 
-                // the US releases generally contain more info
-                if (release.Events[i].Country == "US") {
-                    release_event_index = i;
-                    break;
+            DateTime release_date = DateTime.MaxValue;
+ 
+            foreach (Event release_event in release.GetEvents ()) {
+                if (release_event.Date != null) {
+                    try {
+                        DateTime date = DateTime.Parse (release_event.Date, ApplicationContext.InternalCultureInfo);
+                        if (date < release_date) {
+                            release_date = date;
+                        }
+                    } catch {
+                    }
                 }
             }
             
-            if (release_event_index >= 0) {
-                release_date = DateTime.Parse (release.Events[release_event_index].Date, 
-                    ApplicationContext.InternalCultureInfo);
-            }
-            
             DatabaseArtistInfo artist = new DatabaseArtistInfo ();
-            artist.Name = release.Artist.Name;
-            artist.NameSort = release.Artist.SortName;
-            artist.MusicBrainzId = release.Artist.Id;
+            var mb_artist = release.GetArtist ();
+            artist.Name = mb_artist.GetName ();
+            artist.NameSort = mb_artist.GetSortName ();
+            artist.MusicBrainzId = mb_artist.Id;
             bool is_compilation = false;
             
             DatabaseAlbumInfo album = new DatabaseAlbumInfo ();
-            album.Title = release.Title;
+            album.Title = disc_title;
             album.ArtistName = artist.Name;
             album.MusicBrainzId = release.Id;
-            album.ReleaseDate = release_date;
+            album.ReleaseDate = release_date == DateTime.MaxValue ? DateTime.MinValue : release_date;
             
             i = 0;
-
-            foreach (Track track in release.Tracks) {
+            foreach (Track track in tracks) {
                 AudioCdTrackInfo model_track = (AudioCdTrackInfo)this[i++];
+                var mb_track_artist = track.GetArtist ();
                 
                 model_track.MusicBrainzId = track.Id;
-                model_track.TrackTitle = track.Title;
-                model_track.ArtistName = track.Artist.Name;
-                model_track.AlbumTitle = release.Title;
+                model_track.TrackTitle = track.GetTitle ();
+                model_track.ArtistName = mb_track_artist.GetName ();
+                model_track.AlbumTitle = disc_title;
                 model_track.DiscNumber = disc_number;
                 model_track.Album = album;
 
                 model_track.Artist = new DatabaseArtistInfo ();
-                model_track.Artist.Name = track.Artist.Name;
-                model_track.Artist.NameSort = track.Artist.SortName;
-                model_track.Artist.MusicBrainzId = track.Artist.Id;
+                model_track.Artist.Name = model_track.ArtistName;
+                model_track.Artist.NameSort = mb_track_artist.GetSortName ();
+                model_track.Artist.MusicBrainzId = mb_track_artist.Id;
                 
-                if (!release_date.Equals (DateTime.MinValue)) {
+                if (release_date != DateTime.MinValue) {
                     model_track.Year = release_date.Year;
                 }
 
-                if (!is_compilation && track.Artist.Id != artist.MusicBrainzId) {
+                if (!is_compilation && mb_track_artist.Id != artist.MusicBrainzId) {
                     is_compilation = true;
                 }
             }
 
             if (is_compilation) {
                 album.IsCompilation = true;
-                for (i = 0; i < release.Tracks.Count; i++) {
+                for (i = 0; i < tracks.Count; i++) {
                     AudioCdTrackInfo model_track = (AudioCdTrackInfo)this[i];
                     model_track.IsCompilation = true;
                     model_track.AlbumArtist = artist.Name;

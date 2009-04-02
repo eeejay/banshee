@@ -1,5 +1,3 @@
-#region License
-
 // MusicBrainzException.cs
 //
 // Copyright (c) 2008 Scott Peterson <lunchtimemama@gmail.com>
@@ -22,8 +20,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#endregion
-
 using System;
 
 namespace MusicBrainz
@@ -31,7 +27,7 @@ namespace MusicBrainz
     public sealed class MusicBrainzInvalidParameterException : Exception
     {
         public MusicBrainzInvalidParameterException ()
-            : base ("One of the parameters is invalid. The MBID may be invalid, or you may be using an illegal parameter for this resource type.")
+            : base ("One of the parameters is invalid. The ID may be invalid, or you may be using an illegal parameter for this resource type.")
         {
         }
     }

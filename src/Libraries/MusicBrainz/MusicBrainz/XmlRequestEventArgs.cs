@@ -1,5 +1,3 @@
-#region License
-
 // XmlRequestEventArgs.cs
 //
 // Copyright (c) 2008 Scott Peterson <lunchtimemama@gmail.com>
@@ -22,18 +20,16 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#endregion
-
 using System;
 
 namespace MusicBrainz
 {
     public sealed class XmlRequestEventArgs : EventArgs
     {
-        public readonly string Uri;
+        public readonly Uri Uri;
         public readonly bool FromCache;
         
-        public XmlRequestEventArgs (string uri, bool fromCache)
+        internal XmlRequestEventArgs (Uri uri, bool fromCache)
         {
             Uri = uri;
             FromCache = fromCache;

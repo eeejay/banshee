@@ -1,5 +1,3 @@
-#region License
-
 // LocalDisc.cs
 //
 // Copyright (c) 2008 Scott Peterson <lunchtimemama@gmail.com>
@@ -22,8 +20,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#endregion
-
 using System;
 using System.Security.Cryptography;
 using System.Text;
@@ -32,25 +28,30 @@ namespace MusicBrainz
 {
     public abstract class LocalDisc : Disc
     {
-        public static string SubmissionServiceUrl = "http://mm.musicbrainz.org/bare/cdlookup.html";
+        static Uri submission_service_url = new Uri("http://mm.musicbrainz.org/bare/cdlookup.html");
+        public static Uri SubmissionServiceUrl {
+            get { return submission_service_url; }
+            set {
+                if (value == null) throw new ArgumentNullException ("value");
+                submission_service_url = value;
+            }
+        }
         
-        byte first_track;
-        byte last_track;
-        int [] track_durations;
-        int [] track_offsets = new int [100];
+        internal byte first_track;
+        internal byte last_track;
+        internal int [] track_offsets = new int [100];
+        TimeSpan [] track_durations;
         
         internal LocalDisc()
         {
         }
         
-        protected void Init ()
+        internal void Init ()
         {
-            track_durations = new int [last_track];
+            track_durations = new TimeSpan [last_track];
             for (int i = 1; i <= last_track; i++) {
-                track_durations [i - 1] = i < last_track
-                    ? track_offsets [i + 1] - track_offsets [i]
-                    : track_offsets [0] - track_offsets [i];
-                track_durations [i - 1] /= 75; // 75 frames in a second
+                track_durations [i - 1] = TimeSpan.FromSeconds (
+                    ((i < last_track ? track_offsets [i + 1] : track_offsets [0]) - track_offsets [i]) / 75); // 75 frames in a second
             }
             GenerateId ();
         }
@@ -58,54 +59,55 @@ namespace MusicBrainz
         void GenerateId ()
         {
             StringBuilder input_builder = new StringBuilder (804);
-            
-            input_builder.Append (string.Format ("{0:X2}", FirstTrack));
-            input_builder.Append (string.Format ("{0:X2}", LastTrack));
+
+            input_builder.AppendFormat ("{0:X2}", first_track);
+            input_builder.AppendFormat ("{0:X2}", last_track);
             
             for (int i = 0; i < track_offsets.Length; i++)
-                input_builder.Append (string.Format ("{0:X8}", track_offsets [i]));
+                input_builder.AppendFormat ("{0:X8}", track_offsets[i]);
 
             // MB uses a slightly modified RFC822 for reasons of URL happiness.
-            string base64 = Convert.ToBase64String (SHA1.Create ()
-                .ComputeHash (Encoding.ASCII.GetBytes (input_builder.ToString ())));
+            string base64 = Convert.ToBase64String (SHA1.Create ().
+                ComputeHash (Encoding.ASCII.GetBytes (input_builder.ToString ())));
             StringBuilder hash_builder = new StringBuilder (base64.Length);
             
             foreach (char c in base64)
-                if      (c == '+')  hash_builder.Append ('.');
-                else if (c == '/')  hash_builder.Append ('_');
-                else if (c == '=')  hash_builder.Append ('-');
-                else                hash_builder.Append (c);
+                switch (c) {
+                case '+':
+                    hash_builder.Append ('.');
+                    break;
+                case '/':
+                    hash_builder.Append ('_');
+                    break;
+                case '=':
+                    hash_builder.Append ('-');
+                    break;
+                default:
+                    hash_builder.Append (c);
+                    break;
+                }
             
             Id = hash_builder.ToString ();
         }
         
-        protected byte FirstTrack {
-            get { return first_track; }
-            set { first_track = value; }
-        }
-
-        protected byte LastTrack {
-            get { return last_track; }
-            set { last_track = value; }
-        }
-
-        protected int [] TrackOffsets {
-            get { return track_offsets; }
+        public TimeSpan [] GetTrackDurations ()
+        {
+            return (TimeSpan []) track_durations.Clone ();
         }
         
-        public int [] TrackDurations {
-            get { return track_durations; }
+        Uri submission_url;
+        public Uri SubmissionUrl {
+            get {
+                if (submission_url == null) {
+                    submission_url = BuildSubmissionUrl ();
+                }
+                return submission_url; }
         }
         
-        string submission_url;
-        public string SubmissionUrl {
-            get { return submission_url ?? (submission_url = BuildSubmissionUrl ()); }
-        }
-        
-        string BuildSubmissionUrl ()
+        Uri BuildSubmissionUrl ()
         {
             StringBuilder builder = new StringBuilder ();
-            builder.Append (SubmissionServiceUrl);
+            builder.Append (SubmissionServiceUrl.AbsoluteUri);
             builder.Append ("?id=");
             builder.Append (Id);
             builder.Append ("&tracks=");
@@ -120,15 +122,34 @@ namespace MusicBrainz
                 builder.Append ('+');
                 builder.Append (track_offsets [i]);
             }
-            return builder.ToString ();
+            return new Uri(builder.ToString ());
         }
         
         public static LocalDisc GetFromDevice (string device)
         {
             if (device == null) throw new ArgumentNullException ("device");
-            return Environment.OSVersion.Platform != PlatformID.Unix
-                ? (LocalDisc)new Win32Disc (device)
-                : new LinuxDisc (device);
+            try {
+                switch (Environment.OSVersion.Platform){
+                case PlatformID.Unix:
+                    return new DiscLinux (device);
+                //case PlatformID.Win32NT:
+                    //return new DiscWin32NT (device);
+                default:
+                    return new DiscWin32 (device);
+                }
+            } catch (Exception exception) {
+                throw new LocalDiscException (exception);
+            }
+        }
+    }
+    
+    public class LocalDiscException : Exception
+    {
+        public LocalDiscException (string message) : base (message)
+        {
+        }
+        public LocalDiscException (Exception exception) : base ("Could not load local disc from device.", exception)
+        {
         }
     }
 }

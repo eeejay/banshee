@@ -1,5 +1,3 @@
-#region License
-
 // Utils.cs
 //
 // Copyright (c) 2008 Scott Peterson <lunchtimemama@gmail.com>
@@ -21,8 +19,6 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-
-#endregion
 
 using System;
 using System.Text;
@@ -63,13 +59,6 @@ namespace MusicBrainz
             return null;
         }
         
-        public static string PercentEncode (string value)
-        {
-            StringBuilder builder = new StringBuilder ();
-            PercentEncode (builder, value);
-            return builder.ToString ();
-        }
-        
         public static void PercentEncode (StringBuilder builder, string value)
         {
             foreach (char c in value) {
@@ -79,7 +68,7 @@ namespace MusicBrainz
                 else {
                     builder.Append ('%');
                     foreach (byte b in Encoding.UTF8.GetBytes (new char [] { c }))
-                        builder.Append (string.Format ("{0:X}", b));
+                        builder.AppendFormat ("{0:X}", b);
                 } 
             }
         }

@@ -1,5 +1,3 @@
-#region License
-
 // Release.cs
 //
 // Copyright (c) 2008 Scott Peterson <lunchtimemama@gmail.com>
@@ -21,8 +19,6 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
-
-#endregion
 
 using System;
 using System.Collections.Generic;
@@ -52,11 +48,7 @@ namespace MusicBrainz
         
         #region Constructors
 
-        Release (string mbid) : base (mbid, null)
-        {
-        }
-
-        Release (string mbid, string parameters) : base (mbid, parameters)
+        Release (string id) : base (id)
         {
         }
 
@@ -66,15 +58,15 @@ namespace MusicBrainz
         
         #endregion
         
-        #region Protected Overrides
+        #region Protected
         
-        protected override string UrlExtension {
+        internal override string UrlExtension {
             get { return EXTENSION; }
         }
         
         static readonly string [] track_params = new string [] { "tracks", "track-level-rels", "artist" };
         
-        protected override void CreateIncCore (StringBuilder builder)
+        internal override void CreateIncCore (StringBuilder builder)
         {
             AppendIncParameters (builder, "release-events", "labels");
             if (discs == null) AppendIncParameters (builder, "discs");
@@ -85,26 +77,26 @@ namespace MusicBrainz
             base.CreateIncCore (builder);
         }
 
-        protected override void LoadMissingDataCore ()
+        internal override void LoadMissingDataCore ()
         {
-            Release release = new Release (Id, CreateInc ());
-            type = release.Type;
-            status = release.Status;
-            language = release.Language;
-            script = release.Script;
-            asin = release.Asin;
-            events = release.Events;
-            if (discs == null) discs = release.Discs;
-            if (tracks == null) tracks = release.Tracks;
+            Release release = new Release (Id);
+            type = release.GetReleaseType ();
+            status = release.GetReleaseStatus ();
+            language = release.GetLanguage ();
+            script = release.GetScript ();
+            asin = release.GetAsin ();
+            events = release.GetEvents ();
+            if (discs == null) discs = release.GetDiscs ();
+            if (tracks == null) tracks = release.GetTracks ();
             base.LoadMissingDataCore (release);
         }
 
-        protected override bool ProcessAttributes (XmlReader reader)
+        internal override void ProcessAttributes (XmlReader reader)
         {
             // How sure am I about getting the type and status in the "Type Status" format?
             // MB really ought to specify these two things seperatly.
             string type_string = reader ["type"];
-            if (type_string != null)
+            if (type_string != null) {
                 foreach (string token in type_string.Split (' ')) {
                     if (type == null) {
                         type = Utils.StringToEnumOrNull<ReleaseType> (token);
@@ -112,68 +104,59 @@ namespace MusicBrainz
                     }
                     this.status = Utils.StringToEnumOrNull<ReleaseStatus> (token);
                 }
-            return this.type != null || this.status != null;
+            }
         }
 
-        protected override bool ProcessXml (XmlReader reader)
+        internal override void ProcessXmlCore (XmlReader reader)
         {
-            reader.Read ();
-            bool result = base.ProcessXml (reader);
-            if (!result) {
-                result = true;
-                switch (reader.Name) {
-                case "text-representation":
-                    language = reader ["language"];
-                    script = reader ["script"];
-                    break;
-                case "asin":
-                    reader.Read ();
-                    if (reader.NodeType == XmlNodeType.Text)
-                        asin = reader.ReadContentAsString ();
-                    break;
-                case "disc-list": {
-                    if (reader.ReadToDescendant ("disc")) {
-                        List<Disc> discs = new List<Disc> ();
-                        do discs.Add (new Disc (reader.ReadSubtree ()));
-                        while (reader.ReadToNextSibling ("disc"));
-                        this.discs = discs.AsReadOnly ();
-                    }
-                    break;
+            switch (reader.Name) {
+            case "text-representation":
+                language = reader["language"];
+                script = reader["script"];
+                break;
+            case "asin":
+                asin = reader.ReadString ();
+                break;
+            case "disc-list":
+                if (reader.ReadToDescendant ("disc")) {
+                    List<Disc> discs = new List<Disc> ();
+                    do discs.Add (new Disc (reader.ReadSubtree ()));
+                    while (reader.ReadToNextSibling ("disc"));
+                    this.discs = discs.AsReadOnly ();
                 }
-                case "release-event-list":
-                    if (!AllDataLoaded) reader.Skip(); // FIXME this is a workaround for Mono bug 334752
-                    if (reader.ReadToDescendant ("event")) {
-                        List<Event> events = new List<Event> ();
-                        do events.Add (new Event (reader.ReadSubtree ()));
-                        while (reader.ReadToNextSibling ("event"));
-                        this.events = events.AsReadOnly ();
-                    }
-                    break;
-                case "track-list": {
-                    string offset = reader ["offset"];
-                    if (offset != null)
-                        track_number = int.Parse (offset) + 1;
-                    if (reader.ReadToDescendant ("track")) {
-                        List<Track> tracks = new List<Track> ();
-                        do tracks.Add (new Track (reader.ReadSubtree (), Artist, AllDataLoaded));
-                        while (reader.ReadToNextSibling ("track"));
-                        this.tracks = tracks.AsReadOnly ();
-                    }
-                    break;
-                }
-                default:
+                break;
+            case "release-event-list":
+                if (!AllDataLoaded) {
                     reader.Skip (); // FIXME this is a workaround for Mono bug 334752
-                    result = false;
-                    break;
+                    return;
                 }
+                if (reader.ReadToDescendant ("event")) {
+                    List<Event> events = new List<Event> ();
+                    do events.Add (new Event (reader.ReadSubtree ()));
+                    while (reader.ReadToNextSibling ("event"));
+                    this.events = events.AsReadOnly ();
+                }
+                break;
+            case "track-list":
+                string offset = reader["offset"];
+                if (offset != null)
+                    track_number = int.Parse (offset) + 1;
+                if (reader.ReadToDescendant ("track")) {
+                    List<Track> tracks = new List<Track> ();
+                    do tracks.Add (new Track (reader.ReadSubtree (), GetArtist (), AllDataLoaded));
+                    while (reader.ReadToNextSibling ("track"));
+                    this.tracks = tracks.AsReadOnly ();
+                }
+                break;
+            default:
+                base.ProcessXmlCore (reader);
+                break;
             }
-            reader.Close ();
-            return result;
         }
         
         #endregion
 
-        #region Properties
+        #region Public
 
         [Queryable ("reid")]
         public override string Id {
@@ -181,46 +164,55 @@ namespace MusicBrainz
         }
 
         [Queryable ("release")]
-        public override string Title {
-            get { return base.Title; }
+        public override string GetTitle ()
+        { 
+            return base.GetTitle ();
         }
 
-        [Queryable]
-        public ReleaseType Type {
-            get { return GetPropertyOrDefault (ref type, ReleaseType.None); }
+        [Queryable ("type")]
+        public ReleaseType GetReleaseType ()
+        {
+            return GetPropertyOrDefault (ref type, ReleaseType.None);
         }
 
-        [Queryable]
-        public ReleaseStatus Status {
-            get { return GetPropertyOrDefault (ref status, ReleaseStatus.None); }
+        [Queryable ("status")]
+        public ReleaseStatus GetReleaseStatus ()
+        {
+            return GetPropertyOrDefault (ref status, ReleaseStatus.None);
         }
 
-        public string Language {
-            get { return GetPropertyOrNull (ref language); }
+        public string GetLanguage ()
+        {
+            return GetPropertyOrNull (ref language);
         }
 
-        [Queryable]
-        public string Script {
-            get { return GetPropertyOrNull (ref script); }
+        [Queryable ("script")]
+        public string GetScript ()
+        {
+            return GetPropertyOrNull (ref script);
         }
 
-        [Queryable]
-        public string Asin {
-            get { return GetPropertyOrNull (ref asin); }
+        [Queryable ("asin")]
+        public string GetAsin ()
+        {
+            return GetPropertyOrNull (ref asin);
         }
 
         [QueryableMember("Count", "discids")]
-        public ReadOnlyCollection<Disc> Discs {
-            get { return GetPropertyOrNew (ref discs); }
+        public ReadOnlyCollection<Disc> GetDiscs ()
+        { 
+            return GetPropertyOrNew (ref discs);
         }
 
-        public ReadOnlyCollection<Event> Events {
-            get { return GetPropertyOrNew (ref events); }
+        public ReadOnlyCollection<Event> GetEvents ()
+        {
+            return GetPropertyOrNew (ref events);
         }
 
         [QueryableMember ("Count", "tracks")]
-        public ReadOnlyCollection<Track> Tracks {
-            get { return GetPropertyOrNew (ref tracks); }
+        public ReadOnlyCollection<Track> GetTracks ()
+        {
+            return GetPropertyOrNew (ref tracks);
         }
 
         internal int TrackNumber {
@@ -231,10 +223,10 @@ namespace MusicBrainz
         
         #region Static
 
-        public static Release Get (string mbid)
+        public static Release Get (string id)
         {
-            if (mbid == null) throw new ArgumentNullException ("mbid");
-            return new Release (mbid);
+            if (id == null) throw new ArgumentNullException ("id");
+            return new Release (id);
         }
 
         public static Query<Release> Query (string title)
@@ -269,7 +261,7 @@ namespace MusicBrainz
         public static Query<Release> Query (ReleaseQueryParameters parameters)
         {
             if (parameters == null) throw new ArgumentNullException ("parameters");
-            return new Query<Release> (EXTENSION, QueryLimit, parameters.ToString ());
+            return new Query<Release> (EXTENSION, parameters.ToString ());
         }
 
         public static Query<Release> QueryFromDevice(string device)
@@ -284,7 +276,7 @@ namespace MusicBrainz
         public static Query<Release> QueryLucene (string luceneQuery)
         {
             if (luceneQuery == null) throw new ArgumentNullException ("luceneQuery");
-            return new Query<Release> (EXTENSION, QueryLimit, CreateLuceneParameter (luceneQuery));
+            return new Query<Release> (EXTENSION, CreateLuceneParameter (luceneQuery));
         }
 
         public static implicit operator string (Release release)
@@ -373,9 +365,8 @@ namespace MusicBrainz
             set { script = value; }
         }
 
-        public override string ToString ()
+        internal override void ToStringCore (StringBuilder builder)
         {
-            StringBuilder builder = new StringBuilder ();
             if (disc_id != null) {
                 builder.Append ("&discid=");
                 builder.Append (disc_id);
@@ -396,8 +387,6 @@ namespace MusicBrainz
                 builder.Append ("&script=");
                 builder.Append (script);
             }
-            AppendBaseToBuilder (builder);
-            return builder.ToString ();
         }
     }
     

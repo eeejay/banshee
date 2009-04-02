@@ -1,5 +1,3 @@
-#region License
-
 // Track.cs
 //
 // Copyright (c) 2008 Scott Peterson <lunchtimemama@gmail.com>
@@ -22,8 +20,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#endregion
-
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -38,7 +34,7 @@ namespace MusicBrainz
         #region Private
         
         const string EXTENSION = "track";
-        uint duration;
+        TimeSpan? duration;
         ReadOnlyCollection<Release> releases;
         ReadOnlyCollection<string> puids;
         
@@ -46,11 +42,7 @@ namespace MusicBrainz
         
         #region Constructors
 
-        Track (string mbid) : base (mbid, null)
-        {
-        }
-
-        Track (string mbid, string parameters) : base (mbid, parameters)
+        Track (string id) : base (id)
         {
         }
 
@@ -64,74 +56,59 @@ namespace MusicBrainz
         
         #endregion
 
-        #region Protected Overrides
+        #region Protected
         
-        protected override string UrlExtension {
+        internal override string UrlExtension {
             get { return EXTENSION; }
         }
         
-        protected override void CreateIncCore (StringBuilder builder)
+        internal override void CreateIncCore (StringBuilder builder)
         {
             if (releases == null) AppendIncParameters (builder, "releases");
             if (puids == null) AppendIncParameters (builder, "puids");
             base.CreateIncCore (builder);
         }
 
-        protected override void LoadMissingDataCore ()
+        internal override void LoadMissingDataCore ()
         {
-            Track track = new Track (Id, CreateInc ());
-            duration = track.Duration;
-            if (releases == null) releases = track.Releases;
-            if (puids == null) puids = track.Puids;
+            Track track = new Track (Id);
+            duration = track.GetDuration ();
+            if (releases == null) releases = track.GetReleases ();
+            if (puids == null) puids = track.GetPuids ();
             base.LoadMissingDataCore (track);
         }
 
-        protected override bool ProcessAttributes (XmlReader reader)
+        internal override void ProcessXmlCore (XmlReader reader)
         {
-            return true;
-        }
-
-        protected override bool ProcessXml (XmlReader reader)
-        {
-            reader.Read ();
-            bool result = base.ProcessXml (reader);
-            if (!result) {
-                result = true;
-                switch (reader.Name) {
-                case "duration":
-                    reader.Read ();
-                    if (reader.NodeType == XmlNodeType.Text)
-                        duration = uint.Parse (reader.ReadContentAsString ());
-                    break;
-                case "release-list":
-                    if(reader.ReadToDescendant ("release")) {
-                        List<Release> releases = new List<Release> ();
-                        do releases.Add (new Release (reader.ReadSubtree ()));
-                        while (reader.ReadToNextSibling ("release"));
-                        this.releases = releases.AsReadOnly ();
-                    }
-                    break;
-                case "puid-list":
-                    if(reader.ReadToDescendant ("puid")) {
-                        List<string> puids = new List<string> ();
-                        do puids.Add (reader ["id"]);
-                        while (reader.ReadToNextSibling ("puid"));
-                        this.puids = puids.AsReadOnly ();
-                    }
-                    break;
-                default:
-                    reader.Skip (); // FIXME this is a workaround for Mono bug 334752
-                    result = false;
-                    break;
+            switch (reader.Name) {
+            case "duration":
+                duration = TimeSpan.FromMilliseconds (reader.ReadElementContentAsDouble ());
+                break;
+            case "release-list":
+                if (reader.ReadToDescendant ("release")) {
+                    List<Release> releases = new List<Release> ();
+                    do releases.Add (new Release (reader.ReadSubtree ()));
+                    while (reader.ReadToNextSibling ("release"));
+                    this.releases = releases.AsReadOnly ();
                 }
+                break;
+            case "puid-list":
+                if (reader.ReadToDescendant ("puid")) {
+                    List<string> puids = new List<string> ();
+                    do puids.Add (reader["id"]);
+                    while (reader.ReadToNextSibling ("puid"));
+                    this.puids = puids.AsReadOnly ();
+                }
+                break;
+            default:
+                base.ProcessXmlCore (reader);
+                break;
             }
-            reader.Close ();
-            return result;
         }
         
         #endregion
 
-        #region Properties
+        #region Public
 
         [Queryable ("trid")]
         public override string Id {
@@ -139,30 +116,33 @@ namespace MusicBrainz
         }
 
         [Queryable ("track")]
-        public override string Title {
-            get { return base.Title; }
+        public override string GetTitle ()
+        {
+            return base.GetTitle ();
         }
 
         [Queryable ("dur")]
-        public uint Duration {
-            get { return duration; }
+        public TimeSpan GetDuration ()
+        {
+            return GetPropertyOrDefault (ref duration);
         }
 
         [QueryableMember ("Contains", "release")]
-        public ReadOnlyCollection<Release> Releases {
-            get { return GetPropertyOrNew (ref releases); }
-
+        public ReadOnlyCollection<Release> GetReleases ()
+        {
+            return GetPropertyOrNew (ref releases);
         }
 
-        public ReadOnlyCollection<string> Puids {
-            get { return GetPropertyOrNew (ref puids); }
+        public ReadOnlyCollection<string> GetPuids ()
+        {
+            return GetPropertyOrNew (ref puids);
         }
 
         public int GetTrackNumber (Release release)
         {
             if (release == null) throw new ArgumentNullException ("release");
             
-            foreach (Release r in Releases)
+            foreach (Release r in GetReleases ())
                 if (r.Equals (release))
                     return r.TrackNumber;
             return -1;
@@ -172,10 +152,10 @@ namespace MusicBrainz
         
         #region Static
 
-        public static Track Get (string mbid)
+        public static Track Get (string id)
         {
-            if (mbid == null) throw new ArgumentNullException ("mbid");
-            return new Track (mbid);
+            if (id == null) throw new ArgumentNullException ("id");
+            return new Track (id);
         }
 
         public static Query<Track> Query (string title)
@@ -187,40 +167,40 @@ namespace MusicBrainz
             return Query (parameters);
         }
 
-        public static Query<Track> Query (string title, string release)
+        public static Query<Track> Query (string title, string artist)
         {
             if (title == null) throw new ArgumentNullException ("title");
-            if (release == null) throw new ArgumentNullException ("release");
-            
-            TrackQueryParameters parameters = new TrackQueryParameters ();
-            parameters.Title = title;
-            parameters.Release = release;
-            return Query (parameters);
-        }
-        
-        public static Query<Track> Query (string title, string release, string artist)
-        {
-            if (title == null) throw new ArgumentNullException ("title");
-            if (release == null) throw new ArgumentNullException ("release");
             if (artist == null) throw new ArgumentNullException ("artist");
             
             TrackQueryParameters parameters = new TrackQueryParameters ();
             parameters.Title = title;
-            parameters.Release = release;
             parameters.Artist = artist;
+            return Query (parameters);
+        }
+        
+        public static Query<Track> Query (string title, string artist, string release)
+        {
+            if (title == null) throw new ArgumentNullException ("title");
+            if (artist == null) throw new ArgumentNullException ("artist");
+            if (release == null) throw new ArgumentNullException ("release");
+            
+            TrackQueryParameters parameters = new TrackQueryParameters ();
+            parameters.Title = title;
+            parameters.Artist = artist;
+            parameters.Release = release;
             return Query (parameters);
         }
 
         public static Query<Track> Query (TrackQueryParameters parameters)
         {
             if (parameters == null) throw new ArgumentNullException ("parameters");
-            return new Query<Track> (EXTENSION, QueryLimit, parameters.ToString ());
+            return new Query<Track> (EXTENSION, parameters.ToString ());
         }
 
         public static Query<Track> QueryLucene (string luceneQuery)
         {
             if(luceneQuery == null) throw new ArgumentNullException ("luceneQuery"); 
-            return new Query<Track> (EXTENSION, QueryLimit, CreateLuceneParameter (luceneQuery));
+            return new Query<Track> (EXTENSION, CreateLuceneParameter (luceneQuery));
         }
 
         public static implicit operator string (Track track)
@@ -266,9 +246,8 @@ namespace MusicBrainz
             set { puid = value; }
         }
 
-        public override string ToString ()
+        internal override void ToStringCore (StringBuilder builder)
         {
-            StringBuilder builder = new StringBuilder ();
             if (release != null) {
                 builder.Append ("&release=");
                 Utils.PercentEncode (builder, release);
@@ -289,8 +268,6 @@ namespace MusicBrainz
                 builder.Append ("&puid=");
                 builder.Append (puid);
             }
-            AppendBaseToBuilder (builder);
-            return builder.ToString ();
         }
     }
     

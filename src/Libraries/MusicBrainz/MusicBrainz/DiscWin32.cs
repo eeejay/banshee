@@ -1,6 +1,4 @@
-#region License
-
-// Win32Disc.cs
+// DiscWin32.cs
 //
 // Copyright (c) 2008 Scott Peterson <lunchtimemama@gmail.com>
 //
@@ -22,8 +20,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#endregion
-
 using System;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -31,17 +27,17 @@ using System.Threading;
 
 namespace MusicBrainz
 {
-    internal sealed class Win32Disc : LocalDisc
+    internal sealed class DiscWin32 : LocalDisc
     {
         [DllImport ("winmm")]
-        static extern Int32 mciSendString (String command, StringBuilder buffer, Int32 bufferSize, IntPtr hwndCallback);
+        static extern Int32 mciSendString ([MarshalAs(UnmanagedType.LPTStr)] String command, [MarshalAs(UnmanagedType.LPTStr)] StringBuilder buffer, Int32 bufferSize, IntPtr hwndCallback);
 
         [DllImport ("winmm")]
-        static extern Int32 mciGetErrorString (Int32 errorCode, StringBuilder errorText, Int32 errorTextSize);
+        static extern Int32 mciGetErrorString (Int32 errorCode, [MarshalAs(UnmanagedType.LPTStr)] StringBuilder errorText, Int32 errorTextSize);
         
         delegate void MciCall (string result);
 
-        internal Win32Disc (string device)
+        internal DiscWin32 (string device)
         {
             string device_string = device.Length == 0 ? "cdaudio" : string.Format ("{0} type cdaudio", device);
 
@@ -53,7 +49,7 @@ namespace MusicBrainz
                 "Could not get the list of CD audio devices",
                 delegate (string result) {
                     if (int.Parse (result.ToString ()) <= 0)
-                        throw new Exception ("No CD audio devices present.");
+                        throw new LocalDiscException ("No CD audio devices present.");
                 });
 
             MciClosure (
@@ -65,8 +61,8 @@ namespace MusicBrainz
                 string.Format ("status {0} number of tracks wait", alias),
                 "Could not read number of tracks",
                 delegate (string result) {
-                    FirstTrack = 1;
-                    LastTrack = byte.Parse (result);
+                    first_track = 1;
+                    last_track = byte.Parse (result);
                 });
 
             MciClosure (
@@ -74,26 +70,26 @@ namespace MusicBrainz
                 "Could not set time format",
                 null);
 
-            for (int i = 1; i <= LastTrack; i++)
+            for (int i = 1; i <= last_track; i++)
                 MciClosure (
                     string.Format ("status {0} position track {1} wait", alias, i),
                     string.Format ("Could not get position for track {0}", i),
                     delegate (string result) {
-                        TrackOffsets [i] =
+                        track_offsets [i] =
                             int.Parse (result.Substring (0,2)) * 4500 +
                             int.Parse (result.Substring (3,2)) * 75 +
                             int.Parse (result.Substring (6,2));
                     });
 
             MciClosure (
-                string.Format ("status {0} length track {1} wait", alias, LastTrack),
+                string.Format ("status {0} length track {1} wait", alias, last_track),
                 "Could not read the length of the last track",
                 delegate (string result) {
-                    TrackOffsets [0] =
+                    track_offsets [0] =
                         int.Parse (result.Substring (0, 2)) * 4500 +
                         int.Parse (result.Substring (3, 2)) * 75 +
                         int.Parse (result.Substring (6, 2)) +
-                        TrackOffsets [LastTrack] + 1;
+                        track_offsets [last_track] + 1;
                 });
 
             MciClosure (
@@ -111,7 +107,7 @@ namespace MusicBrainz
             int ret = mciSendString (command, mci_result, mci_result.Capacity, IntPtr.Zero);
             if (ret != 0) {
                 mciGetErrorString (ret, mci_error, mci_error.Capacity);
-                throw new Exception (string.Format ("{0} : {1}", failure_message, mci_error.ToString ()));
+                throw new LocalDiscException (string.Format ("{0} : {1}", failure_message, mci_error.ToString ()));
             } else if (code != null) code (mci_result.ToString ());
         }
     }

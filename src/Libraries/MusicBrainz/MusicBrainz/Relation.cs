@@ -1,5 +1,3 @@
-#region License
-
 // Relation.cs
 //
 // Copyright (c) 2008 Scott Peterson <lunchtimemama@gmail.com>
@@ -22,9 +20,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#endregion
-
 using System;
+using System.Collections.ObjectModel;
 
 namespace MusicBrainz
 {
@@ -32,7 +29,7 @@ namespace MusicBrainz
     {
         T target;
         string type;
-        string [] attributes;
+        ReadOnlyCollection<string> attributes;
         RelationDirection direction;
         string begin;
         string end;
@@ -45,7 +42,7 @@ namespace MusicBrainz
             this.direction = direction;
             this.begin = begin;
             this.end = end;
-            this.attributes = attributes;
+            this.attributes = new ReadOnlyCollection<string> (attributes ?? new string [0]);
         }
 
         public T Target {
@@ -56,7 +53,7 @@ namespace MusicBrainz
             get { return type; }
         }
 
-        public string [] Attributes {
+        public ReadOnlyCollection<string> Attributes {
             get { return attributes; }
         }
 
@@ -86,7 +83,7 @@ namespace MusicBrainz
         }
     }
 
-    public sealed class UrlRelation : RelationBase<string>
+    public sealed class UrlRelation : RelationBase<Uri>
     {
         internal UrlRelation(string type,
                              string target,
@@ -94,7 +91,7 @@ namespace MusicBrainz
                              string begin,
                              string end,
                              string [] attributes)
-            : base (type, target, direction, begin, end, attributes)
+            : base (type, new Uri (target), direction, begin, end, attributes)
         {
         }
     }

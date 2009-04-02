@@ -1,5 +1,3 @@
-#region License
-
 // Label.cs
 //
 // Copyright (c) 2008 Scott Peterson <lunchtimemama@gmail.com>
@@ -22,8 +20,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#endregion
-
 using System;
 using System.Text;
 using System.Xml;
@@ -43,11 +39,7 @@ namespace MusicBrainz
         
         #region Constructors
 
-        Label (string mbid) : base (mbid, null)
-        {
-        }
-
-        Label (string mbid, string parameters) : base (mbid, parameters)
+        Label (string id) : base (id, null)
         {
         }
 
@@ -59,71 +51,64 @@ namespace MusicBrainz
         
         #region Protected
         
-        protected override string UrlExtension {
+        internal override string UrlExtension {
             get { return EXTENSION; }
         }
 
-        protected override void LoadMissingDataCore ()
+        internal override void LoadMissingDataCore ()
         {
-            Label label = new Label (Id, CreateInc ());
-            type = label.Type;
+            Label label = new Label (Id);
+            type = label.GetLabelType ();
+            country = label.GetCountry ();
             base.LoadMissingDataCore (label);
         }
 
-        protected override bool ProcessAttributes (XmlReader reader)
+        internal override void ProcessAttributes (XmlReader reader)
         {
             type = Utils.StringToEnum<LabelType> (reader ["type"]);
-            return this.type != null;
         }
 
-        protected override bool ProcessXml (XmlReader reader)
+        internal override void ProcessXmlCore (XmlReader reader)
         {
-            reader.Read ();
-            bool result = base.ProcessXml (reader);
-            if (!result) {
-                if (reader.Name == "country") {
-                    result = true;
-                    reader.Read ();
-                    if (reader.NodeType == XmlNodeType.Text)
-                        country = reader.ReadContentAsString ();
-                } else reader.Skip (); // FIXME this is a workaround for Mono bug 334752
-            }
-            reader.Close ();
-            return result;
+            if (reader.Name == "country") {
+                country = reader.ReadString ();
+            } else base.ProcessXmlCore (reader);
         }
         
         #endregion
 
-        #region Properties
+        #region Public
         
-        public string Country {
-            get { return GetPropertyOrNull (ref country); }
+        public string GetCountry ()
+        {
+            return GetPropertyOrNull (ref country);
         }
 
-        public LabelType Type {
-            get { return GetPropertyOrDefault (ref type, LabelType.None); }
+        public LabelType GetLabelType ()
+        {
+            return GetPropertyOrDefault (ref type, LabelType.None);
         }
         
         #endregion
         
         #region Static
 
-        public static Label Get (string mbid)
+        public static Label Get (string id)
         {
-            if (mbid == null) throw new ArgumentNullException ("mbid");
-            return new Label (mbid);
+            if (id == null) throw new ArgumentNullException ("id");
+            return new Label (id);
         }
 
         public static Query<Label> Query (string name)
         {
             if (name == null) throw new ArgumentNullException ("name");
-            return new Query<Label> (EXTENSION, QueryLimit, CreateNameParameter (name));
+            return new Query<Label> (EXTENSION, CreateNameParameter (name));
         }
 
         public static Query<Label> QueryLucene (string luceneQuery)
         {
             if (luceneQuery == null) throw new ArgumentNullException ("luceneQuery");
-            return new Query<Label> (EXTENSION, QueryLimit, CreateLuceneParameter (luceneQuery));
+            return new Query<Label> (EXTENSION, CreateLuceneParameter (luceneQuery));
         }
 
         public static implicit operator string (Label label)

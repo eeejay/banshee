@@ -1,5 +1,3 @@
-#region License
-
 // MusicBrainzItem.cs
 //
 // Copyright (c) 2008 Scott Peterson <lunchtimemama@gmail.com>
@@ -22,8 +20,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#endregion
-
 using System;
 using System.Text;
 using System.Xml;
@@ -43,7 +39,7 @@ namespace MusicBrainz
         
         #region Constructors
         
-        internal MusicBrainzItem (string mbid, string parameters) : base (mbid, parameters)
+        internal MusicBrainzItem (string id) : base (id, null)
         {
         }
 
@@ -56,54 +52,48 @@ namespace MusicBrainz
         
         #region Protected Overrides
 
-        protected override void CreateIncCore (StringBuilder builder)
+        internal override void CreateIncCore (StringBuilder builder)
         {
             if (artist == null) AppendIncParameters(builder, "artist");
             base.CreateIncCore (builder);
         }
 
-        protected void LoadMissingDataCore (MusicBrainzItem item)
+        internal void LoadMissingDataCore (MusicBrainzItem item)
         {
-            title = item.Title;
-            if (artist == null) artist = item.Artist;
+            title = item.GetTitle ();
+            if (artist == null) artist = item.GetArtist ();
             base.LoadMissingDataCore (item);
         }
 
-        protected override bool ProcessXml (XmlReader reader)
+        internal override void ProcessXmlCore (XmlReader reader)
         {
-            bool result = true;
             switch (reader.Name) {
             case "title":
-                reader.Read ();
-                if (reader.NodeType == XmlNodeType.Text)
-                    title = reader.ReadContentAsString ();
+                title = reader.ReadString ();
                 break;
             case "artist":
                 artist = new Artist (reader.ReadSubtree ());
                 break;
             default:
-                result = false;
+                base.ProcessXmlCore (reader);
                 break;
             }
-            return result;
-        }
-        
-        #endregion
-
-        #region Properties
-        
-        public virtual string Title {
-            get { return GetPropertyOrNull (ref title); }
-        }
-
-        [Queryable ("artist")]
-        public virtual Artist Artist {
-            get { return GetPropertyOrNull (ref artist); }
         }
         
         #endregion
 
         #region Public
+        
+        public virtual string GetTitle ()
+        {
+            return GetPropertyOrNull (ref title);
+        }
+
+        [Queryable ("artist")]
+        public virtual Artist GetArtist ()
+        {
+            return GetPropertyOrNull (ref artist);
+        }
         
         public override string ToString ()
         {
@@ -158,8 +148,12 @@ namespace MusicBrainz
             set { count = value; }
         }
 
-        protected void AppendBaseToBuilder (StringBuilder builder)
+        internal abstract void ToStringCore (StringBuilder builder);
+        
+        public override string ToString ()
         {
+            StringBuilder builder = new StringBuilder ();
+            ToStringCore (builder);
             if (title != null) {
                 builder.Append ("&title=");
                 Utils.PercentEncode (builder, title);
@@ -184,6 +178,7 @@ namespace MusicBrainz
                 builder.Append ("&count=");
                 builder.Append (count.Value);
             }
+            return builder.ToString ();
         }
     }
     
