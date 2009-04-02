@@ -82,6 +82,7 @@ namespace Banshee.Dap.Ipod
                 LastPlayed = track.LastPlayed;
                 LastSkipped = track.LastSkipped;
                 PlayCount = track.PlayCount;
+                Rating = track.Rating;
                 ReleaseDate = track.ReleaseDate;
                 SkipCount = track.SkipCount;
                 TrackCount = track.TrackCount;
