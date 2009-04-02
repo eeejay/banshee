@@ -99,6 +99,7 @@ namespace Banshee.Collection.Gui
         private void CreateDefaultColumns ()
         {
             indicator_column = new Column (null, "indicator", new ColumnCellStatusIndicator (null), 0.05, true, 30, 30);
+            indicator_column.Title = String.Empty;
 
             // Visible-by-default column
             track_column        = Create (BansheeQuery.TrackNumberField, 0.10, true, new ColumnCellTrackNumber (null, true));
