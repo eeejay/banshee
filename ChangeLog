@@ -1,3 +1,7 @@
+2009-04-01  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* libbanshee/banshee-bpmdetector.c: Fix warnings.
+
 2009-03-31  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
 	* src/Core/Banshee.Core/Banshee.Base/Localization.cs: Reduce startup

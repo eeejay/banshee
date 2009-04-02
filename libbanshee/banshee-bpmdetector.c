@@ -48,9 +48,12 @@ typedef void (* BansheeBpmDetectorErrorCallback)    (const gchar *error, const g
 struct BansheeBpmDetector {
     gboolean is_detecting;
 
-    // You can run this pipeline on the cmd line with:
-    //   gst-launch -m filesrc location=/path/to/my.mp3 ! decodebin ! \
-    //     audioconvert ! bpmdetect ! fakesink
+    /*
+     * You can run this pipeline on the cmd line with:
+     * gst-launch -m filesrc location=/path/to/my.mp3 ! decodebin ! \
+     *    audioconvert ! bpmdetect ! fakesink
+     */
+
     GstElement *pipeline;
     GstElement *filesrc;
     GstElement *decodebin;
@@ -290,7 +293,7 @@ gboolean
 bbd_process_file (BansheeBpmDetector *detector, const gchar *path)
 {
     static GstFormat format = GST_FORMAT_TIME;
-    gint64 duration, duration_ms, start_ms, end_ms;
+    //gint64 duration, duration_ms, start_ms, end_ms;
 
     g_return_val_if_fail (detector != NULL, FALSE);
 
