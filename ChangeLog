@@ -1,5 +1,17 @@
 2009-04-02  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Core/Banshee.Streaming/StreamTagger.cs: Patch from
+	Alexander Kojevnikov working around issue in TagLib# where it
+	miscalculates the bitrate for VBR tracks if the duration isn't set
+	yet (BGO #562582)
+
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	Bump the metadata version to trigger a refresh.  Users of trunk will get
+	yet another refresh, where users coming from 1.4 won't see a difference;
+	they already were going to get a refresh.
+
+2009-04-02  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	Updated to latest MusicBrainz# courtesy of Scott Peterson and Tom Corner.
 
 	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdDiscModel.cs:

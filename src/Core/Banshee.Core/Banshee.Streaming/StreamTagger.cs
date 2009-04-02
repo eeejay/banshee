@@ -134,8 +134,8 @@ namespace Banshee.Streaming
             if (file != null) {
                 track.Uri = new SafeUri (file.Name);
                 track.MimeType = file.MimeType;
-                track.BitRate  = file.Properties.AudioBitrate;
                 track.Duration = file.Properties.Duration;
+                track.BitRate  = file.Properties.AudioBitrate;
                 
                 FindTrackMediaAttributes (track, file);
     

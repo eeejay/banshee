@@ -54,7 +54,7 @@ namespace Banshee.Database
         //       this version MUST be incremented and a migration method
         //       MUST be supplied to match the new version number
         protected const int CURRENT_VERSION = 30;
-        protected const int CURRENT_METADATA_VERSION = 5;
+        protected const int CURRENT_METADATA_VERSION = 6;
         
 #region Migration Driver
         
