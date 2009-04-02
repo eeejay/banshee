@@ -1,3 +1,9 @@
+2009-04-02  Alexander Kojevnikov  <alexander@kojevnikov.com>
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Header.cs:
+	Allowing to resize track list view columns as long as one column to the
+	left and to the right is not fixed-width (BGO #538085)
+
 2009-04-02  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade: Improve

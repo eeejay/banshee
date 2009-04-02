@@ -312,6 +312,15 @@ namespace Hyena.Data.Gui
             CachedColumn resizing_column = column_cache[resizing_column_index];
             double resize_delta = x - resizing_column.ResizeX2;
 
+            // If this column cannot be resized, check the columns to the left.
+            int real_resizing_column_index = resizing_column_index;
+            while (resizing_column.MinWidth == resizing_column.MaxWidth) {
+                if (real_resizing_column_index == 0) {
+                    return;
+                }
+                resizing_column = column_cache[--real_resizing_column_index];
+            }
+
             // Make sure the resize_delta won't make us smaller than the min
             if (resizing_column.Width + resize_delta < resizing_column.MinWidth) {
                 resize_delta = resizing_column.MinWidth - resizing_column.Width;
@@ -330,7 +339,7 @@ namespace Hyena.Data.Gui
             resize_delta = Math.Abs (resize_delta);
             double total_elastic_width = 0.0;
             
-            for (int i = resizing_column_index + 1; i < column_cache.Length; i++) {
+            for (int i = real_resizing_column_index + 1; i < column_cache.Length; i++) {
                 total_elastic_width += column_cache[i].ElasticWidth = sign == 1
                     ? column_cache[i].Width - column_cache[i].MinWidth
                     : column_cache[i].MaxWidth - column_cache[i].Width;
@@ -347,7 +356,7 @@ namespace Hyena.Data.Gui
             // Convert to a proprotional width
             resize_delta = sign * resize_delta / (double)header_width;
             
-            for (int i = resizing_column_index + 1; i < column_cache.Length; i++) {
+            for (int i = real_resizing_column_index + 1; i < column_cache.Length; i++) {
                 column_cache[i].Column.Width += -resize_delta * (column_cache[i].ElasticWidth / total_elastic_width);
             }
             
@@ -369,13 +378,37 @@ namespace Hyena.Data.Gui
                 if (x < column_cache[i].ResizeX1 - 2) {
                     // No point in checking other columns since their ResizeX1 are even larger
                     break;
-                } else if (x <= column_cache[i].ResizeX2 + 2 &&
-                    column_cache[i].Column.MaxWidth != column_cache[i].Column.MinWidth) {
+                } else if (x <= column_cache[i].ResizeX2 + 2 && CanResizeColumn (i)) {
                     return column_cache[i].Column;
                 }
             }
 
             return null;
+        }
+
+        private bool CanResizeColumn (int column_index)
+        {
+            // At least one column to the left (including the one being resized) should be resizable.
+            bool found = false;
+            for (int i = column_index; i >= 0 ; i--) {
+                if (column_cache[i].Column.MaxWidth != column_cache[i].Column.MinWidth) {
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found) {
+                return false;
+            }
+
+            // At least one column to the right should be resizable as well.
+            for (int i = column_index + 1; i < column_cache.Length; i++) {
+                if (column_cache[i].Column.MaxWidth != column_cache[i].Column.MinWidth) {
+                    return true;
+                }
+            }
+
+            return false;
         }
         
         private Column GetColumnAt (int x)
