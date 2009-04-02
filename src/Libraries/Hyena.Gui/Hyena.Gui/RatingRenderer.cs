@@ -52,8 +52,8 @@ namespace Hyena.Gui
         {
         }
         
-        public virtual void Render (Context cr, Gdk.Rectangle area, Color color, bool isHovering, int hoverValue, 
-            double fillOpacity, double hoverFillOpacity, double strokeOpacity)
+        public virtual void Render (Context cr, Gdk.Rectangle area, Color color, bool showEmptyStars, bool isHovering,
+            int hoverValue, double fillOpacity, double hoverFillOpacity, double strokeOpacity)
         {
             if (!(Value > MinRating || (Value == MinRating && isHovering))) {
                 return;
@@ -72,7 +72,7 @@ namespace Hyena.Gui
             cr.LineWidth = 1.0;
             cr.Translate (0.5, 0.5);
                     
-            for (int i = MinRating + 1, s = isHovering ? MaxRating : Value; i <= s; i++, x += Size) {
+            for (int i = MinRating + 1, s = isHovering || showEmptyStars ? MaxRating : Value; i <= s; i++, x += Size) {
                 bool fill = i <= Value && Value > MinRating;
                 bool hover_fill = i <= hoverValue && hoverValue > MinRating;
                 double scale = fill || hover_fill ? Size : Size - 2;
@@ -90,7 +90,11 @@ namespace Hyena.Gui
                 cr.ClosePath ();
                 
                 if (fill || hover_fill) {
-                    cr.Color = fill ? fill_color : hover_fill_color;
+                    if (!isHovering || hoverValue >= Value) {
+                        cr.Color = fill ? fill_color : hover_fill_color;
+                    } else {
+                        cr.Color = hover_fill ? fill_color : hover_fill_color;
+                    }
                     cr.Fill ();
                 } else {
                     cr.Color = stroke_color;

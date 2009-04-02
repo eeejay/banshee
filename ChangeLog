@@ -1,3 +1,10 @@
+2009-04-02  Alexander Kojevnikov  <alexander@kojevnikov.com>
+
+	* src/Libraries/Hyena.Gui/Hyena.Data.Gui/ColumnCellRating.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Gui/RatingRenderer.cs:
+	* src/Libraries/Hyena.Gui/Hyena.Widgets/RatingEntry.cs: Changed the
+	RatingEntry widget to make it easier to edit and reset the ratings.
+
 2009-04-02  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Core/Banshee.Streaming/StreamTagger.cs: Patch from
