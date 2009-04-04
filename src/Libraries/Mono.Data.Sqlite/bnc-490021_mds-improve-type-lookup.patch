@@ -1,0 +1,131 @@
+Index: Mono.Data.Sqlite/SQLiteConvert.cs
+===================================================================
+--- Mono.Data.Sqlite/SQLiteConvert.cs	(revision 130492)
++++ Mono.Data.Sqlite/SQLiteConvert.cs	(working copy)
+@@ -125,18 +125,6 @@
+     internal TypeAffinity Affinity;
+   }
+ 
+-  internal struct SqliteTypeNames
+-  {
+-    internal SqliteTypeNames(string newtypeName, DbType newdataType)
+-    {
+-      typeName = newtypeName;
+-      dataType = newdataType;
+-    }
+-
+-    internal string typeName;
+-    internal DbType dataType;
+-  }
+-
+   /// <summary>
+   /// This base class provides datatype conversion services for the Sqlite provider.
+   /// </summary>
+@@ -591,60 +579,58 @@
+     {
+       if (String.IsNullOrEmpty(Name)) return DbType.Object;
+ 
+-      int x = _typeNames.Length;
+-      for (int n = 0; n < x; n++)
+-      {
+-        if (String.Compare(Name, 0, _typeNames[n].typeName, 0, _typeNames[n].typeName.Length, true, CultureInfo.InvariantCulture) == 0)
+-          return _typeNames[n].dataType; 
++      DbType t;
++      if (_typeNames.TryGetValue(Name, out t)) {
++        return t;
+       }
+       return DbType.Object;
+     }
+     #endregion
+ 
+-    private static SqliteTypeNames[] _typeNames = {
+-      new SqliteTypeNames("COUNTER", DbType.Int64),
+-      new SqliteTypeNames("AUTOINCREMENT", DbType.Int64),
+-      new SqliteTypeNames("IDENTITY", DbType.Int64),
+-      new SqliteTypeNames("LONGTEXT", DbType.String),
+-      new SqliteTypeNames("LONGCHAR", DbType.String),
+-      new SqliteTypeNames("LONGVARCHAR", DbType.String),
+-      new SqliteTypeNames("LONG", DbType.Int64),
+-      new SqliteTypeNames("TINYINT", DbType.Byte),
+-      new SqliteTypeNames("INTEGER", DbType.Int64),
+-      new SqliteTypeNames("INT", DbType.Int32),
+-      new SqliteTypeNames("VARCHAR", DbType.String),
+-      new SqliteTypeNames("NVARCHAR", DbType.String),
+-      new SqliteTypeNames("CHAR", DbType.String),
+-      new SqliteTypeNames("NCHAR", DbType.String),
+-      new SqliteTypeNames("TEXT", DbType.String),
+-      new SqliteTypeNames("NTEXT", DbType.String),
+-      new SqliteTypeNames("STRING", DbType.String),
+-      new SqliteTypeNames("DOUBLE", DbType.Double),
+-      new SqliteTypeNames("FLOAT", DbType.Double),
+-      new SqliteTypeNames("REAL", DbType.Single),          
+-      new SqliteTypeNames("BIT", DbType.Boolean),
+-      new SqliteTypeNames("YESNO", DbType.Boolean),
+-      new SqliteTypeNames("LOGICAL", DbType.Boolean),
+-      new SqliteTypeNames("BOOL", DbType.Boolean),
+-      new SqliteTypeNames("NUMERIC", DbType.Decimal),
+-      new SqliteTypeNames("DECIMAL", DbType.Decimal),
+-      new SqliteTypeNames("MONEY", DbType.Decimal),
+-      new SqliteTypeNames("CURRENCY", DbType.Decimal),
+-      new SqliteTypeNames("TIME", DbType.DateTime),
+-      new SqliteTypeNames("DATE", DbType.DateTime),
+-      new SqliteTypeNames("SMALLDATE", DbType.DateTime),
+-      new SqliteTypeNames("BLOB", DbType.Binary),
+-      new SqliteTypeNames("BINARY", DbType.Binary),
+-      new SqliteTypeNames("VARBINARY", DbType.Binary),
+-      new SqliteTypeNames("IMAGE", DbType.Binary),
+-      new SqliteTypeNames("GENERAL", DbType.Binary),
+-      new SqliteTypeNames("OLEOBJECT", DbType.Binary),
+-      new SqliteTypeNames("GUID", DbType.Guid),
+-      new SqliteTypeNames("UNIQUEIDENTIFIER", DbType.Guid),
+-      new SqliteTypeNames("MEMO", DbType.String),
+-      new SqliteTypeNames("NOTE", DbType.String),
+-      new SqliteTypeNames("SMALLINT", DbType.Int16),
+-      new SqliteTypeNames("BIGINT", DbType.Int64),
++    private static Dictionary<string, DbType> _typeNames = new Dictionary<string, DbType>(StringComparer.InvariantCultureIgnoreCase) {
++      {"COUNTER", DbType.Int64},
++      {"AUTOINCREMENT", DbType.Int64},
++      {"IDENTITY", DbType.Int64},
++      {"LONGTEXT", DbType.String},
++      {"LONGCHAR", DbType.String},
++      {"LONGVARCHAR", DbType.String},
++      {"LONG", DbType.Int64},
++      {"TINYINT", DbType.Byte},
++      {"INTEGER", DbType.Int64},
++      {"INT", DbType.Int32},
++      {"VARCHAR", DbType.String},
++      {"NVARCHAR", DbType.String},
++      {"CHAR", DbType.String},
++      {"NCHAR", DbType.String},
++      {"TEXT", DbType.String},
++      {"NTEXT", DbType.String},
++      {"STRING", DbType.String},
++      {"DOUBLE", DbType.Double},
++      {"FLOAT", DbType.Double},
++      {"REAL", DbType.Single},
++      {"BIT", DbType.Boolean},
++      {"YESNO", DbType.Boolean},
++      {"LOGICAL", DbType.Boolean},
++      {"BOOL", DbType.Boolean},
++      {"NUMERIC", DbType.Decimal},
++      {"DECIMAL", DbType.Decimal},
++      {"MONEY", DbType.Decimal},
++      {"CURRENCY", DbType.Decimal},
++      {"TIME", DbType.DateTime},
++      {"DATE", DbType.DateTime},
++      {"SMALLDATE", DbType.DateTime},
++      {"BLOB", DbType.Binary},
++      {"BINARY", DbType.Binary},
++      {"VARBINARY", DbType.Binary},
++      {"IMAGE", DbType.Binary},
++      {"GENERAL", DbType.Binary},
++      {"OLEOBJECT", DbType.Binary},
++      {"GUID", DbType.Guid},
++      {"UNIQUEIDENTIFIER", DbType.Guid},
++      {"MEMO", DbType.String},
++      {"NOTE", DbType.String},
++      {"SMALLINT", DbType.Int16},
++      {"BIGINT", DbType.Int64},
+     };
+   }
+ }
