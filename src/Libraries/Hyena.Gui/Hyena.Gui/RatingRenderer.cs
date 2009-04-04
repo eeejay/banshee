@@ -55,7 +55,7 @@ namespace Hyena.Gui
         public virtual void Render (Context cr, Gdk.Rectangle area, Color color, bool showEmptyStars, bool isHovering,
             int hoverValue, double fillOpacity, double hoverFillOpacity, double strokeOpacity)
         {
-            if (!(Value > MinRating || (Value == MinRating && isHovering))) {
+            if (Value == MinRating && !isHovering && !showEmptyStars) {
                 return;
             }
             

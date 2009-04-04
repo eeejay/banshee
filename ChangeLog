@@ -1,3 +1,8 @@
+2009-04-04  Alexander Kojevnikov  <alexander@kojevnikov.com>
+
+	* src/Libraries/Hyena.Gui/Hyena.Gui/RatingRenderer.cs: Fixed zero rating
+	display in the main menu (BGO #577835)
+
 2009-04-03  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Libraries/Mono.Data.Sqlite/Mono.Data.Sqlite/SQLiteConvert.cs:
