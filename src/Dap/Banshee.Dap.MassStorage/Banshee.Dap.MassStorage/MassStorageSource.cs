@@ -483,7 +483,7 @@ namespace Banshee.Dap.MassStorage
                             cover_art_file.Write (bytes, 0, bytes.Length);
                             cover_art_file.Close ();
                         } catch (GLib.GException){
-                            Log.DebugFormat ("Could convert cover art to {0}, unsupported filetype?", CoverArtFileType);
+                            Log.DebugFormat ("Could not convert cover art to {0}, unsupported filetype?", CoverArtFileType);
                         } finally {
                             Banshee.Collection.Gui.ArtworkManager.DisposePixbuf (pic);
                         }

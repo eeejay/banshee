@@ -1,3 +1,8 @@
+2009-04-05  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
+
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:
+	Fix confusing typo in debug message.
+
 2009-04-04  Alexander Kojevnikov  <alexander@kojevnikov.com>
 
 	* src/Libraries/Hyena.Gui/Hyena.Gui/RatingRenderer.cs: Fixed zero rating
