@@ -172,6 +172,8 @@ docs/Banshee/Makefile
 po/Makefile.in
 
 tests/Makefile
+tests/Analyzer/Makefile
+tests/Performance/Makefile
 
 extras/Makefile
 

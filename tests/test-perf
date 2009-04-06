@@ -1,0 +1,165 @@
+#!/usr/bin/perl
+
+#
+# test-perf
+#
+# Author:
+#   Gabriel Burt <gburt@novell.com>
+#
+# Copyright (C) 2009 Novell, Inc.
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# "Software"), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+#
+
+use strict;
+
+chomp(my $pwd = `pwd`);
+chdir "../bin" || die "couldn't cd ../bin";
+
+my $RUNS_PER_TEST = 3;
+my $ENV_OPTIONS = "TZ=America/Chicago LC_ALL=it_IT LANG=it_IT";
+my $original_rev = current_rev();
+
+sub current_rev {
+    my $current_rev = `git rev-parse \@\{0\};`;
+    chomp($current_rev);
+    return $current_rev;
+}
+
+sub usage {
+    print "test-perf [--name=NAME] [SHORT-NAME=GIT-REV | GIT-REV | GIT-REV-EXPR]...\n\n";
+    print "  NAME specifies the directory that the NUnit xml results will be placed in\n";
+    print "  SHORT-NAME lets you alias a git revision\n\n";
+    print "  GIT-REV and GIT-REV-EXPR must be parsable by git rev-parse\n\n";
+    print "  Examples:\n\n";
+    print "     test-perf --name=a-vs-b a=HEAD~3 b=34e934\n";
+    print "     test-perf HEAD~3 34e934 # same as above, just without nice aliases\n";
+    print "     test-perf\n";
+    exit;
+}
+
+my $run_name = "results";
+my %revisions;
+my @ordered_revisions;
+my $rev_count = 0;
+foreach my $in (@ARGV) {
+    if ($in =~ m/--help/) {
+        usage ();
+    } elsif ($in =~ m/^--name=(\S+)$/) {
+        $run_name = $1;
+    } elsif ($in =~ m/^(\S+)=(\S+)$/) {
+        my $rev = `git rev-parse $2`;
+        chomp $rev;
+        $revisions{$1} = $rev;
+        push @ordered_revisions, $1;
+        $rev_count++;
+    } else {
+        my @expanded = `git rev-parse $in`;
+        foreach my $rev (@expanded) {
+            chomp $rev;
+            my $key = length(@expanded) == 1 ? $in : $rev;
+            $revisions{$key} = $rev;
+            push @ordered_revisions, $key;
+            $rev_count++;
+        }
+    }
+}
+
+if ($rev_count == 0) {
+    usage ();
+}
+
+print "Will test:\n";
+foreach my $key (@ordered_revisions) {
+    my $val = $revisions{$key};
+    if ($key eq $val) {
+        print "  $val\n";
+    } else {
+        print "  $val ($key)\n";
+    }
+}
+print "\n";
+
+my $results_dir = "$pwd/$run_name";
+print "Warning: results dir $results_dir already exists\n\n" if -d $results_dir;
+`mkdir -p $results_dir`;
+
+# Backup the database so we can restore it after each test
+`cp ~/.config/banshee-1/banshee.db ~/.config/banshee-1/banshee.db.bak`;
+
+foreach my $rev_name (@ordered_revisions) {
+    print "* $rev_name\n";
+
+    my $rev = $revisions{$rev_name};
+    my $rev_dir = "$results_dir/$rev_name";
+
+    if (-d $rev_dir) {
+        print "  - Removing existing results dir ($rev_dir)\n";
+        unlink $rev_dir;
+    }
+    mkdir $rev_dir;
+
+    # TODO output these as well ?
+    # load
+    # hwinfo --cpu
+    # hwinfo --memory
+    # $(BUILD_VENDOR_ID)
+    # $(BUILD_HOST_OS)
+    # $(BUILD_HOST_CPU)
+    # $(BUILD_TIME)
+    # put a chronologically-ordered identifier for this commit into its result dir (run-info file)
+    my $alias = $rev_name eq $rev ? "" : " $rev_name";
+    my $info = `git rev-list -n 1 --pretty=format:"%ai %h %at" $rev | grep -v commit`;
+    $info =~ s/^(\S+)\s+\S+\s+\S+\s+(\S+)\s+(\S+)$/$1 $2$alias\n$3/;
+    chomp($info);
+    `echo "$info" > $rev_dir/run-info`;
+
+    chdir "..";
+
+    my $cur = current_rev ();
+    if ($rev ne current_rev()) {
+        print "  - Checking out\n";
+        `git checkout $rev >/dev/null`;
+        print "  - Building $rev_name\n";
+    } else {
+        print "  - Building $rev_name\n";
+    }
+
+    my $make_ret = `make`;
+    chdir "bin";
+    `cp ../tests/Performance/Performance.dll .`;
+
+    print "  - Testing $rev_name\n";
+    #foreach my $asm (glob("*.dll"))
+    foreach my $asm (glob("Performance.dll")) {
+        for (my $i = 0; $i < $RUNS_PER_TEST; $i++) {
+            `$ENV_OPTIONS nunit-console2 -nologo -noshadow -xml=$rev_dir/$i-$asm.xml $asm 2>/dev/null`;
+            `cp ~/.config/banshee-1/banshee.db.bak ~/.config/banshee-1/banshee.db`;
+        }
+    }
+
+    print "\n\n";
+}
+
+if (current_rev () ne $original_rev) {
+    `git checkout $original_rev`;
+}
+
+print "Output is in $run_name/\n";

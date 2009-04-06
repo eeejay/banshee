@@ -1,5 +1,8 @@
 include $(top_srcdir)/build/build.environment.mk
 
+SUBDIRS = \
+	Analyzer
+
 if ENABLE_TESTS
 
 TEST_ASSEMBLIES = \

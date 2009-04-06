@@ -1,0 +1,1 @@
+MONO_PATH=../bin/ mono Analyzer/Analyzer.exe $@

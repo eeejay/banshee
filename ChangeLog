@@ -1,3 +1,15 @@
+2009-04-06  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* configure.ac:
+	* tests/Analyzer/Analyzer.cs:
+	* tests/Analyzer/Makefile.am:
+	* tests/Makefile.am:
+	* tests/Performance/Makefile.am:
+	* tests/Performance/PerformanceTests.cs:
+	* tests/compare-perf-results:
+	* tests/test-perf: New scripts and tests for testing and comparing
+	performance across commits.
+
 2009-04-05  Bertrand Lorentz  <bertrand.lorentz@gmail.com>
 
 	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:
