@@ -72,6 +72,7 @@ namespace Hyena.Data.Sqlite
             closed = false;
             current_row = -1;
             ReadAllRows (reader);
+            reader.Dispose ();
         }
 
         #endregion

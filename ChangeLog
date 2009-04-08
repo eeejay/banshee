@@ -1,5 +1,10 @@
 2009-04-08  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/HyenaSqliteArrayDataReader.cs:
+	Dispose underlying reader after reading in all its values.
+
+2009-04-08  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Libraries/Hyena/Hyena.Data.Sqlite/HyenaSqliteConnection.cs: Remove
 	old comment about how to fix the transactions code.
 
