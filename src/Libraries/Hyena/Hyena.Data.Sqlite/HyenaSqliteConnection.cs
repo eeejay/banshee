@@ -238,17 +238,6 @@ namespace Hyena.Data.Sqlite
 
 #region Public Utility Methods
         
-        // FIXME these are commented out because they can cause deadlock if one thread
-        // starts a transaction, then another one tries to execute command A (which locks A) but
-        // waits for the transaction to finish while holding the lock on A.  If the transaction thread
-        // then tries to execute/lock A, it can't.
-        //
-        // I think the way to fix this is to change all the Query/Execute methods above to not lock
-        // the command themselves, but to let that happen in the QueueCommand method (which can be modified
-        // to either take a param_values array and a HyenaCommandType, or have overrides, etc).  That way
-        // the command locking and values applied only when we know the calling thread is not blocking by a
-        // transaction thread.
-        //
         public void BeginTransaction ()
         {
             if (transaction_thread == Thread.CurrentThread) {
