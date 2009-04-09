@@ -1,5 +1,9 @@
 2009-04-08  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* tests/Analyzer/Analyzer.cs: Fix warnings.
+
+2009-04-08  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Libraries/Mono.Data.Sqlite/Mono.Data.Sqlite/SQLite3.cs:
 	* src/Libraries/Mono.Data.Sqlite/Mono.Data.Sqlite/SQLiteBase.cs:
 	* src/Libraries/Mono.Data.Sqlite/Mono.Data.Sqlite/SQLiteCommand.cs:

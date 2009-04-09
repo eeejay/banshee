@@ -74,21 +74,14 @@ namespace Banshee.Tests
                 //ConsoleCrayon.ResetColor ();
 
                 foreach (var tests in unique_tests) {
-                    var count = tests.Count ();
-                    var avg = tests.Average (t => t.Avg);
-                    var min = tests.Min (t => t.Min);
-                    var max = tests.Max (t => t.Max);
-
                     Console.Write ("    {0,-36}", tests.Key);
                     Console.WriteLine ();
 
                     bool first = true;
-                    double first_min = 0, first_avg = 0, first_max = 0;
+                    double first_avg = 0;
                     foreach (var test in tests.OrderBy (t => t.RunTime)) {
                         if (first) {
-                            first_min = test.Min;
                             first_avg = test.Avg;
-                            first_max = test.Max;
                             first = false;
                         }
 
