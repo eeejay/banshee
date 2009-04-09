@@ -1,5 +1,11 @@
 2009-04-08  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Libraries/Mono.Data.Sqlite/bnc-490021_mds-even-better.patch:
+	* src/Libraries/Mono.Data.Sqlite/Mono.Data.Sqlite/SQLiteConvert.cs:
+	Building on Bertrand's patch, improve performance even more.
+
+2009-04-08  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/tests/Performance/Makefile.am: Also build an exe, useful for
 	drilling into a performance problem with mono --profile.
 

@@ -582,12 +582,16 @@ namespace Mono.Data.Sqlite
       DbType t;
       if (_typeNames.TryGetValue(Name, out t)) {
         return t;
+      } else if (_typeNames.TryGetValue (Name.ToUpperInvariant (), out t)) {
+        _typeNames[Name] = t;
+        return t;
       }
       return DbType.Object;
     }
     #endregion
 
-    private static Dictionary<string, DbType> _typeNames = new Dictionary<string, DbType>(StringComparer.InvariantCultureIgnoreCase) {
+    // All the strings below must be uppercase
+    private static Dictionary<string, DbType> _typeNames = new Dictionary<string, DbType>() {
       {"COUNTER", DbType.Int64},
       {"AUTOINCREMENT", DbType.Int64},
       {"IDENTITY", DbType.Int64},
