@@ -587,7 +587,7 @@ namespace Mono.Data.Sqlite
 
         if (_cnn._sql.Step(stmt) == true && ret == null)
         {
-          ret = _cnn._sql.GetValue(stmt, 0, ref typ);
+          ret = _cnn._sql.GetValue(stmt, 0, typ);
         }
         _cnn._sql.Reset(stmt);
       }

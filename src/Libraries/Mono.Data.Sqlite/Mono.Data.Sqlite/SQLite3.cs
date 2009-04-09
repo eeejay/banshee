@@ -633,7 +633,7 @@ namespace Mono.Data.Sqlite
     /// <param name="index">The column index to retrieve</param>
     /// <param name="typ">The type of data contained in the column.  If Uninitialized, this function will retrieve the datatype information.</param>
     /// <returns>Returns the data in the column</returns>
-    internal override object GetValue(SqliteStatement stmt, int index, ref SqliteType typ)
+    internal override object GetValue(SqliteStatement stmt, int index, SqliteType typ)
     {
       if (typ.Affinity == 0) typ = SqliteConvert.ColumnToType(stmt, index);
       if (IsNull(stmt, index)) return DBNull.Value;

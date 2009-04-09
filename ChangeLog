@@ -1,5 +1,15 @@
 2009-04-08  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Libraries/Mono.Data.Sqlite/Mono.Data.Sqlite/SQLite3.cs:
+	* src/Libraries/Mono.Data.Sqlite/Mono.Data.Sqlite/SQLiteBase.cs:
+	* src/Libraries/Mono.Data.Sqlite/Mono.Data.Sqlite/SQLiteCommand.cs:
+	* src/Libraries/Mono.Data.Sqlite/Mono.Data.Sqlite/SQLiteConvert.cs:
+	* src/Libraries/Mono.Data.Sqlite/Mono.Data.Sqlite/SQLiteDataReader.cs:
+	Performance fixes ported from upstream System.Data.Sqlite, making SqliteType
+	a class (not struct) and avoid unnecessary calls to TypeNameToDbType.
+
+2009-04-08  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Libraries/Mono.Data.Sqlite/bnc-490021_mds-even-better.patch:
 	* src/Libraries/Mono.Data.Sqlite/Mono.Data.Sqlite/SQLiteConvert.cs:
 	Building on Bertrand's patch, improve performance even more.

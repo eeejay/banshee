@@ -179,7 +179,7 @@ namespace Mono.Data.Sqlite
 
     internal abstract int GetLastInsertRowId ();
     
-    internal abstract object GetValue(SqliteStatement stmt, int index, ref SqliteType typ);
+    internal abstract object GetValue(SqliteStatement stmt, int index, SqliteType typ);
 
     protected virtual void Dispose(bool bDisposing)
     {

@@ -836,7 +836,7 @@ namespace Mono.Data.Sqlite
 #endif
       SqliteType typ = GetSqliteType(i);
       typ.Affinity = _activeStatement._sql.ColumnAffinity(_activeStatement, i);
-      return _activeStatement._sql.GetValue(_activeStatement, i, ref typ);
+      return _activeStatement._sql.GetValue(_activeStatement, i, typ);
     }
 
     /// <summary>
@@ -986,11 +986,24 @@ namespace Mono.Data.Sqlite
     /// <returns>A SqliteType structure</returns>
     private SqliteType GetSqliteType(int i)
     {
+      SqliteType typ;
+
+      // Initialize the field types array if not already initialized
       if (_fieldTypeArray == null) _fieldTypeArray = new SqliteType[VisibleFieldCount];
 
-      if (_fieldTypeArray[i].Affinity == TypeAffinity.Uninitialized || _fieldTypeArray[i].Affinity == TypeAffinity.Null)
-        _fieldTypeArray[i].Type = SqliteConvert.TypeNameToDbType(_activeStatement._sql.ColumnType(_activeStatement, i, out _fieldTypeArray[i].Affinity));
-      return _fieldTypeArray[i];
+      // Initialize this column's field type instance
+      if (_fieldTypeArray[i] == null) _fieldTypeArray[i] = new SqliteType();
+
+      typ = _fieldTypeArray[i];
+
+      // If not initialized, then fetch the declared column datatype and attempt to convert it 
+      // to a known DbType.
+      if (typ.Affinity == TypeAffinity.Uninitialized)
+        typ.Type = SqliteConvert.TypeNameToDbType(_activeStatement._sql.ColumnType(_activeStatement, i, out typ.Affinity));
+      else
+        typ.Affinity = _activeStatement._sql.ColumnAffinity(_activeStatement, i);
+
+      return typ;
     }
 
     /// <summary>

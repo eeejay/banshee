@@ -113,7 +113,7 @@ namespace Mono.Data.Sqlite
   /// <summary>
   /// Struct used internally to determine the datatype of a column in a resultset
   /// </summary>
-  internal struct SqliteType
+  internal class SqliteType
   {
     /// <summary>
     /// The DbType of the column, or DbType.Object if it cannot be determined
@@ -378,7 +378,7 @@ namespace Mono.Data.Sqlite
     /// <returns>Returns a SqliteType struct</returns>
     internal static SqliteType ColumnToType(SqliteStatement stmt, int i)
     {
-      SqliteType typ;
+      SqliteType typ = new SqliteType ();
 
       typ.Type = TypeNameToDbType(stmt._sql.ColumnType(stmt, i, out typ.Affinity));
 
