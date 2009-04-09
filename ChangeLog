@@ -1,5 +1,14 @@
 2009-04-08  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/tests/Performance/Makefile.am: Also build an exe, useful for
+	drilling into a performance problem with mono --profile.
+
+	* src/tests/Performance/PerformanceTests.cs: Categorize tests, add
+	FetchTrack, LoadTrack, and Select* tests testing relatively low level db
+	operations.
+
+2009-04-08  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	* src/Libraries/Hyena/Hyena.Data.Sqlite/HyenaSqliteArrayDataReader.cs:
 	Dispose underlying reader after reading in all its values.
 

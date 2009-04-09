@@ -27,16 +27,19 @@
 //
 
 using System;
+using System.Data;
 using System.Threading;
 using NUnit.Framework;
 
 using Hyena;
 using Hyena.Data;
+using Hyena.Data.Sqlite;
 using Hyena.Query;
 using Hyena.CommandLine;
 
 using Banshee.Base;
 using Banshee.Collection;
+using Banshee.Collection.Database;
 using Banshee.Query;
 using Banshee.ServiceStack;
 
@@ -46,6 +49,7 @@ namespace Banshee.Tests
     public class PerformanceTests
     {
         const int NUM = 50;
+        private string select_single_command;
 
 #region Reload tests
 
@@ -63,36 +67,42 @@ namespace Banshee.Tests
         }
 
         [Test]
+        [Category ("Performance")]
         public void Reload ()
         {
             ReloadMusicLibrary ("", .25);
         }
 
         [Test]
+        [Category ("Performance")]
         public void ReloadD ()
         {
             ReloadMusicLibrary ("d", .25);
         }
 
         [Test]
+        [Category ("Performance")]
         public void ReloadDave ()
         {
             ReloadMusicLibrary ("dave");
         }
 
         [Test]
+        [Category ("Performance")]
         public void ReloadByDave ()
         {
             ReloadMusicLibrary ("by:dave");
         }
 
         [Test]
+        [Category ("Performance")]
         public void ReloadFavorites ()
         {
             ReloadMusicLibrary ("rating>3");
         }
 
         [Test]
+        [Category ("Performance")]
         public void ReloadGenreRock ()
         {
             ReloadMusicLibrary ("genre:rock");
@@ -100,7 +110,10 @@ namespace Banshee.Tests
 
 #endregion
 
+#region Access tests
+
         [Test]
+        [Category ("Performance")]
         public void ScrollLinear ()
         {
             music_library.FilterQuery = "";
@@ -117,6 +130,92 @@ namespace Banshee.Tests
             Assert.IsFalse (any_null);
         }
 
+        [Test]
+        [Category ("Performance")]
+        public void FetchTrack ()
+        {
+            var track = music_library.TrackModel[0] as DatabaseTrackInfo;
+            int track_id = track.TrackId;
+            var cmd = new HyenaSqliteCommand (select_single_command, track_id);
+            var db = ServiceManager.DbConnection;
+
+            for (int i = 0; i < NUM * 30; i++) {
+                using (IDataReader reader = db.Query (cmd)) {
+                    if (reader.Read ()) {
+                    }
+                }
+            }
+        }
+
+        [Test]
+        [Category ("Too")]
+        public void LoadTrack ()
+        {
+            var track = music_library.TrackModel[0] as DatabaseTrackInfo;
+            var provider = DatabaseTrackInfo.Provider;
+            int track_id = track.TrackId;
+            var cmd = new HyenaSqliteCommand (select_single_command, track_id);
+            var db = ServiceManager.DbConnection;
+            IDataReader reader = db.Query (cmd);
+            Assert.IsTrue (reader.Read ());
+
+            for (int i = 0; i < NUM*1000; i++) {
+                provider.Load (reader, track);
+            }
+
+            reader.Dispose ();
+        }
+
+        private void Select<T> (T val)
+        {
+            T res = default(T);
+            var cmd = new HyenaSqliteCommand ("SELECT ?", val);
+            Log.DebugFormat ("Select<T> cmd is {0}", cmd.Text);
+            var db = ServiceManager.DbConnection;
+
+            for (int i = 0; i < NUM * 250; i++) {
+                res = db.Query<T> (cmd);
+            }
+            Assert.AreEqual (val, res);
+        }
+
+        [Test]
+        [Category ("Performance")]
+        public void SelectStrings ()
+        {
+            Select ("Foo bar");
+        }
+
+        [Test]
+        [Category ("Performance")]
+        public void SelectInt ()
+        {
+            Select ((int)42);
+        }
+
+        [Test]
+        [Category ("Performance")]
+        public void SelectLong ()
+        {
+            Select ((long)42);
+        }
+
+        [Test]
+        [Category ("Performance")]
+        public void SelectDateTime ()
+        {
+            Select (new DateTime (1999, 2, 3));
+        }
+
+        [Test]
+        [Category ("Performance")]
+        public void SelectBool ()
+        {
+            Select (true);
+        }
+
+#endregion
+
 #region Sort tests
 
         private void SortMusicLibrary (QueryField field)
@@ -131,24 +230,28 @@ namespace Banshee.Tests
         }
 
         [Test]
+        [Category ("Performance")]
         public void SortTrack ()
         {
             SortMusicLibrary (BansheeQuery.TrackNumberField);
         }
 
         [Test]
+        [Category ("Performance")]
         public void SortArtist ()
         {
             SortMusicLibrary (BansheeQuery.ArtistField);
         }
 
         [Test]
+        [Category ("Performance")]
         public void SortRating ()
         {
             SortMusicLibrary (BansheeQuery.RatingField);
         }
 
         [Test]
+        [Category ("Performance")]
         public void SortLastPlayed ()
         {
             SortMusicLibrary (BansheeQuery.LastPlayedField);
@@ -170,11 +273,6 @@ namespace Banshee.Tests
                 Environment.GetEnvironmentVariable ("BANSHEE_DEV_OPTIONS") }, 0);
             Log.Debugging = false;
 
-            /*Application.IdleHandler = delegate (IdleHandler handler) { handler (); return 0; };
-            Application.TimeoutHandler = delegate (uint milliseconds, TimeoutHandler handler) {
-                new System.Threading.Timer (delegate { handler (); }, null, milliseconds, Timeout.Infinite);
-                return 0;
-            };*/
             Application.TimeoutHandler = RunTimeout;
             Application.IdleHandler = RunIdle;
             Application.IdleTimeoutRemoveHandler = IdleTimeoutRemove;
@@ -192,16 +290,25 @@ namespace Banshee.Tests
             ThreadAssist.InitializeMainThread ();
             Application.PushClient (client);
             Application.Run ();
+
             music_library = ServiceManager.SourceManager.MusicLibrary;
+
+            var provider = DatabaseTrackInfo.Provider;
+            select_single_command = String.Format (
+                    "SELECT {0} FROM {1} WHERE {2}{3}{4} = ?",
+                    provider.Select, provider.From, provider.Where,
+                    (String.IsNullOrEmpty (provider.Where) ? String.Empty : " AND "),
+                    provider.PrimaryKey
+            );
+
             client.Start ();
         }
 
         [TestFixtureTearDown]
+        [Category ("Performance")]
         public void Teardown ()
         {
-            using (new Hyena.Timer ("Stopping Banshee")) {
-                ThreadAssist.ProxyToMain (Application.Shutdown);
-            }
+            ThreadAssist.ProxyToMain (Application.Shutdown);
             main_thread.Join ();
             main_thread = null;
         }
@@ -222,6 +329,18 @@ namespace Banshee.Tests
         }
 
 #endregion
+
+        public static void Main (string [] args)
+        {
+            var tests = new PerformanceTests ();
+            tests.Setup ();
+
+            using (new Hyena.Timer ("Performance.exe Tests")) {
+                tests.ScrollLinear ();
+            }
+
+            tests.Teardown ();
+        }
 
     }
 
