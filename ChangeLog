@@ -1,3 +1,7 @@
+2009-04-14  Alexander Kojevnikov  <alexander@kojevnikov.com>
+
+	* .gitignore: Added *.mdb
+
 2009-04-08  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* tests/Analyzer/Analyzer.cs: Fix warnings.

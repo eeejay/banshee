@@ -8,6 +8,7 @@
 *.lo
 *.la
 *.exe
+*.mdb
 *.deps*
 *.libs*
 *.pidb
