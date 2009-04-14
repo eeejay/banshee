@@ -114,6 +114,7 @@ namespace Banshee.Gui.Widgets
         {
             if (task_active) {
                 Active = true;
+                Sensitive = true;
                 Banshee.ServiceStack.Application.RunTimeout (1000, TurnOff);
             }
             return false;
@@ -122,6 +123,7 @@ namespace Banshee.Gui.Widgets
         private bool TurnOff ()
         {
             Active = false;
+            Sensitive = task_active;
 
             if (task_active) {
                 Banshee.ServiceStack.Application.RunTimeout (5000, TurnOn);
