@@ -84,6 +84,8 @@ namespace Banshee.Preferences.Gui
         
         private void BuildDialog ()
         {
+            SetDefaultSize (-1, 400);
+
             AddDefaultCloseButton ();
             
             if (service.Count > 1) {

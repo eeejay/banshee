@@ -1,3 +1,8 @@
+2009-04-14  Alexander Kojevnikov  <alexander@kojevnikov.com>
+
+	* src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/PreferenceDialog.cs:
+	Setting default height for the Preferences dialog (BGO #552620)
+
 2009-04-14  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TaskStatusIcon.cs: Set
