@@ -239,7 +239,7 @@ namespace Banshee.Sources.Gui
                     
             }
             
-            container.Pack1 (filter_box, true, false);
+            container.Pack1 (filter_box, false, false);
             container.Pack2 (main_scrolled_window, true, false);
             browser_container = filter_box;
             

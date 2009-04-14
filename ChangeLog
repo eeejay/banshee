@@ -1,5 +1,11 @@
 2009-04-14  Alexander Kojevnikov  <alexander@kojevnikov.com>
 
+	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/FilteredListSourceContents.cs:
+	Don't change the browser height when the recommendations pane is shown
+	(BGO #578896)
+
+2009-04-14  Alexander Kojevnikov  <alexander@kojevnikov.com>
+
 	* src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/PreferenceDialog.cs:
 	Setting default height for the Preferences dialog (BGO #552620)
 
