@@ -1,5 +1,12 @@
 2009-04-15  Alexander Kojevnikov  <alexander@kojevnikov.com>
 
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/FullscreenWindow.cs:
+	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/NowPlayingInterface.cs:
+	Fixed the full-screen mode visual glitch in the Now Playing source
+	(BGO #539024)
+
+2009-04-15  Alexander Kojevnikov  <alexander@kojevnikov.com>
+
 	* src/Libraries/Hyena.Gui/Hyena.Widgets/RatingEntry.cs: Fixed the
 	RatingEntry colors on dark themes (BGO #576459)
 

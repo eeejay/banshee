@@ -77,7 +77,6 @@ namespace Banshee.NowPlaying
             switch (evnt.Key) {
                 case Gdk.Key.F11:
                 case Gdk.Key.Escape:
-                    Unfullscreen ();
                     Hide ();
                     return true;
                 case Gdk.Key.C:

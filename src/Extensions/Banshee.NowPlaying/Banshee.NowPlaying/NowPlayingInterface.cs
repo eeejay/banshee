@@ -161,6 +161,7 @@ namespace Banshee.NowPlaying
                 fullscreen_adapter.Fullscreen (video_window, true);
                 screensaver.Inhibit ();
             } else {
+                video_window.Hide ();
                 screensaver.UnInhibit ();
                 fullscreen_adapter.Fullscreen (video_window, false);
                 video_window.Hide ();
