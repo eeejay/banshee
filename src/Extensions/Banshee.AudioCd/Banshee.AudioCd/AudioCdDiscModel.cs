@@ -145,7 +145,13 @@ namespace Banshee.AudioCd
             foreach (Event release_event in release.GetEvents ()) {
                 if (release_event.Date != null) {
                     try {
-                        DateTime date = DateTime.Parse (release_event.Date, ApplicationContext.InternalCultureInfo);
+                        // Handle "YYYY" dates
+                        var date_str = release_event.Date;
+                        DateTime date = DateTime.Parse (
+                            date_str.Length > 4 ? date_str : date_str + "-01",
+                            ApplicationContext.InternalCultureInfo
+                        );
+
                         if (date < release_date) {
                             release_date = date;
                         }
