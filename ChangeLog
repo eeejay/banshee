@@ -1,3 +1,7 @@
+2009-04-15  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	* build/m4/shamrock/nunit.m4: If nunit is not found, look for mono-nunit.
+
 2009-04-14  Alexander Kojevnikov  <alexander@kojevnikov.com>
 
 	* src/Core/Banshee.ThickClient/Banshee.Sources.Gui/FilteredListSourceContents.cs:
