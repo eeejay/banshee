@@ -28,6 +28,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Globalization;
 using System.Text.RegularExpressions;
@@ -261,6 +262,38 @@ namespace Hyena
                 return "";
             
             return invalid_path_regex.Replace (input, "_");
+        }
+
+        private static readonly char[] escape_path_trim_chars = new char[] {'.', '\x20'};
+        public static string EscapePath (string input)
+        {
+            if (input == null)
+                return "";
+
+            // This method should be called before the full path is constructed.
+            if (Path.IsPathRooted (input)) {
+                return input;
+            }
+
+            StringBuilder builder = new StringBuilder ();
+            foreach (string name in input.Split (Path.DirectorySeparatorChar)) {
+                // Escape the directory or the file name.
+                string escaped = EscapeFilename (name);
+                // Remove leading and trailing dots and spaces.
+                escaped = escaped.Trim (escape_path_trim_chars);
+                // Skip empty names.
+                if (escaped.Length > 0) {
+                    builder.Append (escaped);
+                    builder.Append (Path.DirectorySeparatorChar);
+                }
+            }
+
+            // Chop off the last character.
+            if (builder.Length > 0) {
+                builder.Length--;
+            }
+
+            return builder.ToString ();
         }
         
         public static string MaybeFallback (string input, string fallback)

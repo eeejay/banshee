@@ -30,6 +30,7 @@
 #if ENABLE_TESTS
 
 using System;
+using System.IO;
 using NUnit.Framework;
 using Hyena;
     
@@ -319,6 +320,63 @@ href=http://lkjdflkjdflkjj>baz foo< /a> bar"));
             AssertSortKey ("a", new byte[] {14, 2, 1, 1, 1, 1, 0});
             AssertSortKey ("A", new byte[] {14, 2, 1, 1, 1, 1, 0});
             AssertSortKey ("\u0104", new byte[] {14, 2, 1, 27, 1, 1, 1, 0,});
+        }
+    }
+
+    [TestFixture]
+    public class EscapePathTests
+    {
+        private readonly char dir_sep = Path.DirectorySeparatorChar;
+
+        private void AssertProduces (string input, string output)
+        {
+            Assert.AreEqual (output, StringUtil.EscapePath (input));
+        }
+
+        private void AssertProducesSame (string input)
+        {
+            AssertProduces (input, input);
+        }
+
+        [Test]
+        public void TestEmpty ()
+        {
+            AssertProduces (null,   "");
+            AssertProduces ("",     "");
+            AssertProduces (" ",    "");
+            AssertProduces ("   ",  "");
+        }
+
+        [Test]
+        public void TestNotChanged ()
+        {
+            AssertProducesSame ("a");
+            AssertProducesSame ("aaa");
+            AssertProducesSame ("Foo Bar");
+            AssertProducesSame ("03-Nur geträumt");
+            AssertProducesSame ("превед");
+            AssertProducesSame ("nǐ hǎo");
+
+            AssertProducesSame (String.Format ("a{0}b.ogg", dir_sep));
+            AssertProducesSame (String.Format ("foo{0}bar{0}01. baz.ogg", dir_sep));
+            AssertProducesSame (String.Format ("{0}foo*?:", dir_sep)); // rooted, shouldn't change
+        }
+
+        [Test]
+        public void TestStripped ()
+        {
+            AssertProduces (
+                String.Format ("foo*bar{0}ham:spam.ogg", dir_sep),
+                String.Format ("foo_bar{0}ham_spam.ogg", dir_sep));
+            AssertProduces (
+                String.Format ("..lots..{0}o.f.{0}.dots.ogg.", dir_sep),
+                String.Format ("lots{0}o.f{0}dots.ogg", dir_sep));
+            AssertProduces (
+                String.Format ("foo{0}..{0}bar.ogg", dir_sep),
+                String.Format ("foo{0}bar.ogg", dir_sep));
+            AssertProduces (
+                String.Format (". foo{0}01. bar.ogg. ", dir_sep),
+                String.Format ("foo{0}01. bar.ogg", dir_sep));
         }
     }
     

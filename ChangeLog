@@ -1,5 +1,12 @@
 2009-04-15  Alexander Kojevnikov  <alexander@kojevnikov.com>
 
+	* src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:
+	* src/Libraries/Hyena/Hyena/StringUtil.cs:
+	* src/Libraries/Hyena/Hyena/Tests/StringUtilTests.cs: Trimming dots and
+	spaces in file and folder names (BGO #572999)
+
+2009-04-15  Alexander Kojevnikov  <alexander@kojevnikov.com>
+
 	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/FullscreenWindow.cs:
 	* src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/NowPlayingInterface.cs:
 	Fixed the full-screen mode visual glitch in the Now Playing source

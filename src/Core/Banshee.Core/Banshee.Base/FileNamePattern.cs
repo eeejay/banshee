@@ -263,6 +263,7 @@ namespace Banshee.Base
             }
             
             string songpath = CreateFromTrackInfo (track) + ext;
+            songpath = Hyena.StringUtil.EscapePath (songpath);
             string dir = Path.GetFullPath (Path.Combine (Paths.LibraryLocation, 
                 Path.GetDirectoryName (songpath)));
             string filename = Path.Combine (dir, Path.GetFileName (songpath));
