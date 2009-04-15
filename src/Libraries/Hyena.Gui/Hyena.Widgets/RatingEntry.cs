@@ -256,7 +256,7 @@ namespace Hyena.Widgets
             
             Cairo.Context cr = Gdk.CairoHelper.Create (GdkWindow);
             renderer.Render (cr, Allocation, 
-                CairoExtensions.GdkColorToCairoColor (HasFrame ? Style.Text (State) : Style.Foreground (State)), 
+                CairoExtensions.GdkColorToCairoColor (HasFrame ? Parent.Style.Text (State) : Parent.Style.Foreground (State)),
                 AlwaysShowEmptyStars, PreviewOnHover && hover_value >= renderer.MinRating, hover_value,
                 State == StateType.Insensitive ? 1 : 0.90, 
                 State == StateType.Insensitive ? 1 : 0.55,
