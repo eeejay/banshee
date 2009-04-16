@@ -1,3 +1,8 @@
+2009-04-16  Aaron Bockover  <abock@gnome.org>
+
+	* Project: migrated to git, repository structure cleaned up and
+	organized; this is just a memento
+
 2009-04-15  Alexander Kojevnikov  <alexander@kojevnikov.com>
 
 	* src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:
