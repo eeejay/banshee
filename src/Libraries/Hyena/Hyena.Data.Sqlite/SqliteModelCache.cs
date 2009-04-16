@@ -434,7 +434,7 @@ namespace Hyena.Data.Sqlite
                     CREATE TEMP TABLE {0} (
                         OrderID INTEGER PRIMARY KEY,
                         ModelID INTEGER,
-                        ItemID INTEGER)", CacheTableName
+                        ItemID TEXT)", CacheTableName
                 ));
             }
 
