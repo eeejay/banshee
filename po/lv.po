@@ -3097,7 +3097,7 @@ msgstr ""
 #, csharp-format
 msgid "Are you sure you want to permanently delete this song?"
 msgid_plural "Are you sure you want to permanently delete the selected {0} songs?"
-msgstr[0] "Vai jūs esat drošs ka vēlaties uz visiem laikiem dzest šo dziesmu?"
+msgstr[0] "Vai jūs esat drošs ka vēlaties uz visiem laikiem dzest šīs {0} dziesmas?"
 msgstr[1] "Vai jūs esat drošs ka vēlaties uz visiem laikiem dzest šīs {0} dziesmas?"
 msgstr[2] "Vai jūs esat drošs ka vēlaties uz visiem laikiem dzest šīs {0} dziesmas?"
 
@@ -3113,7 +3113,9 @@ msgstr "Izņemot izvēlēto no bibliotēkas"
 #, csharp-format
 msgid "Are you sure you want to remove the selected song from your library?"
 msgid_plural "Are you sure you want to remove the selected {0} songs from your library?"
-msgstr[0] "Vai esat drošs, ka vēlaties izņemt izvēlēto dziesmu no jūsu bibliotēkas?"
+msgstr[0] ""
+"Vai esat drošs, ka vēlaties izņemt {0} izvēlētās dziesmas no jūsu "
+"bibliotēkas?"
 msgstr[1] ""
 "Vai esat drošs, ka vēlaties izņemt {0} izvēlētās dziesmas no jūsu "
 "bibliotēkas?"
@@ -4092,7 +4094,7 @@ msgstr "Gaida lejupielāžu beigas"
 #, csharp-format
 msgid "Downloading File"
 msgid_plural "Downloading Files ({0} of {1} completed)"
-msgstr[0] "Lejupielādē failu"
+msgstr[0] "Lejupielādē failu ({0} no {1} pabeigti)"
 msgstr[1] "Lejupielādē failu ({0} no {1} pabeigti)"
 msgstr[2] "Lejupielādē failu ({0} no {1} pabeigti)"
 
@@ -4109,7 +4111,7 @@ msgstr ""
 #, csharp-format
 msgid "Currently transfering 1 file at {0} kB/s"
 msgid_plural "Currently transfering {1} files at {0} kB/s"
-msgstr[0] "Šobrīd pārvieto 1 failu ar {0} kB/s"
+msgstr[0] "Šobrīd pārvieto {1} failus ar {0} kB/s"
 msgstr[1] "Šobrīd pārvieto {1} failus ar {0} kB/s"
 msgstr[2] "Šobrīd pārvieto {1} failus ar {0} kB/s"
 

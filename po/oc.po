@@ -738,7 +738,7 @@ msgstr ""
 #: ../src/Core/Banshee.Services/Banshee.Library/ThreadPoolImportSource.cs:107
 #, csharp-format
 msgid "Importing From {0}"
-msgstr "A importar"
+msgstr "A importar {0}"
 
 #: ../src/Core/Banshee.Services/Banshee.Library/VideoLibrarySource.cs:41
 msgid "Video Library"
@@ -2500,7 +2500,7 @@ msgstr "Vendeire"
 #: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:212
 #, csharp-format
 msgid "Loading {0}"
-msgstr "Cargament"
+msgstr "Cargament {0}"
 
 #: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:266
 #, csharp-format
@@ -2940,12 +2940,12 @@ msgstr "Connexion a {0}"
 #: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs:199
 #, csharp-format
 msgid "Logging in to {0}."
-msgstr "Cargament"
+msgstr "Cargament {0}"
 
 #: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs:234
 #, csharp-format
 msgid "Loading {0} tracks."
-msgstr "Cargament"
+msgstr "Cargament {0}"
 
 #: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs:254
 msgid "Loading playlists"
@@ -3225,7 +3225,7 @@ msgstr ""
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:357
 #, csharp-format
 msgid "No new songs available for {0}."
-msgstr "Pas cap de descripcion es disponibla"
+msgstr "Pas cap de descripcion es disponibla {0}"
 
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:383
 #, csharp-format
@@ -3405,7 +3405,7 @@ msgstr ""
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastFeedModel.cs:69
 #, csharp-format
 msgid "All Podcasts ({0})"
-msgstr "Podcasts"
+msgstr "Podcasts ({0})"
 
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastSource.cs:95
 msgid "Podcasts"
