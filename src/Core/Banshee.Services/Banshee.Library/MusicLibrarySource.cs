@@ -35,6 +35,7 @@ using Mono.Unix;
 using Banshee.Collection;
 using Banshee.SmartPlaylist;
 using Banshee.Preferences;
+using Banshee.Configuration;
 using Banshee.Configuration.Schema;
 
 namespace Banshee.Library
@@ -46,12 +47,15 @@ namespace Banshee.Library
             MediaTypes = TrackMediaAttributes.Music | TrackMediaAttributes.AudioStream;
             NotMediaTypes = TrackMediaAttributes.Podcast | TrackMediaAttributes.VideoStream | TrackMediaAttributes.AudioBook;
             Properties.SetStringList ("Icon.Name", "audio-x-generic", "source-library");
-            Properties.SetString ("SourcePreferencesActionLabel", Catalog.GetString ("Music Library Preferences"));
-
-            Section library_section = PreferencesPage.Add (new Section ("library-location", 
-                Catalog.GetString ("Music Library Folder"), 2));
-
-            library_section.Add (new LibraryLocationPreference ());
+            
+            // Migrate the old library-location schema, if necessary
+            if (DatabaseConfigurationClient.Client.Get<int> ("MusicLibraryLocationMigrated", 0) != 1) {
+                string old_location = OldLocationSchema.Get ();
+                if (!String.IsNullOrEmpty (old_location)) {
+                    BaseDirectory = old_location;
+                }
+                DatabaseConfigurationClient.Client.Set<int> ("MusicLibraryLocationMigrated", 1);
+            }
 
             Section file_system = PreferencesPage.Add (new Section ("file-system", 
                 Catalog.GetString ("File System Organization"), 5));
@@ -64,9 +68,9 @@ namespace Banshee.Library
 
             PreferencesPage.Add (new Section ("misc", Catalog.GetString ("Miscellaneous"), 10));
         }
-
-        public override string PreferencesPageId {
-            get { return UniqueId; }
+        
+        public override string DefaultBaseDirectory {
+            get { return Banshee.Base.XdgBaseDirectorySpec.GetUserDirectory ("XDG_MUSIC_DIR", "Music"); }
         }
 
         public override IEnumerable<SmartPlaylistDefinition> DefaultSmartPlaylists {

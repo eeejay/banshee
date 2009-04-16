@@ -74,7 +74,6 @@ SOURCES =  \
 	Banshee.Library/IImportSource.cs \
 	Banshee.Library/ImportSourceManager.cs \
 	Banshee.Library/LibraryImportManager.cs \
-	Banshee.Library/LibraryLocationPreference.cs \
 	Banshee.Library/LibrarySource.cs \
 	Banshee.Library/MusicLibrarySource.cs \
 	Banshee.Library/ThreadPoolImportSource.cs \

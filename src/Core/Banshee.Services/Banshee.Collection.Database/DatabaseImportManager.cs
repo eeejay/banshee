@@ -159,7 +159,7 @@ namespace Banshee.Collection.Database
                 return null;
             }
 
-            if (DatabaseTrackInfo.ContainsUri (uri, Paths.MakePathRelative (uri.AbsolutePath, BaseDirectory) ?? uri.AbsoluteUri, PrimarySourceIds)) {
+            if (DatabaseTrackInfo.ContainsUri (uri, PrimarySourceIds)) {
                 // TODO add DatabaseTrackInfo.SyncedStamp property, and if the file has been
                 // updated since the last sync, fetch its metadata into the db.
                 return null;

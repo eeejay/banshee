@@ -181,7 +181,7 @@ namespace Banshee.AudioCd
             status = String.Format("{0} - {1}", track.ArtistName, track.TrackTitle);
             user_job.Status = status;
             
-            SafeUri uri = new SafeUri (FileNamePattern.BuildFull (track, null));
+            SafeUri uri = new SafeUri (FileNamePattern.BuildFull (ServiceManager.SourceManager.MusicLibrary.BaseDirectory, track, null));
             bool tagging_supported;
             ripper.RipTrack (track.IndexOnDisc, track, uri, out tagging_supported);
         }

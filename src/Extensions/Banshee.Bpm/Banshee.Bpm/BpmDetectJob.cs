@@ -70,7 +70,7 @@ namespace Banshee.Bpm
             ));
 
             SelectCommand = new HyenaSqliteCommand (String.Format (@"
-                SELECT DISTINCT Uri, UriType, TrackID
+                SELECT DISTINCT Uri, TrackID
                 FROM CoreTracks
                 WHERE PrimarySourceID IN ({0}) AND (BPM = 0 OR BPM IS NULL) LIMIT 1",
                 music_library.DbId
@@ -96,10 +96,8 @@ namespace Banshee.Bpm
 
         protected override void IterateCore (HyenaDataReader reader)
         {
-            SafeUri uri = music_library.UriAndTypeToSafeUri (
-                reader.Get<TrackUriType> (1), reader.Get<string> (0)
-            );
-            current_track_id = reader.Get<int> (2);
+            SafeUri uri = new SafeUri (reader.Get<string> (0));
+            current_track_id = reader.Get<int> (1);
             detector.ProcessFile (uri);
         }
 

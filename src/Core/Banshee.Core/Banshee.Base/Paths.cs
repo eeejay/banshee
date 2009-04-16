@@ -161,10 +161,6 @@ namespace Banshee.Base
         public static string ExtensionCacheRoot {
             get { return Path.Combine (ApplicationCache, "extensions"); }
         }
-        
-        public static string DefaultLibraryPath {
-            get { return XdgBaseDirectorySpec.GetUserDirectory ("XDG_MUSIC_DIR", "Music"); }
-        }
 
         public static string SystemTempDir {
             get { return "/tmp/"; }
@@ -180,39 +176,6 @@ namespace Banshee.Base
                 
                 Directory.CreateDirectory (dir);
                 return dir;
-            }
-        }
-        
-        private static string cached_library_location;
-        private static string cached_library_location_with_separator;
-        public static string LibraryLocation {
-             get {
-                string path = LibrarySchema.Location.Get (Paths.DefaultLibraryPath);
-                if (String.IsNullOrEmpty (path)) {
-                    path = Paths.DefaultLibraryPath;
-                }
-                
-                LibraryLocation = path;
-                return cached_library_location;
-             }
-             
-             set {
-                cached_library_location = value;
-                cached_library_location_with_separator = null;
-                LibrarySchema.Location.Set (cached_library_location); 
-            }
-        }
-        
-        public static string CachedLibraryLocation {
-            get { return cached_library_location ?? LibraryLocation; }
-        }
-        
-        public static string CachedLibraryLocationWithSeparator {
-            get {
-                if (cached_library_location_with_separator == null) {
-                    cached_library_location_with_separator = CachedLibraryLocation + Path.DirectorySeparatorChar;
-                }
-                return cached_library_location_with_separator;
             }
         }
         

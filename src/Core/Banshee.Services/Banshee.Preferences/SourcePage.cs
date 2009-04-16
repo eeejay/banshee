@@ -31,17 +31,19 @@ using System;
 using Banshee.ServiceStack;
 using Banshee.Sources;
 
+using Hyena.Data;
+
 namespace Banshee.Preferences
 {
     public class SourcePage : Page, IDisposable
     {
+        private Source source;
+
         public SourcePage (Source source) : this (source.UniqueId, source.Name, null, source.Order)
         {
-            if (source.Properties.GetType ("Icon.Name") == typeof(string)) {
-                IconName = source.Properties.Get<string> ("Icon.Name");
-            } else if (source.Properties.GetType ("Icon.Name") == typeof(string[])) {
-                IconName = source.Properties.Get<string[]> ("Icon.Name")[0];
-            }
+            this.source = source;
+            source.Properties.PropertyChanged += OnPropertyChanged;
+            UpdateIcon ();
         }
 
         public SourcePage (string uniqueId, string name, string iconName, int order) : base (uniqueId, name, order)
@@ -53,6 +55,22 @@ namespace Banshee.Preferences
         public void Dispose ()
         {
             ServiceManager.Get<Banshee.Preferences.PreferenceService> ()["source-specific"].ChildPages.Remove (this);
+        }
+
+        private void UpdateIcon ()
+        {
+            if (source.Properties.GetType ("Icon.Name") == typeof(string)) {
+                IconName = source.Properties.Get<string> ("Icon.Name");
+            } else if (source.Properties.GetType ("Icon.Name") == typeof(string[])) {
+                IconName = source.Properties.Get<string[]> ("Icon.Name")[0];
+            }
+        }
+
+        private void OnPropertyChanged (object o, PropertyChangeEventArgs args)
+        {
+            if (args.PropertyName == "Icon.Name") {
+                UpdateIcon ();
+            }
         }
     }
 }

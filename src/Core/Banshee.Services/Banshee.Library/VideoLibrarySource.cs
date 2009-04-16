@@ -70,6 +70,10 @@ namespace Banshee.Library
         protected override bool HasArtistAlbum {
             get { return false; }
         }
+        
+        public override string DefaultBaseDirectory {
+            get { return Banshee.Base.XdgBaseDirectorySpec.GetUserDirectory ("XDG_VIDEOS_DIR", "Videos"); }
+        }
 
         public override IEnumerable<SmartPlaylistDefinition> DefaultSmartPlaylists {
             get { return default_smart_playlists; }

@@ -249,12 +249,12 @@ namespace Banshee.Base
             return OnFilter (repl_pattern);
         }
 
-        public static string BuildFull (TrackInfo track)
+        public static string BuildFull (string base_dir, TrackInfo track)
         {
-            return BuildFull (track, Path.GetExtension (track.Uri.ToString ()));
+            return BuildFull (base_dir, track, Path.GetExtension (track.Uri.ToString ()));
         }
 
-        public static string BuildFull (ITrackInfo track, string ext)
+        public static string BuildFull (string base_dir, ITrackInfo track, string ext)
         {
             if (ext == null || ext.Length < 1) {
                 ext = String.Empty;
@@ -264,7 +264,7 @@ namespace Banshee.Base
             
             string songpath = CreateFromTrackInfo (track) + ext;
             songpath = Hyena.StringUtil.EscapePath (songpath);
-            string dir = Path.GetFullPath (Path.Combine (Paths.LibraryLocation, 
+            string dir = Path.GetFullPath (Path.Combine (base_dir, 
                 Path.GetDirectoryName (songpath)));
             string filename = Path.Combine (dir, Path.GetFileName (songpath));
                 

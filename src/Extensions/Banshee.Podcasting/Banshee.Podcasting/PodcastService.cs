@@ -54,8 +54,7 @@ namespace Banshee.Podcasting
 {
     public partial class PodcastService : IExtensionService, IDisposable, IDelayedInitializeService
     {  
-        private readonly string tmp_download_path;
-        private string tmp_enclosure_path;
+        private readonly string tmp_download_path = Paths.Combine (Paths.ExtensionCacheRoot, "podcasting", "partial-downloads");
         private uint refresh_timeout_id = 0;
             
         private bool disposed;
@@ -72,19 +71,7 @@ namespace Banshee.Podcasting
 
         public PodcastService ()
         {
-            // TODO translate Podcasts folder?
-            // If changed, change HACK in src/Core/Banshee.Services/Banshee.Collection/RescanPipeline.cs too
-            tmp_enclosure_path = Path.Combine (Paths.LibraryLocation, "Podcasts");
-            tmp_download_path = Paths.Combine (Paths.ExtensionCacheRoot, "podcasting", "partial-downloads");
             Migo.Net.AsyncWebClient.DefaultUserAgent = Banshee.Web.Browser.UserAgent;
-            
-            download_manager = new DownloadManager (2, tmp_download_path);
-            download_manager_iface = new DownloadManagerInterface (download_manager);
-            download_manager_iface.Initialize ();    
-    
-            feeds_manager = new FeedsManager (ServiceManager.DbConnection, download_manager, Path.Combine (Banshee.Base.Paths.CachedLibraryLocation, "Podcasts"));
-
-            InitializeInterface ();
         }
 
         private void MigrateLegacyIfNeeded ()
@@ -143,10 +130,7 @@ namespace Banshee.Podcasting
                     int moved = 0;
                     foreach (FeedEnclosure enclosure in FeedEnclosure.Provider.FetchAllMatching ("LocalPath IS NOT NULL AND LocalPath != ''")) {
                         SafeUri uri = new SafeUri (enclosure.LocalPath);
-                        int track_id = DatabaseTrackInfo.GetTrackIdForUri (
-                            uri, Paths.MakePathRelative (uri.LocalPath, tmp_enclosure_path),
-                            primary_source_ids
-                        );
+                        int track_id = DatabaseTrackInfo.GetTrackIdForUri (uri, primary_source_ids);
 
                         if (track_id > 0) {
                             PodcastTrackInfo pi = new PodcastTrackInfo (DatabaseTrackInfo.Provider.FetchSingle (track_id));
@@ -231,6 +215,12 @@ namespace Banshee.Podcasting
         
         public void DelayedInitialize ()
         {
+            download_manager = new DownloadManager (2, tmp_download_path);
+            download_manager_iface = new DownloadManagerInterface (download_manager);
+            download_manager_iface.Initialize ();    
+            
+            feeds_manager = new FeedsManager (ServiceManager.DbConnection, download_manager, null);
+
             // Migrate data from 0.13.2 podcast tables, if they exist
             MigrateLegacyIfNeeded ();
 
@@ -240,11 +230,35 @@ namespace Banshee.Podcasting
             } catch (Exception e) {
                 Hyena.Log.Exception ("Couldn't migrate podcast download cache", e);
             }
-            
+
+            InitializeInterface ();
+            feeds_manager.PodcastStorageDirectory = source.BaseDirectory;
             feeds_manager.FeedManager.ItemAdded += OnItemAdded;
             feeds_manager.FeedManager.ItemChanged += OnItemChanged;
             feeds_manager.FeedManager.ItemRemoved += OnItemRemoved;
             feeds_manager.FeedManager.FeedsChanged += OnFeedsChanged;
+
+            if (DatabaseConfigurationClient.Client.Get<int> ("Podcast", "Version", 0) < 7) {
+                Banshee.Library.LibrarySource music_lib = ServiceManager.SourceManager.MusicLibrary;
+                if (music_lib != null) {
+                    string old_path = Path.Combine (music_lib.BaseDirectory, "Podcasts");
+                    string new_path = source.BaseDirectory;
+                    SafeUri old_uri = new SafeUri (old_path);
+                    SafeUri new_uri = new SafeUri (new_path);
+                    if (old_path != null && new_path != null && old_path != new_path &&
+                        Banshee.IO.Directory.Exists (old_path) && !Banshee.IO.Directory.Exists (new_path)) {
+                        Banshee.IO.Directory.Move (new SafeUri (old_path), new SafeUri (new_path));
+                        ServiceManager.DbConnection.Execute (String.Format (
+                            "UPDATE {0} SET LocalPath = REPLACE(LocalPath, ?, ?) WHERE LocalPath IS NOT NULL",
+                            FeedEnclosure.Provider.TableName), old_path, new_path);
+                        ServiceManager.DbConnection.Execute (
+                            "UPDATE CoreTracks SET Uri = REPLACE(Uri, ?, ?) WHERE Uri LIKE 'file://%' AND PrimarySourceId = ?",
+                            old_uri.AbsoluteUri, new_uri.AbsoluteUri, source.DbId);
+                        Hyena.Log.DebugFormat ("Moved Podcasts from {0} to {1}", old_path, new_path);
+                    }
+                }
+                DatabaseConfigurationClient.Client.Set<int> ("Podcast", "Version", 7);
+            }
 
             ServiceManager.PlayerEngine.ConnectEvent (OnPlayerEvent, PlayerEvent.StateChange);
             ServiceManager.Get<DBusCommandService> ().ArgumentPushed += OnCommandLineArgument;

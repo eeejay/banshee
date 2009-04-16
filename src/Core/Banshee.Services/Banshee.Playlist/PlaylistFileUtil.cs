@@ -259,7 +259,7 @@ namespace Banshee.Playlist
                 //ServiceManager.DbConnection.BeginTransaction ();
                 foreach (string uri in uris) {
                     // FIXME: Does the following call work if the source is just a PrimarySource (not LibrarySource)?
-                    int track_id = Banshee.Library.LibrarySource.GetTrackIdForUri (uri);
+                    int track_id = source.GetTrackIdForUri (uri);
                     if (track_id > 0) {
                         ServiceManager.DbConnection.Execute (insert_command, track_id);
                     }

@@ -184,10 +184,8 @@ namespace Banshee.FileSystemQueue
             if (uri == null) {
                 return;
             }
-            
-            int id = DatabaseTrackInfo.GetTrackIdForUri (uri, Paths.MakePathRelative (
-                uri.AbsolutePath, BaseDirectory), new int [] { DbId });
-            
+
+            int id = DatabaseTrackInfo.GetTrackIdForUri (uri, new int [] { DbId });
             if (id >= 0) {
                 int index = (int)TrackCache.IndexOf ((long)id);
                 if (index >= 0) {

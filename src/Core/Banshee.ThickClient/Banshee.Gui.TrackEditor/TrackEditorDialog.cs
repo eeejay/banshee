@@ -563,7 +563,7 @@ namespace Banshee.Gui.TrackEditor
 
         private void MoveSavedFile (TrackInfo track)
         {
-            Scheduler.Schedule (new MoveOnInfoSaveJob (track), JobPriority.Highest);
+            Scheduler.Schedule (new MoveOnInfoSaveJob (track as DatabaseTrackInfo), JobPriority.Highest);
         }
 
 #endregion

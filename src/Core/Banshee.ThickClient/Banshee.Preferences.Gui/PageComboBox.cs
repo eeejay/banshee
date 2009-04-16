@@ -45,20 +45,25 @@ namespace Banshee.Preferences.Gui
             this.notebook = notebook;
 
             // icon, name, order, Page object itself
-            model = new ListStore (typeof(string), typeof(string), typeof(int), typeof(Page));
+            model = new ListStore (typeof(Gdk.Pixbuf), typeof(string), typeof(int), typeof(Page));
             model.SetSortColumnId (2, SortType.Ascending);
             Model = model;
 
             CellRendererPixbuf icon = new CellRendererPixbuf ();
             PackStart (icon, false);
-            AddAttribute (icon, "icon-name", 0);
+            AddAttribute (icon, "pixbuf", 0);
 
             CellRendererText name = new CellRendererText ();
             PackStart (name, true);
-            AddAttribute (name, "text", 1);
+            AddAttribute (name, "markup", 1);
 
             foreach (Page page in pages) {
-                model.AppendValues (page.IconName ?? "image-missing", page.Name, page.Order, page);
+                model.AppendValues (
+                    Banshee.Gui.IconThemeUtils.LoadIcon (page.IconName, 22),
+                    String.Format ("<b>{0}</b>", page.Name),
+                    page.Order,
+                    page
+                );
             }
 
             Active = 0;

@@ -52,12 +52,6 @@ using Banshee.Streaming;
 
 namespace Banshee.Collection.Database
 {
-    public enum TrackUriType : int {
-        AbsolutePath = 0,
-        RelativePath = 1,
-        AbsoluteUri = 2
-    }
-
     public class DatabaseTrackInfo : TrackInfo
     {
         private static DatabaseTrackModelProvider<DatabaseTrackInfo> provider;
@@ -67,7 +61,6 @@ namespace Banshee.Collection.Database
         }
 
         private bool artist_changed = false, album_changed = false;
-        private bool uri_fields_dirty = false;
         
         public DatabaseTrackInfo () : base ()
         {
@@ -191,10 +184,7 @@ namespace Banshee.Collection.Database
         [DatabaseColumn ("PrimarySourceID")]
         public int PrimarySourceId {
             get { return primary_source_id; }
-            set {
-                primary_source_id = value;
-                UpdateUri ();
-            }
+            set { primary_source_id = value; }
         }
 
         public PrimarySource PrimarySource {
@@ -365,46 +355,10 @@ namespace Banshee.Collection.Database
             set { base.MusicBrainzId = value; }
         }
 
-        public override SafeUri Uri {
-            get { return base.Uri; }
-            set {
-                base.Uri = value;
-                uri_fields_dirty = true;
-            }
-        }
-        
-        private string uri_field;
         [DatabaseColumn ("Uri")]
         protected string UriField {
-            get {
-                if (uri_fields_dirty && Uri != null && PrimarySource != null) {
-                    PrimarySource.UriToFields (Uri, out uri_type, out uri_field);
-                    uri_fields_dirty = false;
-                }
-                return uri_field;
-            }
-            set {
-                uri_field = value;
-                UpdateUri ();
-            }
-        }
-        
-        private bool uri_type_set;
-        private TrackUriType uri_type;
-        [DatabaseColumn ("UriType")]
-        protected TrackUriType UriType {
-            get {
-                if (uri_fields_dirty && Uri != null && PrimarySource != null) {
-                    PrimarySource.UriToFields (Uri, out uri_type, out uri_field);
-                    uri_fields_dirty = false;
-                }
-                return uri_type;
-            }
-            set {
-                uri_type = value;
-                uri_type_set = true;
-                UpdateUri ();
-            }
+            get { return Uri.AbsoluteUri; }
+            set { Uri = new SafeUri (value); }
         }
         
         [DatabaseColumn]
@@ -644,13 +598,6 @@ namespace Banshee.Collection.Database
             }
         }
 
-        private void UpdateUri ()
-        {
-            if (Uri == null && uri_type_set && UriField != null && PrimarySource != null) {
-                Uri = PrimarySource.UriAndTypeToSafeUri (UriType, UriField);
-            }
-        }
-
         public void CopyToLibraryIfAppropriate (bool force_copy)
         {
             SafeUri old_uri = this.Uri;
@@ -659,14 +606,15 @@ namespace Banshee.Collection.Database
                 return;
             }
             
-            bool in_library = old_uri.AbsolutePath.StartsWith (Paths.CachedLibraryLocationWithSeparator);
+            bool in_library = old_uri.AbsolutePath.StartsWith (PrimarySource.BaseDirectoryWithSeparator);
 
             if (!in_library && (LibrarySchema.CopyOnImport.Get () || force_copy)) {
-                string new_filename = FileNamePattern.BuildFull (this, Path.GetExtension (old_uri.ToString ()));
+                string new_filename = FileNamePattern.BuildFull (PrimarySource.BaseDirectory, this, Path.GetExtension (old_uri.ToString ()));
                 SafeUri new_uri = new SafeUri (new_filename);
 
                 try {
                     if (Banshee.IO.File.Exists (new_uri)) {
+                        Hyena.Log.DebugFormat ("Not copying {0} to library because there is already a file at {1}", old_uri, new_uri);
                         return;
                     }
                     
@@ -678,34 +626,31 @@ namespace Banshee.Collection.Database
             }
         }
 
-        private static HyenaSqliteCommand check_command = new HyenaSqliteCommand (
-            "SELECT TrackID FROM CoreTracks WHERE PrimarySourceId IN (?) AND (Uri = ? OR Uri = ?) LIMIT 1"
+        private static HyenaSqliteCommand get_uri_id_cmd = new HyenaSqliteCommand ("SELECT TrackID FROM CoreTracks WHERE Uri = ? LIMIT 1");
+        public static int GetTrackIdForUri (string uri)
+        {
+            return ServiceManager.DbConnection.Query<int> (get_uri_id_cmd, new SafeUri (uri).AbsoluteUri);
+        }
+
+        private static HyenaSqliteCommand get_track_id_by_uri = new HyenaSqliteCommand (
+            "SELECT TrackID FROM CoreTracks WHERE PrimarySourceId IN (?) AND Uri = ? LIMIT 1"
         );
 
-        public static int GetTrackIdForUri (SafeUri uri, string relative_path, int [] primary_sources)
+        public static int GetTrackIdForUri (SafeUri uri, int [] primary_sources)
         {
-            return ServiceManager.DbConnection.Query<int> (check_command,
-                primary_sources, relative_path, uri.AbsoluteUri);
+            return ServiceManager.DbConnection.Query<int> (get_track_id_by_uri,
+                primary_sources, uri.AbsoluteUri);
         }
 
-        public static int GetTrackIdForUri (string relative_path, int [] primary_sources)
+        public static int GetTrackIdForUri (string absoluteUri, int [] primary_sources)
         {
-            return GetTrackIdForUri (relative_path, relative_path, primary_sources);
-        }
-        
-        public static int GetTrackIdForUri (string uri, string relative_path, int [] primary_sources)
-        {
-            return ServiceManager.DbConnection.Query<int> (check_command, primary_sources, uri, relative_path);
-        }
-        
-        public static bool ContainsUri (string relative_path, int [] primary_sources)
-        {
-            return GetTrackIdForUri (relative_path, primary_sources) > 0;
+            return ServiceManager.DbConnection.Query<int> (get_track_id_by_uri,
+                primary_sources, absoluteUri);
         }
 
-        public static bool ContainsUri (SafeUri uri, string relative_path, int [] primary_sources)
+        public static bool ContainsUri (SafeUri uri, int [] primary_sources)
         {
-            return GetTrackIdForUri (uri, relative_path, primary_sources) > 0;
+            return GetTrackIdForUri (uri, primary_sources) > 0;
         }
     }
 }

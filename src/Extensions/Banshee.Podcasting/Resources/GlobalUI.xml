@@ -6,6 +6,8 @@
         <menuitem name="NewPlaylist" action="NewPlaylistAction"/>
         <menuitem name="NewSmartPlaylist" action="NewSmartPlaylistAction"/>
         <menu name="SortChildren" action="SortChildrenAction" />
+        <separator/>
+        <menuitem name="SourcePreferences" action="SourcePreferencesAction"/>
     </popup>
 
     <popup name="PodcastAllFeedsContextMenu" action="PodcastAllFeedsContextMenuAction">

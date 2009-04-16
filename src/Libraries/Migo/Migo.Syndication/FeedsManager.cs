@@ -117,6 +117,7 @@ namespace Migo.Syndication
         private string podcast_base_dir;
         public string PodcastStorageDirectory {
             get { return podcast_base_dir; }
+            set { podcast_base_dir = value; }
         }
 
 #endregion

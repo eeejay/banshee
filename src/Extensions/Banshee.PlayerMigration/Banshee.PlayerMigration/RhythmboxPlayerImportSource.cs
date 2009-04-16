@@ -327,7 +327,7 @@ namespace Banshee.PlayerMigration
                             continue;
                         }
                         
-                        int track_id = Banshee.Library.LibrarySource.GetTrackIdForUri (entry.InnerText);
+                        int track_id = ServiceManager.SourceManager.MusicLibrary.GetTrackIdForUri (entry.InnerText);
                         if (track_id > 0) {
                             ServiceManager.DbConnection.Execute (insert_command, track_id);
                         }

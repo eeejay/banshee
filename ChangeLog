@@ -1,3 +1,50 @@
+2009-04-16  Gabriel Burt  <gabriel.burt@gmail.com>
+
+	This patch adds separate library folder preferences for Music Library,
+	Video Library, and Podcasts (BGO #404827).  They are all configurable via
+	the Preferences dialog.  It also changes the format used to store URIs in
+	the database, from sometime relative and sometimes absolute to always
+	absolute (BGO #564355).
+
+	* src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:
+	* src/Core/Banshee.Core/Banshee.Base/Paths.cs:
+	* src/Core/Banshee.Core/Banshee.Configuration.Schema/LibrarySchema.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseImportManager.cs:
+	* src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseTrackInfo.cs:
+	* src/Core/Banshee.Services/Banshee.Collection/MoveOnInfoSaveJob.cs:
+	* src/Core/Banshee.Services/Banshee.Collection/RescanPipeline.cs:
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	* src/Core/Banshee.Services/Banshee.Library/LibrarySource.cs:
+	* src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:
+	* src/Core/Banshee.Services/Banshee.Library/VideoLibrarySource.cs:
+	* src/Core/Banshee.Services/Banshee.Playlist/PlaylistFileUtil.cs:
+	* src/Core/Banshee.Services/Banshee.Preferences/SourcePage.cs:
+	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs:
+	* src/Core/Banshee.Services/Makefile.am:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/DefaultPreferenceWidgets.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/NotebookPage.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/PageComboBox.cs:
+	* src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdRipper.cs:
+	* src/Extensions/Banshee.Bpm/Banshee.Bpm/BpmDetectJob.cs:
+	* src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:
+	* src/Extensions/Banshee.FileSystemQueue/Banshee.FileSystemQueue/FileSystemQueueSource.cs:
+	* src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:
+	* src/Extensions/Banshee.PlayerMigration/Banshee.PlayerMigration/RhythmboxPlayerImportSource.cs:
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastSource.cs:
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting/PodcastService.cs:
+	* src/Extensions/Banshee.Podcasting/Banshee.Podcasting/PodcastService_Interface.cs:
+	* src/Extensions/Banshee.Podcasting/Resources/GlobalUI.xml:
+	* src/Libraries/Migo/Migo.Syndication/FeedsManager.cs:
+	* src/Core/Banshee.Services/Banshee.Library/LibraryLocationPreference.cs:
+	Remove assumptions about there being only one Library Location, instead
+	use the relevant PrimarySource's BaseDirectory.  Remove relative-URI
+	logic/munging; always use the absolute URI.  Add library location
+	preferences for Music, Video, and Podcasts.
+
 2009-04-16  Aaron Bockover  <abock@gnome.org>
 
 	* Project: migrated to git, repository structure cleaned up and

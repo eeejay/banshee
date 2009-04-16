@@ -200,26 +200,15 @@ namespace Banshee.Sources
         {
             return (primary_sources.ContainsKey (id)) ? primary_sources[id] : null;
         }
-        
-        public virtual SafeUri UriAndTypeToSafeUri (TrackUriType type, string uri_field)
-        {
-            if (type == TrackUriType.RelativePath && BaseDirectory != null)
-                return new SafeUri (System.IO.Path.Combine (BaseDirectory, uri_field));
-            else
-                return new SafeUri (uri_field);
-        }
-
-        public virtual void UriToFields (SafeUri uri, out TrackUriType type, out string uri_field)
-        {
-            uri_field = Paths.MakePathRelative (uri.AbsolutePath, BaseDirectory);
-            type = (uri_field == null) ? TrackUriType.AbsoluteUri : TrackUriType.RelativePath;
-            if (uri_field == null) {
-                uri_field = uri.AbsoluteUri;
-            }
-        }
 
         public virtual string BaseDirectory {
             get { return null; }
+            protected set { base_dir_with_sep = null; }
+        }
+        
+        private string base_dir_with_sep;
+        public string BaseDirectoryWithSeparator {
+            get { return base_dir_with_sep ?? (base_dir_with_sep = BaseDirectory + System.IO.Path.DirectorySeparatorChar); }
         }
 
         protected PrimarySource (string generic_name, string name, string id, int order) : base (generic_name, name, id, order)
@@ -593,6 +582,12 @@ namespace Banshee.Sources
                 AddTrackList (cached_list);
             }
             return true;
+        }
+
+        private static HyenaSqliteCommand get_track_id_cmd = new HyenaSqliteCommand ("SELECT TrackID FROM CoreTracks WHERE PrimarySourceId = ? AND Uri = ? LIMIT 1");
+        public int GetTrackIdForUri (string uri)
+        {
+            return ServiceManager.DbConnection.Query<int> (get_track_id_cmd, DbId, new SafeUri (uri).AbsoluteUri);
         }
 
         private bool is_adding;

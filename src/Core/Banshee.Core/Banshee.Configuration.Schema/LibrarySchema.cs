@@ -33,13 +33,9 @@ namespace Banshee.Configuration.Schema
 {
     public static class LibrarySchema
     {
-        public static readonly SchemaEntry<string> Location = new SchemaEntry<string>(
-            "library", "base_location",
-            String.Empty,
-            "Library location",
-            "Base location for library music"
-        );
-    
+        // Deprecated, don't use in new code
+        internal static readonly SchemaEntry<string> Location = new SchemaEntry<string> ("library", "base_location", null, null, null);
+
         public static readonly SchemaEntry<string> FolderPattern = new SchemaEntry<string>(
             "library", "folder_pattern",
             Banshee.Base.FileNamePattern.DefaultFolder,
@@ -59,27 +55,6 @@ namespace Banshee.Configuration.Schema
                 "See LibraryFolderPattern. Legal tokens: %album_artist%, %track_artist%, %album%, %genre%, %title%, %track_number%, " +
                 "%track_count%, %track_number_nz% (No prefixed zero), %track_count_nz% (No prefixed zero), " +
                 "%album_artist_initial%, %artist% (deprecated, use %album_artist%)."
-        );
-
-        public static readonly SchemaEntry<int> SortColumn = new SchemaEntry<int>(
-            "library", "sort_column",
-            -1,
-            "Column index",
-            "Column index for sorting the library source. -1 for unset."
-        );
-
-        public static readonly SchemaEntry<int> SortType = new SchemaEntry<int>(
-            "library", "sort_type",
-            0,
-            "Column sort type",
-            "Column sort type for the library source. Ascending (0) or Descending (1)"
-        );
-        
-        public static readonly SchemaEntry<bool> SourceExpanded = new SchemaEntry<bool>(
-            "library", "source_expanded",
-            true,
-            "Library source expansion",
-            "Whether to expand the library node in the source view"
         );
         
         public static readonly SchemaEntry<bool> CopyOnImport = new SchemaEntry<bool>(
@@ -101,20 +76,6 @@ namespace Banshee.Configuration.Schema
             false,
             "Write metadata back to audio files",
             "If enabled, metadata (tags) will be written back to audio files when using the track metadata editor."
-        );
-        
-        public static readonly SchemaEntry<int> PlaylistSortOrder = new SchemaEntry<int>(
-            "library", "playlist_sort_order",
-            0,
-            "Sort order of playlists",
-            "Sort order of library playlists in the source view (0 = Ascending, 1 = Descending)"
-        );
-        
-        public static readonly SchemaEntry<int> PlaylistSortCriteria = new SchemaEntry<int>(
-            "library", "playlist_sort_criteria",
-            0,
-            "Sort criteria of playlists",
-            "Sort criteria of library playlists in the source view (0 = Name, 1 = Size)"
         );
     }
 }

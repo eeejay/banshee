@@ -168,9 +168,10 @@ namespace Banshee.Gui
             chooser.DefaultResponse = ResponseType.Ok;
             chooser.SelectMultiple = true;
             chooser.AddFilter (Hyena.Gui.GtkUtilities.GetFileFilter (Catalog.GetString ("Playlists"), PlaylistFileUtil.PlaylistExtensions));
-            try {
+            // TODO library-location add the BaseDirectory for the library being imported to (or all of them)
+            /*try {
                 chooser.AddShortcutFolder (Paths.LibraryLocation);
-            } catch {}
+            } catch {}*/
 
             chooser.AddButton (Stock.Cancel, ResponseType.Cancel);
             // Translators: verb

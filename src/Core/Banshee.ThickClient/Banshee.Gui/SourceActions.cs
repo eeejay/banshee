@@ -105,7 +105,7 @@ namespace Banshee.Gui
                     Catalog.GetString ("Sort Children by"), null, null,
                     OnSortChildrenMenu),
 
-                new ActionEntry ("SourcePreferencesAction", null, String.Empty, null, 
+                new ActionEntry ("SourcePreferencesAction", null, Catalog.GetString ("Preferences"), null, 
                     Catalog.GetString ("Edit preferences related to this source"), OnSourcePreferences),
 
             });

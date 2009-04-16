@@ -165,7 +165,7 @@ namespace Banshee.Dap.MassStorage
                 //Hyena.Data.Sqlite.HyenaSqliteCommand.LogAll = true;
                 foreach (Dictionary<string, object> element in loaded_playlist.Elements) {
                     string track_path = (element["uri"] as Uri).LocalPath;
-                    int track_id = DatabaseTrackInfo.GetTrackIdForUri (track_path, Paths.MakePathRelative (track_path, BaseDirectory), psources);
+                    int track_id = DatabaseTrackInfo.GetTrackIdForUri (new SafeUri (track_path), psources);
                     if (track_id == 0) {
                         Log.DebugFormat ("Failed to find track {0} in DAP library to load it into playlist {1}", track_path, playlist_path);
                     } else {

@@ -113,7 +113,7 @@ namespace Banshee.PlayQueue
 
         public void EnqueueUri (string uri, bool prepend)
         {
-            EnqueueId (LibrarySource.GetTrackIdForUri (uri), prepend);
+            EnqueueId (DatabaseTrackInfo.GetTrackIdForUri (uri), prepend);
         }
         
         public void EnqueueTrack (TrackInfo track, bool prepend)

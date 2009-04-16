@@ -3,8 +3,9 @@
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
+//   Gabriel Burt <gburt@novell.com>
 //
-// Copyright (C) 2007-2008 Novell, Inc.
+// Copyright (C) 2007-2009 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -53,7 +54,7 @@ namespace Banshee.Database
         // NOTE: Whenever there is a change in ANY of the database schema,
         //       this version MUST be incremented and a migration method
         //       MUST be supplied to match the new version number
-        protected const int CURRENT_VERSION = 30;
+        protected const int CURRENT_VERSION = 31;
         protected const int CURRENT_METADATA_VERSION = 6;
         
 #region Migration Driver
@@ -715,6 +716,31 @@ namespace Banshee.Database
 #endregion
 
 
+#region Version 31
+
+        [DatabaseVersion (31)]
+        private bool Migrate_31 ()
+        {
+            try {
+                // Make paths not relative for Music Library items
+                string library_path = Banshee.Library.LibrarySource.OldLocationSchema.Get ();
+                if (library_path != null) {
+                    int podcast_src_id = connection.Query<int> ("SELECT PrimarySourceID FROM CorePrimarySources WHERE StringID = 'PodcastSource-PodcastLibrary'");
+                    
+                    Banshee.Base.SafeUri uri = new Banshee.Base.SafeUri (library_path);
+                    connection.Execute ("UPDATE CoreTracks SET Uri = (? || Uri) WHERE UriType = 1 AND PrimarySourceID != ?", uri.AbsoluteUri + System.IO.Path.DirectorySeparatorChar, podcast_src_id);
+
+                    uri = new Banshee.Base.SafeUri (Banshee.Base.Paths.Combine (library_path, "Podcasts"));
+                    connection.Execute ("UPDATE CoreTracks SET Uri = (? || Uri) WHERE UriType = 1 AND PrimarySourceID = ?", uri.AbsoluteUri + System.IO.Path.DirectorySeparatorChar, podcast_src_id);
+                }
+            } catch (Exception e) {
+                Hyena.Log.Exception (e);
+            }
+            return true;
+        }
+        
+#endregion
+
 #pragma warning restore 0169
         
 #region Fresh database setup
@@ -770,7 +796,6 @@ namespace Banshee.Database
                     MusicBrainzID       TEXT,
 
                     Uri                 TEXT,
-                    UriType             INTEGER,
                     MimeType            TEXT,
                     FileSize            INTEGER,
                     BitRate             INTEGER,
@@ -967,7 +992,6 @@ namespace Banshee.Database
                         0,
                         0,
                         Uri,
-                        0,
                         MimeType,
                         0, 0,
                         {0},

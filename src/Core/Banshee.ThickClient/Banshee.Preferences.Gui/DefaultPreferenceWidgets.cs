@@ -51,8 +51,9 @@ namespace Banshee.Preferences.Gui
         {
             Page music = ServiceManager.SourceManager.MusicLibrary.PreferencesPage;
         
-            PreferenceBase library_location = music["library-location"]["library-location"];
-            library_location.DisplayWidget = new LibraryLocationButton (library_location);
+            foreach (LibrarySource source in ServiceManager.SourceManager.FindSources<LibrarySource> ()) {
+                new LibraryLocationButton (source);
+            }
             
             PreferenceBase folder_pattern = music["file-system"]["folder_pattern"];
             folder_pattern.DisplayWidget = new PatternComboBox (folder_pattern, FileNamePattern.SuggestedFolders);
@@ -77,15 +78,20 @@ namespace Banshee.Preferences.Gui
 
         private class LibraryLocationButton : HBox
         {
+            private LibrarySource source;
+            private SchemaPreference<string> preference;
             private FileChooserButton chooser;
             private Button reset;
-            private LibraryLocationPreference preference;
             private string created_directory;
 
-            public LibraryLocationButton (PreferenceBase pref)
+            public LibraryLocationButton (LibrarySource source)
             {
-                preference = (LibraryLocationPreference)pref;
+                this.source = source;
+                preference = source.PreferencesPage["library-location"]["library-location"] as SchemaPreference<string>;
                 preference.ShowLabel = false;
+                preference.DisplayWidget = this;
+
+                string dir = preference.Value ?? source.DefaultBaseDirectory;
                 
                 Spacing = 5;
                 
@@ -93,9 +99,9 @@ namespace Banshee.Preferences.Gui
                 // so create it if it doesn't and store the fact that we did
                 // in case it ends up not being used, we can remove it
                 try {
-                    if (!Banshee.IO.Directory.Exists (preference.Value)) {
-                        Banshee.IO.Directory.Create (preference.Value);
-                        created_directory = preference.Value;
+                    if (!Banshee.IO.Directory.Exists (dir)) {
+                        Banshee.IO.Directory.Create (dir);
+                        created_directory = dir;
                         Log.DebugFormat ("Created library directory: {0}", created_directory);
                     } 
                 } catch {
@@ -103,7 +109,7 @@ namespace Banshee.Preferences.Gui
 
                 chooser = new FileChooserButton (Catalog.GetString ("Select library location"), 
                     FileChooserAction.SelectFolder);
-                chooser.SetCurrentFolder (preference.Value);
+                chooser.SetCurrentFolder (dir);
                 chooser.SelectionChanged += OnChooserChanged;
                     
                 HBox box = new HBox ();
@@ -113,9 +119,14 @@ namespace Banshee.Preferences.Gui
                 reset = new Button ();
                 reset.Clicked += OnReset;
                 reset.Add (box);
+
+                //Button open = new Button ();
+                //open.PackStart (new Image (Stock.Open, IconSize.Button), false, false, 0);
+                //open.Clicked += OnOpen;
                 
                 PackStart (chooser, true, true, 0);
                 PackStart (reset, false, false, 0);
+                //PackStart (open, false, false, 0);
                 
                 chooser.Show ();
                 reset.ShowAll ();
@@ -123,8 +134,13 @@ namespace Banshee.Preferences.Gui
             
             private void OnReset (object o, EventArgs args)
             {
-                chooser.SetFilename (Paths.DefaultLibraryPath);
+                chooser.SetFilename (source.DefaultBaseDirectory);
             }
+
+            //private void OnOpen (object o, EventArgs args)
+            //{
+                //open chooser.Filename
+            //}
             
             private void OnChooserChanged (object o, EventArgs args)
             {
@@ -139,7 +155,7 @@ namespace Banshee.Preferences.Gui
                     try {
                         Banshee.IO.Directory.Delete (created_directory);
                         if (!Banshee.IO.Directory.Exists (created_directory)) {
-                            Log.DebugFormat ("Deleted unusedi and empty previous library directory: {0}", created_directory);
+                            Log.DebugFormat ("Deleted unused and empty previous library directory: {0}", created_directory);
                             created_directory = null;
                         }
                     } catch {

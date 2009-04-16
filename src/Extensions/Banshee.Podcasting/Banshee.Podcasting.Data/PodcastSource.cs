@@ -57,10 +57,12 @@ namespace Banshee.Podcasting.Gui
     public class PodcastSource : Banshee.Library.LibrarySource
     {
         private PodcastFeedModel feed_model;
-
-        private string baseDirectory;
-        public override string BaseDirectory {
-            get { return baseDirectory; }
+        
+        public override string DefaultBaseDirectory {
+            get {
+                // HACK there isn't an XDG_PODCASTS_DIR; propose it?
+                return XdgBaseDirectorySpec.GetUserDirectory ("XDG_PODCASTS_DIR", "Podcasts");
+            }
         }
 
         public override bool CanRename {
@@ -82,17 +84,15 @@ namespace Banshee.Podcasting.Gui
         public PodcastFeedModel FeedModel {
             get { return feed_model; }
         }
-        
+
+        public override string PreferencesPageId {
+            get { return UniqueId; }
+        }
 
 #region Constructors
 
-        public PodcastSource () : this (null)
+        public PodcastSource () : base (Catalog.GetString ("Podcasts"), "PodcastLibrary", 200)
         {
-        }
-
-        public PodcastSource (string baseDirectory) : base (Catalog.GetString ("Podcasts"), "PodcastLibrary", 200)
-        {
-            this.baseDirectory = baseDirectory;
             TrackExternalObjectHandler = GetPodcastInfoObject;
             TrackArtworkIdHandler = GetTrackArtworkId;
             MediaTypes = TrackMediaAttributes.Podcast;

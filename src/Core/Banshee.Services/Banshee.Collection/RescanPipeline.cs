@@ -96,17 +96,20 @@ namespace Banshee.Collection
 
             //Hyena.Log.DebugFormat ("Have {0} items before delete", ServiceManager.DbConnection.Query<int>("select count(*) from coretracks where primarysourceid=?", psource.DbId));
 
-            // Delete tracks that are under the BaseDirectory (UriType = relative) and that weren't rescanned just now
-            ServiceManager.DbConnection.Execute (@"BEGIN;
-                DELETE FROM CorePlaylistEntries WHERE TrackID IN 
-                    (SELECT TrackID FROM CoreTracks WHERE PrimarySourceID = ? AND UriType = ? AND LastSyncedStamp IS NOT NULL AND LastSyncedStamp < ?);
-                DELETE FROM CoreSmartPlaylistEntries WHERE TrackID IN
-                    (SELECT TrackID FROM CoreTracks WHERE PrimarySourceID = ? AND UriType = ? AND LastSyncedStamp IS NOT NULL AND LastSyncedStamp < ?);
-                DELETE FROM CoreTracks WHERE PrimarySourceID = ? AND UriType = ? AND LastSyncedStamp IS NOT NULL AND LastSyncedStamp < ?;
-                COMMIT",
-                psource.DbId, (int)TrackUriType.RelativePath, scan_started,
-                psource.DbId, (int)TrackUriType.RelativePath, scan_started,
-                psource.DbId, (int)TrackUriType.RelativePath, scan_started
+            // Delete tracks that are under the BaseDirectory and that weren't rescanned just now
+            string condition = String.Format (
+                "WHERE PrimarySourceID = ? AND Uri LIKE '{0}%' AND LastSyncedStamp IS NOT NULL AND LastSyncedStamp < ?",
+                new SafeUri (psource.BaseDirectoryWithSeparator).AbsoluteUri
+            );
+
+            ServiceManager.DbConnection.Execute (String.Format (@"BEGIN;
+                    DELETE FROM CorePlaylistEntries WHERE TrackID IN (SELECT TrackID FROM CoreTracks {0});
+                    DELETE FROM CoreSmartPlaylistEntries WHERE TrackID IN (SELECT TrackID FROM CoreTracks {0});
+                    DELETE FROM CoreTracks {0}; COMMIT",
+                condition),
+                psource.DbId, scan_started,
+                psource.DbId, scan_started,
+                psource.DbId, scan_started
             );
 
             // TODO prune artists/albums
@@ -133,7 +136,7 @@ namespace Banshee.Collection
             this.scan_started = scan_started;
 
             fetch_command = DatabaseTrackInfo.Provider.CreateFetchCommand (
-                "CoreTracks.PrimarySourceID = ? AND (CoreTracks.Uri = ? OR CoreTracks.Uri = ?) LIMIT 1");
+                "CoreTracks.PrimarySourceID = ? AND CoreTracks.Uri = ? LIMIT 1");
 
             fetch_similar_command = DatabaseTrackInfo.Provider.CreateFetchCommand (
                 "CoreTracks.PrimarySourceID = ? AND CoreTracks.LastSyncedStamp < ? AND CoreTracks.MetadataHash = ?");
@@ -152,9 +155,9 @@ namespace Banshee.Collection
 
             //Hyena.Log.DebugFormat ("Rescanning item {0}", file_path);
             try {
-                string relative_path = Banshee.Base.Paths.MakePathRelative (file_path, psource.BaseDirectory);
+                SafeUri uri = new SafeUri (file_path);
                 
-                IDataReader reader = ServiceManager.DbConnection.Query (fetch_command, psource.DbId, file_path, relative_path);
+                IDataReader reader = ServiceManager.DbConnection.Query (fetch_command, psource.DbId, uri.AbsoluteUri);
                 if (reader.Read () ) {
                     //Hyena.Log.DebugFormat ("Found it in the db!");
                     DatabaseTrackInfo track = DatabaseTrackInfo.Provider.Load (reader);
@@ -168,7 +171,7 @@ namespace Banshee.Collection
                 } else {
                     // This URI is not in the database - try to find it based on MetadataHash in case it was simply moved
                     DatabaseTrackInfo track = new DatabaseTrackInfo ();
-                    Banshee.Streaming.StreamTagger.TrackInfoMerge (track, new SafeUri (file_path));
+                    Banshee.Streaming.StreamTagger.TrackInfoMerge (track, uri);
     
                     IDataReader similar_reader = ServiceManager.DbConnection.Query (fetch_similar_command, psource.DbId, scan_started, track.MetadataHash);
                     DatabaseTrackInfo similar_track = null;
@@ -176,7 +179,7 @@ namespace Banshee.Collection
                         similar_track = DatabaseTrackInfo.Provider.Load (similar_reader);
                         if (!Banshee.IO.File.Exists (similar_track.Uri)) {
                             //Hyena.Log.DebugFormat ("Apparently {0} was moved to {1}", similar_track.Uri, file_path);
-                            similar_track.Uri = new SafeUri (file_path);
+                            similar_track.Uri = uri;
                             MergeIfModified (similar_track);
                             similar_track.LastSyncedStamp = DateTime.Now;
                             similar_track.Save (false);

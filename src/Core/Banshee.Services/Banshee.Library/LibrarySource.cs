@@ -39,19 +39,32 @@ using Banshee.Base;
 using Banshee.Sources;
 using Banshee.Database;
 using Banshee.ServiceStack;
+using Banshee.Preferences;
 using Banshee.Collection;
 using Banshee.Collection.Database;
 
 namespace Banshee.Library
 {
-    public class LibrarySource : PrimarySource
+    public abstract class LibrarySource : PrimarySource
     {
+        // Deprecated, don't use in new code
+        internal static readonly Banshee.Configuration.SchemaEntry<string> OldLocationSchema = new Banshee.Configuration.SchemaEntry<string> ("library", "base_location", null, null, null);
+
+        private Banshee.Configuration.SchemaEntry<string> base_dir_schema;
+
         public LibrarySource (string label, string name, int order) : base (label, label, name, order)
         {
             Properties.SetString ("GtkActionPath", "/LibraryContextMenu");
             Properties.SetString ("RemoveTracksActionLabel", Catalog.GetString ("Remove From Library"));
             IsLocal = true;
+            base_dir_schema = CreateSchema<string> ("library-location", null, "The base directory under which files for this library are stored", null);
             AfterInitialized ();
+            
+            Section library_section = PreferencesPage.Add (new Section ("library-location", 
+                // Translators: {0} is the library name, eg 'Music Library' or 'Podcasts'
+                String.Format (Catalog.GetString ("{0} Folder"), Name), 2));
+
+            library_section.Add (base_dir_schema);
         }
 
         public string AttributesCondition {
@@ -76,9 +89,25 @@ namespace Banshee.Library
             set { not_media_types = value; }
         }
 
-        public override string BaseDirectory {
-            get { return Paths.CachedLibraryLocation; }
+        public override string PreferencesPageId {
+            get { return UniqueId; }
         }
+
+        public override string BaseDirectory {
+            get {
+                string dir = base_dir_schema.Get ();
+                if (dir == null) {
+                    BaseDirectory = dir = DefaultBaseDirectory;
+                }
+                return dir;
+            }
+            protected set {
+                base_dir_schema.Set (value);
+                base.BaseDirectory = value;
+            }
+        }
+        
+        public abstract string DefaultBaseDirectory { get; }
         
         public override bool Indexable {
             get { return true; }
@@ -120,11 +149,12 @@ namespace Banshee.Library
                 source.NotifyTracksChanged ();
             } else {
                 // Figure out where we should put it if were to copy it
-                string path = FileNamePattern.BuildFull (track);
+                string path = FileNamePattern.BuildFull (BaseDirectory, track);
                 SafeUri uri = new SafeUri (path);
 
                 // Make sure it's not already in the library
-                if (DatabaseTrackInfo.ContainsUri (uri, Paths.MakePathRelative (uri.AbsolutePath, BaseDirectory) ?? uri.AbsoluteUri, new int [] {DbId})) {
+                // TODO optimize - no need to recrate this int [] every time
+                if (DatabaseTrackInfo.ContainsUri (uri, new int [] {DbId})) {
                     return;
                 }
 
@@ -136,18 +166,6 @@ namespace Banshee.Library
                 new_track.Uri = uri;
                 new_track.PrimarySource = this;
                 new_track.Save (false);
-            }
-        }
-        
-        public static int GetTrackIdForUri (string uri)
-        {
-            return DatabaseTrackInfo.GetTrackIdForUri (new SafeUri (uri), Paths.MakePathRelative (uri, Paths.LibraryLocation), LibraryIds);
-        }
-        
-        private static int [] library_ids;
-        private static int [] LibraryIds {
-            get {
-                return library_ids ?? (library_ids = new int [] {ServiceManager.SourceManager.MusicLibrary.DbId, ServiceManager.SourceManager.VideoLibrary.DbId});
             }
         }
     }

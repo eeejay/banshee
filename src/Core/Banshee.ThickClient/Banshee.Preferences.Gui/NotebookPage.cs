@@ -80,7 +80,6 @@ namespace Banshee.Preferences.Gui
                     foreach (Page child_page in page.ChildPages) {
                         NotebookPage page_ui = new NotebookPage (child_page);
                         page_ui.BorderWidth = 0;
-                        page_ui.Spacing = 0;
                         page_ui.Show ();
                         notebook.AppendPage (page_ui, null);
                     }

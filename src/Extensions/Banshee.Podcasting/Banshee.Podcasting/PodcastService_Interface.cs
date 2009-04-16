@@ -55,13 +55,13 @@ namespace Banshee.Podcasting
 {
     public partial class PodcastService
     {                 
-        PodcastActions actions = null;
+        private PodcastActions actions = null;
          
         private void InitializeInterface ()
         {
-            source = new PodcastSource (tmp_enclosure_path);
-            ServiceManager.SourceManager.AddSource (source);
+            source = new PodcastSource ();
 
+            ServiceManager.SourceManager.AddSource (source);
             actions = new PodcastActions (source);
         }
         

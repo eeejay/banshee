@@ -32,38 +32,43 @@ using System.IO;
 using Mono.Unix;
 
 using Banshee.Base;
+using Banshee.Collection.Database;
 using Banshee.Configuration.Schema;
 
 namespace Banshee.Collection
 {
     public class MoveOnInfoSaveJob : Banshee.Kernel.IInstanceCriticalJob
     {
-        private TrackInfo track;
+        private DatabaseTrackInfo track;
 
         public string Name {
             get { return String.Format (Catalog.GetString ("Renaming {0}"), track.TrackTitle); }
         }
 
-        public MoveOnInfoSaveJob (TrackInfo track)
+        public MoveOnInfoSaveJob (DatabaseTrackInfo track)
         {
             this.track = track;
         }
 
         public void Run ()
         {
+            if (track == null) {
+                return;
+            }
+
             if (!LibrarySchema.MoveOnInfoSave.Get ()) {
                 Hyena.Log.Debug ("Skipping scheduled rename, preference disabled after scheduling");
                 return;
             }
 
             SafeUri old_uri = track.Uri;
-            bool in_library = old_uri.AbsolutePath.StartsWith (Paths.CachedLibraryLocationWithSeparator);
+            bool in_library = old_uri.AbsolutePath.StartsWith (track.PrimarySource.BaseDirectoryWithSeparator);
 
             if (!in_library) {
                 return;
             }
 
-            string new_filename = FileNamePattern.BuildFull (track, Path.GetExtension (old_uri.ToString ()));
+            string new_filename = FileNamePattern.BuildFull (track.PrimarySource.BaseDirectory, track, Path.GetExtension (old_uri.ToString ()));
             SafeUri new_uri = new SafeUri (new_filename);
 
             if (!new_uri.Equals (old_uri) && !Banshee.IO.File.Exists (new_uri)) {

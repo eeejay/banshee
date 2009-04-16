@@ -69,7 +69,7 @@ namespace Banshee.CoverArt
                         LastAttempt > ? OR Downloaded = 1)");
 
         private static HyenaSqliteCommand select_query = new HyenaSqliteCommand (@"
-            SELECT DISTINCT CoreAlbums.AlbumID, CoreAlbums.Title, CoreArtists.Name, CoreTracks.Uri, CoreTracks.UriType
+            SELECT DISTINCT CoreAlbums.AlbumID, CoreAlbums.Title, CoreArtists.Name, CoreTracks.Uri
             FROM CoreTracks, CoreArtists, CoreAlbums
             WHERE
                 CoreTracks.PrimarySourceID = ? AND
@@ -139,7 +139,7 @@ namespace Banshee.CoverArt
                             track.AlbumTitle = reader.Get<string> (1);
                             track.ArtistName = reader.Get<string> (2);
                             track.PrimarySource = ServiceManager.SourceManager.MusicLibrary;
-                            track.Uri = track.PrimarySource.UriAndTypeToSafeUri (reader.Get<TrackUriType> (4), reader.Get<string> (3));
+                            track.Uri = new SafeUri (reader.Get<string> (3));
                             track.AlbumId = reader.Get<int> (0);
                             //Console.WriteLine ("have album {0}/{1} for track uri {2}", track.AlbumId, track.AlbumTitle, track.Uri);
 
