@@ -4,17 +4,11 @@
          xmlns:gnome="http://api.gnome.org/doap-extensions#"
          xmlns="http://usefulinc.com/ns/doap#">
 
-  <!--
-  This is a DOAP template file.  It contains Pulse's best guesses at
-  some basic content.  You should verify the information in this file
-  and modify anything that isn't right.  Add the corrected file to your
-  source code repository to help tools better understand your project.
-  -->
-
-  <name xml:lang="en">banshee</name>
+  <name xml:lang="en">Banshee Media Player</name>
   <shortdesc xml:lang="en">Play and organize your media collection</shortdesc>
-  <homepage rdf:resource="http://www.banshee-project.org/" />
+  <homepage rdf:resource="http://banshee-project.org/" />
   <mailing-list rdf:resource="http://mail.gnome.org/mailman/listinfo/banshee-list" />
+  <bug-database rdf:resource="http://bugzilla.gnome.org/" />
 
   <maintainer>
     <foaf:Person>
@@ -30,4 +24,5 @@
       <gnome:userid>gburt</gnome:userid>
     </foaf:Person>
   </maintainer>
+
 </Project>
