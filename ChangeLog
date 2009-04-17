@@ -1,5 +1,72 @@
 2009-04-16  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	Add a smart, priority-aware, resource-contention-avoiding job scheduler
+	Net result is BPM analysis will pause while importing, etc (BGO #577772).
+	Still need to convert Banshee.Kernel jobs.
+
+	* src/Core/Banshee.Core/Banshee.Base/ProductInformation.cs:
+	* src/Core/Banshee.Core/Banshee.Base/Resource.cs: Rename to
+	AssemblyResource to avoid conflicts.
+
+	* src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs:
+	* src/Core/Banshee.Services/Banshee.Collection/RescanPipeline.cs:
+	* src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:
+	* src/Core/Banshee.Services/Banshee.Library/ThreadPoolImportSource.cs:
+	* src/Core/Banshee.Services/Banshee.MediaEngine/TranscoderService.cs:
+	* src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs:
+	* src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/DatabaseRebuilder.cs:
+	* src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdRipper.cs:
+	* src/Extensions/Banshee.Bpm/Banshee.Bpm/BpmDetectJob.cs:
+	Set PriorityHints and Resources for Jobs.
+
+	* src/Core/Banshee.Services/Banshee.Metadata/IMetadataLookupJob.cs:
+	* src/Core/Banshee.Services/Banshee.Metadata/MetadataServiceJob.cs: Add
+	Cancel method.
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs: Use the
+	new JobScheduler, checking for DataLossJobs on shutdown.
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/DbIteratorJob.cs: Rework
+	as subclass of SimpleAsyncJob.
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/JobScheduler.cs: Simple
+	new class that subclasses JobScheduler and is an IService.
+
+	* src/Core/Banshee.Services/Makefile.am:
+	* src/Core/Banshee.Services/Banshee.ServiceStack/UserJobManager.cs:
+	* src/Core/Banshee.Services/Banshee.ServiceStack/ServiceManager.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/ConfirmShutdownDialog.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TaskStatusIcon.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTile.cs:
+	* src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTileHost.cs:
+	* src/Extensions/Banshee.Bpm/Banshee.Bpm/BpmService.cs:
+	Use JobScheduler instead of UserJobManager.
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/TestUserJob.cs:
+	* src/Core/Banshee.Services/Banshee.ServiceStack/UserJob.cs: Inherit from
+	Hyena.Job.  Most UserJob code now lives in Hyena.Job
+
+	* src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs: Inherit
+	from DbIteratorJob.
+
+	* src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtService.cs:
+	If we were cancelled, don't try to save the last_scan time.
+
+	* src/Libraries/Hyena/Makefile.am:
+	* src/Libraries/Hyena/Hyena.Jobs/Job.cs:
+	* src/Libraries/Hyena/Hyena.Jobs/JobExtensions.cs:
+	* src/Libraries/Hyena/Hyena.Jobs/PriorityHints.cs:
+	* src/Libraries/Hyena/Hyena.Jobs/Resource.cs:
+	* src/Libraries/Hyena/Hyena.Jobs/Scheduler.cs:
+	* src/Libraries/Hyena/Hyena.Jobs/SimpleAsyncJob.cs:
+	* src/Libraries/Hyena/Hyena.Jobs/Tests/SchedulerTests.cs: New set of
+	classes to implement smart scheduling of jobs, prioritizing jobs and
+	avoiding resource contention.
+
+	* src/Libraries/Hyena/Hyena/Timer.cs: Add params/format ctor.
+
+2009-04-16  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	This patch adds separate library folder preferences for Music Library,
 	Video Library, and Podcasts (BGO #404827).  They are all configurable via
 	the Preferences dialog.  It also changes the format used to store URIs in

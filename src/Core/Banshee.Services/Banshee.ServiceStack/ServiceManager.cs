@@ -33,6 +33,7 @@ using System.Collections.Generic;
 using Mono.Addins;
 
 using Hyena;
+
 using Banshee.Base;
 using Banshee.MediaProfiles;
 using Banshee.Sources;
@@ -98,7 +99,7 @@ namespace Banshee.ServiceStack
             RegisterService<PlaybackControllerService> ();
             RegisterService<ImportSourceManager> ();
             RegisterService<LibraryImportManager> ();
-            RegisterService<UserJobManager> ();
+            RegisterService<JobScheduler> ();
             RegisterService<Banshee.Hardware.HardwareManager> ();
             RegisterService<Banshee.Collection.Indexer.CollectionIndexerService> ();
         }
@@ -391,6 +392,10 @@ namespace Banshee.ServiceStack
         
         public static SourceManager SourceManager {
             get { return (SourceManager)Get ("SourceManager"); }
+        }
+
+        public static JobScheduler JobScheduler {
+            get { return (JobScheduler)Get ("JobScheduler"); }
         }
         
         public static PlayerEngineService PlayerEngine {

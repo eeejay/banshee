@@ -35,6 +35,7 @@ using Mono.Unix;
 using Mono.Addins;
 
 using Hyena;
+using Hyena.Jobs;
 using Hyena.Data.Sqlite;
 
 using Banshee.Base;
@@ -53,6 +54,9 @@ namespace Banshee.Bpm
         private int current_track_id;
         private IBpmDetector detector;
         private PrimarySource music_library;
+        private ManualResetEvent result_ready_event = new ManualResetEvent (false);
+        private SafeUri result_uri;
+        private int result_bpm;
         
         private static HyenaSqliteCommand update_query = new HyenaSqliteCommand (
             "UPDATE CoreTracks SET BPM = ?, DateUpdatedStamp = ? WHERE TrackID = ?");
@@ -61,6 +65,8 @@ namespace Banshee.Bpm
         {
             IconNames = new string [] {"audio-x-generic"};
             IsBackground = true;
+            SetResources (Resource.Cpu, Resource.Disk);
+            PriorityHints = PriorityHints.LongRunning;
 
             music_library = ServiceManager.SourceManager.MusicLibrary;
 
@@ -85,33 +91,52 @@ namespace Banshee.Bpm
             detector.FileFinished += OnFileFinished;
         }
 
+        protected override void OnCancelled ()
+        {
+            Cleanup ();
+            result_ready_event.Set ();
+        }
+
         protected override void Cleanup ()
         {
-            Finish ();
-
             if (detector != null) {
+                detector.FileFinished -= OnFileFinished;
                 detector.Dispose ();
+                detector = null;
             }
+
+            base.Cleanup ();
         }
 
         protected override void IterateCore (HyenaDataReader reader)
         {
             SafeUri uri = new SafeUri (reader.Get<string> (0));
             current_track_id = reader.Get<int> (1);
+
+            // Wait for the result to be ready
+            result_ready_event.Reset ();
             detector.ProcessFile (uri);
+            result_ready_event.WaitOne ();
+
+            if (IsCancelRequested) {
+                return;
+            }
+
+            if (result_bpm > 0) {
+                Log.DebugFormat ("Saving BPM of {0} for {1}", result_bpm, result_uri);
+                ServiceManager.DbConnection.Execute (update_query, result_bpm, DateTime.Now, current_track_id);
+            } else {
+                ServiceManager.DbConnection.Execute (update_query, -1, DateTime.Now, current_track_id);
+                Log.DebugFormat ("Unable to detect BPM for {0}", result_uri);
+            }
         }
 
         private void OnFileFinished (SafeUri uri, int bpm)
         {
-            if (bpm > 0) {
-                Log.DebugFormat ("Saving BPM of {0} for {1}", bpm, uri);
-                ServiceManager.DbConnection.Execute (update_query, bpm, DateTime.Now, current_track_id);
-            } else {
-                ServiceManager.DbConnection.Execute (update_query, -1, DateTime.Now, current_track_id);
-                Log.DebugFormat ("Unable to detect BPM for {0}", uri);
-            }
-
-            Iterate ();
+            // This is run on the main thread b/c of GStreamer, so do as little as possible here
+            result_uri = uri;
+            result_bpm = bpm;
+            result_ready_event.Set ();
         }
 
         internal static IBpmDetector GetDetector ()

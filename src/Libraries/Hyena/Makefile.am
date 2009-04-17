@@ -48,6 +48,13 @@ SOURCES =  \
 	Hyena.Data/ModelSelection.cs \
 	Hyena.Data/PropertyStore.cs \
 	Hyena.Data/SortType.cs \
+	Hyena.Jobs/Job.cs \
+	Hyena.Jobs/JobExtensions.cs \
+	Hyena.Jobs/PriorityHints.cs \
+	Hyena.Jobs/Resource.cs \
+	Hyena.Jobs/Scheduler.cs \
+	Hyena.Jobs/SimpleAsyncJob.cs \
+	Hyena.Jobs/Tests/SchedulerTests.cs \
 	Hyena.Json/Deserializer.cs \
 	Hyena.Json/IJsonCollection.cs \
 	Hyena.Json/JsonArray.cs \

@@ -34,6 +34,10 @@ namespace Hyena
     {
         private DateTime start;
         private string label;
+
+        public Timer (string format, params object [] vals) : this (String.Format (format, vals))
+        {
+        }
         
         public Timer (string label) 
         {

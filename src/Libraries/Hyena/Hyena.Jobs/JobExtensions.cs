@@ -1,10 +1,10 @@
-// 
-// UserJob.cs
+//
+// JobExtensions.cs
 //
 // Author:
-//   Aaron Bockover <abockover@novell.com>
+//   Gabriel Burt <gburt@novell.com>
 //
-// Copyright (C) 2007-2008 Novell, Inc.
+// Copyright (C) 2009 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -27,40 +27,43 @@
 //
 
 using System;
-using System.Threading;
+using System.Linq;
+using System.Collections.Generic;
 
-using Hyena.Jobs;
-using Hyena.Data;
-
-namespace Banshee.ServiceStack
+namespace Hyena.Jobs
 {
-    public class UserJob : Job
+    public static class JobExtensions
     {
-        public UserJob (string title) : this (title, null, null)
+        internal static IEnumerable<T> Without<T> (this IEnumerable<T> source, PriorityHints hints) where T : Job
         {
+            return source.Where (j => !j.Has (hints));
         }
 
-        public UserJob (string title, string status) : this (title, status, null)
+        internal static IEnumerable<T> With<T> (this IEnumerable<T> source, PriorityHints hints) where T : Job
         {
+            return source.Where (j => j.Has (hints));
         }
 
-        public UserJob (string title, string status, params string [] iconNames)
+        internal static IEnumerable<T> SharingResourceWith<T> (this IEnumerable<T> source, Job job) where T : Job
         {
-            FreezeUpdate ();
-            Title = title;
-            Status = status;
-            IconNames = iconNames;
-            ThawUpdate (true);
+            return source.Where (j => j.Resources.Intersect (job.Resources).Any ());
         }
 
-        public void Register ()
+        public static void ForEach<T> (this IEnumerable<T> source, Action<T> func)
         {
-            ServiceManager.JobScheduler.Add (this);
+            foreach (T item in source)
+                func (item);
         }
 
-        public void Finish ()
+        public static bool Has<T> (this T job, PriorityHints hints) where T : Job
         {
-            OnFinished ();
+            return (job.PriorityHints & hints) == hints;
         }
+
+        // Useful..
+        /*public static bool Include (this Enum source, Enum flags)
+        {
+            return ((int)source & (int)flags) == (int)flags;
+        }*/
     }
 }

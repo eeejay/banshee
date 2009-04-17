@@ -121,7 +121,6 @@ namespace Banshee.Bpm
             }
 
             job.Finished += delegate { job = null; };
-            job.RunAsync ();
         }
         
         private void OnTracksAdded (Source sender, TrackEventArgs args)
@@ -167,7 +166,7 @@ namespace Banshee.Bpm
                     Detect ();
                 } else {
                     if (job != null) {
-                        job.Cancel ();
+                        ServiceManager.JobScheduler.Cancel (job);
                     }
                 }
             }

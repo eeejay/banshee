@@ -36,6 +36,7 @@ using Mono.Unix;
 using Gtk;
 
 using Hyena;
+using Hyena.Jobs;
 using Hyena.Data.Sqlite;
 
 using Banshee.Base;
@@ -49,37 +50,10 @@ using Banshee.Library;
 
 namespace Banshee.CoverArt
 {
-    public class CoverArtJob : UserJob, IJob
+    public class CoverArtJob : DbIteratorJob
     {
-        private const int BatchSize = 10;
-        
         private DateTime last_scan = DateTime.MinValue;
         private TimeSpan retry_every = TimeSpan.FromDays (7);
-
-        private static HyenaSqliteCommand count_query = new HyenaSqliteCommand (@"
-            SELECT count(DISTINCT CoreTracks.AlbumID)
-            FROM CoreTracks, CoreArtists, CoreAlbums
-            WHERE
-                CoreTracks.PrimarySourceID = ? AND
-                CoreTracks.DateUpdatedStamp > ? AND
-                CoreTracks.AlbumID = CoreAlbums.AlbumID AND 
-                CoreAlbums.ArtistID = CoreArtists.ArtistID AND
-                CoreTracks.AlbumID NOT IN (
-                    SELECT AlbumID FROM CoverArtDownloads WHERE
-                        LastAttempt > ? OR Downloaded = 1)");
-
-        private static HyenaSqliteCommand select_query = new HyenaSqliteCommand (@"
-            SELECT DISTINCT CoreAlbums.AlbumID, CoreAlbums.Title, CoreArtists.Name, CoreTracks.Uri
-            FROM CoreTracks, CoreArtists, CoreAlbums
-            WHERE
-                CoreTracks.PrimarySourceID = ? AND
-                CoreTracks.DateUpdatedStamp > ? AND
-                CoreTracks.AlbumID = CoreAlbums.AlbumID AND 
-                CoreAlbums.ArtistID = CoreArtists.ArtistID AND
-                CoreTracks.AlbumID NOT IN (
-                    SELECT AlbumID FROM CoverArtDownloads WHERE
-                        LastAttempt > ? OR Downloaded = 1)
-            GROUP BY CoreTracks.AlbumID LIMIT ?");
         
         public CoverArtJob (DateTime lastScan) : base (Catalog.GetString ("Downloading Cover Art"))
         {
@@ -91,75 +65,67 @@ namespace Banshee.CoverArt
                 last_scan = DateTime.Now - TimeSpan.FromDays (300);
             }
 
+            CountCommand = new HyenaSqliteCommand (@"
+                SELECT count(DISTINCT CoreTracks.AlbumID)
+                    FROM CoreTracks, CoreArtists, CoreAlbums
+                    WHERE
+                        CoreTracks.PrimarySourceID = ? AND
+                        CoreTracks.DateUpdatedStamp > ? AND
+                        CoreTracks.AlbumID = CoreAlbums.AlbumID AND 
+                        CoreAlbums.ArtistID = CoreArtists.ArtistID AND
+                        CoreTracks.AlbumID NOT IN (
+                            SELECT AlbumID FROM CoverArtDownloads WHERE
+                                LastAttempt > ? OR Downloaded = 1)",
+                ServiceManager.SourceManager.MusicLibrary.DbId, last_scan, last_scan - retry_every
+            );
+
+            SelectCommand = new HyenaSqliteCommand (@"
+                SELECT DISTINCT CoreAlbums.AlbumID, CoreAlbums.Title, CoreArtists.Name, CoreTracks.Uri 
+                    FROM CoreTracks, CoreArtists, CoreAlbums
+                    WHERE
+                        CoreTracks.PrimarySourceID = ? AND
+                        CoreTracks.DateUpdatedStamp > ? AND
+                        CoreTracks.AlbumID = CoreAlbums.AlbumID AND 
+                        CoreAlbums.ArtistID = CoreArtists.ArtistID AND
+                        CoreTracks.AlbumID NOT IN (
+                            SELECT AlbumID FROM CoverArtDownloads WHERE
+                                LastAttempt > ? OR Downloaded = 1)
+                    GROUP BY CoreTracks.AlbumID LIMIT ?",
+                ServiceManager.SourceManager.MusicLibrary.DbId, last_scan, last_scan - retry_every, 1
+            );
+
+            SetResources (Resource.Database);
+            PriorityHints = PriorityHints.LongRunning;
+
             IsBackground = true;
             CanCancel = true;
             DelayShow = true;
-
-            CancelRequested += delegate {
-                Finish ();
-            };
         }
         
         public void Start ()
         {
             Register ();
-            Scheduler.Schedule (this, JobPriority.Lowest);
         }
 
-        private HyenaDataReader RunQuery ()
+        protected override void IterateCore (HyenaDataReader reader)
         {
-            return new HyenaDataReader (ServiceManager.DbConnection.Query (select_query,
-                ServiceManager.SourceManager.MusicLibrary.DbId, last_scan, last_scan - retry_every, BatchSize
-            ));
-        }
-        
-        public void Run ()
-        {
-            Status = Catalog.GetString ("Preparing...");
-            IconNames = new string [] {Stock.Network};
-            
-            int current = 0;
-            int total = 0;
+            DatabaseTrackInfo track = new DatabaseTrackInfo ();
 
-            try {
-                DatabaseTrackInfo track = new DatabaseTrackInfo ();
-                while (true) {
-                    total = current + ServiceManager.DbConnection.Query<int> (count_query, ServiceManager.SourceManager.MusicLibrary.DbId, last_scan, last_scan - retry_every);
-                    if (total == 0 || total <= current) {
-                        break;
-                    }
+            track.AlbumTitle = reader.Get<string> (1);
+            track.ArtistName = reader.Get<string> (2);
+            track.PrimarySource = ServiceManager.SourceManager.MusicLibrary;
+            track.Uri = new SafeUri (reader.Get<string> (3));
+            track.AlbumId = reader.Get<int> (0);
+            //Console.WriteLine ("have album {0}/{1} for track uri {2}", track.AlbumId, track.AlbumTitle, track.Uri);
 
-                    using (HyenaDataReader reader = RunQuery ()) {
-                        while (reader.Read ()) {
-                            if (IsCancelRequested) {
-                                Finish ();
-                                return;
-                            }
-                            
-                            track.AlbumTitle = reader.Get<string> (1);
-                            track.ArtistName = reader.Get<string> (2);
-                            track.PrimarySource = ServiceManager.SourceManager.MusicLibrary;
-                            track.Uri = new SafeUri (reader.Get<string> (3));
-                            track.AlbumId = reader.Get<int> (0);
-                            //Console.WriteLine ("have album {0}/{1} for track uri {2}", track.AlbumId, track.AlbumTitle, track.Uri);
+            Status = String.Format (Catalog.GetString ("{0} - {1}"), track.ArtistName, track.AlbumTitle);
 
-                            Progress = (double) current / (double) total;
-                            Status = String.Format (Catalog.GetString ("{0} - {1}"), track.ArtistName, track.AlbumTitle);
-
-                            FetchForTrack (track);
-                            current++;
-                        }
-                    }
-                }
-            } catch (Exception e) {
-                Log.Exception (e);
-            }
- 
-            Finish ();
+            FetchForTrack (track);
         }
 
         private void FetchForTrack (DatabaseTrackInfo track)
         {
+            bool save = true;
             try {
                 if (String.IsNullOrEmpty (track.AlbumTitle) || track.AlbumTitle == Catalog.GetString ("Unknown Album") ||
                     String.IsNullOrEmpty (track.ArtistName) || track.ArtistName == Catalog.GetString ("Unknown Artist")) {
@@ -168,14 +134,24 @@ namespace Banshee.CoverArt
                     IMetadataLookupJob job = MetadataService.Instance.CreateJob (track);
                     job.Run ();
                 }
+            } catch (System.Threading.ThreadAbortException) {
+                save = false;
+                throw;
             } catch (Exception e) {
                 Log.Exception (e);
             } finally {
-                bool have_cover_art = CoverArtSpec.CoverExists (track.ArtistName, track.AlbumTitle);
-                ServiceManager.DbConnection.Execute (
-                    "INSERT OR REPLACE INTO CoverArtDownloads (AlbumID, Downloaded, LastAttempt) VALUES (?, ?, ?)",
-                    track.AlbumId, have_cover_art, DateTime.Now);
+                if (save) {
+                    bool have_cover_art = CoverArtSpec.CoverExists (track.ArtistName, track.AlbumTitle);
+                    ServiceManager.DbConnection.Execute (
+                        "INSERT OR REPLACE INTO CoverArtDownloads (AlbumID, Downloaded, LastAttempt) VALUES (?, ?, ?)",
+                        track.AlbumId, have_cover_art, DateTime.Now);
+                }
             }
+        }
+
+        protected override void OnCancelled ()
+        {
+            AbortThread ();
         }
     }
 }

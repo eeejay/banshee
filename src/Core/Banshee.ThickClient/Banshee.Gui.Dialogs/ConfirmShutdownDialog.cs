@@ -30,15 +30,19 @@ using System;
 using Gtk;
 using Mono.Unix;
 
-using Banshee.Kernel;
+using Hyena.Jobs;
+
+using Banshee.ServiceStack;
 
 namespace Banshee.Gui.Dialogs
 {
     public class ConfirmShutdownDialog : ErrorListDialog
     {
+        private Scheduler scheduler;
+
         public ConfirmShutdownDialog() : base()
         {
-            ListView.Model = new ListStore(typeof(string), typeof(IJob));
+            ListView.Model = new ListStore(typeof(string), typeof(Job));
             ListView.AppendColumn("Error", new CellRendererText(), "text", 0);
             ListView.HeadersVisible = false;
 
@@ -53,14 +57,14 @@ namespace Banshee.Gui.Dialogs
             
             AddButton(Catalog.GetString("Quit anyway"), ResponseType.Ok, false);
             AddButton(Catalog.GetString("Continue running"), ResponseType.Cancel, true);
+
+            scheduler = ServiceManager.JobScheduler;
+            foreach (Job job in scheduler.Jobs) {
+                AddJob (job);
+            }
             
-            foreach(IJob job in Scheduler.ScheduledJobs) {
-                AddJob(job);
-            }     
-            
-            Scheduler.JobScheduled += AddJob;
-            Scheduler.JobUnscheduled += RemoveJob;
-            Scheduler.JobFinished += RemoveJob;
+            scheduler.JobAdded += AddJob;
+            scheduler.JobRemoved += RemoveJob;
         }
         
         public void AddString(string message)
@@ -68,20 +72,20 @@ namespace Banshee.Gui.Dialogs
             (ListView.Model as ListStore).AppendValues(message, null);
         }
 
-        private void AddJob(IJob job)
+        private void AddJob(Job job)
         {
-            if(job is IInstanceCriticalJob) {
+            if (job.Has (PriorityHints.DataLossIfStopped)) {
                 Banshee.Base.ThreadAssist.ProxyToMain(delegate {
                     TreeIter iter = (ListView.Model as ListStore).Prepend();
-                    (ListView.Model as ListStore).SetValue(iter, 0, (job as IInstanceCriticalJob).Name);
+                    (ListView.Model as ListStore).SetValue(iter, 0, job.Title);
                     (ListView.Model as ListStore).SetValue(iter, 1, job);
                 });
             }
         }
 
-        private void RemoveJob(IJob job)
+        private void RemoveJob(Job job)
         {
-            if(!Scheduler.IsInstanceCriticalJobScheduled) {
+            if(!scheduler.HasAnyDataLossJobs) {
                 Dialog.Respond(Gtk.ResponseType.Ok);
                 return;
             }

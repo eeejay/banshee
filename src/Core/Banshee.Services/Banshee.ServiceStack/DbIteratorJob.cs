@@ -35,13 +35,13 @@ using Mono.Unix;
 using Mono.Addins;
 
 using Hyena;
+using Hyena.Jobs;
 using Hyena.Data.Sqlite;
 
 using Banshee.Base;
 using Banshee.Collection;
 using Banshee.Collection.Database;
 using Banshee.Sources;
-using Banshee.Kernel;
 using Banshee.Metadata;
 using Banshee.MediaEngine;
 using Banshee.ServiceStack;
@@ -49,10 +49,8 @@ using Banshee.Library;
 
 namespace Banshee.ServiceStack
 {
-    public abstract class DbIteratorJob : UserJob
+    public abstract class DbIteratorJob : SimpleAsyncJob
     {
-        //private Thread thread;
-
         private HyenaSqliteCommand count_command;
         private HyenaSqliteCommand select_command;
         private int current_count;
@@ -65,33 +63,43 @@ namespace Banshee.ServiceStack
             set { select_command = value; }
         }
 
-        public DbIteratorJob (string name) : base (name)
+        public DbIteratorJob (string title)
+        {
+            Title = title;
+            CancelRequested += OnCancelled;
+        }
+
+        public void Register ()
+        {
+            ServiceManager.JobScheduler.Add (this);
+        }
+
+        private void OnCancelled (object o, EventArgs args)
+        {
+            OnCancelled ();
+        }
+
+        protected virtual void OnCancelled ()
         {
         }
 
-        public void RunAsync ()
+        protected override void Run ()
         {
-            //thread = ThreadAssist.Spawn (Run);
-            ThreadAssist.Spawn (Run);
-            //thread.Name = Title;
-        }
-
-        public void Run ()
-        {
-            int total = ServiceManager.DbConnection.Query<int> (count_command);
-            if (total > 0) {
+            if (ServiceManager.DbConnection.Query<int> (count_command) > 0) {
                 Init ();
-                Iterate ();
+                while (!IsFinished && Iterate ()) {}
             }
+
+            Cleanup ();
         }
 
-        protected void Iterate ()
+        protected bool Iterate ()
         {
             if (IsCancelRequested) {
-                Hyena.Log.DebugFormat ("{0} cancelled", Title);
-                Cleanup ();
-                return;
+                return false;
             }
+
+            YieldToScheduler ();
 
             int total = current_count + ServiceManager.DbConnection.Query<int> (count_command);
             try {
@@ -99,15 +107,20 @@ namespace Banshee.ServiceStack
                     if (reader.Read ()) {
                         IterateCore (reader);
                     } else {
-                        Cleanup ();
+                        return false;
                     }
                 }
+            } catch (System.Threading.ThreadAbortException) {
+                Cleanup ();
+                throw;
             } catch (Exception e) {
                 Log.Exception (e);
             } finally {
                 Progress = (double) current_count / (double) total;
                 current_count++;
             }
+
+            return true;
         }
 
         protected virtual void Init ()
@@ -116,7 +129,7 @@ namespace Banshee.ServiceStack
 
         protected virtual void Cleanup ()
         {
-            Finish ();
+            OnFinished ();
         }
    
         protected abstract void IterateCore (HyenaDataReader reader);

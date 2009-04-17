@@ -30,8 +30,10 @@ using System;
 using System.IO;
 using System.Threading;
 
-using Hyena;
 using Mono.Unix;
+
+using Hyena;
+using Hyena.Jobs;
 
 using Banshee.ServiceStack;
 using Banshee.Sources;
@@ -52,6 +54,8 @@ namespace Banshee.Library
                 }
                 
                 user_job = new UserJob (UserJobTitle, UserJobTitle, Catalog.GetString ("Importing Songs"));
+                user_job.SetResources (Resource.Cpu, Resource.Disk, Resource.Database);
+                user_job.PriorityHints = PriorityHints.SpeedSensitive | PriorityHints.DataLossIfStopped;
                 user_job.IconNames = IconNames;
                 user_job.CancelMessage = CancelMessage;
                 user_job.CanCancel = CanCancel;

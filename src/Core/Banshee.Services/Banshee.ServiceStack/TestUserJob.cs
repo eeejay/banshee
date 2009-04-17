@@ -52,6 +52,7 @@ namespace Banshee.ServiceStack
         
         public TestUserJob () : base ("UserJob Test Job", "Waiting for 7.5 seconds...")
         {
+            CancelRequested += OnCancelRequested;
             DelayShow = true;
             Register ();
             
@@ -120,7 +121,7 @@ namespace Banshee.ServiceStack
             });
         }
         
-        protected override void OnCancelRequested ()
+        private void OnCancelRequested (object o, EventArgs args)
         {
             if (initial_timeout_id > 0) {
                 Application.IdleTimeoutRemove (initial_timeout_id);

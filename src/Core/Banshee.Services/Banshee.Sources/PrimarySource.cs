@@ -31,6 +31,7 @@ using System.Collections.Generic;
 using Mono.Unix;
 
 using Hyena;
+using Hyena.Jobs;
 using Hyena.Data;
 using Hyena.Query;
 using Hyena.Data.Sqlite;
@@ -671,10 +672,10 @@ namespace Banshee.Sources
             set { delay_add_job = value; }
         }
 
-        private bool delay_delete_jbo = true;
+        private bool delay_delete_job = true;
         protected bool DelayDeleteJob {
-            get { return delay_delete_jbo; }
-            set { delay_delete_jbo = value; }
+            get { return delay_delete_job; }
+            set { delay_delete_job = value; }
         }
 
         private BatchUserJob add_track_job;
@@ -685,6 +686,8 @@ namespace Banshee.Sources
                         add_track_job = new BatchUserJob (String.Format (Catalog.GetString (
                             "Adding {0} of {1} to {2}"), "{0}", "{1}", Name), 
                             Properties.GetStringList ("Icon.Name"));
+                        add_track_job.SetResources (Resource.Cpu, Resource.Database, Resource.Disk);
+                        add_track_job.PriorityHints = PriorityHints.SpeedSensitive | PriorityHints.DataLossIfStopped;
                         add_track_job.DelayShow = DelayAddJob;
                         add_track_job.CanCancel = true;
                         add_track_job.Register ();
@@ -702,6 +705,8 @@ namespace Banshee.Sources
                         delete_track_job = new BatchUserJob (String.Format (Catalog.GetString (
                             "Deleting {0} of {1} From {2}"), "{0}", "{1}", Name),
                             Properties.GetStringList ("Icon.Name"));
+                        delete_track_job.SetResources (Resource.Cpu, Resource.Database);
+                        delete_track_job.PriorityHints = PriorityHints.SpeedSensitive | PriorityHints.DataLossIfStopped;
                         delete_track_job.DelayShow = DelayDeleteJob;
                         delete_track_job.Register ();
                     }

@@ -34,6 +34,7 @@ using Mono.Unix;
 using IPod;
 
 using Hyena;
+using Hyena.Jobs;
 
 using Banshee.Base;
 using Banshee.ServiceStack;
@@ -89,6 +90,8 @@ namespace Banshee.Dap.Ipod
             this.source = source;
             
             user_job = new UserJob (Catalog.GetString ("Rebuilding Database"));
+            user_job.PriorityHints = PriorityHints.SpeedSensitive | PriorityHints.DataLossIfStopped;
+            user_job.SetResources (Resource.Disk, Resource.Cpu);
             user_job.Title = Catalog.GetString ("Rebuilding Database");
             user_job.Status = Catalog.GetString ("Scanning iPod...");
             user_job.IconNames = source._GetIconNames ();

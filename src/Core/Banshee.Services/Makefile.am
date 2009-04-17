@@ -168,12 +168,12 @@ SOURCES =  \
 	Banshee.ServiceStack/IRequiredService.cs \
 	Banshee.ServiceStack/IService.cs \
 	Banshee.ServiceStack/IUserJob.cs \
+	Banshee.ServiceStack/JobScheduler.cs \
 	Banshee.ServiceStack/ServiceManager.cs \
 	Banshee.ServiceStack/ServiceStartedHandler.cs \
 	Banshee.ServiceStack/TestUserJob.cs \
 	Banshee.ServiceStack/UserJob.cs \
 	Banshee.ServiceStack/UserJobEventHandler.cs \
-	Banshee.ServiceStack/UserJobManager.cs \
 	Banshee.SmartPlaylist/Migrator.cs \
 	Banshee.SmartPlaylist/SmartPlaylistDefinition.cs \
 	Banshee.SmartPlaylist/SmartPlaylistSource.cs \

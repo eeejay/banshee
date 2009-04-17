@@ -35,6 +35,7 @@ using Mono.Unix;
 using Gtk;
 
 using Hyena;
+using Hyena.Jobs;
 using Hyena.Widgets;
 
 using Banshee.Base;
@@ -44,8 +45,7 @@ namespace Banshee.Gui.Widgets
 {
     public class TaskStatusIcon : AnimatedImage
     {
-        //private Dictionary<IUserJob, UserJobTile> job_tiles = new Dictionary<IUserJob, UserJobTile> ();
-        private List<IUserJob> jobs = new List<IUserJob> ();
+        private List<Job> jobs = new List<Job> ();
 
         public TaskStatusIcon ()
         {
@@ -61,7 +61,7 @@ namespace Banshee.Gui.Widgets
             }
 
             // Listen for jobs
-            UserJobManager job_manager = ServiceManager.Get<UserJobManager> ();
+            JobScheduler job_manager = ServiceManager.Get<JobScheduler> ();
             job_manager.JobAdded += OnJobAdded;
             job_manager.JobRemoved += OnJobRemoved;
 
@@ -73,7 +73,7 @@ namespace Banshee.Gui.Widgets
             lock (jobs) {
                 if (jobs.Count > 0) {
                     StringBuilder sb = new StringBuilder ();
-                    foreach (IUserJob job in jobs) {
+                    foreach (Job job in jobs) {
                         sb.AppendFormat ("\n<i>{0}</i>", job.Title);
                     }
 
@@ -131,7 +131,7 @@ namespace Banshee.Gui.Widgets
             return false;
         }
 
-        private void AddJob (IUserJob job)
+        private void AddJob (Job job)
         {                
             lock (jobs) {    
                 if (job == null || !job.IsBackground || job.IsFinished) {
@@ -144,12 +144,12 @@ namespace Banshee.Gui.Widgets
             ThreadAssist.ProxyToMain (Update);
         }
         
-        private void OnJobAdded (object o, UserJobEventArgs args)
+        private void OnJobAdded (Job job)
         {
-            AddJob (args.Job);
+            AddJob (job);
         }
         
-        private void RemoveJob (IUserJob job)
+        private void RemoveJob (Job job)
         {
             lock (jobs) {
                 if (jobs.Contains (job)) {
@@ -160,9 +160,9 @@ namespace Banshee.Gui.Widgets
             ThreadAssist.ProxyToMain (Update);
         }
         
-        private void OnJobRemoved (object o, UserJobEventArgs args)
+        private void OnJobRemoved (Job job)
         {
-            RemoveJob (args.Job);
+            RemoveJob (job);
         }
     }
 }

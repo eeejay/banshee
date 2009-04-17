@@ -32,6 +32,8 @@ using System.Collections.Generic;
 using Mono.Unix;
 using Mono.Addins;
 
+using Hyena.Jobs;
+
 using Banshee.Base;
 using Banshee.ServiceStack;
 using Banshee.Collection;
@@ -119,6 +121,8 @@ namespace Banshee.AudioCd
             user_job.CancelMessage = String.Format (Catalog.GetString (
                 "<i>{0}</i> is still being imported into the music library. Would you like to stop it?"
                 ), GLib.Markup.EscapeText (source.DiscModel.Title));
+            user_job.SetResources (Resource.Cpu);
+            user_job.PriorityHints = PriorityHints.SpeedSensitive | PriorityHints.DataLossIfStopped;
             user_job.CanCancel = true;
             user_job.CancelRequested += OnCancelRequested;
             user_job.Finished += OnFinished;

@@ -1,10 +1,10 @@
-// 
-// UserJob.cs
+//
+// Resource.cs
 //
 // Author:
-//   Aaron Bockover <abockover@novell.com>
+//   Gabriel Burt <gburt@novell.com>
 //
-// Copyright (C) 2007-2008 Novell, Inc.
+// Copyright (C) 2009 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -27,40 +27,17 @@
 //
 
 using System;
-using System.Threading;
 
-using Hyena.Jobs;
-using Hyena.Data;
-
-namespace Banshee.ServiceStack
+namespace Hyena.Jobs
 {
-    public class UserJob : Job
+    public class Resource
     {
-        public UserJob (string title) : this (title, null, null)
-        {
-        }
+        // Convenience Resources for programs to use
+        public static readonly Resource Cpu = new Resource { Id = "cpu", Name = "CPU" };
+        public static readonly Resource Disk = new Resource { Id = "disk", Name = "Disk" };
+        public static readonly Resource Database = new Resource { Id = "db", Name = "Database" };
 
-        public UserJob (string title, string status) : this (title, status, null)
-        {
-        }
-
-        public UserJob (string title, string status, params string [] iconNames)
-        {
-            FreezeUpdate ();
-            Title = title;
-            Status = status;
-            IconNames = iconNames;
-            ThawUpdate (true);
-        }
-
-        public void Register ()
-        {
-            ServiceManager.JobScheduler.Add (this);
-        }
-
-        public void Finish ()
-        {
-            OnFinished ();
-        }
+        public string Id { get; set; }
+        public string Name { get; set; }
     }
 }

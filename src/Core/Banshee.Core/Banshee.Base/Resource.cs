@@ -32,7 +32,7 @@ using System.Reflection;
 
 namespace Banshee.Base
 {
-    public static class Resource
+    public static class AssemblyResource
     {
         public static string GetFileContents (string name)
         {

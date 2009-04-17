@@ -1,10 +1,10 @@
-// 
-// UserJob.cs
+//
+// SimpleAsyncJob.cs
 //
 // Author:
-//   Aaron Bockover <abockover@novell.com>
+//   Gabriel Burt <gburt@novell.com>
 //
-// Copyright (C) 2007-2008 Novell, Inc.
+// Copyright (C) 2009 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -27,40 +27,53 @@
 //
 
 using System;
+using System.Linq;
 using System.Threading;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
-using Hyena.Jobs;
-using Hyena.Data;
-
-namespace Banshee.ServiceStack
+namespace Hyena.Jobs
 {
-    public class UserJob : Job
+    public abstract class SimpleAsyncJob : Job
     {
-        public UserJob (string title) : this (title, null, null)
+        private Thread thread;
+
+        public SimpleAsyncJob ()
         {
         }
 
-        public UserJob (string title, string status) : this (title, status, null)
+        public SimpleAsyncJob (string name, PriorityHints hints, params Resource [] resources)
+            : base (name, hints, resources)
         {
         }
 
-        public UserJob (string title, string status, params string [] iconNames)
+        protected override void RunJob ()
         {
-            FreezeUpdate ();
-            Title = title;
-            Status = status;
-            IconNames = iconNames;
-            ThawUpdate (true);
+            if (thread == null) {
+                thread = new Thread (InnerStart);
+                thread.Name = String.Format ("Hyena.Jobs.JobRunner ({0})", Title);
+                thread.Priority = this.Has (PriorityHints.SpeedSensitive) ? ThreadPriority.Normal : ThreadPriority.Lowest;
+                thread.Start ();
+            }
         }
 
-        public void Register ()
+        protected void AbortThread ()
         {
-            ServiceManager.JobScheduler.Add (this);
+            if (thread != null) {
+                thread.Abort ();
+            }
         }
 
-        public void Finish ()
+        private void InnerStart ()
         {
-            OnFinished ();
+            try {
+                Run ();
+            } catch (ThreadAbortException) {
+            } catch (Exception e) {
+                Log.Exception (e);
+            }
         }
+
+        protected abstract void Run ();
     }
 }

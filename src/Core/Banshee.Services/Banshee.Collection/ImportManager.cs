@@ -31,6 +31,7 @@ using System.Globalization;
 using Mono.Unix;
 
 using Hyena;
+using Hyena.Jobs;
 using Hyena.Collections;
 
 using Banshee.IO;
@@ -134,6 +135,8 @@ namespace Banshee.Collection
                 timer_id = Log.DebugTimerStart ();
                 
                 user_job = new UserJob (Title, Catalog.GetString ("Scanning for media"));
+                user_job.SetResources (Resource.Cpu, Resource.Disk, Resource.Database);
+                user_job.PriorityHints = PriorityHints.SpeedSensitive | PriorityHints.DataLossIfStopped;
                 user_job.IconNames = new string [] { "system-search", "gtk-find" };
                 user_job.CancelMessage = CancelMessage;
                 user_job.CanCancel = true;

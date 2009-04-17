@@ -35,6 +35,7 @@ using System.Threading;
 using Mono.Unix;
 
 using Hyena;
+using Hyena.Jobs;
 using Hyena.Data.Sqlite;
 using Timer=Hyena.Timer;
 
@@ -1078,7 +1079,7 @@ namespace Banshee.Database
 
         private void OnServiceStarted (ServiceStartedArgs args)
         {
-            if (args.Service is UserJobManager) {
+            if (args.Service is JobScheduler) {
                 ServiceManager.ServiceStarted -= OnServiceStarted;
                 if (ServiceManager.SourceManager.MusicLibrary != null) {
                     RefreshMetadataDelayed ();
@@ -1130,6 +1131,8 @@ namespace Banshee.Database
             }
 
             UserJob job = new UserJob (Catalog.GetString ("Refreshing Metadata"));
+            job.SetResources (Resource.Cpu, Resource.Disk, Resource.Database);
+            job.PriorityHints = PriorityHints.SpeedSensitive;
             job.Status = Catalog.GetString ("Scanning...");
             job.IconNames = new string [] { "system-search", "gtk-find" };
             job.Register ();

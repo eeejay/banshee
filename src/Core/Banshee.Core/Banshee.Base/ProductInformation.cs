@@ -55,7 +55,7 @@ namespace Banshee.Base
             List<string> contributors_list = new List<string> ();
         
             XmlDocument doc = new XmlDocument ();
-            doc.LoadXml (Resource.GetFileContents ("contributors.xml"));
+            doc.LoadXml (AssemblyResource.GetFileContents ("contributors.xml"));
         
             foreach (XmlNode node in doc.DocumentElement.ChildNodes) {
                 if (node.FirstChild == null || node.FirstChild.Value == null) {
@@ -89,7 +89,7 @@ namespace Banshee.Base
         private static void LoadTranslators ()
         {
             XmlDocument doc = new XmlDocument ();
-            doc.LoadXml (Resource.GetFileContents ("translators.xml"));
+            doc.LoadXml (AssemblyResource.GetFileContents ("translators.xml"));
         
             foreach (XmlNode node in doc.DocumentElement.ChildNodes) {
                 if (node.Name != "language") {
@@ -133,7 +133,7 @@ namespace Banshee.Base
         }
         
         public static string License {
-            get { return Resource.GetFileContents ("COPYING"); }
+            get { return AssemblyResource.GetFileContents ("COPYING"); }
         }
     }
     

@@ -33,6 +33,8 @@ using System.Collections.Generic;
 using Mono.Unix;
 using Mono.Addins;
 
+using Hyena.Jobs;
+
 using Banshee.Base;
 using Banshee.ServiceStack;
 using Banshee.Collection;
@@ -130,6 +132,8 @@ namespace Banshee.MediaEngine
             get {
                 if (user_job == null) {
                     user_job = new BatchUserJob (Catalog.GetString("Converting {0} of {1}"), Catalog.GetString("Initializing"), "encode");
+                    user_job.SetResources (Resource.Cpu);
+                    user_job.PriorityHints = PriorityHints.SpeedSensitive;
                     user_job.CancelMessage = Catalog.GetString ("Files are currently being converted to another format. Would you like to stop this?");
                     user_job.CanCancel = true;
                     user_job.DelayShow = true;

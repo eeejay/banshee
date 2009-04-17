@@ -104,6 +104,7 @@ namespace Banshee.ServiceStack
         {
             shutting_down = true;
             if (Banshee.Kernel.Scheduler.IsScheduled (typeof (Banshee.Kernel.IInstanceCriticalJob)) ||
+                ServiceManager.JobScheduler.HasAnyDataLossJobs ||
                 Banshee.Kernel.Scheduler.CurrentJob is Banshee.Kernel.IInstanceCriticalJob) {
                 if (shutdown_prompt_handler != null && !shutdown_prompt_handler ()) {
                     shutting_down = false;
@@ -198,6 +199,7 @@ namespace Banshee.ServiceStack
         
         private static void Dispose ()
         {
+            ServiceManager.JobScheduler.CancelAll (true);
             ServiceManager.Shutdown ();
             
             lock (running_clients) {

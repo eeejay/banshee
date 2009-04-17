@@ -30,15 +30,17 @@ using System;
 using Mono.Unix;
 using Gtk;
 
+using Hyena.Jobs;
+using Hyena.Gui;
+
 using Banshee.Base;
 using Banshee.ServiceStack;
-using Hyena.Gui;
 
 namespace Banshee.Gui.Widgets
 {
     public class UserJobTile : Table
     {
-        private IUserJob job;
+        private Job job;
         
         private string [] icon_names;
         private string title;
@@ -56,7 +58,7 @@ namespace Banshee.Gui.Widgets
         
         Banshee.Widgets.HigMessageDialog cancel_dialog;
         
-        public UserJobTile (IUserJob job) : base (3, 2, false)
+        public UserJobTile (Job job) : base (3, 2, false)
         {
             this.job = job;
             this.job.Updated += OnJobUpdated;
@@ -151,7 +153,7 @@ namespace Banshee.Gui.Widgets
                 
             if (cancel_dialog.Run () == (int)ResponseType.Yes) {
                 if (job.CanCancel) {
-                    job.Cancel ();
+                    ServiceManager.JobScheduler.Cancel (job);
                 }
             }
         

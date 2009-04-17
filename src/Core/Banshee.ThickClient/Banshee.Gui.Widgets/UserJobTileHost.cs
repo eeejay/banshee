@@ -31,6 +31,7 @@ using System.Collections.Generic;
 
 using Gtk;
 
+using Hyena.Jobs;
 using Hyena.Widgets;
 using Hyena.Gui.Theatrics;
 
@@ -42,8 +43,8 @@ namespace Banshee.Gui.Widgets
     public class UserJobTileHost : Alignment
     {
         private AnimatedVBox box;
-        private Dictionary<IUserJob, UserJobTile> job_tiles = new Dictionary<IUserJob, UserJobTile> ();
-        private Dictionary<IUserJob, DateTime> job_start_times = new Dictionary<IUserJob, DateTime> ();
+        private Dictionary<Job, UserJobTile> job_tiles = new Dictionary<Job, UserJobTile> ();
+        private Dictionary<Job, DateTime> job_start_times = new Dictionary<Job, DateTime> ();
         
         public UserJobTileHost () : base (0.0f, 0.0f, 1.0f, 1.0f)
         {
@@ -57,8 +58,8 @@ namespace Banshee.Gui.Widgets
             Add (box);
             ShowAll ();
 
-            if (ServiceManager.Contains<UserJobManager> ()) {
-                UserJobManager job_manager = ServiceManager.Get<UserJobManager> ();
+            if (ServiceManager.Contains<JobScheduler> ()) {
+                JobScheduler job_manager = ServiceManager.Get<JobScheduler> ();
                 job_manager.JobAdded += OnJobAdded;
                 job_manager.JobRemoved += OnJobRemoved;
             }
@@ -72,7 +73,7 @@ namespace Banshee.Gui.Widgets
             }
         }
 
-        private void AddJob (IUserJob job)
+        private void AddJob (Job job)
         {                
             lock (this) {    
                 if (job == null || job.IsFinished) {
@@ -90,26 +91,26 @@ namespace Banshee.Gui.Widgets
             }
         }
         
-        private void OnJobAdded (object o, UserJobEventArgs args)
+        private void OnJobAdded (Job job)
         {
-            if (args.Job.IsBackground) {
+            if (job.IsBackground) {
                 return;
             }
 
             ThreadAssist.ProxyToMain (delegate {
-                if (args.Job.DelayShow) {
+                if (job.DelayShow) {
                     // Give the Job 1 second to become more than 33% complete
                     Banshee.ServiceStack.Application.RunTimeout (1000, delegate {
-                        AddJob (args.Job);
+                        AddJob (job);
                         return false;
                     });
                 } else {
-                    AddJob (args.Job);
+                    AddJob (job);
                 }
             });
         }
         
-        private void RemoveJob (IUserJob job)
+        private void RemoveJob (Job job)
         {
             lock (this) {
                 if (job_tiles.ContainsKey (job)) {
@@ -122,23 +123,23 @@ namespace Banshee.Gui.Widgets
             }
         }
         
-        private void OnJobRemoved (object o, UserJobEventArgs args)
+        private void OnJobRemoved (Job job)
         {
             ThreadAssist.ProxyToMain (delegate {
                 lock (this) {
-                    if (job_start_times.ContainsKey (args.Job)) {
-                        double ms_since_added = (DateTime.Now - job_start_times[args.Job]).TotalMilliseconds;
+                    if (job_start_times.ContainsKey (job)) {
+                        double ms_since_added = (DateTime.Now - job_start_times[job]).TotalMilliseconds;
                         if (ms_since_added < 1000) {
                             // To avoid user jobs flasing up and out, don't let any job be visible for less than 1 second
                             Banshee.ServiceStack.Application.RunTimeout ((uint) (1000 - ms_since_added), delegate {
-                                RemoveJob (args.Job);
+                                RemoveJob (job);
                                 return false;
                             });
                             return;
                         }
                     }
                     
-                    RemoveJob (args.Job);
+                    RemoveJob (job);
                 }
             });
         }

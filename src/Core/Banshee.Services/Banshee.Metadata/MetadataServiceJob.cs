@@ -43,8 +43,10 @@ namespace Banshee.Metadata
     public class MetadataServiceJob : IMetadataLookupJob
     {
         private MetadataService service;
+        private bool cancelled;
         private IBasicTrackInfo track;
         private List<StreamTag> tags = new List<StreamTag>();
+        private IMetadataLookupJob current_job;
         
         protected bool InternetConnected {
             get { return ServiceManager.Get<Network> ().Connected; }
@@ -59,17 +61,42 @@ namespace Banshee.Metadata
             this.service = service;
             this.track = track;
         }
+
+        public virtual void Cancel ()
+        {
+            cancelled = true;
+            lock (this) {
+                if (current_job != null) {
+                    current_job.Cancel ();
+                }
+            }
+        }
     
         public virtual void Run()
         {
             foreach(IMetadataProvider provider in service.Providers) {
+                if (cancelled)
+                    break;;
+
                 try {
-                    IMetadataLookupJob job = provider.CreateJob(track);
-                    job.Run();
+                    lock (this) {
+                        current_job = provider.CreateJob(track);
+                    }
+
+                    current_job.Run();
+
+                    if (cancelled)
+                        break;;
                     
-                    foreach(StreamTag tag in job.ResultTags) {
+                    foreach(StreamTag tag in current_job.ResultTags) {
                         AddTag(tag);
                     }
+
+                    lock (this) {
+                        current_job = null;
+                    }
+                } catch (System.Threading.ThreadAbortException) {
+                    throw;
                 } catch(Exception e) {
                    Hyena.Log.Exception (e);
                 }

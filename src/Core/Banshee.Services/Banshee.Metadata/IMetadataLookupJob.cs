@@ -40,5 +40,6 @@ namespace Banshee.Metadata
     {
         IBasicTrackInfo Track { get; }
         IList<StreamTag> ResultTags { get; }
+        void Cancel ();
     }
 }
