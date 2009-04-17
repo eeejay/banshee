@@ -61,7 +61,6 @@ SOURCES =  \
 	Banshee.Kernel/JobPriority.cs \
 	Banshee.Kernel/Scheduler.cs \
 	Banshee.Streaming/CommonTags.cs \
-	Banshee.Streaming/SaveTrackMetadataJob.cs \
 	Banshee.Streaming/StreamPlaybackError.cs \
 	Banshee.Streaming/StreamTag.cs \
 	Banshee.Streaming/StreamTagger.cs

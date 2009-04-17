@@ -1,5 +1,35 @@
 2009-04-16  Gabriel Burt  <gabriel.burt@gmail.com>
 
+	* src/Core/Banshee.Core/Banshee.Base/Tests/TaglibReadWriteTests.cs:
+	* src/Core/Banshee.Core/Banshee.Streaming/StreamTagger.cs:
+	* src/Core/Banshee.Core/Banshee.Streaming/SaveTrackMetadataJob.cs:
+	* src/Core/Banshee.Core/Makefile.am: Remove old save job and move its
+	save-to-file logic into StreamTagger.
+
+	* src/Core/Banshee.Services/Makefile.am:
+	* src/Core/Banshee.Services/Banshee.Metadata/SaveTrackMetadataService.cs:
+	* src/Core/Banshee.Services/Banshee.Metadata/SaveTrackMetadataJob.cs: New
+	service and job that save-to-file and move-on-info-save if/when
+	appropriate.
+
+	* src/Core/Banshee.Services/Banshee.Preferences/PreferenceService.cs: the
+	SchemaPreferences are now created in SaveTrackMetadataServices; use them.
+
+	* src/Core/Banshee.Services/Banshee.ServiceStack/ServiceManager.cs: Start
+	the SaveTrackMetadataServices.
+
+	* src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs:
+	Get rid of the old write-to-file and move-on-info-save job queueing; now
+	happens based on the Updated and LastSynced stamps in the db.
+
+	* src/Libraries/Hyena/Hyena.Data.Sqlite/HyenaSqliteConnection.cs: Give
+	access to the underlying IDataReader from HyenaDataReader.
+
+	* src/Core/Banshee.Services/Banshee.Collection/MoveOnInfoSaveJob.cs:
+	Remove.
+
+2009-04-16  Gabriel Burt  <gabriel.burt@gmail.com>
+
 	Add a smart, priority-aware, resource-contention-avoiding job scheduler
 	Net result is BPM analysis will pause while importing, etc (BGO #577772).
 	Still need to convert Banshee.Kernel jobs.

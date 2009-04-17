@@ -39,6 +39,10 @@ namespace Hyena.Data.Sqlite
     {
         private IDataReader reader;
         private bool read = false;
+
+        public IDataReader Reader {
+            get { return reader; }
+        }
         
         public HyenaDataReader (IDataReader reader)
         {

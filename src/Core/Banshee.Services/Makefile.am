@@ -41,7 +41,6 @@ SOURCES =  \
 	Banshee.Collection/ImportManager.cs \
 	Banshee.Collection/MemoryTrackListModel.cs \
 	Banshee.Collection/ModelHelper.cs \
-	Banshee.Collection/MoveOnInfoSaveJob.cs \
 	Banshee.Collection/RescanPipeline.cs \
 	Banshee.Collection/SelectAllSelection.cs \
 	Banshee.Collection/TrackListModel.cs \
@@ -110,6 +109,8 @@ SOURCES =  \
 	Banshee.Metadata/IMetadataProvider.cs \
 	Banshee.Metadata/MetadataService.cs \
 	Banshee.Metadata/MetadataServiceJob.cs \
+	Banshee.Metadata/SaveTrackMetadataJob.cs \
+	Banshee.Metadata/SaveTrackMetadataService.cs \
 	Banshee.Networking/Network.cs \
 	Banshee.Networking/NetworkManager.cs \
 	Banshee.PlaybackController/IBasicPlaybackController.cs \

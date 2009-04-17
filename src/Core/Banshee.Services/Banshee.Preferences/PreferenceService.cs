@@ -56,14 +56,9 @@ namespace Banshee.Preferences
             policies.Add (new SchemaPreference<bool> (LibrarySchema.CopyOnImport, 
                 Catalog.GetString ("Co_py files to media folders when importing")));
             
-            policies.Add (new SchemaPreference<bool> (LibrarySchema.WriteMetadata, 
-                Catalog.GetString ("Write _metadata to files"),
-                Catalog.GetString ("Enable this option to save tags and other metadata inside supported audio files.")));
+            policies.Add (Banshee.Metadata.SaveTrackMetadataService.WriteEnabled);
+            policies.Add (Banshee.Metadata.SaveTrackMetadataService.RenameEnabled);
 
-            policies.Add (new SchemaPreference<bool> (LibrarySchema.MoveOnInfoSave,
-                Catalog.GetString ("_Update file and folder names"),
-                Catalog.GetString ("Enabling this option ensures that files and folders are renamed according to the metadata.")));
-            
             // Misc section
             general.Add (new Section ("misc", Catalog.GetString ("Miscellaneous"), 20));
         }

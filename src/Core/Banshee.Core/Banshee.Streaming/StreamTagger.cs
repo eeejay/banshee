@@ -206,6 +206,68 @@ namespace Banshee.Streaming
             }
             return false;
         }
+
+        private static void SaveIsCompilation (TagLib.Tag tag, bool is_compilation)
+        {
+            TagLib.Id3v2.Tag id3v2_tag = tag as TagLib.Id3v2.Tag;
+            if (id3v2_tag != null) {
+                id3v2_tag.IsCompilation = is_compilation;
+                return;
+            }
+
+            TagLib.Mpeg4.AppleTag apple_tag = tag as TagLib.Mpeg4.AppleTag;
+            if (apple_tag != null) {
+                apple_tag.IsCompilation = is_compilation;
+                return;
+            }
+        }
+
+        public static void SaveToFile (TrackInfo track)
+        {
+            // FIXME taglib# does not seem to handle writing metadata to video files well at all atm
+            // so not allowing
+            if ((track.MediaAttributes & TrackMediaAttributes.VideoStream) != 0) {
+                Hyena.Log.DebugFormat ("Avoiding 100% cpu bug with taglib# by not writing metadata to video file {0}", track);
+                return;
+            }
+        
+            // Note: this should be kept in sync with the metadata read in StreamTagger.cs
+            TagLib.File file = ProcessUri (track.Uri);
+            if (file == null) {
+                return;
+            }
+            
+            file.Tag.Performers = new string [] { track.ArtistName };
+            file.Tag.PerformersSort = new string [] { track.ArtistNameSort };
+            file.Tag.Album = track.AlbumTitle;
+            file.Tag.AlbumSort = track.AlbumTitleSort;
+            file.Tag.AlbumArtists = track.AlbumArtist == null ? new string [0] : new string [] {track.AlbumArtist};
+            file.Tag.AlbumArtistsSort = (track.AlbumArtistSort == null ? new string [0] : new string [] {track.AlbumArtistSort});
+            // Bug in taglib-sharp-2.0.3.0: Crash if you send it a genre of "{ null }"
+            // on a song with both ID3v1 and ID3v2 metadata. It's happy with "{}", though.
+            // (see http://forum.taglib-sharp.com/viewtopic.php?f=5&t=239 )
+            file.Tag.Genres = (track.Genre == null) ? new string[] {} : new string [] { track.Genre };
+            file.Tag.Title = track.TrackTitle;
+            file.Tag.TitleSort = track.TrackTitleSort;
+            file.Tag.Track = (uint)track.TrackNumber;
+            file.Tag.TrackCount = (uint)track.TrackCount;
+            file.Tag.Composers = new string [] { track.Composer };
+            file.Tag.Conductor = track.Conductor;
+            file.Tag.Grouping = track.Grouping;
+            file.Tag.Copyright = track.Copyright;
+            file.Tag.Comment = track.Comment;
+            file.Tag.Disc = (uint)track.DiscNumber;
+            file.Tag.DiscCount = (uint)track.DiscCount;
+            file.Tag.Year = (uint)track.Year;
+            file.Tag.BeatsPerMinute = (uint)track.Bpm;
+            
+            SaveIsCompilation (file.Tag, track.IsCompilation);
+            file.Save ();
+
+            track.FileSize = Banshee.IO.File.GetSize (track.Uri);
+            track.FileModifiedStamp = Banshee.IO.File.GetModifiedTime (track.Uri);
+            track.LastSyncedStamp = DateTime.Now;
+        }
     
         public static void TrackInfoMerge (TrackInfo track, StreamTag tag)
         {

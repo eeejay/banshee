@@ -102,6 +102,7 @@ namespace Banshee.ServiceStack
             RegisterService<JobScheduler> ();
             RegisterService<Banshee.Hardware.HardwareManager> ();
             RegisterService<Banshee.Collection.Indexer.CollectionIndexerService> ();
+            RegisterService<Banshee.Metadata.SaveTrackMetadataService> ();
         }
         
         public static void DefaultInitialize ()

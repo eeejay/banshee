@@ -543,29 +543,11 @@ namespace Banshee.Gui.TrackEditor
             TrackInfo.ExportableMerge (track, track.SourceTrack);
             track.SourceTrack.Save ();
                 
-            if (LibrarySchema.WriteMetadata.Get ()) {
-                SaveToFile (track.SourceTrack);
-            }
-
-            if (LibrarySchema.MoveOnInfoSave.Get ()) {
-                MoveSavedFile (track.SourceTrack);
-            }
-
             if (track.SourceTrack == ServiceManager.PlayerEngine.CurrentTrack) {
                 ServiceManager.PlayerEngine.TrackInfoUpdated ();
             }
         }
         
-        private void SaveToFile (TrackInfo track)
-        {
-            Scheduler.Schedule (new Banshee.Streaming.SaveTrackMetadataJob (track), JobPriority.Highest);
-        }
-
-        private void MoveSavedFile (TrackInfo track)
-        {
-            Scheduler.Schedule (new MoveOnInfoSaveJob (track as DatabaseTrackInfo), JobPriority.Highest);
-        }
-
 #endregion
 
 #region Static Helpers
