@@ -31,7 +31,15 @@ for arg in $*; do
 	case "x--redirect-log" in ("x$arg")
 		[ -z "$(pidof $BANSHEE_EXEC_NAME)" ] && BANSHEE_REDIRECT_LOG="${BANSHEE_CONFIG_DIR}/log"
 	esac
+
+	case "x--client=" in ("x${arg:0:9}")
+		BANSHEE_CLIENT="${arg:9}"
+	esac
 done
+
+if [ ! -z "$BANSHEE_CLIENT" ]; then
+	BANSHEE_CLIENT="--client=${BANSHEE_CLIENT}"
+fi
 
 if [ -n "$BANSHEE_DEBUG" -o -n "$BANSHEE_TRACE" -o -n "$BANSHEE_PROFILE" ]; then
     MONO_OPTIONS="$BANSHEE_DEBUG $BANSHEE_TRACE $BANSHEE_PROFILE"
@@ -39,7 +47,7 @@ if [ -n "$BANSHEE_DEBUG" -o -n "$BANSHEE_TRACE" -o -n "$BANSHEE_PROFILE" ]; then
 fi
 
 # Finally - environment is set up, time to run our beloved
-exec_args="-a $BANSHEE_EXEC_NAME mono $MONO_OPTIONS $MONO_EXE $BANSHEE_DEBUG"
+exec_args="-a $BANSHEE_EXEC_NAME mono $MONO_OPTIONS $MONO_EXE $BANSHEE_DEBUG $BANSHEE_CLIENT"
 
 if [ -z "$BANSHEE_REDIRECT_LOG" ]; then
 	exec $exec_args "$@"
