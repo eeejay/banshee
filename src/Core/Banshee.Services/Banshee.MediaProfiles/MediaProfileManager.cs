@@ -66,13 +66,28 @@ namespace Banshee.MediaProfiles
         }
     
         private XmlDocument document;
-        private List<Profile> profiles = new List<Profile>();
-        private Dictionary<string, PipelineVariable> preset_variables = new Dictionary<string, PipelineVariable>();
+        private List<Profile> profiles;
+        private Dictionary<string, PipelineVariable> preset_variables;
 
         public event TestProfileHandler TestProfile;
+        public event EventHandler Initialized;
 
         public MediaProfileManager()
         {
+        }
+
+        private void Initialize ()
+        {
+            if (profiles != null) {
+                return;
+            }
+
+
+            uint timer = Hyena.Log.DebugTimerStart ();
+
+            profiles = new List<Profile> ();
+            preset_variables = new Dictionary<string, PipelineVariable> ();
+
             string path = Banshee.Base.Paths.GetInstalledDataDirectory ("audio-profiles");
             if(File.Exists(path)) {
                 LoadFromFile(path);
@@ -87,6 +102,13 @@ namespace Banshee.MediaProfiles
                         LoadFromFile(file);
                     }
                 }
+            }
+
+            Hyena.Log.DebugTimerPrint (timer, "Initialized MediaProfileManager: {0}");
+
+            EventHandler handler = Initialized;
+            if (handler != null) {
+                handler (this, EventArgs.Empty);
             }
         }
         
@@ -145,6 +167,7 @@ namespace Banshee.MediaProfiles
         private Dictionary<string, string> mimetype_extensions = new Dictionary<string, string> ();
         public void Add(Profile profile)
         {
+            Initialize ();
             foreach (string mimetype in profile.MimeTypes) {
                 mimetype_extensions[mimetype] = profile.OutputFileExtension;
             }
@@ -153,6 +176,7 @@ namespace Banshee.MediaProfiles
 
         public void Remove(Profile profile)
         {
+            Initialize ();
             profiles.Remove(profile);
         }
 
@@ -162,6 +186,7 @@ namespace Banshee.MediaProfiles
                 throw new ArgumentNullException("id");
             }
 
+            Initialize ();
             return preset_variables[id];
         }
         
@@ -179,6 +204,8 @@ namespace Banshee.MediaProfiles
 
         public IEnumerable<Profile> GetAvailableProfiles()
         {
+            Initialize ();
+
             foreach(Profile profile in this) {
                 if(profile.Available == null) {
                     profile.Available = OnTestProfile(profile);
@@ -192,11 +219,15 @@ namespace Banshee.MediaProfiles
         
         public ProfileConfiguration GetActiveProfileConfiguration (string id)
         {
+            Initialize ();
+
             return ProfileConfiguration.LoadActive (this, id);
         }
         
         public ProfileConfiguration GetActiveProfileConfiguration(string id, string [] mimetypes)
         {
+            Initialize ();
+
             ProfileConfiguration config = GetActiveProfileConfiguration (id);
             if (config != null) {
                 // Ensure the profile configuration is valid for the mimetype restriction
@@ -222,6 +253,8 @@ namespace Banshee.MediaProfiles
         
         public void TestAll()
         {
+            Initialize ();
+
             foreach(Profile profile in this) {
                 profile.Available = OnTestProfile(profile);
             }
@@ -229,6 +262,8 @@ namespace Banshee.MediaProfiles
         
         public Profile GetProfileForMimeType(string mimetype)
         {
+            Initialize ();
+
             foreach(Profile profile in GetAvailableProfiles()) {
                 if(profile.HasMimeType(mimetype)) {
                     return profile;
@@ -246,6 +281,8 @@ namespace Banshee.MediaProfiles
             if (extension[0] == '.')
                 extension = extension.Substring (1, extension.Length - 1);
             
+            Initialize ();
+
             foreach (Profile profile in this) {
                 if (profile.OutputFileExtension == extension) {
                     return profile;
@@ -256,6 +293,8 @@ namespace Banshee.MediaProfiles
 
         public string GetExtensionForMimeType (string mimetype)
         {
+            Initialize ();
+
             if (mimetype != null && mimetype_extensions.ContainsKey (mimetype))
                 return mimetype_extensions[mimetype];
             return null;
@@ -263,20 +302,24 @@ namespace Banshee.MediaProfiles
 
         public IEnumerator<Profile> GetEnumerator()
         {
+            Initialize ();
             return profiles.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
+            Initialize ();
             return profiles.GetEnumerator();
         }
         
         public int ProfileCount {
-            get { return profiles.Count; }
+            get { Initialize (); return profiles.Count; }
         }
         
         public int AvailableProfileCount {
             get {
+                Initialize ();
+
                 int count = 0;
                 #pragma warning disable 0168, 0219
                 foreach(Profile profile in GetAvailableProfiles()) {
@@ -293,6 +336,7 @@ namespace Banshee.MediaProfiles
         
         public override string ToString()
         {
+            Initialize ();
             StringBuilder builder = new StringBuilder();
             
             builder.Append("Preset Pipeline Variables:\n\n");
