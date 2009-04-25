@@ -121,7 +121,8 @@ namespace Banshee.Base.Tests
             track.Year = 1999;
     
             // Save changes
-            StreamTagger.SaveToFile (track);
+            bool saved = StreamTagger.SaveToFile (track);
+            Assert.IsTrue (saved);
     
             // Read changes
             file = StreamTagger.ProcessUri (uri);

@@ -222,19 +222,19 @@ namespace Banshee.Streaming
             }
         }
 
-        public static void SaveToFile (TrackInfo track)
+        public static bool SaveToFile (TrackInfo track)
         {
             // FIXME taglib# does not seem to handle writing metadata to video files well at all atm
             // so not allowing
             if ((track.MediaAttributes & TrackMediaAttributes.VideoStream) != 0) {
                 Hyena.Log.DebugFormat ("Avoiding 100% cpu bug with taglib# by not writing metadata to video file {0}", track);
-                return;
+                return false;
             }
         
             // Note: this should be kept in sync with the metadata read in StreamTagger.cs
             TagLib.File file = ProcessUri (track.Uri);
             if (file == null) {
-                return;
+                return false;
             }
             
             file.Tag.Performers = new string [] { track.ArtistName };
@@ -267,6 +267,7 @@ namespace Banshee.Streaming
             track.FileSize = Banshee.IO.File.GetSize (track.Uri);
             track.FileModifiedStamp = Banshee.IO.File.GetModifiedTime (track.Uri);
             track.LastSyncedStamp = DateTime.Now;
+            return true;
         }
     
         public static void TrackInfoMerge (TrackInfo track, StreamTag tag)

@@ -77,8 +77,7 @@ namespace Banshee.Metadata
             try {
                 if (WriteEnabled) {
                     Hyena.Log.DebugFormat ("Saving metadata for {0}", track);
-                    StreamTagger.SaveToFile (track);
-                    wrote = true;
+                    wrote = StreamTagger.SaveToFile (track);
                 }
 
                 if (RenameEnabled) {
