@@ -33,6 +33,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using Mono.Unix;
+using Mono.Data.Sqlite;
 
 using Hyena;
 using Hyena.Jobs;
@@ -727,12 +728,17 @@ namespace Banshee.Database
                 string library_path = Banshee.Library.LibrarySource.OldLocationSchema.Get ();
                 if (library_path != null) {
                     int podcast_src_id = connection.Query<int> ("SELECT PrimarySourceID FROM CorePrimarySources WHERE StringID = 'PodcastSource-PodcastLibrary'");
-                    
-                    Banshee.Base.SafeUri uri = new Banshee.Base.SafeUri (library_path);
-                    connection.Execute ("UPDATE CoreTracks SET Uri = (? || Uri) WHERE UriType = 1 AND PrimarySourceID != ?", uri.AbsoluteUri + System.IO.Path.DirectorySeparatorChar, podcast_src_id);
 
-                    uri = new Banshee.Base.SafeUri (Banshee.Base.Paths.Combine (library_path, "Podcasts"));
-                    connection.Execute ("UPDATE CoreTracks SET Uri = (? || Uri) WHERE UriType = 1 AND PrimarySourceID = ?", uri.AbsoluteUri + System.IO.Path.DirectorySeparatorChar, podcast_src_id);
+                    connection.Execute (@"
+                        UPDATE CoreTracks SET Uri = BANSHEE_MIGRATE_PARTIAL(?, Uri)
+                        WHERE UriType = 1
+                          AND PrimarySourceID != ?", library_path, podcast_src_id);
+
+                    string podcast_path = Banshee.Base.Paths.Combine (library_path, "Podcasts");
+                    connection.Execute (@"
+                        UPDATE CoreTracks SET Uri = BANSHEE_MIGRATE_PARTIAL(?, Uri)
+                        WHERE UriType = 1
+                          AND PrimarySourceID = ?", podcast_path, podcast_src_id);
                 }
             } catch (Exception e) {
                 Hyena.Log.Exception (e);
@@ -1188,5 +1194,17 @@ namespace Banshee.Database
         
 #endregion
 
+    }
+
+    [SqliteFunction (Name = "BANSHEE_MIGRATE_PARTIAL", FuncType = FunctionType.Scalar, Arguments = 2)]
+    internal class MigratePartialFunction : SqliteFunction
+    {
+        public override object Invoke (object[] args)
+        {
+            string library_path = (string)args[0];
+            string filename_fragment = (string)args[1];
+            string full_path = Banshee.Base.Paths.Combine (library_path, filename_fragment);
+            return Banshee.Base.SafeUri.FilenameToUri (full_path);
+        }
     }
 }
