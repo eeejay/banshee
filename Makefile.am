@@ -30,9 +30,10 @@ $(MO_FILES): $(LC_BUILD)/%/LC_MESSAGES/$(PACKAGE).mo: po/%.gmo
 	cp -af '$<' '$@'
 
 run: $(MO_FILES)
-	@pushd bin; \
-	$(MONO) --debug $(BANSHEE_DEV_MONO_OPTIONS) Nereid.exe --debug --uninstalled $(BANSHEE_DEV_OPTIONS); \
-	popd;
+	(cd bin; $(MONO) --debug $(BANSHEE_DEV_MONO_OPTIONS) Nereid.exe --debug --uninstalled $(BANSHEE_DEV_OPTIONS) | tee last-run-log)
+
+run-perf: run
+	extras/perf-analyze-log bin/last-run-log
 
 gdb:
 	@pushd bin; \
