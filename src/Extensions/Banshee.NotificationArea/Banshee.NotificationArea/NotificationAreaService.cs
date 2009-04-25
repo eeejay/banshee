@@ -58,9 +58,10 @@ namespace Banshee.NotificationArea
         private Menu menu;
         private RatingMenuItem rating_menu_item;
         private BansheeActionGroup actions;
-        private uint ui_manager_id;
-
         private bool? actions_supported;
+        
+        private int ui_manager_id;
+        
         private bool show_notifications;
         private string notify_last_title;
         private string notify_last_artist;
@@ -107,6 +108,13 @@ namespace Banshee.NotificationArea
                 return false;
             }
             
+            GLib.Timeout.Add (1000, delegate {
+                if (notif_area != null) {
+                    notif_area.Show ();
+                }
+                return false;
+            });
+            
             return true;
         }
         
@@ -127,37 +135,8 @@ namespace Banshee.NotificationArea
             
             interface_action_service.AddActionGroup (actions);
             
-            ui_manager_id = interface_action_service.UIManager.AddUiFromResource ("NotificationAreaMenu.xml");      
-            menu = (Menu)interface_action_service.UIManager.GetWidget("/NotificationAreaIconMenu");
-            menu.Show ();
+            ui_manager_id = -1;
             
-            for (int i = 0; i < menu.Children.Length; i++) {
-                if (menu.Children[i].Name == "Previous") {
-                    int j = i;
-                    PlaybackRepeatActions repeat_group = interface_action_service.FindActionGroup ("PlaybackRepeat")
-                         as PlaybackRepeatActions;
-                    if (repeat_group != null) {
-                        menu.Insert (repeat_group.CreateSubmenu (), i++ + 2);
-                    }
-                    
-                    PlaybackShuffleActions shuffle_group = interface_action_service.FindActionGroup ("PlaybackShuffle")
-                         as PlaybackShuffleActions;
-                    if (shuffle_group != null) {
-                        menu.Insert (shuffle_group.CreateSubmenu (), i++ + 2);
-                    }
-                    
-                    if (j != i) {
-                        menu.Insert (new SeparatorMenuItem (), i++ + 2);
-                    }
-                    
-                    rating_menu_item = new RatingMenuItem ();
-                    rating_menu_item.Activated += OnRatingChanged;
-                    ToggleRatingMenuSensitive ();
-                    menu.Insert (rating_menu_item, i + 2);
-                    break;
-                }
-            }
-
             ServiceManager.PlayerEngine.ConnectEvent (OnPlayerEvent,
                PlayerEvent.StartOfStream |
                PlayerEvent.EndOfStream |
@@ -192,8 +171,11 @@ namespace Banshee.NotificationArea
                 interface_action_service.GlobalActions.Remove (close_action);
             }
             
-            interface_action_service.RemoveActionGroup ("NotificationArea");
-            interface_action_service.UIManager.RemoveUi (ui_manager_id);
+            if (ui_manager_id >= 0) {
+                interface_action_service.RemoveActionGroup ("NotificationArea");
+                interface_action_service.UIManager.RemoveUi ((uint)ui_manager_id);
+                ui_manager_id = -1;
+            }
             
             actions = null;
             elements_service = null;
@@ -252,6 +234,44 @@ namespace Banshee.NotificationArea
             }
         }
         
+        private void BuildContextMenu ()
+        {
+            if (menu != null) {
+                return;
+            }
+            
+            ui_manager_id = (int)interface_action_service.UIManager.AddUiFromResource ("NotificationAreaMenu.xml");
+            menu = (Menu)interface_action_service.UIManager.GetWidget("/NotificationAreaIconMenu");
+            menu.Show ();
+            
+            for (int i = 0; i < menu.Children.Length; i++) {
+                if (menu.Children[i].Name == "Previous") {
+                    int j = i;
+                    PlaybackRepeatActions repeat_group = interface_action_service.FindActionGroup ("PlaybackRepeat")
+                         as PlaybackRepeatActions;
+                    if (repeat_group != null) {
+                        menu.Insert (repeat_group.CreateSubmenu (), i++ + 2);
+                    }
+                    
+                    PlaybackShuffleActions shuffle_group = interface_action_service.FindActionGroup ("PlaybackShuffle")
+                         as PlaybackShuffleActions;
+                    if (shuffle_group != null) {
+                        menu.Insert (shuffle_group.CreateSubmenu (), i++ + 2);
+                    }
+                    
+                    if (j != i) {
+                        menu.Insert (new SeparatorMenuItem (), i++ + 2);
+                    }
+                    
+                    rating_menu_item = new RatingMenuItem ();
+                    rating_menu_item.Activated += OnRatingChanged;
+                    ToggleRatingMenuSensitive ();
+                    menu.Insert (rating_menu_item, i + 2);
+                    break;
+                }
+            }
+        }
+        
         private void RegisterCloseHandler ()
         {
             if (elements_service.PrimaryWindowClose == null) {
@@ -286,6 +306,8 @@ namespace Banshee.NotificationArea
         
         private void OnNotificationAreaPopupMenuEvent (object o, PopupMenuArgs args)
         {
+            BuildContextMenu ();
+
             if (rating_menu_item.Visible) {
                 TrackInfo track = ServiceManager.PlayerEngine.CurrentTrack;
                 if (track != null) {
@@ -295,6 +317,7 @@ namespace Banshee.NotificationArea
                     rating_menu_item.Reset (track.Rating);
                 }
             }
+
             menu.Popup (null, null, notif_area.PositionMenu, 3, Gtk.Global.CurrentEventTime);
         }
         

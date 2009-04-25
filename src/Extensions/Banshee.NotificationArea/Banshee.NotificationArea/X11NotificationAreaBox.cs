@@ -76,7 +76,7 @@ namespace Banshee.NotificationArea
             event_box.LeaveNotifyEvent += OnLeaveNotifyEvent;
             event_box.ScrollEvent += OnMouseScroll;
             
-            ShowAll ();
+            event_box.ShowAll ();
         }
         
         public override void Dispose ()

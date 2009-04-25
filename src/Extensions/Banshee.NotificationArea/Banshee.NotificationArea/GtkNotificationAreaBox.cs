@@ -58,6 +58,7 @@ namespace Banshee.NotificationArea
         
         public GtkNotificationAreaBox (BaseClientWindow window)
         {
+            Visible = false;
             IconName = Banshee.ServiceStack.Application.IconName;
             
             Tooltip = window.Title;
@@ -71,6 +72,16 @@ namespace Banshee.NotificationArea
         
         public void OnPlayerEvent (PlayerEventArgs args)
         {
+        }
+        
+        public void Show ()
+        {
+            Visible = true;
+        }
+        
+        public void Hide ()
+        {
+            Visible = false;
         }
     }
 }

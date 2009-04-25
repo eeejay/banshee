@@ -43,5 +43,8 @@ namespace Banshee.NotificationArea
         void OnPlayerEvent (PlayerEventArgs args);
         
         Widget Widget { get; }
+        
+        void Show ();
+        void Hide ();
     }
 }
