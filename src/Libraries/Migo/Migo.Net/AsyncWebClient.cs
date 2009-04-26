@@ -1,5 +1,5 @@
 /*************************************************************************** 
- *  AsyncHttpWebClient.cs
+ *  AsyncWebClient.cs
  *
  *  Copyright (C) 2007 Michael C. Urbanski
  *  Written by Mike Urbanski <michael.c.urbanski@gmail.com>
@@ -91,17 +91,13 @@ namespace Migo.Net
         public event EventHandler<DownloadDataCompletedEventArgs> DownloadDataCompleted;
         public event EventHandler<DownloadStringCompletedEventArgs> DownloadStringCompleted;               
                 
-        public ICredentials Credentials 
-		{
+        public ICredentials Credentials {
             get { return credentials; }
             set { credentials = value; }
         }
 
-        public Encoding Encoding 
-		{
-            get {
-                return encoding;
-            }
+        public Encoding Encoding {
+            get { return encoding; }
             
             set {
                 if (value == null) {
@@ -112,11 +108,8 @@ namespace Migo.Net
             }
         }
 
-        public WebHeaderCollection Headers 
-		{
-            get {
-                return headers; 
-            }
+        public WebHeaderCollection Headers {
+            get { return headers; }
             
             set {
                 if (value == null) {
@@ -127,14 +120,12 @@ namespace Migo.Net
             }
         }
 
-        public DateTime IfModifiedSince
-        {
+        public DateTime IfModifiedSince {
             get { return ifModifiedSince; }
             set { ifModifiedSince = value; }
         }   
 
-        public bool IsBusy 
-        {
+        public bool IsBusy {
             get {
                 lock (cancelBusySync) {
                     return busy;
@@ -142,14 +133,12 @@ namespace Migo.Net
             }
         }
         
-        public IWebProxy Proxy 
-		{
+        public IWebProxy Proxy {
             get { return proxy; }
             set { proxy = value; }
         }
         
-        public int Range 
-		{
+        public int Range {
             get { return range; }
             set { 
                 if (range > -1) {
@@ -168,8 +157,7 @@ namespace Migo.Net
             get { return responseHeaders; }
         }
 
-        public AsyncWebClientStatus Status
-        {            
+        public AsyncWebClientStatus Status {            
             get {
                 if (type == DownloadType.String) {
                     throw new InvalidOperationException (
@@ -182,7 +170,7 @@ namespace Migo.Net
                         tsm.Progress, tsm.BytesReceived, 
                         tsm.TotalBytes, tsm.TotalBytesReceived
                     );
-                }       
+                }
             }
         }
         
@@ -203,7 +191,7 @@ namespace Migo.Net
         public static string DefaultUserAgent {
             get { return default_user_agent; }
             set { default_user_agent = value; }
-        }            
+        }
         
         public string UserAgent {
             get { return user_agent ?? DefaultUserAgent; }
@@ -238,7 +226,7 @@ namespace Migo.Net
             
             SetBusy ();
             DownloadAsync (address, DownloadType.Data, userState);
-        }        
+        }
         
         public void DownloadFileAsync (Uri address, string fileName)
         {
@@ -248,23 +236,23 @@ namespace Migo.Net
         public void DownloadFileAsync (Uri address, Stream file)
         {
             DownloadFileAsync (address, null, file, null);
-        }        
+        }
         
         public void DownloadFileAsync (Uri address, string file, object userState)
         {
             DownloadFileAsync (address, file, null, userState);
-        }         
+        }
         
         public void DownloadFileAsync (Uri address, Stream file, object userState)
         {
             DownloadFileAsync (address, null, file, userState);
-        }         
+        }
         
         private void DownloadFileAsync (Uri address, 
                                         string filePath, 
                                         Stream fileStream, 
                                         object userState)
-        {        
+        {
             if (String.IsNullOrEmpty (filePath) && 
                 fileStream == null || fileStream == Stream.Null) {
                 throw new ArgumentNullException ("file");
@@ -279,12 +267,10 @@ namespace Migo.Net
             } else {
                 this.fileName = filePath;
             }
-              
-          
-            SetBusy ();                      
-                            
+            
+            SetBusy ();
             DownloadAsync (address, DownloadType.File, userState);
-        }   
+        }
         
         public void DownloadStringAsync (Uri address)
         {
@@ -299,7 +285,7 @@ namespace Migo.Net
             
             SetBusy ();
             DownloadAsync (address, DownloadType.String, userState);
-        }        
+        }
                 
         public void CancelAsync ()
         {
@@ -308,35 +294,25 @@ namespace Migo.Net
         
         public void CancelAsync (bool deleteFile)
         {
-            if (SetCancelled ())
-            {  
-                //Console.WriteLine ("CancelAsync Called:  {0}", this.fileName);
+            if (SetCancelled ()) {  
                 AbortDownload ();
-            } else {
-                //Console.WriteLine ("CancelAsync not Called:  {0}", this.fileName);              
-            }           
-        }               
+            }
+        }
 
         private void AbortDownload ()
-        {   
+        {
             AbortDownload (null);
         }
         
         private void AbortDownload (Exception e)
         {
-            //Console.WriteLine ("AbortDownload Called:  {0}", this.fileName);
-                
             error = e;
-            //Console.WriteLine ("001");
-                
+            
             try {
                 HttpWebRequest req = request;                
                 
                 if (req != null) {
-                    //Console.WriteLine ("AsyncWebrequest - 002");
-                        
                     req.Abort();
-                    //Console.WriteLine ("AsyncWebrequest - 003");
                 }
             } catch (Exception ae) {
                 Console.WriteLine ("Abort Download Error:  {0}", ae.Message);
@@ -352,16 +328,12 @@ namespace Migo.Net
         {
             Exception err = (SetCompleted ()) ? e : error;
             
-            object statePtr = userState; 
+            object statePtr = userState;
             byte[] resultPtr = result;
             bool cancelledCpy = Cancelled;
 
-            //Console.WriteLine ("2");
-            //Console.WriteLine ("CleanUp:  GetResponseCallback");                
-            
             CleanUp ();
                              
-            //Console.WriteLine ("2.5");
             DownloadCompleted (resultPtr, err, cancelledCpy, statePtr);
             
             Reset ();
@@ -369,17 +341,15 @@ namespace Migo.Net
 
         private void CleanUp ()
         {
-            //Console.WriteLine ("CleanUp");
-
             if (localFile != null) {
                 localFile.Close ();
-                localFile = null;                
+                localFile = null;
             }
             
             if (memoryStream != null) {
                 memoryStream.Close ();
-                memoryStream = null;                
-            }            
+                memoryStream = null;
+            }
             
             if (response != null) {
                 response.Close ();
@@ -387,7 +357,7 @@ namespace Migo.Net
             }
             
             result = null;
-            request = null;            
+            request = null;
             
             CleanUpHandles ();
         }
@@ -397,12 +367,12 @@ namespace Migo.Net
             if (registeredTimeoutHandle != null) {
                 registeredTimeoutHandle.Unregister (readTimeoutHandle);
                 readTimeoutHandle = null;
-            }            
+            }
             
             if (readTimeoutHandle != null) {
                 readTimeoutHandle.Close ();
                 readTimeoutHandle = null;
-            }        
+            }
         }
 
         private bool SetBusy () 
@@ -419,7 +389,7 @@ namespace Migo.Net
                 }
             }
             
-            return ret;            
+            return ret;
         }
 
         private bool SetCancelled ()
@@ -433,7 +403,7 @@ namespace Migo.Net
             }
             
             return ret;
-        }  
+        }
         
         private bool SetCompleted ()
         {
@@ -446,7 +416,7 @@ namespace Migo.Net
             }
             
             return ret;
-        }         
+        }
 
         private void DownloadAsync (Uri uri, DownloadType type, object state)
         {            
@@ -469,107 +439,105 @@ namespace Migo.Net
                        
                 ThreadPool.RegisterWaitForSingleObject (
                     ar.AsyncWaitHandle, 
-                    new WaitOrTimerCallback(OnTimeout),
+                    new WaitOrTimerCallback (OnTimeout),
                     request, timeout, true
-                );            
+                );
             } catch (Exception e) {
                 Completed (e);
             }
-        }    
+        }
             
         private HttpWebRequest PrepRequest (Uri address)
         {
             responseHeaders = null;        
             HttpWebRequest req = HttpWebRequest.Create (address) as HttpWebRequest;
-                        
+            
             req.AllowAutoRedirect = true;
             req.Credentials = credentials;
-           
+            
             if (proxy != null) {
                 req.Proxy = proxy;
-            }            
+            }
 
-			if (headers != null && headers.Count != 0) {
-				
-				int rangeHdr = -1;				
-				string expect = headers ["Expect"];
-				string contentType = headers ["Content-Type"];
-				string accept = headers ["Accept"];
-				string connection = headers ["Connection"];
-				string userAgent = headers ["User-Agent"];
-				string referer = headers ["Referer"];
-				string rangeStr = headers ["Range"];
-				string ifModifiedSince = headers ["If-Modified-Since"];
+            if (headers != null && headers.Count != 0) {
+                int rangeHdr = -1;
+                string expect = headers ["Expect"];
+                string contentType = headers ["Content-Type"];
+                string accept = headers ["Accept"];
+                string connection = headers ["Connection"];
+                string userAgent = headers ["User-Agent"];
+                string referer = headers ["Referer"];
+                string rangeStr = headers ["Range"];
+                string ifModifiedSince = headers ["If-Modified-Since"];
                 
-				if (!String.IsNullOrEmpty (rangeStr)) {
-    				Int32.TryParse (rangeStr, out rangeHdr);
-				}
-				
-				headers.Remove ("Expect");
-				headers.Remove ("Content-Type");
-				headers.Remove ("Accept");
-				headers.Remove ("Connection");
-				headers.Remove ("Referer");
-				headers.Remove ("User-Agent");
-				headers.Remove ("Range");                
-				headers.Remove ("If-Modified-Since");                
-                
-				req.Headers = headers;
-
-				if (!String.IsNullOrEmpty (expect)) {
-					req.Expect = expect;
+                if (!String.IsNullOrEmpty (rangeStr)) {
+                    Int32.TryParse (rangeStr, out rangeHdr);
                 }
                 
-				if (!String.IsNullOrEmpty (accept)) {
-					req.Accept = accept;
+                headers.Remove ("Expect");
+                headers.Remove ("Content-Type");
+                headers.Remove ("Accept");
+                headers.Remove ("Connection");
+                headers.Remove ("Referer");
+                headers.Remove ("User-Agent");
+                headers.Remove ("Range");                
+                headers.Remove ("If-Modified-Since");                
+                
+                req.Headers = headers;
+
+                if (!String.IsNullOrEmpty (expect)) {
+                    req.Expect = expect;
+                }
+                
+                if (!String.IsNullOrEmpty (accept)) {
+                    req.Accept = accept;
                 }
 
-				if (!String.IsNullOrEmpty (contentType)) {
-					req.ContentType = contentType;
+                if (!String.IsNullOrEmpty (contentType)) {
+                    req.ContentType = contentType;
                 }
 
-				if (!String.IsNullOrEmpty (connection)) {
-					req.Connection = connection;
+                if (!String.IsNullOrEmpty (connection)) {
+                    req.Connection = connection;
                 }
 
-				if (!String.IsNullOrEmpty (userAgent)) {
-					req.UserAgent = userAgent;
+                if (!String.IsNullOrEmpty (userAgent)) {
+                    req.UserAgent = userAgent;
                 }
 
-				if (!String.IsNullOrEmpty (referer)) {
-					req.Referer = referer;
+                if (!String.IsNullOrEmpty (referer)) {
+                    req.Referer = referer;
                 }
 
-			    if (rangeHdr > 0) {
+                if (rangeHdr > 0) {
                     req.AddRange (range);
-			    }
-			    
-				if (!String.IsNullOrEmpty (ifModifiedSince)) {
+                }
+                
+                if (!String.IsNullOrEmpty (ifModifiedSince)) {
                     DateTime modDate;
                     
                     if (DateTime.TryParse (ifModifiedSince, out modDate)) {
                         req.IfModifiedSince = modDate;
                     }
                 }
-			} else {
+            } else {
                 if (!String.IsNullOrEmpty (UserAgent)) {
                     req.UserAgent = UserAgent;
                 }
 
                 if (this.range > 0) {
-                    //Console.WriteLine ("Range Added: {0}", this.range);
                     req.AddRange (this.range);
-    		    }
+                }
 
                 if (this.ifModifiedSince > DateTime.MinValue) {
                     req.IfModifiedSince = this.ifModifiedSince;
                 }
             }
             
-			responseHeaders = null;                       
+            responseHeaders = null;                       
             
             return req;
-        }         
+        }
         
         private void OnResponseCallback (IAsyncResult ar)
         {    
@@ -577,23 +545,14 @@ namespace Migo.Net
             bool redirect_workaround = false;
             
             try {
-                //Console.WriteLine ("0");
-                //Console.WriteLine ("begin EndGetResponse:  {0}", this.fileName);
-                
                 response = request.EndGetResponse (ar) as HttpWebResponse;
 
                 responseHeaders = response.Headers;
-                OnResponseReceived (); 
-
-                //Console.WriteLine ("end EndGetResponse");
-                //Console.WriteLine ("1");      
-                Download (response.GetResponseStream ());                
+                OnResponseReceived ();
+                Download (response.GetResponseStream ());
             } catch (ObjectDisposedException) {
             } catch (WebException we) {
                 if (we.Status != WebExceptionStatus.RequestCanceled) {
-                    //Console.WriteLine ("am I here?");
-                    //Console.WriteLine ("Why {1}:  {0}", we.Status, this.fileName);
-                    //Console.WriteLine ("Cancelled:  {0}", this.Cancelled);
                     err = we;
                     
                     HttpWebResponse response = we.Response as HttpWebResponse;
@@ -605,16 +564,13 @@ namespace Migo.Net
                     }
                 }
             } catch (Exception e) {
-                //Console.WriteLine ("GetResponseCallback:  {0}", e.Message);
-                err = e;                
-                //Console.WriteLine (request.
+                err = e;
             } finally {
                 if (!redirect_workaround) {
                     Completed (err);
                 }
-                //Console.WriteLine ("3");  
             }
-        }        
+        }
 
         // All of this download code could be abstracted
         // and put in a helper class.
@@ -631,13 +587,9 @@ namespace Migo.Net
             
             int length = (cLength == -1 || cLength > 8192) ? 8192 : (int) cLength;            
             
-            Stream dest = null; 
+            Stream dest = null;
             readTimeoutHandle = new ManualResetEvent (true);
             
-            //Console.WriteLine ("_____________________________________________");
-            //Console.WriteLine (response.Headers);
-            //Console.WriteLine ("_____________________________________________\n");           
-
             byte[] buffer = null;
             
             bool dataDownload = false;
@@ -651,19 +603,19 @@ namespace Migo.Net
             switch (type) {
                 case DownloadType.String:
                 case DownloadType.Data:
-                    dataDownload = true;                    
+                    dataDownload = true;
                     
                     if (cLength != -1) {
-                        length = (int) cLength;                    
+                        length = (int) cLength;
                         buffer = new byte[cLength];
                     } else {
-                        writeToStream = true;                    
+                        writeToStream = true;
                         buffer = new byte[length];
                         dest = OpenMemoryStream ();
                     }
                     break;
                 case DownloadType.File:
-                    writeToStream = true;                    
+                    writeToStream = true;          
                     buffer = new byte [length];
                     if (localFile == null) {
                         dest = OpenLocalFile (fileName);
@@ -672,21 +624,17 @@ namespace Migo.Net
                     }
                     
                     break;
-            }            
+            }
 
             registeredTimeoutHandle = ThreadPool.RegisterWaitForSingleObject (
-                readTimeoutHandle, 
-                new WaitOrTimerCallback(OnTimeout),
-                null, timeout, false
-            );             
+                readTimeoutHandle, new WaitOrTimerCallback (OnTimeout), null, timeout, false
+            );
             
             IAsyncResult ar;
-            //Console.WriteLine (writeToStream);
+
+            readTimeoutHandle.Set ();
             
-            readTimeoutHandle.Set ();            
-            
-            while (nread != 0)
-            {        
+            while (nread != 0) {
                 readTimeoutHandle.Reset ();
                 
                 // <hack> 
@@ -709,108 +657,104 @@ namespace Migo.Net
                 }
 
                 if (type != DownloadType.String) {
-                    tsm.AddBytes (nread);         
-                } 
+                    tsm.AddBytes (nread);
+                }
             }
             
             CleanUpHandles ();
             
-            if (type != DownloadType.String) {            
+            if (type != DownloadType.String) {
                 if (tsm.TotalBytes == -1) {
                     tsm.TotalBytes = tsm.BytesReceived;
                 }
             }
             
             if (dataDownload) {
-                if (writeToStream) {    
+                if (writeToStream) {
                     result = memoryStream.ToArray ();
                 } else {
                     result = buffer;
                 }
-            }            
-            
-            //Console.WriteLine ("Download End");            
+            }
         }
     
         private Stream OpenLocalFile (string filePath)
-        {            
+        {
             return File.Open (
                 filePath, FileMode.OpenOrCreate, 
                 FileAccess.Write, FileShare.None
-            );            
+            );
         }
         
         private MemoryStream OpenMemoryStream ()
         {
-            return memoryStream = new MemoryStream ();       
-        }        
+            return memoryStream = new MemoryStream ();
+        }
         
         private void Reset ()
         {
             lock (cancelBusySync) {
-                busy = false;                
+                busy = false;          
                 cancelled = false;
                 completed = false;
                 error = null;
                 fileName = String.Empty;
-                ifModifiedSince = DateTime.MinValue;                
+                ifModifiedSince = DateTime.MinValue;
                 range = 0;
                 type = DownloadType.None;
                 uri = null;
                 userState = null;
-            } 
+            }
         }
         
         private void DownloadCompleted (byte[] resultPtr, 
                                         Exception errPtr, 
                                         bool cancelledCpy, 
                                         object userStatePtr)
-        {        
-            switch (type) {                
-            case DownloadType.Data:
-                //Console.WriteLine ("DownloadCompleted Data");
-                OnDownloadDataCompleted (
-                    resultPtr, errPtr, cancelledCpy, userStatePtr
-                );
-                break;
-            case DownloadType.File:
-                OnDownloadFileCompleted (errPtr, cancelledCpy, userStatePtr);
-                break;
-            case DownloadType.String:
-                string s;
-                try {
-                    s = Encoding.GetString (resultPtr).TrimStart ();
-
-                    // Workaround if the string is a XML to set the encoding from it
-                    if (s.StartsWith("<?xml")) {
-                        string auxStr = "encoding=";
-                        int startIndex = s.IndexOf (auxStr) + auxStr.Length + 1;
-                        int endIndex = s.IndexOf ('\"', startIndex);
-                        string encodingStr = s.Substring (startIndex, endIndex - startIndex);
-                        try {
-                            Encoding enc = Encoding.GetEncoding (encodingStr);
-                            if (!enc.Equals (Encoding)) {
-                                s = enc.GetString (resultPtr);
-                            }
-                        } catch (ArgumentException) {}
+        {
+            switch (type) {
+                case DownloadType.Data:
+                    OnDownloadDataCompleted (
+                        resultPtr, errPtr, cancelledCpy, userStatePtr
+                    );
+                    break;
+                case DownloadType.File:
+                    OnDownloadFileCompleted (errPtr, cancelledCpy, userStatePtr);
+                    break;
+                case DownloadType.String:
+                    string s;
+                    try {
+                        s = Encoding.GetString (resultPtr).TrimStart ();
+    
+                        // Workaround if the string is a XML to set the encoding from it
+                        if (s.StartsWith("<?xml")) {
+                            string auxStr = "encoding=";
+                            int startIndex = s.IndexOf (auxStr) + auxStr.Length + 1;
+                            int endIndex = s.IndexOf ('\"', startIndex);
+                            string encodingStr = s.Substring (startIndex, endIndex - startIndex);
+                            try {
+                                Encoding enc = Encoding.GetEncoding (encodingStr);
+                                if (!enc.Equals (Encoding)) {
+                                    s = enc.GetString (resultPtr);
+                                }
+                            } catch (ArgumentException) {}
+                        }
+                    } catch {
+                        s = String.Empty;
                     }
-                } catch {
-                    s = String.Empty;
-                }
-            
-                OnDownloadStringCompleted (
-                    s, errPtr, cancelledCpy, userStatePtr
-                );                        
-                break;
-            }            
+                
+                    OnDownloadStringCompleted (
+                        s, errPtr, cancelledCpy, userStatePtr
+                    );
+                    break;
+            }
         }
 
         private void OnTimeout (object state, bool timedOut) 
         {
             if (timedOut) {
-                        //Console.WriteLine ("OnTimeout");
                 if (SetCompleted ()) {
-                    try { 
+                    try {
                         AbortDownload (new WebException (
                             "The operation timed out", null, 
                             WebExceptionStatus.Timeout, response
@@ -838,7 +782,7 @@ namespace Migo.Net
         {
             OnDownloadProgressChanged (
                 new DownloadProgressChangedEventArgs (
-                    progressPercentage, userState,                    
+                    progressPercentage, userState, 
                     bytesReceived, BytesToReceive
                 )
             );
@@ -885,7 +829,7 @@ namespace Migo.Net
             if (handler != null) {
                 handler (this, args);
             }
-        }        
+        }
         
         private void OnDownloadFileCompleted (Exception error,
                                               bool cancelled,
@@ -896,8 +840,7 @@ namespace Migo.Net
             );
         }
 
-        private void OnDownloadFileCompleted (
-            AsyncCompletedEventArgs args)
+        private void OnDownloadFileCompleted (AsyncCompletedEventArgs args)
         {
             EventHandler <AsyncCompletedEventArgs> 
                 handler = DownloadFileCompleted;
