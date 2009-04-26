@@ -687,21 +687,19 @@ namespace Migo.Net
             
             while (nread != 0)
             {        
-                try {
-                    readTimeoutHandle.Reset ();
-                    
-                    // <hack> 
-                    // Yeah, Yeah, Yeah, I'll change this later, 
-                    // it's here to get around abort issues.
-                    
-                    ar = st.BeginRead (buffer, offset, length, null, null);
-                    nread = st.EndRead (ar);
-                    
-                    // need an auxiliary downloader class to replace this. 
-                    // </hack>
-                    
-                    readTimeoutHandle.Set ();
-                } catch { return; }
+                readTimeoutHandle.Reset ();
+                
+                // <hack> 
+                // Yeah, Yeah, Yeah, I'll change this later, 
+                // it's here to get around abort issues.
+                
+                ar = st.BeginRead (buffer, offset, length, null, null);
+                nread = st.EndRead (ar);
+                
+                // need an auxiliary downloader class to replace this. 
+                // </hack>
+                
+                readTimeoutHandle.Set ();
                 
                 if (writeToStream) {
                     dest.Write (buffer, 0, nread);

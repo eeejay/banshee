@@ -419,7 +419,7 @@ namespace Migo.DownloadCore
 	            
                 try {                        
                     if (e.Error != null) {
-                        //Console.WriteLine ("DT {1} Error:  {0}", e.Error, this.Name);
+                        Hyena.Log.WarningFormat ("HttpDownloadTask {0} Error: {1}", this.Name, e.Error);
                         WebException we = e.Error as WebException;
                         
                         if (we != null) {
