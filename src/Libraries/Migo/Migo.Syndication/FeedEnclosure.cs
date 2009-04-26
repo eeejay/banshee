@@ -138,6 +138,7 @@ namespace Migo.Syndication
             lock (sync) {
                 if (!String.IsNullOrEmpty (local_path) && File.Exists (local_path)) {
                     try {
+                        File.SetAttributes (local_path, FileAttributes.Normal);
                         File.Delete (local_path);
                         Directory.Delete (Path.GetDirectoryName (local_path));
                     } catch {}
