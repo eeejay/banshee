@@ -74,7 +74,7 @@ namespace Migo.Net
         
         private TransferStatusManager tsm;
         
-        private ManualResetEvent readTimeoutHandle;
+        private AutoResetEvent readTimeoutHandle;
         private RegisteredWaitHandle registeredTimeoutHandle;
         
         private bool busy;
@@ -588,7 +588,7 @@ namespace Migo.Net
             int length = (cLength == -1 || cLength > 8192) ? 8192 : (int) cLength;            
             
             Stream dest = null;
-            readTimeoutHandle = new ManualResetEvent (true);
+            readTimeoutHandle = new AutoResetEvent (false);
             
             byte[] buffer = null;
             
@@ -632,11 +632,7 @@ namespace Migo.Net
             
             IAsyncResult ar;
 
-            readTimeoutHandle.Set ();
-            
             while (nread != 0) {
-                readTimeoutHandle.Reset ();
-                
                 // <hack> 
                 // Yeah, Yeah, Yeah, I'll change this later, 
                 // it's here to get around abort issues.
