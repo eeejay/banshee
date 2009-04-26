@@ -191,7 +191,7 @@ namespace Banshee.Gui.Widgets
             // FIXME: This is incredibly bad, but we don't want to break
             // translations right now. It needs to be replaced for 1.4!!
             string line = GetSecondLineText (track);
-            string second_line = line, third_line = line;
+            string second_line = line, third_line = String.Empty;
             int split_pos = line.LastIndexOf ("<span");
             if (split_pos >= 0
                 // Check that there are at least 3 spans in the string, else this
