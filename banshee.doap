@@ -13,14 +13,14 @@
   <maintainer>
     <foaf:Person>
       <foaf:name>Aaron Bockover</foaf:name>
-      <foaf:mbox rdf:resource="abock@gnome.org" />
+      <foaf:mbox rdf:resource="mailto:abock@gnome.org" />
       <gnome:userid>abock</gnome:userid>
     </foaf:Person>
   </maintainer>
   <maintainer>
     <foaf:Person>
       <foaf:name>Gabriel Burt</foaf:name>
-      <foaf:mbox rdf:resource="gabriel.burt@gmail.com" />
+      <foaf:mbox rdf:resource="mailto:gabriel.burt@gmail.com" />
       <gnome:userid>gburt</gnome:userid>
     </foaf:Person>
   </maintainer>
