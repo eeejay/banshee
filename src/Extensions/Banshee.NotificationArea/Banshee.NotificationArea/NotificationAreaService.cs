@@ -388,6 +388,10 @@ namespace Banshee.NotificationArea
         
         private void ToggleRatingMenuSensitive () 
         {
+            if (rating_menu_item == null) {
+                return;
+            }
+            
             if (ServiceManager.PlayerEngine.CurrentTrack is DatabaseTrackInfo) {
                 rating_menu_item.Show ();
             } else {
