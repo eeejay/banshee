@@ -169,6 +169,15 @@ namespace Banshee.Dap.Mtp
                     return;
                 }*/
 
+                // Delete any empty albums
+                lock (mtp_device) {
+                    foreach (Album album in mtp_device.GetAlbums ()) {
+                        if (album.Count == 0) {
+                            album.Remove ();
+                        }
+                    }
+                }
+
                 int [] source_ids = new int [] { DbId };
                 foreach (Track mtp_track in files) {
                     int track_id;
@@ -326,9 +335,9 @@ namespace Banshee.Dap.Mtp
 
                 // Add/update album art
                 if (!video) {
-                    string key = MakeAlbumKey (track.ArtistName, track.AlbumTitle);
+                    string key = MakeAlbumKey (track.AlbumArtist, track.AlbumTitle);
                     if (!album_cache.ContainsKey (key)) {
-                        Album album = new Album (mtp_device, track.AlbumTitle, track.ArtistName, track.Genre);
+                        Album album = new Album (mtp_device, track.AlbumTitle, track.AlbumArtist, track.Genre, track.Composer);
                         album.AddTrack (mtp_track);
 
                         if (supports_jpegs && can_sync_albumart) {
@@ -342,7 +351,12 @@ namespace Banshee.Dap.Mtp
                                     Banshee.Collection.Gui.ArtworkManager.DisposePixbuf (pic);
                                 }
                                 album_cache[key] = album;
-                            } catch {}
+                            } catch (Exception e) {
+                                Log.Debug ("Failed to create MTP Album", e.Message);
+                            }
+                        } else {
+                            album.Save ();
+                            album_cache[key] = album;
                         }
                     } else {
                         Album album = album_cache[key];
@@ -432,9 +446,9 @@ namespace Banshee.Dap.Mtp
             Dispose ();
         }
 
-        private static string MakeAlbumKey (string artist, string album)
+        private static string MakeAlbumKey (string album_artist, string album)
         {
-            return String.Format ("{0}_{1}", artist, album);
+            return String.Format ("{0}_{1}", album_artist, album);
         }
 
         public static readonly SchemaEntry<bool> NeverSyncAlbumArtSchema = new SchemaEntry<bool>(

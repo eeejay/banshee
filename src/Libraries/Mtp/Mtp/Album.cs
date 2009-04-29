@@ -43,30 +43,37 @@ namespace Mtp
 
         public override string Name {
             get { return album.name; }
-            set {
-                album.name = value;
-            }
+            set { album.name = value; }
         }
 
         public string Artist {
             get { return album.artist; }
-            set {
-                album.artist = value;
-            }
+            set { album.artist = value; }
         }
 
         public string Genre {
             get { return album.genre; }
+            set { album.genre = value; }
+        }
+
+        public string Composer {
+            get {
+#if LIBMTP8
+                return album.composer;
+#else
+                return null;
+#endif
+            }
             set {
-                album.genre = value;
+#if LIBMTP8
+                album.composer = value;
+#endif
             }
         }
 
         public override uint Count {
             get { return album.no_tracks; }
-            protected set {
-                album.no_tracks = value;
-            }
+            protected set { album.no_tracks = value; }
         }
 
         protected override IntPtr TracksPtr {
@@ -74,14 +81,14 @@ namespace Mtp
             set { album.tracks = value; }
         }
 
-        public Album (MtpDevice device, string name, string artist, string genre) : base (device, name)
+        public Album (MtpDevice device, string name, string artist, string genre, string composer) : base (device, name)
         {
-            this.album = new AlbumStruct ();
-            TracksPtr = IntPtr.Zero;
             Name = name;
             Artist = artist;
             Genre = genre;
+            Composer = composer;
             Count = 0;
+            TracksPtr = IntPtr.Zero;
         }
 
         internal Album (MtpDevice device, AlbumStruct album) : base (device, album.tracks, album.no_tracks)
@@ -111,7 +118,7 @@ namespace Mtp
                 cover.filetype = FileType.JPEG;
 
                 if (FileSample.LIBMTP_Send_Representative_Sample (Device.Handle, AlbumId, ref cover) != 0) {
-                    //Console.WriteLine ("failed to send representative sample file");
+                    //Console.WriteLine ("Failed to send representative sample file for album {0} (id {1})", Name, AlbumId);
                 }
                 Marshal.FreeHGlobal (cover.data);
             }
@@ -190,12 +197,17 @@ namespace Mtp
         [MarshalAs(UnmanagedType.LPStr)]
         public string artist;
 
+#if LIBMTP8
+        [MarshalAs(UnmanagedType.LPStr)]
+        public string composer;
+#endif
+
         [MarshalAs(UnmanagedType.LPStr)]
         public string genre;
 
         public IntPtr tracks;
         public uint no_tracks;
 
-        public IntPtr next; // LIBMTP_album_t*
+        public IntPtr next;
     }
 }
