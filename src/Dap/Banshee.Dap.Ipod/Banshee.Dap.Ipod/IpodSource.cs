@@ -88,7 +88,7 @@ namespace Banshee.Dap.Ipod
 
             // TODO disable this later, but right now it won't disable it in Sync, so might as well
             // leave it enabled
-            //SupportsPodcasts = ipod_device.ModelInfo.HasCapability ("podcast");
+            SupportsPodcasts = ipod_device.ModelInfo.HasCapability ("podcast");
             SupportsVideo = ipod_device.ModelInfo.DeviceClass == "video" ||
                             ipod_device.ModelInfo.DeviceClass == "classic" ||
                             (ipod_device.ModelInfo.DeviceClass == "nano" && ipod_device.ModelInfo.Generation >= 3);
@@ -238,7 +238,6 @@ namespace Banshee.Dap.Ipod
                         SELECT ?, TrackID FROM CoreTracks WHERE PrimarySourceID = ? AND ExternalID = ?");
                 foreach (IPod.Playlist playlist in ipod_device.TrackDatabase.Playlists) {
                     if (playlist.IsOnTheGo) { // || playlist.IsPodcast) {
-                        Console.WriteLine ("have playlist {0} with {1} items but ignoring b/c otg or podcast", playlist.Name, playlist.Tracks.Count);
                         continue;
                     }
                     PlaylistSource pl_src = new PlaylistSource (playlist.Name, this);
@@ -591,7 +590,7 @@ namespace Banshee.Dap.Ipod
             // Remove playlists on the device
             List<IPod.Playlist> device_playlists = new List<IPod.Playlist> (ipod_device.TrackDatabase.Playlists);
             foreach (IPod.Playlist playlist in device_playlists) {
-                if (!playlist.IsOnTheGo) { // && !playlist.IsPodcast) {
+                if (!playlist.IsOnTheGo) {
                     ipod_device.TrackDatabase.RemovePlaylist (playlist);
                 }
             }
@@ -613,16 +612,6 @@ namespace Banshee.Dap.Ipod
                 }
             }
     
-            // Sync podcast playlist
-            /*IPod.Playlist podcast_playlist = GetPodcastPlaylist ();
-            podcast_playlist.Clear ();
-            foreach (int track_id in ServiceManager.DbConnection.QueryEnumerable<int> (
-                "SELECT CoreTracks.TrackID FROM CoreTracks WHERE PrimarySourceID = ? AND (Attributes & ?) != 0",
-                DbId, (int)Banshee.Collection.TrackMediaAttributes.Podcast))
-            {
-                podcast_playlist.AddTrack (tracks_map[track_id].IpodTrack);
-            }*/
-            
             try {
                 ipod_device.TrackDatabase.SaveStarted += OnIpodDatabaseSaveStarted;
                 ipod_device.TrackDatabase.SaveEnded += OnIpodDatabaseSaveEnded;
@@ -639,19 +628,6 @@ namespace Banshee.Dap.Ipod
             }
         }
 
-        /*private IPod.Playlist GetPodcastPlaylist ()
-        {
-            foreach (IPod.Playlist playlist in ipod_device.TrackDatabase.Playlists) {
-                if (playlist.IsPodcast) {
-                    return playlist;
-                }
-            }
-
-            IPod.Playlist podcast_playlist= ipod_device.TrackDatabase.CreatePlaylist (Catalog.GetString ("Podcasts"));
-            podcast_playlist.IsPodcast = true;
-            return podcast_playlist;
-        }*/
-        
         private UserJob sync_user_job;
         
         private void OnIpodDatabaseSaveStarted (object o, EventArgs args)

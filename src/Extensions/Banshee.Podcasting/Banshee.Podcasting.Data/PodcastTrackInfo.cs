@@ -56,7 +56,7 @@ namespace Banshee.Podcasting.Data
         None = 7
     }
 
-    public class PodcastTrackInfo
+    public class PodcastTrackInfo : IPodcastInfo
     {
         public static PodcastTrackInfo From (TrackInfo track)
         {
@@ -81,7 +81,6 @@ namespace Banshee.Podcasting.Data
             }
         }
         
-        private int position;
         private DatabaseTrackInfo track;
 
 #region Properties
@@ -121,15 +120,10 @@ namespace Banshee.Podcasting.Data
             get { return !String.IsNullOrEmpty (Enclosure.LocalPath); }
         }
         
-        public int Position {
-            get { return position; }
-            set { position = value; }
-        }
-
         public DateTime ReleaseDate {
             get { return Item.PubDate; }
         }
-        
+
         public FeedEnclosure Enclosure {
             get { return (Item == null) ? null : Item.Enclosure; }
         }

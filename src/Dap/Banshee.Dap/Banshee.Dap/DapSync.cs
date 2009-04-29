@@ -222,6 +222,10 @@ namespace Banshee.Dap
                 if (!dap.SupportsVideo) {
                     sources.Remove (ServiceManager.SourceManager.VideoLibrary);
                 }
+
+                if (!dap.SupportsPodcasts) {
+                    sources.RemoveAll (s => s.UniqueId == "PodcastSource-PodcastLibrary");
+                }
                 
                 foreach (Source source in sources) {
                     if (source is LibrarySource) {

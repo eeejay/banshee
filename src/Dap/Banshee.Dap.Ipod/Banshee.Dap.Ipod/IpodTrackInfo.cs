@@ -48,6 +48,9 @@ namespace Banshee.Dap.Ipod
         internal int IpodId {
             get { return ipod_id; }
         }
+
+        // Used for podcasts only
+        private string description;
         
         public IpodTrackInfo (IPod.Track track) : base ()
         {
@@ -90,6 +93,12 @@ namespace Banshee.Dap.Ipod
                 TrackTitle = track.TrackTitle;
                 Year = track.Year;
                 MediaAttributes = track.MediaAttributes;
+
+                var podcast_info = track.ExternalObject as IPodcastInfo;
+                if (podcast_info != null) {
+                    description = podcast_info.Description;
+                    ReleaseDate = podcast_info.ReleaseDate;
+                }
             }
             
             CanSaveToDatabase = true;
@@ -126,8 +135,9 @@ namespace Banshee.Dap.Ipod
             TrackCount = track.TotalTracks;
             TrackNumber = track.TrackNumber;
             TrackTitle = String.IsNullOrEmpty (track.Title) ? null : track.Title;
-            //ReleaseDate = track.DateReleased;
             Year = track.Year;
+            description = track.Description;
+            ReleaseDate = track.DateReleased;
             
             switch (track.Rating) {
                 case IPod.TrackRating.One:   rating = 1; break;
@@ -204,7 +214,7 @@ namespace Banshee.Dap.Ipod
             track.TotalTracks = TrackCount;
             track.TrackNumber = TrackNumber;
             track.Year = Year;
-            //track.DateReleased = ReleaseDate;
+            track.DateReleased = ReleaseDate;
             
             track.Album = AlbumTitle;
             track.Artist = ArtistName;
@@ -221,10 +231,10 @@ namespace Banshee.Dap.Ipod
             }
 
             if (HasAttribute (TrackMediaAttributes.Podcast)) {
-                //track.Description = ..
-                //track.Category = ..
-                //track.RememberPosition = true;
-                //track.NotPlayedMark = track.PlayCount == 0;
+                track.DateReleased = ReleaseDate;
+                track.Description = description;
+                track.RememberPosition = true;
+                track.NotPlayedMark = track.PlayCount == 0;
             }
 
             if (HasAttribute (TrackMediaAttributes.VideoStream)) {

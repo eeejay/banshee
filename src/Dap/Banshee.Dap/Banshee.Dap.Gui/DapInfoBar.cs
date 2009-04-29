@@ -99,6 +99,9 @@ namespace Banshee.Dap.Gui
         
         private void OnSourceUpdated (object o, EventArgs args)
         {
+            if (source.Sync.Syncing)
+                return;
+
             Banshee.Base.ThreadAssist.ProxyToMain (delegate {
                 try {
                     UpdateUsage ();

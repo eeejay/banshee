@@ -23,6 +23,7 @@ SOURCES =  \
 	Banshee.Collection/FileTrackInfo.cs \
 	Banshee.Collection/IBasicTrackInfo.cs \
 	Banshee.Collection/ITrackInfo.cs \
+	Banshee.Collection/IPodcastInfo.cs \
 	Banshee.Collection/SampleTrackInfo.cs \
 	Banshee.Collection/TrackAttributes.cs \
 	Banshee.Collection/TrackFilterType.cs \
