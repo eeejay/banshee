@@ -135,7 +135,11 @@ namespace Mtp
 
 		internal static uint CreateFolder (MtpDeviceHandle handle, string name, uint parentId)
 		{
+#if LIBMTP8
+			uint result = LIBMTP_Create_Folder (handle, name, parentId, 0);
+#else
 			uint result = LIBMTP_Create_Folder (handle, name, parentId);
+#endif
 			if (result == 0)
 			{
 				LibMtpException.CheckErrorStack(handle);
@@ -174,8 +178,13 @@ namespace Mtp
 		[DllImport("libmtp.dll")]
 		private static extern IntPtr LIBMTP_Find_Folder (IntPtr folderList, uint folderId); // LIBMTP_folder_t*
 
+#if LIBMTP8
+		[DllImport("libmtp.dll")]
+		private static extern uint LIBMTP_Create_Folder (MtpDeviceHandle handle, string name, uint parentId, uint storageId);
+#else
 		[DllImport("libmtp.dll")]
 		private static extern uint LIBMTP_Create_Folder (MtpDeviceHandle handle, string name, uint parentId);
+#endif
 	}
 
 	internal class FolderHandle : SafeHandle
