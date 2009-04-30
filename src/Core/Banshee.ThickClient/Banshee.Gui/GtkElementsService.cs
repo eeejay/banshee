@@ -56,6 +56,11 @@ namespace Banshee.Gui
         private void OnStyleSet (object o, StyleSetArgs args)
         {
             SourceInvalidateIconPixbuf (ServiceManager.SourceManager.Sources);
+
+            // Ugly hack to avoid stupid themes that set this to 0, causing a huge
+            // bug when constructing the "add to playlist" popup menu (BGO #524706)
+            Gtk.Rc.ParseString ("gtk-menu-popup-delay = 225");
+
             OnThemeChanged ();
         }
         
