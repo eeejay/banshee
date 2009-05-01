@@ -195,6 +195,8 @@ namespace Hyena.Jobs
                     Hyena.Log.DebugFormat ("{0} iteration {1}", Title, iteration++);
                     System.Threading.Thread.Sleep (sleep_time);
                 }
+
+                OnFinished ();
             }
         }
     }

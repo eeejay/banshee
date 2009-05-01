@@ -205,7 +205,10 @@ namespace Hyena.Jobs
         public bool DelayShow { get; set; }
 
         public PriorityHints PriorityHints { get; set; }
-        public IEnumerable<Resource> Resources { get; protected set; }
+
+        // Causes runtime method-not-found error in mono 2.0.1
+        //public IEnumerable<Resource> Resources { get; protected set; }
+        internal Resource [] Resources;
 
         public JobState State {
             get { return state; }
