@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: gu\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-09-04 03:57+0000\n"
-"PO-Revision-Date: 2009-05-04 14:50+0530\n"
+"PO-Revision-Date: 2009-05-04 17:09+0530\n"
 "Last-Translator: Sweta Kothari <swkothar@redhat.com>\n"
 "Language-Team: Gujarati\n"
 "MIME-Version: 1.0\n"
@@ -1740,9 +1740,8 @@ msgid "Repeat"
 msgstr "બધું પુનરાવર્તન કરો"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackRepeatActions.cs:79
-#, fuzzy
 msgid "Repeat _Off"
-msgstr "બધું પુનરાવર્તન કરો (_A)"
+msgstr ""
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackRepeatActions.cs:80
 msgid "Do not repeat playlist"
