@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: gu\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-09-04 03:57+0000\n"
-"PO-Revision-Date: 2009-05-04 17:09+0530\n"
+"PO-Revision-Date: 2009-05-04 17:56+0530\n"
 "Last-Translator: Sweta Kothari <swkothar@redhat.com>\n"
 "Language-Team: Gujarati\n"
 "MIME-Version: 1.0\n"
@@ -718,13 +718,12 @@ msgid "Write _metadata to files"
 msgstr "મેટાડેટાને ફાઈલોમાં લખો (_m)"
 
 #: ../src/Core/Banshee.Services/Banshee.Preferences/Page.cs:65
-#, fuzzy
 msgid ""
 "Enable this option to save tags and other metadata inside supported audio "
 "files."
 msgstr ""
 "ટેગો સંગ્રહવા માટે અને આધારભૂત ઓડિયો ફાઈલોની અંદર અન્ય મેટાડેટા સંગ્રહવા માટે આ વિકલ્પ "
-"સક્રિય કરો"
+"સક્રિય કરો."
 
 #: ../src/Core/Banshee.Services/Banshee.Preferences/Page.cs:68
 msgid "_Update file and folder names"
@@ -1156,9 +1155,8 @@ msgid "mimetype"
 msgstr "માઇમ પ્રકાર"
 
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:274
-#, fuzzy
 msgid "format"
-msgstr "ડિસ્ક બંધારણ:"
+msgstr "બંધારણ"
 
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:274
 #, fuzzy
@@ -1186,9 +1184,8 @@ msgid "playedon"
 msgstr "ક્યારેય નહિં વગાડેલ"
 
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:288
-#, fuzzy
 msgid "Last Skipped"
-msgstr "છેલ્લે સુધારેલ:"
+msgstr "છેલ્લે છોડેલ"
 
 #. Translators: These are unique search fields.  Please, no spaces. Blank ok.
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:290
@@ -1387,9 +1384,8 @@ msgid "Contributors"
 msgstr "ફાળો આપનારાઓ"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:89
-#, fuzzy
 msgid "Extraordinary Multimedia Management and Playback"
-msgstr "મ્યુઝીક વ્યવસ્થાપન અને જીનોમ માટે પ્લેબેક."
+msgstr "મ્યુઝીક વ્યવસ્થાપન અને જીનોમ માટે પ્લેબેક"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:91
 msgid ""
@@ -2011,7 +2007,7 @@ msgstr "ઈક્વીલાઈઝર (_E)"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/ViewActions.cs:66
 msgid "View the graphical equalizer"
-msgstr "ગ્રાફીકલ ઈક્વીલાઈઝર દર્શાવો."
+msgstr "ગ્રાફીકલ ઈક્વીલાઈઝર દર્શાવો"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/ViewActions.cs:71
 msgid "_Fullscreen"
@@ -2857,7 +2853,7 @@ msgstr "બહાર નીકાળો જ્યારે આયાત કર�
 
 #: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:172
 msgid "When an audio CD has been imported, automatically eject it."
-msgstr "જ્યારે ઓડિયો CD ને આયાત કરી દેવામાં આવે છે, આપમેળે તે બહાર નીકળે છે"
+msgstr "જ્યારે ઓડિયો CD ને આયાત કરી દેવામાં આવે છે, આપમેળે તે બહાર નીકળે છે."
 
 #: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:175
 msgid "Use error correction when importing"
@@ -3079,8 +3075,8 @@ msgstr "{0} માં પ્રવેશી રહ્યા છીએ."
 #, csharp-format
 msgid "Loading {0} track."
 msgid_plural "Loading {0} tracks."
-msgstr[0] "{0} ટ્રેકને લોડ કરી રહ્યા છે"
-msgstr[1] "{0} ટ્રેકોને લોડ કરી રહ્યા છે"
+msgstr[0] "{0} ટ્રેકને લોડ કરી રહ્યા છે."
+msgstr[1] "{0} ટ્રેકોને લોડ કરી રહ્યા છે."
 
 #: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs:257
 msgid "Loading playlists"
