@@ -51,6 +51,7 @@ using Banshee.Base;
 using Banshee.Configuration;
 using Banshee.ServiceStack;
 using Banshee.Gui;
+using Banshee.Gui.Widgets;
 using Banshee.Networking;
 
 using Banshee.Collection;
@@ -62,8 +63,9 @@ using Banshee.Lastfm.Radio;
 
 namespace Banshee.Lastfm.Recommendations
 {
-    public class RecommendationPane : Hyena.Widgets.RoundedFrame
+    public class RecommendationPane : HBox
     {
+        private ContextPage context_page;
         private HBox main_box;
         private MessagePane no_artists_pane;
         private TitledList artist_box;
@@ -93,11 +95,11 @@ namespace Banshee.Lastfm.Recommendations
         private bool ready = false;
         private bool refreshing = false;
         private bool show_when_ready = true;
-        public bool ShowWhenReady {
+        private bool ShowWhenReady {
             get { return show_when_ready; }
             set {
                 show_when_ready = value;
-                UpdateVisiblity ();
+                ShowIfReady ();
                 
                 if (!show_when_ready) {
                     CancelTasks ();
@@ -107,7 +109,7 @@ namespace Banshee.Lastfm.Recommendations
             }
         }
         
-        private void UpdateVisiblity ()
+        private void ShowIfReady ()
         {
             if (ShowWhenReady && ready) {
                 ShowAll ();
@@ -119,7 +121,6 @@ namespace Banshee.Lastfm.Recommendations
             get { return artist; }
             set {
                 if (artist == value) {
-                    UpdateVisiblity ();
                     return;
                 }
                 
@@ -133,10 +134,7 @@ namespace Banshee.Lastfm.Recommendations
                     }
                 }
                 
-                if (String.IsNullOrEmpty (artist)) {
-                    Hide ();
-                } else {
-                    HideWithTimeout ();
+                if (!String.IsNullOrEmpty (artist)) {
                     RefreshRecommendations ();
                 }
             }
@@ -148,6 +146,7 @@ namespace Banshee.Lastfm.Recommendations
             
             if (show_when_ready && !String.IsNullOrEmpty (Artist)) {
                 refreshing = true;
+                context_page.SetState (Banshee.ContextPane.ContextState.Loading);
                 Banshee.Kernel.Scheduler.Schedule (new RefreshRecommendationsJob (this, Artist));
             }
         }
@@ -171,12 +170,14 @@ namespace Banshee.Lastfm.Recommendations
             return false;
         }
 
-        public RecommendationPane () : base ()
+        public RecommendationPane (ContextPage contextPage) : base ()
         {
-            main_box = new HBox ();
+            this.context_page = contextPage;
+            main_box = this;
             main_box.BorderWidth = 5;
 
             artist_box = new TitledList (Catalog.GetString ("Recommended Artists"));
+            artist_box.ShowAll ();
             similar_artists_view = new TileView (2);
             similar_artists_view_sw = new Gtk.ScrolledWindow ();
             similar_artists_view_sw.SetPolicy (PolicyType.Never, PolicyType.Automatic);
@@ -219,8 +220,6 @@ namespace Banshee.Lastfm.Recommendations
             main_box.PackStart (track_box, false, false, 5);
             
             no_artists_pane.Hide ();
-            
-            Add (main_box);
         }
         
         private void OnSideSizeAllocated (object o, SizeAllocatedArgs args)
@@ -345,7 +344,7 @@ namespace Banshee.Lastfm.Recommendations
                 
                 ready = true;
                 refreshing = false;
-                UpdateVisiblity ();
+                context_page.SetState (Banshee.ContextPane.ContextState.Loaded);
             });
         }
         

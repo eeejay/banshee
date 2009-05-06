@@ -48,6 +48,7 @@ namespace Nereid
         private HBox header;
         private Label title_label;
         private Label search_label;
+        private Banshee.ContextPane.ContextPane context_pane;
         private VBox footer;
         
         private ISourceContents content;
@@ -112,6 +113,14 @@ namespace Nereid
             
             PackStart (header, false, false, 0);
             PackEnd (footer, false, false, 0);
+
+            context_pane = new Banshee.ContextPane.ContextPane ();
+            context_pane.ExpandHandler = b => {
+                SetChildPacking (content.Widget, !b, true, 0, PackType.Start);
+                SetChildPacking (context_pane, b, b, 0, PackType.End);
+            };
+            PackEnd (context_pane, false, false, 0);
+
             PackEnd (new ConnectedMessageBar (), false, true, 0);
         }
         
@@ -216,7 +225,7 @@ namespace Nereid
 
                 // Add and show the new one
                 if (value != null && value.Widget != null) {
-                    PackStart (value.Widget, true, true, 0);
+                    PackStart (value.Widget, !context_pane.Large, true, 0);
                     value.Widget.Show ();
                 }
                 

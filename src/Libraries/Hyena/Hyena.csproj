@@ -140,6 +140,13 @@
     <Compile Include="Hyena.Data.Sqlite\HyenaSqliteArrayDataReader.cs" />
     <Compile Include="Hyena.Data.Sqlite\Tests\SqliteUtilTests.cs" />
     <Compile Include="Hyena.Query\ExactStringQueryValue.cs" />
+    <Compile Include="Hyena.Jobs\Job.cs" />
+    <Compile Include="Hyena.Jobs\JobExtensions.cs" />
+    <Compile Include="Hyena.Jobs\PriorityHints.cs" />
+    <Compile Include="Hyena.Jobs\Resource.cs" />
+    <Compile Include="Hyena.Jobs\Scheduler.cs" />
+    <Compile Include="Hyena.Jobs\SimpleAsyncJob.cs" />
+    <Compile Include="Hyena.Jobs\Tests\SchedulerTests.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>

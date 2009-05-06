@@ -66,6 +66,15 @@ namespace Banshee.Gui
                    Catalog.GetString ("View the graphical equalizer"), OnShowEqualizer)
             });
 
+            Add (new ToggleActionEntry [] {
+                new ToggleActionEntry (
+                   "ShowContextPaneAction", null,
+                   Catalog.GetString ("_Context Pane"), "",
+                   Catalog.GetString ("Show the context pane beneath the track list"), null,
+                   Banshee.ContextPane.ContextPane.ShowSchema.Get ()
+                )
+            });
+
             AddImportant (new ToggleActionEntry [] {
                 new ToggleActionEntry ("FullScreenAction", "gtk-fullscreen",
                     Catalog.GetString ("_Fullscreen"), "F",

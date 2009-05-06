@@ -231,7 +231,7 @@ namespace Banshee.Sources.Gui
                     // If the drag source is not the track list, it's a filter list, and instead of
                     // only merging the track model's selected tracks, we should merge all the tracks
                     // currently matching the active filters.
-                    bool from_filter = !(Gtk.Drag.GetSourceWidget (context) is Banshee.Collection.Gui.TrackListView);
+                    bool from_filter = !(Gtk.Drag.GetSourceWidget (context) is Banshee.Collection.Gui.BaseTrackListView);
                     drop_source.MergeSourceInput (
                         ServiceManager.SourceManager.ActiveSource,
                         from_filter ? SourceMergeType.Source : SourceMergeType.ModelSelection

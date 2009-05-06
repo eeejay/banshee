@@ -32,6 +32,9 @@ SOURCES =  \
 	Banshee.Collection.Gui/TrackFilterListView.cs \
 	Banshee.Collection.Gui/TrackListView.cs \
 	Banshee.Collection.Gui/XmlColumnController.cs \
+	Banshee.ContextPane/BaseContextPage.cs \
+	Banshee.ContextPane/ContextPageManager.cs \
+	Banshee.ContextPane/ContextPane.cs \
 	Banshee.Equalizer.Gui/EqualizerBandScale.cs \
 	Banshee.Equalizer.Gui/EqualizerLevelsBox.cs \
 	Banshee.Equalizer.Gui/EqualizerPresetComboBox.cs \
@@ -91,6 +94,7 @@ SOURCES =  \
 	Banshee.Gui.Widgets/PlaylistMenuItem.cs \
 	Banshee.Gui.Widgets/RepeatActionButton.cs \
 	Banshee.Gui.Widgets/TaskStatusIcon.cs \
+	Banshee.Gui.Widgets/TitledList.cs \
 	Banshee.Gui.Widgets/TrackInfoDisplay.cs \
 	Banshee.Gui.Widgets/UserJobTile.cs \
 	Banshee.Gui.Widgets/UserJobTileHost.cs \
@@ -153,6 +157,8 @@ RESOURCES =  \
 	Resources/banshee-dialogs.glade \
 	Resources/banshee-logo.png \
 	Resources/browser-album-cover.png \
+	Resources/context-pane-close.png \
+	Resources/context-pane-maximize.png \
 	Resources/core-ui-actions-layout.xml \
 	Resources/jcastro.png
 

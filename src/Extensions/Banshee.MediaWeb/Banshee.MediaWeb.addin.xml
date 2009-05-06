@@ -9,7 +9,7 @@
     description=""
     author=""
     url="http://banshee-project.org/"
-    defaultEnabled="true">
+    defaultEnabled="false">
 
   <Dependencies>
     <Addin id="Banshee.Services" version="1.0"/>

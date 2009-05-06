@@ -60,6 +60,7 @@
         <!--<menuitem name="ShowCoverArt" action="ShowCoverArtAction"/>-->
       <placeholder name="BrowserViews"/>
       <placeholder name="ViewMenuAdditions"/>
+      <menuitem name="ShowContextPane" action="ShowContextPaneAction"/>
       <menuitem name="FullScreen" action="FullScreenAction"/>
       <separator/>
       <menuitem name="ShowEqualizer" action="ShowEqualizerAction"/>

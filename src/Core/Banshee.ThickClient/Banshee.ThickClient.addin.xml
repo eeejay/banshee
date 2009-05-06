@@ -40,6 +40,11 @@
     <Description>Defines a new GTK+ source view, possibly in conjunction with a Source extension.</Description>
     <ExtensionNode name="SourceView"/>
   </ExtensionPoint>
+
+  <ExtensionPoint path="/Banshee/ThickClient/ContextPage">
+    <Description>Defines a new GTK+ context page, for showing contextual information beneath the main track source view.</Description>
+    <ExtensionNode name="ContextPage"/>
+  </ExtensionPoint>
   
   <ExtensionPoint path="/Banshee/Gui/TrackEditor/NotebookPage">
     <Description>Defines a new notebook page for the track editor.</Description>

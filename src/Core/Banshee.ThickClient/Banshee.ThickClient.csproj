@@ -70,6 +70,12 @@
     <EmbeddedResource Include="Resources\browser-album-cover.png">
       <LogicalName>browser-album-cover.png</LogicalName>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\context-pane-close.png">
+      <LogicalName>context-pane-close.png</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\context-pane-maximize.png">
+      <LogicalName>context-pane-maximize.png</LogicalName>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\core-ui-actions-layout.xml">
       <LogicalName>core-ui-actions-layout.xml</LogicalName>
     </EmbeddedResource>
@@ -227,6 +233,11 @@
     <Compile Include="Banshee.Gui.TrackEditor\SortingPage.cs" />
     <Compile Include="Banshee.Gui.Widgets\TaskStatusIcon.cs" />
     <Compile Include="Banshee.Preferences.Gui\PageComboBox.cs" />
+    <Compile Include="Banshee.Gui.TrackEditor\LicenseEntry.cs" />
+    <Compile Include="Banshee.Gui.Widgets\TitledList.cs" />
+    <Compile Include="Banshee.ContextPane\BaseContextPage.cs" />
+    <Compile Include="Banshee.ContextPane\ContextPageManager.cs" />
+    <Compile Include="Banshee.ContextPane\ContextPane.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
@@ -245,4 +256,7 @@
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
+  <ItemGroup>
+    <Folder Include="Banshee.ContextPane\" />
+  </ItemGroup>
 </Project>

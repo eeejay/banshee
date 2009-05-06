@@ -69,7 +69,6 @@
     <Compile Include="Banshee.Collection\TrackFilterType.cs" />
     <Compile Include="Banshee.Base\PlatformHacks.cs" />
     <Compile Include="Banshee.Streaming\CommonTags.cs" />
-    <Compile Include="Banshee.Streaming\SaveTrackMetadataJob.cs" />
     <Compile Include="Banshee.Streaming\StreamTag.cs" />
     <Compile Include="Banshee.Streaming\StreamTagger.cs" />
     <Compile Include="Banshee.Streaming\StreamPlaybackError.cs" />
@@ -106,6 +105,7 @@
     <Compile Include="Banshee.IO\DirectoryScannerPipelineElement.cs" />
     <Compile Include="Banshee.Configuration\MemoryConfigurationClient.cs" />
     <Compile Include="Banshee.IO\ExtensionSet.cs" />
+    <Compile Include="Banshee.Base\Tests\CoverArtSpecTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\contributors.xml">

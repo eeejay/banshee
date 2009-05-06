@@ -87,7 +87,6 @@
     <Compile Include="Banshee.Collection\ModelHelper.cs" />
     <Compile Include="Banshee.Collection\TrackListModel.cs" />
     <Compile Include="Banshee.MediaEngine\PlayerEngineService.cs" />
-    <Compile Include="Banshee.ServiceStack\UserJobManager.cs" />
     <Compile Include="Banshee.ServiceStack\IUserJob.cs" />
     <Compile Include="Banshee.ServiceStack\UserJobEventHandler.cs" />
     <Compile Include="Banshee.ServiceStack\UserJob.cs" />
@@ -228,7 +227,6 @@
     <Compile Include="Banshee.Collection.Database\QueryFilterInfo.cs" />
     <Compile Include="Banshee.Sources\IFilterableSource.cs" />
     <Compile Include="Banshee.MediaEngine\IVisualizationDataSource.cs" />
-    <Compile Include="Banshee.Collection\MoveOnInfoSaveJob.cs" />
     <Compile Include="Banshee.ServiceStack\IRegisterOnDemandService.cs" />
     <Compile Include="Banshee.Web\HttpRequest.cs" />
     <Compile Include="Banshee.Collection.Indexer\CollectionIndexerService.cs" />
@@ -252,8 +250,10 @@
     <Compile Include="Banshee.Preferences\SourcePage.cs" />
     <Compile Include="Banshee.ServiceStack\DbIteratorJob.cs" />
     <Compile Include="Banshee.Sources\SourceSortType.cs" />
-    <Compile Include="Banshee.Library\LibraryLocationPreference.cs" />
     <Compile Include="Banshee.Playlists.Formats\AsfReferencePlaylistFormat.cs" />
+    <Compile Include="Banshee.Metadata\SaveTrackMetadataJob.cs" />
+    <Compile Include="Banshee.Metadata\SaveTrackMetadataService.cs" />
+    <Compile Include="Banshee.ServiceStack\JobScheduler.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Banshee.Services.addin.xml" />
