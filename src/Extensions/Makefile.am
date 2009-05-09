@@ -20,6 +20,7 @@ SUBDIRS = \
 	Banshee.Sample \
 	Banshee.SqlDebugConsole \
 	Banshee.Torrent \
-	Banshee.RemoteAudio
+	Banshee.RemoteAudio \
+	Banshee.Wikipedia
 
 MAINTAINERCLEANFILES = Makefile.in

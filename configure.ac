@@ -60,8 +60,8 @@ BANSHEE_CHECK_BOO
 dnl Monodoc (optional through --disable-docs)
 SHAMROCK_CHECK_MONODOC
 
-dnl MediaWeb (optional through --enable-mediaweb)
-BANSHEE_CHECK_MEDIAWEB
+dnl webkit (optional through --enable-webkit)
+BANSHEE_CHECK_WEBKIT
 
 dnl Moonlight (optional through --enable-moonlight)
 BANSHEE_CHECK_MOONLIGHT
@@ -251,6 +251,7 @@ src/Extensions/Banshee.SqlDebugConsole/Makefile
 src/Extensions/Banshee.Sample/Makefile
 src/Extensions/Banshee.Torrent/Makefile
 src/Extensions/Banshee.RemoteAudio/Makefile
+src/Extensions/Banshee.Wikipedia/Makefile
 ])
 
 cat <<EOF
@@ -296,7 +297,7 @@ EOF
 # Unstable/in-development features; only show them if they were manually enabled
 if test "x$enable_moonlight" = "xyes";    then br=yes; echo "  Moonlight Effects:   ${enable_moonlight}";    fi
 if test "x$enable_remote_audio" = "xyes"; then br=yes; echo "  Remote Audio:        ${enable_remote_audio}"; fi
-if test "x$enable_mediaweb" = "xyes";     then br=yes; echo "  MediaWeb:            ${enable_mediaweb}";     fi
+if test "x$enable_webkit" = "xyes";       then br=yes; echo "  WebKit:              ${enable_webkit}";     fi
 if test "x$enable_torrent" = "xyes";      then br=yes; echo "  Torrent Podcasts:    ${enable_torrent}";      fi
 
 if test -d ${expanded_libdir}/${PACKAGE}; then
