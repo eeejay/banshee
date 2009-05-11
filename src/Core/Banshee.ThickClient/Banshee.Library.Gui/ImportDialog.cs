@@ -43,7 +43,9 @@ namespace Banshee.Library.Gui
         private ComboBox source_combo_box;
         private ListStore source_model;
         private AccelGroup accel_group;
-        
+
+        [Widget] private Gtk.Label choose_label;
+
         public ImportDialog () : this (false)
         {
         }
@@ -59,7 +61,7 @@ namespace Banshee.Library.Gui
             Dialog.WindowPosition = WindowPosition.CenterOnParent;
             Dialog.AddAccelGroup (accel_group);
             Dialog.DefaultResponse = ResponseType.Ok;
-		    
+
             DoNotShowAgainVisible = doNotShowAgainVisible;
             
             PopulateSourceList ();
@@ -84,6 +86,7 @@ namespace Banshee.Library.Gui
             
             source_combo_box = new ComboBox ();
             source_combo_box.Model = source_model;
+            choose_label.MnemonicWidget = source_combo_box;
             
             CellRendererPixbuf pixbuf_cr = new CellRendererPixbuf ();
             CellRendererText text_cr = new CellRendererText ();

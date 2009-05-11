@@ -54,7 +54,7 @@ namespace Banshee.Gui
                     Catalog.GetString ("Import media from a variety of sources"), OnImport),
 
                 new ActionEntry ("ImportPlaylistAction", null,
-                    Catalog.GetString ("Import Playlist..."), null,
+                    Catalog.GetString ("Import _Playlist..."), null,
                     Catalog.GetString ("Import a playlist"), OnImportPlaylist),
 
                 new ActionEntry ("RescanAction", null,
@@ -175,7 +175,7 @@ namespace Banshee.Gui
 
             chooser.AddButton (Stock.Cancel, ResponseType.Cancel);
             // Translators: verb
-            chooser.AddButton (Catalog.GetString("Import"), ResponseType.Ok);
+            chooser.AddButton (Catalog.GetString("I_mport"), ResponseType.Ok);
             
             int response = chooser.Run();            
 
