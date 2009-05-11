@@ -146,12 +146,13 @@ namespace Hyena
         
         public static string DoubleToTenthsPrecision (double num, bool always_decimal)
         {
+            return DoubleToTenthsPrecision (num, always_decimal, NumberFormatInfo.CurrentInfo);
+        }
+
+        public static string DoubleToTenthsPrecision (double num, bool always_decimal, IFormatProvider provider)
+        {
             num = Math.Round (num, 1, MidpointRounding.ToEven);
-            return String.Format (
-                !always_decimal && num == (int)num 
-                    ? "{0:N0}" : "{0:N1}",
-                num
-            );
+            return String.Format (provider, !always_decimal && num == (int)num ? "{0:N0}" : "{0:N1}", num);
         }
         
         // This method helps us pluralize doubles. Probably a horrible i18n idea.

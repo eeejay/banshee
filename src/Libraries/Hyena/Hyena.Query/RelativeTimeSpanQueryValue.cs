@@ -83,10 +83,11 @@ namespace Hyena.Query
             return DateTimeUtil.FromDateTime (DateTime.Now + TimeSpan.FromSeconds ((double) offset)).ToString (System.Globalization.CultureInfo.InvariantCulture);
         }
 
-        protected override string FactorString (TimeFactor factor, double count)
+        protected override string FactorString (TimeFactor factor, double count, bool translate)
         {
-            string translated = base.FactorString (factor, count);
-            return (translated == null) ? null : String.Format (Catalog.GetString ("{0} ago"), translated);
+            string result = base.FactorString (factor, count, translate);
+            return (result == null) ? null : String.Format (
+                translate ? Catalog.GetString ("{0} ago") : "{0} ago", result);
         }
     }
 }

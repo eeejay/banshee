@@ -28,6 +28,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Xml;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -92,9 +93,14 @@ namespace Hyena.Query
         {
             Match match = number_regex.Match (input);
             if (match != Match.Empty && match.Groups.Count > 0) {
-                double val = Convert.ToDouble (match.Groups[0].Captures[0].Value);
+                double val;
+                try {
+                    val = Convert.ToDouble (match.Groups[0].Captures[0].Value);
+                } catch (FormatException) {
+                    val = Convert.ToDouble (match.Groups[0].Captures[0].Value, NumberFormatInfo.InvariantInfo);
+                }
                 foreach (TimeFactor factor in Enum.GetValues (typeof(TimeFactor))) {
-                    if (input == FactorString (factor, val)) {
+                    if (input == FactorString (factor, val, true) || input == FactorString (factor, val, false)) {
                         SetUserRelativeValue (val, factor);
                         return;
                     }
@@ -105,7 +111,7 @@ namespace Hyena.Query
 
         public override string ToUserQuery ()
         {
-            return FactorString (factor, FactoredValue);
+            return FactorString (factor, FactoredValue, true);
         }
 
         public virtual void SetUserRelativeValue (double offset, TimeFactor factor)
@@ -163,22 +169,36 @@ namespace Hyena.Query
             return Convert.ToString (offset * 1000, System.Globalization.CultureInfo.InvariantCulture);
         }
 
-        protected virtual string FactorString (TimeFactor factor, double count)
+        protected virtual string FactorString (TimeFactor factor, double count, bool translate)
         {
-            string translated = null;
+            string result = null;
             int plural_count = StringUtil.DoubleToPluralInt (count);
-            switch (factor) {
-                case TimeFactor.Second: translated = Catalog.GetPluralString ("{0} second", "{0} seconds", plural_count); break;
-                case TimeFactor.Minute: translated = Catalog.GetPluralString ("{0} minute", "{0} minutes", plural_count); break;
-                case TimeFactor.Hour:   translated = Catalog.GetPluralString ("{0} hour",   "{0} hours", plural_count); break;
-                case TimeFactor.Day:    translated = Catalog.GetPluralString ("{0} day",    "{0} days", plural_count); break;
-                case TimeFactor.Week:   translated = Catalog.GetPluralString ("{0} week",   "{0} weeks", plural_count); break;
-                case TimeFactor.Month:  translated = Catalog.GetPluralString ("{0} month",  "{0} months", plural_count); break;
-                case TimeFactor.Year:   translated = Catalog.GetPluralString ("{0} year",   "{0} years", plural_count); break;
-                default: return null;
+            if (translate) {
+                switch (factor) {
+                    case TimeFactor.Second: result = Catalog.GetPluralString ("{0} second", "{0} seconds", plural_count); break;
+                    case TimeFactor.Minute: result = Catalog.GetPluralString ("{0} minute", "{0} minutes", plural_count); break;
+                    case TimeFactor.Hour:   result = Catalog.GetPluralString ("{0} hour",   "{0} hours", plural_count); break;
+                    case TimeFactor.Day:    result = Catalog.GetPluralString ("{0} day",    "{0} days", plural_count); break;
+                    case TimeFactor.Week:   result = Catalog.GetPluralString ("{0} week",   "{0} weeks", plural_count); break;
+                    case TimeFactor.Month:  result = Catalog.GetPluralString ("{0} month",  "{0} months", plural_count); break;
+                    case TimeFactor.Year:   result = Catalog.GetPluralString ("{0} year",   "{0} years", plural_count); break;
+                    default: return null;
+                }
+            } else {
+                switch (factor) {
+                    case TimeFactor.Second: result = plural_count == 1 ? "{0} second" : "{0} seconds"; break;
+                    case TimeFactor.Minute: result = plural_count == 1 ? "{0} minute" : "{0} minutes"; break;
+                    case TimeFactor.Hour:   result = plural_count == 1 ? "{0} hour"   : "{0} hours"; break;
+                    case TimeFactor.Day:    result = plural_count == 1 ? "{0} day"    : "{0} days"; break;
+                    case TimeFactor.Week:   result = plural_count == 1 ? "{0} week"   : "{0} weeks"; break;
+                    case TimeFactor.Month:  result = plural_count == 1 ? "{0} month"  : "{0} months"; break;
+                    case TimeFactor.Year:   result = plural_count == 1 ? "{0} year"   : "{0} years"; break;
+                    default: return null;
+                }
             }
 
-            return String.Format (translated, StringUtil.DoubleToTenthsPrecision (count));
+            return String.Format (result, StringUtil.DoubleToTenthsPrecision (
+                count, false, translate ? NumberFormatInfo.CurrentInfo : NumberFormatInfo.InvariantInfo));
         }
     }
 }
