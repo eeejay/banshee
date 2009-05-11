@@ -114,8 +114,10 @@ public class TranslatorExtractor
         }
         
         Console.WriteLine("  <language code=\"{0}\" name=\"{1}\">", language_code, language_name);
-        foreach(KeyValuePair<string, string> person in names) {
-            Console.WriteLine("    <person>{0}</person>", person.Value.Replace("\"", "&quot;"));
+        List<string> sorted_names = new List<string> (names.Values);
+        sorted_names.Sort ();
+        foreach(string name in sorted_names) {
+            Console.WriteLine("    <person>{0}</person>", name.Replace("\"", "&quot;"));
         }
         Console.WriteLine("  </language>");
     }
