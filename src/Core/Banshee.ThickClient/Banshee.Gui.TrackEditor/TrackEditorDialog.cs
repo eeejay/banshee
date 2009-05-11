@@ -397,8 +397,21 @@ namespace Banshee.Gui.TrackEditor
                 nav_backward_button.Sensitive = CanGoBackward;
                 nav_forward_button.Sensitive = CanGoForward;
             }
+
+            // If there was a widget focused already (eg the Title entry), GrabFocus on it,
+            // which causes its text to be selected, ready for editing.
+            Widget child = FocusChild;
+            while (child != null) {
+                Container container = child as Container;
+                if (container != null) {
+                    child = container.FocusChild;
+                } else if (child != null) {
+                    child.GrabFocus ();
+                    child = null;
+                }
+            }
         }
-        
+
         public void ForeachNonCurrentTrack (EditorTrackOperationClosure closure)
         {
             for (int i = 0; i < TrackCount; i++) {
