@@ -41,6 +41,8 @@ namespace Hyena.Widgets
         private AnimatedImage image;
         private Label label;
         private Button close_button;
+
+        private Window win;
         
         private Theme theme;
         
@@ -51,6 +53,13 @@ namespace Hyena.Widgets
         
         public MessageBar () : base (0.0f, 0.5f, 1.0f, 0.0f)
         {
+            win = new Window (WindowType.Popup);
+            win.Name = "gtk-tooltips";
+            win.EnsureStyle ();
+            win.StyleSet += delegate {
+                Style = win.Style;
+            };
+
             HBox shell_box = new HBox ();
             shell_box.Spacing = 10;
         
@@ -92,7 +101,7 @@ namespace Hyena.Widgets
             Add (shell_box);
             
             EnsureStyle ();
-            
+
             BorderWidth = 3;
         }
         
@@ -146,10 +155,8 @@ namespace Hyena.Widgets
             }
             
             changing_style = true;
-            Window win = new Window (WindowType.Popup);
-            win.Name = "gtk-tooltips";
-            win.EnsureStyle ();
             Style = win.Style;
+            label.Style = Style;
             changing_style = false;
         }
         
