@@ -38,6 +38,7 @@ namespace Banshee.Widgets
         private bool can_seek;
         private bool raise_seek_requested;
         private bool can_set_value;
+        private double pressed_x;
         
         public event EventHandler SeekRequested;
         public event EventHandler DurationChanged;
@@ -59,6 +60,9 @@ namespace Banshee.Widgets
         protected override bool OnButtonPressEvent(Gdk.EventButton evnt)
         {
             can_set_value = false;
+            if (evnt.Button == 1) {
+                pressed_x = evnt.X;
+            }
             return base.OnButtonPressEvent(evnt);
         }
 
@@ -80,7 +84,7 @@ namespace Banshee.Widgets
             }
             
             if (can_seek) {
-                if (evnt.Button == 1) {
+                if (evnt.Button == 1 && Math.Abs (pressed_x - evnt.X) <= 3.0) {
                     SeekValue = (long) (evnt.X / Allocation.Width * Duration); // seek to clicked position
                 }
                 OnSeekRequested();
