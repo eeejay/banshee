@@ -56,7 +56,7 @@ namespace Banshee.GStreamer
     internal delegate void BansheePlayerStateChangedCallback (IntPtr player, GstState old_state, GstState new_state, GstState pending_state);
     internal delegate void BansheePlayerIterateCallback (IntPtr player);
     internal delegate void BansheePlayerBufferingCallback (IntPtr player, int buffering_progress);
-    internal delegate void BansheePlayerVisDataCallback (IntPtr player, int channels, int samples, IntPtr data, IntPtr spectrum);
+    internal delegate void BansheePlayerVisDataCallback (IntPtr player, int channels, int samples, IntPtr data, int bands, IntPtr spectrum);
 
     internal delegate void GstTaggerTagFoundCallback (IntPtr player, string tagName, ref GLib.Value value);
     
@@ -159,6 +159,8 @@ namespace Banshee.GStreamer
             
             InstallPreferences ();
             ReplayGainEnabled = ReplayGainEnabledSchema.Get ();
+
+            bp_set_vis_data_callback (handle, vis_data_callback);
         }
         
         public override void Dispose ()
@@ -166,6 +168,7 @@ namespace Banshee.GStreamer
             UninstallPreferences ();
             base.Dispose ();
             bp_destroy (handle);
+            handle = new HandleRef (this, IntPtr.Zero);
         }
         
         public override void Close (bool fullShutdown)
@@ -322,7 +325,7 @@ namespace Banshee.GStreamer
             OnTagFound (ProcessNativeTagResult (tagName, ref value));
         }
         
-        private void OnVisualizationData (IntPtr player, int channels, int samples, IntPtr data, IntPtr spectrum)
+        private void OnVisualizationData (IntPtr player, int channels, int samples, IntPtr data, int bands, IntPtr spectrum)
         {
             VisualizationDataHandler handler = data_available;
             
@@ -340,8 +343,8 @@ namespace Banshee.GStreamer
                 cbd[i] = channel;
             }
             
-            float [] spec = new float[512];
-            Marshal.Copy (spectrum, spec, 0, 512);
+            float [] spec = new float[bands];
+            Marshal.Copy (spectrum, spec, 0, bands);
             
             try {
                 handler (cbd, new float[][] { spec });

@@ -31,7 +31,6 @@
 
 #include "banshee-player-private.h"
 
-void _bp_vis_process_message  (BansheePlayer *player, GstMessage *message);
 void _bp_vis_pipeline_setup   (BansheePlayer *player);
 void _bp_vis_pipeline_destroy (BansheePlayer *player);
 

@@ -37,6 +37,7 @@
 #include <gst/gst.h>
 #include <gst/base/gstadapter.h>
 #include <gdk/gdk.h>
+#include <gst/fft/gstfftf32.h>
 
 #ifdef HAVE_GST_PBUTILS
 #  include <gst/pbutils/pbutils.h>
@@ -69,7 +70,7 @@ typedef void (* BansheePlayerStateChangedCallback) (BansheePlayer *player, GstSt
 typedef void (* BansheePlayerIterateCallback)      (BansheePlayer *player);
 typedef void (* BansheePlayerBufferingCallback)    (BansheePlayer *player, gint buffering_progress);
 typedef void (* BansheePlayerTagFoundCallback)     (BansheePlayer *player, const gchar *tag, const GValue *value);
-typedef void (* BansheePlayerVisDataCallback)      (BansheePlayer *player, gint channels, gint samples, gfloat *data, gfloat *spectrum);
+typedef void (* BansheePlayerVisDataCallback)      (BansheePlayer *player, gint channels, gint samples, gfloat *data, gint bands, gfloat *spectrum);
 
 struct BansheePlayer {
     // Player Callbacks
@@ -110,8 +111,13 @@ struct BansheePlayer {
     #endif
     
     // Visualization State
+    GstElement *vis_resampler;
     GstAdapter *vis_buffer;
-    gfloat *spectrum_buffer;
+    gboolean vis_enabled;
+    gboolean vis_thawing;
+    GstFFTF32 *vis_fft;
+    GstFFTF32Complex *vis_fft_buffer;
+    gfloat *vis_fft_sample_buffer;
     
     // Plugin Installer State
     GdkWindow *window;

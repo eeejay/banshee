@@ -162,7 +162,6 @@ bp_pipeline_bus_callback (GstBus *bus, GstMessage *message, gpointer userdata)
         
         case GST_MESSAGE_ELEMENT: {
             _bp_missing_elements_process_message (player, message);
-            _bp_vis_process_message (player, message);
             break;
         }
         
@@ -261,7 +260,7 @@ _bp_pipeline_construct (BansheePlayer *player)
         gst_element_link (audiosinkqueue, audiosink);
     }
     
-    // _bp_vis_pipeline_setup (player);
+    _bp_vis_pipeline_setup (player);
     
     // Now that our internal audio sink is constructed, tell playbin to use it
     g_object_set (G_OBJECT (player->playbin), "audio-sink", player->audiobin, NULL);

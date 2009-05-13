@@ -8,7 +8,8 @@ AC_DEFUN([BANSHEE_CHECK_GSTREAMER],
 		gstreamer-base-0.10 >= $GSTREAMER_REQUIRED_VERSION
 		gstreamer-plugins-base-0.10 >= $GSTREAMER_REQUIRED_VERSION
 		gstreamer-controller-0.10 >= $GSTREAMER_REQUIRED_VERSION
-		gstreamer-dataprotocol-0.10 >= $GSTREAMER_REQUIRED_VERSION)
+		gstreamer-dataprotocol-0.10 >= $GSTREAMER_REQUIRED_VERSION
+		gstreamer-fft-0.10 >= $GSTREAMER_REQUIRED_VERSION)
 
 	GST_LIBS="$GST_LIBS -lgstvideo-0.10 -lgstinterfaces-0.10 -lgstcdda-0.10"
 
