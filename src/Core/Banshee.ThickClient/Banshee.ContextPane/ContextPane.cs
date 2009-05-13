@@ -27,6 +27,7 @@
 //
 
 using System;
+using System.Linq;
 using System.Collections.Generic;
 
 using Mono.Unix;
@@ -52,6 +53,7 @@ namespace Banshee.ContextPane
         private Gtk.Notebook notebook;
         private VBox vbox;
         private bool large = false;
+        private bool initialized = false;
 
         private RoundedFrame no_active;
         private RoundedFrame loading;
@@ -62,8 +64,6 @@ namespace Banshee.ContextPane
         private Dictionary<BaseContextPage, Widget> pane_pages = new Dictionary<BaseContextPage, Widget> ();
         private List<BaseContextPage> pages = new List<BaseContextPage> ();
         private BaseContextPage active_page;
-
-        private const int MIN_HEIGHT = 200;
 
         private Action<bool> expand_handler;
         public Action<bool> ExpandHandler {
@@ -76,11 +76,41 @@ namespace Banshee.ContextPane
         
         public ContextPane ()
         {
-            notebook = new Notebook () {
-                ShowBorder = false,
-                ShowTabs = false
-            };
+            HeightRequest = 200;
 
+            CreateContextNotebook ();
+            CreateTabButtonBox ();
+
+            new ContextPageManager (this);
+            initialized = true;
+
+            RestoreLastActivePage ();
+
+            Enabled = ShowSchema.Get ();
+            ShowAction.Activated += OnShowContextPane;
+
+            ServiceManager.PlayerEngine.ConnectEvent (OnPlayerEvent, PlayerEvent.StartOfStream | PlayerEvent.TrackInfoUpdated);
+        }
+
+        private void RestoreLastActivePage ()
+        {
+            // TODO restore the last page
+            string last_id = LastContextPageSchema.Get ();
+            if (!String.IsNullOrEmpty (last_id)) {
+                var page = pages.FirstOrDefault (p => p.Id == last_id);
+                if (page != null) {
+                    SetActivePage (page);
+                    pane_tabs[page].Active = true;
+                }
+            }
+
+            if (active_page == null) {
+                ActivateFirstPage ();
+            }
+        }
+
+        private void CreateTabButtonBox ()
+        {
             vbox = new VBox ();
 
             HBox hbox = new HBox ();
@@ -97,6 +127,17 @@ namespace Banshee.ContextPane
             hbox.PackStart (close, false, false, 0);
             vbox.PackStart (hbox, false, false, 0);
 
+            PackStart (vbox, false, false, 6);
+            vbox.ShowAll ();
+        }
+
+        private void CreateContextNotebook ()
+        {
+            notebook = new Notebook () {
+                ShowBorder = false,
+                ShowTabs = false
+            };
+
             // 'No active track' and 'Loading' widgets
             no_active = new RoundedFrame ();
             no_active.Add (new Label () { Markup = "<b>Context pane waiting for playback to begin...</b>" });
@@ -109,21 +150,8 @@ namespace Banshee.ContextPane
             notebook.Add (loading);
 
             PackStart (notebook, true, true, 0);
-            PackStart (vbox, false, false, 6);
-
             notebook.Show ();
-            vbox.ShowAll ();
             
-            HeightRequest = MIN_HEIGHT;
-
-            // TODO remember/restore the last page
-
-            new ContextPageManager (this);
-
-            Enabled = ShowSchema.Get ();
-            ShowAction.Activated += OnShowContextPane;
-
-            ServiceManager.PlayerEngine.ConnectEvent (OnPlayerEvent, PlayerEvent.StartOfStream | PlayerEvent.TrackInfoUpdated);
         }
 
         private void OnPlayerEvent (PlayerEventArgs args)
@@ -199,6 +227,7 @@ namespace Banshee.ContextPane
 
             active_page = page;
             active_page.StateChanged += OnActivePageStateChanged;
+            LastContextPageSchema.Set (page.Id);
             OnActivePageStateChanged (active_page.State);
             SetCurrentTrackForActivePage ();
         }
@@ -206,6 +235,9 @@ namespace Banshee.ContextPane
         public void AddPage (BaseContextPage page)
         {
             Hyena.Log.DebugFormat ("Adding context page {0}", page.Id);
+
+            // TODO delay adding the page.Widget until the page is first activated,
+            // that way we don't even create those objects unless used
             var frame = new Hyena.Widgets.RoundedFrame ();
             frame.Add (page.Widget);
             frame.Show ();
@@ -245,7 +277,7 @@ namespace Banshee.ContextPane
 
             pages.Add (page);
 
-            if (pages.Count == 1) {
+            if (initialized && pages.Count == 1) {
                 SetActivePage (page);
                 toggle_button.Active = true;
             }
@@ -268,12 +300,19 @@ namespace Banshee.ContextPane
             pages.Remove (page);
 
             // Set a new page as the default
-            if (was_active && pages.Count > 0) {
-                SetActivePage (pages[0]);
-                pane_tabs[active_page].Active = true;
+            if (was_active) {
+                ActivateFirstPage ();
             }
 
             UpdateVisibility ();
+        }
+
+        private void ActivateFirstPage ()
+        {
+            if (pages.Count > 0) {
+                SetActivePage (pages[0]);
+                pane_tabs[active_page].Active = true;
+            }
         }
 
         internal static readonly SchemaEntry<bool> ShowSchema = new SchemaEntry<bool>(
@@ -281,6 +320,13 @@ namespace Banshee.ContextPane
             true,
             "Show context pane",
             "Show context pane for the currently playing track"
+        );
+
+        private static readonly SchemaEntry<string> LastContextPageSchema = new SchemaEntry<string>(
+            "interface", "last_context_page",
+            null,
+            "The id of the last context page",
+            "The string id of the last context page, which will be defaulted to when Banshee starts"
         );
     }
 }
