@@ -59,7 +59,8 @@ namespace Banshee.NotificationArea
         private RatingMenuItem rating_menu_item;
         private BansheeActionGroup actions;
         private uint ui_manager_id;
-        
+
+        private bool? actions_supported;
         private bool show_notifications;
         private string notify_last_title;
         private string notify_last_artist;
@@ -199,6 +200,17 @@ namespace Banshee.NotificationArea
             interface_action_service = null;
             
             disposed = true;
+        }
+
+        private bool ActionsSupported {
+            get {
+                if (!actions_supported.HasValue) {
+                    actions_supported = Notifications.Global.Capabilities != null &&
+                        Array.IndexOf (Notifications.Global.Capabilities, "actions") > -1;
+                }
+
+                return actions_supported.Value;
+            }
         }
         
         private bool BuildNotificationArea () 
@@ -405,7 +417,7 @@ namespace Banshee.NotificationArea
                     message, image, notif_area.Widget);
                 nf.Urgency = Urgency.Low;
                 nf.Timeout = 4500;
-                if (!current_track.IsLive && interface_action_service.PlaybackActions["NextAction"].Sensitive) {
+                if (!current_track.IsLive && ActionsSupported && interface_action_service.PlaybackActions["NextAction"].Sensitive) {
                     nf.AddAction ("skip-song", Catalog.GetString("Skip this item"), OnSongSkipped);
                 }
                 nf.Show ();
