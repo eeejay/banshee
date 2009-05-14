@@ -201,6 +201,8 @@ namespace Banshee.Dap
             if (Enabled) {
                 Banshee.Base.ThreadAssist.AssertNotInMainThread ();
 
+                CalculateSync ();
+
                 sync.Dap.DeleteAllTracks (to_remove);
                 sync.Dap.AddAllTracks (to_add);
 
