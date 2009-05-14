@@ -371,6 +371,13 @@ namespace Banshee.NotificationArea
                 rating_menu_item.Hide ();
             }
         }
+
+        private bool IsNotificationDaemon {
+            get {
+                var name = Notifications.Global.ServerInformation.Name;
+                return name == "notification-daemon" || name == "Notification Daemon";
+            }
+        }
         
         private void ShowTrackNotification ()
         {
@@ -398,7 +405,11 @@ namespace Banshee.NotificationArea
             Gdk.Pixbuf image = null;
             
             if (artwork_manager_service != null) {
-                image = artwork_manager_service.LookupScalePixbuf (current_track.ArtworkId, 42);
+                if (IsNotificationDaemon) {
+                    image = artwork_manager_service.LookupScalePixbuf (current_track.ArtworkId, 42);
+                } else {
+                    image = artwork_manager_service.LookupPixbuf (current_track.ArtworkId);
+                }
             }
             
             if (image == null) {
