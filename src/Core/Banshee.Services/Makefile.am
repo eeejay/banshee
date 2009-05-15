@@ -81,6 +81,7 @@ SOURCES =  \
 	Banshee.MediaEngine/IBpmDetector.cs \
 	Banshee.MediaEngine/IEqualizer.cs \
 	Banshee.MediaEngine/IPlayerEngineService.cs \
+	Banshee.MediaEngine/ISupportClutter.cs \
 	Banshee.MediaEngine/ITranscoder.cs \
 	Banshee.MediaEngine/IVisualizationDataSource.cs \
 	Banshee.MediaEngine/NullPlayerEngine.cs \

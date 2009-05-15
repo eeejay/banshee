@@ -26,12 +26,12 @@ AC_DEFUN([BANSHEE_CHECK_LIBBANSHEE],
 	fi
 
 	PKG_CHECK_MODULES(CLUTTER,
-		clutter-0.8 >= 0.8.6,
+		clutter-0.9 >= 0.9.0,
 		enable_clutter=yes, enable_clutter=no)
 
 	if test "x$enable_clutter" = "xyes"; then
 		SHAMROCK_CONCAT_MODULE(LIBBANSHEE, CLUTTER)
-		AC_DEFINE(HAVE_CLUTTER, 1, 
+		AC_DEFINE(HAVE_CLUTTER, 1,
 			[Define if the video sink should be Clutter])
 	fi
 

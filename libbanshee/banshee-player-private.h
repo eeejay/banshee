@@ -48,10 +48,6 @@
 #  include <gst/interfaces/xoverlay.h>
 #endif
 
-#ifdef HAVE_CLUTTER
-#  include <clutter/clutter.h>
-#endif
-
 #include "banshee-gst.h"
 
 #define P_INVOKE
@@ -71,6 +67,13 @@ typedef void (* BansheePlayerIterateCallback)      (BansheePlayer *player);
 typedef void (* BansheePlayerBufferingCallback)    (BansheePlayer *player, gint buffering_progress);
 typedef void (* BansheePlayerTagFoundCallback)     (BansheePlayer *player, const gchar *tag, const GValue *value);
 typedef void (* BansheePlayerVisDataCallback)      (BansheePlayer *player, gint channels, gint samples, gfloat *data, gint bands, gfloat *spectrum);
+typedef GstElement * (* BansheePlayerVideoPipelineSetupCallback) (BansheePlayer *player, GstBus *bus);
+
+typedef enum {
+    BP_VIDEO_DISPLAY_CONTEXT_UNSUPPORTED = 0,
+    BP_VIDEO_DISPLAY_CONTEXT_GDK_WINDOW = 1,
+    BP_VIDEO_DISPLAY_CONTEXT_CUSTOM = 2
+} BpVideoDisplayContextType;
 
 struct BansheePlayer {
     // Player Callbacks
@@ -81,6 +84,7 @@ struct BansheePlayer {
     BansheePlayerBufferingCallback buffering_cb;
     BansheePlayerTagFoundCallback tag_found_cb;
     BansheePlayerVisDataCallback vis_data_cb;
+    BansheePlayerVideoPipelineSetupCallback video_pipeline_setup_cb;
 
     // Pipeline Elements
     GstElement *playbin;
@@ -99,17 +103,12 @@ struct BansheePlayer {
     gchar *cdda_device;
     
     // Video State
+    BpVideoDisplayContextType video_display_context_type;
     #ifdef GDK_WINDOWING_X11
     GstXOverlay *xoverlay;
     GdkWindow *video_window;
     #endif
-    
-    // Clutter State
-    #ifdef HAVE_CLUTTER
-    GstElement *clutter_sink;
-    ClutterTexture *clutter_texture;
-    #endif
-    
+       
     // Visualization State
     GstElement *vis_resampler;
     GstAdapter *vis_buffer;

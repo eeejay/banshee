@@ -124,14 +124,15 @@ bp_new ()
     
     player->mutex = g_mutex_new ();
     
-    _bp_replaygain_init (player);
-    
-    if (!_bp_pipeline_construct (player)) {
-        bp_destroy (player);
-        return NULL;
-    }
+    _bp_replaygain_init (player); 
     
     return player;
+}
+
+P_INVOKE gboolean
+bp_initialize_pipeline (BansheePlayer *player)
+{
+    return _bp_pipeline_construct (player);
 }
 
 P_INVOKE gboolean

@@ -32,38 +32,6 @@
 // Private Functions
 // ---------------------------------------------------------------------------
 
-typedef enum {
-    BP_VIDEO_DISPLAY_CONTEXT_UNSUPPORTED = 0,
-    BP_VIDEO_DISPLAY_CONTEXT_GDK_WINDOW = 1,
-    BP_VIDEO_DISPLAY_CONTEXT_CLUTTER_TEXTURE = 2
-} BpVideoDisplayContextType;
-
-#ifdef HAVE_CLUTTER
-
-#include <clutter/clutter.h>
-#include "clutter-gst-video-sink.h"
-
-
-static gboolean
-bp_video_pipeline_setup_clutter (BansheePlayer *player, GstBus *bus)
-{
-    if (player->clutter_texture == NULL) {
-        player->clutter_texture = g_object_new (CLUTTER_TYPE_TEXTURE,
-            "sync-size", FALSE,
-            "disable-slicing", TRUE,
-            NULL);
-    }
-    
-    bp_debug ("Created ClutterTexture: %p", player->clutter_texture);
-    
-    player->clutter_sink = clutter_gst_video_sink_new (CLUTTER_TEXTURE (player->clutter_texture));
-    g_object_set (G_OBJECT (player->playbin), "video-sink", player->clutter_sink, NULL);
-
-    return TRUE;
-}
-
-#endif /* HAVE_CLUTTER */
-
 #ifdef GDK_WINDOWING_X11
 
 static gboolean
@@ -160,18 +128,24 @@ _bp_video_pipeline_setup (BansheePlayer *player, GstBus *bus)
     
     g_return_if_fail (IS_BANSHEE_PLAYER (player));
     
-    #if HAVE_CLUTTER
-    if (bp_video_pipeline_setup_clutter (player, bus)) {
-        return;
+     if (player->video_pipeline_setup_cb != NULL) {
+        videosink = player->video_pipeline_setup_cb (player, bus);
+        if (videosink != NULL && GST_IS_ELEMENT (videosink)) {
+            g_object_set (G_OBJECT (player->playbin), "video-sink", videosink, NULL);
+            player->video_display_context_type = BP_VIDEO_DISPLAY_CONTEXT_CUSTOM;
+            return;
+        }
     }
-    #endif
     
     #ifdef GDK_WINDOWING_X11
+
+    player->video_display_context_type = BP_VIDEO_DISPLAY_CONTEXT_GDK_WINDOW;
     
     videosink = gst_element_factory_make ("gconfvideosink", "videosink");
     if (videosink == NULL) {
         videosink = gst_element_factory_make ("ximagesink", "videosink");
         if (videosink == NULL) {
+            player->video_display_context_type = BP_VIDEO_DISPLAY_CONTEXT_UNSUPPORTED;
             videosink = gst_element_factory_make ("fakesink", "videosink");
             if (videosink != NULL) {
                 g_object_set (G_OBJECT (videosink), "sync", TRUE, NULL);
@@ -190,6 +164,8 @@ _bp_video_pipeline_setup (BansheePlayer *player, GstBus *bus)
     
     #else
     
+    player->video_display_context_type = BP_VIDEO_DISPLAY_CONTEXT_UNSUPPORTED;
+
     videosink = gst_element_factory_make ("fakesink", "videosink");
     if (videosink != NULL) {
         g_object_set (G_OBJECT (videosink), "sync", TRUE, NULL);
@@ -198,6 +174,12 @@ _bp_video_pipeline_setup (BansheePlayer *player, GstBus *bus)
     g_object_set (G_OBJECT (player->playbin), "video-sink", videosink, NULL);
     
     #endif
+}
+
+P_INVOKE void
+bp_set_video_pipeline_setup_callback (BansheePlayer *player, BansheePlayerVideoPipelineSetupCallback cb)
+{
+    SET_CALLBACK (video_pipeline_setup_cb);
 }
 
 // ---------------------------------------------------------------------------
@@ -209,13 +191,7 @@ _bp_video_pipeline_setup (BansheePlayer *player, GstBus *bus)
 P_INVOKE BpVideoDisplayContextType
 bp_video_get_display_context_type (BansheePlayer *player)
 {
-    #ifdef HAVE_CLUTTER
-    return player->clutter_sink == NULL
-        ? BP_VIDEO_DISPLAY_CONTEXT_GDK_WINDOW
-        : BP_VIDEO_DISPLAY_CONTEXT_CLUTTER_TEXTURE;
-    #else
-    return BP_VIDEO_DISPLAY_CONTEXT_GDK_WINDOW; // bp_video_find_xoverlay (player);
-    #endif
+    return player->video_display_context_type;
 }
 
 P_INVOKE void
@@ -232,13 +208,7 @@ P_INVOKE gpointer
 bp_video_get_display_context (BansheePlayer *player)
 {
     g_return_val_if_fail (IS_BANSHEE_PLAYER (player), NULL);
-    
-    #ifdef HAVE_CLUTTER
-    if (bp_video_get_display_context_type (player) == BP_VIDEO_DISPLAY_CONTEXT_CLUTTER_TEXTURE) {
-        return player->clutter_texture;
-    }
-    #endif
-    
+   
     if (bp_video_get_display_context_type (player) == BP_VIDEO_DISPLAY_CONTEXT_GDK_WINDOW) {
         return player->video_window;
     }
@@ -281,13 +251,7 @@ bp_video_window_expose (BansheePlayer *player, GdkWindow *window, gboolean direc
 P_INVOKE BpVideoDisplayContextType
 bp_video_get_display_context_type (BansheePlayer *player)
 {
-    #ifdef HAVE_CLUTTER
-    return player->clutter_sink == NULL
-        ? BP_VIDEO_DISPLAY_CONTEXT_UNSUPPORTED
-        : BP_VIDEO_DISPLAY_CONTEXT_CLUTTER_TEXTURE;
-    #else
-    return BP_VIDEO_DISPLAY_CONTEXT_UNSUPPORTED;
-    #endif
+    return player->video_display_contex_type;
 }
 
 P_INVOKE void
@@ -298,12 +262,6 @@ bp_video_set_display_context (BansheePlayer *player, gpointer context)
 P_INVOKE gpointer
 bp_video_get_display_context (BansheePlayer *player)
 {
-    #ifdef HAVE_CLUTTER
-    if (bp_video_get_display_context_type (player) == BP_VIDEO_DISPLAY_CONTEXT_CLUTTER_TEXTURE) {
-        return player->clutter_texture;
-    }
-    #endif
-    
     return NULL;
 }
 

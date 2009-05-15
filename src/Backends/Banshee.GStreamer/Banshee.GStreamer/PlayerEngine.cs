@@ -57,10 +57,12 @@ namespace Banshee.GStreamer
     internal delegate void BansheePlayerIterateCallback (IntPtr player);
     internal delegate void BansheePlayerBufferingCallback (IntPtr player, int buffering_progress);
     internal delegate void BansheePlayerVisDataCallback (IntPtr player, int channels, int samples, IntPtr data, int bands, IntPtr spectrum);
+    internal delegate IntPtr VideoPipelineSetupHandler (IntPtr player, IntPtr bus);
 
     internal delegate void GstTaggerTagFoundCallback (IntPtr player, string tagName, ref GLib.Value value);
     
-    public class PlayerEngine : Banshee.MediaEngine.PlayerEngine, IEqualizer, IVisualizationDataSource
+    public class PlayerEngine : Banshee.MediaEngine.PlayerEngine, 
+        IEqualizer, IVisualizationDataSource, ISupportClutter
     {
         private uint GST_CORE_ERROR = 0;
         private uint GST_LIBRARY_ERROR = 0;
@@ -75,6 +77,7 @@ namespace Banshee.GStreamer
         private BansheePlayerIterateCallback iterate_callback;
         private BansheePlayerBufferingCallback buffering_callback;
         private BansheePlayerVisDataCallback vis_data_callback;
+        private VideoPipelineSetupHandler video_pipeline_setup_callback;
         private GstTaggerTagFoundCallback tag_found_callback;
         
         private bool buffering_finished;
@@ -142,6 +145,7 @@ namespace Banshee.GStreamer
             iterate_callback = new BansheePlayerIterateCallback (OnIterate);
             buffering_callback = new BansheePlayerBufferingCallback (OnBuffering);
             vis_data_callback = new BansheePlayerVisDataCallback (OnVisualizationData);
+            video_pipeline_setup_callback = new VideoPipelineSetupHandler (OnVideoPipelineSetup);
             tag_found_callback = new GstTaggerTagFoundCallback (OnTagFound);
             
             bp_set_eos_callback (handle, eos_callback);
@@ -150,7 +154,14 @@ namespace Banshee.GStreamer
             bp_set_state_changed_callback (handle, state_changed_callback);
             bp_set_buffering_callback (handle, buffering_callback);
             bp_set_tag_found_callback (handle, tag_found_callback);
+            bp_set_video_pipeline_setup_callback (handle, video_pipeline_setup_callback);
             
+            if (!bp_initialize_pipeline (handle)) {
+                bp_destroy (handle);
+                handle = new HandleRef (this, IntPtr.Zero);
+                throw new ApplicationException (Catalog.GetString ("Could not initialize GStreamer library"));
+            }
+
             OnStateChanged (PlayerState.Ready);
             
             if (pending_volume >= 0) {
@@ -159,8 +170,6 @@ namespace Banshee.GStreamer
             
             InstallPreferences ();
             ReplayGainEnabled = ReplayGainEnabledSchema.Get ();
-
-            bp_set_vis_data_callback (handle, vis_data_callback);
         }
         
         public override void Dispose ()
@@ -488,6 +497,53 @@ namespace Banshee.GStreamer
             get { return bp_replaygain_get_enabled (handle); }
             set { bp_replaygain_set_enabled (handle, value); }
         }
+
+#region ISupportClutter
+
+        private IntPtr clutter_video_sink;
+        private IntPtr clutter_video_texture;
+        private bool clutter_video_sink_enabled;
+
+        public void EnableClutterVideoSink (IntPtr videoTexture)
+        {
+            clutter_video_sink_enabled = true;
+            clutter_video_texture = videoTexture;
+        }
+
+        public void DisableClutterVideoSink ()
+        {
+            clutter_video_sink_enabled = false;
+            clutter_video_texture = IntPtr.Zero;
+        }
+
+        public bool IsClutterVideoSinkInitialized {
+            get { return 
+                clutter_video_sink_enabled &&
+                clutter_video_texture != IntPtr.Zero &&
+                clutter_video_sink != IntPtr.Zero;
+            }
+        }
+
+        private IntPtr OnVideoPipelineSetup (IntPtr player, IntPtr bus)
+        {
+            try {
+                if (clutter_video_sink_enabled && clutter_video_sink == IntPtr.Zero) {
+                    clutter_video_sink = clutter_gst_video_sink_new (clutter_video_texture);
+                } else if (!clutter_video_sink_enabled && clutter_video_sink != IntPtr.Zero) {
+                    clutter_video_sink = IntPtr.Zero;
+                    clutter_video_texture = IntPtr.Zero;
+                }
+            } catch {
+                Log.Warning ("Clutter support could not be initialized");
+                clutter_video_sink = IntPtr.Zero;
+                clutter_video_texture = IntPtr.Zero;
+                clutter_video_sink_enabled = false;
+            }
+
+            return clutter_video_sink;
+        }
+
+#endregion
         
 #region Preferences
 
@@ -531,6 +587,9 @@ namespace Banshee.GStreamer
         private static extern IntPtr bp_new ();
         
         [DllImport ("libbanshee")]
+        private static extern bool bp_initialize_pipeline (HandleRef player);
+
+        [DllImport ("libbanshee")]
         private static extern void bp_destroy (HandleRef player);
         
         [DllImport ("libbanshee")]
@@ -553,6 +612,10 @@ namespace Banshee.GStreamer
         [DllImport ("libbanshee")]
         private static extern void bp_set_buffering_callback (HandleRef player,
             BansheePlayerBufferingCallback cb);
+
+        [DllImport ("libbanshee")]
+        private static extern void bp_set_video_pipeline_setup_callback (HandleRef player,
+            VideoPipelineSetupHandler cb);
         
         [DllImport ("libbanshee")]
         private static extern void bp_set_tag_found_callback (HandleRef player,
@@ -635,5 +698,8 @@ namespace Banshee.GStreamer
         
         [DllImport ("libbanshee")]
         private static extern bool bp_replaygain_get_enabled (HandleRef player);
+
+        [DllImport ("libbanshee")]
+        private static extern IntPtr clutter_gst_video_sink_new (IntPtr texture);
     }
 }

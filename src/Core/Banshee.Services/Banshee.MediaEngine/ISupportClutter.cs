@@ -1,10 +1,10 @@
 //
-// VideoDisplayContextType.cs
+// ISupportClutter.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //
-// Copyright (C) 2009 Novell, Inc.
+// Copyright 2009 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -30,10 +30,10 @@ using System;
 
 namespace Banshee.MediaEngine
 {
-    public enum VideoDisplayContextType
+    public interface ISupportClutter
     {
-        Unsupported = 0,
-        GdkWindow = 1,
-        Custom = 2
+        void EnableClutterVideoSink (IntPtr videoTexture);
+        void DisableClutterVideoSink ();
+        bool IsClutterVideoSinkInitialized { get; }
     }
 }

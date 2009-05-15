@@ -242,6 +242,7 @@
     <Compile Include="Banshee.Hardware\DeviceCommand.cs" />
     <Compile Include="Banshee.MediaEngine\VideoDisplayContextType.cs" />
     <Compile Include="Banshee.MediaEngine\IBpmDetector.cs" />
+    <Compile Include="Banshee.MediaEngine\ISupportClutter.cs" />
     <Compile Include="Banshee.Collection.Database\Tests\DatabaseAlbumInfoTests.cs" />
     <Compile Include="Banshee.Collection.Database\Tests\DatabaseArtistInfoTests.cs" />
     <Compile Include="Banshee.Collection.Database\Tests\DatabaseTrackInfoTests.cs" />

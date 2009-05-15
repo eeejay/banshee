@@ -15,12 +15,12 @@ SOURCES =  \
 
 RESOURCES = Banshee.NowPlaying.Clutter.addin.xml
 
-if HAVE_CLUTTER
-include $(top_srcdir)/build/build.mk
-module_SCRIPTS += Banshee.NowPlaying.Clutter.dll.config
-EXTRA_DIST += Banshee.NowPlaying.Clutter.dll.config
-else
+#if HAVE_CLUTTER
+#include $(top_srcdir)/build/build.mk
+#module_SCRIPTS += Banshee.NowPlaying.Clutter.dll.config
+#EXTRA_DIST += Banshee.NowPlaying.Clutter.dll.config
+#else
 EXTRA_DIST = $(SOURCES) $(RESOURCES) Banshee.NowPlaying.Clutter
-endif
+#endif
 
 
