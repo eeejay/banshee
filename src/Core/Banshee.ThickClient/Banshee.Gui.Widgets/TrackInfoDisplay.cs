@@ -311,8 +311,10 @@ namespace Banshee.Gui.Widgets
         
         private void OnPlayerEvent (PlayerEventArgs args)
         {
-            if (args.Event == PlayerEvent.StartOfStream || args.Event == PlayerEvent.TrackInfoUpdated) {
+            if (args.Event == PlayerEvent.StartOfStream) {
                 LoadCurrentTrack ();
+            } else if (args.Event == PlayerEvent.TrackInfoUpdated) {
+                LoadCurrentTrack (true);
             } else if (args.Event == PlayerEvent.StateChange && (incoming_track != null || incoming_image != null)) {
                 PlayerEventStateChangeArgs state = (PlayerEventStateChangeArgs)args;
                 if (state.Current == PlayerState.Idle) {
@@ -340,12 +342,17 @@ namespace Banshee.Gui.Widgets
             idle_timeout_id = 0;
             return false;
         }
-        
+
         private void LoadCurrentTrack ()
+        {
+            LoadCurrentTrack (false);
+        }
+
+        private void LoadCurrentTrack (bool force_reload)
         {
             TrackInfo track = ServiceManager.PlayerEngine.CurrentTrack;
 
-            if (track == current_track && !IsMissingImage (current_image)) {
+            if (track == current_track && !IsMissingImage (current_image) && !force_reload) {
                 return;
             } else if (track == null) {
                 incoming_track = null;

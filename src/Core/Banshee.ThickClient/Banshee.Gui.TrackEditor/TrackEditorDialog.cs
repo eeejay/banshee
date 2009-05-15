@@ -556,7 +556,8 @@ namespace Banshee.Gui.TrackEditor
             TrackInfo.ExportableMerge (track, track.SourceTrack);
             track.SourceTrack.Save ();
                 
-            if (track.SourceTrack == ServiceManager.PlayerEngine.CurrentTrack) {
+            if (track.SourceTrack.TrackEqual (ServiceManager.PlayerEngine.CurrentTrack)) {
+                TrackInfo.ExportableMerge (track, ServiceManager.PlayerEngine.CurrentTrack);
                 ServiceManager.PlayerEngine.TrackInfoUpdated ();
             }
         }

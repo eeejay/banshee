@@ -104,10 +104,7 @@ namespace Banshee.Collection.Database
 
         public static bool TrackEqual (DatabaseTrackInfo a, DatabaseTrackInfo b)
         {
-            return a != null && b != null && 
-                a.TrackId == b.TrackId && 
-                a.CacheModelId == b.CacheModelId && 
-                a.CacheEntryId.Equals (b.CacheEntryId);
+            return a != null && b != null && a.TrackId == b.TrackId;
         }
         
         public DatabaseArtistInfo Artist {

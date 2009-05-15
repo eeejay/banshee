@@ -123,7 +123,7 @@ namespace Banshee.Collection.Gui
                 icon_index = (int)(track.PlaybackError == StreamPlaybackError.Drm
                     ? Icon.Protected
                     : Icon.Error);
-            } else if (ServiceManager.PlayerEngine.IsPlaying (track)) {
+            } else if (track.IsPlaying) {
                 icon_index = (int)(ServiceManager.PlayerEngine.CurrentState == PlayerState.Paused
                     ? Icon.Paused
                     : Icon.Playing);

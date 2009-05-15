@@ -109,7 +109,8 @@ namespace Banshee.MediaEngine
             
             MetadataService.Instance.HaveResult += OnMetadataServiceHaveResult;
             
-            TrackInfo.IsPlayingMethod = IsPlaying;
+            TrackInfo.IsPlayingMethod = track => IsPlaying (track) &&
+                ServiceManager.PlaybackController.Source == ServiceManager.SourceManager.ActiveSource;
         }
         
         private void LoadEngine (TypeExtensionNode node)
