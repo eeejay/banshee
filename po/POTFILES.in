@@ -32,14 +32,14 @@ src/Clients/Nereid/Nereid/PlayerInterface.cs
 src/Clients/Nereid/Nereid/ViewContainer.cs
 src/Core/Banshee.Core/Banshee.Base/CoverArtSpec.cs
 src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs
+src/Core/Banshee.Core/Banshee.Collection/AlbumInfo.cs
+src/Core/Banshee.Core/Banshee.Collection/ArtistInfo.cs
 src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs
-src/Core/Banshee.Core/Banshee.Streaming/SaveTrackMetadataJob.cs
 src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumInfo.cs
 src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumListModel.cs
 src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseArtistInfo.cs
 src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseArtistListModel.cs
 src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs
-src/Core/Banshee.Services/Banshee.Collection/MoveOnInfoSaveJob.cs
 src/Core/Banshee.Services/Banshee.Collection/RescanPipeline.cs
 src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs
 src/Core/Banshee.Services/Banshee.Library/HomeDirectoryImportSource.cs
@@ -49,8 +49,11 @@ src/Core/Banshee.Services/Banshee.Library/ThreadPoolImportSource.cs
 src/Core/Banshee.Services/Banshee.Library/VideoLibrarySource.cs
 src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs
 src/Core/Banshee.Services/Banshee.MediaEngine/TranscoderService.cs
+src/Core/Banshee.Services/Banshee.Metadata/SaveTrackMetadataJob.cs
+src/Core/Banshee.Services/Banshee.Metadata/SaveTrackMetadataService.cs
 src/Core/Banshee.Services/Banshee.Networking/Network.cs
 src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs
+src/Core/Banshee.Services/Banshee.Playlists.Formats/AsfReferencePlaylistFormat.cs
 src/Core/Banshee.Services/Banshee.Playlists.Formats/AsxPlaylistFormat.cs
 src/Core/Banshee.Services/Banshee.Playlists.Formats/M3uPlaylistFormat.cs
 src/Core/Banshee.Services/Banshee.Playlists.Formats/PlsPlaylistFormat.cs
@@ -74,6 +77,7 @@ src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellDiscAndCount.cs
 src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellTrackAndCount.cs
 src/Core/Banshee.ThickClient/Banshee.Collection.Gui/DefaultColumnController.cs
 src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs
+src/Core/Banshee.ThickClient/Banshee.ContextPane/ContextPane.cs
 src/Core/Banshee.ThickClient/Banshee.Equalizer.Gui/EqualizerWindow.cs
 src/Core/Banshee.ThickClient/Banshee.Gui/BaseClientWindow.cs
 src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs
@@ -93,6 +97,7 @@ src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs
 src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/ExtraTrackDetailsPage.cs
 src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/HelpPage.cs
 src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/LyricsPage.cs
+src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/PageNavigationEntry.cs
 src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/SortingPage.cs
 src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs
 src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs
@@ -162,7 +167,7 @@ src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs
 src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationEditor.cs
 src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs
 src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs
-src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Recommendations/RecommendationActions.cs
+src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Recommendations/ContextPage.cs
 src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Recommendations/RecommendationPane.cs
 src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Recommendations/SimilarArtistTile.cs
 src/Extensions/Banshee.Lastfm/Resources/lastfm.glade
@@ -194,6 +199,8 @@ src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/S
 src/Extensions/Banshee.RemoteAudio/Banshee.RemoteAudio/RemoteSpeakersWidget.cs
 src/Extensions/Banshee.Sample/Banshee.Sample/SampleSource.cs
 src/Extensions/Banshee.SqlDebugConsole/Banshee.SqlDebugConsole/SqlActions.cs
+src/Extensions/Banshee.Wikipedia/Banshee.Wikipedia/ContextPage.cs
+src/Extensions/Banshee.Wikipedia/Banshee.Wikipedia/WikipediaView.cs
 src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Header.cs
 src/Libraries/Hyena.Gui/Hyena.Gui.Dialogs/ExceptionDialog.cs
 src/Libraries/Hyena.Gui/Hyena.Gui.Dialogs/VersionInformationDialog.cs
