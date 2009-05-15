@@ -164,12 +164,15 @@ namespace Banshee.MiniMode
 
             default_main_window.Hide ();
 
+            OverrideFullscreen ();
+
             Show ();
         }
 
         public void Disable ()
         {
             Hide ();
+            RelinquishFullscreen ();
             default_main_window.Show ();
         }
 
@@ -218,7 +221,40 @@ namespace Banshee.MiniMode
                 SetHeightLimit ();
             } catch (Exception) {
             }
-        }        
+        }
+
+#region Mini-mode Fullscreen Override
+
+        private ViewActions.FullscreenHandler previous_fullscreen_handler;
+
+        private void OverrideFullscreen ()
+        {
+            InterfaceActionService service = ServiceManager.Get<InterfaceActionService> (); 
+            if (service == null || service.ViewActions == null) {
+                return;
+            }
+
+            previous_fullscreen_handler = service.ViewActions.Fullscreen;
+            service.ViewActions.Fullscreen = FullscreenHandler;
+        }
+
+        private void RelinquishFullscreen ()
+        {
+            InterfaceActionService service = ServiceManager.Get<InterfaceActionService> (); 
+            if (service == null || service.ViewActions == null) {
+                return;
+            }
+
+            service.ViewActions.Fullscreen = previous_fullscreen_handler;
+        }
+
+        private void FullscreenHandler (bool fullscreen)
+        {
+            // Do nothing, we don't want full-screen while in mini-mode.
+        }
+
+#endregion
+
     }
 }
 
