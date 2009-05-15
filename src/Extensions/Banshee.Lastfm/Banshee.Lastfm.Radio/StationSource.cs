@@ -492,7 +492,15 @@ namespace Banshee.Lastfm.Radio
         public bool ConfirmRemoveTracks {
             get { return false; }
         }
-        
+
+        public virtual bool CanRepeat {
+            get { return false; }
+        }
+
+        public virtual bool CanShuffle {
+            get { return false; }
+        }
+
         public bool ShowBrowser {
             get { return false; }
         }

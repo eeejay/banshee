@@ -260,6 +260,14 @@ namespace Banshee.Sources
             get { return true; }
         }
 
+        public virtual bool CanRepeat {
+            get { return true; }
+        }
+
+        public virtual bool CanShuffle {
+            get { return true; }
+        }
+
         public override string TrackModelPath {
             get { return DBusServiceManager.MakeObjectPath (DatabaseTrackModel); }
         }

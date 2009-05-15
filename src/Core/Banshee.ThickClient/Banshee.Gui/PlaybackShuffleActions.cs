@@ -43,6 +43,7 @@ namespace Banshee.Gui
     public class PlaybackShuffleActions : BansheeActionGroup, IEnumerable<RadioAction>
     {
         private RadioAction active_action;
+        private RadioAction saved_action;
         private PlaybackActions playback_actions;
 
         public RadioAction Active {
@@ -105,6 +106,7 @@ namespace Banshee.Gui
             this["ShuffleAlbumAction"].Sensitive = false;
 
             ServiceManager.PlaybackController.ShuffleModeChanged += OnShuffleModeChanged;
+            ServiceManager.PlaybackController.SourceChanged += OnPlaybackSourceChanged;
 
             Gtk.Action action = this[ConfigIdToActionName (ShuffleMode.Get ())];
             if (action is RadioAction) {
@@ -129,8 +131,25 @@ namespace Banshee.Gui
                 }
             }
 
-            ShuffleMode.Set (ActionNameToConfigId (active_action.Name));
+            if (saved_action == null) {
+                ShuffleMode.Set (ActionNameToConfigId (active_action.Name));
+            }
             OnChanged();
+        }
+
+        private void OnPlaybackSourceChanged (object o, EventArgs args)
+        {
+            var source = ServiceManager.PlaybackController.Source;
+
+            if (saved_action == null && !source.CanShuffle) {
+                saved_action = Active;
+                Active = this["ShuffleOffAction"] as RadioAction;
+                Sensitive = false;
+            } else if (saved_action != null && source.CanShuffle) {
+                Active = saved_action;
+                saved_action = null;
+                Sensitive = true;
+            }
         }
 
         private void OnActionChanged (object o, ChangedArgs args)

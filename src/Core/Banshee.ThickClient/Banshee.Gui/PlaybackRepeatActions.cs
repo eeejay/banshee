@@ -43,6 +43,7 @@ namespace Banshee.Gui
     public class PlaybackRepeatActions : BansheeActionGroup, IEnumerable<RadioAction>
     {
         private RadioAction active_action;
+        private RadioAction saved_action;
         
         public RadioAction Active {
             get { return active_action; }
@@ -94,6 +95,7 @@ namespace Banshee.Gui
             this["RepeatSingleAction"].IconName = "media-repeat-single";
 
             ServiceManager.PlaybackController.RepeatModeChanged += OnRepeatModeChanged;
+            ServiceManager.PlaybackController.SourceChanged += OnPlaybackSourceChanged;
 
             Gtk.Action action = this[ConfigIdToActionName (RepeatMode.Get ())];
             if (action is RadioAction) {
@@ -118,8 +120,25 @@ namespace Banshee.Gui
                 }
             }
 
-            RepeatMode.Set (ActionNameToConfigId (active_action.Name));
+            if (saved_action == null) {
+                RepeatMode.Set (ActionNameToConfigId (active_action.Name));
+            }
             OnChanged();
+        }
+
+        private void OnPlaybackSourceChanged (object o, EventArgs args)
+        {
+            var source = ServiceManager.PlaybackController.Source;
+
+            if (saved_action == null && !source.CanRepeat) {
+                saved_action = Active;
+                Active = this["RepeatNoneAction"] as RadioAction;
+                Sensitive = false;
+            } else if (saved_action != null && source.CanRepeat) {
+                Active = saved_action;
+                saved_action = null;
+                Sensitive = true;
+            }
         }
 
         private void OnActionChanged (object o, ChangedArgs args)

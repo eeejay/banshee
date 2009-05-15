@@ -179,7 +179,6 @@ namespace Banshee.Lastfm.Radio
         {
             Actions.UIManager.RemoveUi (actions_id);
             Actions.RemoveActionGroup (this);
-            RestoreShuffleRepeat ();
             ServiceManager.PlayerEngine.DisconnectEvent (OnPlayerEvent);
             base.Dispose ();
         }
@@ -410,8 +409,6 @@ namespace Banshee.Lastfm.Radio
         }
 
         private uint track_actions_id;
-        private RadioAction old_shuffle;
-        private RadioAction old_repeat;
         private bool was_lastfm = false;
         private void OnPlaybackSourceChanged (object o, EventArgs args)
         {
@@ -422,41 +419,13 @@ namespace Banshee.Lastfm.Radio
 
             bool is_lastfm = ServiceManager.PlaybackController.Source is StationSource;
             Actions.PlaybackActions["PreviousAction"].Sensitive = !is_lastfm;
-            PlaybackRepeatActions repeat_actions = Actions.PlaybackActions.RepeatActions;
-            PlaybackShuffleActions shuffle_actions = Actions.PlaybackActions.ShuffleActions;
 
-            // Save/clear shuffle/repeat values when we first switch to a Last.fm station
-            if (is_lastfm && !was_lastfm) {
-                old_repeat = repeat_actions.Active;
-                repeat_actions.Active = repeat_actions["RepeatNoneAction"] as RadioAction;
-                
-                old_shuffle = shuffle_actions.Active;
-                shuffle_actions.Active = shuffle_actions["ShuffleOffAction"] as RadioAction;
-            }
-            // Restore shuffle/repeat values when we switch from a Last.fm station to a non Last.fm source
-            if (!is_lastfm && was_lastfm) {
-                RestoreShuffleRepeat ();
-            }
-            
-            // Set sensitivity
-            shuffle_actions.Sensitive = !is_lastfm;
-            repeat_actions.Sensitive = !is_lastfm;
-            
             if (is_lastfm && !was_lastfm)
                 track_actions_id = Actions.UIManager.AddUiFromResource ("LastfmTrackActions.xml");
             else if (!is_lastfm && was_lastfm)
                 Actions.UIManager.RemoveUi (track_actions_id);
 
             was_lastfm = is_lastfm;
-        }
-
-        private void RestoreShuffleRepeat ()
-        {
-            if (Actions != null && Actions.PlaybackActions != null && old_repeat != null) {
-                Actions.PlaybackActions.RepeatActions.Active = old_repeat;
-                Actions.PlaybackActions.ShuffleActions.Active = old_shuffle;
-            }
-            old_repeat = old_shuffle = null;
         }
     }
 }

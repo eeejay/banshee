@@ -49,7 +49,10 @@ namespace Banshee.Sources
         bool CanRemoveTracks { get; }
         bool CanDeleteTracks { get; }
         bool ConfirmRemoveTracks { get; }
-        
+
+        bool CanRepeat { get; }
+        bool CanShuffle { get; }
+
         bool ShowBrowser { get; }
         bool Indexable { get; }
     }

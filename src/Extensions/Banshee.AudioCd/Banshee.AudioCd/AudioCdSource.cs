@@ -321,7 +321,15 @@ namespace Banshee.AudioCd
         public bool ConfirmRemoveTracks {
             get { return false; }
         }
-        
+
+        public virtual bool CanRepeat {
+            get { return true; }
+        }
+
+        public virtual bool CanShuffle {
+            get { return true; }
+        }
+
         public bool ShowBrowser {
             get { return false; }
         }
