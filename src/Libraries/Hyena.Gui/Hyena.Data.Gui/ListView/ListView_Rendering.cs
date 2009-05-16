@@ -67,7 +67,7 @@ namespace Hyena.Data.Gui
             
             base.OnStyleSet (old_style);
             RecomputeRowHeight = true;
-            theme = new GtkTheme (this);
+            theme = Hyena.Gui.Theming.ThemeEngine.CreateTheme (this);
 
             // Save the drawable so we can reuse it
             Gdk.Drawable drawable = cell_context != null ? cell_context.Drawable : null;

@@ -40,6 +40,7 @@ SOURCES =  \
 	Hyena.Gui.Theming/GtkTheme.cs \
 	Hyena.Gui.Theming/Theme.cs \
 	Hyena.Gui.Theming/ThemeContext.cs \
+	Hyena.Gui.Theming/ThemeEngine.cs \
 	Hyena.Gui/CairoExtensions.cs \
 	Hyena.Gui/CleanRoomStartup.cs \
 	Hyena.Gui/CompositeUtils.cs \
