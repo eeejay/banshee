@@ -132,10 +132,10 @@ typedef enum
   CLUTTER_GST_I420,
 } ClutterGstVideoFormat;
 
-typedef void (*GLUNIFORM1IPROC)(COGLint location, COGLint value);
+typedef void (*GLUNIFORM1IPROC)(GLint location, GLint value);
 /* GL_ARB_fragment_program */
-typedef void (*GLGENPROGRAMSPROC)(GLsizei n, COGLuint *programs);
-typedef void (*GLBINDPROGRAMPROC)(GLenum target, COGLint program);
+typedef void (*GLGENPROGRAMSPROC)(GLsizei n, GLuint *programs);
+typedef void (*GLBINDPROGRAMPROC)(GLenum target, GLint program);
 typedef void (*GLPROGRAMSTRINGPROC)(GLenum target, GLenum format, GLsizei len,
                                     const void *string);
 /* multi-texturing */
@@ -191,7 +191,7 @@ struct _ClutterGstVideoSinkPrivate
   CoglHandle             v_tex;
   CoglHandle             program;
   CoglHandle             shader;
-  COGLuint               fp;
+  GLuint                 fp;
 
   GMutex                *buffer_lock;   /* mutex for the buffer and idle_id */
   GstBuffer             *buffer;
@@ -328,7 +328,7 @@ clutter_gst_video_sink_set_shader (ClutterGstVideoSink *sink,
       /* Create shader through COGL - necessary as we need to be able to set
        * integer uniform variables for multi-texturing.
        */
-      priv->shader = cogl_create_shader (CGL_FRAGMENT_SHADER);
+      priv->shader = cogl_create_shader (COGL_SHADER_TYPE_FRAGMENT);
       cogl_shader_source (priv->shader, shader_src);
       cogl_shader_compile (priv->shader);
       
@@ -438,7 +438,7 @@ clutter_gst_yv12_glsl_init (ClutterActor        *actor,
                             ClutterGstVideoSink *sink)
 {
   ClutterGstVideoSinkPrivate *priv= sink->priv;
-  COGLint location;
+  GLint location;
 
   clutter_gst_video_sink_set_shader (sink,
                                      yv12_to_rgba_shader);
@@ -468,7 +468,9 @@ clutter_gst_yv12_upload (ClutterGstVideoSink *sink,
                                                  COGL_PIXEL_FORMAT_G_8,
                                                  priv->width,
                                                  GST_BUFFER_DATA (buffer));
-  cogl_texture_set_filters (y_tex, CGL_LINEAR, CGL_LINEAR);
+  cogl_texture_set_filters (y_tex,
+                            COGL_TEXTURE_FILTER_LINEAR,
+                            COGL_TEXTURE_FILTER_LINEAR);
   clutter_texture_set_cogl_texture (priv->texture, y_tex);
   cogl_texture_unref (y_tex);
 
@@ -487,7 +489,9 @@ clutter_gst_yv12_upload (ClutterGstVideoSink *sink,
                                             priv->width/2,
                                             GST_BUFFER_DATA (buffer) +
                                             (priv->width * priv->height));
-  cogl_texture_set_filters (priv->v_tex, CGL_LINEAR, CGL_LINEAR);
+  cogl_texture_set_filters (priv->v_tex,
+                            COGL_TEXTURE_FILTER_LINEAR,
+                            COGL_TEXTURE_FILTER_LINEAR);
 
   priv->u_tex =
     cogl_texture_new_from_data (priv->width/2,
@@ -500,7 +504,9 @@ clutter_gst_yv12_upload (ClutterGstVideoSink *sink,
                                 GST_BUFFER_DATA (buffer) +
                                 (priv->width * priv->height) +
                                 (priv->width/2 * priv->height/2));
-  cogl_texture_set_filters (priv->u_tex, CGL_LINEAR, CGL_LINEAR);
+  cogl_texture_set_filters (priv->u_tex,
+                            COGL_TEXTURE_FILTER_LINEAR,
+                            COGL_TEXTURE_FILTER_LINEAR);
 }
 
 static void
@@ -618,7 +624,7 @@ clutter_gst_i420_glsl_init (ClutterActor        *actor,
                             ClutterGstVideoSink *sink)
 {
   ClutterGstVideoSinkPrivate *priv = sink->priv;
-  COGLint location;
+  GLint location;
 
   clutter_gst_video_sink_set_shader (sink,
                                      yv12_to_rgba_shader);
