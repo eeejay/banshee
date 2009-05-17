@@ -137,8 +137,8 @@ AC_ARG_WITH(vendor-build-id,
 	AC_HELP_STRING([--with-vendor-build-id=<vendor-build-id>],
 		[Set a vendor build ID, recommended for packagers]),
 	[vendor_build_id="$withval"], [
-		test -d .svn || test -d .git \
-			&& vendor_build_id="svn-checkout" \
+		test -d .git \
+			&& vendor_build_id="git-checkout" \
 			|| vendor_build_id="source-tarball"
 	])
 BUILD_VENDOR_ID="$vendor_build_id"
