@@ -150,13 +150,6 @@ REF_BACKEND_HAL = $(LINK_BANSHEE_SERVICES_DEPS) $(LINK_DBUS)
 REF_BACKEND_OSX = $(LINK_BANSHEE_SERVICES_DEPS) $(LINK_BANSHEE_THICKCLIENT_DEPS) $(LINK_IGEMACINTEGRATION)
 REF_BACKEND_BNPX11 = $(LINK_EXTENSION_NOWPLAYING_DEPS)
 
-# Build rules
-# Ignoring 0278 due to a bug in gmcs: 
-# http://bugzilla.ximian.com/show_bug.cgi?id=79998
-BUILD_FLAGS = -debug -nowarn:0278 $(ASSEMBLY_BUILD_FLAGS)
-BUILD = $(MCS) $(BUILD_FLAGS)
-BUILD_LIB = $(BUILD) -target:library
-
 # Cute hack to replace a space with something
 colon:= :
 empty:=

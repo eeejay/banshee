@@ -45,3 +45,5 @@ data/audio-profiles/*.xml
 stamp-h1
 *.userprefs
 Banshee.usertasks
+build/m4/shave/shave
+build/m4/shave/shave-libtool

@@ -1,25 +1,41 @@
-dnl Automake setup
-AC_INIT([banshee-1], [1.5.0])
-DISPLAY_VERSION="1.5.0"
-API_VERSION="1.6"
-ASM_VERSION="$API_VERSION.0.0"
-AC_SUBST(API_VERSION)
-AC_SUBST(ASM_VERSION)
-AC_SUBST(DISPLAY_VERSION)
+m4_define([banshee_version_major], [1])
+m4_define([banshee_version_minor], [5])
+m4_define([banshee_version_micro], [0])
 
-DISTCHECK_CONFIGURE_FLAGS="--disable-docs --enable-mtp --enable-daap --enable-podcast --enable-release"
-AC_SUBST(DISTCHECK_CONFIGURE_FLAGS)
-AC_SUBST([ACLOCAL_AMFLAGS], ["-I build/m4/shamrock -I build/m4/banshee \${ACLOCAL_FLAGS}"])
+m4_define([banshee_version],
+	[banshee_version_major.banshee_version_minor.banshee_version_micro])
 
-AC_PREREQ(2.13)
+m4_define([banshee_display_version],
+	[banshee_version])
+
+m4_define([banshee_api_version],
+	[banshee_version_major.banshee_version_minor])
+
+m4_define([banshee_asm_version],
+	[banshee_api_version.0.0])
+
+AC_PREREQ(2.52)
+AC_INIT([banshee-1],
+	[banshee_version],
+	[http://bugzilla.gnome.org/enter_bug.cgi?product=banshee])
+
 AM_INIT_AUTOMAKE([1.9 dist-bzip2 tar-ustar])
 AM_MAINTAINER_MODE
+AM_CONFIG_HEADER([config.h])
+AC_SUBST([ACLOCAL_AMFLAGS], ["-I build/m4/shamrock -I build/m4/banshee -I build/m4/shave \${ACLOCAL_FLAGS}"])
 
-dnl Pieces needed by autogen; can't be parsed from macros
-AM_CONFIG_HEADER(config.h)
 IT_PROG_INTLTOOL([0.35.0])
 AC_PROG_LIBTOOL
 AC_PROG_INSTALL
+
+dnl How to configure for distcheck
+DISTCHECK_CONFIGURE_FLAGS="--disable-docs --enable-mtp --enable-daap --enable-podcast --enable-release"
+AC_SUBST(DISTCHECK_CONFIGURE_FLAGS)
+
+dnl Export Version Info
+AC_SUBST([API_VERSION], [banshee_api_version])
+AC_SUBST([ASM_VERSION], [banshee_asm_version])
+AC_SUBST([DISPLAY_VERSION], [banshee_display_version])
 
 dnl Expansions
 SHAMROCK_EXPAND_LIBDIR
@@ -150,12 +166,16 @@ AC_SUBST(BUILD_HOST_OS)
 AC_SUBST(BUILD_HOST_CPU)
 AC_SUBST(BUILD_TIME)
 
+SHAVE_INIT([build/m4/shave], [enable])
+
 dnl generated files
 AC_OUTPUT([
 Makefile
 
 build/Makefile
 build/m4/Makefile
+build/m4/shave/shave
+build/m4/shave/shave-libtool
 build/pkg-config/Makefile
 
 data/Makefile
@@ -270,7 +290,7 @@ ${PACKAGE}-${VERSION}
   Video/Graphics:
     Graphics System:   ${GRAPHICS_SUBSYSTEM}
     X11 Video:         ${have_xvidmode}
-    Clutter:           ${enable_clutter} (experimental)
+    Clutter:           ${enable_clutter}
 
   Operating System/Desktop Environment:
     GNOME Support:     ${enable_gnome}

@@ -46,23 +46,18 @@ $(ASSEMBLY_FILE).mdb: $(ASSEMBLY_FILE)
 
 $(ASSEMBLY_FILE): $(SOURCES_BUILD) $(RESOURCES_EXPANDED) $(DEP_LINK)
 	@mkdir -p $(top_builddir)/bin
-	@colors=no; \
-	case $$TERM in \
-		"xterm" | "rxvt" | "rxvt-unicode") \
-			test "x$$COLORTERM" != "x" && colors=yes ;; \
-		"xterm-color") colors=yes ;; \
-	esac; \
-	if [ "x$$colors" = "xyes" ]; then \
-		tty -s && true || { colors=no; true; } \
-	fi; \
-	test "x$$colors" = "xyes" && \
-		echo -e "\033[1mCompiling $(notdir $@)...\033[0m" || \
-		echo "Compiling $(notdir $@)...";
 	@if [ ! "x$(ENABLE_RELEASE)" = "xyes" ]; then \
 		$(top_srcdir)/build/dll-map-makefile-verifier $(srcdir)/Makefile.am $(srcdir)/$(notdir $@.config) && \
 		$(MONO) $(top_builddir)/build/dll-map-verifier.exe $(srcdir)/$(notdir $@.config) -iwinmm -ilibbanshee -ilibbnpx11 -ilibc -ilibc.so.6 -iintl -ilibmtp.dll $(SOURCES_BUILD); \
 	fi;
-	@$(BUILD) $(GMCS_FLAGS) -nowarn:0078 -target:$(TARGET) -out:$@ $$warn -define:HAVE_GTK_2_10 -define:NET_2_0 $(BUILD_DEFINES) $(ENABLE_TESTS_FLAG) $(FILTERED_LINK) $(RESOURCES_BUILD) $(SOURCES_BUILD) 
+	$(MCS) \
+		$(GMCS_FLAGS) \
+		$(ASSEMBLY_BUILD_FLAGS) \
+		-nowarn:0278 -nowarn:0078 $$warn \
+		-define:HAVE_GTK_2_10 -define:NET_2_0 \
+		-debug -target:$(TARGET) -out:$@ \
+		$(BUILD_DEFINES) $(ENABLE_TESTS_FLAG) \
+		$(FILTERED_LINK) $(RESOURCES_BUILD) $(SOURCES_BUILD)
 	@if [ -e $(srcdir)/$(notdir $@.config) ]; then \
 		cp $(srcdir)/$(notdir $@.config) $(top_builddir)/bin; \
 	fi;
