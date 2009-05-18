@@ -80,7 +80,11 @@ namespace Lastfm.Data
             this.cache_duration = cacheDuration;
             this.xpath = xpath;
 
-            GetData ();
+            try {
+                GetData ();
+            } catch {
+                Refresh ();
+            }
         }
 
         public void Refresh ()
