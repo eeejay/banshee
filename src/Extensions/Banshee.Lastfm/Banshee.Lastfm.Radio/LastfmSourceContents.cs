@@ -52,7 +52,8 @@ namespace Banshee.Lastfm.Radio
 
             // Clamp the width, preventing horizontal scrolling
             SizeAllocated += delegate (object o, SizeAllocatedArgs args) {
-                main_box.WidthRequest = args.Allocation.Width - 10;
+                // TODO '- 10' worked for Nereid, but not for Cubano; properly calculate the right width we should request
+                main_box.WidthRequest = args.Allocation.Width - 30;
             };
 
             viewport.Add (main_box);
