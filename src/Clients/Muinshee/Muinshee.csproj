@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -9,16 +9,17 @@
     <UseParentDirectoryAsNamespace>true</UseParentDirectoryAsNamespace>
     <AssemblyName>Muinshee</AssemblyName>
     <SchemaVersion>2.0</SchemaVersion>
-    <ApplicationIcon>.</ApplicationIcon>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <SourceAnalysisOverrideSettingsFile>C:\Documents and Settings\Administrator\Application Data\ICSharpCode/SharpDevelop3.0\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
     <Optimize>true</Optimize>
     <OutputPath>..\..\..\bin</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
     <AssemblyKeyFile>.</AssemblyKeyFile>
     <CustomCommands>
       <CustomCommands>
@@ -28,8 +29,32 @@
     </CustomCommands>
     <Externalconsole>true</Externalconsole>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Windows|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <AssemblyKeyFile>.</AssemblyKeyFile>
+    <Externalconsole>true</Externalconsole>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="atk-sharp" />
+    <Reference Include="gdk-sharp" />
+    <Reference Include="glib-sharp" />
+    <Reference Include="gtk-sharp" />
     <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="Mono.Cairo" />
+    <Reference Include="Mono.Posix">
+      <HintPath>..\..\..\winbin\Mono.Posix.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoPosixHelper">
+      <HintPath>..\..\..\winbin\MonoPosixHelper.dll</HintPath>
+    </Reference>
+    <Reference Include="NDesk.DBus">
+      <HintPath>..\..\..\winbin\NDesk.DBus.dll</HintPath>
+    </Reference>
+    <Reference Include="NDesk.DBus.GLib">
+      <HintPath>..\..\..\winbin\NDesk.DBus.GLib.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
   </ItemGroup>
@@ -68,6 +93,10 @@
       <Project>{74B2E4CC-2701-4C8B-A11D-6E4443F4B21B}</Project>
       <Name>Banshee.PlayQueue</Name>
     </ProjectReference>
+    <Folder Include="Resources" />
+    <EmbeddedResource Include="Resources\GlobalUI.xml">
+      <LogicalName>GlobalUI.xml</LogicalName>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Muinshee\PlayerInterface.cs" />

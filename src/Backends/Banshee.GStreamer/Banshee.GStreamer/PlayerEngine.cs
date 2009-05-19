@@ -583,33 +583,33 @@ namespace Banshee.GStreamer
 
 #endregion
         
-        [DllImport ("libbanshee")]
+        [DllImport ("libbanshee.dll")]
         private static extern IntPtr bp_new ();
         
-        [DllImport ("libbanshee")]
+        [DllImport ("libbanshee.dll")]
         private static extern bool bp_initialize_pipeline (HandleRef player);
 
-        [DllImport ("libbanshee")]
+        [DllImport ("libbanshee.dll")]
         private static extern void bp_destroy (HandleRef player);
         
-        [DllImport ("libbanshee")]
+        [DllImport ("libbanshee.dll")]
         private static extern void bp_set_eos_callback (HandleRef player, BansheePlayerEosCallback cb);
         
-        [DllImport ("libbanshee")]
+        [DllImport ("libbanshee.dll")]
         private static extern void bp_set_error_callback (HandleRef player, BansheePlayerErrorCallback cb);
         
-        [DllImport ("libbanshee")]
+        [DllImport ("libbanshee.dll")]
         private static extern void bp_set_vis_data_callback (HandleRef player, BansheePlayerVisDataCallback cb);
         
-        [DllImport ("libbanshee")]
+        [DllImport ("libbanshee.dll")]
         private static extern void bp_set_state_changed_callback (HandleRef player, 
             BansheePlayerStateChangedCallback cb);
             
-        [DllImport ("libbanshee")]
+        [DllImport ("libbanshee.dll")]
         private static extern void bp_set_iterate_callback (HandleRef player,
             BansheePlayerIterateCallback cb);
         
-        [DllImport ("libbanshee")]
+        [DllImport ("libbanshee.dll")]
         private static extern void bp_set_buffering_callback (HandleRef player,
             BansheePlayerBufferingCallback cb);
 
@@ -617,86 +617,86 @@ namespace Banshee.GStreamer
         private static extern void bp_set_video_pipeline_setup_callback (HandleRef player,
             VideoPipelineSetupHandler cb);
         
-        [DllImport ("libbanshee")]
+        [DllImport ("libbanshee.dll")]
         private static extern void bp_set_tag_found_callback (HandleRef player,
             GstTaggerTagFoundCallback cb);
         
-        [DllImport ("libbanshee")]
+        [DllImport ("libbanshee.dll")]
         private static extern bool bp_open (HandleRef player, IntPtr uri);
         
-        [DllImport ("libbanshee")]
+        [DllImport ("libbanshee.dll")]
         private static extern void bp_stop (HandleRef player, bool nullstate);
         
-        [DllImport ("libbanshee")]
+        [DllImport ("libbanshee.dll")]
         private static extern void bp_pause (HandleRef player);
         
-        [DllImport ("libbanshee")]
+        [DllImport ("libbanshee.dll")]
         private static extern void bp_play (HandleRef player);
         
-        [DllImport ("libbanshee")]
+        [DllImport ("libbanshee.dll")]
         private static extern void bp_set_volume (HandleRef player, double volume);
         
-        [DllImport("libbanshee")]
+        [DllImport("libbanshee.dll")]
         private static extern double bp_get_volume (HandleRef player);
         
-        [DllImport ("libbanshee")]
+        [DllImport ("libbanshee.dll")]
         private static extern bool bp_can_seek (HandleRef player);
         
-        [DllImport ("libbanshee")]
+        [DllImport ("libbanshee.dll")]
         private static extern bool bp_set_position (HandleRef player, ulong time_ms);
         
-        [DllImport ("libbanshee")]
+        [DllImport ("libbanshee.dll")]
         private static extern ulong bp_get_position (HandleRef player);
         
-        [DllImport ("libbanshee")]
+        [DllImport ("libbanshee.dll")]
         private static extern ulong bp_get_duration (HandleRef player);
         
-        [DllImport ("libbanshee")]
+        [DllImport ("libbanshee.dll")]
         private static extern bool bp_get_pipeline_elements (HandleRef player, out IntPtr playbin,
             out IntPtr audiobin, out IntPtr audiotee);
             
-        [DllImport ("libbanshee")]
+        [DllImport ("libbanshee.dll")]
         private static extern void bp_set_application_gdk_window (HandleRef player, IntPtr window);
         
-        [DllImport ("libbanshee")]
+        [DllImport ("libbanshee.dll")]
         private static extern VideoDisplayContextType bp_video_get_display_context_type (HandleRef player);
         
-        [DllImport ("libbanshee")]
+        [DllImport ("libbanshee.dll")]
         private static extern void bp_video_set_display_context (HandleRef player, IntPtr displayContext);
         
-        [DllImport ("libbanshee")]
+        [DllImport ("libbanshee.dll")]
         private static extern IntPtr bp_video_get_display_context (HandleRef player);
         
-        [DllImport ("libbanshee")]
+        [DllImport ("libbanshee.dll")]
         private static extern void bp_video_window_expose (HandleRef player, IntPtr displayContext, bool direct);
                                                                    
-        [DllImport ("libbanshee")]
+        [DllImport ("libbanshee.dll")]
         private static extern void bp_get_error_quarks (out uint core, out uint library, 
             out uint resource, out uint stream);
         
-        [DllImport ("libbanshee")]
+        [DllImport ("libbanshee.dll")]
         private static extern bool bp_equalizer_is_supported (HandleRef player);
         
-        [DllImport ("libbanshee")]
+        [DllImport ("libbanshee.dll")]
         private static extern void bp_equalizer_set_preamp_level (HandleRef player, double level);
         
-        [DllImport ("libbanshee")]
+        [DllImport ("libbanshee.dll")]
         private static extern void bp_equalizer_set_gain (HandleRef player, uint bandnum, double gain);
         
-        [DllImport ("libbanshee")]
+        [DllImport ("libbanshee.dll")]
         private static extern void bp_equalizer_get_bandrange (HandleRef player, out int min, out int max);
         
-        [DllImport ("libbanshee")]
+        [DllImport ("libbanshee.dll")]
         private static extern uint bp_equalizer_get_nbands (HandleRef player);
         
-        [DllImport ("libbanshee")]
+        [DllImport ("libbanshee.dll")]
         private static extern void bp_equalizer_get_frequencies (HandleRef player,
             [MarshalAs (UnmanagedType.LPArray)] out double [] freq);
             
-        [DllImport ("libbanshee")]
+        [DllImport ("libbanshee.dll")]
         private static extern void bp_replaygain_set_enabled (HandleRef player, bool enabled);
         
-        [DllImport ("libbanshee")]
+        [DllImport ("libbanshee.dll")]
         private static extern bool bp_replaygain_get_enabled (HandleRef player);
 
         [DllImport ("libbanshee")]

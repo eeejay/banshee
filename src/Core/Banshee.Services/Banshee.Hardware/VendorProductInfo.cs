@@ -38,7 +38,8 @@ namespace Banshee.Hardware
         {
             vendor_name = vendorName;
             product_name = productName;
-            VendorProductId = vendorProductId;
+            vendor_id = (short)(vendorProductId >> 16);
+            product_id = (short)(vendorProductId & 0xffff);
         }
     
         public VendorProductInfo (string vendorName, string productName, 

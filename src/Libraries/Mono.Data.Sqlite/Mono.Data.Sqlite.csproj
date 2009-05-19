@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <ProjectGuid>{BB1D1D81-7A74-4183-B7B1-3E78B32D42F1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <UseParentDirectoryAsNamespace>true</UseParentDirectoryAsNamespace>
+    <AssemblyName>Mono.Data.Sqlite</AssemblyName>
+    <SchemaVersion>2.0</SchemaVersion>
+    <SourceAnalysisOverrideSettingsFile>C:\Documents and Settings\Administrator\Application Data\ICSharpCode/SharpDevelop3.0\Settings.SourceAnalysis</SourceAnalysisOverrideSettingsFile>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <NoStdLib>False</NoStdLib>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\..\bin</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <DefineConstants>NET_2_0 MONO_BACKWARD_COMPAT</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="Build" command="make" workingdir="${SolutionDir}" />
+        <Command type="Execute" command="make run" workingdir="${SolutionDir}" />
+      </CustomCommands>
+    </CustomCommands>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Windows|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>Full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Mono.Data.Sqlite\SQLite3.cs" />
+    <Compile Include="Mono.Data.Sqlite\SQLite3_UTF16.cs" />
+    <Compile Include="Mono.Data.Sqlite\SQLiteBase.cs" />
+    <Compile Include="Mono.Data.Sqlite\SQLiteCommand.cs" />
+    <Compile Include="Mono.Data.Sqlite\SQLiteCommandBuilder.cs" />
+    <Compile Include="Mono.Data.Sqlite\SQLiteConnection.cs" />
+    <Compile Include="Mono.Data.Sqlite\SQLiteConnectionStringBuilder.cs" />
+    <Compile Include="Mono.Data.Sqlite\SQLiteConvert.cs" />
+    <Compile Include="Mono.Data.Sqlite\SQLiteDataAdapter.cs" />
+    <Compile Include="Mono.Data.Sqlite\SQLiteDataReader.cs" />
+    <Compile Include="Mono.Data.Sqlite\SQLiteEnlistment.cs" />
+    <Compile Include="Mono.Data.Sqlite\SQLiteException.cs" />
+    <Compile Include="Mono.Data.Sqlite\SQLiteFactory.cs" />
+    <Compile Include="Mono.Data.Sqlite\SQLiteFunction.cs" />
+    <Compile Include="Mono.Data.Sqlite\SQLiteFunctionAttribute.cs" />
+    <Compile Include="Mono.Data.Sqlite\SQLiteMetaDataCollectionNames.cs" />
+    <Compile Include="Mono.Data.Sqlite\SQLiteParameter.cs" />
+    <Compile Include="Mono.Data.Sqlite\SQLiteParameterCollection.cs" />
+    <Compile Include="Mono.Data.Sqlite\SQLiteStatement.cs" />
+    <Compile Include="Mono.Data.Sqlite\SQLiteTransaction.cs" />
+    <Compile Include="Mono.Data.Sqlite\SR.Designer.cs" />
+    <Compile Include="Mono.Data.Sqlite\SqliteDataSourceEnumerator.cs" />
+    <Compile Include="Mono.Data.Sqlite\UnsafeNativeMethods.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ProjectExtensions>
+    <MonoDevelop>
+      <Properties>
+        <Deployment.LinuxDeployData generateScript="false" />
+        <MonoDevelop.Autotools.MakefileInfo IntegrationEnabled="true" RelativeMakefileName="Makefile.am">
+          <BuildFilesVar Sync="true" Name="SOURCES" />
+          <DeployFilesVar />
+          <ResourcesVar />
+          <OthersVar />
+          <GacRefVar />
+          <AsmRefVar />
+          <ProjectRefVar />
+        </MonoDevelop.Autotools.MakefileInfo>
+      </Properties>
+    </MonoDevelop>
+  </ProjectExtensions>
+</Project>

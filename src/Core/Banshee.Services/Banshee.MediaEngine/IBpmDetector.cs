@@ -34,9 +34,23 @@ using Banshee.Collection;
 
 namespace Banshee.MediaEngine
 {
+    public delegate void BpmEventHandler (object o, BpmEventArgs args);
+    
+    public class BpmEventArgs : EventArgs
+    {
+        public SafeUri Uri { get; private set; }
+        public int Bpm { get; private set; }
+
+        public BpmEventArgs (SafeUri uri, int bpm)
+        {
+            Uri = uri;
+            Bpm = bpm;
+        }
+    }
+
     public interface IBpmDetector : IDisposable
     {
-        event Action<SafeUri, int> FileFinished;
+        event BpmEventHandler FileFinished;
 
         void ProcessFile (SafeUri uri);
         void Cancel ();

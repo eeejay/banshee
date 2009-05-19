@@ -71,12 +71,15 @@ _bp_equalizer_new (BansheePlayer *player)
                 return equalizer;
             }
             
+// TODO Windows compiler doesn't like this, I'm unsure why
+#ifndef WIN32
             GstElementFactory *efactory = gst_element_get_factory (equalizer);
             if (gst_plugin_feature_check_version (GST_PLUGIN_FEATURE (efactory), 0, 10, 9)) {
                 bp_debug ("Using system (gst-plugins-good) equalizer element");
                 player->equalizer_status = BP_EQ_STATUS_USE_SYSTEM;
                 return equalizer;
             }
+#endif
             
             bp_debug ("Buggy system equalizer found. gst-plugins-good 0.10.9 or better "
                 "required, or build Banshee with the built-in equalizer.");

@@ -34,6 +34,13 @@ namespace Banshee.Base
 {
     public static class PlatformHacks
     {
+        public static bool IsRunningUnix {
+            get {
+                int p = (int) System.Environment.OSVersion.Platform;
+                return (p == 4) || (p == 6) || (p == 128);
+            }
+        }
+
         // For the SEGV trap hack (see below)
         [DllImport ("libc")]
         private static extern int sigaction (Mono.Unix.Native.Signum sig, IntPtr act, IntPtr oact);

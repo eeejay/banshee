@@ -43,21 +43,12 @@
 #  include <gst/pbutils/pbutils.h>
 #endif
 
-typedef enum {
-    BANSHEE_LOG_TYPE_DEBUG,
-    BANSHEE_LOG_TYPE_WARNING,
-    BANSHEE_LOG_TYPE_INFORMATION,
-    BANSHEE_LOG_TYPE_ERROR
-} BansheeLogType;
-
-typedef void (* BansheeLogHandler) (BansheeLogType type, const gchar *component, const gchar *message);
-
 static gboolean gstreamer_initialized = FALSE;
 static gboolean banshee_debugging;
 static BansheeLogHandler banshee_log_handler = NULL;
 static gint banshee_version = -1;
 
-void 
+MYEXPORT void
 gstreamer_initialize (gboolean debugging, BansheeLogHandler log_handler)
 {
     if (gstreamer_initialized) {
@@ -76,7 +67,7 @@ gstreamer_initialize (gboolean debugging, BansheeLogHandler log_handler)
     gstreamer_initialized = TRUE;
 }
 
-gboolean 
+MYEXPORT gboolean 
 gstreamer_test_pipeline (gchar *pipeline)
 {
     GstElement *element = NULL;

@@ -52,7 +52,7 @@ namespace Banshee.IO.SystemIO
         }
         
         public Stream ReadStream {
-            get { return file_info.Open (FileMode.Open, FileAccess.Read); }
+            get { return file_info.Open (FileMode.Open, FileAccess.Read, FileShare.Read); }
         }
         
         public Stream WriteStream {

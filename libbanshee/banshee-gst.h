@@ -31,6 +31,13 @@
 
 #include <glib.h>
 
+#ifdef WIN32
+#define MYEXPORT __declspec(dllexport)
+#else
+#define MYEXPORT
+#endif
+
+
 #define BANSHEE_GST_ITERATOR_ITERATE(iter,child_type,child_name,free,block) { \
     gboolean iter##_done = FALSE; \
     while (!iter##_done) { \
@@ -46,6 +53,17 @@
     if (free) gst_iterator_free (iter); \
 }
 
+typedef enum {
+    BANSHEE_LOG_TYPE_DEBUG,
+    BANSHEE_LOG_TYPE_WARNING,
+    BANSHEE_LOG_TYPE_INFORMATION,
+    BANSHEE_LOG_TYPE_ERROR
+} BansheeLogType;
+
+typedef void (* BansheeLogHandler) (BansheeLogType type, const gchar *component, const gchar *message);
+
+MYEXPORT void
+gstreamer_initialize (gboolean debugging, BansheeLogHandler log_handler);
 gboolean  banshee_is_debugging ();
 guint     banshee_get_version_number ();
 

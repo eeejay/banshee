@@ -50,11 +50,23 @@
 
 #include "banshee-gst.h"
 
+#ifdef WIN32
+#define P_INVOKE __declspec(dllexport)
+#define MYEXPORT __declspec(dllexport)
+#else
 #define P_INVOKE
+#define MYEXPORT
+#endif
+
 #define IS_BANSHEE_PLAYER(e) (e != NULL)
 #define SET_CALLBACK(cb_name) { if(player != NULL) { player->cb_name = cb; } }
 
+#ifdef WIN32
+// TODO Windows doesn't like the ... varargs
+#define bp_debug(x)
+#else
 #define bp_debug(x...) banshee_log_debug ("player", x)
+#endif
 
 typedef struct BansheePlayer BansheePlayer;
 

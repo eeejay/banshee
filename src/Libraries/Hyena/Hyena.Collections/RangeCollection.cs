@@ -60,8 +60,8 @@ namespace Hyena.Collections
             
             public Range (int start, int end)
             {
-                Start = start;
-                End = end;
+                this.start = start;
+                this.end = end;
             }
 
             public override string ToString ()

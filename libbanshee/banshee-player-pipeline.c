@@ -196,9 +196,12 @@ _bp_pipeline_construct (BansheePlayer *player)
     // fall back on auto, which should work on windows, and as a last ditch, try alsa
     audiosink = gst_element_factory_make ("gconfaudiosink", "audiosink");
     if (audiosink == NULL) {
-        audiosink = gst_element_factory_make ("autoaudiosink", "audiosink");
+        audiosink = gst_element_factory_make ("directsoundsink", "audiosink");
         if (audiosink == NULL) {
-            audiosink = gst_element_factory_make ("alsasink", "audiosink");
+            audiosink = gst_element_factory_make ("autoaudiosink", "audiosink");
+            if (audiosink == NULL) {
+                audiosink = gst_element_factory_make ("alsasink", "audiosink");
+            }
         }
     }
     

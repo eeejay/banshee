@@ -55,7 +55,7 @@ namespace Banshee.GStreamer
         private BpmDetectorFinishedHandler finished_cb;
         //private BpmDetectorErrorHandler error_cb;
         
-        public event Action<SafeUri, int> FileFinished;
+        public event BpmEventHandler FileFinished;
         
         public BpmDetector ()
         {
@@ -114,9 +114,9 @@ namespace Banshee.GStreamer
         
         private void OnFileFinished (SafeUri uri, int bpm)
         {
-            Action<SafeUri, int> handler = FileFinished;
+            BpmEventHandler handler = FileFinished;
             if (handler != null) {
-                handler (uri, bpm);
+                handler (this, new BpmEventArgs (uri, bpm));
             }
         }
         
@@ -168,25 +168,25 @@ namespace Banshee.GStreamer
         private delegate void BpmDetectorFinishedHandler ();
         //private delegate void BpmDetectorErrorHandler (IntPtr error, IntPtr debug);
         
-        [DllImport ("libbanshee")]
+        [DllImport ("libbanshee.dll")]
         private static extern IntPtr bbd_new ();
 
-        [DllImport ("libbanshee")]
+        [DllImport ("libbanshee.dll")]
         private static extern void bbd_destroy (HandleRef handle);
 
-        [DllImport ("libbanshee")]
+        [DllImport ("libbanshee.dll")]
         private static extern bool bbd_get_is_detecting (HandleRef handle);
         
-        [DllImport ("libbanshee")]
+        [DllImport ("libbanshee.dll")]
         private static extern void bbd_process_file (HandleRef handle, IntPtr path);
         
-        [DllImport ("libbanshee")]
+        [DllImport ("libbanshee.dll")]
         private static extern void bbd_set_progress_callback (HandleRef handle, BpmDetectorProgressHandler callback);
         
-        [DllImport ("libbanshee")]
+        [DllImport ("libbanshee.dll")]
         private static extern void bbd_set_finished_callback (HandleRef handle, BpmDetectorFinishedHandler callback);
         
-        //[DllImport ("libbanshee")]
+        //[DllImport ("libbanshee.dll")]
         //private static extern void bbd_set_error_callback (HandleRef handle, BpmDetectorErrorHandler callback);
     }
 }

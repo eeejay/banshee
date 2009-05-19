@@ -157,17 +157,17 @@ namespace Banshee.Bpm
             }
         }
 
-        private void OnFileFinished (SafeUri uri, int bpm)
+        private void OnFileFinished (object o, BpmEventArgs args)
         {
             ThreadAssist.ProxyToMain (delegate {
                 detect_button.Sensitive = true;
 
-                if (track.Uri != uri || bpm == 0) {
+                if (track.Uri != args.Uri || args.Bpm == 0) {
                     return;
                 }
 
-                Log.DebugFormat ("Detected BPM of {0} for {1}", bpm, uri);
-                Bpm = bpm;
+                Log.DebugFormat ("Detected BPM of {0} for {1}", args.Bpm, args.Uri);
+                Bpm = args.Bpm;
                 OnChanged (null, null);
             });
         }

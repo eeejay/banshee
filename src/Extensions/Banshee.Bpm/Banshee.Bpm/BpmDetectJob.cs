@@ -131,11 +131,11 @@ namespace Banshee.Bpm
             }
         }
 
-        private void OnFileFinished (SafeUri uri, int bpm)
+        private void OnFileFinished (object o, BpmEventArgs args)
         {
             // This is run on the main thread b/c of GStreamer, so do as little as possible here
-            result_uri = uri;
-            result_bpm = bpm;
+            result_uri = args.Uri;
+            result_bpm = args.Bpm;
             result_ready_event.Set ();
         }
 

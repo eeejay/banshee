@@ -132,7 +132,7 @@ namespace Banshee.Collection.Database
             } else {
                 ModelHelper.BuildIdFilter<object> (GetSelectedObjects (), FilterColumn, null,
                     delegate (object item) {
-                        if (item != select_all_item) {
+                        if (!select_all_item.Equals (item)) {
                             return ItemToFilterValue (item);
                         }
                         return null;
