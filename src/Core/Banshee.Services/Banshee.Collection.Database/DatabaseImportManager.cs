@@ -212,7 +212,7 @@ namespace Banshee.Collection.Database
 
         private void LogError (string path, string msg)
         {
-            ErrorSource.AddMessage (Path.GetFileName (path), msg);
+            ErrorSource.AddMessage (path, msg);
             Log.Error (path, msg, false);
         }
         
