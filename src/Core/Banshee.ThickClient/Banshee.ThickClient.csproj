@@ -92,7 +92,6 @@
     <Reference Include="taglib-sharp">
       <HintPath>..\..\..\winbin\taglib-sharp.dll</HintPath>
     </Reference>
-    <Compile Include="Banshee.Gui.TrackEditor\LicenseEntry.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
