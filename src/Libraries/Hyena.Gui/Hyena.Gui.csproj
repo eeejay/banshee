@@ -105,6 +105,7 @@
     <Compile Include="Hyena.Gui.Theming\Theme.cs" />
     <Compile Include="Hyena.Gui.Theming\GtkColors.cs" />
     <Compile Include="Hyena.Gui.Theming\ThemeContext.cs" />
+    <Compile Include="Hyena.Gui.Theming\ThemeEngine.cs" />
     <Compile Include="Hyena.Gui.Theming\GtkTheme.cs" />
     <Compile Include="Hyena.Data.Gui\ListView\ListView_DragAndDrop.cs" />
     <Compile Include="Hyena.Gui\PangoCairoHelper.cs" />
