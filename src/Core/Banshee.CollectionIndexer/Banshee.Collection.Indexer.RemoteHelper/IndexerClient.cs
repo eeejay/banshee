@@ -112,8 +112,13 @@ namespace Banshee.Collection.Indexer.RemoteHelper
         {
             DisconnectFromIndexerService ();
             ResolveIndexerService ();
-            
-            Debug ("Connected to {0}", service_interface);
+
+            if (service == null) {
+                Log.Error ("Failed to connect to {0}, bailing.", service_interface);
+                return;
+            } else {
+                Debug ("Connected to {0}", service_interface);
+            }
             
             service.CleanupAndShutdown += OnCleanupAndShutdown;
             

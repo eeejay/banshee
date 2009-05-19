@@ -36,6 +36,7 @@ using Hyena;
 
 using Banshee.Base;
 using Banshee.Database;
+using Banshee.Preferences;
 using Banshee.ServiceStack;
 using Banshee.Sources;
 using Banshee.Collection.Indexer;
@@ -78,6 +79,7 @@ namespace Beroe
             ServiceManager.RegisterService<DBusServiceManager> ();
             ServiceManager.RegisterService<BansheeDbConnection> ();
             ServiceManager.RegisterService<SourceManager> ();
+            ServiceManager.RegisterService<PreferenceService> ();
             ServiceManager.RegisterService<CollectionIndexerService> ();
             ServiceManager.RegisterService<IndexerClient> ();
             ServiceManager.Run ();
