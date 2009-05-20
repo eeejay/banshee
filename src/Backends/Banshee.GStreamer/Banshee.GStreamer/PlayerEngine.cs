@@ -613,7 +613,7 @@ namespace Banshee.GStreamer
         private static extern void bp_set_buffering_callback (HandleRef player,
             BansheePlayerBufferingCallback cb);
 
-        [DllImport ("libbanshee")]
+        [DllImport ("libbanshee.dll")]
         private static extern void bp_set_video_pipeline_setup_callback (HandleRef player,
             VideoPipelineSetupHandler cb);
         
@@ -699,7 +699,7 @@ namespace Banshee.GStreamer
         [DllImport ("libbanshee.dll")]
         private static extern bool bp_replaygain_get_enabled (HandleRef player);
 
-        [DllImport ("libbanshee")]
+        [DllImport ("libbanshee.dll")]
         private static extern IntPtr clutter_gst_video_sink_new (IntPtr texture);
     }
 }
