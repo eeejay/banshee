@@ -42,13 +42,14 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="&quot;C:\Documents and Settings\Administrator\Desktop\Code\deps\gtk+-dev_2.16.0-2_win32\lib\gtk-2.0\include&quot;;&quot;C:\Documents and Settings\Administrator\Desktop\Code\deps\pango-dev_1.24.0-1_win32\include\pango-1.0&quot;;&quot;C:\Documents and Settings\Administrator\Desktop\Code\deps\cairo\include\cairo&quot;;&quot;C:\Documents and Settings\Administrator\Desktop\Code\deps\gettext\include&quot;;&quot;C:\Documents and Settings\Administrator\Desktop\Code\deps\gtk+-dev_2.16.0-2_win32\include\gtk-2.0&quot;;&quot;C:\Documents and Settings\Administrator\Desktop\Code\deps\glib\lib\glib-2.0\include&quot;;&quot;C:\Documents and Settings\Administrator\Desktop\Code\deps\gst-plugins-base\include\gstreamer-0.10&quot;;&quot;C:\Documents and Settings\Administrator\Desktop\Code\deps\gstreamer\include\gstreamer-0.10&quot;;&quot;C:\Documents and Settings\Administrator\Desktop\Code\deps\glib\include\glib-2.0&quot;"
-				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;LIBBANSHEE_EXPORTS;HAVE_CONFIG_H;HAVE_GST_PBUTILS"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;LIBBANSHEE_EXPORTS;HAVE_CONFIG_H;HAVE_GST_PBUTILS"
 				ExceptionHandling="0"
-				RuntimeLibrary="3"
+				RuntimeLibrary="2"
+				BufferSecurityCheck="false"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="true"
-				DebugInformationFormat="3"
+				DebugInformationFormat="0"
 				CallingConvention="0"
 				CompileAs="1"
 			/>
@@ -66,11 +67,14 @@
 				AdditionalDependencies="glib-2.0.lib gobject-2.0.lib gthread-2.0.lib gmodule-2.0.lib gio-2.0.lib gettextpo.lib intl.lib gstcontroller-0.10-0.lib gstbase-0.10-0.lib gstreamer-0.10-0.lib gstpbutils-0.10-0.lib gstcdda-0.10-0.lib gsttag-0.10-0.lib"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;C:\Documents and Settings\Administrator\Desktop\Code\deps\gettext\lib&quot;;&quot;C:\Documents and Settings\Administrator\Desktop\Code\deps\gst-plugins-base\lib&quot;;&quot;C:\Documents and Settings\Administrator\Desktop\Code\deps\gstreamer\lib&quot;;&quot;C:\Documents and Settings\Administrator\Desktop\Code\deps\glib\lib&quot;"
-				GenerateDebugInformation="true"
-				AssemblyDebug="1"
+				ManifestFile="$(OutDir)\$(TargetName).manifest"
+				IgnoreAllDefaultLibraries="false"
+				GenerateDebugInformation="false"
+				AssemblyDebug="0"
 				SubSystem="2"
 				ResourceOnlyDLL="true"
 				TargetMachine="1"
+				AllowIsolation="true"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -96,10 +100,10 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="Release"
+			OutputDirectory="..\bin"
 			IntermediateDirectory="Release"
 			ConfigurationType="2"
-			ManagedExtensions="1"
+			ManagedExtensions="0"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -118,12 +122,15 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;LIBBANSHEE_EXPORTS;"
+				AdditionalIncludeDirectories="&quot;C:\Documents and Settings\Administrator\Desktop\Code\deps\gtk+-dev_2.16.0-2_win32\lib\gtk-2.0\include&quot;;&quot;C:\Documents and Settings\Administrator\Desktop\Code\deps\pango-dev_1.24.0-1_win32\include\pango-1.0&quot;;&quot;C:\Documents and Settings\Administrator\Desktop\Code\deps\cairo\include\cairo&quot;;&quot;C:\Documents and Settings\Administrator\Desktop\Code\deps\gettext\include&quot;;&quot;C:\Documents and Settings\Administrator\Desktop\Code\deps\gtk+-dev_2.16.0-2_win32\include\gtk-2.0&quot;;&quot;C:\Documents and Settings\Administrator\Desktop\Code\deps\glib\lib\glib-2.0\include&quot;;&quot;C:\Documents and Settings\Administrator\Desktop\Code\deps\gst-plugins-base\include\gstreamer-0.10&quot;;&quot;C:\Documents and Settings\Administrator\Desktop\Code\deps\gstreamer\include\gstreamer-0.10&quot;;&quot;C:\Documents and Settings\Administrator\Desktop\Code\deps\glib\include\glib-2.0&quot;"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;LIBBANSHEE_EXPORTS;HAVE_CONFIG_H;HAVE_GST_PBUTILS;"
+				ExceptionHandling="0"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="true"
 				DebugInformationFormat="3"
+				CompileAs="1"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -136,12 +143,15 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="glib-2.0.lib gobject-2.0.lib gthread-2.0.lib gmodule-2.0.lib gio-2.0.lib gettextpo.lib intl.lib gstcontroller-0.10-0.lib gstbase-0.10-0.lib gstreamer-0.10-0.lib gstpbutils-0.10-0.lib gstcdda-0.10-0.lib gsttag-0.10-0.lib"
 				LinkIncremental="2"
+				AdditionalLibraryDirectories="&quot;C:\Documents and Settings\Administrator\Desktop\Code\deps\gettext\lib&quot;;&quot;C:\Documents and Settings\Administrator\Desktop\Code\deps\gst-plugins-base\lib&quot;;&quot;C:\Documents and Settings\Administrator\Desktop\Code\deps\gstreamer\lib&quot;;&quot;C:\Documents and Settings\Administrator\Desktop\Code\deps\glib\lib&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="2"
-				OptimizeReferences="2"
-				EnableCOMDATFolding="2"
-				EntryPointSymbol="main"
+				OptimizeReferences="1"
+				EnableCOMDATFolding="1"
+				EntryPointSymbol=""
+				ResourceOnlyDLL="true"
 				TargetMachine="1"
 			/>
 			<Tool
