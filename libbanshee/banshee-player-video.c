@@ -251,7 +251,7 @@ bp_video_window_expose (BansheePlayer *player, GdkWindow *window, gboolean direc
 P_INVOKE BpVideoDisplayContextType
 bp_video_get_display_context_type (BansheePlayer *player)
 {
-    return player->video_display_contex_type;
+    return player->video_display_context_type;
 }
 
 P_INVOKE void

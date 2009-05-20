@@ -143,7 +143,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="glib-2.0.lib gobject-2.0.lib gthread-2.0.lib gmodule-2.0.lib gio-2.0.lib gettextpo.lib intl.lib gstcontroller-0.10-0.lib gstbase-0.10-0.lib gstreamer-0.10-0.lib gstpbutils-0.10-0.lib gstcdda-0.10-0.lib gsttag-0.10-0.lib"
+				AdditionalDependencies="glib-2.0.lib gobject-2.0.lib gthread-2.0.lib gmodule-2.0.lib gio-2.0.lib gettextpo.lib intl.lib gstcontroller-0.10-0.lib gstbase-0.10-0.lib gstreamer-0.10-0.lib gstpbutils-0.10-0.lib gstcdda-0.10-0.lib gsttag-0.10-0.lib gstfft-0.10-0.lib"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;C:\Documents and Settings\Administrator\Desktop\Code\deps\gettext\lib&quot;;&quot;C:\Documents and Settings\Administrator\Desktop\Code\deps\gst-plugins-base\lib&quot;;&quot;C:\Documents and Settings\Administrator\Desktop\Code\deps\gstreamer\lib&quot;;&quot;C:\Documents and Settings\Administrator\Desktop\Code\deps\glib\lib&quot;"
 				GenerateDebugInformation="true"
