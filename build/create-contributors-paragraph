@@ -1,0 +1,31 @@
+#!/usr/bin/perl
+
+open (IN, '../src/Core/Banshee.Core/Resources/contributors.xml');
+
+my @names;
+while (my $line = readline(IN)) {
+    if ($line !~ m/artist/i and $line =~ m/>([^<]+)</) {
+        push @names, $1;
+    }
+}
+sort (@names);
+
+my $i = 80;
+my $indent = 4;
+my $j = 1;
+
+foreach my $name (@names) {
+    if ($i + length($name) + 2 >= 80) {
+        $i = $indent - 1;
+        print "\n";
+        print ' ' x $indent;
+    }
+
+    print $name;
+    print ", ";
+    $i += length ($name) + 2;
+    $j++;
+}
+print "\n";
+
+close (IN);
