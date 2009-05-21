@@ -141,7 +141,7 @@ namespace Banshee.PlayQueue
                     DbId, prepend ? 0 : MaxViewOrder));
             ServiceManager.DbConnection.Execute (insert_command, trackId);
 
-            Reload ();
+            OnTracksAdded ();
             NotifyUser ();
         }
         
