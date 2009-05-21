@@ -1,5 +1,5 @@
 ===============================================================================
-WELCOME TO BANSHEE 1.4.2 - Released January 20, 2009 - "The Obama Release"
+WELCOME TO BANSHEE 1.5.0 - Released May 22, 2009 - "The Keyboard Cat Release"
 ===============================================================================
 
   * Banshee is a multimedia management and playback application for GNOME.
@@ -10,14 +10,15 @@ WELCOME TO BANSHEE 1.4.2 - Released January 20, 2009 - "The Obama Release"
     experience automatic cover art fetching as you listen; and easily browse,
     search, and control your media collection."
 
-  * Learn More: http://banshee-project.org/download/archives/1.4.2/
+  * Learn More: http://banshee-project.org/download/archives/1.5.0/
 
 
 ===============================================================================
 NEW AWESOME FEATURES AND ENHANCEMENTS
 ===============================================================================
 
-    Banshee 1.4.2 is primarily a bug fix release, and is considered stable.
+    Banshee 1.5.0 is an unstable, beta release.  It brings many big changes and
+    new features, and is the first release in what will become 1.6.0.
     
     Improvements:
 
@@ -66,9 +67,9 @@ SOURCES / PACKAGES
 Sources
 -------
 
-    * Banshee 1.4.2 Tarballs:
-      http://download.banshee-project.org/banshee/banshee-1-1.4.2.tar.bz2
-      http://download.banshee-project.org/banshee/banshee-1-1.4.2.tar.gz
+    * Banshee 1.5.0 Tarballs:
+      http://download.banshee-project.org/banshee/banshee-1-1.5.0.tar.bz2
+      http://download.banshee-project.org/banshee/banshee-1-1.5.0.tar.gz
 
 Packages
 --------
@@ -84,13 +85,13 @@ Packages
 
     Binaries for Mac OS X 10.4 and 10.5:
 
-    * http://download.banshee-project.org/banshee/banshee-1-1.4.2.macosx.intel.dmg
+    * http://download.banshee-project.org/banshee/banshee-1-1.5.0.macosx.intel.dmg
 
 ChangeLogs & Checksums
 ----------------------
 
-    * http://download.banshee-project.org/banshee/banshee-1-1.4.2.changes
-    * http://download.banshee-project.org/banshee/banshee-1-1.4.2.sha1sum
+    * http://download.banshee-project.org/banshee/banshee-1-1.5.0.changes
+    * http://download.banshee-project.org/banshee/banshee-1-1.5.0.sha1sum
 
 
 ===============================================================================
@@ -151,7 +152,7 @@ REPORT BUGS - HELP THE PROJECT - GROW THE COMMUNITY
     hesitate to file bugs!
 
     * http://banshee-project.org/contribute/file-bugs
-    * http://bugzilla.gnome.org/enter_bug.cgi?product=banshee&version=1.4.2
+    * http://bugzilla.gnome.org/enter_bug.cgi?product=banshee&version=1.5.0
 
 
 ===============================================================================
@@ -164,35 +165,45 @@ Contributors For This Release
     The following people directly contributed to the release of this version
     of Banshee. Without their help, there would be no release!
 
-      Aaron Bockover, Benjamín Valero Espinos, Bertrand Lorentz,
-      Bob Copeland, Brandon Perry, Christoph Burgdorf, Eoin Hennessy,
-      Erik Schmidt, Félix Velasco, Gabriel Burt, Ivan N. Zlatev,
-      John Millikin, Nicholas Doyle, Wouter Bolsterlee
+      Aaron Bockover, Alexander Kojevnikov, Alex Launi, Andreas Neustifter,
+      Andrés G. Aragoneses, Bertrand Lorentz, Brian Lucas, Chris Howie,
+      Chris Jones, Christian Krause, Christoph Burgdorf, Cody Russell,
+      Daniel Siegel, David Spreen, Diego E. Pettenò, Eoin Hennessy,
+      Félix Velasco, Gabriel Burt, John Millikin, Matt Enright, Mike Urbanski,
+      Moritz Schallaböck, Neil Loknath, Nicolò Chieffo, Paul Lange,
+      Przemysław Grzegorczyk, Roderich Schupp, Valentin Sawadski,
+      William Pettersson, Wouter Bolsterlee
 
     The following people contributed updated translations to this release. 
     Without them, our project's reach would be much more limited.
  
-      Benjamin Valero, Daniel Nylander, Fábio Nogueir, Gabor Kelemen,
-      Gianvito Cavasoli, Gintautas Miliauskas, Lasse Bang Mikkelsen,
-      Nickolay V. Shmyrev, Og Maciel, Tomasz Dominikowski, Wouter Bolsterlee
+      António Lima, Benjamin Valero, Daniel Nylander, Daniel S. Koda,
+      Gabor Kelemen, Hendrik Richter, Inaki Larranaga Murgoitio, Jen Ockwell,
+      Jiri Eischmann, Jordi Mas, Mario Blättermann, Maxim V. Dziumanenko,
+      Philip Withnall, Sweta Kothari, Ville-Pekka Vainio, Wadim Dziedzic,
+      Wouter Bolsterlee
 
 Contributors In Past Releases
 -----------------------------
 
-    Aaron Bockover, Alan McGovern, Alexander Hixon, Alexandros Frantzis,
-    Alex Kloss, Alex Launi, Alp Toker, Andrés G. Aragoneses, Andy Midgette,
-    Arthur Carli, Aydemir Ulaş Şahin, Benjamín Valero Espinosa, Ben Maur
-    Bertrand Lorentz, Bill Dawson, Bob Copeland, Bojan Rajkovic, Brad Taylor,
-    Brian Nickel, Brian Teague, Chris Howie, Chris Lahey, Christian Krause,
-    Christopher Halse Rogers, Chris Toshok, Chris Turchin, Daniel Munkton,
-    Dan Wilson, Dan Winship, David Spreen, Eoin Hennessy, Eric Butler, 
-    Fabian Jost, Félix Velasco, Fredrik Hedberg, Gabriel Burt, 
-    Hans Petter Jansson, Iain Lane, Igor Guerrero Fonseca, Ilya Konstantinov, 
-    Ivan N. Zlatev, James Willcox, Jan Arne Petersen, Jason Conti, Jeff Tickle, 
-    Jorge Castro, Jo Shields, Juri Pakaste, Ken Vandine, Larry Ewing, 
-    Lauri Kotilainen, Michael Kaiser, Michael Monreal, Miguel de Icaza, 
-    Mike Urbanski, Nathan Palmer, Nicholas Parker, Oscar Forero, Pacho Ramos, 
-    Patrick van Staveren, Pepijn van de Geer, Peter de Kraker, 
-    Ruben Vermeersch, Sandy Armstrong, Scott Peterson, Sebastian Dröge,
-    Tim Yamin, Todd Berman, Trey Ethridge, Will Farrington, Wouter Bolsterlee
+    Aaron Bockover, Gabriel Burt, Bertrand Lorentz, John Millikin, 
+    Scott Peterson, Alan McGovern, Alex Kloss, Alex Launi, Alexander Hixon, 
+    Alexandros Frantzis, Alp Toker, Andrés G. Aragoneses, Andrew Conkling, 
+    Andy Midgette, Arthur Carli, Aydemir Ulaş Şahin, Ben Maurer, 
+    Benjamín Valero Espinosa, Bill Dawson, Bob Copeland, Bojan Rajkovic, 
+    Brad Taylor, Brandon Perry, Brian Nickel, Brian Teague, Chris Howie, 
+    Chris Jones, Chris Lahey, Chris Toshok, Chris Turchin, Christian Krause, 
+    Christoph Burgdorf, Christopher Halse Rogers, Cosmin Banu, Dan Wilson, 
+    Dan Winship, Daniel Munkton, David Spreen, Eoin Hennessy, Eric Butler, 
+    Erik Schmidt, Fabian Jost, Fredrik Hedberg, Félix Velasco, 
+    Fredrik Hedberg, Hans Petter Jansson, Iain Lane, Igor Guerrero Fonseca, 
+    Ilya Konstantinov, Ivan N. Zlatev, James Willcox, Jan Arne Petersen, 
+    Jason Conti, Jeff Tickle, Jo Shields, Jorge Castro, Juri Pakaste, 
+    Ken Vandine, Larry Ewing, Lauri Kotilainen, Michael Kaiser, 
+    Michael Monreal, Miguel de Icaza, Mike Urbanski, Nathan Palmer, 
+    Nicholas Doyle, Nicholas Parker, Oscar Forero, Pacho Ramos, 
+    Patrick van Staveren, Paul Lange, Pepijn van de Geer, Peter de Kraker, 
+    Ruben Vermeersch, Sandy Armstrong, Sebastian Dröge, Tim Yamin, 
+    Todd Berman, Trey Ethridge, Will Farrington, William Pettersson, 
+    Wouter Bolsterlee
 
