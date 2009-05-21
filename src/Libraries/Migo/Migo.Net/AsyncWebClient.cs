@@ -30,6 +30,7 @@ using System;
 using System.IO;
 using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.ComponentModel;
 
@@ -48,6 +49,8 @@ namespace Migo.Net
         private int range = 0;
         private int timeout = (120 * 1000); // 2 minutes
         private DateTime ifModifiedSince = DateTime.MinValue;
+        private static Regex encoding_regexp = new Regex (@"encoding=[""']([^""']+)[""']", 
+                                                    RegexOptions.Compiled | RegexOptions.IgnoreCase);
         
         private string fileName;
 
@@ -724,11 +727,9 @@ namespace Migo.Net
     
                         // Workaround if the string is a XML to set the encoding from it
                         if (s.StartsWith("<?xml")) {
-                            string auxStr = "encoding=";
-                            int startIndex = s.IndexOf (auxStr) + auxStr.Length + 1;
-                            if (startIndex > auxStr.Length + 1) {
-                                int endIndex = s.IndexOf ('\"', startIndex);
-                                string encodingStr = s.Substring (startIndex, endIndex - startIndex);
+                            Match match = encoding_regexp.Match (s);
+                            if (match.Success && match.Groups.Count > 0) {
+                                string encodingStr = match.Groups[1].Value;
                                 try {
                                     Encoding enc = Encoding.GetEncoding (encodingStr);
                                     if (!enc.Equals (Encoding)) {
@@ -737,7 +738,8 @@ namespace Migo.Net
                                 } catch (ArgumentException) {}
                             }
                         }
-                    } catch {
+                    } catch (Exception ex) {
+                        Hyena.Log.DebugException (ex);
                         s = String.Empty;
                     }
                 
