@@ -66,6 +66,12 @@ namespace Lastfm
             set { password = String.IsNullOrEmpty (value) ? null : value; }
         }
 
+        private string scrobble_url;
+        public string ScrobbleUrl {
+            get { return scrobble_url; }
+            set { scrobble_url = value; }
+        }
+
         public void SignUp ()
         {
             Browser.Open ("http://www.last.fm/join");

@@ -82,6 +82,7 @@ namespace Banshee.Lastfm.Audioscrobbler
             if (account.UserName == null) {
                 account.UserName = LastUserSchema.Get ();
                 account.CryptedPassword = LastPassSchema.Get ();
+                account.ScrobbleUrl = LastScrobbleUrlSchema.Get ();
             }
             
             if (LastfmCore.UserAgent == null) {
@@ -316,6 +317,13 @@ namespace Banshee.Lastfm.Audioscrobbler
             "plugins.lastfm", "password_hash", "", "Last.fm password", "Last.fm password (hashed)"
         );
    
+        public static readonly SchemaEntry<string> LastScrobbleUrlSchema = new SchemaEntry<string> (
+            "plugins.audioscrobbler", "api_url",
+            null,
+            "AudioScrobbler API URL",
+            "URL for the AudioScrobbler API (supports turtle.libre.fm, for instance)"
+        );
+
         public static readonly SchemaEntry<bool> EngineEnabledSchema = new SchemaEntry<bool> (
             "plugins.audioscrobbler", "engine_enabled",
             false,

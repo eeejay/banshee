@@ -385,9 +385,16 @@ namespace Lastfm
             string timestamp = UnixTime();
             string security_token = Hyena.CryptoUtil.Md5Encode
                 (LastfmCore.Account.CryptedPassword + timestamp);
+            
+            string api_url = LastfmCore.Account.ScrobbleUrl;
+            if (String.IsNullOrEmpty (api_url)) {
+                api_url = SCROBBLER_URL;
+            } else {
+                Log.DebugFormat ("Scrobbling to non-standard API URL: {0}", api_url);
+            }
 
             string uri = String.Format ("{0}?hs=true&p={1}&c={2}&v={3}&u={4}&t={5}&a={6}",
-                                        SCROBBLER_URL,
+                                        api_url,
                                         SCROBBLER_VERSION,
                                         CLIENT_ID, CLIENT_VERSION,
                                         HttpUtility.UrlEncode (LastfmCore.Account.UserName),
