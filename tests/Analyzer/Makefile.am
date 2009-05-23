@@ -9,5 +9,7 @@ $(ANALYZER_EXE): Analyzer.cs
 
 all: $(ALL_TARGETS)
 
+EXTRA_DIST = Analyzer.cs
+
 CLEANFILES = *.exe *.mdb
 MAINTAINERCLEANFILES = Makefile.in

@@ -177,7 +177,6 @@ src/Extensions/Banshee.MiniMode/Resources/minimode.glade
 src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs
 src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/X11NotificationAreaBox.cs
 src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/NowPlayingSource.cs
-src/Extensions/Banshee.NowPlaying.Clutter/Banshee.NowPlaying.Clutter/NowPlayingSource.cs
 src/Extensions/Banshee.PlayerMigration/Banshee.PlayerMigration/AmarokPlayerImportSource.cs
 src/Extensions/Banshee.PlayerMigration/Banshee.PlayerMigration/RhythmboxPlayerImportSource.cs
 src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueActions.cs
