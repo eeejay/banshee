@@ -19,7 +19,7 @@ AC_INIT([banshee-1],
 	[banshee_version],
 	[http://bugzilla.gnome.org/enter_bug.cgi?product=banshee])
 
-AM_INIT_AUTOMAKE([1.9 dist-bzip2 tar-ustar])
+AM_INIT_AUTOMAKE([1.9 dist-bzip2 tar-ustar foreign])
 AM_MAINTAINER_MODE
 AM_CONFIG_HEADER([config.h])
 AC_SUBST([ACLOCAL_AMFLAGS], ["-I build/m4/shamrock -I build/m4/banshee -I build/m4/shave \${ACLOCAL_FLAGS}"])

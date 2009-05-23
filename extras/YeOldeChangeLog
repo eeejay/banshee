@@ -1,3 +1,14 @@
+2009-05-22  Aaron Bockover  <abock@gnome.org>
+
+	Friends, after 4 years and 3 months, this file has come to an end. This
+	was a good file, a noble file, and it should be respected and cherished.
+	Many wonderful people have contributed to this file. I thank them all.
+
+	The spirit of this file will live on in git log, and whatever worthy
+	change log tracking facility we may adopt in the future.
+
+	Also, I win. First and Last post. BUUUUUUURRRRRNNNN.
+
 2009-04-16  Gabriel Burt  <gabriel.burt@gmail.com>
 
 	* src/Core/Banshee.Core/Banshee.Base/Tests/TaglibReadWriteTests.cs:
