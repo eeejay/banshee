@@ -19,6 +19,20 @@ uninstall-hook:
 		rmdir $(pkglibdir); \
 	fi
 
+dist-hook:
+	@( \
+	  echo "`date +%Y-%m-%d`  The Banshee Project  <http://banshee-project.org>"; \
+	  echo; \
+	  echo "@Banshee $(VERSION)"; \
+	  echo; \
+	  echo "@You probably are looking for the useful change summary detailed"; \
+	  echo "@in the NEWS file, perfect for downstream maintainers."; \
+	  echo; \
+	  echo "@If you care about commit-level changes, use 'git log' against"; \
+	  echo "@a clone of our git repository (git://git.gnome.org/banshee)."; \
+	  echo; \
+	) | tr '@' '\t' > $(top_distdir)/ChangeLog
+
 # Developer targets
 
 LC_BUILD = $(top_builddir)/bin/share/locale
