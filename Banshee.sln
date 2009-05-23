@@ -39,8 +39,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Extensions", "Extensions", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Banshee.Bpm", "src\Extensions\Banshee.Bpm\Banshee.Bpm.csproj", "{471E44F3-B404-413B-8E95-BCCA70C6E834}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Banshee.NowPlaying.Clutter", "src\Extensions\Banshee.NowPlaying.Clutter\Banshee.NowPlaying.Clutter.csproj", "{694E4C7C-9385-47D6-A76E-911FC057E89D}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Banshee.SqlDebugConsole", "src\Extensions\Banshee.SqlDebugConsole\Banshee.SqlDebugConsole.csproj", "{0E1A7F20-E49B-4F9D-AEA0-2B1AD64326AC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Banshee.InternetRadio", "src\Extensions\Banshee.InternetRadio\Banshee.InternetRadio.csproj", "{12984BDF-C565-4452-AD47-79BD3C440E28}"
