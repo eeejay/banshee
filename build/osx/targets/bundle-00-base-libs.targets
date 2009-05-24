@@ -1,6 +1,7 @@
 TARGETS=(
     # name (%n)        version (%v)  dir (%d)  file (%f)   download uri                    configure args
     "libxml2           2.6.30        %n-%v     %d.tar.bz2  http://ftp.gnome.org/pub/gnome/sources/libxml2/2.6/%f"
+    "libproxy          0.2.3         %n-%v     %d.tar.gz   http://libproxy.googlecode.com/files/%f"
     "intltool          0.40.6        %n-%v     %d.tar.bz2  http://ftp.gnome.org/pub/gnome/sources/intltool/0.40/%f"
-    "libsoup           2.26.2        %n-%v     %d.tar.bz2  http://ftp.gnome.org/pub/gnome/sources/libsoup/2.26/%f  --disable-gtk-doc"
+    "libsoup           2.26.2        %n-%v     %d.tar.bz2  http://ftp.gnome.org/pub/gnome/sources/libsoup/2.26/%f  --without-gnome --disable-gtk-doc"
 )
