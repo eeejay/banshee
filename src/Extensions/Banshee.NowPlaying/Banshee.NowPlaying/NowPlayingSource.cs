@@ -47,11 +47,6 @@ namespace Banshee.NowPlaying
         
         public NowPlayingSource () : base ("now-playing", Catalog.GetString ("Now Playing"), 10, "now-playing")
         {
-            if (Banshee.ServiceStack.ServiceManager.PlayerEngine.VideoDisplayContextType != 
-                Banshee.MediaEngine.VideoDisplayContextType.GdkWindow) {
-                throw new ApplicationException ("Unsupported video display context");
-            }
-        
             now_playing_interface = new NowPlayingInterface ();
         
             Properties.SetString ("Icon.Name", "applications-multimedia");
