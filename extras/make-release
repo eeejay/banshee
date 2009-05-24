@@ -5,7 +5,7 @@ function preparing_to () {
 		printf "\rPreparing to %s in %d ... " "$1" $i
 		sleep 1
 	done
-	echo
+	printf "\rRunning %s ...                        \n\n" "$1"
 }
 
 function bail () {
@@ -39,6 +39,7 @@ Release Summary
     User:  ${WEB_USER}
     Host:  ${WEB_HOST}
     Path:  ${WEB_PATH}
+    DOAP:  ${WEB_DOAP_PATH}
 
   git tag: ${TAG_NAME}
 
@@ -107,6 +108,11 @@ function upload_release () {
 		|| bail "Could not create the LATEST-IS-${PACKAGE_VERSION} link"
 	
 	rm -rf release-data
+
+	[[ -z "${WEB_DOAP_PATH}" ]] || {
+		scp *.doap ${WEB_USER}@${WEB_HOST}:${WEB_DOAP_PATH} \
+			|| bail "Could not upload DOAP file"
+	}
 }
 
 function tag_release () {

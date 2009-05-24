@@ -4,12 +4,46 @@
          xmlns:gnome="http://api.gnome.org/doap-extensions#"
          xmlns="http://usefulinc.com/ns/doap#">
 
+  <!-- Project Info -->
+  <shortname>banshee</shortname>
+  <created>2005-02-17</created>
+
   <name xml:lang="en">Banshee Media Player</name>
   <shortdesc xml:lang="en">Play and organize your media collection</shortdesc>
+
   <homepage rdf:resource="http://banshee-project.org/" />
+  <download-page rdf:resource="http://banshee-project.org/download" />
   <mailing-list rdf:resource="http://mail.gnome.org/mailman/listinfo/banshee-list" />
   <bug-database rdf:resource="http://bugzilla.gnome.org/" />
+  <license rdf:resource="http://usefulinc.com/doap/licenses/mit" />
 
+  <!-- Current Releases -->
+  <release>
+    <Version>
+      <name>1.4.4 Stable Release</name>
+      <branc>stable</branch>
+      <created>2009-05-26</created>
+      <revision>1.4.4</revision>
+      <file-release rdf:resource="http://download.banshee-project.org/banshee/stable/1.4.4/banshee-1-1.4.4.tar.bz2" />
+    </Version>
+    <Version>
+      <name>1.5.0 Unstable Release</name>
+      <branch>unstable</branch>
+      <created>2009-05-26</created>
+      <revision>1.5.0</revision>
+      <file-release rdf:resource="http://download.banshee-project.org/banshee/unstable/1.5.0/banshee-1-1.5.0.tar.bz2" />
+    </Version>
+  </release>
+
+  <!-- Version Control -->
+  <repository>
+    <GitRepository>
+      <browse rdf:resource="http://git.gnome.org/cgit/banshee" />
+      <location rdf:resource="git://git.gnome.org/banshee" />
+    </GitRepository>
+  </repository>
+
+  <!-- Maintainers -->
   <maintainer>
     <foaf:Person>
       <foaf:name>Aaron Bockover</foaf:name>
