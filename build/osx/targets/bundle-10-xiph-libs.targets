@@ -5,9 +5,7 @@ TARGETS=(
     "libogg            1.1.3         %n-%v     %d.tar.gz   ${XIPH_DOWNLOAD_URI}/ogg/%f     "
     "libvorbis         1.2.0         %n-%v     %d.tar.gz   ${XIPH_DOWNLOAD_URI}/vorbis/%f  "
     "flac              1.2.1         %n-%v     %d.tar.gz   ${XIPH_DOWNLOAD_URI}/%n/%f      --disable-asm-optimizations --disable-cpplibs"
-    "libtheora         1.0           %n-%v     %d.tar.gz   ${XIPH_DOWNLOAD_URI}/theora/%f  "
+    "libtheora         1.1alpha1     %n-%v     %d.tar.gz   ${XIPH_DOWNLOAD_URI}/theora/%f  "
     "speex             1.2rc1        %n-%v     %d.tar.gz   ${XIPH_DOWNLOAD_URI}/%n/%f      "
 )
-
-# FLAC is broken currently in the build
 

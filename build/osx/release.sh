@@ -36,9 +36,9 @@ pushd $SOURCE_DIR &>/dev/null
 	--disable-gnome \
 	--disable-docs \
 	--enable-osx \
-	--with-vendor-build-id="Banshee:OSX-10.5-Intel" || "Configure failed"
+	--with-vendor-build-id="Banshee:OSX-10.5-Intel" || bail "Configure failed"
 make || bail "Build failed"
-make install || "Install failed"
+make install || bail "Install failed"
 popd &>/dev/null
 
 ./make-dmg-bundle.sh || "Image creation failed"
