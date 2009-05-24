@@ -1,0 +1,152 @@
+#!/bin/bash
+
+function preparing_to () {
+	for ((i=10; i > 0; i--)); do
+		printf "\rPreparing to %s in %d ... " "$1" $i
+		sleep 1
+	done
+	echo
+}
+
+function bail () {
+	echo "Error: $@" 1>&2
+	exit 1
+}
+
+PACKAGE_INFO=$(./configure -V | head -n1)
+PACKAGE_NAME=$(echo "$PACKAGE_INFO" | cut -f1 -d' ')
+PACKAGE_VERSION=$(echo "$PACKAGE_INFO" | cut -f3 -d' ')
+TAG_NAME="release-test-${PACKAGE_VERSION}"
+
+RELEASE_TYPE="stable"
+[[ "x$1" = "x--unstable" ]] && RELEASE_TYPE="unstable"
+
+RELEASE_RC_FILE="release-rc"
+. "$RELEASE_RC_FILE" 2>/dev/null \
+	|| bail "Could not load release RC file: '$RELEASE_RC_FILE'"
+
+[[ -z "${PACKAGE_NAME}" || -z "${PACKAGE_VERSION}" ]] \
+	&& bail "Could not figure out package information. Do you have a configure?"
+
+cat <<EOF
+Release Summary
+
+  Package: ${PACKAGE_NAME}
+  Version: ${PACKAGE_VERSION}
+  Release: ${RELEASE_TYPE}
+
+  Release Upload:
+    User:  ${WEB_USER}
+    Host:  ${WEB_HOST}
+    Path:  ${WEB_PATH}
+
+  git tag: ${TAG_NAME}
+
+  OS X Build Configuration:
+EOF
+
+if [[ -z $OSX_USER ]]; then
+	echo "    Disabled"
+else
+cat <<EOF
+    User:  ${OSX_USER}
+    Host:  ${OSX_HOST}
+    Path:  ${OSX_BUILD_DIR}
+    git:   ${OSX_GIT}
+EOF
+fi
+
+echo
+read -p "Press enter if the configuration is correct..."
+echo
+
+function hook_defined () {
+	type $1 2>/dev/null | grep -q function
+}
+
+function run_hook () {
+	hook_defined $1 && $1
+}
+
+function distcheck () {
+	preparing_to "make distcheck"
+	make distcheck || bail "distcheck failed"
+}
+
+function prepare_upload () {
+	preparing_to "create upload data"
+
+	rm -rf release-data
+	mkdir release-data || bail "Could not create release directory"
+
+	find -maxdepth 1 \( \
+		-name \*.zip -o \
+		-name \*.bz2 -o \
+		-name \*.gz -o \
+		-name \*.dmg \
+		\) -exec cp -a {} release-data \;
+
+	cp -a NEWS release-data/${PACKAGE_NAME}-${PACKAGE_VERSION}.news \
+		|| bail "Could not copy NEWS file"
+
+	(cd release-data && {
+		sha256sum * > ${PACKAGE_NAME}-${PACKAGE_VERSION}.sha256sum \
+			|| bail "Could not sha256sum the release files"
+	}) || exit 1
+}
+
+function upload_release () {
+	preparing_to "upload release files"
+
+	scp -r release-data ${WEB_USER}@${WEB_HOST}:${WEB_PATH}/${PACKAGE_VERSION} \
+		|| bail "Uploading release failed"
+
+	( ssh ${WEB_USER}@${WEB_HOST} rm -f ${WEB_PATH}/LATEST-IS\* &&
+	  ssh ${WEB_USER}@${WEB_HOST} ln -s ${PACKAGE_VERSION} \
+		${WEB_PATH}/LATEST-IS-${PACKAGE_VERSION} ) \
+		|| bail "Could not create the LATEST-IS-${PACKAGE_VERSION} link"
+	
+	rm -rf release-data
+}
+
+function tag_release () {
+	preparing_to "tag release as '${TAG_NAME}'"
+	git tag -a -m "${PACKAGE_VERSION} ${RELEASE_TYPE} release" \
+		${TAG_NAME} || bail "Could not create tag"
+	git push origin ${TAG_NAME} || bail "Failed to push tag to remote"
+}
+
+function post_release () {
+	firefox "http://bugzilla.gnome.org/editversions.cgi?action=new&product=banshee&version=${PACKAGE_VERSION}"
+}
+
+# Build the OS X binary
+function osx_run_remote () {
+	ssh ${OSX_USER}@${OSX_HOST} "cd ${OSX_BUILD_DIR}; $@"
+}
+
+function osx_build_dmg () {
+	osx_run_remote ${OSX_GIT} pull \
+		|| bail "Could not update git clone"
+
+	scp ${PACKAGE_NAME}-${PACKAGE_VERSION}.tar.bz2 \
+		${OSX_USER}@${OSX_HOST}:${OSX_BUILD_DIR} \
+		|| bail "Could not transfer tarball to OS X build machine"
+
+	osx_run_remote ./release.sh ${PACKAGE_VERSION} \
+		|| bail "OS X build failed"
+	
+	scp ${OSX_USER}@${OSX_HOST}:${OSX_BUILD_DIR}/${PACKAGE_NAME}-${PACKAGE_VERSION}\*.dmg . \
+		|| bail "Could not fetch DMG image from OS X build machine"
+}
+
+distcheck
+osx_build_dmg
+prepare_upload
+upload_release
+tag_release
+post_release
+
+echo
+echo "Congratulations, you have released ${PACKAGE_VERSION}!"
+echo
