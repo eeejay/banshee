@@ -21,7 +21,7 @@
   <release>
     <Version>
       <name>1.4.4 Stable Release</name>
-      <branc>stable</branch>
+      <branch>stable</branch>
       <created>2009-05-26</created>
       <revision>1.4.4</revision>
       <file-release rdf:resource="http://download.banshee-project.org/banshee/stable/1.4.4/banshee-1-1.4.4.tar.bz2" />
