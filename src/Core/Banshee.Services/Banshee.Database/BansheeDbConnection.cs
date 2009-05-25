@@ -94,7 +94,7 @@ namespace Banshee.Database
             bool needs_analyze = false;
             long analyze_threshold = configuration.Get<long> ("Database", "AnalyzeThreshold", 100);
             string [] tables_with_indexes = {"CoreTracks", "CoreArtists", "CoreAlbums",
-                "CorePlaylistEntries", "CoreSmartPlaylistEntries", "PodcastItems", "PodcastEnclosures",
+                "CorePlaylistEntries", "PodcastItems", "PodcastEnclosures",
                 "PodcastSyndications", "CoverArtDownloads"};
             
             if (TableExists ("sqlite_stat1")) {
