@@ -307,6 +307,7 @@ ${PACKAGE}-${VERSION}
 
   Operating System/Desktop Environment:
     GNOME Support:     ${enable_gnome}
+    Builtin Equalizer: ${enable_builtin_equalizer}
     OSX Support:       ${enable_osx}
 
   Digital Audio Player (DAP) Support:
