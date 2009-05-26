@@ -44,7 +44,7 @@ namespace Banshee.ServiceStack
         };
         
         private string [] icon_names_rand = new string [] {
-            "face-angel", "face-crying", "face-devil-grin", "face-glasses",
+            "face-angel", "face-crying", "face-devilish", "face-glasses",
             "face-grin", "face-kiss", "face-monkey",  "face-plain",
             "face-sad", "face-smile-big", "face-smile", "face-surprise",
             "face-wink"
