@@ -87,9 +87,11 @@ namespace Banshee.Gui
                 Initialize (true);
             }
         }
-        
-        [System.Runtime.InteropServices.DllImport ("clutter-gtk")]
-        private static extern int gtk_clutter_init (IntPtr argc, IntPtr argv);
+
+        protected virtual void InitializeGtk ()
+        {
+            Gtk.Application.Init ();
+        }
         
         protected void Initialize (bool registerCommonServices)
         {
@@ -98,14 +100,7 @@ namespace Banshee.Gui
             
             Application.Initialize ();
             
-            // Initialize Clutter/GTK
-            try {
-                if (gtk_clutter_init (IntPtr.Zero, IntPtr.Zero) != 1) {
-                    Gtk.Application.Init ();
-                }
-            } catch {
-                Gtk.Application.Init ();
-            }
+            InitializeGtk ();
             
             Gtk.Window.DefaultIconName = default_icon_name;
 
