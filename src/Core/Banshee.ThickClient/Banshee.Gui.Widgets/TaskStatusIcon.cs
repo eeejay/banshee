@@ -46,9 +46,22 @@ namespace Banshee.Gui.Widgets
     public class TaskStatusIcon : AnimatedImage
     {
         private List<Job> jobs = new List<Job> ();
+        
+        public bool ShowOnlyBackgroundTasks { get; set; }
+        public bool IntermittentVisibility { get; set; }
+        public uint IntermittentVisibleTime { get; set; }
+        public uint IntermittentHiddenTime { get; set; }
+
+        private uint turn_off_id;
+        private uint turn_on_id;
 
         public TaskStatusIcon ()
         {
+            ShowOnlyBackgroundTasks = true;
+            IntermittentVisibility = true;
+            IntermittentVisibleTime = 2500;
+            IntermittentHiddenTime = 2 * IntermittentVisibleTime;
+
             // Setup widgetry
             try {
                 Pixbuf = Gtk.IconTheme.Default.LoadIcon ("process-working", 22, IconLookupFlags.NoSvg);
@@ -72,21 +85,23 @@ namespace Banshee.Gui.Widgets
         {
             lock (jobs) {
                 if (jobs.Count > 0) {
-                    StringBuilder sb = new StringBuilder ();
+                    var sb = new StringBuilder ();
+                    
+                    sb.Append ("<b>");
+                    sb.Append (GLib.Markup.EscapeText (Catalog.GetPluralString (
+                        "Active Task Running", "Active Tasks Running", jobs.Count)));
+                    sb.Append ("</b>");
+
                     foreach (Job job in jobs) {
-                        sb.AppendFormat ("\n<i>{0}</i>", job.Title);
+                        sb.AppendLine ();
+                        sb.AppendFormat ("<small> \u2022 {0}</small>",
+                            GLib.Markup.EscapeText (job.Title));
                     }
 
-                    TooltipMarkup = String.Format ("<b>{0}</b>{1}",
-                        String.Format (
-                            // Translators: the number of jobs running is available for your use via {0}
-                            Catalog.GetPluralString ("Background Task Running:", "Background Tasks Running:", jobs.Count),
-                            jobs.Count
-                        ), sb.ToString ()
-                    );
+                    TooltipMarkup = sb.ToString ();
                     TaskActive = true;
                 } else {
-                    TooltipText = Catalog.GetString ("No background tasks running");
+                    TooltipText = null;
                     TaskActive = false;
                 }
             }
@@ -96,16 +111,27 @@ namespace Banshee.Gui.Widgets
         private bool task_active = false;
         private bool TaskActive {
             set {
-                if (!first && task_active == value)
+                if (!first && task_active == value) {
                     return;
-
+                }
+                
                 first = false;
                 task_active = value;
 
                 if (task_active) {
-                    TurnOn ();
+                    if (IntermittentVisibility) {
+                        TurnOn ();
+                    } else {
+                        Active = true;
+                        Sensitive = true;
+                    }
                 } else {
-                    TurnOff ();
+                    if (IntermittentVisibility) {
+                        TurnOff ();
+                    } else {
+                        Active = false;
+                        Sensitive = false;
+                    }
                 }
             }
         }
@@ -115,8 +141,12 @@ namespace Banshee.Gui.Widgets
             if (task_active) {
                 Active = true;
                 Sensitive = true;
-                Banshee.ServiceStack.Application.RunTimeout (1000, TurnOff);
+                if (turn_off_id == 0) {
+                    turn_off_id = Banshee.ServiceStack.Application.RunTimeout (IntermittentHiddenTime, TurnOff);
+                }
             }
+            
+            turn_on_id = 0;
             return false;
         }
 
@@ -125,20 +155,28 @@ namespace Banshee.Gui.Widgets
             Active = false;
             Sensitive = task_active;
 
-            if (task_active) {
-                Banshee.ServiceStack.Application.RunTimeout (5000, TurnOn);
+            if (task_active && turn_on_id == 0) {
+                turn_on_id = Banshee.ServiceStack.Application.RunTimeout (IntermittentVisibleTime, TurnOn);
             }
+
+            turn_off_id = 0;
             return false;
+        }
+
+        private void OnJobUpdated (object o, EventArgs args)
+        {
+            Update ();
         }
 
         private void AddJob (Job job)
         {                
             lock (jobs) {    
-                if (job == null || !job.IsBackground || job.IsFinished) {
+                if (job == null || (ShowOnlyBackgroundTasks && !job.IsBackground) || job.IsFinished) {
                     return;
                 }
                 
                 jobs.Add (job);
+                job.Updated += OnJobUpdated;
             }
 
             ThreadAssist.ProxyToMain (Update);
@@ -153,6 +191,7 @@ namespace Banshee.Gui.Widgets
         {
             lock (jobs) {
                 if (jobs.Contains (job)) {
+                    job.Updated -= OnJobUpdated;
                     jobs.Remove (job);
                 }
             }
