@@ -108,25 +108,12 @@ namespace Banshee.GStreamer
                 }
             }
         }
-        
-        public PlayerEngine ()
-        {
-            if (ServiceManager.IsInitialized) {
-                Initialize ();
-            } else {
-                ServiceManager.ServiceStarted += OnServiceStarted;
-            }
+
+        protected override bool DelayedInitialize {
+            get { return true; }
         }
-        
-        private void OnServiceStarted (ServiceStartedArgs args)
-        {
-            if (args.Service is Service) {
-                ServiceManager.ServiceStarted -= OnServiceStarted;
-                Initialize ();
-            }
-        }
-        
-        private void Initialize ()
+
+        protected override void Initialize ()
         {
             IntPtr ptr = bp_new ();
             

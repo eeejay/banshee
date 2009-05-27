@@ -54,7 +54,17 @@ namespace Banshee.MediaEngine
         private PlayerState idle_state = PlayerState.NotReady; 
         
         protected abstract void OpenUri (SafeUri uri);
-        
+
+        internal protected virtual bool DelayedInitialize {
+            get { return false; }
+        }
+
+        public bool IsInitialized { get; internal set; }
+
+        internal protected virtual void Initialize ()
+        {
+        }
+
         public void Reset ()
         {
             current_track = null;

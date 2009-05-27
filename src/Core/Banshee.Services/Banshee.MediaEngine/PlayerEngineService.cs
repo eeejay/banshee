@@ -47,7 +47,8 @@ namespace Banshee.MediaEngine
 {
     public delegate bool TrackInterceptHandler (TrackInfo track);
 
-    public class PlayerEngineService : IInitializeService, IRequiredService, IPlayerEngineService, IDisposable
+    public class PlayerEngineService : IInitializeService, IDelayedInitializeService, 
+        IRequiredService, IPlayerEngineService, IDisposable
     {   
         private List<PlayerEngine> engines = new List<PlayerEngine> ();
         private PlayerEngine active_engine;
@@ -61,6 +62,8 @@ namespace Banshee.MediaEngine
 
         public event EventHandler PlayWhenIdleRequest;
         public event TrackInterceptHandler TrackIntercept;
+        public event Action<PlayerEngine> EngineBeforeInitialize;
+        public event Action<PlayerEngine> EngineAfterInitialize;
         
         private event DBusPlayerEventHandler dbus_event_changed;
         event DBusPlayerEventHandler IPlayerEngineService.EventChanged {
@@ -78,7 +81,7 @@ namespace Banshee.MediaEngine
         {
         }
         
-        public void Initialize ()
+        void IInitializeService.Initialize ()
         {
             preferred_engine_id = EngineSchema.Get();
             
@@ -112,6 +115,31 @@ namespace Banshee.MediaEngine
             TrackInfo.IsPlayingMethod = track => IsPlaying (track) &&
                 ServiceManager.PlaybackController.Source == ServiceManager.SourceManager.ActiveSource;
         }
+
+        private void InitializeEngine (PlayerEngine engine)
+        {
+            var handler = EngineBeforeInitialize;
+            if (handler != null) {
+                handler (engine);
+            }
+            
+            engine.Initialize ();
+            engine.IsInitialized = true;
+            
+            handler = EngineAfterInitialize;
+            if (handler != null) {
+                handler (engine);
+            }
+        }
+        
+        void IDelayedInitializeService.DelayedInitialize ()
+        {
+            foreach (var engine in Engines) {
+                if (engine.DelayedInitialize) {
+                    InitializeEngine (engine);
+                }
+            }
+        }
         
         private void LoadEngine (TypeExtensionNode node)
         {
@@ -120,6 +148,10 @@ namespace Banshee.MediaEngine
         
         private void LoadEngine (PlayerEngine engine)
         {
+            if (!engine.DelayedInitialize) {
+                InitializeEngine (engine);
+            }
+            
             engine.EventChanged += OnEngineEventChanged;
 
             if (engine.Id == preferred_engine_id) {
