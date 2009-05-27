@@ -249,10 +249,6 @@ _bp_pipeline_construct (BansheePlayer *player)
     gst_element_add_pad (player->audiobin, gst_ghost_pad_new ("sink", teepad));
     gst_object_unref (teepad);
 
-    // Link the first tee pad to the primary audio sink queue
-    gst_pad_link (gst_element_get_request_pad (player->audiotee, "src0"), 
-        gst_element_get_pad (audiosinkqueue, "sink"));
-
     // Link the queue and the actual audio sink
     if (player->equalizer != NULL) {
         // link in equalizer, preamp and audioconvert.
@@ -275,6 +271,22 @@ _bp_pipeline_construct (BansheePlayer *player)
     // Now allow specialized pipeline setups
     _bp_cdda_pipeline_setup (player);
     _bp_video_pipeline_setup (player, bus);
+
+    // This call must be the last one in the pipeline setup to work around a
+    // GStreamer 0.10.21-0.10.22 algorithm that causes the last-allocated pad
+    // to be the one used for buffer allocations.  If the visualization one
+    // winds up being used for that then the pipeline will freeze when
+    // visualizations are disabled.
+    //
+    // When 0.10.23 is more mainstream we can use the new alloc-pad property to
+    // force selection of this pad for allocation.  Until then we just have to
+    // make sure it's the last one allocated.
+    //
+    // -- Chris Howie <cdhowie@gmail.com>
+
+    // Link the first tee pad to the primary audio sink queue
+    gst_pad_link (gst_element_get_request_pad (player->audiotee, "src0"),
+        gst_element_get_pad (audiosinkqueue, "sink"));
 
     return TRUE;
 }
