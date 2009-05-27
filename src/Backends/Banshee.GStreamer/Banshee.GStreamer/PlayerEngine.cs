@@ -113,7 +113,8 @@ namespace Banshee.GStreamer
             get { return true; }
         }
 
-        protected override void Initialize ()
+
+        public PlayerEngine ()
         {
             IntPtr ptr = bp_new ();
             
@@ -142,7 +143,10 @@ namespace Banshee.GStreamer
             bp_set_buffering_callback (handle, buffering_callback);
             bp_set_tag_found_callback (handle, tag_found_callback);
             bp_set_video_pipeline_setup_callback (handle, video_pipeline_setup_callback);
-            
+        }
+        
+        protected override void Initialize ()
+        {
             if (!bp_initialize_pipeline (handle)) {
                 bp_destroy (handle);
                 handle = new HandleRef (this, IntPtr.Zero);
