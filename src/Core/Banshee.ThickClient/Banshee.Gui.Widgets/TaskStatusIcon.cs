@@ -165,7 +165,7 @@ namespace Banshee.Gui.Widgets
 
         private void OnJobUpdated (object o, EventArgs args)
         {
-            Update ();
+            ThreadAssist.ProxyToMain (Update);
         }
 
         private void AddJob (Job job)
