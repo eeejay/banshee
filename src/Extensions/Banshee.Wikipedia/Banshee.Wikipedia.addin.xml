@@ -16,7 +16,7 @@
     <Addin id="Banshee.ThickClient" version="1.0"/>
   </Dependencies>
 
-  <Extension path="/Banshee/ThickClient/ContextPage">
+  <Extension path="/Banshee/ThickClient/ContextPane">
     <ContextPage class="Banshee.Wikipedia.ContextPage"/>
   </Extension>
 

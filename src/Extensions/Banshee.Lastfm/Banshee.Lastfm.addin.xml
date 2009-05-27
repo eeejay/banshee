@@ -20,7 +20,7 @@
     <Source class="Banshee.Lastfm.Radio.LastfmSource"/>
   </Extension>
 
-  <Extension path="/Banshee/ThickClient/ContextPage">
+  <Extension path="/Banshee/ThickClient/ContextPane">
     <ContextPage class="Banshee.Lastfm.Recommendations.ContextPage"/>
   </Extension>
   

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Addin 
     id="Banshee.ThickClient"
+    isroot="true"
     version="1.0"
     compatVersion="1.0"
     copyright="© 2008 Novell Inc. Licensed under the MIT X11 license."
@@ -41,7 +42,7 @@
     <ExtensionNode name="SourceView"/>
   </ExtensionPoint>
 
-  <ExtensionPoint path="/Banshee/ThickClient/ContextPage">
+  <ExtensionPoint path="/Banshee/ThickClient/ContextPane">
     <Description>Defines a new GTK+ context page, for showing contextual information beneath the main track source view.</Description>
     <ExtensionNode name="ContextPage"/>
   </ExtensionPoint>

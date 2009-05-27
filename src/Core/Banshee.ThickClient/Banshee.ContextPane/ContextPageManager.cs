@@ -42,7 +42,7 @@ namespace Banshee.ContextPane
         public ContextPageManager (ContextPane pane)
         {
             this.pane = pane;
-            Mono.Addins.AddinManager.AddExtensionNodeHandler ("/Banshee/ThickClient/ContextPage", OnExtensionChanged);
+            Mono.Addins.AddinManager.AddExtensionNodeHandler ("/Banshee/ThickClient/ContextPane", OnExtensionChanged);
         }
 
         private void OnExtensionChanged (object o, ExtensionNodeEventArgs args) 
