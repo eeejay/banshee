@@ -98,9 +98,8 @@
     <Compile Include="Banshee.Lastfm.Audioscrobbler\AudioscrobblerService.cs" />
     <Compile Include="Banshee.Lastfm.Audioscrobbler\Queue.cs" />
     <Compile Include="Banshee.Lastfm.Radio\LastfmColumnController.cs" />
-    <Compile Include="Banshee.Lastfm.Recommendations\RecommendationActions.cs" />
+    <Compile Include="Banshee.Lastfm.Recommendations\ContextPage.cs" />
     <Compile Include="Banshee.Lastfm.Recommendations\RecommendationPane.cs" />
-    <Compile Include="Banshee.Lastfm.Recommendations\RecommendationService.cs" />
     <Compile Include="Banshee.Lastfm.Recommendations\SimilarArtistTile.cs" />
   </ItemGroup>
   <ItemGroup>
