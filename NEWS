@@ -1,5 +1,5 @@
 ===============================================================================
-WELCOME TO BANSHEE 1.5.0 - Released May 22, 2009 - "The Keyboard Cat Release"
+WELCOME TO BANSHEE 1.5.0 - Released May ??, 2009 - "The Keyboard Cat Release"
 ===============================================================================
 
   * Banshee is a multimedia management and playback application for GNOME.
@@ -18,7 +18,7 @@ NEW AWESOME FEATURES AND ENHANCEMENTS
 ===============================================================================
 
     Banshee 1.5.0 is an unstable, beta release.  It brings many big changes,
-    new features, and fixes, and is the first release in what will become 1.6.0.
+    new features, and fixes, and is the first release in what will become 1.6.
     
     New Features:
 
@@ -34,11 +34,11 @@ NEW AWESOME FEATURES AND ENHANCEMENTS
     Enhancements:
 
       * Support importing/exporting XSPF playlists
-      * Support loading ASF playlists
-      * Whitelist .spx, 669, it, med, mod, mol, mtm, nst, s3m, stm, ult, wow, xm, and xnm
+      * Support loading ASF playlists (BGO #545646)
+      * Whitelist .spx, 669, it, med, mod, mol, mtm, nst, s3m, stm, ult, wow, xm, and xnm (BGO #580014)
       * Source-specific preferences, accessible via Preferences dialog and via sources' context menu
       * Much improved child source sorting - live, persistent, with group-by-type option
-      * Priorty and resource-ware job scheduler; i.e. pauses BPM detection while importing
+      * Priorty and resource-ware job scheduler; i.e. pauses BPM detection while importing (BGO #577772)
       * Podcast espisode details tabs in track information/editor
       * Can rename podcasts
       * Can unsubscribe/download/refresh multiple podcasts at a time
@@ -54,31 +54,31 @@ NEW AWESOME FEATURES AND ENHANCEMENTS
 
     Notable bug fixes:
 
-      * Fix problems with subscribing and downloading some podcasts
-      * Unescape URLs received from Last.fm so can open in browser
-      * Don't show Skip button in now-playing notification for radio tracks
-      * Fixed notification area popup position on multi-monitor systems
-      * Support and default to using %album_artist% in folder organization preference
-      * Revamped illegal filename characters code to not be overly strict
-      * Trim periods and spaces appropriately for NTFS compatibility
+      * Fix problems with subscribing and downloading some podcasts (BGO #538397, BGO #536047, BGO #567293)
+      * Unescape URLs received from Last.fm so can open in browser (BGO #563076)
+      * Don't show Skip button in now-playing notification for radio tracks (BGO #572971)
+      * Fixed notification area popup position on multi-monitor systems (BGO #537696)
+      * Support and default to using %album_artist% in folder organization preference (BGO #570298)
+      * Revamped illegal filename characters code to not be overly strict (BGO #458224)
+      * Trim periods and spaces appropriately for NTFS compatibility (BGO #572999)
       * Make the source list accessible
-      * Visibly disable repeat/shuffle when in Play Queue
-      * Update UI when changing repeat/shuffle via dbus
+      * Visibly disable repeat/shuffle when in Play Queue (BGO #577681)
+      * Update UI when changing repeat/shuffle via dbus (BGO #575383)
       * Better feedback while waiting for network streams to connect
-      * Fix bugs with device playlist sync
-      * Fix bugs with MTP device track transfer
+      * Fix bugs with device playlist sync (BGO #560970)
+      * Fix bugs with MTP device track transfer (BGO #571023, BGO #567093)
       * Fix bug with device sync where it would repeatedly remove/add the same tracks
-      * Fix mass storage device support to respect folder_depth (like it used to)
-      * Fix bug with transferring ratings to iPods
-      * Focus the track list on jump-to-playing item
+      * Fix mass storage device support to respect folder_depth (like it used to) (BGO #537367)
+      * Fix bug with transferring ratings to iPods (BGO #577396)
+      * Focus the track list on jump-to-playing item (BGO #558940)
       * Fix several relatively minor ListView rendering and interaction issues
-      * Right-align the header text of right-aligned columns
+      * Right-align the header text of right-aligned columns (BGO #560918)
       * Fix size/position restoration on startup/notification-area toggle
       * Fix the track editor forward/back buttons to focus/select the current field
       * Disable track editor field-sync for Track Artist when is compilation checked
-      * Fix bug with reading bitrate on VBR tracks
-      * Fix bug with getting the release year from MusicBrainz
-      * Improve the rating rendering, including fixing it for dark themes
+      * Fix bug with reading bitrate on VBR tracks (BGO #562582)
+      * Fix bug with getting the release year from MusicBrainz (BGO #578073)
+      * Improve the rating rendering, including fixing it for dark themes (BGO #576459)
 
       * 165 bugs were FIXED since 1.4.4
 
