@@ -50,14 +50,28 @@ namespace Hyena.Gui
         {
             destroy_func = new cairo_destroy_func_t (DestroyPixelData);
         }
+
+        public static PixbufImageSurface Create (Gdk.Pixbuf pixbuf)
+        {
+            return Create (pixbuf, false);
+        }
+
+        public static PixbufImageSurface Create (Gdk.Pixbuf pixbuf, bool disposePixbuf)
+        {
+            if (pixbuf == null || pixbuf.Handle == IntPtr.Zero) {
+                return null;
+            }
+
+            return new PixbufImageSurface (pixbuf, disposePixbuf);
+        }
         
         private IntPtr data;
         
-        public PixbufImageSurface (Gdk.Pixbuf pixbuf) : this (pixbuf, false)
+        private PixbufImageSurface (Gdk.Pixbuf pixbuf) : this (pixbuf, false)
         {
         }
         
-        public PixbufImageSurface (Gdk.Pixbuf pixbuf, bool disposePixbuf) : this (disposePixbuf ? pixbuf : null, 
+        private PixbufImageSurface (Gdk.Pixbuf pixbuf, bool disposePixbuf) : this (disposePixbuf ? pixbuf : null, 
             pixbuf.Width, pixbuf.Height, pixbuf.NChannels, pixbuf.Rowstride, pixbuf.Pixels)
         {
         }
