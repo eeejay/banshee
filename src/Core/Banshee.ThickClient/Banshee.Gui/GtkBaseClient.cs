@@ -90,6 +90,9 @@ namespace Banshee.Gui
 
         protected virtual void InitializeGtk ()
         {
+            if (!GLib.Thread.Supported) {
+                GLib.Thread.Init ();
+            }
             Gtk.Application.Init ();
         }
         
