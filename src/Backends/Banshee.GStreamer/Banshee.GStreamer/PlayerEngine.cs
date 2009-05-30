@@ -518,7 +518,11 @@ namespace Banshee.GStreamer
         private IntPtr OnVideoPipelineSetup (IntPtr player, IntPtr bus)
         {
             try {
-                if (clutter_video_sink_enabled && clutter_video_sink == IntPtr.Zero) {
+                if (clutter_video_sink_enabled) {
+                    if (clutter_video_sink != IntPtr.Zero) {
+                        // FIXME: does this get unreffed by the pipeline?
+                    }
+                    
                     clutter_video_sink = clutter_gst_video_sink_new (clutter_video_texture);
                 } else if (!clutter_video_sink_enabled && clutter_video_sink != IntPtr.Zero) {
                     clutter_video_sink = IntPtr.Zero;
