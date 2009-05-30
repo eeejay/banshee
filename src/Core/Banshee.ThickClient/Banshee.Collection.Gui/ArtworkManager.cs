@@ -125,7 +125,7 @@ namespace Banshee.Collection.Gui
             }
             
             try {
-                surface = PixbufImageSurface.Create (pixbuf);
+                surface = new PixbufImageSurface (pixbuf);
                 if (surface == null) {
                     return null;
                 }
