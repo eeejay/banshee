@@ -120,7 +120,7 @@ namespace Banshee.Collection.Gui
             }
         
             Pixbuf pixbuf = LookupScalePixbuf (id, size);
-            if (pixbuf == null) {
+            if (pixbuf == null || pixbuf.Handle == IntPtr.Zero) {
                 return null;
             }
             
