@@ -2,9 +2,24 @@ m4_define([banshee_version_major], [1])
 m4_define([banshee_version_minor], [5])
 m4_define([banshee_version_micro], [0])
 
-m4_define([banshee_version],
-	[banshee_version_major.banshee_version_minor.banshee_version_micro])
+dnl set to 0 when doing an official release
+m4_define([banshee_version_pre_release], [rc1])
 
+m4_define([concat], $1$2$3$4)
+
+dnl create base version string
+m4_define([banshee_version], concat(
+	banshee_version_major.,
+	banshee_version_minor.,
+	banshee_version_micro))
+
+dnl create the release version
+m4_define([banshee_version],
+	m4_if(banshee_version_pre_release, [0],
+		banshee_version,
+		concat(banshee_version, banshee_version_pre_release)))
+
+dnl this can sometimes differ manually
 m4_define([banshee_display_version],
 	[banshee_version])
 
@@ -15,8 +30,7 @@ m4_define([banshee_asm_version],
 	[banshee_api_version.0.0])
 
 AC_PREREQ(2.52)
-AC_INIT([banshee-1],
-	[banshee_version],
+AC_INIT([banshee-1], banshee_version,
 	[http://bugzilla.gnome.org/enter_bug.cgi?product=banshee])
 
 AM_INIT_AUTOMAKE([1.9 dist-bzip2 tar-ustar dist-zip foreign])
