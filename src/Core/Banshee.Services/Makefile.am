@@ -114,6 +114,8 @@ SOURCES =  \
 	Banshee.Metadata/SaveTrackMetadataService.cs \
 	Banshee.Networking/Network.cs \
 	Banshee.Networking/NetworkManager.cs \
+	Banshee.PlatformServices/IScreensaverManager.cs \
+	Banshee.PlatformServices/ScreensaverManager.cs \
 	Banshee.PlaybackController/IBasicPlaybackController.cs \
 	Banshee.PlaybackController/ICanonicalPlaybackController.cs \
 	Banshee.PlaybackController/IPlaybackController.cs \

@@ -32,6 +32,7 @@ using Mono.Unix;
 using Gtk;
 
 using Banshee.ServiceStack;
+using Banshee.PlatformServices;
 using Banshee.Sources;
 using Banshee.Gui;
 using Banshee.Sources.Gui;

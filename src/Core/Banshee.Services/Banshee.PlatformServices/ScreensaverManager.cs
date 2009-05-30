@@ -30,7 +30,7 @@ using System;
 using Hyena;
 using Mono.Addins;
 
-namespace Banshee.NowPlaying
+namespace Banshee.PlatformServices
 {
     public class ScreensaverManager : IScreensaverManager, IDisposable
     {
@@ -39,7 +39,7 @@ namespace Banshee.NowPlaying
         
         public ScreensaverManager ()
         {
-            foreach (TypeExtensionNode node in AddinManager.GetExtensionNodes ("/Banshee/NowPlaying/ScreensaverManager")) {
+            foreach (TypeExtensionNode node in AddinManager.GetExtensionNodes ("/Banshee/PlatformServices/ScreensaverManager")) {
                 try {
                     manager = (IScreensaverManager)node.CreateInstance (typeof (IScreensaverManager));
                     Log.DebugFormat ("Loaded IScreensaverManager: {0}", manager.GetType ().FullName);

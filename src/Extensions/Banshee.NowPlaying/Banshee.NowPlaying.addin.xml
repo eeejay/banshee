@@ -27,9 +27,5 @@
   <ExtensionPoint path="/Banshee/NowPlaying/FullscreenAdapter">
     <ExtensionNode name="FullscreenAdapter"/>
   </ExtensionPoint>
-  
-  <ExtensionPoint path="/Banshee/NowPlaying/ScreensaverManager">
-    <ExtensionNode name="ScreensaverManager"/>
-  </ExtensionPoint>
 
 </Addin>

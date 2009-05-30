@@ -26,7 +26,7 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-namespace Banshee.NowPlaying
+namespace Banshee.PlatformServices
 {
     public interface IScreensaverManager
     {

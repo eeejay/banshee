@@ -90,8 +90,6 @@
     <Compile Include="Banshee.NowPlaying\FullscreenControls.cs" />
     <Compile Include="Banshee.NowPlaying\IFullscreenAdapter.cs" />
     <Compile Include="Banshee.NowPlaying\FullscreenAdapter.cs" />
-    <Compile Include="Banshee.NowPlaying\IScreensaverManager.cs" />
-    <Compile Include="Banshee.NowPlaying\ScreensaverManager.cs" />
     <Compile Include="Banshee.NowPlaying\NowPlayingContents.cs" />
     <Compile Include="Banshee.NowPlaying\NowPlayingTrackInfoDisplay.cs" />
     <Compile Include="Banshee.NowPlaying\IVideoDisplay.cs" />

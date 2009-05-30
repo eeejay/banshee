@@ -30,7 +30,7 @@
     <Helper class="Banshee.GnomeBackend.DefaultApplicationHelper"/>
 </Extension>-->
   
-  <Extension path="/Banshee/NowPlaying/ScreensaverManager">
+  <Extension path="/Banshee/PlatformServices/ScreensaverManager">
     <ScreensaverManager class="Banshee.GnomeBackend.GnomeScreensaverManager"/>
   </Extension>
 </Addin>

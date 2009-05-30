@@ -52,5 +52,9 @@
   <ExtensionPoint path="/Banshee/Platform/DiscDuplicator">
     <ExtensionNode name="DiscDuplicator"/>
   </ExtensionPoint>
+  
+  <ExtensionPoint path="/Banshee/PlatformServices/ScreensaverManager">
+    <ExtensionNode name="ScreensaverManager"/>
+  </ExtensionPoint>
 
 </Addin>
