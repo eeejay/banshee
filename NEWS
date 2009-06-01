@@ -1,5 +1,5 @@
 ===============================================================================
-WELCOME TO BANSHEE 1.5.0 - Released May ??, 2009 - "The Keyboard Cat Release"
+WELCOME TO BANSHEE 1.5.0 - Released June 1, 2009 - "The Keyboard Cat Release"
 ===============================================================================
 
   * Banshee is a multimedia management and playback application for GNOME.
@@ -91,8 +91,8 @@ Sources
 -------
 
     * Banshee 1.5.0 Tarballs:
-      http://download.banshee-project.org/banshee/banshee-1-1.5.0.tar.bz2
-      http://download.banshee-project.org/banshee/banshee-1-1.5.0.tar.gz
+      http://download.banshee-project.org/banshee/unstable/1.5.0/banshee-1-1.5.0.tar.bz2
+      http://download.banshee-project.org/banshee/unstable/1.5.0/banshee-1-1.5.0.tar.gz
 
 Packages
 --------
@@ -108,13 +108,13 @@ Packages
 
     Binaries for Mac OS X 10.4 and 10.5:
 
-    * http://download.banshee-project.org/banshee/banshee-1-1.5.0.macosx.intel.dmg
+    * http://download.banshee-project.org/banshee/unstable/1.5.0/banshee-1-1.5.0.macosx.intel.dmg
 
 ChangeLogs & Checksums
 ----------------------
 
-    * http://download.banshee-project.org/banshee/banshee-1-1.5.0.changes
-    * http://download.banshee-project.org/banshee/banshee-1-1.5.0.sha1sum
+    * http://download.banshee-project.org/banshee/unstable/1.5.0/banshee-1-1.5.0.changes
+    * http://download.banshee-project.org/banshee/unstable/1.5.0/banshee-1-1.5.0.sha1sum
 
 
 ===============================================================================
