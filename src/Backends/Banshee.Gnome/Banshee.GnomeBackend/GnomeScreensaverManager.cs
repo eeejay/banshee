@@ -1,5 +1,5 @@
 //
-// ScreensaverManager.cs
+// GnomeScreensaverManager.cs
 //
 // Author:
 //   Christopher James Halse Rogers <raof@ubuntu.com>
@@ -25,53 +25,66 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
-
 using System;
-using Mono.Addins;
+using NDesk.DBus;
+using Mono.Unix;
 
-using Hyena;
 using Banshee.PlatformServices;
 
-namespace Banshee.NowPlaying
-{
-    public class ScreensaverManager : IScreensaverManager, IDisposable
+namespace Banshee.GnomeBackend
+{    
+    [Interface("org.gnome.ScreenSaver")]
+    internal interface IGnomeScreensaver
     {
-        private IScreensaverManager manager;
-        bool inhibited = false;
+        uint Inhibit (string application_name, string reason);
+        void UnInhibit (uint cookie);
+    }
+
+    class GnomeScreensaverManager : IScreensaverManager
+    {
+        const string DBUS_INTERFACE = "org.gnome.ScreenSaver";
+        const string DBUS_PATH = "/org/gnome/ScreenSaver";
         
-        public ScreensaverManager ()
+        IGnomeScreensaver manager;
+        uint? cookie;
+
+        public GnomeScreensaverManager ()
         {
-            foreach (TypeExtensionNode node in AddinManager.GetExtensionNodes ("/Banshee/NowPlaying/ScreensaverManager")) {
-                try {
-                    manager = (IScreensaverManager)node.CreateInstance (typeof (IScreensaverManager));
-                    Log.DebugFormat ("Loaded IScreensaverManager: {0}", manager.GetType ().FullName);
-                    break;
-                } catch (Exception e) {
-                    Log.Exception ("IScreensaverManager extension failed to load", e);    
-                }
+            if (Manager == null) {
+                Hyena.Log.Information ("GNOME screensaver service not found");
             }
         }
-        
-        public void Dispose ()
-        {
-            UnInhibit ();
+
+        private IGnomeScreensaver Manager {
+            get {
+                if (manager == null) {
+                    if (!Bus.Session.NameHasOwner (DBUS_INTERFACE)) {
+                        return null;
+                    }
+                    
+                    manager = Bus.Session.GetObject<IGnomeScreensaver> (DBUS_INTERFACE, new ObjectPath (DBUS_PATH));
+                    
+                    if (manager == null) {
+                        Hyena.Log.ErrorFormat ("The {0} object could not be located on the DBus interface {1}",
+                            DBUS_PATH, DBUS_INTERFACE);
+                    }
+                }
+                return manager;
+            }
         }
         
         public void Inhibit ()
         {
-            if (manager != null && !inhibited) {
-                Log.Information ("Inhibiting screensaver during fullscreen playback");
-                manager.Inhibit ();
-                inhibited = true;
+            if (!cookie.HasValue && Manager != null) {
+                cookie = Manager.Inhibit ("Banshee", Catalog.GetString ("Fullscreen video playback active"));
             }
         }
-        
+
         public void UnInhibit ()
         {
-            if (manager != null && inhibited) {
-                Log.Information ("Uninhibiting screensaver");
-                manager.UnInhibit ();
-                inhibited = false;
+            if (cookie.HasValue && Manager != null) {
+                Manager.UnInhibit (cookie.Value);
+                cookie = null;
             }
         }
     }
