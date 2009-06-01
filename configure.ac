@@ -3,7 +3,7 @@ m4_define([banshee_version_minor], [5])
 m4_define([banshee_version_micro], [0])
 
 dnl set to 0 when doing an official release
-m4_define([banshee_version_pre_release], [rc1])
+m4_define([banshee_version_pre_release], [0])
 
 m4_define([concat], $1$2$3$4)
 

@@ -16,7 +16,7 @@ function bail () {
 PACKAGE_INFO=$(./configure -V | head -n1)
 PACKAGE_NAME=$(echo "$PACKAGE_INFO" | cut -f1 -d' ')
 PACKAGE_VERSION=$(echo "$PACKAGE_INFO" | cut -f3 -d' ')
-TAG_NAME="release-test-${PACKAGE_VERSION}"
+TAG_NAME="${PACKAGE_VERSION}"
 
 RELEASE_TYPE="stable"
 [[ "x$1" = "x--unstable" ]] && RELEASE_TYPE="unstable"
