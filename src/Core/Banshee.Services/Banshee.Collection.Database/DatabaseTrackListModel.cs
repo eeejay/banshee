@@ -361,7 +361,7 @@ namespace Banshee.Collection.Database
                 }
 
                 TrackInfo track = GetRandomTrack (mode, repeat);
-                if (track == null && repeat) {
+                if (track == null && (repeat || mode != PlaybackShuffleMode.Linear)) {
                     random_began_at = last_random;
                     random_album_id = random_artist_id = null;
                     track = GetRandomTrack (mode, repeat);
