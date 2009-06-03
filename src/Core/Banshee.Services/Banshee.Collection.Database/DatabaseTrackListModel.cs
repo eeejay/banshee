@@ -341,8 +341,8 @@ namespace Banshee.Collection.Database
 
         private const string random_condition = "AND LastStreamError = 0 AND (LastPlayedStamp < ? OR LastPlayedStamp IS NULL) AND (LastSkippedStamp < ? OR LastSkippedStamp IS NULL)";
         private static string random_fragment = String.Format ("{0} ORDER BY RANDOM()", random_condition);
-        private static string random_by_album_fragment = String.Format ("AND CoreTracks.AlbumID = ? {0} ORDER BY DiscNumber ASC, TrackNumber ASC", random_condition);
-        private static string random_by_artist_fragment = String.Format ("AND CoreAlbums.ArtistID = ? {0} ORDER BY CoreAlbums.TitleSortKey ASC, DiscNumber ASC, TrackNumber ASC", random_condition);
+        private static string random_by_album_fragment = String.Format ("AND CoreTracks.AlbumID = ? {0} ORDER BY Disc ASC, TrackNumber ASC", random_condition);
+        private static string random_by_artist_fragment = String.Format ("AND CoreAlbums.ArtistID = ? {0} ORDER BY CoreAlbums.TitleSortKey ASC, Disc ASC, TrackNumber ASC", random_condition);
 
         private DateTime random_began_at = DateTime.MinValue;
         private DateTime last_random = DateTime.MinValue;
