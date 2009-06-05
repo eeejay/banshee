@@ -62,7 +62,7 @@ namespace Banshee.PlayerMigration
             LibraryImportManager import_manager = ServiceManager.Get<LibraryImportManager> ();
 
             SafeUri db_uri = rhythmbox_db_uri;
-            //Check if library is located in the old place (.gnome2/rhythmbox/rhythmdb.db)
+            // Check if library is located in the old place (.gnome2/rhythmbox/rhythmdb.db)
             if (!Banshee.IO.File.Exists (rhythmbox_db_uri)) {
                 db_uri = rhythmbox_db_uri_old;
             }
@@ -90,10 +90,21 @@ namespace Banshee.PlayerMigration
             // Import Rhythmbox playlists if playlist file is available
             SafeUri rhythmbox_playlists_uri = new SafeUri (Banshee.Base.Paths.Combine (
                 Environment.GetFolderPath (Environment.SpecialFolder.Personal),
-                ".gnome2", "rhythmbox", "playlists.xml"
+                ".local", "share", "rhythmbox", "playlists.xml"
             ));
 
             bool playlists_available = Banshee.IO.File.Exists (rhythmbox_playlists_uri);
+
+            // Look at the old location too
+            if (!playlists_available) {
+                rhythmbox_playlists_uri = new SafeUri (Banshee.Base.Paths.Combine (
+                    Environment.GetFolderPath (Environment.SpecialFolder.Personal),
+                    ".gnome2", "rhythmbox", "playlists.xml"
+                ));
+
+                playlists_available = Banshee.IO.File.Exists (rhythmbox_playlists_uri);
+            }
+
             XmlElement playlists_root = null;
             
             if (playlists_available) {
