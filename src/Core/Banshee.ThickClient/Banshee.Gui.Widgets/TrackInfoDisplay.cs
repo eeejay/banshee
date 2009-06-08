@@ -66,13 +66,13 @@ namespace Banshee.Gui.Widgets
         private ImageSurface missing_audio_image;
         protected ImageSurface MissingAudioImage {
             get { return missing_audio_image ?? (missing_audio_image 
-                = new PixbufImageSurface (IconThemeUtils.LoadIcon (MissingIconSizeRequest, "audio-x-generic"), true)); }
+                = PixbufImageSurface.Create (IconThemeUtils.LoadIcon (MissingIconSizeRequest, "audio-x-generic"), true)); }
         }
         
         private ImageSurface missing_video_image;
         protected ImageSurface MissingVideoImage {
             get { return missing_video_image ?? (missing_video_image 
-                = new PixbufImageSurface (IconThemeUtils.LoadIcon (MissingIconSizeRequest, "video-x-generic"), true)); }
+                = PixbufImageSurface.Create (IconThemeUtils.LoadIcon (MissingIconSizeRequest, "video-x-generic"), true)); }
         }
         
         private Cairo.Color background_color;
