@@ -173,12 +173,12 @@ namespace Banshee.Gui.Widgets
             text_light_color = Hyena.Gui.Theming.GtkTheme.GetCairoTextMidColor (this);
             
             if (missing_audio_image != null) {
-                missing_audio_image.Destroy ();
+                ((IDisposable)missing_audio_image).Dispose ();
                 missing_audio_image = null;
             }
 
             if (missing_video_image != null) {
-                missing_video_image.Destroy ();
+                ((IDisposable)missing_video_image).Dispose ();
                 missing_video_image = null;
             }
             
@@ -407,7 +407,7 @@ namespace Banshee.Gui.Widgets
             }
             
             if (current_image != null && current_image != incoming_image && !IsMissingImage (current_image)) {
-                current_image.Destroy ();
+                ((IDisposable)current_image).Dispose ();
             }
             
             current_image = incoming_image;
