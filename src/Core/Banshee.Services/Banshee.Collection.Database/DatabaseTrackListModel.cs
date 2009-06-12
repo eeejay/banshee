@@ -342,14 +342,14 @@ namespace Banshee.Collection.Database
         private const string random_condition = "AND LastStreamError = 0 AND (LastPlayedStamp < ? OR LastPlayedStamp IS NULL) AND (LastSkippedStamp < ? OR LastSkippedStamp IS NULL)";
         private static string random_fragment = String.Format ("{0} ORDER BY RANDOM()", random_condition);
         private static string random_by_album_fragment = String.Format ("AND CoreTracks.AlbumID = ? {0} ORDER BY Disc ASC, TrackNumber ASC", random_condition);
-        private static string random_by_artist_fragment = String.Format ("AND CoreAlbums.ArtistID = ? {0} ORDER BY CoreAlbums.TitleSortKey ASC, Disc ASC, TrackNumber ASC", random_condition);
+        private static string random_by_artist_fragment = String.Format ("AND CoreAlbums.ArtistID = ? {0} ORDER BY CoreTracks.Year, CoreTracks.AlbumID ASC, Disc ASC, TrackNumber ASC", random_condition);
 
         private DateTime random_began_at = DateTime.MinValue;
         private DateTime last_random = DateTime.MinValue;
         private int? random_album_id;
         private int? random_artist_id;
 
-        public override TrackInfo GetRandom (DateTime notPlayedSince, PlaybackShuffleMode mode, bool repeat)
+        public override TrackInfo GetRandom (DateTime notPlayedSince, PlaybackShuffleMode mode, bool repeat, bool lastWasSkipped)
         {
             lock (this) {
                 if (Count == 0) {
@@ -360,11 +360,11 @@ namespace Banshee.Collection.Database
                     random_began_at = last_random = notPlayedSince;
                 }
 
-                TrackInfo track = GetRandomTrack (mode, repeat);
+                TrackInfo track = GetRandomTrack (mode, repeat, lastWasSkipped);
                 if (track == null && (repeat || mode != PlaybackShuffleMode.Linear)) {
-                    random_began_at = last_random;
+                    random_began_at = (random_began_at == last_random) ? DateTime.Now : last_random;
                     random_album_id = random_artist_id = null;
-                    track = GetRandomTrack (mode, repeat);
+                    track = GetRandomTrack (mode, repeat, lastWasSkipped);
                 }
 
                 last_random = DateTime.Now;
@@ -372,8 +372,13 @@ namespace Banshee.Collection.Database
             }
         }
 
-        private TrackInfo GetRandomTrack (PlaybackShuffleMode mode, bool repeat)
+        private TrackInfo GetRandomTrack (PlaybackShuffleMode mode, bool repeat, bool lastWasSkipped)
         {
+            // Skip the entire album or artist
+            if (lastWasSkipped) {
+                random_album_id = random_artist_id = null;
+            }
+
             if (mode == PlaybackShuffleMode.Album) {
                 random_artist_id = null;
                 if (random_album_id == null) {
@@ -387,6 +392,7 @@ namespace Banshee.Collection.Database
                 if (random_album_id != null) {
                     return cache.GetSingle (random_by_album_fragment, (int)random_album_id, random_began_at, random_began_at);
                 }
+                return null;
             } else if (mode == PlaybackShuffleMode.Artist) {
                 random_album_id = null;
                 if (random_artist_id == null) {
@@ -400,6 +406,7 @@ namespace Banshee.Collection.Database
                 if (random_artist_id != null) {
                     return cache.GetSingle (random_by_artist_fragment, (int)random_artist_id, random_began_at, random_began_at);
                 }
+                return null;
             } else {
                 random_album_id = random_artist_id = null;
             }
