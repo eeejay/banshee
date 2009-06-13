@@ -91,19 +91,7 @@ namespace Banshee.Playlists.Formats
                     try {
                         stream = new MemoryStream ();
 
-                        byte [] buffer = new byte[4096];
-                        int read;
-            
-                        // If more than 4KB of data exists on an HTTP playlist, 
-                        // it's probably not a playlist. This kind of sucks,
-                        // but it should work until someone can prove otherwise
-                        
-                        read = web_stream.Read (buffer, 0, buffer.Length);
-                        if (read >= buffer.Length - 1) {
-                            throw new InvalidPlaylistException ();
-                        }
-                        
-                        stream.Write (buffer, 0, read);
+                        Banshee.IO.StreamAssist.Save (web_stream, stream, false);
                         stream.Position = 0;
                     } finally {
                         web_stream.Close ();
