@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: banshee\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?"
 "product=banshee&component=general\n"
-"POT-Creation-Date: 2009-06-04 20:05+0000\n"
+"POT-Creation-Date: 2009-06-14 14:39+0000\n"
 "PO-Revision-Date: 2009-06-05 00:16+0000\n"
 "Last-Translator: António Lima <amrlima@gmail.com>\n"
 "Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
@@ -68,17 +68,14 @@ msgid "Constant Bitrate"
 msgstr "Taxa de Bits Constante"
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:6
-#| msgid "Extra"
 msgid "Extreme"
 msgstr "Radical"
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:7
-#| msgid "name"
 msgid "Insane"
 msgstr "Louco"
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:8
-#| msgid "New Preset"
 msgid "LAME Preset"
 msgstr "LAME Predefinição"
 
@@ -87,12 +84,10 @@ msgid "MP3 (LAME Encoder)"
 msgstr "MP3 (Codificador LAME)"
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:10
-#| msgid "_Media"
 msgid "Medium"
 msgstr "Média"
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:11
-#| msgid "New Preset"
 msgid "Preset"
 msgstr "Predefinição"
 
@@ -588,6 +583,11 @@ msgid "Specify an alternate database to use"
 msgstr "Especificar uma base de dados alternativa para utilização"
 
 #: ../src/Clients/Booter/Booter/Entry.cs:205
+#| msgid "Specify an alternate database to use"
+msgid "Specify an alternate key, default is /apps/banshee-1/"
+msgstr "Especificar uma chave alternativa, por omissão é /apps/banshee-1/"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:206
 msgid ""
 "Optimize instance for running uninstalled; most notably, this will create an "
 "alternate Mono.Addins database in the working directory"
@@ -595,18 +595,18 @@ msgstr ""
 "Optimizar instância para executar desinstalada; particularmente, isso irá "
 "criar uma base de dados alternativa de Mono.Addins no directório de trabalho."
 
-#: ../src/Clients/Booter/Booter/Entry.cs:207
+#: ../src/Clients/Booter/Booter/Entry.cs:208
 msgid "Disable DBus support completely"
 msgstr "Desactivar completamente o suporte a DBus"
 
-#: ../src/Clients/Booter/Booter/Entry.cs:209
+#: ../src/Clients/Booter/Booter/Entry.cs:210
 #, csharp-format
 msgid "Skip loading a custom gtkrc file ({0}) if it exists"
 msgstr ""
 "Ignorar o carregamento de um ficheiro gtkrc ({0}) personalizado se ele "
 "existir"
 
-#: ../src/Clients/Booter/Booter/Entry.cs:240
+#: ../src/Clients/Booter/Booter/Entry.cs:241
 #, csharp-format
 msgid "The following help arguments are invalid: {0}"
 msgstr "Os seguintes argumentos de ajuda são inválidos: {0}"
@@ -2185,6 +2185,16 @@ msgstr ""
 "Reproduzir todas as músicas de um álbum, depois escolher aleatoriamente "
 "outro álbum"
 
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackShuffleActions.cs:101
+#| msgid "Shuffle by _Song"
+msgid "Shuffle by _Rating"
+msgstr "Baralhar por _Avaliação"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackShuffleActions.cs:102
+#| msgid "Play songs randomly from the playlist"
+msgid "Play songs randomly, prefer higher rated songs"
+msgstr "Reproduzir aleatoriamente músicas, preferir as com melhor avaliação"
+
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:73
 msgid "_New Playlist"
 msgstr "_Nova Lista de Reprodução"
@@ -2777,8 +2787,6 @@ msgid "Enter or leave fullscreen mode"
 msgstr "Alternar o modo de ecrã completo"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TaskStatusIcon.cs:92
-#| msgid "Background Task Running:"
-#| msgid_plural "Background Tasks Running:"
 msgid "Active Task Running"
 msgid_plural "Active Tasks Running"
 msgstr[0] "Tarefa Activa em Execução"
@@ -4341,11 +4349,11 @@ msgstr "Falha ao importar a partir do Amarok"
 msgid "Amarok"
 msgstr "Amarok"
 
-#: ../src/Extensions/Banshee.PlayerMigration/Banshee.PlayerMigration/RhythmboxPlayerImportSource.cs:215
+#: ../src/Extensions/Banshee.PlayerMigration/Banshee.PlayerMigration/RhythmboxPlayerImportSource.cs:236
 msgid "Unable to import song."
 msgstr "Incapaz de importar a faixa."
 
-#: ../src/Extensions/Banshee.PlayerMigration/Banshee.PlayerMigration/RhythmboxPlayerImportSource.cs:349
+#: ../src/Extensions/Banshee.PlayerMigration/Banshee.PlayerMigration/RhythmboxPlayerImportSource.cs:370
 msgid "Rhythmbox Music Player"
 msgstr "Reprodutor de Música Rhythmbox"
 
