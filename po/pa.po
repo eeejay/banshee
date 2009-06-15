@@ -4,7 +4,7 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # A S Alam <aalam@users.sf.net>, 2007, 2009.
-\msgid ""
+msgid ""
 msgstr ""
 "Project-Id-Version: banshee.HEAD.pa\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=banshee&component=general\n"
