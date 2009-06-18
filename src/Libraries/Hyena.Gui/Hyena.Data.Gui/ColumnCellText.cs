@@ -35,7 +35,7 @@ using Hyena.Gui.Theming;
 
 namespace Hyena.Data.Gui
 {
-    public class ColumnCellText : ColumnCell, ISizeRequestCell, ITextCell
+    public class ColumnCellText : ColumnCell, ISizeRequestCell, ITextCell, ITooltipCell
     {
         internal const int Spacing = 4;
 
@@ -102,8 +102,13 @@ namespace Hyena.Data.Gui
             context.Layout.Alignment = alignment;
             context.Layout.SetText (GetFormattedText (text));
             context.Layout.GetPixelSize (out text_width, out text_height);
-            // Requires Gtk# 2.12
-            //is_ellipsized = context.Layout.IsEllipsized;
+            is_ellipsized = context.Layout.IsEllipsized;
+        }
+
+        public string GetTooltipMarkup (CellContext cellContext, double columnWidth)
+        {
+            UpdateText (cellContext, columnWidth);
+            return IsEllipsized ? Text : null;
         }
         
         protected virtual string GetText (object obj)
@@ -119,10 +124,10 @@ namespace Hyena.Data.Gui
             return String.Format (text_format, text);
         }
 
-        /*private bool is_ellipsized = false;
+        private bool is_ellipsized = false;
         public bool IsEllipsized {
             get { return is_ellipsized; }
-        }*/
+        }
 
         public string Text {
             get { return last_text; }
