@@ -49,7 +49,7 @@ namespace Hyena.Query.Gui
             get { return terms.Count > 0 ? terms[0] : null; }
         }
         
-        public QueryTermsBox (QueryFieldSet fieldSet) : base (0, 4, false)
+        public QueryTermsBox (QueryFieldSet fieldSet) : base (1, 4, false)
         {
             // Sort the fields alphabetically by their label
             sorted_fields = fieldSet.OrderBy (f => f.Label).ToArray ();
