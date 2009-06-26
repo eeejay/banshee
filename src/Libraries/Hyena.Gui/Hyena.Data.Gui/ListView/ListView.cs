@@ -73,7 +73,7 @@ namespace Hyena.Data.Gui
                         // TODO not right - could be smaller if at the top/bottom and only partially showing
                         rect.Height = RowHeight;
                         
-                        args.Tooltip.Markup = markup; //GLib.Markup.EscapeText (cell.Text);
+                        args.Tooltip.Markup = markup;
                         args.Tooltip.TipArea = rect;
                         args.RetVal = true;
                     }

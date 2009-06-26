@@ -108,7 +108,7 @@ namespace Hyena.Data.Gui
         public string GetTooltipMarkup (CellContext cellContext, double columnWidth)
         {
             UpdateText (cellContext, columnWidth);
-            return IsEllipsized ? Text : null;
+            return IsEllipsized ? GLib.Markup.EscapeText (Text) : null;
         }
         
         protected virtual string GetText (object obj)
