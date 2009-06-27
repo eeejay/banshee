@@ -240,15 +240,15 @@ namespace Banshee.NotificationArea
             
             PositionWidget (popup, out x, out y, 5);
             
-            x = x - (popup_req.Width / 2) + (event_box_req.Width / 2);     
-
             int monitor = event_box.Screen.GetMonitorAtPoint (x, y);
-            int monitor_width = event_box.Screen.GetMonitorGeometry(monitor).Width;
+            var monitor_rect = event_box.Screen.GetMonitorGeometry(monitor);
 
-            if (x + popup_req.Width >= monitor_width) {
-                x = monitor_width - popup_req.Width - 5;
-            } else if (x < 5) {
-                x = 5;
+            x = x - (popup_req.Width / 2) + (event_box_req.Width / 2);
+
+            if (x + popup_req.Width >= monitor_rect.Right - 5) {
+                x = monitor_rect.Right - popup_req.Width - 5;
+            } else if (x < monitor_rect.Left + 5) {
+                x = monitor_rect.Left + 5;
             }
             
             popup.Move (x, y);
