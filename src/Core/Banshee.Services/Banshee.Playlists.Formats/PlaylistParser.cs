@@ -1,8 +1,9 @@
 //
 // PlaylistParser.cs
 //
-// Author:
+// Authors:
 //   Aaron Bockover <abockover@novell.com>
+//   Bertrand Lorentz <bertrand.lorentz@gmail.com>
 //
 // Copyright (C) 2007 Novell, Inc.
 //
@@ -59,7 +60,11 @@ namespace Banshee.Playlists.Formats
             ThreadAssist.AssertNotInMainThread ();
             lock (this) {
                 elements = null;
+                HttpWebResponse response = null;
                 Stream stream = null;
+                Stream web_stream = null;
+                bool partial_read = false;
+                long saved_position = 0;
                 
                 if (uri.Scheme == "file") {
                     stream = Banshee.IO.File.OpenRead (uri);
@@ -85,17 +90,31 @@ namespace Banshee.Playlists.Formats
                         request.Credentials = new NetworkCredential (username, password);
                     }
             
-                    HttpWebResponse response = (HttpWebResponse)request.GetResponse ();
-                    Stream web_stream = response.GetResponseStream ();
+                    response = (HttpWebResponse)request.GetResponse ();
+                    web_stream = response.GetResponseStream ();
                     
                     try {
                         stream = new MemoryStream ();
 
-                        Banshee.IO.StreamAssist.Save (web_stream, stream, false);
+                        byte [] buffer = new byte[4096];
+                        int read;
+
+                        // If we haven't read the whole stream and if
+                        // it turns out to be a playlist, we'll read the rest
+                        read = web_stream.Read (buffer, 0, buffer.Length);
+                        stream.Write (buffer, 0, read);
+                        if ((read = web_stream.Read (buffer, 0, buffer.Length)) > 0) {
+                            partial_read = true;
+                            stream.Write (buffer, 0, read);
+                            saved_position = stream.Position;
+                        }
+                        
                         stream.Position = 0;
                     } finally {
-                        web_stream.Close ();
-                        response.Close ();
+                        if (!partial_read) {
+                            web_stream.Close ();
+                            response.Close ();
+                        }
                     }
                 } else {
                     Hyena.Log.DebugFormat ("Not able to parse playlist at {0}", uri);
@@ -118,6 +137,15 @@ namespace Banshee.Playlists.Formats
                     return false;
                 }
 
+                if (partial_read) {
+                    try {
+                        stream.Position = saved_position;
+                        Banshee.IO.StreamAssist.Save (web_stream, stream, false);
+                    } finally {
+                        web_stream.Close ();
+                        response.Close ();
+                    }
+                }
                 stream.Position = 0;
                 IPlaylistFormat playlist = (IPlaylistFormat)Activator.CreateInstance (matching_format.Type);
                 playlist.BaseUri = BaseUri;
