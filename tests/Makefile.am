@@ -1,10 +1,6 @@
 include $(top_srcdir)/build/build.environment.mk
 
-SUBDIRS = \
-	Analyzer
-
 DIST_SUBDIRS = \
-	Analyzer \
 	Performance
 
 if ENABLE_TESTS
