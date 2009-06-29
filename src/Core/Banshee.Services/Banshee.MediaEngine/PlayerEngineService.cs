@@ -114,7 +114,7 @@ namespace Banshee.MediaEngine
             
             TrackInfo.IsPlayingMethod = track => IsPlaying (track) &&
                 track.CacheModelId == CurrentTrack.CacheModelId &&
-                track.CacheEntryId.Equals (CurrentTrack.CacheEntryId);
+                (track.CacheEntryId == null || track.CacheEntryId.Equals (CurrentTrack.CacheEntryId));
         }
 
         private void InitializeEngine (PlayerEngine engine)
