@@ -38,7 +38,6 @@ SOURCES =  \
 	Banshee.Collection/AlbumListModel.cs \
 	Banshee.Collection/ArtistListModel.cs \
 	Banshee.Collection/BansheeListModel.cs \
-	Banshee.Collection/ExportableModel.cs \
 	Banshee.Collection/FilterListModel.cs \
 	Banshee.Collection/IExportableModel.cs \
 	Banshee.Collection/IFilterListModel.cs \

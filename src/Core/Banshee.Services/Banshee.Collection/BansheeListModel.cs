@@ -1,5 +1,5 @@
 //
-// ListModel.cs
+// BansheeListModel.cs
 //
 // Author:
 //   Aaron Bockover <abockover@novell.com>
@@ -35,73 +35,40 @@ using Banshee.ServiceStack;
 
 namespace Banshee.Collection
 {
-    public abstract class BansheeListModel<T> : ExportableModel, IListModel<T>
+    public abstract class BansheeListModel<T> : BaseListModel<T>, IDBusExportable
     {
-        protected Selection selection;
+        private IDBusExportable parent;
 
-        public event EventHandler Cleared;
-        public event EventHandler Reloaded;
-
-        public BansheeListModel () : base ()
+        public BansheeListModel ()
         {
         }
-        
-        public BansheeListModel (IDBusExportable parent) : base (parent)
+
+        public BansheeListModel (IDBusExportable parent)
         {
+            Parent = parent;
         }
-        
-        protected virtual void OnCleared ()
+
+        public virtual string ServiceName {
+            get { return GetType().Name; }
+        }
+
+        public virtual IDBusExportable Parent {
+            set { parent = value; }
+            get { return parent; }
+        }
+
+        protected override void OnCleared ()
         {
             Banshee.Base.ThreadAssist.ProxyToMain (delegate {
-                EventHandler handler = Cleared;
-                if(handler != null) {
-                    handler(this, EventArgs.Empty);
-                }
-            });
-        }
-        
-        protected virtual void OnReloaded ()
-        {
-            Banshee.Base.ThreadAssist.ProxyToMain (delegate {
-                EventHandler handler = Reloaded;
-                if(handler != null) {
-                    handler(this, EventArgs.Empty);
-                }
+                base.OnCleared ();
             });
         }
 
-        public void RaiseReloaded ()
+        protected override void OnReloaded ()
         {
-            OnReloaded ();
-        }
-        
-        public abstract void Clear();
-        
-        public abstract void Reload();
-    
-        public abstract T this[int index] { get; }
-
-        public abstract int Count { get; }
-
-        public virtual Selection Selection {
-            get { return selection; }
-        }
-
-        protected ModelSelection<T> model_selection;
-        public virtual ModelSelection<T> SelectedItems {
-            get {
-                return model_selection ?? (model_selection = new ModelSelection<T> (this, Selection));
-            }
-        }
-        
-        public T FocusedItem {
-            get { return Selection.FocusedIndex == -1 ? default(T) : this[Selection.FocusedIndex]; }
-        }
-
-        private bool can_reorder = false;
-        public bool CanReorder {
-            get { return can_reorder; }
-            set { can_reorder = value; }
+            Banshee.Base.ThreadAssist.ProxyToMain (delegate {
+                base.OnReloaded ();
+            });
         }
     }
 }
