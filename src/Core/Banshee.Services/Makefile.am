@@ -22,6 +22,11 @@ SOURCES =  \
 	Banshee.Collection.Database/IDatabaseTrackModelCache.cs \
 	Banshee.Collection.Database/IDatabaseTrackModelProvider.cs \
 	Banshee.Collection.Database/QueryFilterInfo.cs \
+	Banshee.Collection.Database/RandomBy.cs \
+	Banshee.Collection.Database/RandomByTrack.cs \
+	Banshee.Collection.Database/RandomByArtist.cs \
+	Banshee.Collection.Database/RandomByAlbum.cs \
+	Banshee.Collection.Database/RandomByRating.cs \
 	Banshee.Collection.Database/Tests/DatabaseAlbumInfoTests.cs \
 	Banshee.Collection.Database/Tests/DatabaseArtistInfoTests.cs \
 	Banshee.Collection.Database/Tests/DatabaseTrackInfoTests.cs \
