@@ -50,6 +50,7 @@ namespace Hyena.Data.Gui
         private string text_format = null;
         protected string MinString, MaxString;
         private string last_text = null;
+        private bool use_markup;
         
         public ColumnCellText (string property, bool expand) : base (property, expand)
         {
@@ -100,9 +101,19 @@ namespace Hyena.Data.Gui
             context.Layout.FontDescription.Weight = font_weight;
             context.Layout.Ellipsize = EllipsizeMode;
             context.Layout.Alignment = alignment;
-            context.Layout.SetText (GetFormattedText (text));
+            UpdateLayout (context.Layout, text);
             context.Layout.GetPixelSize (out text_width, out text_height);
             is_ellipsized = context.Layout.IsEllipsized;
+        }
+
+        private void UpdateLayout (Pango.Layout layout, string text)
+        {
+            string final_text = GetFormattedText (text);
+            if (use_markup) {
+                layout.SetMarkup (final_text);
+            } else {
+                layout.SetText (final_text);
+            }
         }
 
         public string GetTooltipMarkup (CellContext cellContext, double columnWidth)
@@ -184,14 +195,14 @@ namespace Hyena.Data.Gui
             min = max = -1;
             
             if (!String.IsNullOrEmpty (MinString)) {
-                layout.SetText (GetFormattedText (MinString));
+                UpdateLayout (layout, MinString);
                 layout.GetPixelSize (out min, out height);
                 min += 2*Spacing;
                 //Console.WriteLine ("for {0} got min {1} for {2}", this, min, MinString);
             }
 
             if (!String.IsNullOrEmpty (MaxString)) {
-                layout.SetText (GetFormattedText (MaxString));
+                UpdateLayout (layout, MaxString);
                 layout.GetPixelSize (out max, out height);
                 max += 2*Spacing;
                 //Console.WriteLine ("for {0} got max {1} for {2}", this, max, MaxString);
@@ -202,6 +213,11 @@ namespace Hyena.Data.Gui
         public bool RestrictSize {
             get { return restrict_size; }
             set { restrict_size = value; }
+        }
+
+        public bool UseMarkup {
+            get { return use_markup; }
+            set { use_markup = value; }
         }
         
         #endregion
