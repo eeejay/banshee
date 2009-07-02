@@ -111,6 +111,7 @@ SOURCES =  \
 	Hyena/Delegates.cs \
 	Hyena/IUndoAction.cs \
 	Hyena/Log.cs \
+	Hyena/PlatformUtil.cs \
 	Hyena/StringUtil.cs \
 	Hyena/Tests/CryptoUtilTests.cs \
 	Hyena/Tests/StringUtilTests.cs \
