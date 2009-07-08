@@ -75,7 +75,6 @@ namespace Banshee.Collection.Database
             // counts[x] = number of tracks rated x + 1.
             int[] counts = new int[5];
             // Get the distribution of ratings for tracks that haven't been played since stamp.
-            Console.WriteLine ("About to run rating query: {0}", Query.Text);
             using (var reader = ServiceManager.DbConnection.Query (Query, after, after)) {
                 while (reader.Read ()) {
                     int r = Convert.ToInt32 (reader[0]);
@@ -125,7 +124,9 @@ namespace Banshee.Collection.Database
 
         public override TrackInfo GetTrack (DateTime after)
         {
-            return !IsReady ? null : Cache.GetSingle (track_condition, rating, rating, after, after);
+            var track = !IsReady ? null : Cache.GetSingle (track_condition, rating, rating, after, after);
+            Reset ();
+            return track;
         }
 
         private HyenaSqliteCommand Query {
