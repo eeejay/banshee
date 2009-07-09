@@ -55,6 +55,12 @@ namespace Banshee.Dap.MassStorage
             "Music/",
             "amazonmp3/"
         };
+
+        private static string [] playlist_formats = new string [] {
+            "audio/x-mpegurl"
+        };
+
+        private static string playlists_path = "Playlists/";
         
         private static string [] icon_names = new string [] {
             "phone-htc-g1-white", DapSource.FallbackIcon
@@ -83,7 +89,15 @@ namespace Banshee.Dap.MassStorage
         public override string [] AudioFolders {
             get { return audio_folders; }
         }
+
+        public override string [] PlaylistFormats {
+            get { return playlist_formats; }
+        }
         
+        public override string PlaylistPath {
+            get { return playlists_path; }
+        }
+
         public override string [] PlaybackMimeTypes {
             get { return playback_mime_types; }
         }
