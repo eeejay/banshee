@@ -256,16 +256,19 @@ namespace Hyena
             if (orig == null) { return null; }
             return culture_compare_info.GetSortKey (orig, CompareOptions.IgnoreCase).KeyData;
         }
-        
+
+        private static readonly char[] escape_path_trim_chars = new char[] {'.', '\x20'};
         public static string EscapeFilename (string input)
         {
             if (input == null)
                 return "";
             
+            // Remove leading and trailing dots and spaces.
+            input = input.Trim (escape_path_trim_chars);
+
             return invalid_path_regex.Replace (input, "_");
         }
 
-        private static readonly char[] escape_path_trim_chars = new char[] {'.', '\x20'};
         public static string EscapePath (string input)
         {
             if (input == null)
@@ -280,8 +283,6 @@ namespace Hyena
             foreach (string name in input.Split (Path.DirectorySeparatorChar)) {
                 // Escape the directory or the file name.
                 string escaped = EscapeFilename (name);
-                // Remove leading and trailing dots and spaces.
-                escaped = escaped.Trim (escape_path_trim_chars);
                 // Skip empty names.
                 if (escaped.Length > 0) {
                     builder.Append (escaped);
