@@ -2,16 +2,16 @@
 # Copyright (C) 2006 Free Software Foundation
 # This file is distributed under the same license as the banshee package.
 #
-# Alexandre Prokoudine <alexandre.prokoudine@gmail.com>, 2006, 2007, 2009
 # Daniel Abramov <ex@vingrad.ru>, 2008.
 # Nickolay V. Shmyrev <nshmyrev@yandex.ru>, 2008
 #
+# Alexandre Prokoudine <alexandre.prokoudine@gmail.com>, 2006, 2007, 2009, 2009.
 msgid ""
 msgstr ""
 "Project-Id-Version: banshee trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-06 16:50+0400\n"
-"PO-Revision-Date: 2009-07-06 16:59+0400\n"
+"POT-Creation-Date: 2009-07-15 18:21+0400\n"
+"PO-Revision-Date: 2009-07-15 18:23+0400\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -990,7 +990,7 @@ msgstr ""
 "Не удалось найти ни одного «движка» воспроизведения видео. Убедитесь в "
 "корректной установке Banshee."
 
-#: ../src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:320
+#: ../src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:321
 msgid "Problem with Player Engine"
 msgstr "Неполадки с «движком» воспроизведения"
 
@@ -1411,9 +1411,8 @@ msgid "license"
 msgstr "лицензия"
 
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:229
-#, fuzzy
 msgid "licensed"
-msgstr "прослушиваний"
+msgstr "под лицензией"
 
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:229
 msgid "under"
@@ -1773,7 +1772,7 @@ msgid "Version:"
 msgstr "Версия:"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Addins.Gui/AddinDetailsDialog.cs:72
-#: ../src/Core/Banshee.ThickClient/Banshee.Addins.Gui/AddinTile.cs:98
+#: ../src/Core/Banshee.ThickClient/Banshee.Addins.Gui/AddinTile.cs:97
 msgid "Authors:"
 msgstr "Авторы:"
 
@@ -1785,11 +1784,11 @@ msgstr "Лицензия (авторские права):"
 msgid "Extension Dependencies:"
 msgstr "Зависит от:"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Addins.Gui/AddinTile.cs:183
+#: ../src/Core/Banshee.ThickClient/Banshee.Addins.Gui/AddinTile.cs:182
 msgid "Disable"
 msgstr "Отключить"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Addins.Gui/AddinTile.cs:184
+#: ../src/Core/Banshee.ThickClient/Banshee.Addins.Gui/AddinTile.cs:183
 msgid "Enable"
 msgstr "Включить"
 
@@ -2798,7 +2797,7 @@ msgstr "Показать графический эквалайзер"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/ViewActions.cs:72
 msgid "_Context Pane"
-msgstr ""
+msgstr "_Контекстная панель"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/ViewActions.cs:73
 #, fuzzy
@@ -2916,7 +2915,7 @@ msgstr "Локальные файлы"
 msgid "Import Folder to Library"
 msgstr "Импорт папки в медиатеку"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Library.Gui/FolderImportSource.cs:61
+#: ../src/Core/Banshee.ThickClient/Banshee.Library.Gui/FolderImportSource.cs:62
 msgid "Local Folder"
 msgstr "Локальная папка"
 
@@ -3967,9 +3966,8 @@ msgid "Enable song reporting"
 msgstr "Отправлять отчёты о прослушанных песнях"
 
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:66
-#, fuzzy
 msgid "_Add Station..."
-msgstr "_Добавить радиостанцию"
+msgstr "_Добавить станцию"
 
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:67
 msgid "Add a new Last.fm radio station"
@@ -4223,7 +4221,7 @@ msgstr "Радио соседей"
 
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:580
 msgid "Creative Commons"
-msgstr ""
+msgstr "Creative Commons"
 
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:85
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:94
@@ -4279,9 +4277,8 @@ msgid "lastfm://"
 msgstr "lastfm://"
 
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Recommendations/ContextPage.cs:44
-#, fuzzy
 msgid "Last.fm Recommendations"
-msgstr "Показывать рекомендации"
+msgstr "Рекомендации Last.fm"
 
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Recommendations/RecommendationPane.cs:81
 #, csharp-format
@@ -4347,11 +4344,11 @@ msgstr "Показывать _уведомления"
 msgid "Show notifications when item changes"
 msgstr "Показывать уведомления при переходе к следующей песне"
 
-#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:336
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:334
 msgid "Still Running"
 msgstr "Работа продолжается"
 
-#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:337
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:335
 msgid ""
 "Banshee was closed to the notification area. Use the <i>Quit</i> option to "
 "end your session."
@@ -4359,16 +4356,16 @@ msgstr ""
 "Программа Banshee была свёрнута в значок области уведомлений. Используйте "
 "команду «Выйти», чтобы полностью завершить выполнение приложения."
 
-#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:459
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:457
 #: ../src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/NowPlayingSource.cs:48
 msgid "Now Playing"
 msgstr "Сейчас воспроизводится"
 
-#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:464
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:462
 msgid "Skip this item"
 msgstr "Пропустить"
 
-#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:470
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:468
 msgid "Cannot show notification"
 msgstr "Не удалось показать уведомление"
 
@@ -4391,9 +4388,8 @@ msgid "Unable to import song."
 msgstr "Не удалось импортировать дорожку: {0}"
 
 #: ../src/Extensions/Banshee.PlayerMigration/Banshee.PlayerMigration/RhythmboxPlayerImportSource.cs:370
-#, fuzzy
 msgid "Rhythmbox Music Player"
-msgstr "Музыкальный проигрыватель Banshee"
+msgstr "Музыкальный проигрыватель Rhythmbox"
 
 #: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueActions.cs:49
 msgid "Add to Play Queue"
@@ -4576,9 +4572,8 @@ msgid "Podcast URL is invalid."
 msgstr "URL подкаста некорректен"
 
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastEpisodePage.cs:87
-#, fuzzy
 msgid "Author"
-msgstr "Авторы:"
+msgstr "Автор"
 
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastEpisodePage.cs:109
 #, fuzzy
@@ -4590,9 +4585,8 @@ msgid "Last updated:"
 msgstr "Последнее обновление:"
 
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastFeedPropertiesDialog.cs:87
-#, fuzzy
 msgid "Podcast Name:"
-msgstr "Подкаст:"
+msgstr "Название подкаста:"
 
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastFeedPropertiesDialog.cs:97
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastPropertiesDialog.cs:85
@@ -4668,9 +4662,8 @@ msgid "Stop SQL Monitoring"
 msgstr "Прекратить отслеживание SQL-запросов"
 
 #: ../src/Extensions/Banshee.Wikipedia/Banshee.Wikipedia/ContextPage.cs:44
-#, fuzzy
 msgid "Wikipedia"
-msgstr "пропущено"
+msgstr "Википедия"
 
 #: ../src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Header.cs:551
 #, csharp-format
