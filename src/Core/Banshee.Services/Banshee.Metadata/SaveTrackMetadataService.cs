@@ -129,7 +129,7 @@ namespace Banshee.Metadata
             Catalog.GetString ("Write _ratings and play counts to files");
             Catalog.GetString ("Enable this option to save rating and play count metadata inside supported audio files whenever the rating is changed.");
             Catalog.GetString ("Import _ratings");
-            Catalog.GetString ("Import _play counts");
+            Catalog.GetString ("Import play _counts");
         }
     }
 }
