@@ -55,7 +55,12 @@ namespace Banshee.Dap.MassStorage
         
         private static string [] audio_folders = new string [] {
             "Music/",
-            "amazonmp3/"
+            "amazonmp3/",
+            "Video/"
+        };
+
+        private static string [] video_folders = new string [] {
+            "Video/"
         };
 
         private static string [] playlist_formats = new string [] {
@@ -90,6 +95,10 @@ namespace Banshee.Dap.MassStorage
         
         public override string [] AudioFolders {
             get { return audio_folders; }
+        }
+
+        public override string [] VideoFolders {
+            get { return video_folders; }
         }
 
         public override string [] PlaylistFormats {

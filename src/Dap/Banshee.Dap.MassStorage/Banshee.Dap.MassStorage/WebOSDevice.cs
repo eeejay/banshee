@@ -88,6 +88,10 @@ namespace Banshee.Dap.MassStorage
             "AmazonMP3/"
         };
 
+        private static string [] video_folders = new string [] {
+            "Videos/"
+        };
+
         private static string [] icon_names = new string [] {
             DapSource.FallbackIcon
         };
@@ -119,6 +123,10 @@ namespace Banshee.Dap.MassStorage
 
         public override string [] AudioFolders {
             get { return audio_folders; }
+        }
+
+        public override string [] VideoFolders {
+            get { return video_folders; }
         }
 
         public override string [] PlaybackMimeTypes {

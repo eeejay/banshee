@@ -81,7 +81,7 @@ namespace Banshee.Dap.MassStorage
                 Hyena.Log.DebugFormat ("Found RockBox Device");
                 name = Catalog.GetString ("Rockbox Device");
                 audio_folders = new string [] {"Music/","Videos/"};
-                //video_folders = new string [] {"Videos/"};
+                video_folders = new string [] {"Videos/"};
                 folder_depth = 2;
                 playback_mime_types = new string [] {"application/ogg","audio/x-ms-wma","audio/mpeg","audio/mp4","audio/x-wav"};
                 playlist_formats = new string [] {"audio/x-mpegurl"};
@@ -101,20 +101,17 @@ namespace Banshee.Dap.MassStorage
                                 case "cover_art_file_type": cover_art_file_type = item.Value[0].ToLower (); break;
                                 case "cover_art_file_name": cover_art_file_name = item.Value[0]; break;
                                 case "cover_art_size": Int32.TryParse (item.Value[0], out cover_art_size); break;
-
+                                case "audio_folders": audio_folders = item.Value; break;
+                                case "video_folders": video_folders = item.Value; break;
+                                case "output_formats": playback_mime_types = item.Value; break;
+                                case "playlist_format": playlist_formats = item.Value; break;
+                                case "playlist_path": playlist_path = item.Value[0]; break;
                                 case "folder_depth": 
                                     if (!Int32.TryParse (item.Value[0], out folder_depth)) {
                                         folder_depth = -1;
                                     }
                                     Hyena.Log.DebugFormat ("MassStorageDevice.LoadDeviceConfiguration {0}", folder_depth);
                                     break;
-                                case "audio_folders": audio_folders = item.Value; break;
-
-                                case "output_formats": playback_mime_types = item.Value; break;
-
-                                case "playlist_format": playlist_formats = item.Value; break;
-                                case "playlist_path": playlist_path = item.Value[0]; break;
-
                                 default:
                                     throw new ApplicationException ("unsupported key");    
                             }
@@ -169,6 +166,11 @@ namespace Banshee.Dap.MassStorage
         private string [] audio_folders = new string[0];
         public virtual string [] AudioFolders { 
             get { return audio_folders; } 
+        }
+
+        private string [] video_folders = new string[0];
+        public virtual string [] VideoFolders { 
+            get { return video_folders; } 
         }
         
         private string cover_art_file_type;
