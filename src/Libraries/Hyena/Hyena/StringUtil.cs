@@ -219,8 +219,15 @@ namespace Hyena
                 // Can ignore A-Z because we've already lowercased the char
                 previous_was_latin = (c >= 'a' && c <= 'z');
             }
-            
-            return sb.ToString ().Normalize (NormalizationForm.FormKC);
+
+            string result = sb.ToString ();
+            try {
+                result = result.Normalize (NormalizationForm.FormKC);
+            }
+            catch {
+                // FIXME: work-around, see http://bugzilla.gnome.org/show_bug.cgi?id=590478
+            }
+            return result;
         }
         
         private static Regex invalid_path_regex = BuildInvalidPathRegex ();
