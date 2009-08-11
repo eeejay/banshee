@@ -154,7 +154,14 @@ namespace Banshee.Daap
                     try {
                         DAAP.Track song = database.LookupTrackById(song_id);
                         if(song != null) {
-                            StreamTrack(client, database, song);
+                            long offset = -1;
+                            foreach (string line in body_request) {
+                                if (line.ToLower ().Contains ("range:")) {
+                                    offset = ParseRangeRequest (line);
+                                }
+                            }
+                            
+                            StreamTrack(client, database, song, offset);
                             return;
                         }
                     } catch (Exception e) {
@@ -183,12 +190,17 @@ namespace Banshee.Daap
 
             WriteResponse(client, code, body + GetHtmlFooter());
         }
+
+        protected void StreamTrack(Socket client, DAAP.Database database, DAAP.Track song)
+        {
+            StreamTrack (client, database, song, -1);
+        }
         
-        private void StreamTrack(Socket client, DAAP.Database database, DAAP.Track song)
+        protected virtual void StreamTrack(Socket client, DAAP.Database database, DAAP.Track song, long offset)
         {
             long length;
-            Stream stream = database.StreamTrack(song, out length);
-            WriteResponseStream(client, stream, length, song.FileName);
+            Stream stream = database.StreamTrack(song, offset, out length);
+            WriteResponseStream(client, stream, length, song.FileName, offset < 0 ? 0 : offset);
             stream.Close();
             client.Close();
         }
