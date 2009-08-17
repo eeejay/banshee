@@ -26,7 +26,7 @@ AC_DEFUN([BANSHEE_CHECK_LIBBANSHEE],
 	fi
 
 	PKG_CHECK_MODULES(CLUTTER,
-		clutter-0.9 >= 0.9.5,
+		clutter-1.0 >= 1.0.3,
 		enable_clutter=yes, enable_clutter=no)
 
 	if test "x$enable_clutter" = "xyes"; then

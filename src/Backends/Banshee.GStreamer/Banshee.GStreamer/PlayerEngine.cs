@@ -528,8 +528,8 @@ namespace Banshee.GStreamer
                     clutter_video_sink = IntPtr.Zero;
                     clutter_video_texture = IntPtr.Zero;
                 }
-            } catch {
-                Log.Warning ("Clutter support could not be initialized");
+            } catch (Exception e) {
+                Log.Exception ("Clutter support could not be initialized", e);
                 clutter_video_sink = IntPtr.Zero;
                 clutter_video_texture = IntPtr.Zero;
                 clutter_video_sink_enabled = false;
