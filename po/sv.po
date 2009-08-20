@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-20 21:47+0200\n"
-"PO-Revision-Date: 2009-08-20 21:57+0100\n"
+"POT-Creation-Date: 2009-08-20 23:35+0200\n"
+"PO-Revision-Date: 2009-08-20 23:36+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -4343,14 +4343,12 @@ msgid "_Fill"
 msgstr "_Fyll"
 
 #: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:332
-#, fuzzy
 msgid "f_rom"
-msgstr "från"
+msgstr "f_rån"
 
 #: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:334
-#, fuzzy
 msgid "Refresh random tracks in the play queue"
-msgstr "Ta bort alla spår från spelkön"
+msgstr "Uppdatera slumpmässiga spår i spelkön"
 
 #: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:335
 msgid "Number of _played songs to show"
