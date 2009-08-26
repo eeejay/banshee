@@ -43,5 +43,7 @@ namespace Banshee.IO.SystemIO
     	public Type DemuxVfsProvider {
     	    get { return typeof (DemuxVfs); }
     	}
+
+        public bool LocalOnly { get { return true; } }
     }
 }

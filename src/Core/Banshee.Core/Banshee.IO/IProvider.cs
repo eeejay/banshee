@@ -35,5 +35,6 @@ namespace Banshee.IO
         Type FileProvider { get; }
         Type DirectoryProvider { get; }
         Type DemuxVfsProvider { get; }
+        bool LocalOnly { get; }
     }
 }

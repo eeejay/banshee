@@ -2,9 +2,9 @@
 // Provider.cs
 //
 // Author:
-//   Aaron Bockover <abockover@novell.com>
+//   Gabriel Burt <gburt@novell.com>
 //
-// Copyright (C) 2008 Novell, Inc.
+// Copyright (C) 2009 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -28,22 +28,22 @@
 
 using System;
 
-namespace Banshee.IO.Unix
+namespace Banshee.IO.Gio
 {
     public class Provider : Banshee.IO.IProvider
     {
-    	public Type FileProvider { 
-    	    get { return typeof (File); }
-    	}
+        public Type FileProvider {
+            get { return typeof (File); }
+        }
 
-    	public Type DirectoryProvider {
-    	    get { return typeof (Directory); }
-    	}
+        public Type DirectoryProvider {
+            get { return typeof (Directory); }
+        }
 
-    	public Type DemuxVfsProvider {
-    	    get { return typeof (DemuxVfs); }
-    	}
+        public Type DemuxVfsProvider {
+            get { return typeof (DemuxVfs); }
+        }
 
-        public bool LocalOnly { get { return true; } }
+        public bool LocalOnly { get { return false; } }
     }
 }

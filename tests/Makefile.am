@@ -12,6 +12,7 @@ TEST_ASSEMBLIES = \
 	Migo.dll \
 	Mono.Media.dll \
 	Banshee.Core.dll \
+	Banshee.Gnome.dll \
 	Banshee.Services.dll \
 	Banshee.Dap.Mtp.dll
 

@@ -95,6 +95,9 @@ SHAMROCK_CHECK_MONODOC
 dnl webkit (optional through --enable-webkit)
 BANSHEE_CHECK_WEBKIT
 
+dnl gtk#-beans and gio#
+BANSHEE_CHECK_GIO_SHARP
+
 dnl Moonlight (optional through --enable-moonlight)
 BANSHEE_CHECK_MOONLIGHT
 
@@ -245,6 +248,7 @@ src/Core/Banshee.ThickClient/Makefile
 src/Core/Banshee.Widgets/Makefile
 
 src/Backends/Makefile
+src/Backends/Banshee.Gio/Makefile
 src/Backends/Banshee.Gnome/Makefile
 src/Backends/Banshee.GStreamer/Makefile
 src/Backends/Banshee.Hal/Makefile
@@ -319,6 +323,7 @@ ${PACKAGE}-${VERSION}
   Operating System/Desktop Environment:
     GNOME Support:     ${enable_gnome}
     Builtin Equalizer: ${enable_builtin_equalizer}
+    GIO Support:       ${enable_gio} (requires gtk-sharp-beans and gio-sharp)
     OSX Support:       ${enable_osx}
 
   Digital Audio Player (DAP) Support:

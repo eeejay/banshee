@@ -66,6 +66,7 @@ namespace Banshee.Gui.Dialogs
         public FileChooserDialog (string title, Window parent, FileChooserAction action) : 
             base (title, parent, action)
         {
+            LocalOnly = Banshee.IO.Provider.LocalOnly;
             SetCurrentFolderUri (LastFileChooserUri.Get (Environment.GetFolderPath (Environment.SpecialFolder.Personal)));
             WindowPosition = WindowPosition.Center;
         }

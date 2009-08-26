@@ -81,6 +81,10 @@ namespace Banshee.IO
         internal static IFile File {
             get { return file; }
         }
+
+        public static bool LocalOnly {
+            get { return provider == null ? true : provider.LocalOnly; }
+        }
         
         internal static IDemuxVfs CreateDemuxVfs (string file)
         {
@@ -89,9 +93,10 @@ namespace Banshee.IO
         
         internal static readonly SchemaEntry<string> ProviderSchema = new SchemaEntry<string> (
             "core", "io_provider",
-            "Banshee.IO.Unix.Provider",
+            "Banshee.IO.Gio.Provider",
             "Set the IO provider backend in Banshee",
             "Can be either \"Banshee.IO.SystemIO.Provider\" (.NET System.IO), " + 
+                "\"Banshee.IO.Gio.Provider\" (GIO), or " +
                 "\"Banshee.IO.Unix.Provider\" (Native Unix/POSIX), or " +
                 "\"Banshee.IO.GnomeVfs.Provider\" (GNOME VFS); " +
                 "takes effect on Banshee start (restart necessary)"
