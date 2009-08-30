@@ -208,7 +208,7 @@ namespace Media.Playlists.Xspf
                 @"^(?<year>\d\d\d\d)" +
                 @"(-(?<month>\d\d)(-(?<day>\d\d)(T(?<hour>\d\d):" + 
                 @"(?<min>\d\d)(:(?<sec>\d\d)(?<ms>\.\d+)?)?" +
-                @"(?<ofs>(Z|[+\-]\d\d:\d\d)))?)?)?$"; 
+                @"(?<ofs>(Z|[+\-]\d\d:\d\d))?)?)?)?$"; 
 
             string combined_format = String.Format(
                 @"(?<rfc822>{0})|(?<w3c>{1})", Rfc822DateFormat, W3CDateFormat);
