@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-20 23:35+0200\n"
-"PO-Revision-Date: 2009-08-20 23:36+0100\n"
+"POT-Creation-Date: 2009-09-01 00:20+0200\n"
+"PO-Revision-Date: 2009-09-01 00:21+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -1770,6 +1770,14 @@ msgstr "Gör sammanhangspanelen större eller mindre"
 msgid "Hide context pane"
 msgstr "Dölj sammanhangspanel"
 
+#: ../src/Core/Banshee.ThickClient/Banshee.ContextPane/ContextPane.cs:144
+msgid "Waiting for playback to begin..."
+msgstr "Väntar på att uppspelningen ska startas..."
+
+#: ../src/Core/Banshee.ThickClient/Banshee.ContextPane/ContextPane.cs:150
+msgid "Loading..."
+msgstr "Läser in..."
+
 #: ../src/Core/Banshee.ThickClient/Banshee.Equalizer.Gui/EqualizerWindow.cs:52
 msgid "Equalizer"
 msgstr "Equalizer"
@@ -1921,7 +1929,7 @@ msgstr "Avsluta Banshee"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:76
 msgid "_Edit"
-msgstr "_Redigera"
+msgstr "R_edigera"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:79
 msgid "_Preferences"
@@ -1969,11 +1977,11 @@ msgstr "Lär dig avancerade sätt att söka igenom din mediasamling"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:110
 msgid "Banshee _Home Page"
-msgstr "Banshees _hemsida"
+msgstr "Banshees _webbsida"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:111
 msgid "Visit the Banshee Home Page"
-msgstr "Besök Banshees hemsida"
+msgstr "Besök Banshees webbsida"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:116
 msgid "_Get Involved"
@@ -6149,8 +6157,6 @@ msgstr "Okänd poddsändning"
 #~ msgstr "Ikonnamn"
 #~ msgid "Maximum number of concurrent downloads cannot be less than 0."
 #~ msgstr "Maximalt antal samtidiga hämtningar kan inte vara mindre än 0."
-#~ msgid "<b>Loading...</b>"
-#~ msgstr "<b>Läser in...</b>"
 #~ msgid "Shows the Notification Area Icon"
 #~ msgstr "Visar ikon för notifieringsyta"
 #~ msgid "Base location for library music"
