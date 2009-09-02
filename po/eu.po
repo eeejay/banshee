@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-29 17:47+0200\n"
-"PO-Revision-Date: 2009-08-29 18:15+0200\n"
+"POT-Creation-Date: 2009-09-02 19:43+0200\n"
+"PO-Revision-Date: 2009-09-02 19:45+0200\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
 "Language-Team: Basque <itzulpena@euskalgnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -1038,7 +1038,10 @@ msgstr "Idatzi _balioa eta erreprodukzio-zenbaketak fitxategietan"
 msgid ""
 "Enable this option to save rating and play count metadata inside supported "
 "audio files whenever the rating is changed."
-msgstr "Gaitu aukera hori onartutako audio-fitxategien barruan balio eta erreprodukzio-zenbaketen metadatuak gordetzeko balioa aldatzen den bakoitzean."
+msgstr ""
+"Gaitu aukera hori onartutako audio-fitxategien barruan balio eta "
+"erreprodukzio-zenbaketen metadatuak gordetzeko balioa aldatzen den "
+"bakoitzean."
 
 #: ../src/Core/Banshee.Services/Banshee.Metadata/SaveTrackMetadataService.cs:131
 msgid "Import _ratings"
@@ -1822,6 +1825,14 @@ msgstr "Egin testuinguruko panela handiagoa edo txikiagoa"
 #: ../src/Core/Banshee.ThickClient/Banshee.ContextPane/ContextPane.cs:123
 msgid "Hide context pane"
 msgstr "Ezkutatu testuinguruko panela"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.ContextPane/ContextPane.cs:144
+msgid "Waiting for playback to begin..."
+msgstr "Erreprodukzioa hasteko zain..."
+
+#: ../src/Core/Banshee.ThickClient/Banshee.ContextPane/ContextPane.cs:150
+msgid "Loading..."
+msgstr "Kargatzen..."
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Equalizer.Gui/EqualizerWindow.cs:52
 msgid "Equalizer"
@@ -4413,8 +4424,9 @@ msgid ""
 "The iTunes library refers to your music directory as \"{0}\" but Banshee was "
 "not able to infer the location of this directory. Please locate it."
 msgstr ""
-"iTunes liburutegiak zure musiken direktorioa \"{0}\" gisa adierazten du, baina "
-"Banshee ez da gai direktorio horren kokalekua ateratzeko. Lokalizatu ezazu."
+"iTunes liburutegiak zure musiken direktorioa \"{0}\" gisa adierazten du, "
+"baina Banshee ez da gai direktorio horren kokalekua ateratzeko. Lokalizatu "
+"ezazu."
 
 #: ../src/Extensions/Banshee.PlayerMigration/Banshee.PlayerMigration/RhythmboxPlayerImportSource.cs:393
 msgid "iTunes Media Player"
@@ -4426,9 +4438,9 @@ msgid ""
 "Importing may or may not work as expected, or at all. Would you like to "
 "attempt to import anyway?"
 msgstr ""
-"Banshee ez dago ohituta iTunes-en liburutegiaren bertsio honen formatuarekin. "
-"Inportatzeak agian funtziona dezake, edo agian ez. Hala ere, inportatzen saiatzea "
-"nahi duzu?"
+"Banshee ez dago ohituta iTunes-en liburutegiaren bertsio honen "
+"formatuarekin. Inportatzeak agian funtziona dezake, edo agian ez. Hala ere, "
+"inportatzen saiatzea nahi duzu?"
 
 #: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueActions.cs:49
 msgid "Add to Play Queue"
