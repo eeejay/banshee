@@ -52,6 +52,7 @@ namespace Banshee.Gui.TrackEditor
     public class StatisticsPage : ScrolledWindow, ITrackEditorPage
     {
         private CellRendererText name_renderer;
+        private CellRendererText value_renderer;
         private ListStore model;
         private TreeView view;
         
@@ -64,6 +65,8 @@ namespace Banshee.Gui.TrackEditor
             view = new FixedTreeView (model);
             view.HeadersVisible = false;
             view.RowSeparatorFunc = new TreeViewRowSeparatorFunc (RowSeparatorFunc);
+            view.HasTooltip = true;
+            view.QueryTooltip += HandleQueryTooltip;
             
             name_renderer = new CellRendererText ();
             name_renderer.Alignment = Pango.Alignment.Right;
@@ -71,7 +74,7 @@ namespace Banshee.Gui.TrackEditor
             name_renderer.Xalign = 1.0f;
             name_renderer.Scale = Pango.Scale.Small;
             
-            CellRendererText value_renderer = new CellRendererText ();
+            value_renderer = new CellRendererText ();
             value_renderer.Ellipsize = Pango.EllipsizeMode.End;
             value_renderer.Editable = true;
             value_renderer.Scale = Pango.Scale.Small;
@@ -92,6 +95,42 @@ namespace Banshee.Gui.TrackEditor
         private bool RowSeparatorFunc (TreeModel model, TreeIter iter)
         {
             return (bool)model.GetValue (iter, 2);
+        }
+
+        private void HandleQueryTooltip(object o, QueryTooltipArgs args)
+        {
+            TreePath path;
+            TreeIter iter;
+            if (view.GetPathAtPos (args.X, args.Y, out path) && view.Model.GetIter (out iter, path)) {
+                string text = (string)view.Model.GetValue (iter, 1);
+                if (!String.IsNullOrEmpty (text)) {
+                    using (var layout = new Pango.Layout (view.PangoContext)) {
+                        layout.FontDescription = value_renderer.FontDesc;
+                        layout.SetText (text);
+                        layout.Attributes = new Pango.AttrList ();
+                        layout.Attributes.Insert (new Pango.AttrScale (value_renderer.Scale));
+
+                        int width, height;
+                        layout.GetPixelSize (out width, out height);
+
+                        var column = view.GetColumn (1);
+                        var column_width = column.Width - 2 * value_renderer.Xpad -
+                            (int)view.StyleGetProperty ("horizontal-separator") -
+                            2 * (int)view.StyleGetProperty ("focus-line-width");
+
+                        if (width > column_width) {
+                            args.Tooltip.Text = text;
+                            view.SetTooltipCell (args.Tooltip, path, column, value_renderer);
+                            args.RetVal = true;
+                        }
+                    }
+                }
+            }
+
+            // Work around ref counting SIGSEGV, see http://bugzilla.gnome.org/show_bug.cgi?id=478519#c9
+            if (args.Tooltip != null) {
+                args.Tooltip.Dispose ();
+            }
         }
         
         protected override void OnStyleSet (Style previous_style)
