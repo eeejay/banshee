@@ -178,11 +178,14 @@ namespace Banshee.Collection.Database
                 
                 track.PrimarySource = trackPrimarySourceChooser (track);
 
+                bool save_track = true;
                 if (track.PrimarySource is Banshee.Library.LibrarySource) {
-                    track.CopyToLibraryIfAppropriate (force_copy);
+                    save_track = track.CopyToLibraryIfAppropriate (force_copy);
                 }
 
-                track.Save (false);
+                if (save_track) {
+                    track.Save (false);
+                }
 
                 ServiceManager.DbConnection.CommitTransaction ();
             } catch (Exception) {

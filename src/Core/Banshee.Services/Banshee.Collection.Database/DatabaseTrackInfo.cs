@@ -610,12 +610,14 @@ namespace Banshee.Collection.Database
             }
         }
 
-        public void CopyToLibraryIfAppropriate (bool force_copy)
+        public bool CopyToLibraryIfAppropriate (bool force_copy)
         {
+            bool copy_success = true;
+
             SafeUri old_uri = this.Uri;
             if (old_uri == null) {
                 // Get out quick, no URI set yet.
-                return;
+                return copy_success;
             }
             
             bool in_library = old_uri.AbsolutePath.StartsWith (PrimarySource.BaseDirectoryWithSeparator);
@@ -626,16 +628,29 @@ namespace Banshee.Collection.Database
 
                 try {
                     if (Banshee.IO.File.Exists (new_uri)) {
-                        Hyena.Log.DebugFormat ("Not copying {0} to library because there is already a file at {1}", old_uri, new_uri);
-                        return;
+                        if (Banshee.IO.File.GetSize (old_uri) == Banshee.IO.File.GetSize (new_uri)) {
+                            Hyena.Log.DebugFormat ("Not copying {0} to library because there is already a file of same size at {1}", old_uri, new_uri);
+                            copy_success = false;
+                            return copy_success;
+                        } else {
+                            string extension = Path.GetExtension (new_filename);
+                            string filename_no_ext = new_filename.Remove (new_filename.Length - extension.Length);
+                            int duplicate_index = 1;
+                            while (Banshee.IO.File.Exists (new_uri)) {
+                                new_filename = String.Format ("{0} ({1}){2}", filename_no_ext, duplicate_index, extension);
+                                new_uri = new SafeUri (new_filename);
+                                duplicate_index++;
+                          }
+                        }
                     }
-                    
+
                     Banshee.IO.File.Copy (old_uri, new_uri, false);
                     Uri = new_uri;
                 } catch (Exception e) {
                     Log.ErrorFormat ("Exception copying into library: {0}", e);
                 }
             }
+            return copy_success;
         }
 
         private static HyenaSqliteCommand get_uri_id_cmd = new HyenaSqliteCommand ("SELECT TrackID FROM CoreTracks WHERE Uri = ? LIMIT 1");
