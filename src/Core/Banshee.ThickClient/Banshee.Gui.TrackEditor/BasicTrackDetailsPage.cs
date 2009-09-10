@@ -96,6 +96,12 @@ namespace Banshee.Gui.TrackEditor
                 }
             );
 
+            track_artist_entry.Changed += delegate {
+                if (!album_artist_entry.IsCompilation) {
+                    album_artist_entry.Text = track_artist_entry.Text;
+                }
+            };
+
             AddField (left, new TextEntry ("CoreAlbums", "Title"), 
                 Catalog.GetString ("Set all album titles to this value"),
                 delegate { return Catalog.GetString ("Albu_m Title:"); },
