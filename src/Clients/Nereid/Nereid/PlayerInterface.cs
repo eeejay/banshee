@@ -346,6 +346,7 @@ namespace Nereid
             ISourceContents contents = source.GetProperty<ISourceContents> ("Nereid.SourceContents",
                 source.GetInheritedProperty<bool> ("Nereid.SourceContentsPropagate"));
 
+            view_container.ClearHeaderWidget ();
             view_container.ClearFooter ();
             
             if (contents != null) {
@@ -378,6 +379,15 @@ namespace Nereid
 
             view_container.Header.Visible = source.Properties.Contains ("Nereid.SourceContents.HeaderVisible") ?
                 source.Properties.Get<bool> ("Nereid.SourceContents.HeaderVisible") : true;
+
+            Widget header_widget = null;
+            if (source.Properties.Contains ("Nereid.SourceContents.HeaderWidget")) {
+                header_widget = source.Properties.Get<Widget> ("Nereid.SourceContents.HeaderWidget");
+            }
+
+            if (header_widget != null) {
+                view_container.SetHeaderWidget (header_widget);
+            }
 
             Widget footer_widget = null;
             if (source.Properties.Contains ("Nereid.SourceContents.FooterWidget")) {
