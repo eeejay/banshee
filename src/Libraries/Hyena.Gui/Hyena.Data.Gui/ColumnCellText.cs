@@ -108,6 +108,7 @@ namespace Hyena.Data.Gui
         private void UpdateLayout (Pango.Layout layout, string text)
         {
             string final_text = GetFormattedText (text);
+            final_text = final_text.Replace ("\r\n", "\x20").Replace ("\n", "\x20").Replace ("\r", "\x20");
             if (use_markup) {
                 layout.SetMarkup (final_text);
             } else {
