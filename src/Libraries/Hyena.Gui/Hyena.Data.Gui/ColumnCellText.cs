@@ -105,10 +105,13 @@ namespace Hyena.Data.Gui
             is_ellipsized = context.Layout.IsEllipsized;
         }
 
+        private static char[] lfcr = new char[] {'\n', '\r'};
         private void UpdateLayout (Pango.Layout layout, string text)
         {
             string final_text = GetFormattedText (text);
-            final_text = final_text.Replace ("\r\n", "\x20").Replace ("\n", "\x20").Replace ("\r", "\x20");
+            if (final_text.IndexOfAny (lfcr) >= 0) {
+                final_text = final_text.Replace ("\r\n", "\x20").Replace ('\n', '\x20').Replace ('\r', '\x20');
+            }
             if (use_markup) {
                 layout.SetMarkup (final_text);
             } else {
