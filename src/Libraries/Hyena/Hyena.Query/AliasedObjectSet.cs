@@ -53,10 +53,12 @@ namespace Hyena.Query
                 map [obj.Name.ToLower ()] = obj;
                 foreach (string alias in obj.Aliases) {
                     if (!String.IsNullOrEmpty (alias) && alias.IndexOf (" ") == -1) {
-                        string lower_alias = alias.ToLower ();
-                        map [lower_alias] = obj;
-                        if (!aliases.Contains (lower_alias)) {
-                            aliases.Add (lower_alias);
+                        foreach (string sub_alias in alias.Split(',')) {
+                            string lower_alias = sub_alias.ToLower ();
+                            map [lower_alias] = obj;
+                            if (!aliases.Contains (lower_alias)) {
+                                aliases.Add (lower_alias);
+                            }
                         }
                     }
                 }

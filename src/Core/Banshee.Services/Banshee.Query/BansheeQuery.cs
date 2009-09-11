@@ -95,7 +95,7 @@ namespace Banshee.Query
         public static QueryField ArtistField = new QueryField (
             "artist", "DisplayArtistName",
             Catalog.GetString ("Artist"), "CoreArtists.NameLowered", true,
-            // Translators: These are unique search aliases for "artist".  Please, no spaces. Blank ok.
+            // Translators: These are unique search aliases for "artist". You can use CSV for synonyms. Please, no spaces. Blank ok.
             Catalog.GetString ("artist"), Catalog.GetString ("by"), Catalog.GetString ("artists"),
             "by", "artist", "artists"
         );
@@ -103,7 +103,7 @@ namespace Banshee.Query
         public static QueryField AlbumArtistField = new QueryField (
             "albumartist", "DisplayAlbumArtistName",
             Catalog.GetString ("Album Artist"), "CoreAlbums.ArtistNameLowered", true,
-            // Translators: These are unique search aliases for "album artist".  Please, no spaces. Blank ok.
+            // Translators: These are unique search aliases for "album artist". You can use CSV for synonyms. Please, no spaces. Blank ok.
             Catalog.GetString ("albumartist"), Catalog.GetString ("compilationartist"),
             "albumartist", "compilationartist"
         );
@@ -113,7 +113,7 @@ namespace Banshee.Query
         public static QueryField AlbumField = new QueryField (
             "album", "DisplayAlbumTitle",
             Catalog.GetString ("Album"), "CoreAlbums.TitleLowered", true,
-            // Translators: These are unique search aliases for "album".  Please, no spaces. Blank ok.
+            // Translators: These are unique search aliases for "album". You can use CSV for synonyms. Please, no spaces. Blank ok.
             Catalog.GetString ("album"), Catalog.GetString ("on"), Catalog.GetString ("from"),
             "on", "album", "from", "albumtitle"
         );
@@ -121,7 +121,7 @@ namespace Banshee.Query
         public static QueryField DiscNumberField = new QueryField (
             "disc", "DiscNumber",
             Catalog.GetString ("Disc"), "CoreTracks.Disc", typeof(NaturalIntegerQueryValue),
-            // Translators: These are unique search fields (and nouns).  Please, no spaces. Blank ok.
+            // Translators: These are unique search fields (and nouns). You can use CSV for synonyms. Please, no spaces. Blank ok.
             Catalog.GetString ("disc"), Catalog.GetString ("cd"), Catalog.GetString ("discnum"),
             "disc", "cd", "discnum"
         );
@@ -129,7 +129,7 @@ namespace Banshee.Query
         public static QueryField DiscCountField = new QueryField (
             "disccount", "DiscCount",
             Catalog.GetString ("Disc Count"), "CoreTracks.DiscCount", typeof(NaturalIntegerQueryValue),
-            // Translators: These are unique search fields (and nouns).  Please, no spaces. Blank ok.
+            // Translators: These are unique search fields (and nouns). You can use CSV for synonyms. Please, no spaces. Blank ok.
             Catalog.GetString ("discs"), Catalog.GetString ("cds"),
             "discs", "cds"
         );
@@ -138,7 +138,7 @@ namespace Banshee.Query
             "track", "TrackNumber",
             // Translators: noun
             Catalog.GetString ("Track Number"), "CoreTracks.TrackNumber", typeof(NaturalIntegerQueryValue),
-            // Translators: These are unique search fields.  Please, no spaces. Blank ok.
+            // Translators: These are unique search fields. You can use CSV for synonyms. Please, no spaces. Blank ok.
             "#", Catalog.GetString ("track"), Catalog.GetString ("trackno"), Catalog.GetString ("tracknum"),
             "track", "trackno", "tracknum"
         );
@@ -147,7 +147,7 @@ namespace Banshee.Query
             "trackcount", "TrackCount",
             // Translators: noun
             Catalog.GetString ("Track Count"), "CoreTracks.TrackCount", typeof(NaturalIntegerQueryValue),
-            // Translators: These are unique search fields.  Please, no spaces. Blank ok.
+            // Translators: These are unique search fields. You can use CSV for synonyms. Please, no spaces. Blank ok.
             Catalog.GetString ("tracks"), Catalog.GetString ("trackcount"),
             "tracks", "trackcount"
         );
@@ -155,7 +155,7 @@ namespace Banshee.Query
         public static QueryField BpmField = new QueryField (
             "bpm", "Bpm",
             Catalog.GetString ("Beats per Minute"), "CoreTracks.BPM", typeof(NaturalIntegerQueryValue),
-            // Translators: These are unique search fields.  Please, no spaces. Blank ok.
+            // Translators: These are unique search fields. You can use CSV for synonyms. Please, no spaces. Blank ok.
             Catalog.GetString ("bpm"),
             "bpm"
         );
@@ -164,7 +164,7 @@ namespace Banshee.Query
             "bitrate", "BitRate",
             // Translators: noun
             Catalog.GetString ("Bit Rate"), "CoreTracks.BitRate", typeof(NaturalIntegerQueryValue),
-            // Translators: These are unique search fields.  Please, no spaces. Blank ok.
+            // Translators: These are unique search fields. You can use CSV for synonyms. Please, no spaces. Blank ok.
             Catalog.GetString ("bitrate"), Catalog.GetString ("kbs"), Catalog.GetString ("kps"),
             "bitrate", "kbs", "kps"
         );
@@ -172,7 +172,7 @@ namespace Banshee.Query
         public static QueryField TitleField = new QueryField (
             "title", "DisplayTrackTitle",
             Catalog.GetString ("Name"), "CoreTracks.TitleLowered", true,
-            // Translators: These are unique search fields.  Please, no spaces. Blank ok.
+            // Translators: These are unique search fields. You can use CSV for synonyms. Please, no spaces. Blank ok.
             Catalog.GetString ("title"), Catalog.GetString ("titled"), Catalog.GetString ("name"), Catalog.GetString ("named"),
             "title", "titled", "name", "named"
         );
@@ -180,7 +180,7 @@ namespace Banshee.Query
         public static QueryField YearField = new QueryField (
             "year", "Year",
             Catalog.GetString ("Year"), "CoreTracks.Year", typeof(YearQueryValue),
-            // Translators: These are unique search fields.  Please, no spaces. Blank ok.
+            // Translators: These are unique search fields. You can use CSV for synonyms. Please, no spaces. Blank ok.
             Catalog.GetString ("year"), Catalog.GetString ("released"), Catalog.GetString ("yr"),
             "year", "released", "yr"
         );
@@ -188,28 +188,28 @@ namespace Banshee.Query
         public static QueryField GenreField = new QueryField (
             "genre", "Genre",
             Catalog.GetString ("Genre"), "CoreTracks.Genre", false,
-            // Translators: These are unique search fields.  Please, no spaces. Blank ok.
+            // Translators: These are unique search fields. You can use CSV for synonyms. Please, no spaces. Blank ok.
             Catalog.GetString ("genre"), "genre"
         );
 
         public static QueryField ComposerField = new QueryField (
             "composer", "Composer",
             Catalog.GetString ("Composer"), "CoreTracks.Composer", false,
-            // Translators: These are unique search fields.  Please, no spaces. Blank ok.
+            // Translators: These are unique search fields. You can use CSV for synonyms. Please, no spaces. Blank ok.
             Catalog.GetString ("composer"), "composer"
         );
 
         public static QueryField ConductorField = new QueryField (
             "conductor", "Conductor",
             Catalog.GetString ("Conductor"), "CoreTracks.Conductor", false,
-            // Translators: These are unique search fields.  Please, no spaces. Blank ok.
+            // Translators: These are unique search fields. You can use CSV for synonyms. Please, no spaces. Blank ok.
             Catalog.GetString ("conductor"), "conductor"
         );
 
         public static QueryField GroupingField = new QueryField (
             "grouping", "Grouping",
             Catalog.GetString ("Grouping"), "CoreTracks.Grouping", false,
-            // Translators: These are unique search fields.  Please, no spaces. Blank ok.
+            // Translators: These are unique search fields. You can use CSV for synonyms. Please, no spaces. Blank ok.
             Catalog.GetString ("grouping"), "grouping"
         );
 
@@ -217,7 +217,7 @@ namespace Banshee.Query
             "comment", "Comment",
             // Translators: noun
             Catalog.GetString ("Comment"), "CoreTracks.Comment", false,
-            // Translators: These are unique search fields (and nouns).  Please, no spaces. Blank ok.
+            // Translators: These are unique search fields (and nouns). You can use CSV for synonyms. Please, no spaces. Blank ok.
             Catalog.GetString ("comment"), "comment"
         );
 
@@ -225,7 +225,7 @@ namespace Banshee.Query
             "licenseuri", "LicenseUri",
             // Translators: noun
             Catalog.GetString ("License"), "CoreTracks.LicenseUri", typeof(ExactStringQueryValue),
-            // Translators: These are unique search fields (and nouns).  Please, no spaces. Blank ok.
+            // Translators: These are unique search fields (and nouns). You can use CSV for synonyms. Please, no spaces. Blank ok.
             Catalog.GetString ("license"), Catalog.GetString ("licensed"), Catalog.GetString ("under"),
             "license", "licensed", "under"
         );
@@ -233,7 +233,7 @@ namespace Banshee.Query
         public static QueryField RatingField = new QueryField (
             "rating", "SavedRating",
             Catalog.GetString ("Rating"), "CoreTracks.Rating", new Type [] {typeof(RatingQueryValue)},//, typeof(NullQueryValue)},
-            // Translators: These are unique search fields.  Please, no spaces. Blank ok.
+            // Translators: These are unique search fields. You can use CSV for synonyms. Please, no spaces. Blank ok.
             Catalog.GetString ("rating"), Catalog.GetString ("stars"),
             "rating", "stars"
         );
@@ -241,7 +241,7 @@ namespace Banshee.Query
         public static QueryField PlayCountField = new QueryField (
             "playcount", "PlayCount",
             Catalog.GetString ("Play Count"), "CoreTracks.PlayCount", typeof(NaturalIntegerQueryValue),
-            // Translators: These are unique search fields (and nouns).  Please, no spaces. Blank ok.
+            // Translators: These are unique search fields (and nouns). You can use CSV for synonyms. Please, no spaces. Blank ok.
             Catalog.GetString ("plays"), Catalog.GetString ("playcount"), Catalog.GetString ("listens"),
             "plays", "playcount", "numberofplays", "listens"
         );
@@ -249,7 +249,7 @@ namespace Banshee.Query
         public static QueryField SkipCountField = new QueryField (
             "skipcount", "SkipCount",
             Catalog.GetString ("Skip Count"), "CoreTracks.SkipCount", typeof(NaturalIntegerQueryValue),
-            // Translators: These are unique search fields (and nouns).  Please, no spaces. Blank ok.
+            // Translators: These are unique search fields (and nouns). You can use CSV for synonyms. Please, no spaces. Blank ok.
             Catalog.GetString ("skips"), Catalog.GetString ("skipcount"),
             "skips", "skipcount"
         );
@@ -257,7 +257,7 @@ namespace Banshee.Query
         public static QueryField FileSizeField = new QueryField (
             "filesize", "FileSize",
             Catalog.GetString ("File Size"), "CoreTracks.FileSize", typeof(FileSizeQueryValue),
-            // Translators: These are unique search fields (and nouns).  Please, no spaces. Blank ok.
+            // Translators: These are unique search fields (and nouns). You can use CSV for synonyms. Please, no spaces. Blank ok.
             Catalog.GetString ("size"), Catalog.GetString ("filesize"),
             "size", "filesize"
         );
@@ -265,7 +265,7 @@ namespace Banshee.Query
         public static QueryField UriField = new QueryField (
             "uri", "Uri",
             Catalog.GetString ("File Location"), "CoreTracks.Uri", typeof(ExactStringQueryValue),
-            // Translators: These are unique search fields.  Please, no spaces. Blank ok.
+            // Translators: These are unique search fields. You can use CSV for synonyms. Please, no spaces. Blank ok.
             Catalog.GetString ("uri"), Catalog.GetString ("path"), Catalog.GetString ("file"), Catalog.GetString ("location"),
             "uri", "path", "file", "location"
         );
@@ -273,7 +273,7 @@ namespace Banshee.Query
         public static QueryField DurationField = new QueryField (
             "duration", "Duration",
             Catalog.GetString ("Time"), "CoreTracks.Duration", typeof(TimeSpanQueryValue),
-            // Translators: These are unique search fields.  Please, no spaces. Blank ok.
+            // Translators: These are unique search fields. You can use CSV for synonyms. Please, no spaces. Blank ok.
             Catalog.GetString ("duration"), Catalog.GetString ("length"), Catalog.GetString ("time"),
             "duration", "length", "time"
         );
@@ -281,7 +281,7 @@ namespace Banshee.Query
         public static QueryField MimeTypeField = new QueryField (
             "mimetype", "MimeType",
             Catalog.GetString ("Mime Type"), "CoreTracks.MimeType {0} OR CoreTracks.Uri {0}", typeof(ExactStringQueryValue),
-            // Translators: These are unique search fields.  Please, no spaces. Blank ok.
+            // Translators: These are unique search fields. You can use CSV for synonyms. Please, no spaces. Blank ok.
             Catalog.GetString ("type"), Catalog.GetString ("mimetype"), Catalog.GetString ("format"), Catalog.GetString ("ext"),
             "type", "mimetype", "format", "ext", "mime"
         );
@@ -289,7 +289,7 @@ namespace Banshee.Query
         public static QueryField LastPlayedField = new QueryField (
             "lastplayed", "LastPlayed",
             Catalog.GetString ("Last Played"), "CoreTracks.LastPlayedStamp", new Type [] {typeof(RelativeTimeSpanQueryValue), typeof(DateQueryValue)},
-            // Translators: These are unique search fields.  Please, no spaces. Blank ok.
+            // Translators: These are unique search fields. You can use CSV for synonyms. Please, no spaces. Blank ok.
             Catalog.GetString ("lastplayed"), Catalog.GetString ("played"), Catalog.GetString ("playedon"),
             "lastplayed", "played", "playedon"
         );
@@ -297,7 +297,7 @@ namespace Banshee.Query
         public static QueryField LastSkippedField = new QueryField (
             "lastskipped", "LastSkipped",
             Catalog.GetString ("Last Skipped"), "CoreTracks.LastSkippedStamp", new Type [] {typeof(RelativeTimeSpanQueryValue), typeof(DateQueryValue)},
-            // Translators: These are unique search fields.  Please, no spaces. Blank ok.
+            // Translators: These are unique search fields. You can use CSV for synonyms. Please, no spaces. Blank ok.
             Catalog.GetString ("lastskipped"), Catalog.GetString ("skipped"), Catalog.GetString ("skippedon"),
             "lastskipped", "skipped", "skippedon"
         );
@@ -305,7 +305,7 @@ namespace Banshee.Query
         public static QueryField DateAddedField = new QueryField (
             "added", "DateAdded",
             Catalog.GetString ("Date Added"), "CoreTracks.DateAddedStamp", new Type [] {typeof(RelativeTimeSpanQueryValue), typeof(DateQueryValue)},
-            // Translators: These are unique search fields.  Please, no spaces. Blank ok.
+            // Translators: These are unique search fields. You can use CSV for synonyms. Please, no spaces. Blank ok.
             Catalog.GetString ("added"), Catalog.GetString ("imported"), Catalog.GetString ("addedon"), Catalog.GetString ("dateadded"), Catalog.GetString ("importedon"),
             "added", "imported", "addedon", "dateadded", "importedon"
         );
@@ -325,7 +325,7 @@ namespace Banshee.Query
         public static QueryField ScoreField = new QueryField (
             "score", "Score",
             Catalog.GetString ("Score"), "CoreTracks.Score", typeof(IntegerQueryValue),
-            //Translators: These are unique search fields (and nouns). Please, no spaces. Blank ok.
+            //Translators: These are unique search fields (and nouns). You can use CSV for synonyms. Please, no spaces. Blank ok.
             Catalog.GetString ("score"),
             "score"
         );
