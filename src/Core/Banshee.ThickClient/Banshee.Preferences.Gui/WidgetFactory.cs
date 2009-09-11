@@ -166,7 +166,7 @@ namespace Banshee.Preferences.Gui
             public PreferenceSpinButton (PreferenceBase preference, int min_value, int max_value)
             {
                 var spin_button = new SpinButton (min_value, max_value, 1);
-                spin_button.Changed += delegate {
+                spin_button.ValueChanged += delegate {
                     if (sync) {
                         this.preference.BoxedValue = (int)spin_button.Value;
                     }
