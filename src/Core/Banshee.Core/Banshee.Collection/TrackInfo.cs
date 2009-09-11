@@ -116,9 +116,9 @@ namespace Banshee.Collection
         {
             double total_plays = PlayCount + SkipCount;
             if (total_plays <= 0) {
-                Score = (int) Math.Floor ((Score + (percentCompleted * 100)) / 2);
+                Score = (int) Math.Round ((Score + (percentCompleted * 100)) / 2);
             } else {
-                Score = (int) Math.Floor ((((double)Score * total_plays) + (percentCompleted * 100)) / (total_plays + 1));
+                Score = (int) Math.Round ((((double)Score * total_plays) + (percentCompleted * 100)) / (total_plays + 1));
             }
 
             if (percentCompleted <= 0.5) {
