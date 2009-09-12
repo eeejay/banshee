@@ -154,6 +154,7 @@ namespace Nereid
             AddSearchFilter (TrackFilterType.AlbumTitle, "album", Catalog.GetString ("Album Title"));
             AddSearchFilter (TrackFilterType.Genre, "genre", Catalog.GetString ("Genre"));
             AddSearchFilter (TrackFilterType.Year, "year", Catalog.GetString ("Year"));
+            AddSearchFilter (TrackFilterType.Comment, "comment", Catalog.GetString ("Comment"));
 
             search_entry = new SearchEntry ();
             search_entry.SetSizeRequest (200, -1);

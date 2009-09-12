@@ -38,6 +38,7 @@ namespace Banshee.Collection
         ArtistName = 1 << 1,
         AlbumTitle = 1 << 2,
         Genre      = 1 << 3,
-        Year       = 1 << 4
+        Year       = 1 << 4,
+        Comment    = 1 << 5,
     }
 }
