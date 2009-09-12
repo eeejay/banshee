@@ -233,12 +233,14 @@ namespace Banshee.Widgets
 
         private void OnClearButtonClicked(object o, EventArgs args)
         {
+            active_filter_id = 0;
             entry.Text = String.Empty;
         }
 
         protected override bool OnKeyPressEvent (Gdk.EventKey evnt)
         {
             if (evnt.Key == Gdk.Key.Escape) {
+                active_filter_id = 0;
                 entry.Text = String.Empty;
                 return true;
             }
