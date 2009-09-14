@@ -183,6 +183,7 @@ src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/X11Notification
 src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/NowPlayingSource.cs
 src/Extensions/Banshee.PlayerMigration/Banshee.PlayerMigration/AmarokPlayerImportSource.cs
 src/Extensions/Banshee.PlayerMigration/Banshee.PlayerMigration/RhythmboxPlayerImportSource.cs
+src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/HeaderWidget.cs
 src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueActions.cs
 src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs
 src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastFeedModel.cs
