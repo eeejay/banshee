@@ -132,6 +132,11 @@ namespace Banshee.PlayQueue
             };
             header_widget.SourceChanged += delegate(object sender, SourceChangedEventArgs e) {
                 populate_from = e.Value;
+                if (populate_from == null) {
+                    populate_from_name = "";
+                    PopulateFromSchema.Set ("");
+                    return;
+                }
                 populate_from_name = e.Value.Name;
                 PopulateFromSchema.Set (e.Value.Name);
                 source_set_at = DateTime.Now;
