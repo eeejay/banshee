@@ -287,8 +287,7 @@ namespace Banshee.PlayQueue
 
                 // If the current_track was not playing, and there were no non-generated tracks,
                 // mark the first added track as current.
-                if (view_order == current_view_order && current_track != null &&
-                    !ServiceManager.PlayerEngine.IsPlaying (current_track)) {
+                if (index != -1 && view_order == current_view_order) {
                     SetCurrentTrack (TrackModel[index] as DatabaseTrackInfo);
                 }
                 return true;
