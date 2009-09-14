@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-02 19:43+0200\n"
-"PO-Revision-Date: 2009-09-02 19:45+0200\n"
+"POT-Creation-Date: 2009-09-14 11:13+0200\n"
+"PO-Revision-Date: 2009-09-14 11:13+0200\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
 "Language-Team: Basque <itzulpena@euskalgnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -486,17 +486,17 @@ msgid "URI"
 msgstr "URIa"
 
 #: ../src/Clients/Booter/Booter/Entry.cs:182
-#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:149
+#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:153
 msgid "Artist Name"
 msgstr "Artistaren izena"
 
 #: ../src/Clients/Booter/Booter/Entry.cs:183
-#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:150
+#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:154
 msgid "Album Title"
 msgstr "Albumaren izenburua"
 
 #: ../src/Clients/Booter/Booter/Entry.cs:184
-#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:148
+#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:152
 msgid "Track Title"
 msgstr "Pistaren izenburua"
 
@@ -521,7 +521,7 @@ msgid "Disc Number"
 msgstr "Disko-zenbakia"
 
 #: ../src/Clients/Booter/Booter/Entry.cs:189
-#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:152
+#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:156
 #: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:120
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:182
 msgid "Year"
@@ -651,23 +651,29 @@ msgstr "{0} falta"
 msgid "Play Song"
 msgstr "Erreproduzitu abestia"
 
-#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:89
+#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:92
 msgid "_Search:"
 msgstr "_Bilatu:"
 
-#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:147
+#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:151
 msgid "Artist, Album, or Title"
 msgstr "Artista, albuma edo titulua"
 
-#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:151
+#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:155
 #: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:105
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:67
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:190
 msgid "Genre"
 msgstr "Generoa"
 
+#. Translators: noun
+#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:157
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:219
+msgid "Comment"
+msgstr "Iruzkina"
+
 #. Translators: this is a verb (command), not a noun (things)
-#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:173
+#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:178
 #, csharp-format
 msgid "Filter Results"
 msgstr "Iragazi emaitzak"
@@ -738,37 +744,37 @@ msgid "Various Artists"
 msgstr "Hainbat artista"
 
 #. TODO turn this into a PrimarySource-owned delegate?
-#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:517
+#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:522
 msgid "_Restart Podcast"
 msgstr "_Berrabiarazi Podcast-a"
 
-#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:518
+#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:523
 msgid "_Restart Video"
 msgstr "_Berrabiarazi bideoa"
 
-#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:519
+#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:524
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:86
 msgid "_Restart Song"
 msgstr "_Berrabiarazi kanta"
 
-#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:520
+#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:525
 msgid "_Restart Item"
 msgstr "_Berrabiarazi elementua"
 
-#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:534
+#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:539
 msgid "_Jump to Playing Podcast"
 msgstr "_Joan erreproduzitzen ari den Podcast-era"
 
-#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:535
+#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:540
 msgid "_Jump to Playing Video"
 msgstr "_Joan erreproduzitzen ari den bideora"
 
-#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:536
+#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:541
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:82
 msgid "_Jump to Playing Song"
 msgstr "_Joan erreproduzitzen ari den kantara"
 
-#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:537
+#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:542
 msgid "_Jump to Playing Item"
 msgstr "_Joan erreproduzitzen ari den elementura"
 
@@ -787,7 +793,7 @@ msgid "Scanning for media"
 msgstr "Euskarria eskaneatzen"
 
 #: ../src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs:187
-#: ../src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:1192
+#: ../src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:1206
 msgid "Scanning..."
 msgstr "Eskaneatzea..."
 
@@ -825,7 +831,7 @@ msgstr "Zure Banshee datu-basea eguneratzen"
 msgid "Please wait while your old Banshee database is migrated to the new format."
 msgstr "Itxaron Banshee-ren datu-base zaharra formatu berrira migratu arte."
 
-#: ../src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:1189
+#: ../src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:1203
 msgid "Refreshing Metadata"
 msgstr "Metadatuak freskatzen"
 
@@ -1155,7 +1161,7 @@ msgstr "Artista"
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:66
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:174
 #: ../src/Core/Banshee.Services/Banshee.Sources/Source.cs:659
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:78
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:88
 msgid "Name"
 msgstr "Izena"
 
@@ -1223,7 +1229,7 @@ msgstr "MB"
 msgid "GB"
 msgstr "GB"
 
-#. Translators: These are unique search aliases for "artist".  Please, no spaces. Blank ok.
+#. Translators: These are unique search aliases for "artist". You can use CSV for synonyms. Please, no spaces. Blank ok.
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:99
 msgid "artist"
 msgstr "artista"
@@ -1236,7 +1242,7 @@ msgstr "nork:"
 msgid "artists"
 msgstr "artistak"
 
-#. Translators: These are unique search aliases for "album artist".  Please, no spaces. Blank ok.
+#. Translators: These are unique search aliases for "album artist". You can use CSV for synonyms. Please, no spaces. Blank ok.
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:107
 msgid "albumartist"
 msgstr "albuma-artista"
@@ -1245,7 +1251,7 @@ msgstr "albuma-artista"
 msgid "compilationartist"
 msgstr "bilduma-artista"
 
-#. Translators: These are unique search aliases for "album".  Please, no spaces. Blank ok.
+#. Translators: These are unique search aliases for "album". You can use CSV for synonyms. Please, no spaces. Blank ok.
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:117
 msgid "album"
 msgstr "albuma"
@@ -1262,7 +1268,7 @@ msgstr "-"
 msgid "Disc"
 msgstr "Diskoa"
 
-#. Translators: These are unique search fields (and nouns).  Please, no spaces. Blank ok.
+#. Translators: These are unique search fields (and nouns). You can use CSV for synonyms. Please, no spaces. Blank ok.
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:125
 msgid "disc"
 msgstr "diskoa"
@@ -1279,7 +1285,7 @@ msgstr "disko-zbkia"
 msgid "Disc Count"
 msgstr "disko-kontagailua"
 
-#. Translators: These are unique search fields (and nouns).  Please, no spaces. Blank ok.
+#. Translators: These are unique search fields (and nouns). You can use CSV for synonyms. Please, no spaces. Blank ok.
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:133
 msgid "discs"
 msgstr "diskoak"
@@ -1288,7 +1294,7 @@ msgstr "diskoak"
 msgid "cds"
 msgstr "cdak"
 
-#. Translators: These are unique search fields.  Please, no spaces. Blank ok.
+#. Translators: These are unique search fields. You can use CSV for synonyms. Please, no spaces. Blank ok.
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:142
 msgid "track"
 msgstr "pista"
@@ -1301,7 +1307,7 @@ msgstr "pista-izen"
 msgid "tracknum"
 msgstr "pista-zbkia"
 
-#. Translators: These are unique search fields.  Please, no spaces. Blank ok.
+#. Translators: These are unique search fields. You can use CSV for synonyms. Please, no spaces. Blank ok.
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:151
 msgid "tracks"
 msgstr "pistak"
@@ -1314,12 +1320,12 @@ msgstr "pista-kontagailua"
 msgid "Beats per Minute"
 msgstr "Kolpe minutuko"
 
-#. Translators: These are unique search fields.  Please, no spaces. Blank ok.
+#. Translators: These are unique search fields. You can use CSV for synonyms. Please, no spaces. Blank ok.
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:159
 msgid "bpm"
 msgstr "bpm"
 
-#. Translators: These are unique search fields.  Please, no spaces. Blank ok.
+#. Translators: These are unique search fields. You can use CSV for synonyms. Please, no spaces. Blank ok.
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:168
 msgid "bitrate"
 msgstr "bit-emaria"
@@ -1332,7 +1338,7 @@ msgstr "kbs"
 msgid "kps"
 msgstr "kps"
 
-#. Translators: These are unique search fields.  Please, no spaces. Blank ok.
+#. Translators: These are unique search fields. You can use CSV for synonyms. Please, no spaces. Blank ok.
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:176
 msgid "title"
 msgstr "izenburua"
@@ -1349,7 +1355,7 @@ msgstr "izena"
 msgid "named"
 msgstr "izendatua"
 
-#. Translators: These are unique search fields.  Please, no spaces. Blank ok.
+#. Translators: These are unique search fields. You can use CSV for synonyms. Please, no spaces. Blank ok.
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:184
 msgid "year"
 msgstr "urtea"
@@ -1362,7 +1368,7 @@ msgstr "argitaratua"
 msgid "yr"
 msgstr "urt"
 
-#. Translators: These are unique search fields.  Please, no spaces. Blank ok.
+#. Translators: These are unique search fields. You can use CSV for synonyms. Please, no spaces. Blank ok.
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:192
 msgid "genre"
 msgstr "generoa"
@@ -1371,7 +1377,7 @@ msgstr "generoa"
 msgid "Composer"
 msgstr "Konpositorea"
 
-#. Translators: These are unique search fields.  Please, no spaces. Blank ok.
+#. Translators: These are unique search fields. You can use CSV for synonyms. Please, no spaces. Blank ok.
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:199
 msgid "composer"
 msgstr "konpositorea"
@@ -1380,7 +1386,7 @@ msgstr "konpositorea"
 msgid "Conductor"
 msgstr "Zuzendaria"
 
-#. Translators: These are unique search fields.  Please, no spaces. Blank ok.
+#. Translators: These are unique search fields. You can use CSV for synonyms. Please, no spaces. Blank ok.
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:206
 msgid "conductor"
 msgstr "zuzendaria"
@@ -1389,17 +1395,12 @@ msgstr "zuzendaria"
 msgid "Grouping"
 msgstr "Taldea"
 
-#. Translators: These are unique search fields.  Please, no spaces. Blank ok.
+#. Translators: These are unique search fields. You can use CSV for synonyms. Please, no spaces. Blank ok.
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:213
 msgid "grouping"
 msgstr "taldea"
 
-#. Translators: noun
-#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:219
-msgid "Comment"
-msgstr "Iruzkina"
-
-#. Translators: These are unique search fields (and nouns).  Please, no spaces. Blank ok.
+#. Translators: These are unique search fields (and nouns). You can use CSV for synonyms. Please, no spaces. Blank ok.
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:221
 msgid "comment"
 msgstr "iruzkina"
@@ -1409,7 +1410,7 @@ msgstr "iruzkina"
 msgid "License"
 msgstr "Lizentzia"
 
-#. Translators: These are unique search fields (and nouns).  Please, no spaces. Blank ok.
+#. Translators: These are unique search fields (and nouns). You can use CSV for synonyms. Please, no spaces. Blank ok.
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:229
 msgid "license"
 msgstr "lizentzia"
@@ -1423,7 +1424,7 @@ msgid "under"
 msgstr "pean"
 
 #. , typeof(NullQueryValue)},
-#. Translators: These are unique search fields.  Please, no spaces. Blank ok.
+#. Translators: These are unique search fields. You can use CSV for synonyms. Please, no spaces. Blank ok.
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:237
 msgid "rating"
 msgstr "balorazioa"
@@ -1436,7 +1437,7 @@ msgstr "izarrak"
 msgid "Play Count"
 msgstr "Kontagailua"
 
-#. Translators: These are unique search fields (and nouns).  Please, no spaces. Blank ok.
+#. Translators: These are unique search fields (and nouns). You can use CSV for synonyms. Please, no spaces. Blank ok.
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:245
 msgid "plays"
 msgstr "erreprodukzioak"
@@ -1453,7 +1454,7 @@ msgstr "entzunaldiak"
 msgid "Skip Count"
 msgstr "Saltatze kopurua"
 
-#. Translators: These are unique search fields (and nouns).  Please, no spaces. Blank ok.
+#. Translators: These are unique search fields (and nouns). You can use CSV for synonyms. Please, no spaces. Blank ok.
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:253
 msgid "skips"
 msgstr "saltoak"
@@ -1466,7 +1467,7 @@ msgstr "saltatze kopurua"
 msgid "File Size"
 msgstr "Fitxategi-tamaina"
 
-#. Translators: These are unique search fields (and nouns).  Please, no spaces. Blank ok.
+#. Translators: These are unique search fields (and nouns). You can use CSV for synonyms. Please, no spaces. Blank ok.
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:261
 msgid "size"
 msgstr "tamaina"
@@ -1479,7 +1480,7 @@ msgstr "fitxategi-tamaina"
 msgid "File Location"
 msgstr "Fitxategiaren kokalekua"
 
-#. Translators: These are unique search fields.  Please, no spaces. Blank ok.
+#. Translators: These are unique search fields. You can use CSV for synonyms. Please, no spaces. Blank ok.
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:269
 msgid "uri"
 msgstr "URIa"
@@ -1500,7 +1501,7 @@ msgstr "kokalekua"
 msgid "Time"
 msgstr "Irupena"
 
-#. Translators: These are unique search fields.  Please, no spaces. Blank ok.
+#. Translators: These are unique search fields. You can use CSV for synonyms. Please, no spaces. Blank ok.
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:277
 msgid "duration"
 msgstr "iraupena"
@@ -1517,7 +1518,7 @@ msgstr "denbora"
 msgid "Mime Type"
 msgstr "MIME mota"
 
-#. Translators: These are unique search fields.  Please, no spaces. Blank ok.
+#. Translators: These are unique search fields. You can use CSV for synonyms. Please, no spaces. Blank ok.
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:285
 msgid "type"
 msgstr "mota"
@@ -1538,7 +1539,7 @@ msgstr "luzp"
 msgid "Last Played"
 msgstr "Azkenekoz erreproduzitua"
 
-#. Translators: These are unique search fields.  Please, no spaces. Blank ok.
+#. Translators: These are unique search fields. You can use CSV for synonyms. Please, no spaces. Blank ok.
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:293
 msgid "lastplayed"
 msgstr "azkenerreproduzitua"
@@ -1555,7 +1556,7 @@ msgstr "erreproduzitua"
 msgid "Last Skipped"
 msgstr "Azken saltatutakoa"
 
-#. Translators: These are unique search fields.  Please, no spaces. Blank ok.
+#. Translators: These are unique search fields. You can use CSV for synonyms. Please, no spaces. Blank ok.
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:301
 msgid "lastskipped"
 msgstr "azkensaltatua"
@@ -1572,7 +1573,7 @@ msgstr "saltatuta"
 msgid "Date Added"
 msgstr "Gehitze-data:"
 
-#. Translators: These are unique search fields.  Please, no spaces. Blank ok.
+#. Translators: These are unique search fields. You can use CSV for synonyms. Please, no spaces. Blank ok.
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:309
 msgid "added"
 msgstr "gehitua"
@@ -1598,7 +1599,7 @@ msgstr "inportatua"
 msgid "Smart Playlist"
 msgstr "Erreprodukzio-zerrenda azkarra"
 
-#. Translators: These are unique search fields (and nouns). Please, no spaces. Blank ok.
+#. Translators: These are unique search fields (and nouns). You can use CSV for synonyms. Please, no spaces. Blank ok.
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:329
 msgid "score"
 msgstr "puntuazioa"
@@ -1617,9 +1618,9 @@ msgid "Plays"
 msgstr "Erreprodukzioak"
 
 #: ../src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs:309
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:154
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:156
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:158
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:200
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:202
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:204
 #: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:376
 msgid "Unknown"
 msgstr "Ezezaguna"
@@ -2280,7 +2281,7 @@ msgstr "Erreprodukzio-zerrenda _azkar berria"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:122
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:74
-#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:333
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueActions.cs:56
 msgid "Refresh"
 msgstr "Freskatu"
 
@@ -2326,7 +2327,7 @@ msgid "Edit information on selected tracks"
 msgstr "Editatu hautatutako pisten informazioa"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:79
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:188
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:234
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:108
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:150
 msgid "Properties"
@@ -2463,59 +2464,59 @@ msgstr "Pistaren a_rtista:"
 msgid "Set all compilation album artists to these values"
 msgstr "Ezarri balio hau bilduma albumeko artista guztiei"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:100
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:106
 msgid "Set all album titles to this value"
 msgstr "Ezarri balio hau albumeko izenburu guztiei"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:101
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:107
 msgid "Albu_m Title:"
 msgstr "Albumaren _izenburua:"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:107
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:113
 msgid "Set all genres to this value"
 msgstr "Ezarri balio hau genero guztiei"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:108
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:114
 msgid "_Genre:"
 msgstr "_Generoa:"
 
 #. Right
 #. Translators: "of" is the word beteen a track/disc number and the total count.
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:116
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:148
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:122
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:154
 msgid "of"
 msgstr "/"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:132
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:138
 msgid "Automatically set track number and count"
 msgstr "Automatikoki jarri pista-zenbakiak eta guztirakoak"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:134
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:140
 msgid "Track _Number:"
 msgstr "Pista-_zenbakia:"
 
 #. Catalog.GetString ("Automatically set disc number and count"),
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:150
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:156
 msgid "Set all disc numbers and counts to these values"
 msgstr "Ezarri disko-zenbaki guztiak eta guztirakoak balio hauekin"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:151
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:157
 msgid "_Disc Number:"
 msgstr "_Disko-zenbakia:"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:172
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:178
 msgid "Set all years to this value"
 msgstr "Ezarri balio hau urte guztiei"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:173
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:179
 msgid "_Year:"
 msgstr "_Urtea:"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:180
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:186
 msgid "Set all ratings to this value"
 msgstr "Ezarri balio hau balorazio guztiei"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:181
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:187
 msgid "_Rating:"
 msgstr "_Balorazioa:"
 
@@ -2627,85 +2628,85 @@ msgstr "Ezarri balio hau albumaren izenburu ordenatu guztiei"
 msgid "Sort Album Title:"
 msgstr "Ordenatu albumaren izenburua:"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:79
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:89
 msgid "Value"
 msgstr "Balioa"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:110
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:156
 msgid "File Name:"
 msgstr "Fitxategi-izena:"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:111
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:157
 msgid "Directory:"
 msgstr "Direktorioa:"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:112
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:158
 msgid "Full Path:"
 msgstr "Bide-izen osoa:"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:118
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:164
 msgid "URI:"
 msgstr "URIa:"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:127
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:173
 msgid "Duration:"
 msgstr "Iraupena:"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:130
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:176
 msgid "Audio Bitrate:"
 msgstr "Audioaren bit-emaria:"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:132
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:178
 msgid "Audio Sample Rate:"
 msgstr "Audioaren lagin-emaria:"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:134
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:180
 msgid "Audio Channels:"
 msgstr "Audioaren kanalak:"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:137
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:183
 msgid "Video Dimensions:"
 msgstr "Bideoaren dimentsioak:"
 
 #. Translators: {0} is the description of the codec
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:144
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:190
 #, csharp-format
 msgid "{0} Codec:"
 msgstr "{0} kodeka:"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:149
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:195
 msgid "Container Formats:"
 msgstr "Edukiontziaren formatuak:"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:153
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:199
 msgid "Imported On:"
 msgstr "Inportatua:"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:155
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:201
 msgid "Last Played:"
 msgstr "Azkenekoz erreproduzitua:"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:157
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:203
 msgid "Last Skipped:"
 msgstr "Azken saltatutakoa:"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:159
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:205
 msgid "Play Count:"
 msgstr "Erreprodukzio kopurua:"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:160
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:206
 msgid "Skip Count:"
 msgstr "Saltatze kopurua:"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:161
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:207
 msgid "Score:"
 msgstr "Puntuazioa:"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:167
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:213
 msgid "File Size:"
 msgstr "Fitxategi-tamaina:"
 
-#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:168
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:214
 #: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/FileSizeQueryValueEntry.cs:61
 msgid "bytes"
 msgstr "byte"
@@ -3828,7 +3829,7 @@ msgid "File System Queue"
 msgstr "Fitxategi-sistemaren ilara"
 
 #: ../src/Extensions/Banshee.FileSystemQueue/Banshee.FileSystemQueue/FileSystemQueueSource.cs:72
-#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueActions.cs:56
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueActions.cs:63
 msgid "Clear"
 msgstr "Garbitu"
 
@@ -3837,7 +3838,7 @@ msgid "Remove all tracks from the file system queue"
 msgstr "Kendu pista guztiak fitxategi-sistemako ilaratik"
 
 #: ../src/Extensions/Banshee.FileSystemQueue/Banshee.FileSystemQueue/FileSystemQueueSource.cs:79
-#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueActions.cs:63
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueActions.cs:70
 msgid "Clear on Quit"
 msgstr "Garbitu irtetzean"
 
@@ -3875,7 +3876,7 @@ msgid "Creator"
 msgstr "Sortzailea"
 
 #: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSource.cs:137
-#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastSource.cs:158
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastSource.cs:159
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastEpisodePage.cs:89
 msgid "Description"
 msgstr "Azalpena"
@@ -4451,67 +4452,35 @@ msgid "Append selected songs to the play queue"
 msgstr "Erantsi hautatutako kantak erreprodukzio-ilarari"
 
 #: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueActions.cs:57
-msgid "Remove all tracks from the play queue"
-msgstr "Kendu pista guztiak erreprodukzio-ilaratik"
-
-#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueActions.cs:64
-msgid "Clear the play queue when quitting"
-msgstr "Garbitu erreprodukzio-ilara irtetzean"
-
-#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:63
-msgid "Play Queue"
-msgstr "Erreprodukzio-ilara"
-
-#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:72
-msgid "Remove From Play Queue"
-msgstr "Kendu erreprodukzio-ilaratik"
-
-#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:325
-msgid "manual"
-msgstr "eskuz"
-
-#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:326
-msgid "by song"
-msgstr "abestiaren arabera"
-
-#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:327
-msgid "by album"
-msgstr "albumaren arabera"
-
-#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:328
-msgid "by artist"
-msgstr "artistaren arabera"
-
-#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:329
-msgid "by rating"
-msgstr "balorazioaren arabera"
-
-#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:330
-msgid "by score"
-msgstr "puntuazioaren arabera"
-
-#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:331
-msgid "_Fill"
-msgstr "_Bete"
-
-#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:332
-msgid "f_rom"
-msgstr "n_ondik"
-
-#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:334
 msgid "Refresh random tracks in the play queue"
 msgstr "Freskatu ausaz pistak erreprodukzio-ilaran"
 
-#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:335
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueActions.cs:64
+msgid "Remove all tracks from the play queue"
+msgstr "Kendu pista guztiak erreprodukzio-ilaratik"
+
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueActions.cs:71
+msgid "Clear the play queue when quitting"
+msgstr "Garbitu erreprodukzio-ilara irtetzean"
+
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:77
+msgid "Play Queue"
+msgstr "Erreprodukzio-ilara"
+
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:86
+msgid "Remove From Play Queue"
+msgstr "Kendu erreprodukzio-ilaratik"
+
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:739
 msgid "Number of _played songs to show"
 msgstr "_Erreproduzitutako abesti kopurua erakusteko"
 
-#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:336
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:745
 msgid "Number of _upcoming songs to show"
 msgstr "_Erreproduzituko diren abesti kopurua erakusteko"
 
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastFeedModel.cs:47
-#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastSource.cs:157
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastSource.cs:158
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastEpisodePage.cs:86
 msgid "Podcast"
 msgstr "Podcasta"
@@ -4521,16 +4490,16 @@ msgstr "Podcasta"
 msgid "All Podcasts ({0})"
 msgstr "Podcast guztiak ({0})"
 
-#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastSource.cs:157
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastSource.cs:158
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastEpisodePage.cs:88
 msgid "Published"
 msgstr "Argitaratua"
 
-#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastSource.cs:157
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastSource.cs:158
 msgid "New"
 msgstr "Berria"
 
-#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastSource.cs:158
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastSource.cs:159
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellDownloadStatus.cs:57
 msgid "Downloaded"
 msgstr "Deskargatuta"
@@ -4584,10 +4553,10 @@ msgstr "Utzi podcast-en deskarga guztiak?"
 
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/DownloadManager/DownloadUserJob.cs:120
 #, csharp-format
-msgid "Transfering {0} file at {1} KB/s"
-msgid_plural "Transfering {0} of {2} files at {1} KB/s"
-msgstr[0] "Fitxategi {0} transferitzen ari da. Abiadura: {1} kB/s"
-msgstr[1] "{0} / {2} fitxategi transferitzen ari dira. Abiadura: {1} kB/s"
+msgid "Transferring {0} file at {1} KB/s"
+msgid_plural "Transferring {0} of {2} files at {1} KB/s"
+msgstr[0] "Fitxategi {0} transferitzen ari da. Abiadura: {1} KB/s"
+msgstr[1] "{0} / {2} fitxategi transferitzen ari dira. Abiadura: {1} KB/s"
 
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/DownloadManager/DownloadUserJob.cs:133
 msgid "Canceling Downloads"
