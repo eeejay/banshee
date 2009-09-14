@@ -668,6 +668,14 @@ namespace Banshee.PlayQueue
             }
         }
 
+        public void AddMoreRandomTracks ()
+        {
+            int current_fill = current_track == null ? 0 : Count - TrackModel.IndexOf (current_track) - 1;
+            upcoming_songs_number += current_fill;
+            UpdatePlayQueue ();
+            upcoming_songs_number -= current_fill;
+        }
+
         private void OnTrackStarted(object sender, EventArgs e)
         {
             SetAsPlaybackSourceUnlessPlaying ();
