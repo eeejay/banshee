@@ -488,6 +488,9 @@ namespace Hyena.Data.Sqlite
                     column.SetValue (copy, column.GetRawValue (original));
                 }
             }
+            foreach (var column in virtual_columns) {
+                column.SetValue (copy, column.GetRawValue (original));
+            }
         }
         
         protected virtual HyenaSqliteCommand CreateCommand {
