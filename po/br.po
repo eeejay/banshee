@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=banshee&component=general\n"
-"POT-Creation-Date: 2009-09-14 05:28+0000\n"
-"PO-Revision-Date: 2009-09-14 12:47+0100\n"
+"POT-Creation-Date: 2009-09-14 10:55+0000\n"
+"PO-Revision-Date: 2009-09-14 16:35+0100\n"
 "Last-Translator: Denis\n"
 "Language-Team: Breton <br@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -23,7 +23,7 @@ msgstr "Sanneloù"
 
 #: ../data/audio-profiles/flac.xml.in.h:1
 msgid "Free Lossless Audio Codec"
-msgstr ""
+msgstr "FLAC"
 
 #: ../data/audio-profiles/flac.xml.in.h:2
 msgid "Free Lossless Audio Codec (FLAC) is an open source codec that compresses but does not degrade audio quality."
@@ -35,17 +35,15 @@ msgid "A proprietary and older, but also popular, lossy audio format that produc
 msgstr ""
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:2
-#, fuzzy
 msgid "Average Bitrate"
-msgstr "Bitrate"
+msgstr "Bitrate keitad"
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:3
 #: ../data/audio-profiles/vorbis.xml.in.h:2
 #: ../data/audio-profiles/wavpack.xml.in.h:2
 #: ../data/audio-profiles/wma.xml.in.h:3
-#, fuzzy
 msgid "Best"
-msgstr "Gwell"
+msgstr ""
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:4
 #: ../data/audio-profiles/mp3-xing.xml.in.h:2
@@ -55,9 +53,8 @@ msgid "Bitrate"
 msgstr "Bitrate"
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:5
-#, fuzzy
 msgid "Constant Bitrate"
-msgstr "Bitrate"
+msgstr "Bitrate arstalek"
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:6
 msgid "Extreme"
@@ -69,57 +66,50 @@ msgstr ""
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:8
 msgid "LAME Preset"
-msgstr ""
+msgstr "LAME rakkefluniet"
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:9
 msgid "MP3 (LAME Encoder)"
-msgstr ""
+msgstr "MP3 (Enboneger LAME)"
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:10
-#, fuzzy
 msgid "Medium"
 msgstr "Etre"
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:11
 msgid "Preset"
-msgstr ""
+msgstr "Rakkefluniet"
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:12
-#, fuzzy
 msgid "Standard"
-msgstr "Hollek"
+msgstr "Skoueriek"
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:13
-#, fuzzy
 msgid "VBR Mode"
-msgstr "Mod :"
+msgstr "Mod VBR"
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:14
-#, fuzzy
 msgid "VBR Quality"
-msgstr "Perzhded"
+msgstr "Perzhded VBR"
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:15
-#, fuzzy
 msgid "Variable Bitrate"
-msgstr "Bitrate"
+msgstr "Bitrate argemenn"
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:16
 #: ../data/audio-profiles/vorbis.xml.in.h:5
 #: ../data/audio-profiles/wavpack.xml.in.h:15
 #: ../data/audio-profiles/wma.xml.in.h:7
-#, fuzzy
 msgid "Worst"
-msgstr "eurvezhioù"
+msgstr ""
 
 #: ../data/audio-profiles/mp3-xing.xml.in.h:3
 msgid "MP3 (Xing Encoder)"
-msgstr ""
+msgstr "MP3 (Enboneger Xing)"
 
 #: ../data/audio-profiles/vorbis.xml.in.h:1
-#, fuzzy
 msgid "Audio quality"
-msgstr "Perzhded"
+msgstr "Perzhded aodio"
 
 #: ../data/audio-profiles/vorbis.xml.in.h:3
 msgid "Ogg Vorbis"
@@ -139,7 +129,7 @@ msgstr "Dre ziouer"
 
 #: ../data/audio-profiles/wavpack.xml.in.h:5
 msgid "Default Compression"
-msgstr ""
+msgstr "Koazhañ dre ziouer"
 
 #: ../data/audio-profiles/wavpack.xml.in.h:6
 msgid "Extra processing"
@@ -147,7 +137,7 @@ msgstr ""
 
 #: ../data/audio-profiles/wavpack.xml.in.h:7
 msgid "Fast Compression"
-msgstr ""
+msgstr "Koazhañ herrek"
 
 #: ../data/audio-profiles/wavpack.xml.in.h:8
 msgid "High Compression"
@@ -159,7 +149,7 @@ msgstr ""
 
 #: ../data/audio-profiles/wavpack.xml.in.h:10
 msgid "Lossy mode"
-msgstr ""
+msgstr "Mod gant koll"
 
 #: ../data/audio-profiles/wavpack.xml.in.h:11
 msgid "Mode"
@@ -203,34 +193,28 @@ msgstr "WMA"
 
 #: ../libbanshee/banshee-bpmdetector.c:202
 #: ../libbanshee/banshee-ripper.c:268
-#, fuzzy
 msgid "Could not create pipeline"
-msgstr "Sac'het eo krouadur al lenner"
+msgstr ""
 
 #: ../libbanshee/banshee-bpmdetector.c:208
-#, fuzzy
 msgid "Could not create filesrc element"
-msgstr "Ne oa ket tu da grouiñ ar CD audio"
+msgstr ""
 
 #: ../libbanshee/banshee-bpmdetector.c:214
-#, fuzzy
 msgid "Could not create decodebin plugin"
-msgstr "Ne oa ket tu da grouiñ ar CD audio"
+msgstr "Ne oa ket tu da grouiñ an enlugellad decodebin"
 
 #: ../libbanshee/banshee-bpmdetector.c:220
-#, fuzzy
 msgid "Could not create audioconvert plugin"
-msgstr "Ne oa ket tu da grouiñ ar CD audio"
+msgstr "Ne oa ket tu da grouiñ an enlugellad audioconvert"
 
 #: ../libbanshee/banshee-bpmdetector.c:226
-#, fuzzy
 msgid "Could not create bpmdetect plugin"
-msgstr "Ne oa ket tu da grouiñ ar CD audio"
+msgstr "Ne oa ket tu da grouiñ an enlugellad bpmdetect"
 
 #: ../libbanshee/banshee-bpmdetector.c:232
-#, fuzzy
 msgid "Could not create fakesink plugin"
-msgstr "Ne oa ket tu da grouiñ ar CD audio"
+msgstr "Ne oa ket tu da grouiñ an enlugellad fakesink"
 
 #: ../libbanshee/banshee-bpmdetector.c:241
 #: ../libbanshee/banshee-bpmdetector.c:250
@@ -243,72 +227,60 @@ msgid "Could not initialize element from cdda URI"
 msgstr ""
 
 #: ../libbanshee/banshee-ripper.c:288
-#, fuzzy
 msgid "Could not create encoder pipeline"
-msgstr "Sac'het eo krouadur al lenner"
+msgstr ""
 
 #: ../libbanshee/banshee-ripper.c:294
-#, fuzzy
 msgid "Could not create queue plugin"
-msgstr "Ne oa ket tu da grouiñ ar CD audio"
+msgstr "Ne oa ket tu da grouiñ an enlugellad queue"
 
 #: ../libbanshee/banshee-ripper.c:302
-#, fuzzy
 msgid "Could not create filesink plugin"
-msgstr "Ne oa ket tu da grouiñ ar CD audio"
+msgstr "Ne oa ket tu da grouiñ an enlugellad filesink"
 
 #: ../libbanshee/banshee-transcoder.c:240
-#, fuzzy
 msgid "Could not create 'filesrc' plugin"
-msgstr "Ne oa ket tu da grouiñ ar CD audio"
+msgstr "Ne oa ket tu da grouiñ an enlugellad 'filerc'"
 
 #: ../libbanshee/banshee-transcoder.c:246
-#, fuzzy
 msgid "Could not create 'decodebin' plugin"
-msgstr "Ne oa ket tu da grouiñ ar CD audio"
+msgstr "Ne oa ket tu da grouiñ an enlugellad 'decodebin'"
 
 #: ../libbanshee/banshee-transcoder.c:252
-#, fuzzy
 msgid "Could not create 'filesink' plugin"
-msgstr "Ne oa ket tu da grouiñ ar CD audio"
+msgstr "Ne oa ket tu da grouiñ an enlugellad 'filesink'"
 
 #: ../libbanshee/banshee-transcoder.c:258
-#, fuzzy
 msgid "Could not create 'sinkben' plugin"
-msgstr "Ne oa ket tu da grouiñ ar CD audio"
+msgstr "Ne oa ket tu da grouiñ an enlugellad 'sinkben'"
 
 #: ../libbanshee/banshee-transcoder.c:264
-#, fuzzy
 msgid "Could not create 'audioconvert' plugin"
-msgstr "Ne oa ket tu da grouiñ ar CD audio"
+msgstr "Ne oa ket tu da grouiñ an enlugellad 'audioconvert'"
 
 #: ../libbanshee/banshee-transcoder.c:270
-#, fuzzy
 msgid "Could not create encoding pipeline"
-msgstr "Sac'het eo krouadur al lenner"
+msgstr ""
 
 #: ../libbanshee/banshee-transcoder.c:276
 msgid "Could not get sink pad from encoder"
 msgstr ""
 
 #: ../libbanshee/banshee-transcoder.c:344
-#, fuzzy
 msgid "Could not construct pipeline"
-msgstr "Sac'het eo krouadur al lenner"
+msgstr ""
 
 #: ../src/Backends/Banshee.Gnome/Banshee.GnomeBackend/Brasero.cs:64
-#, fuzzy
 msgid "Write CD..."
-msgstr "O skrivañ ar CD"
+msgstr "Engravañ ur CD..."
 
 #: ../src/Backends/Banshee.Gnome/Banshee.GnomeBackend/Brasero.cs:65
 msgid "Write selected tracks to an audio CD"
-msgstr ""
+msgstr "Engravañ al loabroù diuzet war ar CD aodio"
 
 #: ../src/Backends/Banshee.Gnome/Banshee.GnomeBackend/Brasero.cs:103
-#, fuzzy
 msgid "Could not write CD"
-msgstr "Ne oa ket tu da grouiñ ar CD audio"
+msgstr "Ne oa ket tu da engravañ ur CD"
 
 #: ../src/Backends/Banshee.Gnome/Banshee.GnomeBackend/Brasero.cs:104
 msgid "Brasero could not be started"
@@ -319,19 +291,16 @@ msgid "Fullscreen video playback active"
 msgstr ""
 
 #: ../src/Backends/Banshee.GStreamer/Banshee.GStreamer/AudioCdRipper.cs:89
-#, fuzzy
 msgid "Could not find an encoder for ripping."
-msgstr "Dibosupl eo kaout un egor padennek !"
+msgstr ""
 
 #: ../src/Backends/Banshee.GStreamer/Banshee.GStreamer/AudioCdRipper.cs:108
-#, fuzzy
 msgid "Could not create CD ripping driver."
-msgstr "Dibosupl eo kas da benn an enklask CD-où"
+msgstr ""
 
 #: ../src/Backends/Banshee.GStreamer/Banshee.GStreamer/BpmDetector.cs:71
-#, fuzzy
 msgid "Could not create BPM detection driver."
-msgstr "Ne oa ket tu da grouiñ ar CD audio"
+msgstr ""
 
 #: ../src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs:122
 #: ../src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs:153
@@ -351,9 +320,8 @@ msgid "For tracks that have ReplayGain data, automatically scale (normalize) pla
 msgstr ""
 
 #: ../src/Backends/Banshee.GStreamer/Banshee.GStreamer/Transcoder.cs:63
-#, fuzzy
 msgid "Could not create transcoder"
-msgstr "Ne oa ket tu da grouiñ ar CD audio"
+msgstr ""
 
 #: ../src/Backends/Banshee.Osx/Banshee.OsxBackend/OsxService.cs:87
 #: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:125
@@ -371,26 +339,23 @@ msgstr "Dibarzhioù ar skoazell"
 
 #: ../src/Clients/Booter/Booter/Entry.cs:147
 msgid "Show this help"
-msgstr ""
+msgstr "Diskouez ar skoazell-mañ"
 
 #: ../src/Clients/Booter/Booter/Entry.cs:148
 msgid "Show options for controlling playback"
-msgstr ""
+msgstr "Diskouez an dibarzhioù evit reoliñ al lenn"
 
 #: ../src/Clients/Booter/Booter/Entry.cs:149
-#, fuzzy
 msgid "Show options for querying the playing track"
-msgstr "Diskouez rebuzadur ar ganenn o vezañ sonet"
+msgstr ""
 
 #: ../src/Clients/Booter/Booter/Entry.cs:150
-#, fuzzy
 msgid "Show options for querying the playing engine"
-msgstr "Diskouez rebuzadur ar ganenn o vezañ sonet"
+msgstr ""
 
 #: ../src/Clients/Booter/Booter/Entry.cs:151
-#, fuzzy
 msgid "Show options for the user interface"
-msgstr "Diskouez an titouroù evit ar sonenn diuzet"
+msgstr "Diskouez an titouroù evit ketal an arveriad"
 
 #: ../src/Clients/Booter/Booter/Entry.cs:152
 msgid "Show options for developers and debugging"
@@ -398,16 +363,15 @@ msgstr ""
 
 #: ../src/Clients/Booter/Booter/Entry.cs:153
 msgid "Show all option groups"
-msgstr ""
+msgstr "Diskouez an holl strolladoù dibarzhioù"
 
 #: ../src/Clients/Booter/Booter/Entry.cs:154
-#, fuzzy
 msgid "Show version information"
-msgstr "Fazi en ur enrollañ titouroù ar ganenn"
+msgstr "Diskouez titouroù an handelv"
 
 #: ../src/Clients/Booter/Booter/Entry.cs:157
 msgid "Playback Control Options"
-msgstr ""
+msgstr "Dibarzhioù reoliñ al lenn"
 
 #: ../src/Clients/Booter/Booter/Entry.cs:158
 msgid "Play the next track, optionally restarting if the 'restart' value is set"
@@ -426,19 +390,16 @@ msgid "Start playback"
 msgstr "Kregiñ gant ar seniñ"
 
 #: ../src/Clients/Booter/Booter/Entry.cs:162
-#, fuzzy
 msgid "Pause playback"
-msgstr "Seniñ mut"
+msgstr "Ehan al lenn"
 
 #: ../src/Clients/Booter/Booter/Entry.cs:163
-#, fuzzy
 msgid "Toggle playback"
-msgstr "Seniñ mut"
+msgstr "Lenn/Ehan"
 
 #: ../src/Clients/Booter/Booter/Entry.cs:164
-#, fuzzy
 msgid "Completely stop playback"
-msgstr "Dibosupl eo chom a-sav da seniñ"
+msgstr ""
 
 #: ../src/Clients/Booter/Booter/Entry.cs:166
 msgid "Enable or disable playback stopping after the currently playing track (value should be either 'true' or 'false')"
@@ -461,9 +422,8 @@ msgid "Current player state"
 msgstr ""
 
 #: ../src/Clients/Booter/Booter/Entry.cs:173
-#, fuzzy
 msgid "Last player state"
-msgstr "Sonet an _diwezhañ"
+msgstr ""
 
 #: ../src/Clients/Booter/Booter/Entry.cs:174
 msgid "Query whether the player can be paused"
@@ -474,14 +434,12 @@ msgid "Query whether the player can seek"
 msgstr ""
 
 #: ../src/Clients/Booter/Booter/Entry.cs:176
-#, fuzzy
 msgid "Player volume"
-msgstr "Kemmañ an ampled"
+msgstr "Ampled al lenner"
 
 #: ../src/Clients/Booter/Booter/Entry.cs:177
-#, fuzzy
 msgid "Player position in currently playing track"
-msgstr "Ober un ehan m'emañ o seniñ"
+msgstr ""
 
 #: ../src/Clients/Booter/Booter/Entry.cs:180
 msgid "Playing Track Metadata Query Options"
@@ -493,9 +451,8 @@ msgstr "URI"
 
 #: ../src/Clients/Booter/Booter/Entry.cs:182
 #: ../src/Clients/Nereid/Nereid/ViewContainer.cs:153
-#, fuzzy
 msgid "Artist Name"
-msgstr "Arzour"
+msgstr "Anv an arzour"
 
 #: ../src/Clients/Booter/Booter/Entry.cs:183
 #: ../src/Clients/Nereid/Nereid/ViewContainer.cs:154
@@ -520,9 +477,8 @@ msgstr "Niverenn al loabr"
 #. Translators: noun
 #: ../src/Clients/Booter/Booter/Entry.cs:187
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:149
-#, fuzzy
 msgid "Track Count"
-msgstr "Loabr %u"
+msgstr ""
 
 #: ../src/Clients/Booter/Booter/Entry.cs:188
 msgid "Disc Number"
@@ -542,14 +498,12 @@ msgstr "Notenn"
 
 #: ../src/Clients/Booter/Booter/Entry.cs:191
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:327
-#, fuzzy
 msgid "Score"
-msgstr "Merk"
+msgstr ""
 
 #. Translators: noun
 #: ../src/Clients/Booter/Booter/Entry.cs:192
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:166
-#, fuzzy
 msgid "Bit Rate"
 msgstr "Bitrate"
 
@@ -562,9 +516,8 @@ msgid "Present the user interface on the active workspace"
 msgstr ""
 
 #: ../src/Clients/Booter/Booter/Entry.cs:197
-#, fuzzy
 msgid "Hide the user interface"
-msgstr "Kuzhat ar c'hetal arveriad"
+msgstr "Kuzhat ketal an arveriad"
 
 #: ../src/Clients/Booter/Booter/Entry.cs:198
 msgid "Do not present the user interface, regardless of any other options"
@@ -572,7 +525,7 @@ msgstr ""
 
 #: ../src/Clients/Booter/Booter/Entry.cs:201
 msgid "Debugging and Development Options"
-msgstr ""
+msgstr "Dibarzhioù diveugañ ha diorren"
 
 #: ../src/Clients/Booter/Booter/Entry.cs:202
 msgid "Enable general debugging features"
@@ -618,7 +571,7 @@ msgstr "Seniñ an albom"
 
 #: ../src/Clients/Muinshee/Muinshee/BaseDialog.cs:83
 msgid "En_queue"
-msgstr ""
+msgstr "El l_ostennad"
 
 #: ../src/Clients/Muinshee/Muinshee/BaseDialog.cs:86
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:66
@@ -676,7 +629,6 @@ msgstr "Rumm"
 #. Translators: noun
 #: ../src/Clients/Nereid/Nereid/ViewContainer.cs:157
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:219
-#, fuzzy
 msgid "Comment"
 msgstr "Askelenn"
 
@@ -728,9 +680,8 @@ msgid "Title"
 msgstr "Titl"
 
 #: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:125
-#, fuzzy
 msgid "Count"
-msgstr "Kont"
+msgstr ""
 
 #: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:130
 msgid "Number"
@@ -750,27 +701,26 @@ msgstr "Titl dianav"
 
 #: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:235
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Recommendations/RecommendationPane.cs:92
-#, fuzzy
 msgid "Various Artists"
-msgstr "Lies"
+msgstr ""
 
 #. TODO turn this into a PrimarySource-owned delegate?
 #: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:522
 msgid "_Restart Podcast"
-msgstr ""
+msgstr "_Adloc'hañ ar podskignañ"
 
 #: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:523
 msgid "_Restart Video"
-msgstr ""
+msgstr "_Adloc'hañ ar video"
 
 #: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:524
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:86
 msgid "_Restart Song"
-msgstr ""
+msgstr "_Adloc'hañ ar ganenn"
 
 #: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:525
 msgid "_Restart Item"
-msgstr ""
+msgstr "_Adloc'hañ an ergorenn"
 
 #: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:539
 #, fuzzy
@@ -795,12 +745,12 @@ msgstr "Mont d'ar ganenn o vezañ sonet"
 #: ../src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumListModel.cs:68
 #, csharp-format
 msgid "All Albums ({0})"
-msgstr ""
+msgstr "An holl albomioù ({0})"
 
 #: ../src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseArtistListModel.cs:67
 #, csharp-format
 msgid "All Artists ({0})"
-msgstr ""
+msgstr "An holl arzourien ({0})"
 
 #: ../src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs:137
 #, fuzzy
@@ -813,9 +763,9 @@ msgid "Scanning..."
 msgstr "O c'hwilervañ..."
 
 #: ../src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs:203
-#, fuzzy, csharp-format
+#, csharp-format
 msgid "Scanning ({0} files)..."
-msgstr "O furchal er restroù..."
+msgstr "O c'hwilervañ ({0} restr)..."
 
 #: ../src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs:237
 #, fuzzy
@@ -848,23 +798,23 @@ msgid "Please wait while your old Banshee database is migrated to the new format
 msgstr ""
 
 #: ../src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:1203
+#, fuzzy
 msgid "Refreshing Metadata"
-msgstr ""
+msgstr "ar metaroadennoù"
 
 #: ../src/Core/Banshee.Services/Banshee.Library/HomeDirectoryImportSource.cs:48
 msgid "Home Directory"
 msgstr "Teuliad d'ar gêr"
 
 #: ../src/Core/Banshee.Services/Banshee.Library/LibrarySource.cs:58
-#, fuzzy
 msgid "Remove From Library"
-msgstr "Enporzhiañ an teuliad el levraoueg"
+msgstr "Dilemel diwar al levraoueg"
 
 #. Translators: {0} is the library name, eg 'Music Library' or 'Podcasts'
 #: ../src/Core/Banshee.Services/Banshee.Library/LibrarySource.cs:65
-#, fuzzy, csharp-format
+#, csharp-format
 msgid "{0} Folder"
-msgstr "Teuliad :"
+msgstr "Teuliad {0}"
 
 #. Catalog.GetString ("Music Library")
 #: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:46
@@ -874,12 +824,11 @@ msgstr "Sonerezh"
 
 #: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:62
 msgid "File System Organization"
-msgstr ""
+msgstr "Aozadur ar reizhiad restroù"
 
 #: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:65
-#, fuzzy
 msgid "Folder hie_rarchy"
-msgstr "Urzhaz an teuliad"
+msgstr "U_rzhaz an teuliadoù"
 
 #: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:68
 msgid "File _name"
@@ -893,7 +842,6 @@ msgstr "A bep seurt"
 
 #: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:87
 #: ../src/Core/Banshee.Services/Banshee.Library/VideoLibrarySource.cs:85
-#, fuzzy
 msgid "Favorites"
 msgstr "Ma re well ganin"
 
@@ -972,7 +920,7 @@ msgstr "Oc'h enporzhiañ kanennoù"
 #: ../src/Core/Banshee.Services/Banshee.Library/ThreadPoolImportSource.cs:113
 #, csharp-format
 msgid "Importing From {0}"
-msgstr ""
+msgstr "Oc'h enporzhiañ diouzh {0}"
 
 #. Catalog.GetString ("Video Library")
 #: ../src/Core/Banshee.Services/Banshee.Library/VideoLibrarySource.cs:43
@@ -982,7 +930,7 @@ msgstr "Videoioù"
 
 #: ../src/Core/Banshee.Services/Banshee.Library/VideoLibrarySource.cs:64
 msgid "Produced By"
-msgstr ""
+msgstr "Graet gant"
 
 #: ../src/Core/Banshee.Services/Banshee.Library/VideoLibrarySource.cs:86
 msgid "Videos rated four and five stars"
@@ -1011,20 +959,19 @@ msgstr ""
 #: ../src/Core/Banshee.Services/Banshee.MediaEngine/TranscoderService.cs:134
 #, fuzzy, csharp-format
 msgid "Converting {0} of {1}"
-msgstr "Oc'h amdreiñ"
+msgstr "Oc'h amdreiñ {0} eus {1}"
 
 #: ../src/Core/Banshee.Services/Banshee.MediaEngine/TranscoderService.cs:134
 msgid "Initializing"
-msgstr "Deraouekaat"
+msgstr "O teraouekaat"
 
 #: ../src/Core/Banshee.Services/Banshee.MediaEngine/TranscoderService.cs:137
 msgid "Files are currently being converted to another format. Would you like to stop this?"
 msgstr ""
 
 #: ../src/Core/Banshee.Services/Banshee.Metadata/SaveTrackMetadataJob.cs:51
-#, fuzzy
 msgid "Saving Metadata to File"
-msgstr "_Enrollañ evel restr..."
+msgstr "_Enrollañ ar metaroadennoù en ur restr..."
 
 #: ../src/Core/Banshee.Services/Banshee.Metadata/SaveTrackMetadataService.cs:48
 msgid "Write _metadata to files"
@@ -1091,9 +1038,8 @@ msgid "Playlist"
 msgstr "Roll-tonioù"
 
 #: ../src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs:134
-#, fuzzy
 msgid "Remove From Playlist"
-msgstr "Adenvel ar roll-tonioù"
+msgstr "Dilemel diwar ar roll-tonioù"
 
 #: ../src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs:135
 msgid "Delete Playlist"
@@ -1116,7 +1062,6 @@ msgid "Windows Media ASX (*.asx)"
 msgstr ""
 
 #: ../src/Core/Banshee.Services/Banshee.Playlists.Formats/M3uPlaylistFormat.cs:44
-#, fuzzy
 msgid "MPEG Version 3.0 Extended (*.m3u)"
 msgstr "MPEG handelv 3.0 astennet (*.m3u)"
 
@@ -1143,9 +1088,8 @@ msgstr "Askouezhadennoù"
 
 #. General policies
 #: ../src/Core/Banshee.Services/Banshee.Preferences/PreferenceService.cs:54
-#, fuzzy
 msgid "File Policies"
-msgstr "Reolenn ar restr"
+msgstr "Reolennoù ar restr"
 
 #: ../src/Core/Banshee.Services/Banshee.Preferences/PreferenceService.cs:57
 msgid "Co_py files to media folders when importing"
@@ -1263,6 +1207,7 @@ msgid "compilationartist"
 msgstr ""
 
 #. Translators: These are unique search aliases for "album". You can use CSV for synonyms. Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:117
 msgid "album"
 msgstr "Albom"
 
@@ -1338,7 +1283,7 @@ msgstr ""
 #. Translators: These are unique search fields. You can use CSV for synonyms. Please, no spaces. Blank ok.
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:159
 msgid "bpm"
-msgstr ""
+msgstr "bpm"
 
 #. Translators: These are unique search fields. You can use CSV for synonyms. Please, no spaces. Blank ok.
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:168
@@ -1347,11 +1292,11 @@ msgstr "bitrate"
 
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:168
 msgid "kbs"
-msgstr ""
+msgstr "kbs"
 
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:168
 msgid "kps"
-msgstr ""
+msgstr "kps"
 
 #. Translators: These are unique search fields. You can use CSV for synonyms. Please, no spaces. Blank ok.
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:176
@@ -1423,7 +1368,7 @@ msgstr "Strolladur"
 #. Translators: These are unique search fields (and nouns). You can use CSV for synonyms. Please, no spaces. Blank ok.
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:221
 msgid "comment"
-msgstr "evezhiadenn"
+msgstr "askelenn"
 
 #. Translators: noun
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:227
@@ -1641,16 +1586,15 @@ msgstr "Merk"
 #. Translators: noun
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:346
 msgid "BPM"
-msgstr ""
+msgstr "BPM"
 
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:347
 msgid "Skips"
 msgstr ""
 
 #: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:348
-#, fuzzy
 msgid "Plays"
-msgstr "a son"
+msgstr "a lenn"
 
 #: ../src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs:309
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:200
@@ -1785,9 +1729,8 @@ msgid "Could not open stream or playlist"
 msgstr "Ne oa ket tu da lenn ar roll-tonioù"
 
 #: ../src/Core/Banshee.Services/Banshee.Streaming/RadioTrackInfo.cs:92
-#, fuzzy
 msgid "Problem parsing playlist"
-msgstr "Oc'h adtapout ar roll-tonioù"
+msgstr ""
 
 #: ../src/Core/Banshee.Services/Banshee.Web/Browser.cs:61
 msgid "Could not launch URL"
@@ -1849,9 +1792,8 @@ msgid "Disc #"
 msgstr "Kantenn #"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/DefaultColumnController.cs:130
-#, fuzzy
 msgid "Disc & Count"
-msgstr "_Dilugañ"
+msgstr ""
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/DefaultColumnController.cs:133
 #, csharp-format
@@ -1865,7 +1807,7 @@ msgstr "Bihanaat ar prenestr-penn"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.ContextPane/ContextPane.cs:123
 msgid "Hide context pane"
-msgstr ""
+msgstr "Kuzhat ar banell kemperzhel"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.ContextPane/ContextPane.cs:144
 msgid "Waiting for playback to begin..."
@@ -1884,16 +1826,15 @@ msgid "Enabled"
 msgstr "Gweredekaet"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Equalizer.Gui/EqualizerWindow.cs:158
-#, fuzzy
 msgid "New Preset"
-msgstr "Roll-tonioù nevez"
+msgstr ""
 
 #. Translators: this is the window title when a track is playing
 #. {0} is the track title, {1} is the artist name
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/BaseClientWindow.cs:194
-#, fuzzy, csharp-format
+#, csharp-format
 msgid "{0} by {1}"
-msgstr "gant"
+msgstr "{0} gant {1}"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:54
 msgid "Primary Development"
@@ -1967,7 +1908,7 @@ msgstr "An holl restroù skeudenn"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/ImageFileChooserDialog.cs:54
 msgid "JPEG image files"
-msgstr ""
+msgstr "Restroù skeudenn JPEG"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/ImageFileChooserDialog.cs:59
 msgid "PNG image files"
@@ -1987,9 +1928,8 @@ msgid "_Media"
 msgstr "_Media"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:53
-#, fuzzy
 msgid "Import _Media..."
-msgstr "Emborzhiañ ur _restr..."
+msgstr "Enporzhiañ ur _media..."
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:54
 msgid "Import media from a variety of sources"
@@ -2005,11 +1945,11 @@ msgstr "Enporzhiañ ur roll-tonioù"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:61
 msgid "Rescan Music Library"
-msgstr ""
+msgstr "C'hwirlervañ al levraoueg sonerezh en-dro"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:62
 msgid "Rescan the Music Library folder"
-msgstr ""
+msgstr "C'hwirlervañ teuliad al levraoueg sonerezh en-dro"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:67
 msgid "Open _Location..."
@@ -2036,14 +1976,12 @@ msgid "_Preferences"
 msgstr "Gwe_llvezvioù"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:80
-#, fuzzy
 msgid "Modify your personal preferences"
 msgstr "Kemmañ ho kwellvezioù personel"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:83
-#, fuzzy
 msgid "Manage _Extensions"
-msgstr "Dre askouezhadenn"
+msgstr "Ard_eiñ an askouezhadennoù"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:84
 msgid "Manage extensions to add new features to Banshee"
@@ -2080,11 +2018,11 @@ msgstr "Lenn hag urzhian ho tastumadeg sonerezh"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:110
 msgid "Banshee _Home Page"
-msgstr ""
+msgstr "Gweladenniñ ar bennbajennad Banshee"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:111
 msgid "Visit the Banshee Home Page"
-msgstr ""
+msgstr "Kit da welet ar bennbajennad Banshee"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:116
 msgid "_Get Involved"
@@ -2095,18 +2033,16 @@ msgid "Become a contributor to Banshee"
 msgstr ""
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:122
-#, fuzzy
 msgid "_Version Information"
-msgstr "Adkargañ stlennoù an albom"
+msgstr "Titouroù an handel_v"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:123
 msgid "View detailed version and configuration information"
 msgstr ""
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:163
-#, fuzzy
 msgid "Import Playlist"
-msgstr "Kargañ ar roll-tonioù"
+msgstr "Enporzhiañ ur roll-tonioù"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:170
 msgid "Playlists"
@@ -2134,9 +2070,8 @@ msgid "Pre_vious"
 msgstr "_Kent"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:75
-#, fuzzy
 msgid "Play the previous item"
-msgstr "Kregiñ da seniñ ar sonenn gent"
+msgstr "Lenn an ergorenn kent"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:78
 msgid "Seek _to..."
@@ -2147,9 +2082,8 @@ msgid "Seek to a specific location in current item"
 msgstr ""
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:83
-#, fuzzy
 msgid "Jump to the currently playing item"
-msgstr "Dibunañ ar sell betek ar sonenn o vezañ sonet"
+msgstr ""
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:87
 msgid "Restart the current item"
@@ -2160,9 +2094,8 @@ msgid "_Stop When Finished"
 msgstr ""
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:93
-#, fuzzy
 msgid "Stop playback after the current item finishes playing"
-msgstr "Ober un ehan m'emañ o seniñ"
+msgstr ""
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:99
 msgid "_Playback"
@@ -2179,22 +2112,19 @@ msgstr "_Paouez"
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackRepeatActions.cs:72
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackRepeatActions.cs:73
 msgid "Repeat"
-msgstr "Adseniñ"
+msgstr "Adlenn"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackRepeatActions.cs:78
-#, fuzzy
 msgid "Repeat _Off"
-msgstr "Adseniñ"
+msgstr "Adl_enn diweredekaet"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackRepeatActions.cs:79
-#, fuzzy
 msgid "Do not repeat playlist"
-msgstr "Ne oa ket tu da lenn ar roll-tonioù"
+msgstr ""
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackRepeatActions.cs:83
-#, fuzzy
 msgid "Repeat _All"
-msgstr "Diuzañ an _holl"
+msgstr ""
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackRepeatActions.cs:84
 msgid "Play all songs before repeating playlist"
@@ -2202,12 +2132,11 @@ msgstr ""
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackRepeatActions.cs:88
 msgid "Repeat Singl_e"
-msgstr ""
+msgstr "Adlenn "
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackRepeatActions.cs:89
-#, fuzzy
 msgid "Repeat the current playing song"
-msgstr "Dibunañ ar sell betek ar sonenn o vezañ sonet"
+msgstr "Adlenn ar ganenn o vezañ sonet"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackShuffleActions.cs:75
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackShuffleActions.cs:76
@@ -2293,21 +2222,19 @@ msgstr "Enporzhiañ el levraoueg"
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:89
 #, fuzzy
 msgid "Import source to library"
-msgstr "Enporzhiañ an teuliad el levraoueg"
+msgstr "Enporzhiañ an tarzh el levraoueg"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:92
 msgid "Rename"
 msgstr "Adenvel"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:95
-#, fuzzy
 msgid "Export Playlist..."
-msgstr "Roll-tonioù nevez..."
+msgstr "Ezporzhiañ ar roll-tonioù..."
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:96
-#, fuzzy
 msgid "Export a playlist"
-msgstr "Krouin ur roll-tonioù nevez"
+msgstr "Ezporzhiañ ur roll-tonioù"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:99
 msgid "Unmap"
@@ -2319,7 +2246,7 @@ msgstr "Perzhioù an tarzh"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:105
 msgid "Sort Children by"
-msgstr ""
+msgstr "Rummañ ar vugale dre"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:108
 #: ../src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/PreferenceDialog.cs:50
@@ -2331,7 +2258,6 @@ msgid "Edit preferences related to this source"
 msgstr ""
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:113
-#, fuzzy
 msgid "New _Smart Playlist"
 msgstr "Roll-tonioù nevez"
 
@@ -2347,9 +2273,8 @@ msgid "Refresh this randomly sorted smart playlist"
 msgstr ""
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:290
-#, fuzzy
 msgid "Could not export playlist"
-msgstr "Ne oa ket tu da lenn ar roll-tonioù"
+msgstr "Ne oa ket tu da ezporhiañ ar roll-tonioù"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:418
 #, csharp-format
@@ -2365,27 +2290,24 @@ msgid "Select _All"
 msgstr "Diuzañ an _holl"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:68
-#, fuzzy
 msgid "Select all tracks"
-msgstr "Diuzañ an holl donioù"
+msgstr "Diuzañ an holl loabroù"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:71
 msgid "Select _None"
 msgstr "Na diuzañ netra"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:72
-#, fuzzy
 msgid "Unselect all tracks"
-msgstr "Diziuziñ an holl ganennoù"
+msgstr "Diziuziñ an holl loabroù"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:75
 msgid "_Edit Track Information"
-msgstr ""
+msgstr "K_emmañ titouroù al loabr"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:76
-#, fuzzy
 msgid "Edit information on selected tracks"
-msgstr "Diskouez an titouroù evit ar sonenn diuzet"
+msgstr "Kemmañ an titouroù evit al loabr diuzet"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:79
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:234
@@ -2395,22 +2317,20 @@ msgid "Properties"
 msgstr "Perzhioù"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:80
-#, fuzzy
 msgid "View information on selected tracks"
-msgstr "Diskouez an titouroù evit ar sonenn diuzet"
+msgstr "Diskouez an titouroù diwar-benn al loabroù diuzet"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:83
 msgid "Add _to Playlist"
-msgstr "Ouzhpenn_añ er roll tonioù"
+msgstr "Ouzhpenn_añ er roll-tonioù"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:84
 msgid "Append selected items to playlist or create new playlist from selection"
 msgstr ""
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:89
-#, fuzzy
 msgid "Create new playlist from selected tracks"
-msgstr "Krouin ur roll-tonioù nevez"
+msgstr "Krouiñ ur roll-tonioù nevez gant al loabroù diuzet"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:93
 msgid "_Remove"
@@ -2421,18 +2341,16 @@ msgid "Remove selected track(s) from this source"
 msgstr ""
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:97
-#, fuzzy
 msgid "Remove From _Library"
-msgstr "Enporzhiañ an teuliad el levraoueg"
+msgstr "Dilemel diwar al levraoueg"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:98
 msgid "Remove selected track(s) from library"
 msgstr ""
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:101
-#, fuzzy
 msgid "_Delete From Drive"
-msgstr "Dilemel al lanv"
+msgstr "Dilemel diwar an drobarzhell"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:102
 msgid "Permanently delete selected item(s) from medium"
@@ -2463,9 +2381,9 @@ msgid "Search all songs of this artist"
 msgstr ""
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:240
-#, fuzzy, csharp-format
+#, csharp-format
 msgid "_Delete From \"{0}\""
-msgstr "Dilemel diwar :"
+msgstr "Dilemel diwar \"{0}\""
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:457
 #, csharp-format
@@ -2479,9 +2397,9 @@ msgid "If you delete the selection, it will be permanently lost."
 msgstr ""
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:464
-#, fuzzy, csharp-format
+#, csharp-format
 msgid "Remove selection from {0}?"
-msgstr "Dilemel an diuzad"
+msgstr "Dilemel an diuzad diwar {0} ?"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:467
 #, csharp-format
@@ -2516,9 +2434,8 @@ msgid "Set all track artists to this value"
 msgstr ""
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:78
-#, fuzzy
 msgid "Track _Artist:"
-msgstr "_Arzour :"
+msgstr "_Arzour al loabr :"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:86
 msgid "Set all compilation album artists to these values"
@@ -2634,7 +2551,7 @@ msgstr ""
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/ExtraTrackDetailsPage.cs:101
 msgid "_License URI:"
-msgstr ""
+msgstr "URI al _lañvaz :"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/ExtraTrackDetailsPage.cs:110
 msgid "Set all comments to this value"
@@ -2853,13 +2770,12 @@ msgid "View the graphical equalizer"
 msgstr ""
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/ViewActions.cs:72
-#, fuzzy
 msgid "_Context Pane"
-msgstr "_Panell an "
+msgstr "_Panell kemperzhel"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/ViewActions.cs:73
 msgid "Show the context pane beneath the track list"
-msgstr ""
+msgstr "Diskouezh ar banell kemperzhel dindan roll al loabroù"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/ViewActions.cs:80
 msgid "_Fullscreen"
@@ -2899,7 +2815,7 @@ msgstr "deraouekaet"
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:463
 #, csharp-format
 msgid "{0} {1}"
-msgstr ""
+msgstr "{0} {1}"
 
 #. Translators: {0} and {1} are for markup so ignore them, {2} and {3}
 #. are Artist Name and Album Title, respectively;
@@ -2907,30 +2823,30 @@ msgstr ""
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:499
 #, csharp-format
 msgid "{0}by{1} {2} {0}from{1} {3}"
-msgstr ""
+msgstr "{0}gant{1} {2} {0}adalek{1} {3}"
 
 #. Translators: {0} and {1} are for markup so ignore them, {2} is for Album Title;
 #. e.g. 'from Killing with a Smile'
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:503
-#, fuzzy, csharp-format
+#, csharp-format
 msgid "{0}from{1} {2}"
-msgstr "adalek"
+msgstr "{0} adalek{1} {2}"
 
 #. Translators: {0} and {1} are for markup so ignore them, {2} is for Artist Name;
 #. e.g. 'by Parkway Drive'
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:507
-#, fuzzy, csharp-format
+#, csharp-format
 msgid "{0}by{1} {2}"
-msgstr "gant"
+msgstr "{0}gant{1} {2}"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTile.cs:138
 msgid "Stop Operation"
 msgstr ""
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTile.cs:139
-#, fuzzy, csharp-format
+#, csharp-format
 msgid "Stop {0}"
-msgstr "paouez"
+msgstr "paouez {0}"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTile.cs:142
 msgid "This operation is still performing work. Would you like to stop it?"
@@ -2966,41 +2882,36 @@ msgid "Media Files"
 msgstr "Restroù media"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Library.Gui/FileImportSource.cs:66
-#, fuzzy
 msgid "Local Files"
-msgstr "(restroù lec'hel)"
+msgstr "Restroù lec'hel"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Library.Gui/FileImportSource.cs:92
 msgid "_Files to import:"
-msgstr ""
+msgstr "_Restroù da enporzhiañ :"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Library.Gui/FileImportSource.cs:93
-#, fuzzy
 msgid "Select Files"
-msgstr "Diuzañ restroù"
+msgstr "Diuzañ ar restroù"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Library.Gui/FileImportSource.cs:94
-#, fuzzy
 msgid "(none selected)"
-msgstr "Tra ebet diuzet"
+msgstr "(Tra ebet diuzet)"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Library.Gui/FolderImportSource.cs:44
-#, fuzzy
 msgid "Import Folders to Library"
-msgstr "Enporzhiañ an teuliad el levraoueg"
+msgstr "Enporzhiañ an teuliadoù el levraoueg"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Library.Gui/FolderImportSource.cs:62
 msgid "Local Folders"
-msgstr ""
+msgstr "Teuliadoù lec'hel"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Library.Gui/FolderImportSource.cs:80
 msgid "_Folders to import:"
-msgstr ""
+msgstr "_Teuliadoù da enporzhiañ :"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Library.Gui/FolderImportSource.cs:81
-#, fuzzy
 msgid "Select Folders"
-msgstr "Dibab ar restr evit ar podskignañ"
+msgstr "Diuzañ an teuliadoù"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Library.Gui/PhotoFolderImportSource.cs:67
 msgid "Videos from Photos Folder"
@@ -3008,7 +2919,7 @@ msgstr ""
 
 #: ../src/Core/Banshee.ThickClient/Banshee.MediaProfiles.Gui/ProfileComboBox.cs:86
 msgid "No available profiles"
-msgstr ""
+msgstr "Aelad hegerz ebet"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.MediaProfiles.Gui/ProfileConfigurationDialog.cs:72
 msgid "Advanced"
@@ -3020,46 +2931,40 @@ msgid "Configuring {0}"
 msgstr "O kefluniañ {0}"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Playlist.Gui/PlaylistExportDialog.cs:20
-#, fuzzy
 msgid "Export Playlist"
-msgstr "Kargañ ar roll-tonioù"
+msgstr "Ezporzhiañ ar roll-tonioù"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Playlist.Gui/PlaylistExportDialog.cs:29
 msgid "Export"
 msgstr "Ezporzhiañ"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Playlist.Gui/PlaylistExportDialog.cs:54
-#, fuzzy
 msgid "Select Format: "
-msgstr "Diuzit mentrezh :"
+msgstr "Diuzañ ur mentrezh :"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/DefaultPreferenceWidgets.cs:110
-#, fuzzy
 msgid "Select library location"
-msgstr "Lec'hiadur al levraoueg"
+msgstr "Diuzañ lec'hiadur al levraoueg"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/DefaultPreferenceWidgets.cs:118
 msgid "Reset"
 msgstr "Adderaouekaat"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/PreferenceDialog.cs:55
-#, fuzzy
 msgid "Could not show preferences"
-msgstr "Gwellvezioù an arlun stad"
+msgstr ""
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/PreferenceDialog.cs:56
 msgid "The preferences service could not be found."
 msgstr ""
 
 #: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/Editor.cs:82
-#, fuzzy
 msgid "New Smart Playlist"
 msgstr "Roll-tonioù nevez"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Sources.Gui/FilteredListSourceContents.cs:109
-#, fuzzy
 msgid "Browser on Left"
-msgstr "Selloù ar furcher"
+msgstr "Merdeer war an tu kleiz ar prenestr"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Sources.Gui/FilteredListSourceContents.cs:110
 msgid "Show the artist/album browser to the left of the track list"
@@ -3067,20 +2972,19 @@ msgstr ""
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Sources.Gui/FilteredListSourceContents.cs:113
 msgid "Browser on Top"
-msgstr ""
+msgstr "Merdeer a-us"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Sources.Gui/FilteredListSourceContents.cs:114
 msgid "Show the artist/album browser above the track list"
 msgstr ""
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Sources.Gui/FilteredListSourceContents.cs:119
-#, fuzzy
 msgid "Show Browser"
-msgstr "_Furchal"
+msgstr "Diskouez ar merdeer"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Sources.Gui/FilteredListSourceContents.cs:120
 msgid "Show or hide the artist/album browser"
-msgstr ""
+msgstr "Diskouez pe kuzhat ar merdeer arzour/albom"
 
 #: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:1
 msgid "<b>Details</b>"
@@ -3088,48 +2992,43 @@ msgstr "<b>Munudoù</b>"
 
 #: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:2
 msgid "<big><b>Import Media to Library</b></big>"
-msgstr ""
+msgstr "<big><b>Enporzhiañ ar media el levraoueg</b></big>"
 
 #: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:3
 msgid "Choose an import _source:"
-msgstr ""
+msgstr "Dibab ta_rzh un enporzhiañ :"
 
 #: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:4
-#, fuzzy
 msgid "Create and save"
-msgstr "Krouin ur roll-tonioù nevez"
+msgstr "Krouiñ hag enrollañ"
 
 #: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:5
-#, fuzzy
 msgid "Do not show this dialog again"
-msgstr "Na ziskouez ket ar voestad ken"
+msgstr "Na ziskouez ket ar voestad emziviz ken"
 
 #: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:6
-#, fuzzy
 msgid "Enter the address of the file you would like to open:"
-msgstr "Roit _chomlec'h ar restr a fell deoc'h digeriñ:"
+msgstr "Roit _chomlec'h ar restr a fell deoc'h digeriñ :"
 
 #: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:8
 msgid "I_mport Media Source"
 msgstr ""
 
 #: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:9
-#, fuzzy
 msgid "Import Media to Library"
-msgstr "Enpoorzhiañ ar restr el levraoueg"
+msgstr "Enporzhiañ ar media el levraoueg"
 
 #: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:11
 msgid "Open in editor"
-msgstr ""
+msgstr "Digeriñ gant ar c'hemmer"
 
 #: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:12
 msgid "Playlist _Name: "
 msgstr "A_nv ar roll-tonioù :"
 
 #: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:13
-#, fuzzy
 msgid "Predefined Smart Playlists"
-msgstr "Ouzhpennañ d'ar ro_ll-tonioù"
+msgstr "Ro_lloù tonioù raksavet"
 
 #: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:14
 msgid "Seek to Position"
@@ -3144,6 +3043,8 @@ msgid ""
 "Insert\n"
 "Disc"
 msgstr ""
+"Enlakaat\n"
+"Kantenn"
 
 #: ../src/Core/Banshee.Widgets/Banshee.Widgets/StreamPositionLabel.cs:148
 #, fuzzy
@@ -3151,14 +3052,12 @@ msgid "Idle"
 msgstr "Diaktiv"
 
 #: ../src/Core/Banshee.Widgets/Banshee.Widgets/StreamPositionLabel.cs:149
-#, fuzzy
 msgid "Contacting..."
-msgstr "O kargañ..."
+msgstr ""
 
 #: ../src/Core/Banshee.Widgets/Banshee.Widgets/StreamPositionLabel.cs:159
-#, fuzzy
 msgid "Buffering"
-msgstr "Buffering"
+msgstr ""
 
 #: ../src/Core/Banshee.Widgets/Banshee.Widgets/VolumeButton.cs:549
 msgid "Muted"
@@ -3176,25 +3075,23 @@ msgstr "Sink {0}"
 #: ../src/Dap/Banshee.Dap/Banshee.Dap/DapLibrarySync.cs:190
 #, csharp-format
 msgid "{0} to add, {1} to remove"
-msgstr ""
+msgstr "{0} da ouzhpennañ, {1} da zilemel"
 
 #. Note to translators: {0}, {1} and {2} will be replaced with numbers.
 #: ../src/Dap/Banshee.Dap/Banshee.Dap/DapLibrarySync.cs:248
 #, csharp-format
 msgid "{0} to add, {1} to remove, {2} to update"
-msgstr ""
+msgstr "{0} da ouzhpennañ, {1} da zilemel, {2} da hizivaat"
 
 #: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:174
 msgid "Device Properties"
 msgstr "Perzhioù an drobarzhell"
 
 #: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:191
-#, fuzzy
 msgid "Media Player"
-msgstr "Soner liesvedia"
+msgstr "Lenner liesvedia"
 
 #: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:198
-#, fuzzy
 msgid "Product"
 msgstr "Aozad"
 
@@ -3229,11 +3126,11 @@ msgstr ""
 
 #: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:410
 msgid "Error converting file"
-msgstr ""
+msgstr "Fazi en ur amdreiñ ar restr"
 
 #: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSync.cs:116
 msgid "Manually manage this device"
-msgstr ""
+msgstr "Ardeiñ an drobarzhell dre zorn"
 
 #: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSync.cs:117
 msgid "Manually managing your device means you can drag and drop items onto the device, and manually remove them."
@@ -3301,9 +3198,8 @@ msgid "Capacity used"
 msgstr ""
 
 #: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapPropertiesDialog.cs:121
-#, fuzzy
 msgid "Advanced details"
-msgstr "Kemplesoc'h"
+msgstr "Munudoù kemplesoc'h"
 
 #: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/PurchasedMusicActions.cs:53
 msgid "Import Purchased Music"
@@ -3336,7 +3232,7 @@ msgstr ""
 
 #: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/DatabaseRebuilder.cs:96
 msgid "Scanning iPod..."
-msgstr ""
+msgstr "O c'hwilervañ an iPod..."
 
 #: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/DatabaseRebuilder.cs:131
 msgid "Processing Tracks..."
@@ -3363,9 +3259,8 @@ msgid "Color"
 msgstr "Liv"
 
 #: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:100
-#, fuzzy
 msgid "Generation"
-msgstr "Hollek"
+msgstr ""
 
 #: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:101
 msgid "Capacity"
@@ -3406,7 +3301,7 @@ msgstr ""
 
 #: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:661
 msgid "Syncing iPod"
-msgstr ""
+msgstr "O sinkronaat an iPod"
 
 #: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:662
 msgid "Preparing to synchronize..."
@@ -3434,7 +3329,7 @@ msgstr ""
 
 #: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:86
 msgid "Learn more about Banshee's iPod support"
-msgstr ""
+msgstr "Gouzout hiroc'h diwar-benn skor an iPod gant Banshee"
 
 #: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:94
 msgid ""
@@ -3483,18 +3378,18 @@ msgid "Rockbox Device"
 msgstr ""
 
 #: ../src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:114
-#, fuzzy, csharp-format
+#, csharp-format
 msgid "Audio Folder"
 msgid_plural "Audio Folders"
-msgstr[0] "Lenner CD klevet"
-msgstr[1] "Lenner CD klevet"
+msgstr[0] "Teuliad aodio"
+msgstr[1] "Teuliadoù aodio"
 
 #: ../src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:121
 #, csharp-format
 msgid "Video Folder"
 msgid_plural "Video Folders"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Teuliad ar videoioù"
+msgstr[1] "Teuliaddoù ar videoioù"
 
 #: ../src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:127
 msgid "Required Folder Depth"
@@ -3503,12 +3398,11 @@ msgstr ""
 #: ../src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:130
 #, fuzzy
 msgid "Supports Playlists"
-msgstr "Rolloù tonioù"
+msgstr ""
 
 #: ../src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/WebOSDevice.cs:188
-#, fuzzy
 msgid "Ringtones"
-msgstr "a vunutennoù"
+msgstr ""
 
 #: ../src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:78
 #: ../src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:117
@@ -3564,14 +3458,12 @@ msgid "Track {0}"
 msgstr "Loabr {0}"
 
 #: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdRipper.cs:119
-#, fuzzy
 msgid "Importing Audio CD"
-msgstr "O skrivañ ar son war ar CD"
+msgstr "O enporzhiañ ar CD aodio"
 
 #: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdRipper.cs:120
-#, fuzzy
 msgid "Initializing Drive"
-msgstr "D_eraouekaat"
+msgstr "O teraouekaat al lenner"
 
 #: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdRipper.cs:122
 #, csharp-format
@@ -3584,9 +3476,8 @@ msgid "Cannot Import CD"
 msgstr "N'eus ket tu da lenn ar CD: %s"
 
 #: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:233
-#, fuzzy
 msgid "Audio CDs"
-msgstr "Lenner CD klevet"
+msgstr "CDoù aodio"
 
 #: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:235
 #, fuzzy
@@ -3624,9 +3515,8 @@ msgstr ""
 
 #: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:320
 #: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:440
-#, fuzzy
 msgid "Import CD"
-msgstr "Fazioù en ur enporzhiañ"
+msgstr "Enporzhiañ ar CD"
 
 #: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:321
 #, fuzzy
@@ -3634,9 +3524,8 @@ msgid "Import this audio CD to the library"
 msgstr "Enpoorzhiañ ar restr el levraoueg"
 
 #: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:327
-#, fuzzy
 msgid "Duplicate CD"
-msgstr "Eilañ ar CD aodio..."
+msgstr "Eilañ ar CD"
 
 #: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:328
 #, fuzzy
@@ -3658,9 +3547,8 @@ msgid "Automatic import off since this album is already in the Music Library."
 msgstr ""
 
 #: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:214
-#, fuzzy
 msgid "Could not import CD"
-msgstr "Ne oa ket tu da grouiñ ar CD audio"
+msgstr "Ne oa ket tu da enporzhiañ ar CD"
 
 #: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:231
 #, fuzzy
@@ -3683,9 +3571,8 @@ msgid "Audio CD Preferences"
 msgstr "Gwellvezioù Jamendo"
 
 #: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:415
-#, fuzzy
 msgid "Eject Disc"
-msgstr "Disteurel ar gantenn"
+msgstr "Kas ar gantenn er-maez"
 
 #: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:439
 #, csharp-format
@@ -3720,9 +3607,8 @@ msgid "Detecting BPM"
 msgstr ""
 
 #: ../src/Extensions/Banshee.Bpm/Banshee.Bpm/BpmEntry.cs:86
-#, fuzzy
 msgid "D_etect"
-msgstr "_Kas er-maez"
+msgstr "D_inoiñ"
 
 #: ../src/Extensions/Banshee.Bpm/Banshee.Bpm/BpmEntry.cs:98
 msgid "T_ap"
@@ -3750,39 +3636,34 @@ msgid "Detect BPM for all songs that don't already have a value set"
 msgstr ""
 
 #: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:58
-#, fuzzy
 msgid "Downloading Cover Art"
-msgstr "O pellgargañ ar podskignañ"
+msgstr "O pellgargañ goloioù"
 
 #. Console.WriteLine ("have album {0}/{1} for track uri {2}", track.AlbumId, track.AlbumTitle, track.Uri);
 #: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:121
 #, csharp-format
 msgid "{0} - {1}"
-msgstr ""
+msgstr "{0} - {1}"
 
 #: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtService.cs:106
-#, fuzzy
 msgid "_Cover Art"
-msgstr "Godellig planedenn"
+msgstr "Goloioù"
 
 #: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtService.cs:107
-#, fuzzy
 msgid "Manage cover art"
-msgstr "Godellig planedenn"
+msgstr "Ardeiñ ar goloioù"
 
 #: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtService.cs:109
-#, fuzzy
 msgid "_Download Cover Art"
-msgstr "_Pellgargañ an albom"
+msgstr "_Pellgargañ golo an albom"
 
 #: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtService.cs:110
 msgid "Download cover art for all tracks"
-msgstr ""
+msgstr "Pellgargañ golo an albom evit an holl loabroù"
 
 #: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapContainerSource.cs:42
-#, fuzzy
 msgid "Shared Music"
-msgstr "_Kenimplij ma sonerezh"
+msgstr ""
 
 #: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapErrorView.cs:73
 msgid "Disconnected from music share"
@@ -3791,10 +3672,9 @@ msgstr ""
 #: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapErrorView.cs:74
 #, fuzzy
 msgid "Unable to connect to music share"
-msgstr "N'haller ket kennaskañ"
+msgstr "N'haller ket kennaskañ ouzh "
 
 #: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapErrorView.cs:88
-#, fuzzy
 msgid "Back"
 msgstr "Kent"
 
@@ -3826,9 +3706,8 @@ msgid "You are no longer connected to this music share"
 msgstr ""
 
 #: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapErrorView.cs:125
-#, fuzzy
 msgid "Try connecting again"
-msgstr "O kennaskañ"
+msgstr ""
 
 #: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapErrorView.cs:139
 msgid "The music share is hosted by iTunes® 7"
@@ -3859,9 +3738,8 @@ msgid "Login"
 msgstr "Lugañ"
 
 #: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs:60
-#, fuzzy
 msgid "Music Share"
-msgstr "Lenner sonerezh"
+msgstr ""
 
 #: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs:64
 msgid "Disconnect"
@@ -3870,12 +3748,12 @@ msgstr "Digennaskañ"
 #: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs:106
 #, csharp-format
 msgid "Connecting to {0}"
-msgstr "O kennaskañ ouzh  {0}"
+msgstr "O kennaskañ ouzh {0}"
 
 #: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs:202
-#, fuzzy, csharp-format
+#, csharp-format
 msgid "Logging in to {0}."
-msgstr "O kennaskañ"
+msgstr "O kennaskañ ouzh {0}"
 
 #: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs:238
 #, csharp-format
@@ -3885,9 +3763,8 @@ msgstr[0] "O kargañ {0} loabr"
 msgstr[1] "O kargañ {0} loabr"
 
 #: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs:270
-#, fuzzy
 msgid "Loading playlists"
-msgstr "Kargañ ar roll-tonioù"
+msgstr "O kargañ rolloù tonioù"
 
 #: ../src/Extensions/Banshee.FileSystemQueue/Banshee.FileSystemQueue/FileSystemQueueSource.cs:57
 #: ../src/Extensions/Banshee.FileSystemQueue/Banshee.FileSystemQueue/FileSystemQueueSource.cs:58
@@ -3911,8 +3788,9 @@ msgid "Clear on Quit"
 msgstr "Skarzhañ al lostennad"
 
 #: ../src/Extensions/Banshee.FileSystemQueue/Banshee.FileSystemQueue/FileSystemQueueSource.cs:80
+#, fuzzy
 msgid "Clear the file system queue when quitting"
-msgstr ""
+msgstr "Skarzhañ al lostennad "
 
 #: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSourceContents.cs:62
 msgid "Not Set"
@@ -3927,9 +3805,8 @@ msgid "Add Station"
 msgstr "Ouzhpennañ ar savlec'h"
 
 #: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSource.cs:67
-#, fuzzy
 msgid "Add a new Internet Radio station or playlist"
-msgstr "Radio-gwiad nevez"
+msgstr "Ouzhpennañ ur savlec'h skingomz internet nevez pe ur roll-tonioù"
 
 #: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSource.cs:83
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationEditor.cs:64
@@ -4219,23 +4096,20 @@ msgid "Account Settings"
 msgstr "Arventennoù ar c'hont"
 
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs:258
-#, fuzzy
 msgid "Join Last.fm"
-msgstr "Last.fm"
+msgstr "Mont da Last.fm"
 
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationEditor.cs:72
 msgid "New Station"
 msgstr "Savlec'h nevez"
 
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:57
-#, fuzzy
 msgid "Last.fm Station"
-msgstr "Last.fm"
+msgstr "Savlec'h Last.fm"
 
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:150
-#, fuzzy
 msgid "Edit Last.fm Station"
-msgstr "%d radio"
+msgstr "Kemmañ ar savlec'h Last.fm"
 
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:151
 #, fuzzy
@@ -4294,7 +4168,7 @@ msgstr "Ton priziet"
 
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:578
 msgid "Banshee Group"
-msgstr ""
+msgstr "Strollad Banshee"
 
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:579
 #: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:111
@@ -4523,19 +4397,17 @@ msgid "Add to Play Queue"
 msgstr "Ouzhpennañ d'al _lostad-lenn"
 
 #: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueActions.cs:50
-#, fuzzy
 msgid "Append selected songs to the play queue"
 msgstr "Ouzhpennañ ar kanennoù diuzet d'al lostad-seniñ"
 
 #: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueActions.cs:57
 #, fuzzy
 msgid "Refresh random tracks in the play queue"
-msgstr "Dilemel an holl sonennoù eus al lostennad"
+msgstr "Azbevaat loabroù  el lostennad"
 
 #: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueActions.cs:64
-#, fuzzy
 msgid "Remove all tracks from the play queue"
-msgstr "Dilemel an holl sonennoù eus al lostennad"
+msgstr "Dilemel an holl loabroù diwar al lostennad"
 
 #: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueActions.cs:71
 msgid "Clear the play queue when quitting"
@@ -4546,14 +4418,12 @@ msgid "Play Queue"
 msgstr "Seniñ al lostennad"
 
 #: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:86
-#, fuzzy
 msgid "Remove From Play Queue"
-msgstr "Dilemel an holl sonennoù eus al lostennad"
+msgstr "Dilemel diwar al lostennad"
 
 #: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:739
-#, fuzzy
 msgid "Number of _played songs to show"
-msgstr "Niver a rolloù tonioù :"
+msgstr ""
 
 #: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:745
 msgid "Number of _upcoming songs to show"
@@ -4573,7 +4443,7 @@ msgstr "Podskignañ"
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastSource.cs:158
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastEpisodePage.cs:88
 msgid "Published"
-msgstr ""
+msgstr "Embannet"
 
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastSource.cs:158
 msgid "New"
@@ -4603,9 +4473,9 @@ msgid "Updated at {0}"
 msgstr "Hizivaat an holl lanvioù"
 
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellPodcast.cs:117
-#, fuzzy, csharp-format
+#, csharp-format
 msgid "Updated {0}"
-msgstr "Hizivaat"
+msgstr "{0} hizivaet"
 
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellUnheard.cs:57
 msgid "New Items"
@@ -4661,11 +4531,11 @@ msgstr ""
 
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:72
 msgid "Subscribe to Podcast..."
-msgstr ""
+msgstr "En em enrollañ da bodskignañ..."
 
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:73
 msgid "Subscribe to a new podcast"
-msgstr ""
+msgstr "En em enrollañ da bodskignañ nevez"
 
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:84
 msgid "Unsubscribe and Delete"
@@ -4698,15 +4568,15 @@ msgstr "Nullañ ar bellgargañ"
 
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:138
 msgid "Remove Downloaded File(s)"
-msgstr ""
+msgstr "Dilemel ar restr(où) pellgarget"
 
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:144
 msgid "Visit Website"
-msgstr ""
+msgstr "Kit da welet lec'hienn"
 
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:156
 msgid "Subscribe to Podcast"
-msgstr ""
+msgstr "En em enrollañ da bodskignañ"
 
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:316
 msgid "Invalid URL"
@@ -4745,7 +4615,7 @@ msgstr ""
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastFeedPropertiesDialog.cs:117
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastPropertiesDialog.cs:105
 msgid "No description available"
-msgstr ""
+msgstr "Deskrivadur hegerz ebet"
 
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastPropertiesDialog.cs:77
 msgid "Podcast:"
@@ -4762,7 +4632,7 @@ msgstr "En em enrollañ"
 
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastSubscribeDialog.cs:92
 msgid "Subscribe to New Podcast"
-msgstr ""
+msgstr "En em enrollañ da bodskignañ nevez"
 
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastSubscribeDialog.cs:100
 msgid "Please enter the URL of the podcast to which you would like to subscribe."
@@ -4831,24 +4701,21 @@ msgstr ""
 
 #: ../src/Libraries/Hyena.Gui/Hyena.Gui.Dialogs/VersionInformationDialog.cs:64
 msgid "Assembly Name"
-msgstr ""
+msgstr "Anv an abadenn"
 
 #: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/FileSizeQueryValueEntry.cs:62
 msgid "KB"
 msgstr "Ke"
 
 #: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryBox.cs:86
-#, fuzzy
 msgid "Condition:"
-msgstr "Diferadenn"
+msgstr ""
 
 #: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryBox.cs:104
-#, fuzzy
 msgid "_Match"
-msgstr "%S glotadenn"
+msgstr "_Klotadenn"
 
 #: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryBox.cs:111
-#, fuzzy
 msgid "all"
 msgstr "an holl anezho"
 
@@ -4858,14 +4725,12 @@ msgid "any"
 msgstr "ne vern"
 
 #: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryBox.cs:117
-#, fuzzy
 msgid "of the following:"
-msgstr "da heul"
+msgstr "eus ar re da heul :"
 
 #: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryLimitBox.cs:58
-#, fuzzy
 msgid "_Limit to"
-msgstr "_Terminiñ ouzh: "
+msgstr ""
 
 #: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryLimitBox.cs:85
 msgid "selected by"
@@ -4873,7 +4738,7 @@ msgstr "diuzet gant"
 
 #: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/RelativeTimeSpanQueryValueEntry.cs:42
 msgid "ago"
-msgstr ""
+msgstr "zo"
 
 #: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/TimeSpanQueryValueEntry.cs:59
 msgid "seconds"
@@ -4894,7 +4759,7 @@ msgstr "a vizioù"
 #: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/TimeSpanQueryValueEntry.cs:65
 #, fuzzy
 msgid "years"
-msgstr "BLOAVEZHIOU"
+msgstr "a vloavezhioù"
 
 #. public static readonly Operator Equal              = new Operator ("equals", "= {0}", "==", "=", ":");
 #. public static readonly Operator NotEqual           = new Operator ("notEqual", "!= {0}", true, "!=", "!:");
@@ -4916,7 +4781,7 @@ msgstr "zo"
 #: ../src/Libraries/Hyena/Hyena.Query/IntegerQueryValue.cs:42
 #: ../src/Libraries/Hyena/Hyena.Query/StringQueryValue.cs:46
 msgid "is not"
-msgstr ""
+msgstr "n'eo ket"
 
 #: ../src/Libraries/Hyena/Hyena.Query/IntegerQueryValue.cs:43
 #: ../src/Libraries/Hyena/Hyena.Query/RelativeTimeSpanQueryValue.cs:47
@@ -4930,7 +4795,6 @@ msgstr "d'an nebeutañ"
 
 #: ../src/Libraries/Hyena/Hyena.Query/IntegerQueryValue.cs:45
 #: ../src/Libraries/Hyena/Hyena.Query/RelativeTimeSpanQueryValue.cs:45
-#, fuzzy
 msgid "less than"
 msgstr "bihanoc'h eget"
 
@@ -4938,7 +4802,7 @@ msgstr "bihanoc'h eget"
 #: ../src/Libraries/Hyena/Hyena.Query/IntegerQueryValue.cs:46
 #: ../src/Libraries/Hyena/Hyena.Query/RelativeTimeSpanQueryValue.cs:44
 msgid "more than"
-msgstr ""
+msgstr "muioc'h eget"
 
 #: ../src/Libraries/Hyena/Hyena.Query/NullQueryValue.cs:41
 msgid "empty"
@@ -4947,7 +4811,7 @@ msgstr "goullo"
 #: ../src/Libraries/Hyena/Hyena.Query/RelativeTimeSpanQueryValue.cs:90
 #, csharp-format
 msgid "{0} ago"
-msgstr ""
+msgstr "{0} zo"
 
 #: ../src/Libraries/Hyena/Hyena.Query/StringQueryValue.cs:43
 msgid "contains"
@@ -4956,7 +4820,7 @@ msgstr "a endalc'h"
 #: ../src/Libraries/Hyena/Hyena.Query/StringQueryValue.cs:44
 #, fuzzy
 msgid "doesn't contain"
-msgstr "a endalc'h"
+msgstr "na endalc'h ket"
 
 #: ../src/Libraries/Hyena/Hyena.Query/StringQueryValue.cs:47
 msgid "starts with"
@@ -4964,17 +4828,15 @@ msgstr "a grog gant"
 
 #: ../src/Libraries/Hyena/Hyena.Query/StringQueryValue.cs:48
 msgid "ends with"
-msgstr ""
+msgstr "a echu gant"
 
 #: ../src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginDialog.cs:49
-#, fuzzy
 msgid "Log in to Last.fm"
-msgstr "Nevez war Last.fm?"
+msgstr "Kennaskañ ouzh Last.fm"
 
 #: ../src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginDialog.cs:76
-#, fuzzy
 msgid "Last.fm Account Login"
-msgstr "Anv arveriad ar gont"
+msgstr "Anv arveriad ar gont Last.fm"
 
 #: ../src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginDialog.cs:79
 msgid "Please enter your Last.fm account credentials."
@@ -4982,7 +4844,7 @@ msgstr ""
 
 #: ../src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginDialog.cs:105
 msgid "Save and Log In"
-msgstr ""
+msgstr "Enrollañ ha kennaskañ"
 
 #: ../src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginForm.cs:113
 msgid "Sign up for Last.fm"
@@ -4990,18 +4852,16 @@ msgstr ""
 
 #: ../src/Libraries/Lastfm/Lastfm/AudioscrobblerConnection.cs:446
 #: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:458
-#, fuzzy
 msgid "Last.fm username or password is invalid."
-msgstr "Anv an arveriad pe ger-tremen direizh"
+msgstr "Didalvoudek eo anv an arveriad pe ger-tremen Last.fm"
 
 #: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:301
 msgid "Failed to Login to Last.fm"
 msgstr ""
 
 #: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:302
-#, fuzzy
 msgid "Either your username or password is invalid."
-msgstr "Anv an arveriad pe ger-tremen direizh"
+msgstr "Didalvoudek eo hoc'h anv arveriad pe ker-tremen."
 
 #: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:440
 msgid "There is not enough content to play this station."
@@ -5017,7 +4877,7 @@ msgstr ""
 
 #: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:443
 msgid "This station is not available."
-msgstr ""
+msgstr "Ar savlec'h-mañ n'eo ket hegerz."
 
 #: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:444
 msgid "This station is only available to subscribers."
@@ -5037,7 +4897,7 @@ msgstr ""
 
 #: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:455
 msgid "Not connected to Last.fm."
-msgstr ""
+msgstr "Ket kennasket ouzh Last.fm"
 
 #: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:456
 msgid "Account details are needed before you can connect to Last.fm"
