@@ -1,5 +1,5 @@
 ===============================================================================
-WELCOME TO BANSHEE 1.5.1 - Released September 1?, 2009
+WELCOME TO BANSHEE 1.5.1 - Released September 14, 2009
 ===============================================================================
 
   * Banshee is a multimedia management and playback application for GNOME.
@@ -89,7 +89,7 @@ NEW AWESOME FEATURES AND ENHANCEMENTS
       * Fix rounding when updating the track score
       * Fix initial track score calculation (BGO #594568)
 
-      * N bugs were fixed since 1.5.0
+      * 123 bugs were fixed since 1.5.0
 
 
 ===============================================================================
