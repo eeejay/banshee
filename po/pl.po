@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-13 19:12+0200\n"
-"PO-Revision-Date: 2009-09-13 22:57+0100\n"
+"POT-Creation-Date: 2009-09-15 02:04+0200\n"
+"PO-Revision-Date: 2009-09-15 02:06+0100\n"
 "Last-Translator: Tomasz Dominikowski <dominikowski@gmail.com>\n"
 "Language-Team: Polish <gnomepl@aviary.pl>\n"
 "MIME-Version: 1.0\n"
@@ -3719,7 +3719,7 @@ msgid "File System Queue"
 msgstr "Kolejka systemu plików"
 
 #: ../src/Extensions/Banshee.FileSystemQueue/Banshee.FileSystemQueue/FileSystemQueueSource.cs:72
-#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueActions.cs:63
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueActions.cs:70
 msgid "Clear"
 msgstr "Wyczyść"
 
@@ -3728,7 +3728,7 @@ msgid "Remove all tracks from the file system queue"
 msgstr "Usuwanie wszystkich ścieżek z kolejki odtwarzania"
 
 #: ../src/Extensions/Banshee.FileSystemQueue/Banshee.FileSystemQueue/FileSystemQueueSource.cs:79
-#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueActions.cs:70
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueActions.cs:77
 msgid "Clear on Quit"
 msgstr "Wyczyść na zakończenie"
 
@@ -4315,6 +4315,38 @@ msgstr "Odtwarzacz multimediów iTunes"
 msgid "Banshee is not familiar with this version of the iTunes library format. Importing may or may not work as expected, or at all. Would you like to attempt to import anyway?"
 msgstr "Program Banshee nie zna tej wersji formatu kolekcji iTunes. Zaimportowanie może działać, ale nie musi. Wykonać próbę zaimportowania mimo to?"
 
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/HeaderWidget.cs:47
+msgid "manually"
+msgstr "ręcznie"
+
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/HeaderWidget.cs:48
+msgid "by song"
+msgstr "wg utworu"
+
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/HeaderWidget.cs:49
+msgid "by album"
+msgstr "wg albumu"
+
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/HeaderWidget.cs:50
+msgid "by artist"
+msgstr "wg wykonawcy"
+
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/HeaderWidget.cs:51
+msgid "by rating"
+msgstr "wg oceny"
+
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/HeaderWidget.cs:52
+msgid "by score"
+msgstr "wg punktacji"
+
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/HeaderWidget.cs:59
+msgid "_Fill"
+msgstr "_Wypełnij"
+
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/HeaderWidget.cs:73
+msgid "f_rom"
+msgstr "_z"
+
 #: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueActions.cs:49
 msgid "Add to Play Queue"
 msgstr "Dodaj do kolejki odtwarzania"
@@ -4327,11 +4359,19 @@ msgstr "Dołącza zaznaczone utwory do kolejki odtwarzania"
 msgid "Refresh random tracks in the play queue"
 msgstr "Odświeża losowe ścieżki w kolejce odtwarzania"
 
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueActions.cs:63
+msgid "Add More"
+msgstr "Dodaj więcej"
+
 #: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueActions.cs:64
+msgid "Add more random tracks to the play queue"
+msgstr "Dodaje więcej losowych ścieżek do kolejki odtwarzania"
+
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueActions.cs:71
 msgid "Remove all tracks from the play queue"
 msgstr "Usuwa wszystkie ścieżki z kolejki odtwarzania"
 
-#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueActions.cs:71
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueActions.cs:78
 msgid "Clear the play queue when quitting"
 msgstr "Czyści kolejkę odtwarzania na zakończenie"
 
@@ -4343,11 +4383,11 @@ msgstr "Kolejka odtwarzania"
 msgid "Remove From Play Queue"
 msgstr "Usuń z kolejki odtwarzania"
 
-#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:735
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:747
 msgid "Number of _played songs to show"
 msgstr "Liczba _odtworzonych utworów do wyświetlenia"
 
-#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:741
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:753
 msgid "Number of _upcoming songs to show"
 msgstr "Liczba następnych _utworów do wyświetlenia"
 
