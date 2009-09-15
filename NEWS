@@ -1,86 +1,94 @@
 ===============================================================================
-WELCOME TO BANSHEE 1.5.0 - Released June 1, 2009 - "The Keyboard Cat Release"
+WELCOME TO BANSHEE 1.5.1 - Released September 1?, 2009
 ===============================================================================
 
   * Banshee is a multimedia management and playback application for GNOME.
 
     "Import, organize, and discover new music with Banshee through its simple
-    and powerful interface and wide array of innovative features. Create 
+    and powerful interface and wide array of innovative features. Create
     your own radio stations or listen to a friends' through Last.fm integration;
     experience automatic cover art fetching as you listen; and easily browse,
     search, and control your media collection."
 
-  * Learn More: http://banshee-project.org/download/archives/1.5.0/
+  * Learn More: http://banshee-project.org/download/archives/1.5.1/
 
 
 ===============================================================================
 NEW AWESOME FEATURES AND ENHANCEMENTS
 ===============================================================================
 
-    Banshee 1.5.0 is an unstable, beta release.  It brings many big changes,
+    Banshee 1.5.1 is an unstable, beta release.  It brings many big changes,
     new features, and fixes, and is the first release in what will become 1.6.
-    
+
     New Features:
 
-      * Powerful unicode-aware case-insensitive search; i.e. n matches Ñ and vice-versa
-      * Locale-specific, case-insensitive, unicode-aware sorting
-      * Artist/album/track sort fields support; i.e. can set artist sort to "Beatles, The"
-      * Separate library locations for Music, Video, and Podcast
-      * Creative Commons-aware license column/field
-      * Score column/field, automatically updated when played/skipped
-      * Beats per minute (BPM) support: column/field, preference to autodetect library-wide
-      * Rhythmbox library/metadata importer
+      * Shuffle by album and artist (BGO #348582)
+      * Shuffle by weighted rating and score mode
+      * Add tooltips for ellipsized ListView text
+      * Keep the playing song visible in the track list
+      * Add support for WebOS devices (BGO #585112)
+      * Add support for the Samsung Galaxy Android Phone
 
     Enhancements:
 
-      * Support importing/exporting XSPF playlists
-      * Support loading ASF playlists (BGO #545646)
-      * Whitelist .spx, 669, it, med, mod, mol, mtm, nst, s3m, stm, ult, wow, xm, and xnm (BGO #580014)
-      * Source-specific preferences, accessible via Preferences dialog and via sources' context menu
-      * Much improved child source sorting - live, persistent, with group-by-type option
-      * Priorty and resource-ware job scheduler; i.e. pauses BPM detection while importing (BGO #577772)
-      * Podcast espisode details tabs in track information/editor
-      * Can rename podcasts
-      * Can unsubscribe/download/refresh multiple podcasts at a time
-      * New 'Creative Commons' default Last.fm station
-      * New Refresh button for Last.fm stations
-      * More accurate seeking with click/DnD, can use mouse scrollwheel
-      * Make it easier to edit and reset ratings
-      * Compatibile with new actionless notification systems
-      * Only scale cover art for notification-daemon system
-      * Add mnemonics to track editor fields and import dialog
-      * Show device sync summary; how items sync would add/remove
-      * Make previous button go back if less than 4 seconds into a song
+      * When user picks new sort column, default to sort ascending
+      * Drop the " Library" suffix on the Music and Video sources
+      * Add thin highlight to ListView selection for 3D effect
+      * Keyboard shortcut (ESC) to clear the search box (BGO #558938)
+      * Expose LAME's "preset" option (BGO #563303)
+      * Added a --gconf-base-key for running sandboxed (bgo#585546)
+      * Trim URL pasted from clipboard to podcast dialog (BGO#585679)
+      * Allow selection of multiple folders on import (BGO#586946)
+      * Support playlists on Android G1 devices (BGO #583335)
+      * Better support for devices running Rockbox
+      * Set video sync folder for Android and WebOS devices
+      * Made the error message label selectable (bgo#589741)
+      * Save and load the Gtk.AccelMap (BGO #579013)
+      * Added taglib/oga mimetype to the vorbis audio profile (bgo#586999)
+      * Auto-completion for composer, conductor, grouping and copyright (bgo#592129)
+      * Added the 'comment' search filter (bgo#380524)
+      * Selectable song properties (bgo#586106)
+      * Show a tooltip in track editor when the property is truncated (bgo#589782)
 
     Notable bug fixes:
 
-      * Fix problems with subscribing and downloading some podcasts (BGO #538397, BGO #536047, BGO #567293)
-      * Unescape URLs received from Last.fm so can open in browser (BGO #563076)
-      * Don't show Skip button in now-playing notification for radio tracks (BGO #572971)
-      * Fixed notification area popup position on multi-monitor systems (BGO #537696)
-      * Support and default to using %album_artist% in folder organization preference (BGO #570298)
-      * Revamped illegal filename characters code to not be overly strict (BGO #458224)
-      * Trim periods and spaces appropriately for NTFS compatibility (BGO #572999)
-      * Make the source list accessible
-      * Visibly disable repeat/shuffle when in Play Queue (BGO #577681)
-      * Update UI when changing repeat/shuffle via dbus (BGO #575383)
-      * Better feedback while waiting for network streams to connect
-      * Fix bugs with device playlist sync (BGO #560970)
-      * Fix bugs with MTP device track transfer (BGO #571023, BGO #567093)
-      * Fix bug with device sync where it would repeatedly remove/add the same tracks
-      * Fix mass storage device support to respect folder_depth (like it used to) (BGO #537367)
-      * Fix bug with transferring ratings to iPods (BGO #577396)
-      * Focus the track list on jump-to-playing item (BGO #558940)
-      * Fix several relatively minor ListView rendering and interaction issues
-      * Right-align the header text of right-aligned columns (BGO #560918)
-      * Fix size/position restoration on startup/notification-area toggle
-      * Fix the track editor forward/back buttons to focus/select the current field
-      * Disable track editor field-sync for Track Artist when is compilation checked
-      * Fix bug with reading bitrate on VBR tracks (BGO #562582)
-      * Fix bug with getting the release year from MusicBrainz (BGO #578073)
-      * Improve the rating rendering, including fixing it for dark themes (BGO #576459)
+      * Fix blank MimeTypes for tracks ripped before 1.4 (BGO #536590)
+      * Fix a Bit Rate column sizing glitch (BGO #584587)
+      * Fix browser positioning when Banshee is maximised (bgo#575834)
+      * Fix compilation metadata reading and writing (bgo#563283)
+      * Work with new notification-daemon (BGO #565876)
+      * Avoid needlessly syncing iPods twice
+      * Deterministically sort sources to avoid fluttering
+      * Look for Rhythmbox db at both new and old paths
+      * Fix bug with scrobbling after skipping a track (BGO #584614)
+      * Fix crash in equalizer (BGO #548912)
+      * Fix an exception on startup when DBus is disabled (bgo#573050)
+      * Fix off-by-one-day date querying bug (BGO #546844)
+      * Fix a UI/spacing glitch in the Smart Playlist Editor (bgo#571288)
+      * Don't hide the track info popup while it has focus (bgo#544592)
+      * Prevent endless "Searching for CD metadata..." (bgo#527788)
+      * Fix Last.fm now-playing for non-decimal track lengths (BGO#586460)
+      * Dispose the SqliteCommand after it's executed (bgo#586498)
+      * Fix notification area popup positioning on multi-monitor systems (bgo#586589)
+      * Fix the playing indicator when song in list more than once (bgo#585798)
+      * Fix crash when opening the profile conf dialog (BGO#587308)
+      * Fix crash stopping jobs on shutdown (BGO #587373)
+      * Fix notification area popup flashing (bgo#587703)
+      * Trim filename dots and spaces to be NTFS compliant (BGO #588350)
+      * Stop playing from audio CD when it's ejected (bgo#475094)
+      * Don't update DateUpdated stamp when transient fields change (bgo#585896)
+      * Fix DAP content page title not changing when device renamed (bgo#589290)
+      * Set the Podcast flag on import based on genre (BGO #589831)
+      * Fix hang when slider dragged to track change (BGO#539395).
+      * Prevent slider jumping around after seeking in stream (BGO#591016)
+      * Fix Last.fm logos on dark themes (bgo#588094)
+      * --query-X option sometimes returned an error (bgo#591291)
+      * Build and runtime fixes for FreeBSD
+      * Fix editor always prompting to save podcasts (BGO #584880)
+      * Fix rounding when updating the track score
+      * Fix initial track score calculation (bgo#594568)
 
-      * 165 bugs were FIXED since 1.4.4
+      * N bugs were fixed since 1.5.0
 
 
 ===============================================================================
@@ -90,9 +98,9 @@ SOURCES / PACKAGES
 Sources
 -------
 
-    * Banshee 1.5.0 Tarballs:
-      http://download.banshee-project.org/banshee/unstable/1.5.0/banshee-1-1.5.0.tar.bz2
-      http://download.banshee-project.org/banshee/unstable/1.5.0/banshee-1-1.5.0.tar.gz
+    * Banshee 1.5.1 Tarballs:
+      http://download.banshee-project.org/banshee/unstable/1.5.1/banshee-1-1.5.1.tar.bz2
+      http://download.banshee-project.org/banshee/unstable/1.5.1/banshee-1-1.5.1.tar.gz
 
 Packages
 --------
@@ -101,20 +109,20 @@ Packages
 
     * http://banshee-project.org/download/
 
-    Packages for openSUSE 11.0, openSUSE 10.3, and openSUSE Factory are 
+    Packages for openSUSE 11.0, openSUSE 10.3, and openSUSE Factory are
     available from the openSUSE Build Service in the Banshee project.
 
     * http://download.opensuse.org/repositories/Banshee/
 
     Binaries for Mac OS X 10.4 and 10.5:
 
-    * http://download.banshee-project.org/banshee/unstable/1.5.0/banshee-1-1.5.0.macosx.intel.dmg
+    * http://download.banshee-project.org/banshee/unstable/1.5.1/banshee-1-1.5.1.macosx.intel.dmg
 
 ChangeLogs & Checksums
 ----------------------
 
-    * http://download.banshee-project.org/banshee/unstable/1.5.0/banshee-1-1.5.0.changes
-    * http://download.banshee-project.org/banshee/unstable/1.5.0/banshee-1-1.5.0.sha1sum
+    * http://download.banshee-project.org/banshee/unstable/1.5.1/banshee-1-1.5.1.changes
+    * http://download.banshee-project.org/banshee/unstable/1.5.1/banshee-1-1.5.1.sha1sum
 
 
 ===============================================================================
@@ -132,7 +140,7 @@ DEPENDENCIES
     * TagLib# (taglib-sharp) 2.0.3.1 (2.0.3.2 recommended)
 
     * Required to build default feature stack:
-      * libmtp >= 0.2.0 
+      * libmtp >= 0.2.0
         * Note to packagers: since libmtp has different .so files for
           different versions, you need to require in your package the same
           version of libmtp you used to build Banshee.
@@ -147,17 +155,17 @@ DEPENDENCIES
       * gst-plugins-bad (providing the bpmdetect GStreamer plugin)
 
     Packagers:
-      * --with-vendor-build-id=<foo> should always be set and detail the distro 
+      * --with-vendor-build-id=<foo> should always be set and detail the distro
         name and version (e.g. openSUSE 11.1), and the repository origin, such
         as 'Banshee Team PPA'; for example, the %distribution macro is used in
         the openSUSE Build Service, which expands to something like this:
         'home:gabrielburt:branches:Banshee / openSUSE_Factory'; also the
         build/configure time is stored along with the host OS and CPU
 
-    Please note that for openSUSE, all of the dependencies above can be 
-    found in the openSUSE Build Service, and are linked into the 
+    Please note that for openSUSE, all of the dependencies above can be
+    found in the openSUSE Build Service, and are linked into the
     Banshee project. Even if you build from source, if you wish
-    to avoid building the entire dependency chain above, add the 
+    to avoid building the entire dependency chain above, add the
     Banshee repository to your repository list.
 
     Historically, Banshee has fostered development of a number of projects
@@ -176,7 +184,7 @@ REPORT BUGS - HELP THE PROJECT - GROW THE COMMUNITY
     hesitate to file bugs!
 
     * http://banshee-project.org/contribute/file-bugs
-    * http://bugzilla.gnome.org/enter_bug.cgi?product=banshee&version=1.5.0
+    * http://bugzilla.gnome.org/enter_bug.cgi?product=banshee&version=1.5.1
 
 
 ===============================================================================
@@ -189,45 +197,45 @@ Contributors For This Release
     The following people directly contributed to the release of this version
     of Banshee. Without their help, there would be no release!
 
-      Aaron Bockover, Alexander Kojevnikov, Alex Launi, Andreas Neustifter,
-      Andrés G. Aragoneses, Bertrand Lorentz, Brian Lucas, Chris Howie,
-      Chris Jones, Christian Krause, Christoph Burgdorf, Cody Russell,
-      Daniel Siegel, David Spreen, Diego E. Pettenò, Eoin Hennessy,
-      Félix Velasco, Gabriel Burt, John Millikin, Matt Enright, Mike Urbanski,
-      Moritz Schallaböck, Neil Loknath, Nicolò Chieffo, Paul Lange,
-      Przemysław Grzegorczyk, Roderich Schupp, Valentin Sawadski,
-      William Pettersson, Wouter Bolsterlee
+      Aaron Bockover, Alex Bennee, Alex Launi, Alexander Kojevnikov,
+      Andrea Cimitan, Benjamín Valero Espinosa, Bertrand Lorentz,
+      Chow Loong Jin, Christopher James Halse Rogers, David Stone,
+      Elena Grassi, Florent Thoumie, Gabriel Burt, Jack Deslippe, Jeff Wheeler,
+      Jensen Somers, Johannes Kuhn, Michael Martin-Smucker, Neil Loknath,
+      Nils Naumann, Olivier Duff, Paul Lange, Pratik Patel, Romain Tartière,
+      Sandy Armstrong, Tobias Mueller, Travis Glenn Hansen
 
-    The following people contributed updated translations to this release. 
+    The following people contributed updated translations to this release.
     Without them, our project's reach would be much more limited.
- 
-      António Lima, Benjamin Valero, Daniel Nylander, Daniel S. Koda,
-      Gabor Kelemen, Hendrik Richter, Inaki Larranaga Murgoitio, Jen Ockwell,
-      Jiri Eischmann, Jordi Mas, Mario Blättermann, Maxim V. Dziumanenko,
-      Philip Withnall, Sweta Kothari, Ville-Pekka Vainio, Wadim Dziedzic,
-      Wouter Bolsterlee
+
+      A S Alam, António Lima, Aron Xu, Benjamín Valero Espinosa,
+      Daniel Nylander, Denis ARNAUD, Fran Dieguez, Gabor Kelemen,
+      Gianvito Cavasoli, Gintautas Miliauskas, Inaki Larranaga Murgoitio,
+      Jordi Mas, Miloš Popović, Piotr Drąg, Tomasz Dominikowski,
+      Wolfgang Stöggl, Yaron Shahrabani, Žygimantas Beručka
 
 Contributors In Past Releases
 -----------------------------
 
-    Aaron Bockover, Gabriel Burt, Bertrand Lorentz, John Millikin, 
-    Scott Peterson, Alan McGovern, Alex Kloss, Alex Launi, Alexander Hixon, 
-    Alexandros Frantzis, Alp Toker, Andrés G. Aragoneses, Andrew Conkling, 
-    Andy Midgette, Arthur Carli, Aydemir Ulaş Şahin, Ben Maurer, 
-    Benjamín Valero Espinosa, Bill Dawson, Bob Copeland, Bojan Rajkovic, 
-    Brad Taylor, Brandon Perry, Brian Nickel, Brian Teague, Chris Howie, 
-    Chris Jones, Chris Lahey, Chris Toshok, Chris Turchin, Christian Krause, 
-    Christoph Burgdorf, Christopher Halse Rogers, Cosmin Banu, Dan Wilson, 
-    Dan Winship, Daniel Munkton, David Spreen, Eoin Hennessy, Eric Butler, 
-    Erik Schmidt, Fabian Jost, Fredrik Hedberg, Félix Velasco, 
-    Fredrik Hedberg, Hans Petter Jansson, Iain Lane, Igor Guerrero Fonseca, 
-    Ilya Konstantinov, Ivan N. Zlatev, James Willcox, Jan Arne Petersen, 
-    Jason Conti, Jeff Tickle, Jo Shields, Jorge Castro, Juri Pakaste, 
-    Ken Vandine, Larry Ewing, Lauri Kotilainen, Michael Kaiser, 
-    Michael Monreal, Miguel de Icaza, Mike Urbanski, Nathan Palmer, 
-    Nicholas Doyle, Nicholas Parker, Oscar Forero, Pacho Ramos, 
-    Patrick van Staveren, Paul Lange, Pepijn van de Geer, Peter de Kraker, 
-    Ruben Vermeersch, Sandy Armstrong, Sebastian Dröge, Tim Yamin, 
-    Todd Berman, Trey Ethridge, Will Farrington, William Pettersson, 
-    Wouter Bolsterlee
-
+    Aaron Bockover, Gabriel Burt, Alexander Kojevnikov, Bertrand Lorentz,
+    John Millikin, Scott Peterson, Alan McGovern, Alex Kloss, Alex Launi,
+    Alexander Hixon, Alexandros Frantzis, Alp Toker, Andreas Neustifter,
+    Andrés G. Aragoneses, Andrew Conkling, Andy Midgette, Arthur Carli,
+    Aydemir Ulaş Şahin, Ben Maurer, Benjamín Valero Espinosa, Bill Dawson,
+    Bob Copeland, Bojan Rajkovic, Brad Taylor, Brandon Perry, Brian Lucas,
+    Brian Nickel, Brian Teague, Chris Howie, Chris Jones, Chris Lahey,
+    Chris Toshok, Chris Turchin, Christian Krause, Christoph Burgdorf,
+    Christopher Halse Rogers, Cody Russell, Cosmin Banu, Dan Wilson,
+    Dan Winship, Daniel Munkton, Daniel Siegel, David Spreen,
+    Diego E. Pettenò, Eoin Hennessy, Eric Butler, Erik Schmidt, Fabian Jost,
+    Fredrik Hedberg, Félix Velasco, Hans Petter Jansson, Iain Lane,
+    Igor Guerrero Fonseca, Ilya Konstantinov, Ivan N. Zlatev, James Willcox,
+    Jan Arne Petersen, Jason Conti, Jeff Tickle, Jo Shields, Jorge Castro,
+    Juri Pakaste, Ken Vandine, Larry Ewing, Lauri Kotilainen, Matt Enright,
+    Michael Kaiser, Michael Monreal, Miguel de Icaza, Mike Urbanski,
+    Moritz Schallaböck, Nathan Palmer, Neil Loknath, Nicholas Doyle,
+    Nicholas Parker, Nicolò Chieffo, Oscar Forero, Pacho Ramos,
+    Patrick van Staveren, Paul Lange, Pepijn van de Geer, Peter de Kraker,
+    Przemysław Grzegorczyk, Roderich Schupp, Ruben Vermeersch,
+    Sandy Armstrong, Sebastian Dröge, Tim Yamin, Todd Berman, Trey Ethridge,
+    Valentin Sawadski, Will Farrington, William Pettersson, Wouter Bolsterlee
