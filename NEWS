@@ -22,11 +22,12 @@ NEW AWESOME FEATURES AND ENHANCEMENTS
 
     New Features:
 
-      * Shuffle by album and artist (BGO #348582)
+      * Play Queue Auto DJ keeps the tunes coming
+      * Shuffle by album and artist
       * Shuffle by weighted rating and score mode
       * Add tooltips for ellipsized ListView text
       * Keep the playing song visible in the track list
-      * Add support for WebOS devices (BGO #585112)
+      * Add support for WebOS devices
       * Add support for the Samsung Galaxy Android Phone
 
     Enhancements:
@@ -36,57 +37,57 @@ NEW AWESOME FEATURES AND ENHANCEMENTS
       * Add thin highlight to ListView selection for 3D effect
       * Keyboard shortcut (ESC) to clear the search box (BGO #558938)
       * Expose LAME's "preset" option (BGO #563303)
-      * Added a --gconf-base-key for running sandboxed (bgo#585546)
-      * Trim URL pasted from clipboard to podcast dialog (BGO#585679)
+      * Added a --gconf-base-key for running sandboxed (BGO #585546)
+      * Trim URL pasted from clipboard to podcast dialog (BGO  #585679)
       * Allow selection of multiple folders on import (BGO#586946)
       * Support playlists on Android G1 devices (BGO #583335)
       * Better support for devices running Rockbox
       * Set video sync folder for Android and WebOS devices
-      * Made the error message label selectable (bgo#589741)
+      * Made the error message label selectable (BGO #589741)
       * Save and load the Gtk.AccelMap (BGO #579013)
-      * Added taglib/oga mimetype to the vorbis audio profile (bgo#586999)
-      * Auto-completion for composer, conductor, grouping and copyright (bgo#592129)
-      * Added the 'comment' search filter (bgo#380524)
-      * Selectable song properties (bgo#586106)
-      * Show a tooltip in track editor when the property is truncated (bgo#589782)
+      * Added taglib/oga mimetype to the vorbis audio profile (BGO #586999)
+      * Auto-completion for composer, conductor, grouping and copyright (BGO #592129)
+      * Added the 'comment' search filter (BGO #380524)
+      * Selectable song properties (BGO #586106)
+      * Show a tooltip in track editor when the property is truncated (BGO #589782)
 
     Notable bug fixes:
 
       * Fix blank MimeTypes for tracks ripped before 1.4 (BGO #536590)
       * Fix a Bit Rate column sizing glitch (BGO #584587)
-      * Fix browser positioning when Banshee is maximised (bgo#575834)
-      * Fix compilation metadata reading and writing (bgo#563283)
+      * Fix browser positioning when Banshee is maximised (BGO #575834)
+      * Fix compilation metadata reading and writing (BGO #563283)
       * Work with new notification-daemon (BGO #565876)
       * Avoid needlessly syncing iPods twice
       * Deterministically sort sources to avoid fluttering
       * Look for Rhythmbox db at both new and old paths
       * Fix bug with scrobbling after skipping a track (BGO #584614)
       * Fix crash in equalizer (BGO #548912)
-      * Fix an exception on startup when DBus is disabled (bgo#573050)
+      * Fix an exception on startup when DBus is disabled (BGO #573050)
       * Fix off-by-one-day date querying bug (BGO #546844)
-      * Fix a UI/spacing glitch in the Smart Playlist Editor (bgo#571288)
-      * Don't hide the track info popup while it has focus (bgo#544592)
-      * Prevent endless "Searching for CD metadata..." (bgo#527788)
-      * Fix Last.fm now-playing for non-decimal track lengths (BGO#586460)
-      * Dispose the SqliteCommand after it's executed (bgo#586498)
-      * Fix notification area popup positioning on multi-monitor systems (bgo#586589)
-      * Fix the playing indicator when song in list more than once (bgo#585798)
-      * Fix crash when opening the profile conf dialog (BGO#587308)
+      * Fix a UI/spacing glitch in the Smart Playlist Editor (BGO #571288)
+      * Don't hide the track info popup while it has focus (BGO #544592)
+      * Prevent endless "Searching for CD metadata..." (BGO #527788)
+      * Fix Last.fm now-playing for non-decimal track lengths (BGO #586460)
+      * Dispose the SqliteCommand after it's executed (BGO #586498)
+      * Fix notification area popup positioning on multi-monitor systems (BGO #586589)
+      * Fix the playing indicator when song in list more than once (BGO #585798)
+      * Fix crash when opening the profile conf dialog (BGO #587308)
       * Fix crash stopping jobs on shutdown (BGO #587373)
-      * Fix notification area popup flashing (bgo#587703)
+      * Fix notification area popup flashing (BGO #587703)
       * Trim filename dots and spaces to be NTFS compliant (BGO #588350)
-      * Stop playing from audio CD when it's ejected (bgo#475094)
-      * Don't update DateUpdated stamp when transient fields change (bgo#585896)
-      * Fix DAP content page title not changing when device renamed (bgo#589290)
+      * Stop playing from audio CD when it's ejected (BGO #475094)
+      * Don't update DateUpdated stamp when transient fields change (BGO #585896)
+      * Fix DAP content page title not changing when device renamed (BGO #589290)
       * Set the Podcast flag on import based on genre (BGO #589831)
-      * Fix hang when slider dragged to track change (BGO#539395).
-      * Prevent slider jumping around after seeking in stream (BGO#591016)
-      * Fix Last.fm logos on dark themes (bgo#588094)
-      * --query-X option sometimes returned an error (bgo#591291)
+      * Fix hang when slider dragged to track change (BGO #539395).
+      * Prevent slider jumping around after seeking in stream (BGO #591016)
+      * Fix Last.fm logos on dark themes (BGO #588094)
+      * --query-X option sometimes returned an error (BGO #591291)
       * Build and runtime fixes for FreeBSD
       * Fix editor always prompting to save podcasts (BGO #584880)
       * Fix rounding when updating the track score
-      * Fix initial track score calculation (bgo#594568)
+      * Fix initial track score calculation (BGO #594568)
 
       * N bugs were fixed since 1.5.0
 
