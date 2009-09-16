@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-14 11:13+0200\n"
-"PO-Revision-Date: 2009-09-14 11:13+0200\n"
+"POT-Creation-Date: 2009-09-16 14:52+0200\n"
+"PO-Revision-Date: 2009-09-16 14:53+0200\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
 "Language-Team: Basque <itzulpena@euskalgnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -3829,7 +3829,7 @@ msgid "File System Queue"
 msgstr "Fitxategi-sistemaren ilara"
 
 #: ../src/Extensions/Banshee.FileSystemQueue/Banshee.FileSystemQueue/FileSystemQueueSource.cs:72
-#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueActions.cs:63
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueActions.cs:70
 msgid "Clear"
 msgstr "Garbitu"
 
@@ -3838,7 +3838,7 @@ msgid "Remove all tracks from the file system queue"
 msgstr "Kendu pista guztiak fitxategi-sistemako ilaratik"
 
 #: ../src/Extensions/Banshee.FileSystemQueue/Banshee.FileSystemQueue/FileSystemQueueSource.cs:79
-#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueActions.cs:70
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueActions.cs:77
 msgid "Clear on Quit"
 msgstr "Garbitu irtetzean"
 
@@ -4443,6 +4443,38 @@ msgstr ""
 "formatuarekin. Inportatzeak agian funtziona dezake, edo agian ez. Hala ere, "
 "inportatzen saiatzea nahi duzu?"
 
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/HeaderWidget.cs:47
+msgid "manually"
+msgstr "eskuz"
+
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/HeaderWidget.cs:48
+msgid "by song"
+msgstr "abestiaren arabera"
+
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/HeaderWidget.cs:49
+msgid "by album"
+msgstr "albumaren arabera"
+
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/HeaderWidget.cs:50
+msgid "by artist"
+msgstr "artistaren arabera"
+
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/HeaderWidget.cs:51
+msgid "by rating"
+msgstr "balorazioaren arabera"
+
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/HeaderWidget.cs:52
+msgid "by score"
+msgstr "puntuazioaren arabera"
+
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/HeaderWidget.cs:59
+msgid "_Fill"
+msgstr "_Bete"
+
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/HeaderWidget.cs:73
+msgid "f_rom"
+msgstr "_hemendik"
+
 #: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueActions.cs:49
 msgid "Add to Play Queue"
 msgstr "Gehitu erreprodukzio-ilarara"
@@ -4455,11 +4487,19 @@ msgstr "Erantsi hautatutako kantak erreprodukzio-ilarari"
 msgid "Refresh random tracks in the play queue"
 msgstr "Freskatu ausaz pistak erreprodukzio-ilaran"
 
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueActions.cs:63
+msgid "Add More"
+msgstr "Gehitu gehiago"
+
 #: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueActions.cs:64
+msgid "Add more random tracks to the play queue"
+msgstr "Gehitu ausaz pista gehiago erreprodukzio-ilarari"
+
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueActions.cs:71
 msgid "Remove all tracks from the play queue"
 msgstr "Kendu pista guztiak erreprodukzio-ilaratik"
 
-#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueActions.cs:71
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueActions.cs:78
 msgid "Clear the play queue when quitting"
 msgstr "Garbitu erreprodukzio-ilara irtetzean"
 
@@ -4471,11 +4511,11 @@ msgstr "Erreprodukzio-ilara"
 msgid "Remove From Play Queue"
 msgstr "Kendu erreprodukzio-ilaratik"
 
-#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:739
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:747
 msgid "Number of _played songs to show"
 msgstr "_Erreproduzitutako abesti kopurua erakusteko"
 
-#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:745
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:753
 msgid "Number of _upcoming songs to show"
 msgstr "_Erreproduzituko diren abesti kopurua erakusteko"
 
