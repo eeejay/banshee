@@ -1,6 +1,6 @@
 AC_DEFUN([BANSHEE_CHECK_WEBKIT],
 [
-	AC_ARG_ENABLE(webkit, AC_HELP_STRING([--enable-webkit], [Enable experimental Wikipedia and MediaWeb extensions- unfinished, likely broken]), , enable_webkit="no")
+	AC_ARG_ENABLE(webkit, AC_HELP_STRING([--enable-webkit], [Enable experimental Wikipedia extension - unfinished, likely broken]), , enable_webkit="no")
 
 	if test "x$enable_webkit" = "xyes"; then
 		PKG_CHECK_MODULES(WEBKIT, webkit-sharp-1.0 >= 0.2)

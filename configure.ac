@@ -274,7 +274,6 @@ src/Extensions/Banshee.Daap/Makefile
 src/Extensions/Banshee.FileSystemQueue/Makefile
 src/Extensions/Banshee.InternetRadio/Makefile
 src/Extensions/Banshee.Lastfm/Makefile
-src/Extensions/Banshee.MediaWeb/Makefile
 src/Extensions/Banshee.MiniMode/Makefile
 src/Extensions/Banshee.MultimediaKeys/Makefile
 src/Extensions/Banshee.NotificationArea/Makefile
