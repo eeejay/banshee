@@ -213,6 +213,15 @@ namespace Banshee.Streaming
                 if(stream_uris.Count > 0) {
                     Uri = stream_uris[stream_index];
                     Log.Debug("Playing Radio Stream", Uri.AbsoluteUri);
+                    if (Uri.IsFile) {
+                        try {
+                            TagLib.File file = StreamTagger.ProcessUri (Uri);
+                            StreamTagger.TrackInfoMerge (this, file, true);
+                        } catch (Exception e) {
+                            Log.Warning (String.Format ("Failed to update metadata for {0}", this),
+                                e.GetType ().ToString (), false);
+                        }
+                    }
                     ServiceManager.PlayerEngine.OpenPlay(this);
                 }
             }
