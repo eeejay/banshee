@@ -116,7 +116,10 @@ namespace Banshee.Preferences.Gui
                 box.Spacing = 2;
                 box.PackStart (new Image (Stock.Undo, IconSize.Button), false, false, 0);
                 box.PackStart (new Label (Catalog.GetString ("Reset")), false, false, 0);
-                reset = new Button ();
+                reset = new Button () {
+                    Sensitive = dir != source.DefaultBaseDirectory,
+                    TooltipText = String.Format (Catalog.GetString ("Reset location to default ({0})"), source.DefaultBaseDirectory)
+                };
                 reset.Clicked += OnReset;
                 reset.Add (box);
 
@@ -145,6 +148,7 @@ namespace Banshee.Preferences.Gui
             private void OnChooserChanged (object o, EventArgs args)
             {
                 preference.Value = chooser.Filename;
+                reset.Sensitive = chooser.Filename != source.DefaultBaseDirectory;
             }
 
             protected override void OnUnrealized ()
