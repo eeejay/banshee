@@ -213,5 +213,17 @@ namespace Banshee.Base
         {
             return Path.Combine (InstalledApplicationData, path);
         }
+
+        public static string GetXdgDirectoryUnderHome (string key, string fallback)
+        {
+            string xdg_dir = Banshee.Base.XdgBaseDirectorySpec.GetUserDirectory (key, fallback);
+            string home_dir = Environment.GetFolderPath (Environment.SpecialFolder.Personal);
+
+            if (xdg_dir == null || xdg_dir == home_dir || !xdg_dir.StartsWith (home_dir)) {
+                xdg_dir = Combine (home_dir, fallback);
+            }
+
+            return xdg_dir;
+        }
     }
 }

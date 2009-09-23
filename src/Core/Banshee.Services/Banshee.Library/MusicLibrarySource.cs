@@ -71,7 +71,7 @@ namespace Banshee.Library
         }
         
         public override string DefaultBaseDirectory {
-            get { return Banshee.Base.XdgBaseDirectorySpec.GetUserDirectory ("XDG_MUSIC_DIR", "Music"); }
+            get { return Banshee.Base.Paths.GetXdgDirectoryUnderHome ("XDG_MUSIC_DIR", "Music"); }
         }
 
         public override IEnumerable<SmartPlaylistDefinition> DefaultSmartPlaylists {
