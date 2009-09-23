@@ -10,6 +10,7 @@
     <menu name="MediaMenu" action="MediaMenuAction">
       <placeholder name="BelowOpenLocation">
         <menuitem name="PodcastAdd" action="PodcastAddAction" />
+        <menuitem name="PodcastUpdateAll" action="PodcastUpdateAllAction" />
       </placeholder>
     </menu>
 
