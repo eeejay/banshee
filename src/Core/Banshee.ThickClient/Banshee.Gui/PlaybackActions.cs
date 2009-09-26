@@ -103,10 +103,10 @@ namespace Banshee.Gui
             this["RestartSongAction"].Sensitive = false;
             this["SeekToAction"].Sensitive = false;
             
-            this["PlayPauseAction"].IconName = "media-playback-start";
-            this["NextAction"].IconName = "media-skip-forward";
-            this["PreviousAction"].IconName = "media-skip-backward";
-            
+            this["PlayPauseAction"].StockId = Gtk.Stock.MediaPlay;
+            this["NextAction"].StockId = Gtk.Stock.MediaNext;
+            this["PreviousAction"].StockId = Gtk.Stock.MediaPrevious;
+
             ServiceManager.PlayerEngine.ConnectEvent (OnPlayerEvent, 
                 PlayerEvent.Error | 
                 PlayerEvent.EndOfStream | 
@@ -188,19 +188,19 @@ namespace Banshee.Gui
         private void ShowPause ()
         {
             play_pause_action.Label = Catalog.GetString ("_Pause");
-            play_pause_action.IconName = "media-playback-pause";
+            play_pause_action.StockId = Gtk.Stock.MediaPause;
         }
         
         private void ShowPlay ()
         {
             play_pause_action.Label = Catalog.GetString ("_Play");
-            play_pause_action.IconName = "media-playback-start";
+            play_pause_action.StockId = Gtk.Stock.MediaPlay;
         }
                 
         private void ShowStop ()
         {
             play_pause_action.Label = Catalog.GetString ("Sto_p");
-            play_pause_action.IconName = "media-playback-stop";
+            play_pause_action.StockId = Gtk.Stock.MediaStop;
         }
                 
         private void OnPlayPauseAction (object o, EventArgs args)
