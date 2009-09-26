@@ -1,0 +1,5462 @@
+# Kyrgyz translation of banshee
+# This file is distributed under the same license as the bakery package.
+# Copyright (C) 2009, Free Software Foundation, Inc.
+#
+# Timur Zhamakeev <ztimur@gmail.com>, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: banshee\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-09-19 09:55+0500\n"
+"PO-Revision-Date: 2009-09-26 14:22+0500\n"
+"Last-Translator: Timur Zhamakeev <ztimur@gmail.com>\n"
+"Language-Team: Kyrgyz <ky-li@mail.ru>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"X-Poedit-Language: Kyrgyz\n"
+"X-Poedit-Country: KYRGYZSTAN\n"
+
+#: ../data/audio-profiles/base.xml.in.h:1
+msgid "Channels"
+msgstr "Каналдар"
+
+#: ../data/audio-profiles/flac.xml.in.h:1
+msgid "Free Lossless Audio Codec"
+msgstr "Free Lossless Audio Codec"
+
+#: ../data/audio-profiles/flac.xml.in.h:2
+#, fuzzy
+msgid "Free Lossless Audio Codec (FLAC) is an open source codec that compresses but does not degrade audio quality."
+msgstr "Free Lossless Audio Codec (FLAC) — баштапкы кодекти ачып, үндүк маалыматтардын сапатын бузбай кысат."
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:1
+#: ../data/audio-profiles/mp3-xing.xml.in.h:1
+#, fuzzy
+msgid "A proprietary and older, but also popular, lossy audio format that produces larger files at lower bitrates."
+msgstr "Эркин эмес жана артык, бирок ошол убактта деле үндү кысуу кодеги таанымал. Ал менен чоң көлөмдөгү файлдарды кысуу агымын төмөнкү ылдамдыгы менен "
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:2
+#, fuzzy
+msgid "Average Bitrate"
+msgstr "Агымдын ылдамдыгын ортолотуу"
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:3
+#: ../data/audio-profiles/vorbis.xml.in.h:2
+#: ../data/audio-profiles/wavpack.xml.in.h:2
+#: ../data/audio-profiles/wma.xml.in.h:3
+msgid "Best"
+msgstr "Эң жакшы"
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:4
+#: ../data/audio-profiles/mp3-xing.xml.in.h:2
+#: ../data/audio-profiles/wavpack.xml.in.h:3
+#: ../data/audio-profiles/wma.xml.in.h:4
+msgid "Bitrate"
+msgstr "Агымдын ылдамдыгы"
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:5
+msgid "Constant Bitrate"
+msgstr "Агымдын туруктуу ылдамдыгы"
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:6
+msgid "Extreme"
+msgstr ""
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:7
+#, fuzzy
+msgid "Insane"
+msgstr "аты"
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:8
+msgid "LAME Preset"
+msgstr ""
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:9
+msgid "MP3 (LAME Encoder)"
+msgstr "MP3 (LAME коддогучу)"
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:10
+msgid "Medium"
+msgstr ""
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:11
+#, fuzzy
+msgid "Preset"
+msgstr "Баштапкы абалга келтирүү"
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:12
+msgid "Standard"
+msgstr ""
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:13
+#, fuzzy
+msgid "VBR Mode"
+msgstr "VBR режими"
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:14
+msgid "VBR Quality"
+msgstr "VBR сапаты"
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:15
+msgid "Variable Bitrate"
+msgstr "Агымдын өзгөрмөлүү ылдамдыгы"
+
+#: ../data/audio-profiles/mp3-lame.xml.in.h:16
+#: ../data/audio-profiles/vorbis.xml.in.h:5
+#: ../data/audio-profiles/wavpack.xml.in.h:15
+#: ../data/audio-profiles/wma.xml.in.h:7
+msgid "Worst"
+msgstr "Эң жаман"
+
+#: ../data/audio-profiles/mp3-xing.xml.in.h:3
+msgid "MP3 (Xing Encoder)"
+msgstr "MP3 (Xing коддогучу)"
+
+#: ../data/audio-profiles/vorbis.xml.in.h:1
+msgid "Audio quality"
+msgstr "Үндүн сапаты"
+
+#: ../data/audio-profiles/vorbis.xml.in.h:3
+msgid "Ogg Vorbis"
+msgstr "Ogg Vorbis"
+
+#: ../data/audio-profiles/vorbis.xml.in.h:4
+#, fuzzy
+msgid "Vorbis is an open source, lossy audio codec with high quality output at a lower file size than MP3."
+msgstr "Vorbis ачык коддуу кодек болуп саналат, жогорку сапаттагы үндү камсыздандыруучу көлөмү учурунда файл азырак MP3 кысуу учуруна караганда"
+
+#: ../data/audio-profiles/wavpack.xml.in.h:1
+#, fuzzy
+msgid "A fast and efficient open source audio format offering lossless and high-quality lossy encoding with great dynamic range."
+msgstr "Бат жана натыйжалуу формат ачыктуу өзгөчөлүктөрү менен жана иштеп чыгаруусу менен жоготуусуз кысуу менен камсыздоочу жана жогорку сапаттагы чоң динамикалык диапазонду сактоо кодировкасы"
+
+#: ../data/audio-profiles/wavpack.xml.in.h:4
+msgid "Default"
+msgstr "Баштапкы абалда"
+
+#: ../data/audio-profiles/wavpack.xml.in.h:5
+#, fuzzy
+msgid "Default Compression"
+msgstr "«Кыймыл» баштапкы абалы боюча ойнотуу"
+
+#: ../data/audio-profiles/wavpack.xml.in.h:6
+msgid "Extra processing"
+msgstr "Кошумча иштеп чыгаруу"
+
+#: ../data/audio-profiles/wavpack.xml.in.h:7
+msgid "Fast Compression"
+msgstr ""
+
+#: ../data/audio-profiles/wavpack.xml.in.h:8
+msgid "High Compression"
+msgstr ""
+
+#: ../data/audio-profiles/wavpack.xml.in.h:9
+msgid "Highest"
+msgstr "Эң бийик"
+
+#: ../data/audio-profiles/wavpack.xml.in.h:10
+#, fuzzy
+msgid "Lossy mode"
+msgstr "Төмөнкү сапаттагы режим"
+
+#: ../data/audio-profiles/wavpack.xml.in.h:11
+msgid "Mode"
+msgstr "Режим"
+
+#: ../data/audio-profiles/wavpack.xml.in.h:12
+#, fuzzy
+msgid "Store MD5 sum in the file"
+msgstr "MD5 файлында контролдук сумманы сактоо"
+
+#: ../data/audio-profiles/wavpack.xml.in.h:13
+msgid "Very High Compression"
+msgstr ""
+
+#: ../data/audio-profiles/wavpack.xml.in.h:14
+msgid "Wavpack"
+msgstr "Wavpack"
+
+#: ../data/audio-profiles/wav.xml.in.h:1
+msgid "WAV+PCM is a lossless format that holds uncompressed, raw pulse-code modulated (PCM) audio."
+msgstr "WAV+PCM сапаттуу, маалыматтарды кысуусуз сактоочу, пульстук-коддук модуляциясы менен болгон формат болуп саналат."
+
+#: ../data/audio-profiles/wav.xml.in.h:2
+msgid "Waveform PCM"
+msgstr "Waveform PCM"
+
+#: ../data/audio-profiles/wma.xml.in.h:1
+msgid "A proprietary lossy audio format with high quality output at a lower file size than MP3. A 96 kbps WMA is equivalent to a 128 kbps MP3."
+msgstr "Эркин эмес формат кысууда жоготуулар менен, жогорку сапатты камсыздандыруучу көлөмү учурунда файл азырак MP3 кысуу учуруна караганда. WMA файлынын агымдык ылдамдыгы 96 Кбит/с эквилант MP3 файылынын 128 Кбит/секундук ылдамдыгына"
+
+#: ../data/audio-profiles/wma.xml.in.h:2
+msgid "Audio Quality"
+msgstr "Үндүн ылдамдыгы"
+
+#: ../data/audio-profiles/wma.xml.in.h:5
+msgid "Use a variable bitrate"
+msgstr "Агымдын өзгөрмөлүү ылдамдыгын колдонуу"
+
+#: ../data/audio-profiles/wma.xml.in.h:6
+msgid "Windows Media Audio"
+msgstr "Windows Media Audio"
+
+#: ../libbanshee/banshee-bpmdetector.c:202
+#: ../libbanshee/banshee-ripper.c:268
+msgid "Could not create pipeline"
+msgstr "Конвейер түзүүгө болбой калды"
+
+#: ../libbanshee/banshee-bpmdetector.c:208
+msgid "Could not create filesrc element"
+msgstr "«filesrc»·уламасын түзүүгө болбой калды"
+
+#: ../libbanshee/banshee-bpmdetector.c:214
+msgid "Could not create decodebin plugin"
+msgstr "«decodebin»кеңейтүүсүн түзүү болбой калды"
+
+#: ../libbanshee/banshee-bpmdetector.c:220
+msgid "Could not create audioconvert plugin"
+msgstr "«audioconvert» уламасын түзүүгө болбоду"
+
+#: ../libbanshee/banshee-bpmdetector.c:226
+msgid "Could not create bpmdetect plugin"
+msgstr "\"bpmdetect\" уламасын түзүү болбой калды"
+
+#: ../libbanshee/banshee-bpmdetector.c:232
+msgid "Could not create fakesink plugin"
+msgstr "«filesink» кеңейтүүсүн түзүү мүмкүн эмес"
+
+#: ../libbanshee/banshee-bpmdetector.c:241
+#: ../libbanshee/banshee-bpmdetector.c:250
+#: ../libbanshee/banshee-ripper.c:309
+msgid "Could not link pipeline elements"
+msgstr "Конвейердин элементтерин байлоо болбой калды"
+
+#: ../libbanshee/banshee-ripper.c:274
+msgid "Could not initialize element from cdda URI"
+msgstr "URI cddaда элементтерди инициализациялоо мүмкүн эмес"
+
+#: ../libbanshee/banshee-ripper.c:288
+#, fuzzy
+msgid "Could not create encoder pipeline"
+msgstr "Кодировдук конвейер түзүү болбой калды"
+
+#: ../libbanshee/banshee-ripper.c:294
+#, fuzzy
+msgid "Could not create queue plugin"
+msgstr "Тереңдетилген плады түзүү болбой калды"
+
+#: ../libbanshee/banshee-ripper.c:302
+msgid "Could not create filesink plugin"
+msgstr "«filesink» кеңейтүүсүн түзүү мүмкүн эмес"
+
+#: ../libbanshee/banshee-transcoder.c:240
+msgid "Could not create 'filesrc' plugin"
+msgstr "«filesrc»·кеңейтүүсүн түзүү болбой калды"
+
+#: ../libbanshee/banshee-transcoder.c:246
+msgid "Could not create 'decodebin' plugin"
+msgstr "«decodebin» кеңейтүүсүн түзүү болбой калды"
+
+#: ../libbanshee/banshee-transcoder.c:252
+msgid "Could not create 'filesink' plugin"
+msgstr "«filesinc»·кеңейтүүсүн түзүү болбой калды"
+
+#: ../libbanshee/banshee-transcoder.c:258
+msgid "Could not create 'sinkben' plugin"
+msgstr "«sinkben» кеңейтүүсүн түзүү болбой калды"
+
+#: ../libbanshee/banshee-transcoder.c:264
+msgid "Could not create 'audioconvert' plugin"
+msgstr "«audioconvert»·кеңейтүүсүн түзүү болбой калды"
+
+#: ../libbanshee/banshee-transcoder.c:270
+msgid "Could not create encoding pipeline"
+msgstr "Кодировдук ковейер түзүү болбой калды"
+
+#: ../libbanshee/banshee-transcoder.c:276
+#, fuzzy
+msgid "Could not get sink pad from encoder"
+msgstr "Кодировдолоо конвейерине кирүү үчүн чекит алуу болбой калды."
+
+#: ../libbanshee/banshee-transcoder.c:344
+msgid "Could not construct pipeline"
+msgstr "Конвейер түзүү болбой калды"
+
+#: ../src/Backends/Banshee.Gnome/Banshee.GnomeBackend/Brasero.cs:64
+msgid "Write CD..."
+msgstr "Дискке жазуу..."
+
+#: ../src/Backends/Banshee.Gnome/Banshee.GnomeBackend/Brasero.cs:65
+msgid "Write selected tracks to an audio CD"
+msgstr "Тандалган жолчону үндүк дискке жазуу"
+
+#: ../src/Backends/Banshee.Gnome/Banshee.GnomeBackend/Brasero.cs:103
+msgid "Could not write CD"
+msgstr "Дискке жазуу болбой калды"
+
+#: ../src/Backends/Banshee.Gnome/Banshee.GnomeBackend/Brasero.cs:104
+msgid "Brasero could not be started"
+msgstr "Brasero-ну жүктөө болбой калды"
+
+#: ../src/Backends/Banshee.Gnome/Banshee.GnomeBackend/GnomeScreensaverManager.cs:79
+msgid "Fullscreen video playback active"
+msgstr ""
+
+#: ../src/Backends/Banshee.GStreamer/Banshee.GStreamer/AudioCdRipper.cs:89
+msgid "Could not find an encoder for ripping."
+msgstr "Көчүрүү үчүн кодировщик табылган жок"
+
+#: ../src/Backends/Banshee.GStreamer/Banshee.GStreamer/AudioCdRipper.cs:108
+msgid "Could not create CD ripping driver."
+msgstr "Музыкалдык дисктерди көчүрүү компонентин түзүү болбой калды"
+
+#: ../src/Backends/Banshee.GStreamer/Banshee.GStreamer/BpmDetector.cs:71
+#, fuzzy
+msgid "Could not create BPM detection driver."
+msgstr "Музыкалдык дисктерди көчүрүү компонентин түзүү болбой калды"
+
+#: ../src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs:122
+#: ../src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs:153
+msgid "Could not initialize GStreamer library"
+msgstr "GStreamer библиотекасын инициялоо болбой калды"
+
+#: ../src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs:262
+msgid "Unknown Error"
+msgstr "Түшүнүксүз ката"
+
+#: ../src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs:555
+#, fuzzy
+msgid "_Enable ReplayGain correction"
+msgstr "_Угулган ырлар тууралуу баяндамаларды жөнөтүү"
+
+#: ../src/Backends/Banshee.GStreamer/Banshee.GStreamer/PlayerEngine.cs:556
+msgid "For tracks that have ReplayGain data, automatically scale (normalize) playback volume."
+msgstr ""
+
+#: ../src/Backends/Banshee.GStreamer/Banshee.GStreamer/Transcoder.cs:63
+msgid "Could not create transcoder"
+msgstr "Кайра куруучу формат түзүү болбой калды"
+
+#: ../src/Backends/Banshee.Osx/Banshee.OsxBackend/OsxService.cs:87
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:125
+msgid "_Close"
+msgstr "_Жабуу"
+
+#: ../src/Backends/Banshee.Osx/Banshee.OsxBackend/OsxService.cs:88
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:126
+msgid "Close"
+msgstr "Жабуу"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:146
+msgid "Help Options"
+msgstr "Жардам опциялары"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:147
+msgid "Show this help"
+msgstr "Бул жардамчыны көрсөтүү"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:148
+msgid "Show options for controlling playback"
+msgstr "Ойноткучтун ырастоолорун көрсөтүү"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:149
+msgid "Show options for querying the playing track"
+msgstr ""
+
+#: ../src/Clients/Booter/Booter/Entry.cs:150
+msgid "Show options for querying the playing engine"
+msgstr ""
+
+#: ../src/Clients/Booter/Booter/Entry.cs:151
+msgid "Show options for the user interface"
+msgstr ""
+
+#: ../src/Clients/Booter/Booter/Entry.cs:152
+msgid "Show options for developers and debugging"
+msgstr ""
+
+#: ../src/Clients/Booter/Booter/Entry.cs:153
+msgid "Show all option groups"
+msgstr ""
+
+#: ../src/Clients/Booter/Booter/Entry.cs:154
+msgid "Show version information"
+msgstr "_Версия жөнүндө маалыматтар.."
+
+#: ../src/Clients/Booter/Booter/Entry.cs:157
+msgid "Playback Control Options"
+msgstr ""
+
+#: ../src/Clients/Booter/Booter/Entry.cs:158
+msgid "Play the next track, optionally restarting if the 'restart' value is set"
+msgstr ""
+
+#: ../src/Clients/Booter/Booter/Entry.cs:159
+msgid "Play the previous track, optionally restarting if the 'restart value is set"
+msgstr ""
+
+#: ../src/Clients/Booter/Booter/Entry.cs:160
+msgid "Automatically start playing any tracks enqueued on the command line"
+msgstr ""
+
+#: ../src/Clients/Booter/Booter/Entry.cs:161
+#, fuzzy
+msgid "Start playback"
+msgstr "Ойнотуу"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:162
+msgid "Pause playback"
+msgstr ""
+
+#: ../src/Clients/Booter/Booter/Entry.cs:163
+#, fuzzy
+msgid "Toggle playback"
+msgstr "Ойнотуу"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:164
+msgid "Completely stop playback"
+msgstr ""
+
+#: ../src/Clients/Booter/Booter/Entry.cs:166
+msgid "Enable or disable playback stopping after the currently playing track (value should be either 'true' or 'false')"
+msgstr ""
+
+#: ../src/Clients/Booter/Booter/Entry.cs:167
+msgid "Set the playback volume (0-100)"
+msgstr ""
+
+#: ../src/Clients/Booter/Booter/Entry.cs:168
+msgid "Seek to a specific point (seconds, float)"
+msgstr "Аныкталган моментке чейин жолчону жүгүртүү"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:171
+msgid "Player Engine Query Options"
+msgstr ""
+
+#: ../src/Clients/Booter/Booter/Entry.cs:172
+msgid "Current player state"
+msgstr ""
+
+#: ../src/Clients/Booter/Booter/Entry.cs:173
+msgid "Last player state"
+msgstr "Акыркы аткаруу"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:174
+msgid "Query whether the player can be paused"
+msgstr ""
+
+#: ../src/Clients/Booter/Booter/Entry.cs:175
+msgid "Query whether the player can seek"
+msgstr ""
+
+#: ../src/Clients/Booter/Booter/Entry.cs:176
+msgid "Player volume"
+msgstr "Аткарылды"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:177
+msgid "Player position in currently playing track"
+msgstr "Учурда ойнотулуп жаткан жолчого өтүү"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:180
+msgid "Playing Track Metadata Query Options"
+msgstr ""
+
+#: ../src/Clients/Booter/Booter/Entry.cs:181
+msgid "URI"
+msgstr "URI"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:182
+#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:153
+msgid "Artist Name"
+msgstr "Аткаруучу боюнча"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:183
+#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:154
+msgid "Album Title"
+msgstr "Альбом боюнча"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:184
+#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:152
+msgid "Track Title"
+msgstr "Аталыш"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:185
+msgid "Duration"
+msgstr "Узундугу"
+
+#. Translators: noun
+#: ../src/Clients/Booter/Booter/Entry.cs:186
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:140
+msgid "Track Number"
+msgstr "Жолчонун номери"
+
+#. Translators: noun
+#: ../src/Clients/Booter/Booter/Entry.cs:187
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:149
+msgid "Track Count"
+msgstr "Аткарылды"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:188
+msgid "Disc Number"
+msgstr "Дисктин номери"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:189
+#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:156
+#: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:120
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:182
+msgid "Year"
+msgstr "Жыл боюнча"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:190
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:235
+msgid "Rating"
+msgstr "Баа"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:191
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:327
+msgid "Score"
+msgstr ""
+
+#. Translators: noun
+#: ../src/Clients/Booter/Booter/Entry.cs:192
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:166
+#, fuzzy
+msgid "Bit Rate"
+msgstr "Агымдын ылдамдыгы"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:195
+msgid "User Interface Options"
+msgstr ""
+
+#: ../src/Clients/Booter/Booter/Entry.cs:196
+msgid "Present the user interface on the active workspace"
+msgstr ""
+
+#: ../src/Clients/Booter/Booter/Entry.cs:197
+msgid "Hide the user interface"
+msgstr "Колдонуучу интерфейсти катуу"
+
+#: ../src/Clients/Booter/Booter/Entry.cs:198
+msgid "Do not present the user interface, regardless of any other options"
+msgstr ""
+
+#: ../src/Clients/Booter/Booter/Entry.cs:201
+msgid "Debugging and Development Options"
+msgstr ""
+
+#: ../src/Clients/Booter/Booter/Entry.cs:202
+msgid "Enable general debugging features"
+msgstr ""
+
+#: ../src/Clients/Booter/Booter/Entry.cs:203
+msgid "Enable debugging output of SQL queries"
+msgstr ""
+
+#: ../src/Clients/Booter/Booter/Entry.cs:204
+msgid "Enable debugging output of Mono.Addins"
+msgstr ""
+
+#: ../src/Clients/Booter/Booter/Entry.cs:205
+msgid "Specify an alternate database to use"
+msgstr ""
+
+#: ../src/Clients/Booter/Booter/Entry.cs:206
+msgid "Specify an alternate key, default is /apps/banshee-1/"
+msgstr ""
+
+#: ../src/Clients/Booter/Booter/Entry.cs:207
+msgid "Optimize instance for running uninstalled; most notably, this will create an alternate Mono.Addins database in the working directory"
+msgstr ""
+
+#: ../src/Clients/Booter/Booter/Entry.cs:209
+msgid "Disable DBus support completely"
+msgstr ""
+
+#: ../src/Clients/Booter/Booter/Entry.cs:211
+#, csharp-format
+msgid "Skip loading a custom gtkrc file ({0}) if it exists"
+msgstr ""
+
+#: ../src/Clients/Booter/Booter/Entry.cs:242
+#, csharp-format
+msgid "The following help arguments are invalid: {0}"
+msgstr ""
+
+#: ../src/Clients/Muinshee/Muinshee/AlbumDialog.cs:77
+#, fuzzy
+msgid "Play Album"
+msgstr "Аткарылды"
+
+#: ../src/Clients/Muinshee/Muinshee/BaseDialog.cs:83
+msgid "En_queue"
+msgstr ""
+
+#: ../src/Clients/Muinshee/Muinshee/BaseDialog.cs:86
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:66
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:196
+msgid "_Play"
+msgstr "_Ойнотуу"
+
+#: ../src/Clients/Muinshee/Muinshee/MuinsheeActions.cs:47
+#, fuzzy
+msgid "Play _Song"
+msgstr "Аткарылды"
+
+#: ../src/Clients/Muinshee/Muinshee/MuinsheeActions.cs:48
+#, fuzzy
+msgid "Add a song to the playlist"
+msgstr "Ырларды ойнотуу тизмесинен баш аламан тартипте ойнотуу"
+
+#: ../src/Clients/Muinshee/Muinshee/MuinsheeActions.cs:52
+#, fuzzy
+msgid "Play _Album"
+msgstr "Аткарылды"
+
+#: ../src/Clients/Muinshee/Muinshee/MuinsheeActions.cs:53
+#, fuzzy
+msgid "Add an album to the playlist"
+msgstr "_Ойнотмо тизмесине кошуу"
+
+#: ../src/Clients/Muinshee/Muinshee/PlayerInterface.cs:72
+#: ../src/Clients/Nereid/Nereid/PlayerInterface.cs:76
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/BaseClientWindow.cs:197
+#: ../src/Extensions/Banshee.MiniMode/Banshee.MiniMode/MiniModeWindow.cs:71
+msgid "Banshee Media Player"
+msgstr "Banshee медиаойнотуучусу"
+
+#: ../src/Clients/Muinshee/Muinshee/PlayerInterface.cs:252
+#, fuzzy, csharp-format
+msgid "{0} remaining"
+msgstr "{0} мүнөт"
+
+#: ../src/Clients/Muinshee/Muinshee/SongDialog.cs:53
+#, fuzzy
+msgid "Play Song"
+msgstr "Аткарылды"
+
+#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:92
+msgid "_Search:"
+msgstr "Издөө:"
+
+#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:151
+#, fuzzy
+msgid "Artist, Album, or Title"
+msgstr "Альбом боюнча"
+
+#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:155
+#: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:105
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:67
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:190
+msgid "Genre"
+msgstr "жанр боюнча"
+
+#. Translators: noun
+#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:157
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:219
+#, fuzzy
+msgid "Comment"
+msgstr "Жолчолордун саны"
+
+#. Translators: this is a verb (command), not a noun (things)
+#: ../src/Clients/Nereid/Nereid/ViewContainer.cs:178
+#, csharp-format
+msgid "Filter Results"
+msgstr "Чыпканын жыйынтыгы"
+
+#: ../src/Core/Banshee.Core/Banshee.Base/CoverArtSpec.cs:39
+#: ../src/Core/Banshee.Core/Banshee.Collection/ArtistInfo.cs:37
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdDiscModel.cs:100
+#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:131
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Recommendations/RecommendationPane.cs:91
+msgid "Unknown Artist"
+msgstr "Белгисиз аткаруучу"
+
+#: ../src/Core/Banshee.Core/Banshee.Base/CoverArtSpec.cs:41
+#: ../src/Core/Banshee.Core/Banshee.Collection/AlbumInfo.cs:40
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdDiscModel.cs:101
+#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:130
+msgid "Unknown Album"
+msgstr "Белгисиз альбом"
+
+#: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:84
+#, fuzzy
+msgid "Track Artist"
+msgstr "<b>_Аткаруучу:</b>"
+
+#. Alias for %album_artist%
+#: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:89
+#: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:95
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:105
+#, fuzzy
+msgid "Album Artist"
+msgstr "<b>_Аткаруучу:</b>"
+
+#: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:100
+msgid "Album Artist Initial"
+msgstr ""
+
+#: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:110
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:63
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:115
+msgid "Album"
+msgstr "Альбом"
+
+#: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:115
+msgid "Title"
+msgstr "Аталышы"
+
+#: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:125
+msgid "Count"
+msgstr "Жолчонун саны"
+
+#: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:130
+msgid "Number"
+msgstr "Жолчонун номери"
+
+#: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:135
+msgid "Count (unsorted)"
+msgstr "Жолчонун саны (Тизүүсүз)"
+
+#: ../src/Core/Banshee.Core/Banshee.Base/FileNamePattern.cs:140
+msgid "Number (unsorted)"
+msgstr "Жолчонун номер(Түзүүсүз)"
+
+#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:48
+msgid "Unknown Title"
+msgstr "Белгисиз композиция"
+
+#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:235
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Recommendations/RecommendationPane.cs:92
+#, fuzzy
+msgid "Various Artists"
+msgstr "аткаруучулар"
+
+#. TODO turn this into a PrimarySource-owned delegate?
+#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:522
+#, fuzzy
+msgid "_Restart Podcast"
+msgstr "Башынан _баштап ойнотуу"
+
+#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:523
+#, fuzzy
+msgid "_Restart Video"
+msgstr "Бул видеону _башынан ойнотуу"
+
+#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:524
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:86
+#, fuzzy
+msgid "_Restart Song"
+msgstr "Башынан _баштап ойнотуу"
+
+#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:525
+#, fuzzy
+msgid "_Restart Item"
+msgstr "Бул видеону _башынан ойнотуу"
+
+#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:539
+#, fuzzy
+msgid "_Jump to Playing Podcast"
+msgstr "Ойнотулуп жаткан ырга _өтүү"
+
+#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:540
+msgid "_Jump to Playing Video"
+msgstr "Көрсөтүлүп жаткан видеого _өтүү"
+
+#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:541
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:82
+msgid "_Jump to Playing Song"
+msgstr "Ойнотулуп жаткан ырга _өтүү"
+
+#: ../src/Core/Banshee.Core/Banshee.Collection/TrackInfo.cs:542
+#, fuzzy
+msgid "_Jump to Playing Item"
+msgstr "Көрсөтүлүп жаткан видеого _өтүү"
+
+#: ../src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseAlbumListModel.cs:68
+#, csharp-format
+msgid "All Albums ({0})"
+msgstr "Бардык альбомдор ({0})"
+
+#: ../src/Core/Banshee.Services/Banshee.Collection.Database/DatabaseArtistListModel.cs:67
+#, csharp-format
+msgid "All Artists ({0})"
+msgstr "Бардык аткаруучулар ({0})"
+
+#: ../src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs:137
+msgid "Scanning for media"
+msgstr "маалыматтарды издөөнү өндүрүүдө"
+
+#: ../src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs:187
+#: ../src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:1206
+msgid "Scanning..."
+msgstr "Издөөдө..."
+
+#: ../src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs:203
+#, csharp-format
+msgid "Scanning ({0} files)..."
+msgstr "({0}·Файлдарды) Издөөдө..."
+
+#: ../src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs:237
+msgid "Importing Media"
+msgstr "маалыматтар импорттолууда"
+
+#: ../src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs:244
+#: ../src/Core/Banshee.Services/Banshee.Library/ThreadPoolImportSource.cs:119
+msgid "The import process is currently running. Would you like to stop it?"
+msgstr "Азыр файлдар импорттолууда. Бул роцессти токтолубу?"
+
+#: ../src/Core/Banshee.Services/Banshee.Collection/ImportManager.cs:250
+#: ../src/Core/Banshee.Services/Banshee.Library/ThreadPoolImportSource.cs:81
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdRipper.cs:183
+#, csharp-format
+msgid "Importing {0} of {1}"
+msgstr "Элементтер импорттолууда {0} из {1}"
+
+#: ../src/Core/Banshee.Services/Banshee.Collection/RescanPipeline.cs:78
+#, fuzzy, csharp-format
+msgid "Rescanning {0} of {1}"
+msgstr "Конверттелинет {0}дон {1}ге "
+
+#: ../src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:230
+msgid "Upgrading your Banshee Database"
+msgstr "Медиатека Banshee жаңыланууда"
+
+#: ../src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:231
+msgid "Please wait while your old Banshee database is migrated to the new format."
+msgstr "Токтоңуз,сиздин эски медиакол салуучу Banshee·жаңы форматка кайта курууда"
+
+#: ../src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:1203
+msgid "Refreshing Metadata"
+msgstr "Метамаалыматтар жаңыланууда"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/HomeDirectoryImportSource.cs:48
+msgid "Home Directory"
+msgstr "Үйдүк каталог"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/LibrarySource.cs:58
+msgid "Remove From Library"
+msgstr "Медиакол салычуудан өчүрүү"
+
+#. Translators: {0} is the library name, eg 'Music Library' or 'Podcasts'
+#: ../src/Core/Banshee.Services/Banshee.Library/LibrarySource.cs:65
+#, fuzzy, csharp-format
+msgid "{0} Folder"
+msgstr "{0} саат"
+
+#. Catalog.GetString ("Music Library")
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:46
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/MusicGroupSource.cs:38
+msgid "Music"
+msgstr "Музыка"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:62
+msgid "File System Organization"
+msgstr "Файлдык системаларды уюштуруу"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:65
+#, fuzzy
+msgid "Folder hie_rarchy"
+msgstr "Папкелердин ие_рархиясы"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:68
+msgid "File _name"
+msgstr "Файлдын _аты"
+
+#. Misc section
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:70
+#: ../src/Core/Banshee.Services/Banshee.Preferences/PreferenceService.cs:63
+msgid "Miscellaneous"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:87
+#: ../src/Core/Banshee.Services/Banshee.Library/VideoLibrarySource.cs:85
+msgid "Favorites"
+msgstr "Жактырган"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:88
+msgid "Songs rated four and five stars"
+msgstr "Силер төрт же беш жылдызчалар менен белгилеген ырлар"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:92
+msgid "Recent Favorites"
+msgstr "Акыркы жаккандар"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:93
+msgid "Songs listened to often in the past week"
+msgstr "Акыркы жумадагы көп уккан ырлар"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:97
+msgid "Recently Added"
+msgstr "Акыркы кошула"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:98
+msgid "Songs imported within the last week"
+msgstr "Көп жумага жетпеген ырлар медикол салычууга кошулган"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:102
+msgid "Unheard"
+msgstr "Угулбагандар"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:103
+msgid "Songs that have not been played or skipped"
+msgstr "Такыр угулбаган, дагы өткөрүлгөн ырлар "
+
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:109
+msgid "Neglected Favorites"
+msgstr "Унутулган жактырылган"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:110
+#, fuzzy
+msgid "Favorites not played in over two months"
+msgstr "Эки жумадан бери сиз укпаган жактырган ырлар,"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:114
+msgid "Least Favorite"
+msgstr "Жактырбаган ырлар"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:115
+msgid "Songs rated one or two stars or that you have frequently skipped"
+msgstr "Сиз бир же эки жылдызчалар менен белгилеген же тез өкөрүп чалаган ырлар"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:119
+#, fuzzy
+msgid "700 MB of Favorites"
+msgstr "700 Мбайт тандалган ырлар"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:120
+msgid "A data CD worth of favorite songs"
+msgstr "Маалыматтар менен болгон диск бүт бойдон жактырган ырлардан турат "
+
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:125
+msgid "80 Minutes of Favorites"
+msgstr "80 мүнөт жактырган ырлар"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:126
+msgid "An audio CD worth of favorite songs"
+msgstr "Үндүк диск жактырган ырлардан турат"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:131
+msgid "Unrated"
+msgstr "Баасыз"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/MusicLibrarySource.cs:132
+msgid "Songs that haven't been rated"
+msgstr "Сиз баа бербеген ырлар"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/ThreadPoolImportSource.cs:56
+msgid "Importing Songs"
+msgstr "Ырларды импорттоо"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/ThreadPoolImportSource.cs:113
+#, fuzzy, csharp-format
+msgid "Importing From {0}"
+msgstr "{0} - бул жерден ырлар импорттолуп жатат"
+
+#. Catalog.GetString ("Video Library")
+#: ../src/Core/Banshee.Services/Banshee.Library/VideoLibrarySource.cs:43
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/VideoGroupSource.cs:38
+msgid "Videos"
+msgstr "Видео"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/VideoLibrarySource.cs:64
+#, fuzzy
+msgid "Produced By"
+msgstr "Түзгөн"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/VideoLibrarySource.cs:86
+msgid "Videos rated four and five stars"
+msgstr "Сиз төрт же беш жылдызчалар менен белгилеген видеолор"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/VideoLibrarySource.cs:90
+msgid "Unwatched"
+msgstr "Көрбөгөн видеолор"
+
+#: ../src/Core/Banshee.Services/Banshee.Library/VideoLibrarySource.cs:91
+msgid "Videos that haven't been played yet"
+msgstr "Сиз дагы көрбөгөн видеолор"
+
+#: ../src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:98
+#, fuzzy
+msgid "Default player engine"
+msgstr "«Кыймыл» баштапкы абалы боюча ойнотуу"
+
+#: ../src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:105
+#, fuzzy
+msgid "No player engines were found. Please ensure Banshee has been cleanly installed."
+msgstr "Видеону ойнотуу үчүн эч кандай «Кыймыл» табылган жок. Banshee-ни туура орнолгондугун текшериңиз."
+
+#: ../src/Core/Banshee.Services/Banshee.MediaEngine/PlayerEngineService.cs:321
+#, fuzzy
+msgid "Problem with Player Engine"
+msgstr "Кемчиликтер «кыймыл» ойнотуучусунда "
+
+#: ../src/Core/Banshee.Services/Banshee.MediaEngine/TranscoderService.cs:134
+#, fuzzy, csharp-format
+msgid "Converting {0} of {1}"
+msgstr "Конверттелинет {0}дон {1}ге "
+
+#: ../src/Core/Banshee.Services/Banshee.MediaEngine/TranscoderService.cs:134
+msgid "Initializing"
+msgstr "Инициализациялоо"
+
+#: ../src/Core/Banshee.Services/Banshee.MediaEngine/TranscoderService.cs:137
+msgid "Files are currently being converted to another format. Would you like to stop this?"
+msgstr "Азыркы учурда файл башка форматка курулууда.Бул операцияны үзөлүбү?"
+
+#: ../src/Core/Banshee.Services/Banshee.Metadata/SaveTrackMetadataJob.cs:51
+#, fuzzy
+msgid "Saving Metadata to File"
+msgstr "_Метаберилиштерди файлга жазуу"
+
+#: ../src/Core/Banshee.Services/Banshee.Metadata/SaveTrackMetadataService.cs:48
+msgid "Write _metadata to files"
+msgstr "_Метаберилиштерди файлга жазуу"
+
+#: ../src/Core/Banshee.Services/Banshee.Metadata/SaveTrackMetadataService.cs:49
+#, fuzzy
+msgid "Enable this option to save tags and other metadata inside supported audio files."
+msgstr "Өзгөртүлгөн тегтерди жана метаберилиштерди түздөн-түз колдонулган форматта, файлга жаздыруу."
+
+#: ../src/Core/Banshee.Services/Banshee.Metadata/SaveTrackMetadataService.cs:54
+msgid "_Update file and folder names"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Metadata/SaveTrackMetadataService.cs:55
+msgid "Enabling this option ensures that files and folders are renamed according to the metadata."
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Metadata/SaveTrackMetadataService.cs:129
+#, fuzzy
+msgid "Write _ratings and play counts to files"
+msgstr "_Метаберилиштерди файлга жазуу"
+
+#: ../src/Core/Banshee.Services/Banshee.Metadata/SaveTrackMetadataService.cs:130
+#, fuzzy
+msgid "Enable this option to save rating and play count metadata inside supported audio files whenever the rating is changed."
+msgstr "Өзгөртүлгөн тегтерди жана метаберилиштерди түздөн-түз колдонулган форматта, файлга жаздыруу."
+
+#: ../src/Core/Banshee.Services/Banshee.Metadata/SaveTrackMetadataService.cs:131
+#, fuzzy
+msgid "Import _ratings"
+msgstr "_Чыгуудагы файлдын форматы"
+
+#: ../src/Core/Banshee.Services/Banshee.Metadata/SaveTrackMetadataService.cs:132
+#, fuzzy
+msgid "Import play _counts"
+msgstr "Ойнотуучу тизмени экспорттоо"
+
+#: ../src/Core/Banshee.Services/Banshee.Networking/Network.cs:52
+msgid "There is no available network connection"
+msgstr "Тармактык туташуу болбойт"
+
+#: ../src/Core/Banshee.Services/Banshee.Networking/Network.cs:78
+msgid "Cannot connect to NetworkManager"
+msgstr "Тармактык ырастоолор апплетине туташуу мүмкүн эмес"
+
+#: ../src/Core/Banshee.Services/Banshee.Networking/Network.cs:79
+#, fuzzy
+msgid "An available, working network connection will be assumed"
+msgstr "Эгерде тармактык туташуу бар болсо, ал колдолунат"
+
+#: ../src/Core/Banshee.Services/Banshee.Networking/Network.cs:150
+msgid "_Disable features requiring Internet access"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Networking/Network.cs:151
+msgid "Some features require a broadband Internet connection such as Last.fm or cover art fetching"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Playlist/AbstractPlaylistSource.cs:219
+msgid "The track's rating was set differently on the device and in Banshee"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs:59
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:314
+msgid "Playlist"
+msgstr "Ойнотуу тизмеси"
+
+#: ../src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs:134
+msgid "Remove From Playlist"
+msgstr "Ойнотуу тизмесинен алып таштоо"
+
+#: ../src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs:135
+msgid "Delete Playlist"
+msgstr "Ойнотуу тизмесин алып таштоо"
+
+#: ../src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs:390
+#: ../src/Core/Banshee.Services/Banshee.Playlist/PlaylistSource.cs:396
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:88
+#: ../src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs:464
+#: ../src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView_DragAndDrop.cs:211
+msgid "New Playlist"
+msgstr "Жаңы тизме"
+
+#: ../src/Core/Banshee.Services/Banshee.Playlists.Formats/AsfReferencePlaylistFormat.cs:43
+#, fuzzy
+msgid "Windows Media ASX"
+msgstr "Windows Media Audio"
+
+#: ../src/Core/Banshee.Services/Banshee.Playlists.Formats/AsxPlaylistFormat.cs:46
+msgid "Windows Media ASX (*.asx)"
+msgstr "Windows Media ASX (*.asx)"
+
+#: ../src/Core/Banshee.Services/Banshee.Playlists.Formats/M3uPlaylistFormat.cs:44
+#, fuzzy
+msgid "MPEG Version 3.0 Extended (*.m3u)"
+msgstr "Кеңейтилген нуска MPEG 3.0 (*.m3u)"
+
+#: ../src/Core/Banshee.Services/Banshee.Playlists.Formats/PlsPlaylistFormat.cs:51
+#, fuzzy
+msgid "Shoutcast Playlist version 2 (*.pls)"
+msgstr "Ойнотуу тизмеси Shoutcast v2 (*.pls)"
+
+#: ../src/Core/Banshee.Services/Banshee.Playlists.Formats/XspfPlaylistFormat.cs:44
+#, fuzzy
+msgid "XML Shareable Playlist Format version 1 (*.xspf)"
+msgstr "Ойнотуу тизмеси Shoutcast v2 (*.pls)"
+
+#. Pages (tabs)
+#: ../src/Core/Banshee.Services/Banshee.Preferences/PreferenceService.cs:49
+msgid "General"
+msgstr "Жалпы"
+
+#: ../src/Core/Banshee.Services/Banshee.Preferences/PreferenceService.cs:50
+#, fuzzy
+msgid "Source Specific"
+msgstr "Буклактын касиеттери"
+
+#: ../src/Core/Banshee.Services/Banshee.Preferences/PreferenceService.cs:51
+msgid "Extensions"
+msgstr "Кеңейтүүсү"
+
+#. General policies
+#: ../src/Core/Banshee.Services/Banshee.Preferences/PreferenceService.cs:54
+#, fuzzy
+msgid "File Policies"
+msgstr "Файлдын өлчөмү"
+
+#: ../src/Core/Banshee.Services/Banshee.Preferences/PreferenceService.cs:57
+#, fuzzy
+msgid "Co_py files to media folders when importing"
+msgstr "Файлдарды импорттоодо, учурдагы папкеге көчүрүү"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:59
+#, fuzzy
+msgid "Random"
+msgstr "Кокустан"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:64
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:97
+msgid "Artist"
+msgstr "Аткаруучу"
+
+#. Translators: noun
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:66
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:174
+#: ../src/Core/Banshee.Services/Banshee.Sources/Source.cs:659
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:88
+msgid "Name"
+msgstr "Аталышы"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:69
+#, fuzzy
+msgid "Highest Rating"
+msgstr "Эң жогорку орунда турат"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:70
+#, fuzzy
+msgid "Lowest Rating"
+msgstr "Төмөнкү орунда турат"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:72
+#, fuzzy
+msgid "Highest Score"
+msgstr "Бийигирээк"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:73
+#, fuzzy
+msgid "Lowest Score"
+msgstr "Жактырбаган ырлар"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:75
+msgid "Most Often Played"
+msgstr "Баарынан көп ойнотулган"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:76
+msgid "Least Often Played"
+msgstr "Баарынан аз ойнотулган"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:78
+#, fuzzy
+msgid "Most Recently Played"
+msgstr "Жакында эле ойнотулгандардан"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:79
+#, fuzzy
+msgid "Least Recently Played"
+msgstr "Алда качан ойнотулгандардан"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:81
+msgid "Most Recently Added"
+msgstr "Жакында кошулгандардан"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:82
+#, fuzzy
+msgid "Least Recently Added"
+msgstr "Алда качан кошулгандардан"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:86
+msgid "items"
+msgstr "элементтерди"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:87
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/TimeSpanQueryValueEntry.cs:60
+msgid "minutes"
+msgstr "мүнөт"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:88
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/TimeSpanQueryValueEntry.cs:61
+msgid "hours"
+msgstr "саттарды"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:89
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/FileSizeQueryValueEntry.cs:63
+msgid "MB"
+msgstr "МБ"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:90
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/FileSizeQueryValueEntry.cs:64
+msgid "GB"
+msgstr "ГБ"
+
+#. Translators: These are unique search aliases for "artist". You can use CSV for synonyms. Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:99
+msgid "artist"
+msgstr "аткаруучу"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:99
+#, fuzzy
+msgid "by"
+msgstr "тарабынан"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:99
+msgid "artists"
+msgstr "аткаруучулар"
+
+#. Translators: These are unique search aliases for "album artist". You can use CSV for synonyms. Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:107
+#, fuzzy
+msgid "albumartist"
+msgstr "аткаруучу"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:107
+msgid "compilationartist"
+msgstr ""
+
+#. Translators: These are unique search aliases for "album". You can use CSV for synonyms. Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:117
+msgid "album"
+msgstr "альбом"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:117
+msgid "on"
+msgstr "ичинде"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:117
+#, fuzzy
+msgid "from"
+msgstr "-"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:123
+msgid "Disc"
+msgstr "Диск"
+
+#. Translators: These are unique search fields (and nouns). You can use CSV for synonyms. Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:125
+msgid "disc"
+msgstr "диск"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:125
+msgid "cd"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:125
+msgid "discnum"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:131
+#, fuzzy
+msgid "Disc Count"
+msgstr "Өткөрүлдү"
+
+#. Translators: These are unique search fields (and nouns). You can use CSV for synonyms. Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:133
+#, fuzzy
+msgid "discs"
+msgstr "диск"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:133
+#, fuzzy
+msgid "cds"
+msgstr "секунд"
+
+#. Translators: These are unique search fields. You can use CSV for synonyms. Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:142
+#, fuzzy
+msgid "track"
+msgstr "Жолчонун номуру:"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:142
+#, fuzzy
+msgid "trackno"
+msgstr "Жолчонун номуру:"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:142
+#, fuzzy
+msgid "tracknum"
+msgstr "Жолчонун номуру:"
+
+#. Translators: These are unique search fields. You can use CSV for synonyms. Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:151
+#, fuzzy
+msgid "tracks"
+msgstr "Жолчонун номуру:"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:151
+#, fuzzy
+msgid "trackcount"
+msgstr "Аткарылды"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:157
+msgid "Beats per Minute"
+msgstr ""
+
+#. Translators: These are unique search fields. You can use CSV for synonyms. Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:159
+msgid "bpm"
+msgstr ""
+
+#. Translators: These are unique search fields. You can use CSV for synonyms. Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:168
+#, fuzzy
+msgid "bitrate"
+msgstr "Агымдын ылдамдыгы"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:168
+msgid "kbs"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:168
+#, fuzzy
+msgid "kps"
+msgstr "өткөрүлдү"
+
+#. Translators: These are unique search fields. You can use CSV for synonyms. Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:176
+msgid "title"
+msgstr "аталышы"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:176
+msgid "titled"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:176
+msgid "name"
+msgstr "аты"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:176
+msgid "named"
+msgstr ""
+
+#. Translators: These are unique search fields. You can use CSV for synonyms. Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:184
+msgid "year"
+msgstr "жыл"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:184
+msgid "released"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:184
+msgid "yr"
+msgstr ""
+
+#. Translators: These are unique search fields. You can use CSV for synonyms. Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:192
+msgid "genre"
+msgstr "жанры"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:197
+msgid "Composer"
+msgstr "Композитору"
+
+#. Translators: These are unique search fields. You can use CSV for synonyms. Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:199
+msgid "composer"
+msgstr "композитору"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:204
+#, fuzzy
+msgid "Conductor"
+msgstr "Катышуучулар"
+
+#. Translators: These are unique search fields. You can use CSV for synonyms. Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:206
+#, fuzzy
+msgid "conductor"
+msgstr "Аталышы"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:211
+#, fuzzy
+msgid "Grouping"
+msgstr "Топтун радиосу"
+
+#. Translators: These are unique search fields. You can use CSV for synonyms. Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:213
+#, fuzzy
+msgid "grouping"
+msgstr "Топтун радиосу"
+
+#. Translators: These are unique search fields (and nouns). You can use CSV for synonyms. Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:221
+#, fuzzy
+msgid "comment"
+msgstr "Жолчолордун саны"
+
+#. Translators: noun
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:227
+msgid "License"
+msgstr ""
+
+#. Translators: These are unique search fields (and nouns). You can use CSV for synonyms. Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:229
+msgid "license"
+msgstr "лицензия"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:229
+msgid "licensed"
+msgstr "лицензияланган"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:229
+msgid "under"
+msgstr ""
+
+#. , typeof(NullQueryValue)},
+#. Translators: These are unique search fields. You can use CSV for synonyms. Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:237
+msgid "rating"
+msgstr "рейтинги"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:237
+msgid "stars"
+msgstr "баасы"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:243
+msgid "Play Count"
+msgstr "Аткарылды"
+
+#. Translators: These are unique search fields (and nouns). You can use CSV for synonyms. Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:245
+msgid "plays"
+msgstr "аткарылды"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:245
+msgid "playcount"
+msgstr "жолу"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:245
+msgid "listens"
+msgstr "угуу"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:251
+msgid "Skip Count"
+msgstr "Өткөрүлдү"
+
+#. Translators: These are unique search fields (and nouns). You can use CSV for synonyms. Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:253
+msgid "skips"
+msgstr "өткөрүлдү"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:253
+msgid "skipcount"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:259
+msgid "File Size"
+msgstr "Файлдын өлчөмү"
+
+#. Translators: These are unique search fields (and nouns). You can use CSV for synonyms. Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:261
+msgid "size"
+msgstr "өлчөм"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:261
+msgid "filesize"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:267
+msgid "File Location"
+msgstr "Файлдын орнотулушу"
+
+#. Translators: These are unique search fields. You can use CSV for synonyms. Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:269
+msgid "uri"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:269
+msgid "path"
+msgstr "жол"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:269
+msgid "file"
+msgstr "файл"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:269
+msgid "location"
+msgstr "каякта"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:275
+msgid "Time"
+msgstr "Убакыт"
+
+#. Translators: These are unique search fields. You can use CSV for synonyms. Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:277
+msgid "duration"
+msgstr "созулушу"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:277
+msgid "length"
+msgstr "узундугу"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:277
+msgid "time"
+msgstr "убакыты"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:283
+msgid "Mime Type"
+msgstr "MIME тиби"
+
+#. Translators: These are unique search fields. You can use CSV for synonyms. Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:285
+msgid "type"
+msgstr "тиби"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:285
+msgid "mimetype"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:285
+msgid "format"
+msgstr "форматы"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:285
+msgid "ext"
+msgstr "кеңейтүүсү"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:291
+msgid "Last Played"
+msgstr "Акыркы аткаруу"
+
+#. Translators: These are unique search fields. You can use CSV for synonyms. Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:293
+msgid "lastplayed"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:293
+msgid "played"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:293
+msgid "playedon"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:299
+msgid "Last Skipped"
+msgstr "Акыркы жолу өткөрүлдү"
+
+#. Translators: These are unique search fields. You can use CSV for synonyms. Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:301
+msgid "lastskipped"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:301
+msgid "skipped"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:301
+msgid "skippedon"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:307
+msgid "Date Added"
+msgstr "Кошуу датасы"
+
+#. Translators: These are unique search fields. You can use CSV for synonyms. Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:309
+msgid "added"
+msgstr "кошулду"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:309
+msgid "imported"
+msgstr "импорттолду"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:309
+msgid "addedon"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:309
+msgid "dateadded"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:309
+msgid "importedon"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:320
+#: ../src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:66
+msgid "Smart Playlist"
+msgstr "Динамикалдык ойнотуучунун тизмеси"
+
+#. Translators: These are unique search fields (and nouns). You can use CSV for synonyms. Please, no spaces. Blank ok.
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:329
+msgid "score"
+msgstr ""
+
+#. Translators: noun
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:346
+msgid "BPM"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:347
+#, fuzzy
+msgid "Skips"
+msgstr "өткөрүлдү"
+
+#: ../src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs:348
+#, fuzzy
+msgid "Plays"
+msgstr "аткарылды"
+
+#: ../src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs:309
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:200
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:202
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:204
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:376
+msgid "Unknown"
+msgstr "Белгисиз"
+
+#: ../src/Core/Banshee.Services/Banshee.SmartPlaylist/Migrator.cs:79
+#, fuzzy
+msgid "Unable to Migrate Smart Playlists"
+msgstr "Динамикалык ойнотуу тизмесин көчүрүү мүмкүн эмес"
+
+#: ../src/Core/Banshee.Services/Banshee.SmartPlaylist/Migrator.cs:80
+#, fuzzy, csharp-format
+msgid "Please file a bug with this error: {0}"
+msgstr "Өтүнүч, {0} бул ката тууралуу кабарлаңыз"
+
+#: ../src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:67
+#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/Editor.cs:51
+#, fuzzy
+msgid "Edit Smart Playlist"
+msgstr "Динамикалык ойнотуу тизмесин өзгөртүү"
+
+#: ../src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:229
+#, fuzzy
+msgid "Delete Smart Playlist"
+msgstr "Динамикалык ойнотуу тизмесин жоготуу"
+
+#: ../src/Core/Banshee.Services/Banshee.Sources/DatabaseSource.cs:147
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSource.cs:157
+#, fuzzy, csharp-format
+msgid "All Genres ({0})"
+msgstr "Бардык аткаруучулар ({0})"
+
+#: ../src/Core/Banshee.Services/Banshee.Sources/DurationStatusFormatters.cs:64
+#: ../src/Core/Banshee.Services/Banshee.Sources/DurationStatusFormatters.cs:89
+#: ../src/Core/Banshee.Services/Banshee.Sources/DurationStatusFormatters.cs:139
+#, csharp-format
+msgid "{0} day"
+msgid_plural "{0} days"
+msgstr[0] "{0} күн"
+
+#msgstr[1] "{0} күнү"
+#msgstr[2] "{0} күндөрү"
+#: ../src/Core/Banshee.Services/Banshee.Sources/DurationStatusFormatters.cs:68
+#: ../src/Core/Banshee.Services/Banshee.Sources/DurationStatusFormatters.cs:94
+#: ../src/Core/Banshee.Services/Banshee.Sources/DurationStatusFormatters.cs:141
+#, csharp-format
+msgid "{0} hour"
+msgid_plural "{0} hours"
+msgstr[0] "{0} саат"
+
+#msgstr[1] "{0} саатта"
+#msgstr[2] "{0} сааттарда"
+#: ../src/Core/Banshee.Services/Banshee.Sources/DurationStatusFormatters.cs:72
+#: ../src/Core/Banshee.Services/Banshee.Sources/DurationStatusFormatters.cs:98
+#: ../src/Core/Banshee.Services/Banshee.Sources/DurationStatusFormatters.cs:143
+#, csharp-format
+msgid "{0} minute"
+msgid_plural "{0} minutes"
+msgstr[0] "{0} мүнөт"
+
+#msgstr[1] "{0} мүнөттө"
+#msgstr[2] "{0} мүнөттөрдө"
+#: ../src/Core/Banshee.Services/Banshee.Sources/DurationStatusFormatters.cs:100
+#: ../src/Core/Banshee.Services/Banshee.Sources/DurationStatusFormatters.cs:145
+#, csharp-format
+msgid "{0} second"
+msgid_plural "{0} seconds"
+msgstr[0] "{0} секунд"
+
+#msgstr[1] "{0} секундада"
+#msgstr[2] "{0} секундаларда"
+#: ../src/Core/Banshee.Services/Banshee.Sources/ErrorSource.cs:50
+msgid "Close Error Report"
+msgstr "Ката эсеп-кысабын өчүрүү"
+
+#: ../src/Core/Banshee.Services/Banshee.Sources/ErrorSource.cs:82
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:7
+msgid "Error"
+msgstr "Ката"
+
+#: ../src/Core/Banshee.Services/Banshee.Sources/ErrorSource.cs:83
+msgid "Details"
+msgstr "Майда-чүйдөсү"
+
+#: ../src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs:164
+msgid "Errors"
+msgstr "Каталар"
+
+#: ../src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs:217
+#, fuzzy
+msgid "Sort Playlists by"
+msgstr "Динамикалдык ойнотуучунун тизмеси"
+
+#. Translators: this is a noun, referring to the harddisk
+#: ../src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs:226
+msgid "Drive"
+msgstr ""
+
+#: ../src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs:687
+#, fuzzy, csharp-format
+msgid "Adding {0} of {1} to {2}"
+msgstr "{2} менен {0}-баштап {1}-чейин кошулат"
+
+#: ../src/Core/Banshee.Services/Banshee.Sources/PrimarySource.cs:706
+#, fuzzy, csharp-format
+msgid "Deleting {0} of {1} From {2}"
+msgstr "{2} менен {0}-баштап {1}-чейин алынат"
+
+#: ../src/Core/Banshee.Services/Banshee.Sources/Source.cs:664
+#, fuzzy
+msgid "Size Ascending"
+msgstr "Өлчөмү менен өсүү тартибинде"
+
+#: ../src/Core/Banshee.Services/Banshee.Sources/Source.cs:669
+#, fuzzy
+msgid "Size Descending"
+msgstr "Өлчөмү менен кемүү тартибинде"
+
+#: ../src/Core/Banshee.Services/Banshee.Sources/Source.cs:758
+#, csharp-format
+msgid "{0} item"
+msgid_plural "{0} items"
+msgstr[0] "{0} элемент"
+
+#msgstr[1] "{0} элементи"
+#msgstr[2] "{0} элементерин"
+#: ../src/Core/Banshee.Services/Banshee.Streaming/RadioTrackInfo.cs:82
+#: ../src/Core/Banshee.Services/Banshee.Streaming/RadioTrackInfo.cs:91
+msgid "Error opening stream"
+msgstr "Агымды ачууга болгон аракетте ката келип чыкты"
+
+#: ../src/Core/Banshee.Services/Banshee.Streaming/RadioTrackInfo.cs:83
+#, fuzzy
+msgid "Could not open stream or playlist"
+msgstr "Агымды же ойномо тизмесин ачуу мүмкүн эмес"
+
+#: ../src/Core/Banshee.Services/Banshee.Streaming/RadioTrackInfo.cs:92
+#, fuzzy
+msgid "Problem parsing playlist"
+msgstr "Ойномо тизмени талдоодо ката келип чыкты"
+
+#: ../src/Core/Banshee.Services/Banshee.Web/Browser.cs:61
+#, fuzzy
+msgid "Could not launch URL"
+msgstr "Веб-бетчени ачуу мүмкүн эмес"
+
+#: ../src/Core/Banshee.Services/Banshee.Web/Browser.cs:62
+#, fuzzy, csharp-format
+msgid ""
+"{0} could not be opened: {1}\n"
+"\n"
+" Check your 'Preferred Applications' settings."
+msgstr ""
+"{0}: {1} - ачуу мүмкүн эмес \n"
+"\n"
+"Керектелүүчү иштемелердин ырастоолорун текшериңиз."
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Addins.Gui/AddinDetailsDialog.cs:69
+#, fuzzy
+msgid "Version:"
+msgstr "Нускасы:"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Addins.Gui/AddinDetailsDialog.cs:72
+#: ../src/Core/Banshee.ThickClient/Banshee.Addins.Gui/AddinTile.cs:97
+msgid "Authors:"
+msgstr "Автору:"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Addins.Gui/AddinDetailsDialog.cs:75
+msgid "Copyright/License:"
+msgstr "Лицензиясы (автордук укугу):"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Addins.Gui/AddinDetailsDialog.cs:79
+#, fuzzy
+msgid "Extension Dependencies:"
+msgstr "Андан көз каранды:"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Addins.Gui/AddinTile.cs:182
+msgid "Disable"
+msgstr "Очүрүү"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Addins.Gui/AddinTile.cs:183
+msgid "Enable"
+msgstr "Күйгүзүү"
+
+#. Translators: this is {disc number} of {disc count}
+#. Translators: this is {track number} of {track count}
+#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellDiscAndCount.cs:40
+#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellTrackAndCount.cs:40
+#: ../src/Core/Banshee.Widgets/Banshee.Widgets/StreamPositionLabel.cs:172
+#: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapPropertiesDialog.cs:148
+#, fuzzy, csharp-format
+msgid "{0} of {1}"
+msgstr "{0} - {1}"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/DefaultColumnController.cs:124
+msgid "Track #"
+msgstr "Жолчо №:"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/DefaultColumnController.cs:125
+#, fuzzy
+msgid "Track & Count"
+msgstr "Аткарылды"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/DefaultColumnController.cs:129
+#, fuzzy
+msgid "Disc #"
+msgstr "Диск"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/DefaultColumnController.cs:130
+#, fuzzy
+msgid "Disc & Count"
+msgstr "Өткөрүлдү"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Collection.Gui/DefaultColumnController.cs:133
+#, fuzzy, csharp-format
+msgid "{0} kbps"
+msgstr "{0} ойнотуулар"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.ContextPane/ContextPane.cs:119
+msgid "Make the context pane larger or smaller"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.ContextPane/ContextPane.cs:123
+msgid "Hide context pane"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.ContextPane/ContextPane.cs:144
+#, fuzzy
+msgid "Waiting for playback to begin..."
+msgstr "Жүктөөлөрдүн аягына чейин күтүү..."
+
+#: ../src/Core/Banshee.ThickClient/Banshee.ContextPane/ContextPane.cs:150
+msgid "Loading..."
+msgstr "Жүктөө..."
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Equalizer.Gui/EqualizerWindow.cs:52
+msgid "Equalizer"
+msgstr "Эквалайзери"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Equalizer.Gui/EqualizerWindow.cs:81
+msgid "Enabled"
+msgstr "Күйгүзүлдү"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Equalizer.Gui/EqualizerWindow.cs:158
+#, fuzzy
+msgid "New Preset"
+msgstr "Жаңы тизме"
+
+#. Translators: this is the window title when a track is playing
+#. {0} is the track title, {1} is the artist name
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/BaseClientWindow.cs:194
+#, csharp-format
+msgid "{0} by {1}"
+msgstr "{1} — {0}"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:54
+msgid "Primary Development"
+msgstr "Негизги иштеп чыгаруучулар"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:62
+msgid "Contributors"
+msgstr "Катышуучулар"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:96
+#, fuzzy
+msgid "Extraordinary Multimedia Management and Playback"
+msgstr "Мультимедия коллекциялар маалыматтарын башкарууда аябай күчтүү"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:98
+#, csharp-format
+msgid ""
+"Copyright © 2005–{0} Novell, Inc.\n"
+"Copyright © 2005–{0} Others\n"
+"Copyright © 2005 Aaron Bockover"
+msgstr ""
+"Copyright © 2005–{0} Novell, Inc.\n"
+"Copyright © 2005–{0} Башкалар\n"
+"Copyright © 2005 Aaron Bockover"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs:104
+msgid "Banshee Website"
+msgstr "Banshee сайты"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/ConfirmShutdownDialog.cs:49
+msgid "Important tasks are running"
+msgstr "Маанилүү иштер аткарылууда"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/ConfirmShutdownDialog.cs:51
+#, fuzzy
+msgid "Closing Banshee now will cancel any currently running tasks. They cannot be resumed automatically the next time Banshee is run."
+msgstr "Banshee-ден чыгууда, кээ бир аткарылып жаткан жумуштар үзүгүлтүккө учурайт. Кийинки жүктөөдө буларды улдантуу мүмкүн эмес. "
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/ConfirmShutdownDialog.cs:58
+#, fuzzy
+msgid "Quit anyway"
+msgstr "Баары бир чыгуу"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/ConfirmShutdownDialog.cs:59
+msgid "Continue running"
+msgstr "Улантуу"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/DefaultApplicationHelperDialog.cs:69
+#, fuzzy
+msgid "Make Banshee the default media player?"
+msgstr "Banshee медиаойнотуучусу"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/DefaultApplicationHelperDialog.cs:70
+msgid "Currently another program is configured as the default media player.  Would you prefer Banshee to be the default?"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/DefaultApplicationHelperDialog.cs:72
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:427
+#, fuzzy, csharp-format
+msgid "Do not ask me this again"
+msgstr "Башка, бул тууралуу сураба"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/DefaultApplicationHelperDialog.cs:86
+msgid "Make Banshee the Default"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/ImageFileChooserDialog.cs:39
+msgid "Select album cover image"
+msgstr "Альбомдун бетин тандаңыз"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/ImageFileChooserDialog.cs:47
+msgid "All image files"
+msgstr "Баардык сүрөт файлдар"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/ImageFileChooserDialog.cs:54
+#, fuzzy
+msgid "JPEG image files"
+msgstr "JPEG графикалык файлдары"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/ImageFileChooserDialog.cs:59
+#, fuzzy
+msgid "PNG image files"
+msgstr "PNG графикалык файлдары"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/OpenLocationDialog.cs:54
+msgid "Browse..."
+msgstr "Кароо..."
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/OpenLocationDialog.cs:98
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:10
+msgid "Open Location"
+msgstr "Жайгашкан жерин ачуу"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:50
+msgid "_Media"
+msgstr "_Маалыматтар"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:53
+msgid "Import _Media..."
+msgstr "Маалыматтарды _импортоо..."
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:54
+msgid "Import media from a variety of sources"
+msgstr "Маалыматтарды ар башка булактардан импортоо"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:57
+msgid "Import _Playlist..."
+msgstr "Ойнотуучу тизмени экспорттоо..."
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:58
+msgid "Import a playlist"
+msgstr "Ойнотуучу тизмени экспорттоо"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:61
+msgid "Rescan Music Library"
+msgstr "Фонотека"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:62
+msgid "Rescan the Music Library folder"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:67
+msgid "Open _Location..."
+msgstr "Жайгашкан жерин _ачуу..."
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:68
+msgid "Open a remote location for playback"
+msgstr "Ойнотуу үчүн алыскы даректи ачуу"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:71
+msgid "_Quit"
+msgstr "Чыгуу"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:72
+#, fuzzy
+msgid "Quit Banshee"
+msgstr "Banshee-ден чыгуу"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:76
+msgid "_Edit"
+msgstr "_Оңдоо"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:79
+msgid "_Preferences"
+msgstr "_Ырастоолор"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:80
+#, fuzzy
+msgid "Modify your personal preferences"
+msgstr "Иштеменин иштөө оңдомолорун өзгөртүү"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:83
+msgid "Manage _Extensions"
+msgstr "_Кеңейтмелерин башкаруу"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:84
+#, fuzzy
+msgid "Manage extensions to add new features to Banshee"
+msgstr "Кеңейтмелер Banshee-ге кошумча мүмкүнчүлүктөрдү киргизет "
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:88
+#, fuzzy
+msgid "_Tools"
+msgstr "_Шаймандар"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:92
+msgid "_Help"
+msgstr "_Суроолор"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:95
+msgid "_Web Resources"
+msgstr "_Веб-ресурстар"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:98
+#, fuzzy
+msgid "Banshee _User Guide (Wiki)"
+msgstr "Викидеги Banshee-ни иштетүү _жолдомолору"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:99
+#, fuzzy
+msgid "Learn about how to use Banshee"
+msgstr "Banshee менен кантип колдонууну үйрөнүңүз"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:104
+#, fuzzy
+msgid "Advanced Collection Searching"
+msgstr "Кеңейтилген издөө мүмкүнчүлүктөрү"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:105
+#, fuzzy
+msgid "Learn advanced ways to search your media collection"
+msgstr "Сиздин медиатекаңыздагы кеңейтилген издөө мүмкүнчүлүктөрүн билиңиз"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:110
+#, fuzzy
+msgid "Banshee _Home Page"
+msgstr "Banshee _үй бети"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:111
+msgid "Visit the Banshee Home Page"
+msgstr "Banshee сайтына кирүү"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:116
+#, fuzzy
+msgid "_Get Involved"
+msgstr "_Катышуу"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:117
+#, fuzzy
+msgid "Become a contributor to Banshee"
+msgstr "Banshee-ни иштеп чыгарууда катышыңыз"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:122
+#, fuzzy
+msgid "_Version Information"
+msgstr "Нускасы тууралуу _маалымат..."
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:123
+msgid "View detailed version and configuration information"
+msgstr "Иштеменин нускасы жана конфигурациясы тууралуу көбүрөөк билүү"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:163
+#, fuzzy
+msgid "Import Playlist"
+msgstr "Ойнотуучу тизмени экспорттоо"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:170
+#, fuzzy
+msgid "Playlists"
+msgstr "Ойнотуучу тизме"
+
+#. Translators: verb
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs:178
+#, fuzzy
+msgid "I_mport"
+msgstr "Импорттоо"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:67
+#, fuzzy
+msgid "Play or pause the current item"
+msgstr "Ойномону ойнотуу же токтотуу"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:70
+msgid "_Next"
+msgstr "_Кийинкиси"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:71
+#, fuzzy
+msgid "Play the next item"
+msgstr "Кийинки жолчону ойнотуп баштоо"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:74
+#, fuzzy
+msgid "Pre_vious"
+msgstr "_Мурункусу"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:75
+#, fuzzy
+msgid "Play the previous item"
+msgstr "Мурунку жолчону ойнотуу"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:78
+#, fuzzy
+msgid "Seek _to..."
+msgstr "Чейин издөө..."
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:79
+#, fuzzy
+msgid "Seek to a specific location in current item"
+msgstr "Учурдагы жолчону белгилүү бир учурга чейин жеткирүү"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:83
+#, fuzzy
+msgid "Jump to the currently playing item"
+msgstr "Учурда ойнотулуп жаткан жолчого өтүү"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:87
+#, fuzzy
+msgid "Restart the current item"
+msgstr "Учурдагы жолчону башынан ойнотуу"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:92
+msgid "_Stop When Finished"
+msgstr "Аягына чыгып _токтоо"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:93
+msgid "Stop playback after the current item finishes playing"
+msgstr "Учурдагы жолчонун аягына чыгып токтоо"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:99
+msgid "_Playback"
+msgstr "_Ойнотуу"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:190
+msgid "_Pause"
+msgstr "_Пауза"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackActions.cs:202
+msgid "Sto_p"
+msgstr "Стоп"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackRepeatActions.cs:72
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackRepeatActions.cs:73
+msgid "Repeat"
+msgstr "Кайталоо"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackRepeatActions.cs:78
+msgid "Repeat _Off"
+msgstr "_Кайталабоо"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackRepeatActions.cs:79
+#, fuzzy
+msgid "Do not repeat playlist"
+msgstr "Ойнотуу тизмесин кайталабоо"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackRepeatActions.cs:83
+msgid "Repeat _All"
+msgstr "_Баарын кайталоо"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackRepeatActions.cs:84
+#, fuzzy
+msgid "Play all songs before repeating playlist"
+msgstr "Ойнотмо тизмедеги баардык ырларды кайталоо"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackRepeatActions.cs:88
+msgid "Repeat Singl_e"
+msgstr "_Бирди кайталоо"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackRepeatActions.cs:89
+msgid "Repeat the current playing song"
+msgstr "Учурдагы ырды кайталоо"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackShuffleActions.cs:75
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackShuffleActions.cs:76
+msgid "Shuffle"
+msgstr "Аралашма"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackShuffleActions.cs:81
+msgid "Shuffle _Off"
+msgstr "_Аралаштырбоо"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackShuffleActions.cs:82
+#, fuzzy
+msgid "Do not shuffle playlist"
+msgstr "Баш аламан тартипте ойнотбоо"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackShuffleActions.cs:86
+msgid "Shuffle by _Song"
+msgstr "_Ырларды баш аламан тартипте"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackShuffleActions.cs:87
+#, fuzzy
+msgid "Play songs randomly from the playlist"
+msgstr "Ырларды ойнотуу тизмесинен баш аламан тартипте ойнотуу"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackShuffleActions.cs:91
+#, fuzzy
+msgid "Shuffle by A_rtist"
+msgstr "_Баш аламан тартиптеги аткаруучулар"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackShuffleActions.cs:92
+msgid "Play all songs by an artist, then randomly choose another artist"
+msgstr "Бир аткаруучунун ырларын аткарып, андан соң баш аламан тартипте кийинки  аткаруучуга өтүү"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackShuffleActions.cs:96
+#, fuzzy
+msgid "Shuffle by A_lbum"
+msgstr "Баш аламан тартипте _альбом"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackShuffleActions.cs:97
+#, fuzzy
+msgid "Play all songs from an album, then randomly choose another album"
+msgstr "Бир альбомдогу ырларды аткарып, андан соң баш аламан тартипте кийинкисине өтүү"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackShuffleActions.cs:101
+#, fuzzy
+msgid "Shuffle by _Rating"
+msgstr "_Ырларды баш аламан тартипте"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackShuffleActions.cs:102
+#, fuzzy
+msgid "Play songs randomly, prefer higher rated songs"
+msgstr "Ырларды ойнотуу тизмесинен баш аламан тартипте ойнотуу"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackShuffleActions.cs:106
+#, fuzzy
+msgid "Shuffle by S_core"
+msgstr "_Ырларды баш аламан тартипте"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/PlaybackShuffleActions.cs:107
+#, fuzzy
+msgid "Play songs randomly, prefer higher scored songs"
+msgstr "Ырларды ойнотуу тизмесинен баш аламан тартипте ойнотуу"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:73
+#, fuzzy
+msgid "_New Playlist"
+msgstr "Ойнотмо тизмесин _түзүү"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:74
+#, fuzzy
+msgid "Create a new empty playlist"
+msgstr "Жаңы бош ойнотуу тизмесин түзүү"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:77
+#, fuzzy
+msgid "New _Smart Playlist..."
+msgstr "_Ыңгайлуу ойнотмо тизмесин түзүү"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:78
+#, fuzzy
+msgid "Create a new smart playlist"
+msgstr "Жаңы ыңгайлуу ойнотмо тизмесин түзүү"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:88
+msgid "Import to Library"
+msgstr "Медиатекага импорттоо"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:89
+#, fuzzy
+msgid "Import source to library"
+msgstr "Булакты медиатекага импорттоо"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:92
+msgid "Rename"
+msgstr "Атын өзгөртүү"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:95
+#, fuzzy
+msgid "Export Playlist..."
+msgstr "Ойнотмо тизмени экспорттоо..."
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:96
+#, fuzzy
+msgid "Export a playlist"
+msgstr "Ойнотмо тизмени экспорттоо"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:99
+msgid "Unmap"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:102
+#, fuzzy
+msgid "Source Properties"
+msgstr "Буклактын касиеттери"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:105
+msgid "Sort Children by"
+msgstr "Тартипке келтирүү"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:108
+#: ../src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/PreferenceDialog.cs:50
+msgid "Preferences"
+msgstr "Ырастоолор"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:109
+msgid "Edit preferences related to this source"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:113
+#, fuzzy
+msgid "New _Smart Playlist"
+msgstr "_Ыңгайлуу ойнотмо тизмесин түзүү"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:122
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:74
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueActions.cs:56
+msgid "Refresh"
+msgstr "Жаңылоо"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:123
+#, fuzzy
+msgid "Refresh this randomly sorted smart playlist"
+msgstr "Бул баш аламан тартиптеги ыңгайлуу ойнотмо тизмени жаңылоо"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:290
+#, fuzzy
+msgid "Could not export playlist"
+msgstr "Ойнотмо тизмени экспорттоо мүмкүн эмес"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:418
+#, fuzzy, csharp-format
+msgid "Are you sure you want to delete this {0}?"
+msgstr "{0} - сиз чын эле жоготосузбу?"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:461
+msgid "Separate by Type"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:67
+msgid "Select _All"
+msgstr "Баарын _тандоо"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:68
+msgid "Select all tracks"
+msgstr "Баардык жолчолорду тандоо"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:71
+#, fuzzy
+msgid "Select _None"
+msgstr "Белгилөөлөрдү _жокко чыгаруу"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:72
+#, fuzzy
+msgid "Unselect all tracks"
+msgstr "Белгилөөлөрдү баардык жолчолордон алып таштоо"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:75
+#, fuzzy
+msgid "_Edit Track Information"
+msgstr "Маалыматтарды _редакторлоо"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:76
+msgid "Edit information on selected tracks"
+msgstr "Тандалган жолчолордун метаберилиштерин редакторлоо"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:79
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:234
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:108
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:150
+msgid "Properties"
+msgstr "Касиети"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:80
+#, fuzzy
+msgid "View information on selected tracks"
+msgstr "Тандалган жолчолордун метаберилиштерин редакторлоо"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:83
+msgid "Add _to Playlist"
+msgstr "_Ойнотмо тизмесине кошуу"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:84
+#, fuzzy
+msgid "Append selected items to playlist or create new playlist from selection"
+msgstr "Тандалган жолчолорду учурдагы ойнотмо тизменин аягына кошуу же алардан жаңы түзүү"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:89
+#, fuzzy
+msgid "Create new playlist from selected tracks"
+msgstr "Тандалган жолчолордон жаңы ойнотмо тизме түзүү"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:93
+msgid "_Remove"
+msgstr "_Жоготуу"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:94
+msgid "Remove selected track(s) from this source"
+msgstr "Бул жактан тандалган жолчолорду жоготуу"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:97
+#, fuzzy
+msgid "Remove From _Library"
+msgstr "_Медиатекадан жоготуу"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:98
+msgid "Remove selected track(s) from library"
+msgstr "Медиатекадан тандалган жолчолорду жоготуу"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:101
+msgid "_Delete From Drive"
+msgstr "_Дисктен жоготуу"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:102
+#, fuzzy
+msgid "Permanently delete selected item(s) from medium"
+msgstr "Тандалган жолчолорду дисктен жоготуу"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:108
+msgid "_Search"
+msgstr "Ырларды _издөө"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:109
+#, fuzzy
+msgid "Search for items matching certain criteria"
+msgstr "Белгилүү бир критериялары менен туура келген ырларды издөө"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:112
+msgid "By Matching _Album"
+msgstr "Учурдагы _альбомдон"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:113
+msgid "Search all songs of this album"
+msgstr "Учурдагы альбомдон баардык ырларды издөө"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:116
+msgid "By Matching A_rtist"
+msgstr "Учурдагы _аткаруучу"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:117
+msgid "Search all songs of this artist"
+msgstr "Учурдагы аткаруучунун баардык ырларын издөө"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:240
+#, fuzzy, csharp-format
+msgid "_Delete From \"{0}\""
+msgstr "{0} - жоготуу"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:457
+#, fuzzy, csharp-format
+msgid "Are you sure you want to permanently delete this item?"
+msgid_plural "Are you sure you want to permanently delete the selected {0} items?"
+msgstr[0] "{0} - сиз чын эле жоготосузбу?"
+msgstr[1] "{0} - сиз чын эле жоготосузбу?"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:461
+msgid "If you delete the selection, it will be permanently lost."
+msgstr "Жоготулган ырларды кайра кайтаруу мүмкүн эмес."
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:464
+#, fuzzy, csharp-format
+msgid "Remove selection from {0}?"
+msgstr "«{0}» тизмесинен белгиленген элементтерди жоготосузбу?"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/TrackActions.cs:467
+#, fuzzy, csharp-format
+msgid "Are you sure you want to remove the selected item from your {1}?"
+msgid_plural "Are you sure you want to remove the selected {0} items from your {1}?"
+msgstr[0] "{0} - сиз чын эле жоготосузбу?"
+msgstr[1] "{0} - сиз чын эле жоготосузбу?"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/AlbumArtistEntry.cs:53
+msgid "Com_pilation Album Artist:"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/AlbumArtistEntry.cs:57
+msgid "Check this if this track is part of an album with tracks by various artists"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/AlbumArtistEntry.cs:59
+msgid "This value will affect how this album is sorted; if you enter 'Various Artists' then the album will located with other albums that start with 'V'."
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:44
+#, fuzzy
+msgid "Basic Details"
+msgstr "Майда-чүйдөсү"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:69
+#, fuzzy
+msgid "Track _Title:"
+msgstr "Аталыш"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:77
+#, fuzzy
+msgid "Set all track artists to this value"
+msgstr "Баардык жолчолорго бул аткаруучунун атын коюу"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:78
+#, fuzzy
+msgid "Track _Artist:"
+msgstr "<b>_Аткаруучу:</b>"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:86
+#, fuzzy
+msgid "Set all compilation album artists to these values"
+msgstr "Баардык жолчолорго бул аткаруучунун атын коюу"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:106
+#, fuzzy
+msgid "Set all album titles to this value"
+msgstr "Баардык жолчолорго бул аткаруучунун атын коюу"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:107
+#, fuzzy
+msgid "Albu_m Title:"
+msgstr "Альбом боюнча"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:113
+#, fuzzy
+msgid "Set all genres to this value"
+msgstr "Бул жанрды баардык жолчолорго коюу"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:114
+msgid "_Genre:"
+msgstr "_Жанр:"
+
+#. Right
+#. Translators: "of" is the word beteen a track/disc number and the total count.
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:122
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:154
+msgid "of"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:138
+#, fuzzy
+msgid "Automatically set track number and count"
+msgstr "Жолчолордун номурларын автоматтык түрдө өсүү тартибинде жайгаштыруу"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:140
+#, fuzzy
+msgid "Track _Number:"
+msgstr "Жолчонун номери"
+
+#. Catalog.GetString ("Automatically set disc number and count"),
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:156
+#, fuzzy
+msgid "Set all disc numbers and counts to these values"
+msgstr "Баардык жолчолорго бул дисктин номурун коюу"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:157
+#, fuzzy
+msgid "_Disc Number:"
+msgstr "Дисктин номери"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:178
+#, fuzzy
+msgid "Set all years to this value"
+msgstr "Бул жылды баардык жолчолорго коюу"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:179
+msgid "_Year:"
+msgstr "_Жыл:"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:186
+msgid "Set all ratings to this value"
+msgstr "Бул бааны баардык жолчолорго берүү."
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/BasicTrackDetailsPage.cs:187
+msgid "_Rating:"
+msgstr "_Рейтинг:"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/ExtraTrackDetailsPage.cs:44
+msgid "Extra"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/ExtraTrackDetailsPage.cs:50
+#, fuzzy
+msgid "Set all composers to this value"
+msgstr "Бул жылды баардык жолчолорго коюу"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/ExtraTrackDetailsPage.cs:51
+msgid "C_omposer:"
+msgstr "Композитор:"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/ExtraTrackDetailsPage.cs:57
+#, fuzzy
+msgid "Set all conductors to this value"
+msgstr "Бул жанрды баардык жолчолорго коюу"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/ExtraTrackDetailsPage.cs:58
+#, fuzzy
+msgid "Con_ductor:"
+msgstr "Шарты:"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/ExtraTrackDetailsPage.cs:69
+#, fuzzy
+msgid "Set all groupings to this value"
+msgstr "Бул бааны баардык жолчолорго берүү."
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/ExtraTrackDetailsPage.cs:70
+#, fuzzy
+msgid "_Grouping:"
+msgstr "Топтун радиосу"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/ExtraTrackDetailsPage.cs:80
+#, fuzzy
+msgid "Set all beats per minute to this value"
+msgstr "Бул бааны баардык жолчолорго берүү."
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/ExtraTrackDetailsPage.cs:81
+msgid "Bea_ts Per Minute:"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/ExtraTrackDetailsPage.cs:93
+#, fuzzy
+msgid "Set all copyrights to this value"
+msgstr "Бул бааны баардык жолчолорго берүү."
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/ExtraTrackDetailsPage.cs:94
+#, fuzzy
+msgid "Copyrig_ht:"
+msgstr "Лицензиясы (автордук укугу):"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/ExtraTrackDetailsPage.cs:100
+msgid "Set all licenses to this value"
+msgstr "Бул жанрды баардык жолчолорго коюу"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/ExtraTrackDetailsPage.cs:101
+msgid "_License URI:"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/ExtraTrackDetailsPage.cs:110
+#, fuzzy
+msgid "Set all comments to this value"
+msgstr "Бул жанрды баардык жолчолорго коюу"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/ExtraTrackDetailsPage.cs:111
+#, fuzzy
+msgid "Co_mment:"
+msgstr "Жолчолордун саны"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/HelpPage.cs:69
+msgid "Help"
+msgstr "Жардам"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/LyricsPage.cs:46
+msgid "Lyrics"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/PageNavigationEntry.cs:74
+msgid "Advance to the next track and edit its title"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/SortingPage.cs:42
+msgid "Sorting"
+msgstr "Иреттөө"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/SortingPage.cs:48
+#, fuzzy
+msgid "Set all sort track titles to this value"
+msgstr "Баардык жолчолорго бул аткаруучунун атын коюу"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/SortingPage.cs:49
+#, fuzzy
+msgid "Sort Track Title:"
+msgstr "Аталыш"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/SortingPage.cs:56
+#, fuzzy
+msgid "Set all sort track artists to this value"
+msgstr "Баардык жолчолорго бул аткаруучунун атын коюу"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/SortingPage.cs:57
+#, fuzzy
+msgid "Sort Track Artist:"
+msgstr "<b>_Аткаруучу:</b>"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/SortingPage.cs:63
+#, fuzzy
+msgid "Set all sort album artists to this value"
+msgstr "Баардык жолчолорго бул аткаруучунун атын коюу"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/SortingPage.cs:64
+#, fuzzy
+msgid "Sort Album Artist:"
+msgstr "<b>_Аткаруучу:</b>"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/SortingPage.cs:70
+#, fuzzy
+msgid "Set all sort album titles to this value"
+msgstr "Баардык жолчолорго бул аткаруучунун атын коюу"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/SortingPage.cs:71
+#, fuzzy
+msgid "Sort Album Title:"
+msgstr "Альбом боюнча"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:89
+#, fuzzy
+msgid "Value"
+msgstr "альбом"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:156
+#, fuzzy
+msgid "File Name:"
+msgstr "Файлдын _аты"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:157
+#, fuzzy
+msgid "Directory:"
+msgstr "Үйдүк каталог"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:158
+msgid "Full Path:"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:164
+#, fuzzy
+msgid "URI:"
+msgstr "URI"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:173
+#, fuzzy
+msgid "Duration:"
+msgstr "Узундугу"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:176
+#, fuzzy
+msgid "Audio Bitrate:"
+msgstr "Агымдын ылдамдыгы"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:178
+msgid "Audio Sample Rate:"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:180
+#, fuzzy
+msgid "Audio Channels:"
+msgstr "Каналдар"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:183
+msgid "Video Dimensions:"
+msgstr ""
+
+#. Translators: {0} is the description of the codec
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:190
+#, fuzzy, csharp-format
+msgid "{0} Codec:"
+msgstr "{0} секунда"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:195
+msgid "Container Formats:"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:199
+#, fuzzy
+msgid "Imported On:"
+msgstr "<b>Импорттолду:</b>"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:201
+#, fuzzy
+msgid "Last Played:"
+msgstr "Акыркы аткаруу"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:203
+#, fuzzy
+msgid "Last Skipped:"
+msgstr "Акыркы жолу өткөрүлдү"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:205
+#, fuzzy
+msgid "Play Count:"
+msgstr "Аткарылды"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:206
+#, fuzzy
+msgid "Skip Count:"
+msgstr "Өткөрүлдү"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:207
+msgid "Score:"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:213
+msgid "File Size:"
+msgstr "Файлдын көлөмү:"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/StatisticsPage.cs:214
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/FileSizeQueryValueEntry.cs:61
+msgid "bytes"
+msgstr "байт"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs:84
+#, fuzzy
+msgid "Track Editor"
+msgstr "Аталыш"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs:84
+#, fuzzy
+msgid "Track Properties"
+msgstr "Буклактын касиеттери"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs:132
+#, fuzzy
+msgid "Show the previous track"
+msgstr "Мурунку жолчону ойнотуу"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs:138
+msgid "Show the next track"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs:161
+#, fuzzy
+msgid "Title:"
+msgstr "Аталышы"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs:162
+#, fuzzy
+msgid "Artist:"
+msgstr "Аткаруучу"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs:163
+#, fuzzy
+msgid "Album:"
+msgstr "Альбом"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs:267
+msgid "Sync all field _values"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs:272
+#, fuzzy
+msgid "Apply the values of all common fields set for this track to all of the tracks selected in this editor"
+msgstr "Баардык тандалган жолчолорго Аткаруучу, Альбом, Жанр, Жолчолордун саны, Жылы жана Баасынын маанилерин берүү."
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs:366
+#, fuzzy, csharp-format
+msgid "<i>Editing {0} of {1} items</i>"
+msgstr "{0} - {1} элементи редакторлонууда"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs:606
+#, csharp-format
+msgid "Save the changes made to the open track?"
+msgid_plural "Save the changes made to {0} of {1} open tracks?"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs:623
+msgid "Close _without Saving"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.TrackEditor/TrackEditorDialog.cs:659
+#, fuzzy, csharp-format
+msgid "If you don't save, changes from the last {0} will be permanently lost."
+msgstr "Жоготулган ырларды кайра кайтаруу мүмкүн эмес."
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/ViewActions.cs:62
+msgid "_View"
+msgstr "_Түр"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/ViewActions.cs:65
+msgid "_Equalizer"
+msgstr "_Эквалайзер"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/ViewActions.cs:66
+msgid "View the graphical equalizer"
+msgstr "Графикалык эквалайзерди көрсөтүү"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/ViewActions.cs:72
+msgid "_Context Pane"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/ViewActions.cs:73
+#, fuzzy
+msgid "Show the context pane beneath the track list"
+msgstr "Кичи-браузерди ойнотмо тизменин үстүнө жайгаштыруу"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/ViewActions.cs:80
+msgid "_Fullscreen"
+msgstr "_Толук экран"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui/ViewActions.cs:81
+#, fuzzy
+msgid "Enter or leave fullscreen mode"
+msgstr "Толук экрандык режимге кирүү же чыгуу"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TaskStatusIcon.cs:92
+#, fuzzy
+msgid "Active Task Running"
+msgid_plural "Active Tasks Running"
+msgstr[0] "Иш улантылууда"
+msgstr[1] "Иш улантылууда"
+
+#. Translators: {0} and {1} are for markup so ignore them, {2} and {3}
+#. are Podcast Name and Published Date, respectively;
+#. e.g. 'from BBtv published 7/26/2007'
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:444
+#, fuzzy, csharp-format
+msgid "{0}from{1} {2} {0}published{1} {3}"
+msgstr "{0} - {1} {2} {0}жарыяланды{1} {3}"
+
+#. simply: "Chicago Public Radio" or whatever the artist name is
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:457
+#, fuzzy
+msgid "Unknown Stream"
+msgstr "Белгисиз композиция"
+
+#. Translators: {0} and {1} are markup so ignore them, {2} is the name of the radio station
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:460
+#, fuzzy, csharp-format
+msgid "{0}on{1} {2}"
+msgstr "{0} - {1} {2}"
+
+#. Translators: {0} is the "from {album} by {artist}" type string, and {1} is the "on {radio station name}" string
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:463
+#, fuzzy, csharp-format
+msgid "{0} {1}"
+msgstr "{0} — {1}"
+
+#. Translators: {0} and {1} are for markup so ignore them, {2} and {3}
+#. are Artist Name and Album Title, respectively;
+#. e.g. 'by Parkway Drive from Killing with a Smile'
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:499
+#, fuzzy, csharp-format
+msgid "{0}by{1} {2} {0}from{1} {3}"
+msgstr "{0}аткарылууда{1} {2} {0}альбомдон{1} {3}"
+
+#. Translators: {0} and {1} are for markup so ignore them, {2} is for Album Title;
+#. e.g. 'from Killing with a Smile'
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:503
+#, fuzzy, csharp-format
+msgid "{0}from{1} {2}"
+msgstr "{0} - {1} {2}"
+
+#. Translators: {0} and {1} are for markup so ignore them, {2} is for Artist Name;
+#. e.g. 'by Parkway Drive'
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs:507
+#, fuzzy, csharp-format
+msgid "{0}by{1} {2}"
+msgstr "{0} аткарылууда {1} {2}"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTile.cs:138
+msgid "Stop Operation"
+msgstr "Токтотуу"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTile.cs:139
+#, csharp-format
+msgid "Stop {0}"
+msgstr "{0} токтотуу"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTile.cs:142
+#, fuzzy
+msgid "This operation is still performing work. Would you like to stop it?"
+msgstr "Операция бүтө элек. Үзөсүзбү?"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTile.cs:144
+#, fuzzy, csharp-format
+msgid "The '{0}' operation is still performing work. Would you like to stop it?"
+msgstr "«{0}» операциясы аткарылууда. Аны үзөсүзбү?"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTile.cs:148
+msgid "Continue"
+msgstr "Улантуу"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTile.cs:149
+#, csharp-format
+msgid "Continue {0}"
+msgstr "{0} улантуу"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTile.cs:184
+#, fuzzy
+msgid "Stopping..."
+msgstr "Издөө жүрүп жатат..."
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Library.Gui/FileImportSource.cs:46
+msgid "Import Files to Library"
+msgstr "Файлдарды медиатекага импорттоо"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Library.Gui/FileImportSource.cs:52
+#, fuzzy
+msgid "Media Files"
+msgstr "Медиа файлдар"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Library.Gui/FileImportSource.cs:66
+msgid "Local Files"
+msgstr "Локалдык файлдар"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Library.Gui/FileImportSource.cs:92
+msgid "_Files to import:"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Library.Gui/FileImportSource.cs:93
+#, fuzzy
+msgid "Select Files"
+msgstr "Баарын _тандоо"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Library.Gui/FileImportSource.cs:94
+#, fuzzy
+msgid "(none selected)"
+msgstr "боюнча тандалды"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Library.Gui/FolderImportSource.cs:44
+#, fuzzy
+msgid "Import Folders to Library"
+msgstr "Папкелерди медиатекага импорттоо"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Library.Gui/FolderImportSource.cs:62
+msgid "Local Folders"
+msgstr "Локалдык каталогдор"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Library.Gui/FolderImportSource.cs:80
+#, fuzzy
+msgid "_Folders to import:"
+msgstr "Дискти импорттоо мүмкүн эмес"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Library.Gui/FolderImportSource.cs:81
+#, fuzzy
+msgid "Select Folders"
+msgstr "Колдонуу"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Library.Gui/PhotoFolderImportSource.cs:67
+msgid "Videos from Photos Folder"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.MediaProfiles.Gui/ProfileComboBox.cs:86
+msgid "No available profiles"
+msgstr "Профилдер жок"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.MediaProfiles.Gui/ProfileConfigurationDialog.cs:72
+#, fuzzy
+msgid "Advanced"
+msgstr "Кененирээк"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.MediaProfiles.Gui/ProfileConfigurationDialog.cs:173
+#, fuzzy, csharp-format
+msgid "Configuring {0}"
+msgstr "{0} улантуу"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Playlist.Gui/PlaylistExportDialog.cs:20
+msgid "Export Playlist"
+msgstr "Ойнотуу тизмесин экспорттоо"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Playlist.Gui/PlaylistExportDialog.cs:29
+msgid "Export"
+msgstr "Экспорттоо"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Playlist.Gui/PlaylistExportDialog.cs:54
+#, fuzzy
+msgid "Select Format: "
+msgstr "Форматтын тандаңыз:"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/DefaultPreferenceWidgets.cs:110
+msgid "Select library location"
+msgstr "Медиатеканын турган жерин бериңиз"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/DefaultPreferenceWidgets.cs:118
+#, fuzzy
+msgid "Reset"
+msgstr "Баштапкы абалга келтирүү"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/DefaultPreferenceWidgets.cs:121
+#, csharp-format
+msgid "Reset location to default ({0})"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/PreferenceDialog.cs:55
+msgid "Could not show preferences"
+msgstr "Программанын ырастоолорун көрсөтүү мүмкүн эмес"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/PreferenceDialog.cs:56
+msgid "The preferences service could not be found."
+msgstr "Ырастоолор кызматтын табуу мүмкүн эмес."
+
+#: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/Editor.cs:82
+msgid "New Smart Playlist"
+msgstr "Жаңы ыңгайлуу ойнотмо тизме"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Sources.Gui/FilteredListSourceContents.cs:109
+msgid "Browser on Left"
+msgstr "Кичи-браузер, сол жакта "
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Sources.Gui/FilteredListSourceContents.cs:110
+#, fuzzy
+msgid "Show the artist/album browser to the left of the track list"
+msgstr "Кичи-браузерди ойнотмо тизменин сол жагына жайгаштыруу"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Sources.Gui/FilteredListSourceContents.cs:113
+msgid "Browser on Top"
+msgstr ""
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Sources.Gui/FilteredListSourceContents.cs:114
+#, fuzzy
+msgid "Show the artist/album browser above the track list"
+msgstr "Кичи-браузерди ойнотмо тизменин үстүнө жайгаштыруу"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Sources.Gui/FilteredListSourceContents.cs:119
+msgid "Show Browser"
+msgstr "Кичи-браузерди көрсөтүү"
+
+#: ../src/Core/Banshee.ThickClient/Banshee.Sources.Gui/FilteredListSourceContents.cs:120
+msgid "Show or hide the artist/album browser"
+msgstr "Кичи-браузерди көрсөтүү же бекитүү"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:1
+#, fuzzy
+msgid "<b>Details</b>"
+msgstr "<b>Кененирээк</b>"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:2
+msgid "<big><b>Import Media to Library</b></big>"
+msgstr "<big><b>Медиатекада камтылгандарды импорттоо</b></big>"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:3
+#, fuzzy
+msgid "Choose an import _source:"
+msgstr "Импорттоо булагын тандаңыз:"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:4
+msgid "Create and save"
+msgstr "Түзүү жана сактоо"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:5
+#, fuzzy
+msgid "Do not show this dialog again"
+msgstr "Диалогту башка көрсөтпө"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:6
+#, fuzzy
+msgid "Enter the address of the file you would like to open:"
+msgstr "Ачыла турган файлдын дарегин киргизиңиз:"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:8
+#, fuzzy
+msgid "I_mport Media Source"
+msgstr "Учурдагы булактан импорттоо"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:9
+#, fuzzy
+msgid "Import Media to Library"
+msgstr "Камтылгандарды медиатекага импорттоо"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:11
+msgid "Open in editor"
+msgstr "Редактордо ачуу"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:12
+msgid "Playlist _Name: "
+msgstr "Ойнотмо тизменин _аты:"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:13
+#, fuzzy
+msgid "Predefined Smart Playlists"
+msgstr "Даяр ыңгайлуу ойнотмо тизмелер"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:14
+msgid "Seek to Position"
+msgstr "Позицияны табуу"
+
+#: ../src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade.h:15
+#, fuzzy
+msgid "Your media library is empty. You may import new music and videos into your library now, or choose to do so later."
+msgstr "Сиздин медиатекаңыз бош. Сиз бул жерге ырларды же видеолорду азыр же кийинчерек импорттой аласыз."
+
+#: ../src/Core/Banshee.Widgets/Banshee.Widgets/DiscUsageDisplay.cs:189
+#, fuzzy
+msgid ""
+"Insert\n"
+"Disc"
+msgstr ""
+"Дискти\n"
+"салыңыз"
+
+#: ../src/Core/Banshee.Widgets/Banshee.Widgets/StreamPositionLabel.cs:148
+msgid "Idle"
+msgstr "Эч нерсе ойнотулган жок"
+
+#: ../src/Core/Banshee.Widgets/Banshee.Widgets/StreamPositionLabel.cs:149
+msgid "Contacting..."
+msgstr "Кошулуу..."
+
+#: ../src/Core/Banshee.Widgets/Banshee.Widgets/StreamPositionLabel.cs:159
+msgid "Buffering"
+msgstr "Буферлөө"
+
+#: ../src/Core/Banshee.Widgets/Banshee.Widgets/VolumeButton.cs:549
+msgid "Muted"
+msgstr "Үнү өчүрүлгөн"
+
+#: ../src/Core/Banshee.Widgets/Banshee.Widgets/VolumeButton.cs:551
+msgid "Full Volume"
+msgstr "Толук үн"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapLibrarySync.cs:124
+#, csharp-format
+msgid "Sync {0}"
+msgstr "{0} токтотуу"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapLibrarySync.cs:190
+#, csharp-format
+msgid "{0} to add, {1} to remove"
+msgstr ""
+
+#. Note to translators: {0}, {1} and {2} will be replaced with numbers.
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapLibrarySync.cs:248
+#, csharp-format
+msgid "{0} to add, {1} to remove, {2} to update"
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:174
+#, fuzzy
+msgid "Device Properties"
+msgstr "Аспаптардын касиеттери"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:191
+msgid "Media Player"
+msgstr "Медиаойнотуучу"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:198
+msgid "Product"
+msgstr "Аталышы"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:199
+msgid "Vendor"
+msgstr "Иштеп чыгаруучу"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:277
+#, csharp-format
+msgid "Loading {0}"
+msgstr "{0} көчүрүлүүдө"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:357
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellYesNo.cs:37
+msgid "Yes"
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:357
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellYesNo.cs:38
+#, fuzzy
+msgid "No"
+msgstr "Жок"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:378
+#, fuzzy, csharp-format
+msgid "The {0} format is not supported by the device, and no converter was found to convert it"
+msgstr "Учурдагы аспап менен «{0}» форматты колдонулбайт, ылайыктуу айландыргыч табылган жок."
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:384
+#, fuzzy
+msgid "File format conversion support is not available"
+msgstr "Учурдагы аспапка файлдын форматтын айландыруу мүмкүн эмес."
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSource.cs:410
+#, fuzzy
+msgid "Error converting file"
+msgstr "Агымды ачууга болгон аракетте ката келип чыкты"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSync.cs:116
+msgid "Manually manage this device"
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSync.cs:117
+msgid "Manually managing your device means you can drag and drop items onto the device, and manually remove them."
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSync.cs:121
+msgid "Automatically sync the device when plugged in or when the libraries change"
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSync.cs:122
+msgid "Begin synchronizing the device as soon as the device is plugged in or the libraries change."
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/DapSync.cs:125
+#, fuzzy
+msgid "Sync Preferences"
+msgstr "Ырастоолор"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapActions.cs:50
+msgid "Synchronize"
+msgstr ""
+
+#. Translators: {0} is the name of the digital audio player
+#: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapActions.cs:88
+#, csharp-format
+msgid "Synchronize {0}"
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapInfoBar.cs:67
+msgid "Audio"
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapInfoBar.cs:68
+msgid "Video"
+msgstr "Видео"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapInfoBar.cs:69
+msgid "Other"
+msgstr "башка"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapInfoBar.cs:70
+msgid "Free Space"
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapInfoBar.cs:96
+msgid "None"
+msgstr "Жок"
+
+#. Translators: {0} is the name assigned to a Digital Audio Player by its owner
+#: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapPropertiesDialog.cs:55
+#, fuzzy, csharp-format
+msgid "{0} Properties"
+msgstr "{0} касиетти"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapPropertiesDialog.cs:78
+#: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapPropertiesDialog.cs:81
+msgid "Device name"
+msgstr "Аспаптын аты"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapPropertiesDialog.cs:99
+#, fuzzy
+msgid "Encode to"
+msgstr "Коддоо"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapPropertiesDialog.cs:109
+msgid "Capacity used"
+msgstr "Орун бош эмес"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/DapPropertiesDialog.cs:121
+#, fuzzy
+msgid "Advanced details"
+msgstr "Кенен маалымат"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap.Gui/PurchasedMusicActions.cs:53
+msgid "Import Purchased Music"
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/PodcastGroupSource.cs:38
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastSource.cs:94
+#, fuzzy
+msgid "Podcasts"
+msgstr "Подкасттар"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/RemovableSource.cs:71
+#, fuzzy, csharp-format
+msgid "Eject {0}"
+msgstr "{0} - чыгаруу"
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/RemovableSource.cs:104
+#, fuzzy, csharp-format
+msgid "Ejecting {0}..."
+msgstr "{0} - чыгарылууда..."
+
+#: ../src/Dap/Banshee.Dap/Banshee.Dap/RemovableSource.cs:111
+#, fuzzy, csharp-format
+msgid "Could not eject {0}: {1}"
+msgstr "{0}:  {1} чыгаруу мүмкүн эмес"
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/DatabaseRebuilder.cs:92
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/DatabaseRebuilder.cs:95
+msgid "Rebuilding Database"
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/DatabaseRebuilder.cs:96
+#, fuzzy
+msgid "Scanning iPod..."
+msgstr "Издөө жүрүп жатат..."
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/DatabaseRebuilder.cs:131
+msgid "Processing Tracks..."
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/DatabaseRebuilder.cs:147
+msgid "Ordering Tracks..."
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/DatabaseRebuilder.cs:218
+msgid "Saving new database..."
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/DatabaseRebuilder.cs:230
+msgid "Error rebuilding iPod database"
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:98
+#, fuzzy
+msgid "Device"
+msgstr "Аспаптын аты"
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:99
+msgid "Color"
+msgstr "Түсү"
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:100
+#, fuzzy
+msgid "Generation"
+msgstr "Жалпы"
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:101
+#, fuzzy
+msgid "Capacity"
+msgstr "Орун бош эмес"
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:102
+#: ../src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:144
+#, fuzzy
+msgid "Serial number"
+msgstr "Жолчонун номери"
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:103
+#, fuzzy
+msgid "Produced on"
+msgstr "Түзгөн"
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:104
+msgid "Firmware"
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:108
+msgid "Capabilities"
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:109
+#, fuzzy
+msgid "Supports cover art"
+msgstr "_Сыртын көрсөтүү"
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:110
+msgid "Supports photos"
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:632
+msgid "Out of space on device"
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:632
+msgid "Please manually remove some songs"
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:661
+#, fuzzy
+msgid "Syncing iPod"
+msgstr "iPod менен синхрондоо жүрүп жатат"
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:662
+#, fuzzy
+msgid "Preparing to synchronize..."
+msgstr "Синхрондоого даярдыктар жүрүп жатат..."
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:683
+msgid "Updating..."
+msgstr "Жаңыруу жүрүп жатат..."
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:687
+msgid "Flushing to disk..."
+msgstr "Дискке жазуу..."
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:59
+#, fuzzy
+msgid "Unable to read your iPod"
+msgstr "Сиздин iPod-дуңуздан маалыматтарды окуу мүмкүн эмес"
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:75
+msgid ""
+"You have used this iPod with a version of iTunes that saves a version of the song database for your iPod that is too new for Banshee to recognize.\n"
+"\n"
+"Banshee can rebuild your database, but some settings might be lost. Using Banshee and iTunes with the same iPod is not recommended."
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:86
+msgid "Learn more about Banshee's iPod support"
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:94
+msgid ""
+"An iPod database could not be found on this device.\n"
+"\n"
+"Banshee can build a new database for you."
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:102
+msgid "What is the reason for this?"
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:115
+msgid "Your iPod is mounted read only. Banshee can not restore your iPod."
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:123
+msgid "Rebuild iPod Database..."
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:131
+msgid "Confirm Rebuild iPod Database"
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:137
+msgid ""
+"Rebuilding your iPod database may take some time. Also note that any playlists you have on your iPod will be lost.\n"
+"\n"
+"Are you sure you want to rebuild your iPod database?"
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:141
+msgid "Rebuild Database"
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/UnsupportedDatabaseView.cs:155
+msgid "Rebuilding iPod Database..."
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/AmazonMp3GroupSource.cs:43
+#, fuzzy
+msgid "Purchased Music"
+msgstr "Жалпы музыка"
+
+#: ../src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageDevice.cs:82
+msgid "Rockbox Device"
+msgstr ""
+
+#: ../src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:114
+#, fuzzy, csharp-format
+msgid "Audio Folder"
+msgid_plural "Audio Folders"
+msgstr[0] "Аудиокаталог"
+msgstr[1] "Аудиокаталогтор"
+msgstr[2] "Аудиокаталогтор"
+
+#: ../src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:121
+#, fuzzy, csharp-format
+msgid "Video Folder"
+msgid_plural "Video Folders"
+msgstr[0] "Аудиокаталог"
+msgstr[1] "Аудиокаталогтор"
+msgstr[2] "Аудиокаталогтор"
+
+#: ../src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:127
+#, fuzzy
+msgid "Required Folder Depth"
+msgstr "Керектүү болгон каталогтун тереңдиги"
+
+#: ../src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/MassStorageSource.cs:130
+#, fuzzy
+msgid "Supports Playlists"
+msgstr "Ойнотуучу тизмени экспорттоо"
+
+#: ../src/Dap/Banshee.Dap.MassStorage/Banshee.Dap.MassStorage/WebOSDevice.cs:188
+#, fuzzy
+msgid "Ringtones"
+msgstr "мүнөт"
+
+#: ../src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:78
+#: ../src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:117
+#, fuzzy
+msgid "MTP Support Ignoring Device"
+msgstr "Аспап MTP модулдук жардам тарабынан көңүл бурулбайт"
+
+#: ../src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:79
+#: ../src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:118
+#, fuzzy
+msgid "Banshee's MTP audio player support can only handle one device at a time."
+msgstr "Banshee менен кошулган MTP аудио ойноткучу, бир убакта бир гана MTP аспабы менен иштей алат."
+
+#: ../src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:91
+#, fuzzy
+msgid "Error Initializing MTP Device Support"
+msgstr "MTP аспабынын жардамчы модулун инициализациялоо мүмкүн эмес"
+
+#: ../src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:92
+#, fuzzy
+msgid "There was an error intializing MTP device support.  See http://www.banshee-project.org/Guide/DAPs/MTP for more information."
+msgstr "MTP аспабынын жардамчы модулун инициализациялоо мүмкүн эмес. Бул тууралуу кошумча маалыматтарды http://www.banshee-project.org/Guide/DAPs/MTP веб-бетинен таба аласыз."
+
+#: ../src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:103
+#, fuzzy
+msgid "Error Finding MTP Device Support"
+msgstr "MTP аспабынын жардамчы модулун таба алган жок"
+
+#: ../src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:104
+#, fuzzy
+msgid "An MTP device was detected, but Banshee was unable to load support for it."
+msgstr "MTP аспабы табылды, бирок Banshee жардамчы модулун арта алган жок."
+
+#: ../src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:145
+#: ../src/Libraries/Hyena.Gui/Hyena.Gui.Dialogs/VersionInformationDialog.cs:66
+msgid "Version"
+msgstr "Нускасы"
+
+#: ../src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:147
+msgid "Battery level"
+msgstr ""
+
+#. user_event.Progress = (double)current / total;
+#. Translators: {0} is the name of the MTP audio device (eg Gabe's Zen Player), {1} is the
+#. track currently being loaded, and {2} is the total # of tracks that will be loaded.
+#: ../src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:163
+#, fuzzy, csharp-format
+msgid "Loading {0} - {1} of {2}"
+msgstr "Артылууда {0} - {1} - {2}"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdDiscModel.cs:76
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:55
+#, fuzzy
+msgid "Audio CD"
+msgstr "Үндүк диск"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdDiscModel.cs:102
+#, csharp-format
+msgid "Track {0}"
+msgstr "{0} жолчо"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdRipper.cs:119
+#, fuzzy
+msgid "Importing Audio CD"
+msgstr "Музыкалык диск импорттолууда"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdRipper.cs:120
+#, fuzzy
+msgid "Initializing Drive"
+msgstr "Кыймылдаткыч инициализациялууда"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdRipper.cs:122
+#, fuzzy, csharp-format
+msgid "<i>{0}</i> is still being imported into the music library. Would you like to stop it?"
+msgstr "<i>{0}</i> дагы деле фонотекага импорттолууда. Импорттоону үзөсүзбү?"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdRipper.cs:247
+msgid "Cannot Import CD"
+msgstr "Музыкалык дискти импорттоо мүмкүн эмес"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:233
+#, fuzzy
+msgid "Audio CDs"
+msgstr "Үндүк диск"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:235
+#, fuzzy
+msgid "Audio CD Importing"
+msgstr "Музыкалык дисктерди импорттоо"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:238
+#, fuzzy
+msgid "_Import format"
+msgstr "_Чыгуудагы файлдын форматы"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:242
+#, fuzzy
+msgid "_Automatically import audio CDs when inserted"
+msgstr "_Салынган үңдүк дисктерди автоматтык түрдө импорттоо"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:243
+#, fuzzy
+msgid "When an audio CD is inserted, automatically begin importing it if metadata can be found and it is not already in the library."
+msgstr "Ар-бир жолу компьютерге үндүк дискти салганда, эгер дисктеги альбом фонотекада жок болсо, музыкаларды импорттоо автоматтык түрдө башталат."
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:247
+#, fuzzy
+msgid "_Eject when done importing"
+msgstr "_Импорттоодон кийин дискти чыгаруу"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:248
+#, fuzzy
+msgid "When an audio CD has been imported, automatically eject it."
+msgstr "Импорттоодон кийин үндүк дискти автоматтык түрдө чыгаруу."
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:251
+#, fuzzy
+msgid "Use error correction when importing"
+msgstr "Импорттоодо келип чыккан каталрды оңдоо"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:252
+#, fuzzy
+msgid "Error correction tries to work around problem areas on a disc, such as surface scratches, but will slow down importing substantially."
+msgstr "Каталарды издөө дискте болгон чийиктерди жана башка көйгөйлөрдү оңдойт, бирок жазууларды импорттоо ылдамдыгын бир кача төмөндөтөт."
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:320
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:440
+#, fuzzy
+msgid "Import CD"
+msgstr "Дискти импорттоо"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:321
+#, fuzzy
+msgid "Import this audio CD to the library"
+msgstr "Бул музыкалык дискти медиатекага импорттоо"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:327
+msgid "Duplicate CD"
+msgstr "Дискти дубликаттоо"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdService.cs:328
+#, fuzzy
+msgid "Duplicate this audio CD"
+msgstr "Бул үндүк дискти дубликаттоо"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:130
+#, fuzzy
+msgid "Searching for CD metadata..."
+msgstr "Бул диск үчүн метаберилиштер изделүүдө..."
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:163
+#, fuzzy
+msgid "Could not fetch metadata for CD."
+msgstr "Диск үчүн метаберилиштерди алуу мүмкүн эмес."
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:191
+#, fuzzy
+msgid "Automatic import off since this album is already in the Music Library."
+msgstr "Бул альбом фонотекада болгондуктан, автоматтык импорттоо өчүрүлдү."
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:214
+#, fuzzy
+msgid "Could not import CD"
+msgstr "Дискти импорттоо мүмкүн эмес"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:231
+#, fuzzy
+msgid "Could not duplicate audio CD"
+msgstr "Үндүк дисктин дубликатын чыгаруу мүмкүн эмес"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:363
+msgid "Ejecting audio CD..."
+msgstr "Музыкалык диск чыгарылууда..."
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:381
+#, csharp-format
+msgid "Could not eject audio CD: {0}"
+msgstr "{0} музыкалык дискин чыгаруу мүмкүн эмес"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:414
+#, fuzzy
+msgid "Audio CD Preferences"
+msgstr "Ырастоолор"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:415
+msgid "Eject Disc"
+msgstr "Дискти чыгаруу"
+
+#: ../src/Extensions/Banshee.AudioCd/Banshee.AudioCd/AudioCdSource.cs:439
+#, fuzzy, csharp-format
+msgid "Import ‟{0}”"
+msgstr "«{0}» импорттоо"
+
+#: ../src/Extensions/Banshee.Bookmarks/Banshee.Bookmarks/BookmarksService.cs:84
+msgid "_Bookmarks"
+msgstr "_Китеп белгилер"
+
+#: ../src/Extensions/Banshee.Bookmarks/Banshee.Bookmarks/BookmarksService.cs:87
+msgid "_Add Bookmark"
+msgstr "_Китеп белгини кошуу"
+
+#: ../src/Extensions/Banshee.Bookmarks/Banshee.Bookmarks/BookmarksService.cs:88
+#, fuzzy
+msgid "Bookmark the Position in the Current Track"
+msgstr "Китеп белгини учурдагы жолчого калтыруу"
+
+#: ../src/Extensions/Banshee.Bookmarks/Banshee.Bookmarks/BookmarksService.cs:100
+msgid "_Remove Bookmark"
+msgstr "_Эсбелгини жоготуу"
+
+#. Translators: This is used to generate bookmark names. {0} is track title, {1} is minutes
+#. (possibly more than two digits) and {2} is seconds (between 00 and 60).
+#: ../src/Extensions/Banshee.Bookmarks/Banshee.Bookmarks/BookmarksService.cs:210
+#, csharp-format
+msgid "{0} ({1}:{2:00})"
+msgstr "{0} ({1}:{2:00})"
+
+#: ../src/Extensions/Banshee.Bpm/Banshee.Bpm/BpmDetectJob.cs:64
+msgid "Detecting BPM"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Bpm/Banshee.Bpm/BpmEntry.cs:86
+msgid "D_etect"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Bpm/Banshee.Bpm/BpmEntry.cs:98
+msgid "T_ap"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Bpm/Banshee.Bpm/BpmEntry.cs:106
+msgid "Have Banshee attempt to auto-detect the BPM of this song"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Bpm/Banshee.Bpm/BpmEntry.cs:108
+#, fuzzy
+msgid "Play this song"
+msgstr "Ойнотуучу тизме"
+
+#: ../src/Extensions/Banshee.Bpm/Banshee.Bpm/BpmEntry.cs:111
+msgid "Tap this button to the beat to set the BPM for this song manually"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Bpm/Banshee.Bpm/BpmService.cs:148
+msgid "_Automatically detect BPM for all songs"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Bpm/Banshee.Bpm/BpmService.cs:149
+msgid "Detect BPM for all songs that don't already have a value set"
+msgstr ""
+
+#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:58
+#, fuzzy
+msgid "Downloading Cover Art"
+msgstr "Сырттар артылууда"
+
+#. Console.WriteLine ("have album {0}/{1} for track uri {2}", track.AlbumId, track.AlbumTitle, track.Uri);
+#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtJob.cs:121
+#, csharp-format
+msgid "{0} - {1}"
+msgstr "{0} — {1}"
+
+#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtService.cs:106
+#, fuzzy
+msgid "_Cover Art"
+msgstr "_Сырттары"
+
+#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtService.cs:107
+msgid "Manage cover art"
+msgstr ""
+
+#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtService.cs:109
+#, fuzzy
+msgid "_Download Cover Art"
+msgstr "Сыртын _артуу"
+
+#: ../src/Extensions/Banshee.CoverArt/Banshee.CoverArt/CoverArtService.cs:110
+msgid "Download cover art for all tracks"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapContainerSource.cs:42
+msgid "Shared Music"
+msgstr "Жалпы музыка"
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapErrorView.cs:73
+msgid "Disconnected from music share"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapErrorView.cs:74
+msgid "Unable to connect to music share"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapErrorView.cs:88
+msgid "Back"
+msgstr "Артка"
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapErrorView.cs:101
+msgid ""
+"iTunes® 7 introduced new compatibility issues and currently only works with other iTunes® 7 clients.\n"
+"\n"
+"No third-party clients can connect to iTunes® music shares anymore. This is an intentional limitation by Apple in iTunes® 7 and we apologize for the unfortunate inconvenience."
+msgstr ""
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapErrorView.cs:111
+msgid "Common reasons for connection failures:"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapErrorView.cs:117
+msgid "The provided login credentials are invalid"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapErrorView.cs:118
+msgid "The login process was canceled"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapErrorView.cs:119
+msgid "Too many users are connected to this share"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapErrorView.cs:121
+msgid "You are no longer connected to this music share"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapErrorView.cs:125
+msgid "Try connecting again"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapErrorView.cs:139
+msgid "The music share is hosted by iTunes® 7"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapLoginDialog.cs:47
+#, fuzzy
+msgid "Login to Music Share"
+msgstr "Музыкалардын жалпы каталогуна кирүү"
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapLoginDialog.cs:80
+#, fuzzy
+msgid "Authentication Required"
+msgstr "Аутентификация керек"
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapLoginDialog.cs:104
+#: ../src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginForm.cs:57
+msgid "Username:"
+msgstr "Колдонуучунун аты:"
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapLoginDialog.cs:112
+#: ../src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginForm.cs:64
+msgid "Password:"
+msgstr "Сырсөз:"
+
+#. Translators: this is a verb used as a button label, not a noun
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapLoginDialog.cs:124
+msgid "Login"
+msgstr "Кирүү"
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs:60
+msgid "Music Share"
+msgstr "Музыка жалпыга ачык"
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs:64
+#, fuzzy
+msgid "Disconnect"
+msgstr "Үзүлүү"
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs:106
+#, csharp-format
+msgid "Connecting to {0}"
+msgstr "{0} менен кошулуу жүрүп жатат"
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs:202
+#, fuzzy, csharp-format
+msgid "Logging in to {0}."
+msgstr "{0} менен каттоо жүрүп жатат."
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs:238
+#, fuzzy, csharp-format
+msgid "Loading {0} track"
+msgid_plural "Loading {0} tracks"
+msgstr[0] "{0} жүктөлүүдө"
+msgstr[1] "{0} жүктөлүүдө"
+
+#: ../src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs:270
+msgid "Loading playlists"
+msgstr "Ойнотуу тизмесин жүктөө"
+
+#: ../src/Extensions/Banshee.FileSystemQueue/Banshee.FileSystemQueue/FileSystemQueueSource.cs:57
+#: ../src/Extensions/Banshee.FileSystemQueue/Banshee.FileSystemQueue/FileSystemQueueSource.cs:58
+msgid "File System Queue"
+msgstr ""
+
+#: ../src/Extensions/Banshee.FileSystemQueue/Banshee.FileSystemQueue/FileSystemQueueSource.cs:72
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueActions.cs:70
+msgid "Clear"
+msgstr "Тазалоо"
+
+#: ../src/Extensions/Banshee.FileSystemQueue/Banshee.FileSystemQueue/FileSystemQueueSource.cs:73
+msgid "Remove all tracks from the file system queue"
+msgstr "Ойнотуу катарын тазалоо"
+
+#: ../src/Extensions/Banshee.FileSystemQueue/Banshee.FileSystemQueue/FileSystemQueueSource.cs:79
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueActions.cs:77
+msgid "Clear on Quit"
+msgstr "Жабууда тазалоо"
+
+#: ../src/Extensions/Banshee.FileSystemQueue/Banshee.FileSystemQueue/FileSystemQueueSource.cs:80
+#, fuzzy
+msgid "Clear the file system queue when quitting"
+msgstr "Программадан чыгууда ойнтуулар катарын тазалоо"
+
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSourceContents.cs:62
+msgid "Not Set"
+msgstr ""
+
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSource.cs:55
+#, fuzzy
+msgid "Radio"
+msgstr "Кокустан"
+
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSource.cs:66
+#, fuzzy
+msgid "Add Station"
+msgstr "_Радиостанцияны кошуу"
+
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSource.cs:67
+#, fuzzy
+msgid "Add a new Internet Radio station or playlist"
+msgstr "Жаңы Last.fm радиостанциясын кошуу"
+
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSource.cs:83
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationEditor.cs:64
+msgid "Edit Station"
+msgstr "Радиостанцияны өзгөртүү"
+
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSource.cs:135
+#, fuzzy
+msgid "Station"
+msgstr "Жаңы радиостанция"
+
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSource.cs:136
+msgid "Creator"
+msgstr "Жаратуучу"
+
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSource.cs:137
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastSource.cs:159
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastEpisodePage.cs:89
+msgid "Description"
+msgstr "Баяны:"
+
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSource.cs:237
+msgid "Please provide a valid station URI"
+msgstr ""
+
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSource.cs:250
+msgid "Please provide a station genre"
+msgstr ""
+
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSource.cs:258
+msgid "Please provide a station title"
+msgstr ""
+
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/StationEditor.cs:67
+#, fuzzy
+msgid "Add new radio station"
+msgstr "Жаңы Last.fm радиостанциясын кошуу"
+
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/StationEditor.cs:68
+#, fuzzy
+msgid "Edit radio station"
+msgstr "Радиостанцияны өзгөртүү"
+
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/StationEditor.cs:97
+msgid "Enter the Genre, Title and URL of the radio station you wish to add. A description is optional."
+msgstr ""
+
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/StationEditor.cs:118
+#, fuzzy
+msgid "Station Genre:"
+msgstr "Радио _режими:"
+
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/StationEditor.cs:120
+#, fuzzy
+msgid "Station Name:"
+msgstr "Аталышы боюнча"
+
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/StationEditor.cs:121
+msgid "Stream URL:"
+msgstr ""
+
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/StationEditor.cs:122
+#, fuzzy
+msgid "Station Creator:"
+msgstr "Радио _режими:"
+
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/StationEditor.cs:123
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastFeedPropertiesDialog.cs:79
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastPropertiesDialog.cs:89
+msgid "Description:"
+msgstr "Баяндалмасы:"
+
+#: ../src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/StationEditor.cs:128
+#: ../src/Libraries/Hyena.Gui/Hyena.Widgets/RatingMenuItem.cs:48
+msgid "Rating:"
+msgstr "Баасы:"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:126
+msgid "_Last.fm"
+msgstr "_Last.fm"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:127
+msgid "Configure the Audioscrobbler plugin"
+msgstr "Audioscrobbler кеңейтмелерин ырастоо"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:130
+#, fuzzy
+msgid "Visit _User Profile Page"
+msgstr "_Сиздин профилдер бетине кирүү"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:131
+#, fuzzy
+msgid "Visit Your Last.fm Profile Page"
+msgstr "_Сиздин Last.fm профилдер бетине кирүү"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:134
+#, fuzzy
+msgid "_Configure..."
+msgstr "_Ырастоолор..."
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:135
+#, fuzzy
+msgid "Configure the Last.fm Extension"
+msgstr "Last.fm ырастоолор кеңейтмесин өзгөртүү"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:140
+msgid "_Enable Song Reporting"
+msgstr "_Угулган ырлар тууралуу баяндамаларды жөнөтүү"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Audioscrobbler/AudioscrobblerService.cs:141
+msgid "Enable song reporting"
+msgstr "Угулган ырлар тууралуу баяндамаларды жөнөтүү"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:66
+#, fuzzy
+msgid "_Add Station..."
+msgstr "_Радиостанцияны кошуу"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:67
+msgid "Add a new Last.fm radio station"
+msgstr "Жаңы Last.fm радиостанциясын кошуу"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:80
+msgid "Connect"
+msgstr "Кошулуу"
+
+#. Translators: {0} is a type of Last.fm station, eg "Fans of" or "Similar to".
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:86
+#, csharp-format
+msgid "Listen to {0} Station"
+msgstr "{0} радиостанциясын угуу"
+
+#. Translators: {0} is a type of Last.fm station, eg "Fans of" or "Similar to".
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:88
+#, fuzzy, csharp-format
+msgid "Listen to the Last.fm {0} station for this artist"
+msgstr "Бул аткаруучу үчүн Last.fm сайтында {0} радиостанциясын угуу"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:93
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:127
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:152
+#, fuzzy
+msgid "View on Last.fm"
+msgstr "Last.fm сайтынан аткаруучунун веб-бетин карап чыгуу"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:94
+#, fuzzy
+msgid "View this artist's Last.fm page"
+msgstr "Last.fm сайтынан аткаруучу тууралуу бетти ачуу"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:97
+#, fuzzy
+msgid "View Artist on Wikipedia"
+msgstr "Википедиядан аткаруучу тууралуу бетти карап чыгуу"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:98
+msgid "Find this artist on Wikipedia"
+msgstr "Википедиядан бул аткаруучу тууралуу маалыматтарды табуу"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:105
+msgid "View Artist's Videos"
+msgstr "Аткаруучунун видеожазууларын карап чыгуу"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:106
+#, fuzzy
+msgid "Find videos by this artist"
+msgstr "Бул аткаруучунун видеожазууларын издөө"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:109
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:110
+msgid "Fans of"
+msgstr "Угуучулар"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:114
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:115
+#, fuzzy
+msgid "Similar to"
+msgstr "Буга окшош"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:119
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:135
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:156
+msgid "Recommend to"
+msgstr "Сунуштоо"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:120
+#, fuzzy
+msgid "Recommend this artist to someone"
+msgstr "Бул аткаруучунун музыкаларын башкаларга сунуштоо"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:128
+#, fuzzy
+msgid "View this album's Last.fm page"
+msgstr "Бул альбомдун Last.fm сайтындагы веб-бетине кирүү"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:136
+#, fuzzy
+msgid "Recommend this album to someone"
+msgstr "Бул альбомду башкаларга сунуштоо"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:143
+msgid "Love Track"
+msgstr "Сүйүктүү жолчо"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:144
+msgid "Mark current track as loved"
+msgstr "Учурда ойнотулуп жаткан композицияга суктаныч көрсөтүү"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:148
+#, fuzzy
+msgid "Ban Track"
+msgstr "Тыюу салуу"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:149
+#, fuzzy
+msgid "Mark current track as banned"
+msgstr "Бул жолчону башка уккум келбейт"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:153
+#, fuzzy
+msgid "View this track's Last.fm page"
+msgstr "Бул композициянын Last.fm радиостанциясындагы веб-бетине кирүү"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:157
+msgid "Recommend this track to someone"
+msgstr "Бул композицияны кимдир бирөөлөргө сунуштоо"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:241
+#, csharp-format
+msgid "http://last.fm/music/{0}"
+msgstr "http://lastfm.ru/music/{0}"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:249
+#, csharp-format
+msgid "http://last.fm/music/{0}/{1}"
+msgstr "http://lastfm.ru/music/{0}/{1}"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:257
+#, csharp-format
+msgid "http://last.fm/music/{0}/_/{1}"
+msgstr "http://last.fm/music/{0}/_/{1}"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:265
+#, csharp-format
+msgid "http://www.last.fm/music/{0}/+videos"
+msgstr "http://www.lastfm.ru/music/{0}/+videos"
+
+#. Translators: this is used for looking up artist pages on Wikipedia; change to your wikipedia language if you want
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:273
+#: ../src/Extensions/Banshee.Wikipedia/Banshee.Wikipedia/WikipediaView.cs:48
+#, csharp-format
+msgid "http://en.wikipedia.org/wiki/{0}"
+msgstr "http://ru.wikipedia.org/wiki/{0}"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:307
+#, fuzzy, csharp-format
+msgid "Fans of {0}"
+msgstr "Угуучулар {0}"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:328
+#, fuzzy, csharp-format
+msgid "Similar to {0}"
+msgstr "{0} менен окшош аткаруулар"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmActions.cs:401
+#, fuzzy
+msgid "_Add Station"
+msgstr "_Радиостанцияны кошуу"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSourceContents.cs:126
+#, fuzzy
+msgid "Recently Loved Tracks"
+msgstr "Акыркы жаккан ойнотуулар"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSourceContents.cs:127
+#, fuzzy
+msgid "Recently Played Tracks"
+msgstr "Жакында эле ойнотулган аткаруулар"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSourceContents.cs:128
+msgid "My Top Artists"
+msgstr "Менин топ-аткаруучуларым"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSourceContents.cs:208
+#, fuzzy, csharp-format
+msgid "{0} plays"
+msgstr "{0} ойнотуулар"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs:102
+msgid "Edit Last.fm Settings"
+msgstr "Last.fm ырастоолорун өзгөртүү"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs:103
+#, fuzzy
+msgid "Sort Stations by"
+msgstr "Радиостанцияларды иретке келтирүү"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs:156
+#, fuzzy
+msgid "Total Play Count"
+msgstr "Ойнотулган саны боюнча"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs:256
+msgid "Account Settings"
+msgstr "Аккаунт ырастоолору"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/LastfmSource.cs:258
+msgid "Join Last.fm"
+msgstr "Last.fm радиостанциясынан каттоодон өтүү"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationEditor.cs:72
+msgid "New Station"
+msgstr "Жаңы радиостанция"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:57
+msgid "Last.fm Station"
+msgstr "Last.fm радиостанциясы"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:150
+msgid "Edit Last.fm Station"
+msgstr "Last.fm радиостанциясын өзгөртүү"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:151
+msgid "Delete Last.fm Station"
+msgstr "Last.fm радиостанциясын жоготуу"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:238
+#, fuzzy, csharp-format
+msgid "Tuning Last.fm to {0}."
+msgstr "Last.fm радиостанциясында {0} менен кошулуу жүрүп жатат."
+
+#. Translators: {0} is an error message sentence from RadioConnection.cs.
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:248
+#, fuzzy, csharp-format
+msgid "Failed to tune in station. {0}"
+msgstr "{0} радиостанциясы менен кошулуу мүмкүн эмес."
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:349
+#, csharp-format
+msgid "Getting new songs for {0}."
+msgstr "{0} үчүн ырлар жүктөлүүдө"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:356
+#, csharp-format
+msgid "No new songs available for {0}."
+msgstr "{0} үчүн жаңы ырлар табылган жок"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:382
+#, fuzzy, csharp-format
+msgid "Failed to get new songs for {0}."
+msgstr "{0} үчүн жаңы ырларды алуу мүмкүн эмес."
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:443
+#, fuzzy, csharp-format
+msgid "{0} song played"
+msgid_plural "{0} songs played"
+msgstr[0] "{0} аткарылуусу угулду"
+msgstr[1] "{0} аткарылуулары угулду"
+msgstr[2] "{0} аткарылуулары угулду"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:575
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:84
+msgid "Recommended"
+msgstr "Сунуш кылынган радиолор"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:576
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:93
+msgid "Personal"
+msgstr "Жеке радио"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:577
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:102
+msgid "Loved"
+msgstr "Сүйктүү аткаруулар радиосу"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:578
+msgid "Banshee Group"
+msgstr "Banshee тобу"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:579
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:111
+#, fuzzy
+msgid "Neighbors"
+msgstr "Кошуналардын радиосу"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationSource.cs:580
+msgid "Creative Commons"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:85
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:94
+msgid "For User:"
+msgstr "Колдонуучуга:"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:103
+msgid "By User:"
+msgstr "Колдонуучудан:"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:112
+msgid "Of User:"
+msgstr "Колдонуучуну:"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:120
+msgid "Group"
+msgstr "Топтун радиосу"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:121
+msgid "Group Name:"
+msgstr "Топтун аталышы:"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:129
+#, fuzzy
+msgid "Tag"
+msgstr "Радио тегдери"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:130
+#, fuzzy
+msgid "Tag Name:"
+msgstr "Теги:"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:138
+#, fuzzy
+msgid "Fan"
+msgstr "Фандар радиосу"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:139
+msgid "Fans of:"
+msgstr "Аткаруучунун:"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:147
+msgid "Similar"
+msgstr "Окшош аткаруучулардын радиосу"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:148
+#, fuzzy
+msgid "Similar to:"
+msgstr "Окшотор:"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:156
+msgid "lastfm:// URL"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Radio/StationType.cs:157
+msgid "lastfm://"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Recommendations/ContextPage.cs:44
+#, fuzzy
+msgid "Last.fm Recommendations"
+msgstr "Last.fm радиостанциясы"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Recommendations/RecommendationPane.cs:81
+#, fuzzy, csharp-format
+msgid "Top Albums by {0}"
+msgstr "Бардык альбомдор ({0})"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Recommendations/RecommendationPane.cs:82
+#, fuzzy, csharp-format
+msgid "Top Tracks by {0}"
+msgstr "{0} жолчо"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Recommendations/RecommendationPane.cs:179
+#, fuzzy
+msgid "Recommended Artists"
+msgstr "Сунуш кылынган радиолор"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Recommendations/RecommendationPane.cs:207
+msgid "No similar artists found"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Recommendations/SimilarArtistTile.cs:60
+#, fuzzy, csharp-format
+msgid "{0}% Similarity"
+msgstr "Буга окшош"
+
+#: ../src/Extensions/Banshee.Lastfm/Banshee.Lastfm.Recommendations/SimilarArtistTile.cs:62
+#, fuzzy
+msgid "Unknown Similarity"
+msgstr "Белгисиз аткаруучу"
+
+#: ../src/Extensions/Banshee.Lastfm/Resources/lastfm.glade.h:1
+msgid "Station _Type:"
+msgstr "Радио _режими:"
+
+#: ../src/Extensions/Banshee.MiniMode/Banshee.MiniMode/MiniModeService.cs:25
+#, fuzzy
+msgid "_Mini Mode"
+msgstr "_Жыйнактуу режим"
+
+#: ../src/Extensions/Banshee.MiniMode/Banshee.MiniMode/MiniModeWindow.cs:127
+msgid "Switch back to full mode"
+msgstr "Толук режимге өтүү"
+
+#: ../src/Extensions/Banshee.MiniMode/Banshee.MiniMode/MiniModeWindow.cs:128
+msgid "Change repeat playback mode"
+msgstr "Кайталоочу ойнотмо режимин алмаштыруу"
+
+#: ../src/Extensions/Banshee.MiniMode/Resources/minimode.glade.h:1
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/X11NotificationAreaBox.cs:65
+msgid "Banshee"
+msgstr "Banshee"
+
+#: ../src/Extensions/Banshee.MiniMode/Resources/minimode.glade.h:2
+msgid "Current source:"
+msgstr "Булак:"
+
+#: ../src/Extensions/Banshee.MiniMode/Resources/minimode.glade.h:3
+msgid "Full Mode"
+msgstr "Толук режим"
+
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:132
+#, fuzzy
+msgid "_Show Notifications"
+msgstr "Кабарлоочуну _көрсөтүү"
+
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:133
+#, fuzzy
+msgid "Show notifications when item changes"
+msgstr "Кийинки ырга өтүүдө кабарлоочуну көрсөтүү"
+
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:334
+msgid "Still Running"
+msgstr "Иш улантылууда"
+
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:335
+#, fuzzy
+msgid "Banshee was closed to the notification area. Use the <i>Quit</i> option to end your session."
+msgstr "Banshee программасы кабарландыруучу областка түрүлгөн. Иштемеден чыгуу үчүн «Чыгуу» командасын колдонуңуз."
+
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:457
+#: ../src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/NowPlayingSource.cs:48
+msgid "Now Playing"
+msgstr "Азыр ойнотулат"
+
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:462
+msgid "Skip this item"
+msgstr "Өткөрүп жиберүү"
+
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:468
+#, fuzzy
+msgid "Cannot show notification"
+msgstr "Кабарландыруучуну көрсөтүү мүмкүн эмес"
+
+#: ../src/Extensions/Banshee.PlayerMigration/Banshee.PlayerMigration/AmarokPlayerImportSource.cs:143
+#, csharp-format
+msgid "Unable to import track: {0}"
+msgstr ""
+
+#: ../src/Extensions/Banshee.PlayerMigration/Banshee.PlayerMigration/AmarokPlayerImportSource.cs:177
+msgid "Importing from Amarok failed"
+msgstr ""
+
+#: ../src/Extensions/Banshee.PlayerMigration/Banshee.PlayerMigration/AmarokPlayerImportSource.cs:188
+msgid "Amarok"
+msgstr "Amarok"
+
+#: ../src/Extensions/Banshee.PlayerMigration/Banshee.PlayerMigration/RhythmboxPlayerImportSource.cs:236
+#: ../src/Extensions/Banshee.PlayerMigration/Banshee.PlayerMigration/RhythmboxPlayerImportSource.cs:397
+#, fuzzy
+msgid "Unable to import song."
+msgstr "Угулган ырлар тууралуу баяндамаларды жөнөтүү"
+
+#: ../src/Extensions/Banshee.PlayerMigration/Banshee.PlayerMigration/RhythmboxPlayerImportSource.cs:370
+#, fuzzy
+msgid "Rhythmbox Music Player"
+msgstr "Banshee музыкалык ойнотмо"
+
+#: ../src/Extensions/Banshee.PlayerMigration/Banshee.PlayerMigration/RhythmboxPlayerImportSource.cs:384
+#, fuzzy
+msgid "iTunes Importer"
+msgstr "импорттолду"
+
+#: ../src/Extensions/Banshee.PlayerMigration/Banshee.PlayerMigration/RhythmboxPlayerImportSource.cs:385
+#, fuzzy
+msgid "_Import"
+msgstr "Импорттоо"
+
+#: ../src/Extensions/Banshee.PlayerMigration/Banshee.PlayerMigration/RhythmboxPlayerImportSource.cs:386
+#, fuzzy
+msgid "Import _playlists"
+msgstr "Ойнотуучу тизмени экспорттоо"
+
+#: ../src/Extensions/Banshee.PlayerMigration/Banshee.PlayerMigration/RhythmboxPlayerImportSource.cs:387
+#, csharp-format
+msgid "Locate your \"{0}\" file..."
+msgstr ""
+
+#: ../src/Extensions/Banshee.PlayerMigration/Banshee.PlayerMigration/RhythmboxPlayerImportSource.cs:388
+#, fuzzy, csharp-format
+msgid "Locate \"{0}\""
+msgstr "{0} көчүрүлүүдө"
+
+#: ../src/Extensions/Banshee.PlayerMigration/Banshee.PlayerMigration/RhythmboxPlayerImportSource.cs:389
+msgid "Locate iTunes Music Directory"
+msgstr ""
+
+#: ../src/Extensions/Banshee.PlayerMigration/Banshee.PlayerMigration/RhythmboxPlayerImportSource.cs:391
+#, csharp-format
+msgid "The iTunes library refers to your music directory as \"{0}\" but Banshee was not able to infer the location of this directory. Please locate it."
+msgstr ""
+
+#: ../src/Extensions/Banshee.PlayerMigration/Banshee.PlayerMigration/RhythmboxPlayerImportSource.cs:393
+#, fuzzy
+msgid "iTunes Media Player"
+msgstr "Медиаойнотуучу"
+
+#: ../src/Extensions/Banshee.PlayerMigration/Banshee.PlayerMigration/RhythmboxPlayerImportSource.cs:395
+msgid "Banshee is not familiar with this version of the iTunes library format. Importing may or may not work as expected, or at all. Would you like to attempt to import anyway?"
+msgstr ""
+
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/HeaderWidget.cs:47
+msgid "manually"
+msgstr ""
+
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/HeaderWidget.cs:48
+msgid "by song"
+msgstr "ыр боюнча"
+
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/HeaderWidget.cs:49
+#, fuzzy
+msgid "by album"
+msgstr "альбом"
+
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/HeaderWidget.cs:50
+#, fuzzy
+msgid "by artist"
+msgstr "аткаруучу"
+
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/HeaderWidget.cs:51
+#, fuzzy
+msgid "by rating"
+msgstr "рейтинги"
+
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/HeaderWidget.cs:52
+msgid "by score"
+msgstr ""
+
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/HeaderWidget.cs:59
+msgid "_Fill"
+msgstr ""
+
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/HeaderWidget.cs:73
+#, fuzzy
+msgid "f_rom"
+msgstr "-"
+
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueActions.cs:49
+#, fuzzy
+msgid "Add to Play Queue"
+msgstr "Ойнотмо катарга кошуу"
+
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueActions.cs:50
+#, fuzzy
+msgid "Append selected songs to the play queue"
+msgstr "Тандалгандарды ойнотмо катардын аягына кошуу"
+
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueActions.cs:57
+#, fuzzy
+msgid "Refresh random tracks in the play queue"
+msgstr "Ойнотмо катарын тазалоо"
+
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueActions.cs:63
+msgid "Add More"
+msgstr ""
+
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueActions.cs:64
+#, fuzzy
+msgid "Add more random tracks to the play queue"
+msgstr "Ойнотмо катарын тазалоо"
+
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueActions.cs:71
+#, fuzzy
+msgid "Remove all tracks from the play queue"
+msgstr "Ойнотмо катарын тазалоо"
+
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueActions.cs:78
+#, fuzzy
+msgid "Clear the play queue when quitting"
+msgstr "Иштемени жапканда ойнотмо катарын тазалоо"
+
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:77
+msgid "Play Queue"
+msgstr "Ойнотмо кезеги"
+
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:86
+msgid "Remove From Play Queue"
+msgstr "Ойнотмо катардан жоготуу"
+
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:747
+msgid "Number of _played songs to show"
+msgstr ""
+
+#: ../src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueSource.cs:753
+msgid "Number of _upcoming songs to show"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastFeedModel.cs:47
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastSource.cs:158
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastEpisodePage.cs:86
+msgid "Podcast"
+msgstr "Подкаст"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastFeedModel.cs:69
+#, fuzzy, csharp-format
+msgid "All Podcasts ({0})"
+msgstr "Баардык подкасттар ({0})"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastSource.cs:158
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastEpisodePage.cs:88
+msgid "Published"
+msgstr "Жарыясы"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastSource.cs:158
+msgid "New"
+msgstr "Жаңы"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Data/PodcastSource.cs:159
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellDownloadStatus.cs:57
+msgid "Downloaded"
+msgstr "Жүктөөлөр"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellDownloadStatus.cs:58
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellUnheard.cs:58
+msgid "All Items"
+msgstr "Баардык чыгаруулар"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellDownloadStatus.cs:59
+#, fuzzy
+msgid "Not Downloaded"
+msgstr "Жүктөөлөр"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellPodcast.cs:113
+#, fuzzy
+msgid "Never updated"
+msgstr "Эч качан жаңыланбаган"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellPodcast.cs:115
+#, fuzzy, csharp-format
+msgid "Updated at {0}"
+msgstr "Жаңылануу {0}"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellPodcast.cs:117
+#, fuzzy, csharp-format
+msgid "Updated {0}"
+msgstr "Жаңылануу {0}"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellUnheard.cs:57
+msgid "New Items"
+msgstr "Жаңы чыгаруулар"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/ColumnCellUnheard.cs:59
+msgid "Old Items"
+msgstr "Эски чыгаруулар"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/DownloadManager/DownloadUserJob.cs:46
+msgid "Downloads"
+msgstr "Жүктөө"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/DownloadManager/DownloadUserJob.cs:50
+#, fuzzy
+msgid "Downloading Podcast(s)"
+msgstr "Подкасталарды жүктөө"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/DownloadManager/DownloadUserJob.cs:51
+msgid "Initializing..."
+msgstr "Инициализация жүрүп жатат..."
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/DownloadManager/DownloadUserJob.cs:52
+#, fuzzy
+msgid "Cancel all podcast downloads?"
+msgstr "Жүктөөнү токтотуу"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/DownloadManager/DownloadUserJob.cs:120
+#, fuzzy, csharp-format
+msgid "Transferring {0} file at {1} KB/s"
+msgid_plural "Transferring {0} of {2} files at {1} KB/s"
+msgstr[0] "{0} файлы {1} КБ/с ылдамдыгы менен жөнөтүлүүдө"
+msgstr[1] "{0} файлдар {1} КБ/с ылдамдыгы менен жөнөтүлүүдө"
+msgstr[2] "{0} файлдар {1} КБ/с ылдамдыгы менен жөнөтүлүүдө"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/DownloadManager/DownloadUserJob.cs:133
+#, fuzzy
+msgid "Canceling Downloads"
+msgstr "Жүктөөлөр токтотулду"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/DownloadManager/DownloadUserJob.cs:135
+msgid "Waiting for downloads to terminate..."
+msgstr "Жүктөөлөрдүн аягына чейин күтүү..."
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:66
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:90
+#, fuzzy
+msgid "Check for New Episodes"
+msgstr "Жаңы чыгаруулар бар экендигин текшерүү"
+
+#. "<control><shift>U",
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:67
+#, fuzzy
+msgid "Refresh All Podcasts"
+msgstr "Баардык подкасттарды жаңыртуу"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:72
+#, fuzzy
+msgid "Subscribe to Podcast..."
+msgstr "Подкастка жазылуу"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:73
+msgid "Subscribe to a new podcast"
+msgstr "Жаңы подкастка жазылуу"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:84
+#, fuzzy
+msgid "Unsubscribe and Delete"
+msgstr "Жазылуудан чыгуу жана жоготуу"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:96
+#, fuzzy
+msgid "Download All Episodes"
+msgstr "Баардык чыгарууларды жүктөө"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:102
+msgid "Visit Podcast Homepage"
+msgstr "Подскаст сайтына кирүү"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:114
+msgid "Mark as New"
+msgstr "Жаңы деп белгилөө"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:120
+msgid "Mark as Old"
+msgstr "Эски деп белгилөө"
+
+#. Translators: this is a verb used as a button name, not a noun
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:126
+#, fuzzy
+msgid "Download Podcast(s)"
+msgstr "Подкасттарды жүктөө"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:132
+#, fuzzy
+msgid "Cancel Download"
+msgstr "Жүктөөнү токтотуу"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:138
+msgid "Remove Downloaded File(s)"
+msgstr "Жүктөлгөн файлдарды жоготуу"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:144
+#, fuzzy
+msgid "Visit Website"
+msgstr "Веб-сайтка кирүү"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:156
+msgid "Subscribe to Podcast"
+msgstr "Подкастка жазылуу"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:316
+msgid "Invalid URL"
+msgstr "Туура эмес дарек"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastActions.cs:317
+#, fuzzy
+msgid "Podcast URL is invalid."
+msgstr "Подкаста дареги туура эмес."
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastEpisodePage.cs:87
+#, fuzzy
+msgid "Author"
+msgstr "Автору:"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastEpisodePage.cs:109
+#, fuzzy
+msgid "Episode Details"
+msgstr "Ката тууралуу кененирээк"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastFeedPropertiesDialog.cs:83
+msgid "Last updated:"
+msgstr "Акыркы жаңыртуу:"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastFeedPropertiesDialog.cs:87
+#, fuzzy
+msgid "Podcast Name:"
+msgstr "Подкасты:"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastFeedPropertiesDialog.cs:97
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastPropertiesDialog.cs:85
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastSubscribeDialog.cs:146
+msgid "URL:"
+msgstr "Дареги:"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastFeedPropertiesDialog.cs:101
+msgid "When feed is updated:"
+msgstr "Агым качан жаңырган:"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastFeedPropertiesDialog.cs:117
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastPropertiesDialog.cs:105
+msgid "No description available"
+msgstr "Баяндалмасы табылган жок"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastPropertiesDialog.cs:77
+#, fuzzy
+msgid "Podcast:"
+msgstr "Подкасты:"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastPropertiesDialog.cs:81
+msgid "Date:"
+msgstr "Датасы:"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastSubscribeDialog.cs:61
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastSubscribeDialog.cs:170
+msgid "Subscribe"
+msgstr "Жазылуу"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastSubscribeDialog.cs:92
+msgid "Subscribe to New Podcast"
+msgstr "Подкастингтин жаңы агымына жазылуу"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastSubscribeDialog.cs:100
+#, fuzzy
+msgid "Please enter the URL of the podcast to which you would like to subscribe."
+msgstr "Жазылууну каалаган подкасттын дарегин киргизиңиз."
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastSubscribeDialog.cs:112
+#, fuzzy
+msgid "When new episodes are available:  "
+msgstr "Жаңы чыгаруулар качан чыгат:"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/SyncPreferenceComboBox.cs:41
+msgid "Download all episodes"
+msgstr "Баардык чыгарууларды жүктөө"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/SyncPreferenceComboBox.cs:42
+msgid "Download the most recent episode"
+msgstr "Эң жаңы чыгарууларды гана жүктөө"
+
+#: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/SyncPreferenceComboBox.cs:43
+#, fuzzy
+msgid "Let me decide which episodes to download"
+msgstr "Кайсыл чыгаруулар жүктөөлүшүн тандоого уруксат берүү"
+
+#: ../src/Extensions/Banshee.RemoteAudio/Banshee.RemoteAudio/RemoteSpeakersWidget.cs:51
+#, fuzzy
+msgid "_Speaker:"
+msgstr "Издөө:"
+
+#: ../src/Extensions/Banshee.Sample/Banshee.Sample/SampleSource.cs:40
+msgid "Sample"
+msgstr "Мисал"
+
+#: ../src/Extensions/Banshee.SqlDebugConsole/Banshee.SqlDebugConsole/SqlActions.cs:59
+msgid "Show SQL Console"
+msgstr ""
+
+#: ../src/Extensions/Banshee.SqlDebugConsole/Banshee.SqlDebugConsole/SqlActions.cs:64
+msgid "Start SQL Monitoring"
+msgstr "SQL мониторун иштетүү"
+
+#: ../src/Extensions/Banshee.SqlDebugConsole/Banshee.SqlDebugConsole/SqlActions.cs:69
+msgid "Stop SQL Monitoring"
+msgstr ""
+
+#: ../src/Extensions/Banshee.Wikipedia/Banshee.Wikipedia/ContextPage.cs:44
+msgid "Wikipedia"
+msgstr "Википедиа"
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Header.cs:551
+#, fuzzy, csharp-format
+msgid "Hide <i>{0}</i>"
+msgstr "{0} бекитүү"
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Gui.Dialogs/ExceptionDialog.cs:52
+#, fuzzy
+msgid "Banshee Encountered a Fatal Error"
+msgstr "Banshee менен иштөөдө ката келип чыкты"
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Gui.Dialogs/ExceptionDialog.cs:90
+#, fuzzy
+msgid "Error Details"
+msgstr "Ката тууралуу кененирээк"
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Gui.Dialogs/ExceptionDialog.cs:134
+#, fuzzy
+msgid "An unhandled exception was thrown: "
+msgstr "Иштелип чыкбаган алып таштоолор алынды:"
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Gui.Dialogs/VersionInformationDialog.cs:58
+#, fuzzy
+msgid "Assembly Version Information"
+msgstr "Чогултуу нускасы тууралуу маалымат"
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Gui.Dialogs/VersionInformationDialog.cs:64
+msgid "Assembly Name"
+msgstr "Чогултуу аты"
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/FileSizeQueryValueEntry.cs:62
+msgid "KB"
+msgstr "КБ"
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryBox.cs:86
+msgid "Condition:"
+msgstr "Шарты:"
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryBox.cs:104
+msgid "_Match"
+msgstr "_Туура келет"
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryBox.cs:111
+msgid "all"
+msgstr "баары"
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryBox.cs:112
+msgid "any"
+msgstr "каалаган"
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryBox.cs:117
+msgid "of the following:"
+msgstr "кийинкилерден:"
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryLimitBox.cs:58
+msgid "_Limit to"
+msgstr "_Чейин чектөө"
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/QueryLimitBox.cs:85
+#, fuzzy
+msgid "selected by"
+msgstr "боюнча тандалды"
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/RelativeTimeSpanQueryValueEntry.cs:42
+msgid "ago"
+msgstr "артка"
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/TimeSpanQueryValueEntry.cs:59
+msgid "seconds"
+msgstr "секунд"
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/TimeSpanQueryValueEntry.cs:62
+msgid "days"
+msgstr "күн"
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/TimeSpanQueryValueEntry.cs:63
+msgid "weeks"
+msgstr "жума"
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/TimeSpanQueryValueEntry.cs:64
+msgid "months"
+msgstr "ай"
+
+#: ../src/Libraries/Hyena.Gui/Hyena.Query.Gui/TimeSpanQueryValueEntry.cs:65
+msgid "years"
+msgstr "жыл"
+
+#. public static readonly Operator Equal              = new Operator ("equals", "= {0}", "==", "=", ":");
+#. public static readonly Operator NotEqual           = new Operator ("notEqual", "!= {0}", true, "!=", "!:");
+#. public static readonly Operator LessThanEqual      = new Operator ("lessThanEquals", "<= {0}", "<=");
+#. public static readonly Operator GreaterThanEqual   = new Operator ("greaterThanEquals", ">= {0}", ">=");
+#: ../src/Libraries/Hyena/Hyena.Query/DateQueryValue.cs:47
+msgid "before"
+msgstr "чейин"
+
+#: ../src/Libraries/Hyena/Hyena.Query/DateQueryValue.cs:48
+msgid "after"
+msgstr "кийин"
+
+#: ../src/Libraries/Hyena/Hyena.Query/IntegerQueryValue.cs:41
+#: ../src/Libraries/Hyena/Hyena.Query/StringQueryValue.cs:45
+msgid "is"
+msgstr "является/равно"
+
+#: ../src/Libraries/Hyena/Hyena.Query/IntegerQueryValue.cs:42
+#: ../src/Libraries/Hyena/Hyena.Query/StringQueryValue.cs:46
+msgid "is not"
+msgstr "не является/не равно"
+
+#: ../src/Libraries/Hyena/Hyena.Query/IntegerQueryValue.cs:43
+#: ../src/Libraries/Hyena/Hyena.Query/RelativeTimeSpanQueryValue.cs:47
+msgid "at most"
+msgstr "чоң эмес"
+
+#: ../src/Libraries/Hyena/Hyena.Query/IntegerQueryValue.cs:44
+#: ../src/Libraries/Hyena/Hyena.Query/RelativeTimeSpanQueryValue.cs:46
+msgid "at least"
+msgstr "эч болбогондо"
+
+#: ../src/Libraries/Hyena/Hyena.Query/IntegerQueryValue.cs:45
+#: ../src/Libraries/Hyena/Hyena.Query/RelativeTimeSpanQueryValue.cs:45
+#, fuzzy
+msgid "less than"
+msgstr "караганда кичине"
+
+#. The SQL operators in these Operators are reversed from normal on purpose
+#: ../src/Libraries/Hyena/Hyena.Query/IntegerQueryValue.cs:46
+#: ../src/Libraries/Hyena/Hyena.Query/RelativeTimeSpanQueryValue.cs:44
+#, fuzzy
+msgid "more than"
+msgstr "караганда чоң"
+
+#: ../src/Libraries/Hyena/Hyena.Query/NullQueryValue.cs:41
+msgid "empty"
+msgstr "бош"
+
+#: ../src/Libraries/Hyena/Hyena.Query/RelativeTimeSpanQueryValue.cs:90
+#, csharp-format
+msgid "{0} ago"
+msgstr "{0} артка"
+
+#: ../src/Libraries/Hyena/Hyena.Query/StringQueryValue.cs:43
+msgid "contains"
+msgstr "содержит"
+
+#: ../src/Libraries/Hyena/Hyena.Query/StringQueryValue.cs:44
+msgid "doesn't contain"
+msgstr "не содержит"
+
+#: ../src/Libraries/Hyena/Hyena.Query/StringQueryValue.cs:47
+msgid "starts with"
+msgstr "начинается с"
+
+#: ../src/Libraries/Hyena/Hyena.Query/StringQueryValue.cs:48
+msgid "ends with"
+msgstr "заканчивается на"
+
+#: ../src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginDialog.cs:49
+msgid "Log in to Last.fm"
+msgstr "Last.fm сайтына кирүү"
+
+#: ../src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginDialog.cs:76
+msgid "Last.fm Account Login"
+msgstr "Last.fm каттоо жазуусуна кирүү"
+
+#: ../src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginDialog.cs:79
+#, fuzzy
+msgid "Please enter your Last.fm account credentials."
+msgstr "Last.fm катоо жазуусундагы маалыматтарды киргизиңиз."
+
+#: ../src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginDialog.cs:105
+#, fuzzy
+msgid "Save and Log In"
+msgstr "Сактап, анан кирүү"
+
+#: ../src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginForm.cs:113
+#, fuzzy
+msgid "Sign up for Last.fm"
+msgstr "Last.fm сайтынан каттоодон өтүү"
+
+#: ../src/Libraries/Lastfm/Lastfm/AudioscrobblerConnection.cs:446
+#: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:458
+msgid "Last.fm username or password is invalid."
+msgstr "Сиз колдонуучунун атын же сырсөздү туура эмес киргиздиңиз."
+
+#: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:301
+#, fuzzy
+msgid "Failed to Login to Last.fm"
+msgstr "Last.fm сайтына кирүү мүмкүн эмес"
+
+#: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:302
+#, fuzzy
+msgid "Either your username or password is invalid."
+msgstr "Колдонуучунун аты, же сырсөз туура эмес."
+
+#: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:440
+#, fuzzy
+msgid "There is not enough content to play this station."
+msgstr "Учурдагы радиостанцияны ойнош үчүн, камтыганы аз."
+
+#: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:441
+#, fuzzy
+msgid "This group does not have enough members for radio."
+msgstr "Бул группанын өзүнүн радиостанциясы болуш үчүн, катышуучулардын саны өтө аз."
+
+#: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:442
+#, fuzzy
+msgid "This artist does not have enough fans for radio."
+msgstr "Бул аткаруучунун өзүнүн радиостанциясы болуш үчүн, угуучулары аз."
+
+#: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:443
+#, fuzzy
+msgid "This station is not available."
+msgstr "Бул радиостанция иштеген жок."
+
+#: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:444
+#, fuzzy
+msgid "This station is only available to subscribers."
+msgstr "Бул радиостанция жазылуучулар үчүн гана."
+
+#: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:445
+#, fuzzy
+msgid "There are not enough neighbours for this station."
+msgstr "Учурдагы радиостанцияда кошуналардын саны жетишсиз."
+
+#: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:446
+#, fuzzy
+msgid "The streaming system is offline for maintenance, please try again later."
+msgstr "Техникалык себебтерден азыркы учурда ойномдор агымы иштебей турат. Кийинчерээк кайрылып көрүңүз."
+
+#: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:447
+msgid "There was an unknown error."
+msgstr "Белгисиз ката келип чыкты."
+
+#: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:455
+#, fuzzy
+msgid "Not connected to Last.fm."
+msgstr "Last.fm менен кошулуу жок."
+
+#: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:456
+#, fuzzy
+msgid "Account details are needed before you can connect to Last.fm"
+msgstr "Last.fm менен кошулуу үчүн катоо жазуунун маалыматтарын киргизишиңиз керек."
+
+#: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:457
+msgid "No network connection detected."
+msgstr "Тармак менен кошулуу табылган жок."
+
+#: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:459
+#, fuzzy
+msgid "Connecting to Last.fm."
+msgstr "Last.fm менен байланыш кошулууда."
+
+#: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:460
+#, fuzzy
+msgid "Connected to Last.fm."
+msgstr "Last.fm менен байланыш кошулду."
+
+#: ../src/Libraries/Migo/Migo.Syndication/Feed.cs:149
+#, fuzzy
+msgid "Unknown Podcast"
+msgstr "Белгисиз подкаст"
+
+#~ msgid "Play and organize your media collection"
+#~ msgstr ""
+#~ "Сиздин медиакол салууңуздагы мазмуну тереңдетилген издөө куралдарын "
+#~ "билиңиз"
+#~ msgid "All Columns"
+#~ msgstr "Бардык талаа боюнча "
+
+#, fuzzy
+#~ msgid "Song"
+#~ msgstr "Ыр"
+#~ msgid "Item"
+#~ msgstr "элементтерди"
+#~ msgid "Saving tags for {0}"
+#~ msgstr "Метамаалыматтарды сактоо үчүн {0}"
+#~ msgid "Video Library"
+#~ msgstr "Видеотека"
+#~ msgid "Cannot Convert File"
+#~ msgstr "Файлды конверттациялоо болбой калды"
+#~ msgid "Last Played Date"
+#~ msgstr "Акыркы аткаруу"
+#~ msgid "Last Skipped Date"
+#~ msgstr "Акыркы жолу өткөрүлөр"
+#~ msgid "Location"
+#~ msgstr "Жайгалышы"
+
+#, fuzzy
+#~ msgid "Set all track counts to this value"
+#~ msgstr "Баардык жолчолорго бул санды коюу"
+
+#, fuzzy
+#~ msgid "Set all albums to this value"
+#~ msgstr "Баардык жолчолорго бул альбомду коюу"
+
+#, fuzzy
+#~ msgid "Never played"
+#~ msgstr "Буга чейин ойнотула элек"
+#~ msgid "Editing {0}"
+#~ msgstr "«{0}» редакторлонууда"
+
+#, fuzzy
+#~ msgid "Name Ascending"
+#~ msgstr "Аты менен алфавит тартибине келтирүү"
+
+#, fuzzy
+#~ msgid "Name Descending"
+#~ msgstr "Аты менен тескери тартипте"
+
+#, fuzzy
+#~ msgid ""
+#~ "Are you sure you want to permanently delete this item?Are you sure you "
+#~ "want to permanently delete the selected {0} items?"
+#~ msgstr ""
+#~ "Сиз чын эле {0} элементин кайра келгис кылып жоготосузбу?Сиз чын эле "
+#~ "белгиленген {0} элементтерин кайра келгис кылып жоготосузбу?"
+
+#, fuzzy
+#~ msgid ""
+#~ "Are you sure you want to remove the selected item from your {1}?Are you "
+#~ "sure you want to remove the selected {0} items from your {1}?"
+#~ msgstr ""
+#~ "Сиз чын эле {0} элементин «{1}» тизмесинен жоготосузбу?Сиз чын эле "
+#~ "белгиленген {0} элементтерин «{1}» тизмесинен жоготосузбу?"
+
+#, fuzzy
+#~ msgid "Toggle display of album cover art"
+#~ msgstr "Сыртын көрсөтүү же бекитүү"
+#~ msgid "0"
+#~ msgstr "0"
+#~ msgid "0 MB"
+#~ msgstr "0 МБ"
+#~ msgid "0:00"
+#~ msgstr "0:00"
+#~ msgid "<b>Albu_m:</b>"
+#~ msgstr "<b>_Альбом:</b>"
+
+#, fuzzy
+#~ msgid "<b>Album Cover:</b>"
+#~ msgstr "<b>Альбомдун мукабасы:</b>"
+#~ msgid "<b>Bitrate:</b>"
+#~ msgstr "<b>Агымдын ылдамдыгы:</b>"
+#~ msgid "<b>Channels:</b>"
+#~ msgstr "<b>Каналдар:</b>"
+
+#, fuzzy
+#~ msgid "<b>Duration:</b>"
+#~ msgstr "<b>Улантылуу убактысы:</b>"
+#~ msgid "<b>File name:</b>"
+#~ msgstr "<b>Файлдын аты:</b>"
+#~ msgid "<b>File size:</b>"
+#~ msgstr "<b>Файлдын өлчөмү:</b>"
+#~ msgid "<b>Last played:</b>"
+#~ msgstr "<b>Акыркы ойнотуулар:</b>"
+
+#, fuzzy
+#~ msgid "<b>Location:</b>"
+#~ msgstr "<b>Жайгалышы:</b>"
+
+#, fuzzy
+#~ msgid "<b>Play count:</b>"
+#~ msgstr "<b>Аткаруунун саноочусу:</b>"
+
+#, fuzzy
+#~ msgid "<b>Sample rate:</b>"
+#~ msgstr "<b>Дискретизациянын :</b>"
+#~ msgid "<b>Session Information</b>"
+#~ msgstr "<b>Сессия боюнча маалыматтар</b>"
+#~ msgid "<b>Track _count:</b>"
+#~ msgstr "<b>_Жолчолордун саны:</b>"
+#~ msgid "<b>Track _number:</b>"
+#~ msgstr "<b>Жолчонун _номуру:</b>"
+#~ msgid "<b>Write Options</b>"
+#~ msgstr "<b>Жазуунун ырастоолору</b>"
+#~ msgid "<b>_Disc:</b>"
+#~ msgstr "<b>_Дисктин номуру:</b>"
+#~ msgid "<b>_Genre:</b>"
+#~ msgstr "<b>_Жанры:</b>"
+#~ msgid "<b>_Rating:</b>"
+#~ msgstr "<b>_Баасы:</b>"
+#~ msgid "<b>_Title:</b>"
+#~ msgstr "<b>_Аталышы:</b>"
+#~ msgid "<b>_Year:</b>"
+#~ msgstr "<b>_Жылы:</b>"
+
+#, fuzzy
+#~ msgid "Apply common field values to all tracks"
+#~ msgstr "Баардык жолчолорго тибтик талаалардын маанилерин колдонуу"
+#~ msgid "Artwork"
+#~ msgstr "Дизайны"
+#~ msgid "Copy to all"
+#~ msgstr "Баарына көчүрүү"
+
+#, fuzzy
+#~ msgid "Disc Options"
+#~ msgstr "Дисктин ырастоолору"
+#~ msgid "Disc format:"
+#~ msgstr "Дисктин форматы:"
+#~ msgid "Disc name:"
+#~ msgstr "Дисктин аты:"
+
+#, fuzzy
+#~ msgid "Eject disc after writing"
+#~ msgstr "Көчүрүүдөн кийин дискти чыгаруу"
+
+#, fuzzy
+#~ msgid "Embed directly in song"
+#~ msgstr "Ырларды файлга киргизүү"
+#~ msgid "Enter Next"
+#~ msgstr "Кийинкисин киргизүү"
+#~ msgid "Metadata"
+#~ msgstr "Метаберилиштер"
+
+#, fuzzy
+#~ msgid "Save to song directory"
+#~ msgstr "Ырлар менен кошо каталогко сактоо"
+
+#, fuzzy
+#~ msgid "Write disc to:"
+#~ msgstr "Дискке жазуу:"
+#~ msgid "Write speed:"
+#~ msgstr "Жазуу ылдамдыгы:"
+#~ msgid "_Write"
+#~ msgstr "_Жазуу"
+
+#, fuzzy
+#~ msgid "Preparing..."
+#~ msgstr "Даярдоо жүрүп жатат..."
+#~ msgid "Station Type"
+#~ msgstr "Тиби боюнча"
+#~ msgid "Downloading"
+#~ msgstr "Жүктөө жүрүп жатат"
+
+#, fuzzy
+#~ msgid "Waiting to download"
+#~ msgstr "Жүктөөнү токтотуу үчүн күтүү..."
+
+#, fuzzy
+#~ msgid "Download paused"
+#~ msgstr "Жүктөө убактылуу токтоду"
+#~ msgid "Download failed"
+#~ msgstr "Жүктөө мүмкүн эмес"
+
+#, fuzzy
+#~ msgid "Stream Available"
+#~ msgstr "Агым ачык"
+#~ msgid "Watched"
+#~ msgstr "Көрсөтүлбөгөн видеолор"
+#~ msgid "Heard"
+#~ msgstr "Жыл боюнча"
+
+#, fuzzy
+#~ msgid "Are you sure that you'd like to cancel all podcast downloads?"
+#~ msgstr "Сиз чын эле баардык жүктөөлөрдү токтоткуңуз келип жатабы?"
+
+#, fuzzy
+#~ msgid "Update Podcasts"
+#~ msgstr "Подкасттарды жаңыртуу"
+#~ msgid "Last.fm (Disconnected)"
+#~ msgstr "Last.fm (Нет соединения)"
+#~ msgid "Disk Usage:"
+#~ msgstr "Места занято:"
+#~ msgid "Song Name"
+#~ msgstr "по названию"
+#~ msgid "Filter on {0}"
+#~ msgstr "Искать {0}"
+#~ msgid "Delete the active preset"
+#~ msgstr "Удалить активную предустановку"
+
