@@ -28,6 +28,7 @@
 
 using System;
 using Gtk;
+using Mono.Unix;
 
 namespace Banshee.Widgets
 {
@@ -53,6 +54,8 @@ namespace Banshee.Widgets
             
             Adjustment.Lower = 0;
             Adjustment.Upper = 0;
+
+            Accessible.Name = Catalog.GetString("Seek");
             
             SetIdle();
         }
