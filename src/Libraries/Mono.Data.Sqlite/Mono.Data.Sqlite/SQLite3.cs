@@ -665,7 +665,7 @@ namespace Mono.Data.Sqlite
       }
     }
 
-    internal override int GetLastInsertRowId ()
+    internal override long GetLastInsertRowId ()
     {
 	    return UnsafeNativeMethods.sqlite3_last_insert_rowid (_sql);
     }

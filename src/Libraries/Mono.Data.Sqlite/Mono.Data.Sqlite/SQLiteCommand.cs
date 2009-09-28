@@ -648,7 +648,7 @@ namespace Mono.Data.Sqlite
       return new SqliteCommand(this);
     }
 
-    public int LastInsertRowID ()
+    public long LastInsertRowID ()
     {
 	    return _cnn.LastInsertRowId;
     }

@@ -305,7 +305,7 @@ namespace Mono.Data.Sqlite
     internal static extern int sqlite3_table_cursor(IntPtr stmt, int db, int tableRootPage);
     
     [DllImport(SQLITE_DLL)]
-    internal static extern int sqlite3_last_insert_rowid(IntPtr db);
+    internal static extern long sqlite3_last_insert_rowid(IntPtr db);
   }
 }
 #endif

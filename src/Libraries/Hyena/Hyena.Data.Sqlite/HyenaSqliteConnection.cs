@@ -218,14 +218,14 @@ namespace Hyena.Data.Sqlite
         {
             command.CommandType = HyenaCommandType.Execute;;
             QueueCommand(command);
-            return (int) command.WaitForResult (this);
+            return Convert.ToInt32 (command.WaitForResult (this));
         }
 
         public int Execute (HyenaSqliteCommand command, params object [] param_values)
         {
             command.CommandType = HyenaCommandType.Execute;;
             QueueCommand(command, param_values);
-            return (int) command.WaitForResult (this);
+            return Convert.ToInt32 (command.WaitForResult (this));
         }
 
         public int Execute (string command_str, params object [] param_values)

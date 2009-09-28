@@ -177,7 +177,7 @@ namespace Mono.Data.Sqlite
     internal abstract void SetCommitHook(SqliteCommitCallback func);
     internal abstract void SetRollbackHook(SqliteRollbackCallback func);
 
-    internal abstract int GetLastInsertRowId ();
+    internal abstract long GetLastInsertRowId ();
     
     internal abstract object GetValue(SqliteStatement stmt, int index, SqliteType typ);
 

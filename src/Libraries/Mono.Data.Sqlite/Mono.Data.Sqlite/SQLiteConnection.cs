@@ -1957,7 +1957,7 @@ namespace Mono.Data.Sqlite
       get { return 3; }
     }
 
-    public int LastInsertRowId {
+    public long LastInsertRowId {
 	get { return _sql.GetLastInsertRowId (); }
     }
 
