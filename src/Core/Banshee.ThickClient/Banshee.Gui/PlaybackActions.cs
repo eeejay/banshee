@@ -75,7 +75,7 @@ namespace Banshee.Gui
                     Catalog.GetString ("Play the previous item"), OnPreviousAction),
 
                 new ActionEntry ("SeekToAction", null,
-                    Catalog.GetString ("Seek _to..."), "T",
+                    Catalog.GetString ("Seek _To..."), "T",
                     Catalog.GetString ("Seek to a specific location in current item"), OnSeekToAction),
 
                 new ActionEntry ("JumpToPlayingTrackAction", null,
