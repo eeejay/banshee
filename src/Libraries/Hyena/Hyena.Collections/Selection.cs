@@ -202,7 +202,7 @@ namespace Hyena.Collections
             }
         }
 
-        protected RangeCollection RangeCollection {
+        public RangeCollection RangeCollection {
             get { return ranges; }
         }
 

@@ -3,6 +3,11 @@ ASSEMBLY_BUILD_FLAGS = -unsafe
 TARGET = library
 LINK = $(REF_HYENA_GUI)
 SOURCES =  \
+	Hyena.Data.Gui/Accessibility/ColumnCellAccessible.cs \
+	Hyena.Data.Gui/Accessibility/ICellAccessibleParent.cs \
+	Hyena.Data.Gui/Accessibility/ListViewAccessible.cs \
+	Hyena.Data.Gui/Accessibility/ListViewAccessible_Selection.cs \
+	Hyena.Data.Gui/Accessibility/ListViewAccessible_Table.cs \
 	Hyena.Data.Gui/CellContext.cs \
 	Hyena.Data.Gui/Column.cs \
 	Hyena.Data.Gui/ColumnCell.cs \
@@ -18,6 +23,7 @@ SOURCES =  \
 	Hyena.Data.Gui/ITextCell.cs \
 	Hyena.Data.Gui/ITooltipCell.cs \
 	Hyena.Data.Gui/ListView/ListView.cs \
+	Hyena.Data.Gui/ListView/ListView_Accessible.cs \
 	Hyena.Data.Gui/ListView/ListView_DragAndDrop.cs \
 	Hyena.Data.Gui/ListView/ListView_Header.cs \
 	Hyena.Data.Gui/ListView/ListView_Interaction.cs \
@@ -42,6 +48,7 @@ SOURCES =  \
 	Hyena.Gui.Theming/Theme.cs \
 	Hyena.Gui.Theming/ThemeContext.cs \
 	Hyena.Gui.Theming/ThemeEngine.cs \
+	Hyena.Gui/BaseWidgetAccessible.cs \
 	Hyena.Gui/CairoExtensions.cs \
 	Hyena.Gui/CleanRoomStartup.cs \
 	Hyena.Gui/CompositeUtils.cs \
