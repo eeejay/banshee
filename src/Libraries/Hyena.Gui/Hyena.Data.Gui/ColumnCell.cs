@@ -31,6 +31,8 @@ using System.Reflection;
 using Gtk;
 using Cairo;
 
+using Hyena.Data.Gui.Accessibility;
+
 namespace Hyena.Data.Gui
 {
     public abstract class ColumnCell
@@ -40,7 +42,17 @@ namespace Hyena.Data.Gui
         private PropertyInfo property_info, sub_property_info;
         private object bound_object;
         private object bound_object_parent;
-            
+
+        public virtual Atk.Object GetAccessible (ICellAccessibleParent parent)
+        {
+            return new ColumnCellAccessible (BoundObject, this, parent);
+        }
+
+        public virtual string GetTextAlternative (object obj)
+        {
+            return string.Empty;
+        }
+
         public ColumnCell (string property, bool expand)
         {
             Property = property;

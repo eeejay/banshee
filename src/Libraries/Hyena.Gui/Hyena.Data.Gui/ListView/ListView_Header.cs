@@ -414,6 +414,12 @@ namespace Hyena.Data.Gui
             return null;
         }
 
+        protected int GetColumnWidth (int column_index)
+        {
+            CachedColumn cached_column = column_cache[column_index];
+            return cached_column.Width;
+        }
+
         private bool CanResizeColumn (int column_index)
         {
             // At least one column to the left (including the one being resized) should be resizable.
