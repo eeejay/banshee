@@ -53,12 +53,24 @@ namespace Hyena.Collections
         private int max_index;
         private int first_selected_index;
         private int focused_row_index = -1;
+        private int focused_column_index = 0;
         
         public event EventHandler Changed;
         public event EventHandler FocusRowChanged;
+        public event EventHandler FocusColumnChanged;
         
         public Selection ()
         {
+        }
+
+        public int FocusedColumnIndex {
+            get { return focused_column_index; }
+            set {
+                    focused_column_index = value;
+                    EventHandler handler = FocusColumnChanged;
+                    if (handler != null)
+                        handler (this, EventArgs.Empty);
+                }
         }
 
         public int FocusedRowIndex {
