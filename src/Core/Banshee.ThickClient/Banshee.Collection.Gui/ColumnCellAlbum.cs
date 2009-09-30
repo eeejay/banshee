@@ -33,6 +33,7 @@ using Cairo;
 using Hyena.Gui;
 using Hyena.Gui.Theming;
 using Hyena.Data.Gui;
+using Hyena.Data.Gui.Accessibility;
 
 using Banshee.Gui;
 using Banshee.ServiceStack;
@@ -53,7 +54,23 @@ namespace Banshee.Collection.Gui
         {
             artwork_manager = ServiceManager.Get<ArtworkManager> ();
         }
-    
+
+        private class ColumnCellAlbumAccessible : ColumnCellAccessible
+        {
+            public ColumnCellAlbumAccessible (object bound_object, ColumnCellAlbum cell, ICellAccessibleParent parent): base (bound_object, cell as ColumnCell, parent)
+            {
+                AlbumInfo bound_album_info = (AlbumInfo)bound_object;
+                Name = string.Format("{0} - {1}",
+                                     bound_album_info.DisplayTitle,
+                                     bound_album_info.DisplayArtistName);
+            }
+        }
+
+        public override Atk.Object GetAccessible (ICellAccessibleParent parent)
+        {
+            return new ColumnCellAlbumAccessible (BoundObject, this, parent);
+        }
+
         public override void Render (CellContext context, StateType state, double cellWidth, double cellHeight)
         {
             if (BoundObject == null) {
