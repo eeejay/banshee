@@ -181,6 +181,17 @@ namespace Hyena.Data.Gui.Accessibility
             return IsChildSelected (cell_index);
         }
 
+        public void InvokeColumnHeaderMenu (ColumnCellAccessible cell)
+        {
+            list_view.InvokeColumnHeaderMenu (GetCellIndex (cell));
+        }
+
+        public void ClickColumnHeader (ColumnCellAccessible cell)
+        {
+            list_view.ClickColumnHeader (GetCellIndex (cell));
+        }
+
         # endregion ICellAccessibleParent
+
     }
 }
