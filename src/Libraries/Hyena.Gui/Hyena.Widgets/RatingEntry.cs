@@ -46,6 +46,11 @@ namespace Hyena.Widgets
         
         public event EventHandler Changing;
         public event EventHandler Changed;
+
+        static RatingEntry ()
+        {
+            RatingAccessibleFactory.Init ();
+        }
         
         public RatingEntry () : this (0) 
         {
@@ -380,6 +385,74 @@ namespace Hyena.Widgets
     }
     
 #region Test Module
+
+    public class RatingAccessible : Atk.Object, Atk.Value, Atk.ValueImplementor
+    {
+        private RatingEntry rating;
+
+        public RatingAccessible (IntPtr raw) : base (raw)
+        {
+            Hyena.Log.Information ("RatingAccessible raw ctor..");
+        }
+
+        public RatingAccessible (GLib.Object widget): base()
+        {
+            rating = widget as RatingEntry;
+            Name = "Rating entry";
+            Description = "Rating entry, from 0 to 5 stars";
+            Role = Atk.Role.Slider;
+        }
+
+        public void GetMaximumValue (ref GLib.Value val)
+        {
+            val = new GLib.Value (5);
+        }
+
+        public void GetMinimumIncrement (ref GLib.Value val)
+        {
+            val = new GLib.Value (1);
+        }
+
+        public void GetMinimumValue (ref GLib.Value val)
+        {
+            val = new GLib.Value (0);
+        }
+
+        public void GetCurrentValue (ref GLib.Value val)
+        {
+            val = new GLib.Value (rating.Value);
+        }
+
+        public bool SetCurrentValue (GLib.Value val)
+        {
+            int r = (int) val.Val;
+            if (r <= 0 || r > 5) {
+                return false;
+            }
+
+            rating.Value = (int) val.Val;
+            return true;
+        }
+    }
+
+    internal class RatingAccessibleFactory : Atk.ObjectFactory
+    {
+        public static void Init ()
+        {
+            new RatingAccessibleFactory ();
+            Atk.Global.DefaultRegistry.SetFactoryType ((GLib.GType)typeof(RatingEntry), (GLib.GType)typeof (RatingAccessibleFactory));
+        }
+
+        protected override Atk.Object OnCreateAccessible (GLib.Object obj)
+        {
+            return new RatingAccessible (obj);
+        }
+
+        protected override GLib.GType OnGetAccessibleType ()
+        {
+            return RatingAccessible.GType;
+        }
+    }
 
     [Hyena.Gui.TestModule ("Rating Entry")]
     internal class RatingEntryTestModule : Gtk.Window
