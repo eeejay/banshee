@@ -535,7 +535,7 @@ namespace Banshee.Podcasting.Gui
                     int new_i = ActiveDbSource.TrackModel.IndexOf (new_selection_track);
                     if (new_i != -1) {
                         ActiveDbSource.TrackModel.Selection.Clear (false);
-                        ActiveDbSource.TrackModel.Selection.FocusedIndex = new_i;
+                        ActiveDbSource.TrackModel.Selection.FocusedRowIndex = new_i;
                         ActiveDbSource.TrackModel.Selection.Select (new_i);
                     }
                 }

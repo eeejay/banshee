@@ -238,7 +238,7 @@ namespace Hyena.Data.Gui
                     selection_height += single_list_alloc.Height;
                     selected_rows.Add (ri);
                     
-                    if (Selection.FocusedIndex == ri) {
+                    if (Selection.FocusedRowIndex == ri) {
                         selected_focus_alloc = single_list_alloc;
                     }
                 } else {
@@ -249,7 +249,7 @@ namespace Hyena.Data.Gui
                     
                     PaintReorderLine (ri, single_list_alloc);
                     
-                    if (Selection != null && Selection.FocusedIndex == ri && !Selection.Contains (ri) && HasFocus) {
+                    if (Selection != null && Selection.FocusedRowIndex == ri && !Selection.Contains (ri) && HasFocus) {
                         CairoCorners corners = CairoCorners.All;
                         
                         if (Selection.Contains (ri - 1)) {

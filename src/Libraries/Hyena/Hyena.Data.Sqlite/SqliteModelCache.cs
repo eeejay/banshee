@@ -310,10 +310,10 @@ namespace Hyena.Data.Sqlite
                 connection.Execute (delete_selection_command);
                 saved_selection = true;
                 
-                if (!has_select_all_item && model.Selection.FocusedIndex != -1) {
-                    T item = GetValue (model.Selection.FocusedIndex);
+                if (!has_select_all_item && model.Selection.FocusedRowIndex != -1) {
+                    T item = GetValue (model.Selection.FocusedRowIndex);
                     if (item != null) {
-                        saved_focus_item = GetValue (model.Selection.FocusedIndex);
+                        saved_focus_item = GetValue (model.Selection.FocusedRowIndex);
                     }
                 }
 
@@ -359,7 +359,7 @@ namespace Hyena.Data.Sqlite
                     long i = IndexOf (saved_focus_item);
                     if (i != -1) {
                         // TODO get rid of int cast
-                        model.Selection.FocusedIndex = (int)i;
+                        model.Selection.FocusedRowIndex = (int)i;
                     }
                 }
                 saved_selection = false;

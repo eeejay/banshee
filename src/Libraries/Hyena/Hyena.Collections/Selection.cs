@@ -52,17 +52,23 @@ namespace Hyena.Collections
         RangeCollection ranges = new RangeCollection ();
         private int max_index;
         private int first_selected_index;
-        private int focused_index = -1;
+        private int focused_row_index = -1;
         
         public event EventHandler Changed;
+        public event EventHandler FocusRowChanged;
         
         public Selection ()
         {
         }
-        
-        public int FocusedIndex {
-            get { return focused_index; }
-            set { focused_index = value; }
+
+        public int FocusedRowIndex {
+            get { return focused_row_index; }
+            set {
+                    focused_row_index = value;
+                    EventHandler handler = FocusRowChanged;
+                    if (handler != null)
+                        handler (this, EventArgs.Empty);
+                }
         }
 
         protected virtual void OnChanged ()
