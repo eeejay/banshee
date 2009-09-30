@@ -1,0 +1,125 @@
+#!/usr/bin/python
+import os
+from time import sleep
+
+os.environ['NO_GAIL'] = '1'
+os.environ['NO_AT_BRIDGE'] = '1'
+
+import pyatspi, unittest, gtk
+
+class TestBansheeAccessibity(unittest.TestCase):
+    neried = None
+    list_views = None
+    def setUp(self):
+        if not self.__class__.neried:
+            self.neried = [app for app in pyatspi.Registry.getDesktop(0) \
+                               if getattr(app, 'name', None) == 'Nereid'][0]
+
+        if not self.__class__.list_views:
+            self.list_views = pyatspi.findAllDescendants(
+            self.neried, lambda x: getattr(x, 'name', None) == 'ListView')
+
+    def testAnchestry(self):
+        for list_view in self.list_views:
+            self._parent_check(list_view)
+            for i, cell in enumerate(list_view):
+                self._parent_check(cell)
+
+    def testSelectionAndTable(self):
+        for list_view in self.list_views:
+            tablei = list_view.queryTable()
+            selectioni = list_view.querySelection()
+            for row in xrange(tablei.nRows):
+                for column in xrange(tablei.nColumns):
+                    cell = tablei.getAccessibleAt(row, column)
+                    selectioni.selectChild(cell.getIndexInParent())
+                    self.assertTrue(
+                        cell.getState().contains(pyatspi.STATE_SELECTED),
+                        "Cell does not have selected state (%s)" % cell)
+                    selectioni.clearSelection()
+                    sleep(0.001)
+
+    def testTableColumnHeaders(self):
+        for list_view in self.list_views:
+            tablei = list_view.queryTable()
+            for column in xrange(tablei.nColumns):
+                col_acc = tablei.getColumnHeader(column)
+                self.assertEqual(
+                    col_acc.getRole(), pyatspi.ROLE_TABLE_COLUMN_HEADER,
+                    "Column header has wrong role (%s)." % col_acc)
+                self.assertFalse(
+                    col_acc.getState().contains(pyatspi.STATE_SELECTABLE),
+                    "Column header should not be selectable (%s)." % col_acc)
+
+    def testCellComponentDesktop(self):
+        self._testCellComponent(pyatspi.DESKTOP_COORDS)
+
+    def testCellComponentWindow(self):
+        self._testCellComponent(pyatspi.WINDOW_COORDS)
+
+    def testTableRowColumns(self):
+        for list_view in self.list_views:
+            tablei = list_view.queryTable()
+            for i, cell in enumerate(list_view):
+                if cell.getRole() != pyatspi.ROLE_TABLE_CELL:
+                    continue
+                index = cell.getIndexInParent()
+                self.assertEqual(
+                    index, i,
+                    'Recived index, %d, does not equal %d' % (index, i))
+
+                row = tablei.getRowAtIndex(i)
+                self.assertEqual(
+                    row, (index-tablei.nColumns)/tablei.nColumns,
+                    'Row recieved through index, %d, does not equal '
+                    'calculated row %d' % \
+                        (row, (index-tablei.nColumns)/tablei.nColumns))
+
+                column = tablei.getColumnAtIndex(i)
+                assert(column == (index-tablei.nColumns)%tablei.nColumns)
+                assert(column < tablei.nColumns)
+
+                assert(tablei.getIndexAt(row, column) == i)
+                assert(tablei.getAccessibleAt(row, column) == cell)
+
+    def _testCellComponent(self, coord_type):
+        for list_view in self.list_views:
+            list_view_bb = self._get_extents(list_view, coord_type)
+            list_view_ci = list_view.queryComponent()
+            for cell in list_view:
+                if cell.getState().contains(pyatspi.STATE_SHOWING):
+                    cell_bb = self._get_extents(cell, coord_type)
+                    self.assertEqual(
+                        list_view_bb.intersect(cell_bb), cell_bb,
+                        'Cell %s is not completely in rectangle %s.' % \
+                            (cell_bb, list_view_bb))
+                    assert(list_view_bb.intersect(cell_bb) == cell_bb)
+                    for n1, n2 in \
+                            [(x,y) for x in range(1,4) for y in range(1,4)]:
+                        probe_x = cell_bb.x + (cell_bb.width/4)*n1
+                        probe_y = cell_bb.y + (cell_bb.height/4)*n2
+                        cell_at_point = list_view_ci.getAccessibleAtPoint(
+                            probe_x, probe_y, coord_type)
+                        self.assertEqual(
+                            cell_at_point, cell,
+                            'Cell at point, %s, '
+                            'does not equal given cell %s' % \
+                                (cell_at_point, cell))
+
+    def _get_extents(self, acc, coord_type):
+        ci = acc.queryComponent()
+        extents = ci.getExtents(coord_type)
+        return gtk.gdk.Rectangle(extents.x, extents.y,
+                                 extents.width, extents.height)
+
+    def _parent_check(self, acc):
+        parent = acc.parent
+        for i, child in enumerate(parent):
+            if child == acc:
+                assert (i == acc.getIndexInParent())
+                return
+        raise AssertionError, "child (%s) not in parent (%s)" % (acc, parent)
+
+
+if __name__ == '__main__':
+    unittest.main()
