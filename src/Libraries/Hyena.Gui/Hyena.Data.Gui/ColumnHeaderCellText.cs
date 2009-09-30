@@ -30,6 +30,8 @@ using System;
 using Gtk;
 using Cairo;
 
+using Hyena.Data.Gui.Accessibility;
+
 namespace Hyena.Data.Gui
 {
     public class ColumnHeaderCellText : ColumnCellText, IHeaderCell
@@ -43,7 +45,12 @@ namespace Hyena.Data.Gui
         {
             this.data_handler = data_handler;
         }
-    
+
+        public override Atk.Object GetAccessible (ICellAccessibleParent parent)
+        {
+            return new  ColumnHeaderCellTextAccessible (BoundObject, this, parent);
+        }
+
         public override void Render (CellContext context, StateType state, double cellWidth, double cellHeight)
         {
             if (data_handler == null) {

@@ -127,6 +127,20 @@ namespace Hyena.Data.Gui
             row = GetRowAtY (y);
             col = cached_column.Index;
         }
+
+        public void InvokeColumnHeaderMenu (int column)
+        {
+            Gdk.Rectangle rectangle = GetColumnHeaderCellExtents (column, true, Atk.CoordType.Window);
+            Column col = ColumnController.Where (c => c.Visible).ElementAtOrDefault (column);
+            OnColumnRightClicked (col, rectangle.X + rectangle.Width/2, rectangle.Y + rectangle.Height/2);
+        }
+
+        public void ClickColumnHeader (int column)
+        {
+            Column col = ColumnController.Where (c => c.Visible).ElementAtOrDefault (column);
+            OnColumnLeftClicked (col);
+        }
+
     }
 
     internal class ListViewAccessibleFactory<T> : Atk.ObjectFactory

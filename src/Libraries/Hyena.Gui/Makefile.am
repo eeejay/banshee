@@ -5,6 +5,7 @@ LINK = $(REF_HYENA_GUI)
 SOURCES =  \
 	Hyena.Data.Gui/Accessibility/ColumnCellAccessible.cs \
 	Hyena.Data.Gui/Accessibility/ColumnCellTextAccessible.cs \
+	Hyena.Data.Gui/Accessibility/ColumnHeaderCellTextAccessible.cs \
 	Hyena.Data.Gui/Accessibility/ICellAccessibleParent.cs \
 	Hyena.Data.Gui/Accessibility/ListViewAccessible.cs \
 	Hyena.Data.Gui/Accessibility/ListViewAccessible_Selection.cs \

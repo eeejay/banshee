@@ -157,6 +157,7 @@
     <Compile Include="Hyena.Data.Gui\Accessibility\ListViewAccessible_Table.cs" />
     <Compile Include="Hyena.Data.Gui\Accessibility\ListViewAccessible_Selection.cs" />
     <Compile Include="Hyena.Data.Gui\Accessibility\ColumnCellTextAccessible.cs" />
+    <Compile Include="Hyena.Data.Gui\Accessibility\ColumnHeaderCellTextAccessible.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
