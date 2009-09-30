@@ -1,5 +1,5 @@
 ===============================================================================
-WELCOME TO BANSHEE 1.5.1 - Released September 14, 2009
+WELCOME TO BANSHEE 1.5.1 - Released September 30, 2009
 ===============================================================================
 
   * Banshee is a multimedia management and playback application for GNOME.
@@ -88,8 +88,10 @@ NEW AWESOME FEATURES AND ENHANCEMENTS
       * Fix editor always prompting to save podcasts (BGO #584880)
       * Fix rounding when updating the track score
       * Fix initial track score calculation (BGO #594568)
+      * Fix playback buttons' a11y (BGO #595294)
+      * Fix crasher on PPC (BGO #547218)
 
-      * 123 bugs were fixed since 1.5.0
+      * 131 bugs were fixed since 1.5.0
 
 
 ===============================================================================
@@ -201,10 +203,11 @@ Contributors For This Release
       Aaron Bockover, Alex Bennee, Alex Launi, Alexander Kojevnikov,
       Andrea Cimitan, Benjamín Valero Espinosa, Bertrand Lorentz,
       Chow Loong Jin, Christopher James Halse Rogers, David Stone,
-      Elena Grassi, Florent Thoumie, Gabriel Burt, Jack Deslippe, Jeff Wheeler,
-      Jensen Somers, Johannes Kuhn, Michael Martin-Smucker, Neil Loknath,
-      Nils Naumann, Olivier Duff, Paul Lange, Pratik Patel, Romain Tartière,
-      Sandy Armstrong, Tobias Mueller, Travis Glenn Hansen
+      Eitan Isaacson, Elena Grassi, Florent Thoumie, Gabriel Burt,
+      Haitao Feng, Jack Deslippe, Jeff Wheeler, Jensen Somers, Johannes Kuhn,
+      Michael Martin-Smucker, Neil Loknath, Nils Naumann, Olivier Duff,
+      Paul Lange, Pratik Patel, Romain Tartière, Sandy Armstrong,
+      Tobias Mueller, Travis Glenn Hansen
 
     The following people contributed updated translations to this release.
     Without them, our project's reach would be much more limited.
