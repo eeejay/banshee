@@ -493,31 +493,9 @@ namespace Hyena.Data.Gui
         {
             if (pressed_column_index >= 0 && pressed_column_index < column_cache.Length) {
                 Column column = column_cache[pressed_column_index].Column;
-                if (column != null && Model is ISortable && column is ISortableColumn) {
-                    ISortableColumn sort_column = column as ISortableColumn;
-                    ISortable sortable = Model as ISortable;
-
-                    // Change the sort-type with every click
-                    switch (sort_column.SortType) {
-                        case SortType.Ascending:    sort_column.SortType = SortType.Descending; break;
-                        case SortType.Descending:   sort_column.SortType = SortType.None; break;
-                        case SortType.None:         sort_column.SortType = SortType.Ascending; break;
-                    }
-
-                    // If we're switching to a different column or we aren't reorderable and the type is None, sort Ascending
-                    if (sort_column != ColumnController.SortColumn || (!IsEverReorderable && sort_column.SortType == SortType.None)) {
-                        sort_column.SortType = SortType.Ascending;
-                    }
-
-                    sortable.Sort (sort_column);
-                    ColumnController.SortColumn = sort_column;
-                    IsReorderable = sortable.SortColumn == null || sortable.SortColumn.SortType == SortType.None;
-
-                    Model.Reload ();
-                    RecalculateColumnSizes ();
-                    RegenerateColumnCache ();
-                    InvalidateHeader ();
-                }
+                Selection.FocusedColumnIndex = pressed_column_index;
+                if (column != null)
+                    OnColumnLeftClicked (column);
                 
                 pressed_column_index = -1;
                 return true;

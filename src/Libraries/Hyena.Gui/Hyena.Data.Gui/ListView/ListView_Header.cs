@@ -245,6 +245,34 @@ namespace Hyena.Data.Gui
             UpdateAdjustments ();
             QueueDraw ();
         }
+        protected virtual void OnColumnLeftClicked (Column clickedColumn)
+        {
+            if (Model is ISortable && clickedColumn is ISortableColumn) {
+                    ISortableColumn sort_column = clickedColumn as ISortableColumn;
+                    ISortable sortable = Model as ISortable;
+
+                    // Change the sort-type with every click
+                    switch (sort_column.SortType) {
+                        case SortType.Ascending:    sort_column.SortType = SortType.Descending; break;
+                        case SortType.Descending:   sort_column.SortType = SortType.None; break;
+                        case SortType.None:         sort_column.SortType = SortType.Ascending; break;
+                    }
+
+                    // If we're switching to a different column or we aren't reorderable and the type is None, sort Ascending
+                    if (sort_column != ColumnController.SortColumn || (!IsEverReorderable && sort_column.SortType == SortType.None)) {
+                        sort_column.SortType = SortType.Ascending;
+                    }
+
+                    sortable.Sort (sort_column);
+                    ColumnController.SortColumn = sort_column;
+                    IsReorderable = sortable.SortColumn == null || sortable.SortColumn.SortType == SortType.None;
+
+                    Model.Reload ();
+                    RecalculateColumnSizes ();
+                    RegenerateColumnCache ();
+                    InvalidateHeader ();
+            }
+        }
         
         protected virtual void OnColumnRightClicked (Column clickedColumn, int x, int y)
         {
