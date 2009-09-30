@@ -186,7 +186,42 @@ namespace Hyena.Gui.Theming
             cr.Fill ();
             grad.Destroy ();
         }
-        
+
+        public override void DrawColumnHeaderFocus (Cairo.Context cr, Gdk.Rectangle alloc)
+        {
+            double top_offset = 2.0;
+            double right_offset = 2.0;
+
+            double margin = 0.5;
+            double line_width = 0.7;
+
+            Cairo.Color stroke_color = CairoExtensions.ColorShade (
+                Colors.GetWidgetColor (GtkColorClass.Background, StateType.Selected), 0.8);
+                
+            stroke_color.A = 0.1;
+            cr.Color = stroke_color;
+
+            CairoExtensions.RoundedRectangle (cr,
+                alloc.X + margin + line_width + right_offset,
+                alloc.Y + margin + line_width + top_offset,
+                alloc.Width - (margin + line_width)*2.0 - right_offset,
+                alloc.Height - (margin + line_width)*2.0 - top_offset,
+                Context.Radius/2.0, CairoCorners.None);
+
+            cr.Fill();
+
+            stroke_color.A = 1.0;
+            cr.LineWidth = line_width;
+            cr.Color = stroke_color;
+            CairoExtensions.RoundedRectangle (cr,
+                alloc.X + margin + line_width + right_offset,
+                alloc.Y + margin + line_width + top_offset,
+                alloc.Width - (line_width + margin)*2.0 - right_offset,
+                alloc.Height - (line_width + margin)*2.0 - right_offset,
+                Context.Radius/2.0, CairoCorners.All);
+            cr.Stroke();
+        }
+
         public override void DrawHeaderSeparator (Cairo.Context cr, Gdk.Rectangle alloc, int x)
         {
             Cairo.Color gtk_background_color = Colors.GetWidgetColor (GtkColorClass.Background, StateType.Normal);
