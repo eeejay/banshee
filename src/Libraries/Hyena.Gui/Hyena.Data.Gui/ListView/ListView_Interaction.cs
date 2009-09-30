@@ -37,6 +37,17 @@ namespace Hyena.Data.Gui
 {
     public partial class ListView<T> : ListViewBase
     {
+        bool header_focused = false;
+
+        public bool HeaderFocused {
+            get { return header_focused; }
+            set {
+                header_focused = value;
+                InvalidateHeader();
+                InvalidateList();
+            }
+        }
+
         private Adjustment vadjustment;
         public Adjustment Vadjustment {
             get { return vadjustment; }
@@ -152,49 +163,85 @@ namespace Hyena.Data.Gui
                 case Gdk.Key.K:
                 case Gdk.Key.Up:
                 case Gdk.Key.KP_Up:
-                    handled = KeyboardScroll (press.State, -1, true);
+                    if (!HeaderFocused)
+                        handled = KeyboardScroll (press.State, -1, true);
                     break;
 
                 case Gdk.Key.j:
                 case Gdk.Key.J:
                 case Gdk.Key.Down:
                 case Gdk.Key.KP_Down:
-                    handled = KeyboardScroll (press.State, 1, true);
+                    if (!HeaderFocused)
+                        handled = KeyboardScroll (press.State, 1, true);
+                    else if (HeaderFocused)
+                    {
+                        handled = true;
+                        HeaderFocused = false;
+                    }
                     break;
-
+                case Gdk.Key.Right:
+                case Gdk.Key.KP_Right:
+                    if (Selection.FocusedColumnIndex + 1 < column_cache.Length)
+                    {
+                        Selection.FocusedColumnIndex++;
+                        InvalidateHeader();
+                    }
+                    handled = true;
+                    break;
+                case Gdk.Key.Left:
+                case Gdk.Key.KP_Left:
+                    if (Selection.FocusedColumnIndex - 1 >= 0)
+                    {
+                        Selection.FocusedColumnIndex--;
+                        InvalidateHeader();
+                    }
+                    handled = true;
+                    break;
                 case Gdk.Key.Page_Up:
                 case Gdk.Key.KP_Page_Up:
-                    handled = vadjustment != null && KeyboardScroll (press.State, 
-                        (int)(-vadjustment.PageIncrement / (double)RowHeight), false);
+                    if (!HeaderFocused)
+                        handled = vadjustment != null && KeyboardScroll (press.State,
+                            (int)(-vadjustment.PageIncrement / (double)RowHeight), false);
                     break;
 
                 case Gdk.Key.Page_Down:
                 case Gdk.Key.KP_Page_Down:
-                    handled = vadjustment != null && KeyboardScroll (press.State, 
-                        (int)(vadjustment.PageIncrement / (double)RowHeight), false);
+                    if (!HeaderFocused)
+                        handled = vadjustment != null && KeyboardScroll (press.State,
+                            (int)(vadjustment.PageIncrement / (double)RowHeight), false);
                     break;
 
                 case Gdk.Key.Home:
                 case Gdk.Key.KP_Home:
-                    handled = KeyboardScroll (press.State, -10000000, false);
+                    if (!HeaderFocused)
+                        handled = KeyboardScroll (press.State, -10000000, false);
                     break;
 
                 case Gdk.Key.End:
                 case Gdk.Key.KP_End:
-                    handled = KeyboardScroll (press.State, 10000000, false);
+                    if (!HeaderFocused)
+                        handled = KeyboardScroll (press.State, 10000000, false);
                     break;
 
                 case Gdk.Key.Return:
                 case Gdk.Key.KP_Enter:
-                    handled = ActivateSelection ();
+                    if (!HeaderFocused)
+                        handled = ActivateSelection ();
+                    else if (HeaderFocused && Selection.FocusedColumnIndex >= 0)
+                    {
+                        OnColumnLeftClicked (
+                            column_cache[Selection.FocusedColumnIndex].Column);
+                        handled = true;
+                    }
                     break;
 
                 case Gdk.Key.Escape:
                     handled = CancelColumnDrag ();
                     break;
-                
+
                 case Gdk.Key.space:
-                    if (Selection != null && Selection.FocusedRowIndex != 1) {
+                    if (Selection != null && Selection.FocusedRowIndex != 1 &&
+                        !HeaderFocused) {
                         Selection.ToggleSelect (Selection.FocusedRowIndex);
                         handled = true;
                     }
@@ -345,8 +392,10 @@ namespace Hyena.Data.Gui
         {
             HasFocus = true;
             if (header_visible && header_interaction_alloc.Contains ((int)evnt.X, (int)evnt.Y)) {
+                HeaderFocused = true;
                 return OnHeaderButtonPressEvent (evnt);
             } else if (list_interaction_alloc.Contains ((int)evnt.X, (int)evnt.Y) && model != null) {
+                HeaderFocused = false;
                 return OnListButtonPressEvent (evnt);
             }
             return true;
@@ -630,14 +679,28 @@ namespace Hyena.Data.Gui
             return base.OnLeaveNotifyEvent (evnt);
         }
         
-        protected override bool OnFocusInEvent (Gdk.EventFocus evnt)
+        protected override bool OnFocused (Gtk.DirectionType directionType)
         {
-            return base.OnFocusInEvent (evnt);
-        }
-        
-        protected override bool OnFocusOutEvent (Gdk.EventFocus evnt)
-        {
-            return base.OnFocusOutEvent (evnt);
+            if (!HeaderVisible)
+                return base.OnFocused (directionType);
+
+            if (HasFocus) {
+                if (directionType == DirectionType.TabForward && HeaderFocused)
+                    HeaderFocused = false;
+                else if (directionType == DirectionType.TabBackward && !HeaderFocused)
+                    HeaderFocused = true;
+                else
+                    return base.OnFocused (directionType);
+
+                return true;
+            } else {
+                if (directionType == DirectionType.TabForward )
+                    HeaderFocused = true;
+                else if (directionType == DirectionType.TabBackward)
+                    HeaderFocused = false;
+
+                return base.OnFocused (directionType);
+            }
         }
         
         protected virtual void OnRowActivated ()
