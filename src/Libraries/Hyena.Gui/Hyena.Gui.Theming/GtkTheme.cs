@@ -254,7 +254,17 @@ namespace Hyena.Gui.Theming
             cr.Rectangle (alloc.X, alloc.Y, alloc.Width, alloc.Height);
             cr.Fill ();
         }
-        
+
+        public override void DrawRowCursor (Cairo.Context cr, int x, int y, int width, int height,
+                                            Cairo.Color color, CairoCorners corners)
+        {
+            cr.LineWidth = 1.25;
+            cr.Color = color;
+            CairoExtensions.RoundedRectangle (cr, x + cr.LineWidth/2.0, y + cr.LineWidth/2.0,
+                width - cr.LineWidth, height - cr.LineWidth, Context.Radius, corners, true);
+            cr.Stroke ();
+        }
+
         public override void DrawRowSelection (Cairo.Context cr, int x, int y, int width, int height,
             bool filled, bool stroked, Cairo.Color color, CairoCorners corners)
         {
