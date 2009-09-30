@@ -160,6 +160,10 @@ namespace Hyena.Data.Gui
             if (ci < 0 || column_cache.Length <= ci)
                 return;
 
+            if (ci == Selection.FocusedColumnIndex && HasFocus && HeaderFocused) {
+                Theme.DrawColumnHeaderFocus (cairo_context, area);
+            }
+
             if (dragging) {
                 Theme.DrawColumnHighlight (cairo_context, area, 
                     CairoExtensions.ColorShade (Theme.Colors.GetWidgetColor (GtkColorClass.Dark, StateType.Normal), 0.9));

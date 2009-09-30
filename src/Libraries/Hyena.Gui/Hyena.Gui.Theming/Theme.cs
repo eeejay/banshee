@@ -115,6 +115,8 @@ namespace Hyena.Gui.Theming
         public abstract void DrawFrameBorder (Cairo.Context cr, Gdk.Rectangle alloc);
         
         public abstract void DrawHeaderBackground (Cairo.Context cr, Gdk.Rectangle alloc);
+
+        public abstract void DrawColumnHeaderFocus (Cairo.Context cr, Gdk.Rectangle alloc);
         
         public abstract void DrawHeaderSeparator(Cairo.Context cr, Gdk.Rectangle alloc, int x);
         
