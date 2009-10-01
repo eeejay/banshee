@@ -108,7 +108,7 @@ namespace Banshee.Gui
                     (int)PlaybackShuffleMode.Score)
             }, 0, OnActionChanged);
                 
-            this["ShuffleOffAction"].IconName = "media-skip-forward";
+            this["ShuffleOffAction"].StockId = Gtk.Stock.MediaNext;
             this["ShuffleSongAction"].IconName = "media-playlist-shuffle";
             this["ShuffleArtistAction"].IconName = "media-playlist-shuffle";
             this["ShuffleAlbumAction"].IconName = "media-playlist-shuffle";
@@ -169,6 +169,7 @@ namespace Banshee.Gui
 
         private void OnChanged ()
         {
+            playback_actions["NextAction"].StockId = Active.StockId;
             playback_actions["NextAction"].IconName = Active.IconName;
             EventHandler handler = Changed;
             if (handler != null) {
