@@ -17,8 +17,7 @@ WELCOME TO BANSHEE 1.5.1 - Released September 30, 2009
 NEW AWESOME FEATURES AND ENHANCEMENTS
 ===============================================================================
 
-    Banshee 1.5.1 is an unstable, beta release.  It brings many big changes,
-    new features, and fixes, and is the first release in what will become 1.6.
+    Banshee 1.5.1 brings many big changes, new features, and fixes!
 
     New Features:
 
@@ -102,8 +101,8 @@ Sources
 -------
 
     * Banshee 1.5.1 Tarballs:
-      http://download.banshee-project.org/banshee/unstable/1.5.1/banshee-1-1.5.1.tar.bz2
-      http://download.banshee-project.org/banshee/unstable/1.5.1/banshee-1-1.5.1.tar.gz
+      http://download.banshee-project.org/banshee/stable/1.5.1/banshee-1-1.5.1.tar.bz2
+      http://download.banshee-project.org/banshee/stable/1.5.1/banshee-1-1.5.1.tar.gz
 
 Packages
 --------
@@ -112,20 +111,20 @@ Packages
 
     * http://banshee-project.org/download/
 
-    Packages for openSUSE 11.0, openSUSE 10.3, and openSUSE Factory are
+    Packages for openSUSE 11.1, openSUSE 11.0, and openSUSE Factory are
     available from the openSUSE Build Service in the Banshee project.
 
     * http://download.opensuse.org/repositories/Banshee/
 
     Binaries for Mac OS X 10.4 and 10.5:
 
-    * http://download.banshee-project.org/banshee/unstable/1.5.1/banshee-1-1.5.1.macosx.intel.dmg
+    * http://download.banshee-project.org/banshee/stable/1.5.1/banshee-1-1.5.1.macosx.intel.dmg
 
 ChangeLogs & Checksums
 ----------------------
 
-    * http://download.banshee-project.org/banshee/unstable/1.5.1/banshee-1-1.5.1.changes
-    * http://download.banshee-project.org/banshee/unstable/1.5.1/banshee-1-1.5.1.sha1sum
+    * http://download.banshee-project.org/banshee/stable/1.5.1/banshee-1-1.5.1.changes
+    * http://download.banshee-project.org/banshee/stable/1.5.1/banshee-1-1.5.1.sha1sum
 
 
 ===============================================================================
