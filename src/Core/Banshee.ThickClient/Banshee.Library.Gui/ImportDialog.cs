@@ -31,6 +31,8 @@ using System.Collections.Generic;
 using Gtk;
 using Glade;
 
+using Mono.Unix;
+
 using Banshee.Sources;
 using Banshee.ServiceStack;
 using Banshee.Gui;
@@ -43,6 +45,7 @@ namespace Banshee.Library.Gui
         private ComboBox source_combo_box;
         private ListStore source_model;
         private AccelGroup accel_group;
+        private Button import_button;
 
         [Widget] private Gtk.Label choose_label;
 
@@ -58,9 +61,11 @@ namespace Banshee.Library.Gui
                 Dialog.TransientFor = ServiceManager.Get<GtkElementsService> ().PrimaryWindow;
             }
             
+            Dialog.WidthRequest = 400;
             Dialog.WindowPosition = WindowPosition.CenterOnParent;
             Dialog.AddAccelGroup (accel_group);
             Dialog.DefaultResponse = ResponseType.Ok;
+            import_button = (Glade["ImportButton"] as Button);
 
             DoNotShowAgainVisible = doNotShowAgainVisible;
             
@@ -72,12 +77,18 @@ namespace Banshee.Library.Gui
             
             Glade["MessageLabel"].Visible = ServiceManager.SourceManager.DefaultSource.Count == 0;
             
-            (Glade["ImportButton"] as Button).AddAccelerator ("activate", accel_group, 
-                (uint)Gdk.Key.Return, 0, AccelFlags.Visible);
+            import_button.AddAccelerator ("activate", accel_group, (uint)Gdk.Key.Return, 0, AccelFlags.Visible);
             
             Dialog.StyleSet += delegate {
                 UpdateIcons ();
             };
+        }
+
+        private void UpdateImportLabel ()
+        {
+            string label = ActiveSource == null ? null : ActiveSource.ImportLabel;
+            import_button.Label = label ?? Catalog.GetString ("_Import");
+            import_button.WidthRequest = Math.Max (import_button.WidthRequest, 140);
         }
         
         private void PopulateSourceList ()
@@ -85,6 +96,7 @@ namespace Banshee.Library.Gui
             source_model = new ListStore (typeof (Gdk.Pixbuf), typeof (string), typeof (IImportSource));
             
             source_combo_box = new ComboBox ();
+            source_combo_box.Changed += delegate { UpdateImportLabel (); };
             source_combo_box.Model = source_model;
             choose_label.MnemonicWidget = source_combo_box;
             

@@ -4,7 +4,7 @@
 <glade-interface>
   <widget class="GtkDialog" id="ImportDialog">
     <property name="border_width">12</property>
-    <property name="title" translatable="yes">Import Media to Library</property>
+    <property name="title" translatable="no"></property>
     <property name="resizable">False</property>
     <property name="modal">True</property>
     <property name="window_position">GTK_WIN_POS_CENTER</property>
@@ -57,7 +57,7 @@
                   <widget class="GtkLabel" id="choose_label">
                     <property name="visible">True</property>
                     <property name="xalign">0</property>
-                    <property name="label" translatable="yes">Choose an import _source:</property>
+                    <property name="label" translatable="yes">Import _from:</property>
                     <property name="use_underline">True</property>
                   </widget>
                   <packing>
@@ -131,7 +131,7 @@
                 <property name="can_focus">True</property>
                 <property name="can_default">True</property>
                 <property name="has_default">True</property>
-                <property name="label" translatable="yes">I_mport Media Source</property>
+                <property name="label" translatable="no">Import</property>
                 <property name="use_underline">True</property>
                 <property name="response_id">-5</property>
               </widget>
