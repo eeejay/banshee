@@ -143,9 +143,19 @@ namespace Hyena.Gui.Theming
         {
             cr.LineWidth = BorderWidth;
             cr.Color = border_color;
-            double offset = (double)BorderWidth / 2.0;
+            double offset = (double)cr.LineWidth / 2.0;
             CairoExtensions.RoundedRectangle (cr, alloc.X + offset, alloc.Y + offset,
-                alloc.Width - BorderWidth, alloc.Height - BorderWidth, Context.Radius, CairoCorners.All);
+                alloc.Width - cr.LineWidth, alloc.Height - cr.LineWidth, Context.Radius, CairoCorners.All);
+            cr.Stroke();
+        }
+
+        public override void DrawFrameBorderFocused (Cairo.Context cr, Gdk.Rectangle alloc)
+        {
+            cr.LineWidth = BorderWidth*1.5;
+            cr.Color = CairoExtensions.ColorShade (border_color, 0.8);
+            double offset = (double)cr.LineWidth / 2.0;
+            CairoExtensions.RoundedRectangle (cr, alloc.X + offset, alloc.Y + offset,
+                alloc.Width - cr.LineWidth, alloc.Height - cr.LineWidth, Context.Radius, CairoCorners.All);
             cr.Stroke();
         }
         
