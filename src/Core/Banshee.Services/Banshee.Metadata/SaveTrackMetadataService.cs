@@ -46,13 +46,13 @@ namespace Banshee.Metadata
         public static SchemaPreference<bool> WriteEnabled = new SchemaPreference<bool> (
                 LibrarySchema.WriteMetadata, 
                 Catalog.GetString ("Write _metadata to files"),
-                Catalog.GetString ("Enable this option to save tags and other metadata inside supported audio files.")
+                Catalog.GetString ("Save tags and other metadata inside supported media files")
         );
 
         public static SchemaPreference<bool> RenameEnabled = new SchemaPreference<bool> (
                 LibrarySchema.MoveOnInfoSave,
                 Catalog.GetString ("_Update file and folder names"),
-                Catalog.GetString ("Enabling this option ensures that files and folders are renamed according to the metadata.")
+                Catalog.GetString ("Rename files and folders according to media metadata")
         );
 
         private SaveTrackMetadataJob job;

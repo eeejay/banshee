@@ -553,7 +553,7 @@ namespace Banshee.GStreamer
             
             replaygain_preference = service["general"]["misc"].Add (new SchemaPreference<bool> (ReplayGainEnabledSchema, 
                 Catalog.GetString ("_Enable ReplayGain correction"),
-                Catalog.GetString ("For tracks that have ReplayGain data, automatically scale (normalize) playback volume."),
+                Catalog.GetString ("For tracks that have ReplayGain data, automatically scale (normalize) playback volume"),
                 delegate { ReplayGainEnabled = ReplayGainEnabledSchema.Get (); }
             ));
         }
