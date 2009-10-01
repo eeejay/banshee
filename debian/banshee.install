@@ -1,0 +1,7 @@
+debian/tmp/usr/bin
+debian/tmp/usr/share
+debian/tmp/usr/lib/pkgconfig
+debian/tmp/usr/lib/banshee-1/
+debian/banshee.xpm /usr/share/pixmaps
+debian/Banshee.GStreamer.dll.config /usr/lib/banshee-1/Backends
+debian/Banshee.NowPlaying.X11.dll.config /usr/lib/banshee-1/Backends

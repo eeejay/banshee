@@ -1,0 +1,24 @@
+#!/usr/bin/make -f
+
+include /usr/share/quilt/quilt.make
+include /usr/share/cli-common/cli.make
+
+LDFLAGS += -Wl,-z,defs -Wl,-O1 -Wl,--as-needed
+
+override_dh_auto_configure:
+	dh_auto_configure -- --disable-static --enable-release \
+	                     --with-vendor-build-id="`lsb_release -ds`" \
+	                     MCS=/usr/bin/csc LDFLAGS="$(LDFLAGS)"
+
+# disable tests
+override_dh_auto_test:
+
+# dump debugging symbols in banshee-dbg
+override_dh_strip:
+	dh_strip --dbg-package=banshee-dbg
+
+override_dh_clistrip:
+	dh_clistrip --dbg-package=banshee-dbg
+
+%:
+	dh --with=quilt $@

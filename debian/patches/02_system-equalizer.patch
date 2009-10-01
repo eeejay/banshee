@@ -1,0 +1,13 @@
+diff --git a/gstreamer/Makefile.am b/gstreamer/Makefile.am
+index f6a7050..bf2e00a 100644
+--- a/gstreamer/Makefile.am
++++ b/gstreamer/Makefile.am
+@@ -1,6 +1,6 @@
+ if ENABLE_BUILTIN_EQUALIZER
+-SUBDIRS = \
+-	equalizer
++SUBDIRS =
++
+ endif
+ 
+ MAINTAINERCLEANFILES = Makefile.in

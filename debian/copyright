@@ -1,0 +1,151 @@
+This package was debianized by Sebastian Dröge <slomo@ubuntu.com> on
+Fri,  2 Sep 2005 16:54:20 +0200.
+
+It was downloaded from http://banshee-project.org/
+
+Upstream Author: Aaron Bockover <aaron@aaronbock.net>
+
+Copyright:
+
+  For everything not explicitily noted below:
+  Copyright (C) 2005-2006 Novell
+
+  For po/zh_CN.po,
+      po/zh_HK.po,
+      po/zh_TW.po,
+      po/bg.po,
+      po/da.po,
+      po/de.po,
+      po/cs.po,
+      po/es.po,
+      po/fr.po,
+      po/hu.po,
+      po/ja.po,
+      po/lt.po,
+      po/mk.po,
+      po/nl.po,
+      po/ru.po,
+      po/sr.po,
+      po/th.po,
+      po/sv.po,
+      po/vi.po,
+      po/sr@Latn.po,
+      po/pt_BR.po:
+  Copyright © 2005-2006 Novell, Inc.
+  Copyright © 2005 Aaron Bockover
+
+  For po/ca.po:
+  Copyright (C) 2005-2006 Jordi Mas i Hernàndez, jmas@softcatala.org
+  Copyright © 2005-2006 Novell, Inc.
+  Copyright © 2005 Aaron Bockover
+
+  For po/nb.po:
+  Copyright (C) 2005 Øivind Hoel and the GNOME Foundation
+  Copyright © 2005-2006 Novell, Inc.
+  Copyright © 2005 Aaron Bockover
+
+  For po/fi.po:
+  Copyright (C) 2006 Ilkka Tuohela.
+  Copyright © 2005-2006 Novell, Inc.
+  Copyright © 2005 Aaron Bockover
+
+  For po/en_CA.po:
+  Copyright (C) 2005-2006 Adam Weinberger and the GNOME Foundation
+  Copyright 2005 Novell, Inc.
+  Copyright 2005 Aaron Bockover
+
+  For po/en_GB.po:
+  Copyright (C) 2006 The GNOME Foundation
+  Copyright © 2005-2006 Novell, Inc.
+  Copyright © 2005 Aaron Bockover
+
+  For po/it.po:
+  Copyright (C) 2006 Alessandro Gervaso
+  Copyright © 2005-2006 Novell, Inc.
+  Copyright © 2005 Aaron Bockover
+
+  For src/Banshee.Dap/MassStorage/*:
+  Copyright (C) 2006 Novell and Gabriel Burt
+  
+  For src/Banshee.Plugins/Daap/daap-sharp/*:
+  Copyright (C) 2005  James Willcox <snorp@snorp.net>
+
+  For src/Banshee.Plugins/Daap/daap-sharp/Hasher.cs:
+  Copyright (C) 2005 James Willcox <snorp@snorp.net>
+  Copyright (C) 2004 David Hammerton <david@crazney.net>
+  Copyright (C) 2005 Jon Lech Johansen <jon@nanocrew.net>
+
+  For src/Banshee.Plugins/Daap/daap-sharp/BrokenMD5.cs:
+  Copyright (C) 2005  James Willcox <snorp@snorp.net>
+  Copyright 2001 by Matthew S. Ford.
+  Copyright (C) 2004-2005 Novell, Inc (http://www.novell.com)
+
+  For src/Banshee.Plugins/NotificationAreaIcon/NotificationArea.cs:
+  Copyright (C) 2005 Todd Berman <tberman@off.net>
+  Copyright (C) 2005 Ed Catmur <ed@catmur.co.uk>
+  Copyright (C) 2005 Novell, Inc. (Miguel de Icaza, Aaron Bockover)
+
+  For src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconPlugin.cs:
+  Copyright (C) 2005-2006 Novell, Inc. (Aaron Bockover)
+  Copyright (C) 2006 Sebastian Dröge <slomo@ubuntu.com>
+
+  For src/Banshee.Plugins/NotificationAreaIcon/NotificationAreaIconConfigPage.cs,
+      src/Banshee.Base/Notifications.cs:
+  Copyright (C) 2006 Ruben Vermeersch <ruben@savanne.be>
+
+  For src/Banshee.Dap/Mtp/*:
+  Copyright (C) 2006 Novell and Patrick van Staveren
+
+  For dbus-sharp/*:
+  Copyright 2006 Alp Toker <alp@atoker.com>
+
+  For src/Banshee.Base/Notifications/*:
+  Copyright (c) 2006 Sebastian Dröge <slomo@circular-chaos.org>
+
+  Permission is hereby granted, free of charge, to any person obtaining a
+  copy of this software and associated documentation files (the "Software"),
+  to deal in the Software without restriction, including without limitation
+  the rights to use, copy, modify, merge, publish, distribute, sublicense,
+  and/or sell copies of the Software, and to permit persons to whom the
+  Software is furnished to do so, subject to the following conditions:
+
+  The above copyright notice and this permission notice shall be included in
+  all copies or substantial portions of the Software.
+
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+  THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+  DEALINGS IN THE SOFTWARE.
+
+
+
+  For taglib-sharp/*:
+  Copyright (C) 2005 by Brian Nickel
+
+  For taglib-sharp/TagLib/UnsupportedFormatException.cs,
+      taglib-sharp/TagLib/SupportedMimeType.cs,
+      taglib-sharp/TagLib/ReadOnlyException.cs,
+      taglib-sharp/TagLib/Picture.cs:
+  Copyright (C) 2005-2006 Novell, Inc.
+
+  This library is free software; you can redistribute it and/or modify
+  it  under the terms of the GNU Lesser General Public License version
+  2.1 as published by the Free Software Foundation.
+
+  This library is distributed in the hope that it will be useful, but
+  WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+  Lesser General Public License for more details.
+
+  You should have received a copy of the GNU Lesser General Public
+  License along with this library; if not, write to the Free Software
+  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301,
+  USA.
+
+ This program is free software; you can redistribute it and/or modify it
+ under the terms of the GNU Lesser General Public License Version 2.1,
+ found on Debian systems in the file /usr/share/common-licenses/LGPL-2.1.
+

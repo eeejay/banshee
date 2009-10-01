@@ -1,0 +1,100 @@
+Source: banshee
+Section: sound
+Priority: optional
+Maintainer: Debian CLI Applications Team <pkg-cli-apps-team@lists.alioth.debian.org>
+Uploaders: Sebastian Dröge <slomo@debian.org>, Chow Loong Jin <hyperair@ubuntu.com>
+Build-Depends: debhelper (>= 7.0.50),
+               quilt (>= 0.46-7~),
+               autotools-dev,
+               cli-common-dev (>= 0.5.7),
+               intltool (>= 0.35),
+               lsb-release,
+               mono-devel (>= 2.0.1),
+               boo (>= 0.8.1),
+               libmono-cairo2.0-cil,
+               libmono-sqlite2.0-cil,
+               libndesk-dbus1.0-cil (>= 0.5),
+               libndesk-dbus-glib1.0-cil (>= 0.3),
+               libmono-addins-gui0.2-cil (>= 0.3),
+               libtaglib2.0-cil (>= 2.0.3.2),
+               libmono-zeroconf1.0-cil (>= 0.7.3),
+               libnotify0.4-cil,
+               libglib2.0-cil (>= 2.10),
+               libgtk2.0-cil (>= 2.10),
+               libglade2.0-cil (>= 2.10),
+               libgconf2.0-cil,
+               libgnome2.24-cil,
+               libipod-cil (>= 0.8.2),
+               libipodui-cil (>= 0.8.2),
+               libkarma-cil (>= 0.0.5),
+               monodoc-base (>= 1.1.9),
+               libsqlite3-dev (>= 3.4),
+               libmtp-dev (>= 0.2.0),
+               gconf2,
+               libglib2.0-dev,
+               libgtk2.0-dev (>= 2.8),
+               libx11-dev,
+               libxrandr-dev (>= 2:1.1.1),
+               libxxf86vm-dev (>= 1:1.0.1),
+               libgstreamer0.10-dev (>= 0.10.3),
+               libgstreamer-plugins-base0.10-dev (>= 0.10.12)
+Standards-Version: 3.8.2
+Homepage: http://www.banshee-project.org
+Vcs-Git:  git://git.debian.org/git/pkg-cli-apps/packages/banshee.git
+Vcs-Browser: http://git.debian.org/?p=pkg-cli-apps/packages/banshee.git
+
+Package: banshee
+Architecture: any
+Depends: ${shlibs:Depends},
+         ${cli:Depends},
+         ${misc:Depends},
+         gstreamer0.10-plugins-base,
+         gstreamer0.10-plugins-good (>= 0.10.8-4),
+         gstreamer0.10-alsa | gstreamer0.10-audiosink,
+         hal,
+         gnome-icon-theme (>= 2.16)
+Recommends: gstreamer0.10-plugins-bad,
+            podsleuth (>= 0.6.0),
+            brasero,
+            avahi-daemon
+Suggests: gstreamer0.10-plugins-ugly,
+          gstreamer0.10-ffmpeg,
+          banshee-dbg (=${binary:Version})
+Description: Media Management and Playback application
+ Banshee is a media management and playback application for the GNOME
+ desktop, allowing users to import audio from CDs, search their library,
+ create playlists of selections of their library, sync music to/from iPods
+ and other media devices, play and manage video files and burn selections
+ to a CD.
+
+Package: banshee-dbg
+Section: debug
+Priority: extra
+Architecture: any
+Depends: banshee (= ${binary:Version}),
+         ${shlibs:Depends},
+         ${cli:Depends},
+         ${misc:Depends}
+Description: Media Management and Playback application (debug symbols)
+ Banshee is a media management and playback application for the GNOME
+ desktop, allowing users to import audio from CDs, search their library,
+ create playlists of selections of their library, sync music to/from iPods
+ and other media devices, play and manage video files and burn selections
+ to a CD.
+ .
+ This package contains the debugging symbols for Banshee.
+
+Package: monodoc-banshee-manual
+Section: doc
+Architecture: all
+Depends: monodoc-manual,
+         ${misc:Depends}
+Description: Media Management and Playback application (developer documentation)
+ Banshee is a media management and playback application for the GNOME
+ desktop, allowing users to import audio from CDs, search their library,
+ create playlists of selections of their library, sync music to/from iPods
+ and other media devices, play and manage video files and burn selections
+ to a CD.
+ .
+ This package contains the developer documentation for Banshee.
+

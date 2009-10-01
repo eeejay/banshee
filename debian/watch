@@ -1,0 +1,3 @@
+version=3
+http://download.banshee-project.org/banshee/unstable/(\d\.\d\.\d)/banshee-1-(.*)\.tar\.gz
+http://download.banshee-project.org/banshee/stable/(\d\.\d\.\d)/banshee-1-(.*)\.tar\.gz
