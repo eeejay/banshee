@@ -102,8 +102,12 @@ namespace Hyena.Data.Gui
             if (header_visible && column_controller != null) {
                 PaintHeader (damage);
             }
-           
-            Theme.DrawFrameBorder (cairo_context, Allocation);
+
+            if (HasFocus)
+                Theme.DrawFrameBorderFocused (cairo_context, Allocation);
+            else
+                Theme.DrawFrameBorder (cairo_context, Allocation);
+
             if (Model != null) {
                 PaintRows(damage);
             }
