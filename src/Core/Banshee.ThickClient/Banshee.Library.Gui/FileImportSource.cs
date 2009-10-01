@@ -42,18 +42,11 @@ namespace Banshee.Library.Gui
     
         public void Import()
         {
-            Banshee.Gui.Dialogs.FileChooserDialog chooser = new Banshee.Gui.Dialogs.FileChooserDialog (
-                Catalog.GetString ("Import Files to Library"),
-                FileChooserAction.Open
-            );
-            
-            chooser.AddButton (Stock.Cancel, ResponseType.Cancel);
-            chooser.AddButton (Stock.Open, ResponseType.Ok);
-            chooser.AddFilter (Hyena.Gui.GtkUtilities.GetFileFilter (Catalog.GetString ("Media Files"), Banshee.Collection.Database.DatabaseImportManager.WhiteListFileExtensions.List));
-            chooser.SelectMultiple = true;
-            chooser.DefaultResponse = ResponseType.Ok;
-            
-            SetChooserShortcuts (chooser);
+            var chooser = Banshee.Gui.Dialogs.FileChooserDialog.CreateForImport (Catalog.GetString ("Import Files to Library"), true);
+
+            chooser.AddFilter (Hyena.Gui.GtkUtilities.GetFileFilter (
+                Catalog.GetString ("Media Files"),
+                Banshee.Collection.Database.DatabaseImportManager.WhiteListFileExtensions.List));
             
             if (chooser.Run () == (int)ResponseType.Ok) {
                 Banshee.ServiceStack.ServiceManager.Get<LibraryImportManager> ().Enqueue (chooser.Uris);
@@ -64,6 +57,10 @@ namespace Banshee.Library.Gui
         
         public string Name {
             get { return Catalog.GetString ("Local Files"); }
+        }
+
+        public string ImportLabel {
+            get { return Catalog.GetString ("Choose Files"); }
         }
         
         public string [] IconNames {
@@ -78,14 +75,6 @@ namespace Banshee.Library.Gui
             get { return 5; }
         }
         
-        public static void SetChooserShortcuts (Gtk.FileChooserDialog chooser)
-        {
-            Hyena.Gui.GtkUtilities.SetChooserShortcuts (chooser,
-                ServiceManager.SourceManager.MusicLibrary.BaseDirectory,
-                ServiceManager.SourceManager.VideoLibrary.BaseDirectory
-            );
-        }
-
         // Reserve strings in preparation for the forthcoming string freeze.
         public void ReservedStrings ()
         {

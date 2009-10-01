@@ -40,16 +40,7 @@ namespace Banshee.Library.Gui
     
         public void Import()
         {
-            Banshee.Gui.Dialogs.FileChooserDialog chooser = new Banshee.Gui.Dialogs.FileChooserDialog (
-                Catalog.GetString ("Import Folders to Library"),
-                FileChooserAction.SelectFolder
-            );
-            
-            chooser.AddButton (Stock.Cancel, ResponseType.Cancel);
-            chooser.AddButton (Stock.Open, ResponseType.Ok);
-            chooser.SelectMultiple = true;
-            chooser.DefaultResponse = ResponseType.Ok;
-            FileImportSource.SetChooserShortcuts (chooser);
+            var chooser = Banshee.Gui.Dialogs.FileChooserDialog.CreateForImport (Catalog.GetString ("Import Folders to Library"), false);
             
             if (chooser.Run () == (int)ResponseType.Ok) {
                 Banshee.ServiceStack.ServiceManager.Get<LibraryImportManager> ().Enqueue (chooser.Uris);
@@ -60,6 +51,10 @@ namespace Banshee.Library.Gui
         
         public string Name {
             get { return Catalog.GetString ("Local Folders"); }
+        }
+
+        public string ImportLabel {
+            get { return Catalog.GetString ("Choose Folders"); }
         }
         
         public string [] IconNames {

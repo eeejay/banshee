@@ -129,6 +129,8 @@ namespace Banshee.Library
         
         public abstract string Name { get; }
 
+        public virtual string ImportLabel { get { return null; } }
+
         public abstract string[] IconNames { get; }
         
         public abstract int SortOrder { get; }

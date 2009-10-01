@@ -30,11 +30,35 @@ using System;
 using Gtk;
 
 using Banshee.Configuration;
+using Banshee.ServiceStack;
 
 namespace Banshee.Gui.Dialogs
 {
     public class FileChooserDialog : Gtk.FileChooserDialog
     {
+        public static FileChooserDialog CreateForImport (string title, bool files)
+        {
+            var chooser = new Banshee.Gui.Dialogs.FileChooserDialog (
+                title,
+                ServiceManager.Get<Banshee.Gui.GtkElementsService> ().PrimaryWindow,
+                files ? FileChooserAction.Open : FileChooserAction.SelectFolder
+            );
+
+            chooser.DefaultResponse = ResponseType.Ok;
+            chooser.SelectMultiple = true;
+
+            chooser.AddButton (Stock.Cancel, ResponseType.Cancel);
+            // Translators: verb
+            chooser.AddButton (Mono.Unix.Catalog.GetString("I_mport"), ResponseType.Ok);
+
+            Hyena.Gui.GtkUtilities.SetChooserShortcuts (chooser,
+                ServiceManager.SourceManager.MusicLibrary.BaseDirectory,
+                ServiceManager.SourceManager.VideoLibrary.BaseDirectory
+            );
+
+            return chooser;
+        }
+
         public FileChooserDialog (string title, FileChooserAction action) : this (title, null, action)
         {            
         }
@@ -43,6 +67,7 @@ namespace Banshee.Gui.Dialogs
             base (title, parent, action)
         {
             SetCurrentFolderUri (LastFileChooserUri.Get (Environment.GetFolderPath (Environment.SpecialFolder.Personal)));
+            WindowPosition = WindowPosition.Center;
         }
         
         protected override void OnResponse (ResponseType response)

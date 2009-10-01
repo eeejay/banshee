@@ -159,24 +159,9 @@ namespace Banshee.Gui
         private void OnImportPlaylist (object o, EventArgs args)
         {
             // Prompt user for location of the playlist.
-            Banshee.Gui.Dialogs.FileChooserDialog chooser = new Banshee.Gui.Dialogs.FileChooserDialog (
-                Catalog.GetString("Import Playlist"),
-                PrimaryWindow,
-                FileChooserAction.Open
-            );
-                         
-            chooser.DefaultResponse = ResponseType.Ok;
-            chooser.SelectMultiple = true;
+            var chooser = Banshee.Gui.Dialogs.FileChooserDialog.CreateForImport (Catalog.GetString("Import Playlist"), true);
             chooser.AddFilter (Hyena.Gui.GtkUtilities.GetFileFilter (Catalog.GetString ("Playlists"), PlaylistFileUtil.PlaylistExtensions));
-            // TODO library-location add the BaseDirectory for the library being imported to (or all of them)
-            /*try {
-                chooser.AddShortcutFolder (Paths.LibraryLocation);
-            } catch {}*/
 
-            chooser.AddButton (Stock.Cancel, ResponseType.Cancel);
-            // Translators: verb
-            chooser.AddButton (Catalog.GetString("I_mport"), ResponseType.Ok);
-            
             int response = chooser.Run();            
 
             string [] uris = null;

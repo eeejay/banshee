@@ -353,6 +353,10 @@ namespace Banshee.Daap
         int IImportSource.SortOrder {
             get { return 30; }
         }
+
+        string IImportSource.ImportLabel {
+            get { return null; }
+        }
         
         public string [] IconNames {
             get { return Properties.GetStringList ("Icon.Name"); }

@@ -478,6 +478,10 @@ namespace Banshee.AudioCd
         int IImportSource.SortOrder {
             get { return -10; }
         }
+
+        string IImportSource.ImportLabel {
+            get { return null; }
+        }
         
 #endregion
 

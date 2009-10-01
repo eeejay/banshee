@@ -87,6 +87,10 @@ namespace Banshee.Dap
         public virtual bool CanImport {
             get { return true; }
         }
+
+        string IImportSource.ImportLabel {
+            get { return null; }
+        }
         
         int IImportSource.SortOrder {
             get { return 20; }

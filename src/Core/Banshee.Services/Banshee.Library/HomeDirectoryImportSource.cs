@@ -47,6 +47,8 @@ namespace Banshee.Library
         public string Name {
             get { return Catalog.GetString ("Home Directory"); }
         }
+
+        public string ImportLabel { get { return null; } }
         
         public string [] IconNames {
             get { return new string [] { "user-home", "gtk-home" }; }

@@ -66,6 +66,8 @@ namespace Banshee.Library.Gui
         public string Name {
             get { return Catalog.GetString ("Videos from Photos Folder"); }
         }
+
+        public string ImportLabel { get { return null; } }
         
         public string [] IconNames {
             get { return new string [] { "gtk-open" }; }
