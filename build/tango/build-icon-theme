@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+PACKAGES="
+	icon-naming-utils-0.8.90
+	tango-icon-theme-0.8.90
+"
+
+BUILD_ROOT="$PWD/build-root"
+
+function run {
+	echo "---> $@"
+	$@ || exit 1
+}
+
+for package in $PACKAGES; do
+	run rm -rf $package $package.tar.gz
+	run wget http://tango.freedesktop.org/releases/$package.tar.gz
+	run tar zxvf $package.tar.gz
+	
+	run pushd $package
+	
+	CONFIGURE_ARGS="--prefix=$BUILD_ROOT"
+	[[ $package =~ ^tango ]] && \
+		CONFIGURE_ARGS="$CONFIGURE_ARGS --enable-png-creation 
+			--disable-icon-framing"
+
+	PKG_CONFIG_PATH="${BUILD_ROOT}/share/pkgconfig:${PKG_CONFIG_PATH}" \
+		run ./configure $CONFIGURE_ARGS
+
+	run make
+	run make install
+
+	run popd
+
+done

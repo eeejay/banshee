@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+BUILD_ROOT="$PWD/build-root"
+ICON_ROOT="$PWD/icon-root"
+
+function run {
+	echo "---> $@"
+	$@ || exit 1
+}
+
+run rm -rf "$ICON_ROOT"
+run cp -a "$BUILD_ROOT/share/icons" "$ICON_ROOT"
+run pushd "$ICON_ROOT"
+
+ORIGINAL_SIZE=$(du -s -B1 | cut -f1)
+echo "---> Original size = $(($ORIGINAL_SIZE / 1024 / 1024))M"
+
+# remove some sizes
+for s in 128 96 72 64; do
+	run rm -rf Tango/${s}x${s}
+done
+run rm -rf Tango/scalable
+
+# remove symlinks
+run find -type l -exec rm {} \;
+
+NEW_SIZE=$(du -s -B1 | cut -f1)
+echo "---> New size = $(($NEW_SIZE / 1024 / 1024))M"
+

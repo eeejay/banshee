@@ -1,0 +1,5 @@
+First run build-icon-theme - this will download and install the latest tango
+and install it into a private build root in this directory
+
+Next run extract-icon-theme to pull out and trim the icon theme into a
+directory that can be bundled directly with Banshee.
