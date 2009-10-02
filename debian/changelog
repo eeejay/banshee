@@ -1,3 +1,9 @@
+banshee (1.5.1-1~eeejay2) karmic; urgency=low
+
+  * Fixed some build issues that were solved in upstream.
+
+ -- Eitan Isaacson <eitan@ascender.com>  Thu, 01 Oct 2009 18:05:07 -0700
+
 banshee (1.5.1-1~eeejay1) karmic; urgency=low
 
   * Added a11y work.
