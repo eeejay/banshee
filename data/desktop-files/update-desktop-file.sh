@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 DESKTOP_SOURCE="$1"
 VERSION="$2"

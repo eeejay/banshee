@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 if [ -f $2 ]; then
 	# Lame, but better than nothing

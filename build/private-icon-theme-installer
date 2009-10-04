@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 mkinstalldirs=$1; shift
 install_data=$1; shift

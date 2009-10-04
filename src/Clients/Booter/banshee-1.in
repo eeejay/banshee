@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 prefix=@prefix@
 libdir=@expanded_libdir@
