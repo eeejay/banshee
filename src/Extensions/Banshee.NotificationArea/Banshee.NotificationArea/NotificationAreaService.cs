@@ -446,24 +446,21 @@ namespace Banshee.NotificationArea
                 }
             }
             
-            if (current_nf != null) {
-                try {
-                    current_nf.Close ();
-                } catch {}
-                current_nf = null;
-            }
-
             try {
-                Notification nf = new Notification (Catalog.GetString ("Now Playing"), 
-                    message, image, notif_area.Widget);
-                nf.Urgency = Urgency.Low;
-                nf.Timeout = 4500;
-                if (!current_track.IsLive && ActionsSupported && interface_action_service.PlaybackActions["NextAction"].Sensitive) {
-                    nf.AddAction ("skip-song", Catalog.GetString("Skip this item"), OnSongSkipped);
+                if (current_nf == null)
+                    current_nf = new Notification (Catalog.GetString ("Now Playing"), 
+                        message, image, notif_area.Widget);
+                else {
+                    current_nf.Body = message;
+                    current_nf.Icon = image;
+                    current_nf.AttachWidget = notif_area.Widget;
                 }
-                nf.Show ();
-                
-                current_nf = nf;
+                current_nf.Urgency = Urgency.Low;
+                current_nf.Timeout = 4500;
+                if (!current_track.IsLive && ActionsSupported && interface_action_service.PlaybackActions["NextAction"].Sensitive) {
+                    current_nf.AddAction ("skip-song", Catalog.GetString("Skip this item"), OnSongSkipped);
+                }
+                current_nf.Show ();
             } catch (Exception e) {
                 Hyena.Log.Warning (Catalog.GetString ("Cannot show notification"), e.Message, false);
             }
