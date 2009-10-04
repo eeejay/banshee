@@ -55,6 +55,7 @@ namespace Hyena.Collections
         private int focused_index = -1;
         
         public event EventHandler Changed;
+        public event EventHandler FocusChanged;
         
         public Selection ()
         {
@@ -62,7 +63,12 @@ namespace Hyena.Collections
         
         public int FocusedIndex {
             get { return focused_index; }
-            set { focused_index = value; }
+            set {
+                    focused_index = value;
+                    EventHandler handler = FocusChanged;
+                    if (handler != null)
+                        handler (this, EventArgs.Empty);
+                }
         }
 
         protected virtual void OnChanged ()
