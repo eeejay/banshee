@@ -66,6 +66,17 @@ namespace Banshee.Widgets
             return base.OnButtonPressEvent(evnt);
         }
 
+        protected override bool OnKeyPressEvent(Gdk.EventKey evnt)
+        {
+            switch(evnt.Key) {
+                case Gdk.Key.Left:
+                case Gdk.Key.Right:
+                    return false;
+                default:
+                    return base.OnKeyPressEvent (evnt);
+            }
+        }
+
         protected override bool OnScrollEvent(Gdk.EventScroll evnt) {
             if (can_seek) {
                 SeekValue += (evnt.Direction.Equals (Gdk.ScrollDirection.Down) ? -1 : 1) * 10000; // skip 10s
