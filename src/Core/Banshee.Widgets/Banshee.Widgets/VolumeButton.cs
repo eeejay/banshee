@@ -311,8 +311,6 @@ namespace Bacon
             switch(evnt.Key) {
                 case Gdk.Key.Up:
                 case Gdk.Key.Down:
-                case Gdk.Key.Left:
-                case Gdk.Key.Right:
                 case Gdk.Key.KP_Add:
                 case Gdk.Key.KP_Subtract:
                 case Gdk.Key.plus:
