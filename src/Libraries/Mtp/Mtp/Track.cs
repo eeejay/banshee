@@ -298,6 +298,9 @@ namespace Mtp
 		public ushort rating;    // 0 -> 100
 		public uint usecount;
 		public ulong filesize;
+#if LIBMTP_TRACK_HAS_MODDATE
+		public uint modificationdate;
+#endif
 		public FileType filetype;
 		public IntPtr next; // Track Null if last
 		/*
