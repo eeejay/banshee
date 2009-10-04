@@ -37,14 +37,28 @@ namespace Hyena.Data.Gui
 {
     public partial class ListView<T> : ListViewBase
     {
-        bool header_focused = false;
-
+        private bool header_focused = false;
         public bool HeaderFocused {
             get { return header_focused; }
             set {
                 header_focused = value;
                 InvalidateHeader();
                 InvalidateList();
+            }
+        }
+
+        #pragma warning disable 0067
+        public event EventHandler ActiveColumnChanged;
+        #pragma warning restore 0067
+
+        private int active_column = 0;
+        public int ActiveColumn {
+            get { return active_column; }
+            set {
+                active_column = value;
+                EventHandler handler = ActiveColumnChanged;
+                    if (handler != null)
+                        handler (this, EventArgs.Empty);
             }
         }
 
@@ -87,7 +101,7 @@ namespace Hyena.Data.Gui
 
             int row_limit;
             if (relative_row < 0) {
-                if (Selection.FocusedRowIndex == -1) {
+                if (Selection.FocusedIndex == -1) {
                     return false;
                 }
                 
@@ -96,11 +110,11 @@ namespace Hyena.Data.Gui
                 row_limit = Model.Count - 1;
             }
 
-            if (Selection.FocusedRowIndex == row_limit) {
+            if (Selection.FocusedIndex == row_limit) {
                 return true;
             }
             
-            int row_index = Math.Min (Model.Count - 1, Math.Max (0, Selection.FocusedRowIndex + relative_row));
+            int row_index = Math.Min (Model.Count - 1, Math.Max (0, Selection.FocusedIndex + relative_row));
 
             if (Selection != null) {
                 if ((modifier & Gdk.ModifierType.ControlMask) != 0) {
@@ -111,10 +125,10 @@ namespace Hyena.Data.Gui
                     // Otherwise, select the new row and scroll etc as necessary.
                     if (relative_row * relative_row != 1) {
                         Selection.SelectFromFirst (row_index, true);
-                    } else if (Selection.Contains (Selection.FocusedRowIndex)) {
+                    } else if (Selection.Contains (Selection.FocusedIndex)) {
                         Selection.SelectFromFirst (row_index, true);
                     } else {
-                        Selection.Select (Selection.FocusedRowIndex);
+                        Selection.Select (Selection.FocusedIndex);
                         return true;
                     }
                 } else {
@@ -132,10 +146,10 @@ namespace Hyena.Data.Gui
                     ScrollTo (y_at_row + RowHeight - (vadjustment.PageSize));
                 }
             } else if (vadjustment != null) {
-                ScrollTo (vadjustment.Value + ((row_index - Selection.FocusedRowIndex) * RowHeight));
+                ScrollTo (vadjustment.Value + ((row_index - Selection.FocusedIndex) * RowHeight));
             }
 
-            Selection.FocusedRowIndex = row_index;
+            Selection.FocusedIndex = row_index;
             InvalidateList ();
             return true;
         }
@@ -181,18 +195,18 @@ namespace Hyena.Data.Gui
                     break;
                 case Gdk.Key.Right:
                 case Gdk.Key.KP_Right:
-                    if (Selection.FocusedColumnIndex + 1 < column_cache.Length)
+                    if (ActiveColumn + 1 < column_cache.Length)
                     {
-                        Selection.FocusedColumnIndex++;
+                        ActiveColumn++;
                         InvalidateHeader();
                     }
                     handled = true;
                     break;
                 case Gdk.Key.Left:
                 case Gdk.Key.KP_Left:
-                    if (Selection.FocusedColumnIndex - 1 >= 0)
+                    if (ActiveColumn - 1 >= 0)
                     {
-                        Selection.FocusedColumnIndex--;
+                        ActiveColumn--;
                         InvalidateHeader();
                     }
                     handled = true;
@@ -227,10 +241,10 @@ namespace Hyena.Data.Gui
                 case Gdk.Key.KP_Enter:
                     if (!HeaderFocused)
                         handled = ActivateSelection ();
-                    else if (HeaderFocused && Selection.FocusedColumnIndex >= 0)
+                    else if (HeaderFocused && ActiveColumn >= 0)
                     {
                         OnColumnLeftClicked (
-                            column_cache[Selection.FocusedColumnIndex].Column);
+                            column_cache[ActiveColumn].Column);
                         handled = true;
                     }
                     break;
@@ -240,9 +254,9 @@ namespace Hyena.Data.Gui
                     break;
 
                 case Gdk.Key.space:
-                    if (Selection != null && Selection.FocusedRowIndex != 1 &&
+                    if (Selection != null && Selection.FocusedIndex != 1 &&
                         !HeaderFocused) {
-                        Selection.ToggleSelect (Selection.FocusedRowIndex);
+                        Selection.ToggleSelect (Selection.FocusedIndex);
                         handled = true;
                     }
                     break;
@@ -257,9 +271,9 @@ namespace Hyena.Data.Gui
         
         protected bool ActivateSelection ()
         {
-            if (Selection != null && Selection.FocusedRowIndex != -1) {
+            if (Selection != null && Selection.FocusedIndex != -1) {
                 Selection.Clear (false);
-                Selection.Select (Selection.FocusedRowIndex);
+                Selection.Select (Selection.FocusedIndex);
                 OnRowActivated ();
                 return true;
             }
@@ -542,7 +556,7 @@ namespace Hyena.Data.Gui
         {
             if (pressed_column_index >= 0 && pressed_column_index < column_cache.Length) {
                 Column column = column_cache[pressed_column_index].Column;
-                Selection.FocusedColumnIndex = pressed_column_index;
+                ActiveColumn = pressed_column_index;
                 if (column != null)
                     OnColumnLeftClicked (column);
                 
@@ -705,10 +719,10 @@ namespace Hyena.Data.Gui
         
         protected virtual void OnRowActivated ()
         {
-            if (Selection.FocusedRowIndex != -1) {
+            if (Selection.FocusedIndex != -1) {
                 RowActivatedHandler<T> handler = RowActivated;
                 if (handler != null) {
-                    handler (this, new RowActivatedArgs<T> (Selection.FocusedRowIndex, model[Selection.FocusedRowIndex]));
+                    handler (this, new RowActivatedArgs<T> (Selection.FocusedIndex, model[Selection.FocusedIndex]));
                 }
             }
         }
@@ -746,7 +760,7 @@ namespace Hyena.Data.Gui
 
         private void FocusRow (int index)
         {
-            Selection.FocusedRowIndex = index;
+            Selection.FocusedIndex = index;
         }
 
 #endregion

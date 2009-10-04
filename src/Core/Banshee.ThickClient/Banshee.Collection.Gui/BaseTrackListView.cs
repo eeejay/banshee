@@ -141,7 +141,7 @@ namespace Banshee.Collection.Gui
 
             Selection.Clear (false);
             Selection.QuietSelect (current_index);
-            Selection.FocusedRowIndex = current_index;
+            Selection.FocusedIndex = current_index;
 
             if (old_index == -1 || IsRowVisible (old_index)) {
                 CenterOn (current_index);

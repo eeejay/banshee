@@ -28,8 +28,8 @@ namespace Hyena.Data.Gui.Accessibility
             list_view.Model.Reloaded += (o, a) => OnModelChanged ();
             OnModelChanged ();
 
-            list_view.Selection.FocusRowChanged += OnSelectionFocusChanged;
-            list_view.Selection.FocusColumnChanged += OnSelectionFocusChanged;
+            list_view.Selection.FocusChanged += OnSelectionFocusChanged;
+            list_view.ActiveColumnChanged += OnSelectionFocusChanged;
 
             ListViewAccessible_Selection ();
             ListViewAccessible_Table ();
@@ -106,10 +106,9 @@ namespace Hyena.Data.Gui.Accessibility
             Atk.Object cell;
 
             if (list_view.HeaderFocused)
-                cell = OnRefChild (list_view.Selection.FocusedColumnIndex);
+                cell = OnRefChild (list_view.ActiveColumn);
             else
-                cell = RefAt (list_view.Selection.FocusedRowIndex,
-                    list_view.Selection.FocusedColumnIndex);
+                cell = RefAt (list_view.Selection.FocusedIndex, list_view.ActiveColumn);
 
             GLib.Signal.Emit (this, "active-descendant-changed", cell.Handle);
         }
@@ -173,7 +172,7 @@ namespace Hyena.Data.Gui.Accessibility
 
             int row = cell_index/NColumns;
 
-            return row == list_view.Selection.FocusedRowIndex;
+            return row == list_view.Selection.FocusedIndex;
         }
 
         public bool IsCellSelected (ColumnCellAccessible cell)
