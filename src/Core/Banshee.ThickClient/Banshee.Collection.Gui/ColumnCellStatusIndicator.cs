@@ -48,11 +48,7 @@ namespace Banshee.Collection.Gui
         {
         }
 
-        public string ImageLocale {
-            get {
-                return null;
-            }
-        }
+        public string ImageLocale { get { return null; } }
 
         public bool SetImageDescription (string description)
         {
@@ -61,10 +57,10 @@ namespace Banshee.Collection.Gui
 
         public void GetImageSize (out int width, out int height)
         {
-            if (cell.GetTextAlternative (bound_object) != string.Empty)
+            if (!String.IsNullOrEmpty (cell.GetTextAlternative (bound_object)))
                 width = height = 16;
             else
-                width = height = int.MinValue;
+                width = height = Int32.MinValue;
         }
 
         public string ImageDescription {
@@ -75,13 +71,13 @@ namespace Banshee.Collection.Gui
 
         public void GetImagePosition (out int x, out int y, Atk.CoordType coordType)
         {
-            if (cell.GetTextAlternative (bound_object) != string.Empty)
-            {
+            if (!String.IsNullOrEmpty (cell.GetTextAlternative (bound_object))) {
                 GetPosition (out x, out y, coordType);
                 x += 4;
                 y += 4;
-            } else
-                x = y = int.MinValue;
+            } else {
+                x = y = Int32.MinValue;
+            }
         }
     }
 
@@ -94,9 +90,10 @@ namespace Banshee.Collection.Gui
             Protected
         }
 
-        private string[] icon_names = new string[] {
+        private string [] icon_names = new string[] {
             Catalog.GetString ("Playing"), Catalog.GetString ("Paused"),
-            Catalog.GetString ("Error"), Catalog.GetString ("Protected"), string.Empty};
+            Catalog.GetString ("Error"), Catalog.GetString ("Protected"), ""
+        };
         
         private int pixbuf_size = 16;
         protected virtual int PixbufSize {
@@ -131,15 +128,16 @@ namespace Banshee.Collection.Gui
 
         public override string GetTextAlternative (object obj)
         {
-            if (!(obj is TrackInfo))
-                return string.Empty;
+            var track = obj as TrackInfo;
+            if (track == null)
+                return "";
 
-            int icon_index = GetIconIndex ((TrackInfo)obj);
+            int icon_index = GetIconIndex (track);
 
             if (icon_index < 0)
-                return string.Empty;
+                return "";
             else
-                return icon_names[GetIconIndex ((TrackInfo)obj)];
+                return icon_names[GetIconIndex (track)];
         }
 
         protected virtual int PixbufCount {
@@ -180,9 +178,9 @@ namespace Banshee.Collection.Gui
                 pixbufs = new Gdk.Pixbuf[PixbufCount];
             }
             
-            pixbufs[(int)Icon.Playing] = IconThemeUtils.LoadIcon (PixbufSize, "media-playback-start");
-            pixbufs[(int)Icon.Paused] = IconThemeUtils.LoadIcon (PixbufSize, "media-playback-pause");
-            pixbufs[(int)Icon.Error] = IconThemeUtils.LoadIcon (PixbufSize, "emblem-unreadable", "dialog-error");
+            pixbufs[(int)Icon.Playing]   = IconThemeUtils.LoadIcon (PixbufSize, "media-playback-start");
+            pixbufs[(int)Icon.Paused]    = IconThemeUtils.LoadIcon (PixbufSize, "media-playback-pause");
+            pixbufs[(int)Icon.Error]     = IconThemeUtils.LoadIcon (PixbufSize, "emblem-unreadable", "dialog-error");
             pixbufs[(int)Icon.Protected] = IconThemeUtils.LoadIcon (PixbufSize, "emblem-readonly", "dialog-error");
         }
         

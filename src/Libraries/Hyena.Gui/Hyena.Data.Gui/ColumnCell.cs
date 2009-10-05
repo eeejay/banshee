@@ -50,7 +50,7 @@ namespace Hyena.Data.Gui
 
         public virtual string GetTextAlternative (object obj)
         {
-            return string.Empty;
+            return "";
         }
 
         public ColumnCell (string property, bool expand)
