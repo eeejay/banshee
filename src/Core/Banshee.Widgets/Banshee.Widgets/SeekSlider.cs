@@ -44,7 +44,7 @@ namespace Banshee.Widgets
         public event EventHandler SeekRequested;
         public event EventHandler DurationChanged;
 
-        public SeekSlider() : base(0.0, 0.0, 0.0)
+        public SeekSlider () : base (0.0, 0.0, 0.0)
         {
             UpdatePolicy = UpdateType.Continuous;
             DrawValue = false;
@@ -55,23 +55,23 @@ namespace Banshee.Widgets
             Adjustment.Lower = 0;
             Adjustment.Upper = 0;
 
-            Accessible.Name = Catalog.GetString("Seek");
+            Accessible.Name = Catalog.GetString ("Seek");
             
-            SetIdle();
+            SetIdle ();
         }
         
-        protected override bool OnButtonPressEvent(Gdk.EventButton evnt)
+        protected override bool OnButtonPressEvent (Gdk.EventButton evnt)
         {
             can_set_value = false;
             if (evnt.Button == 1) {
                 pressed_x = evnt.X;
             }
-            return base.OnButtonPressEvent(evnt);
+            return base.OnButtonPressEvent (evnt);
         }
 
-        protected override bool OnKeyPressEvent(Gdk.EventKey evnt)
+        protected override bool OnKeyPressEvent (Gdk.EventKey evnt)
         {
-            switch(evnt.Key) {
+            switch (evnt.Key) {
                 case Gdk.Key.Left:
                 case Gdk.Key.Right:
                     return false;
@@ -80,48 +80,48 @@ namespace Banshee.Widgets
             }
         }
 
-        protected override bool OnScrollEvent(Gdk.EventScroll evnt) {
+        protected override bool OnScrollEvent (Gdk.EventScroll evnt) {
             if (can_seek) {
                 SeekValue += (evnt.Direction.Equals (Gdk.ScrollDirection.Down) ? -1 : 1) * 10000; // skip 10s
-                OnSeekRequested();
+                OnSeekRequested ();
             }
             
             return base.OnScrollEvent (evnt);
         }
 
-        protected override bool OnButtonReleaseEvent(Gdk.EventButton evnt)
+        protected override bool OnButtonReleaseEvent (Gdk.EventButton evnt)
         {
             can_set_value = true;
             
-            if(timeout > 0) {
-                GLib.Source.Remove(timeout);
+            if (timeout > 0) {
+                GLib.Source.Remove (timeout);
             }
             
             if (can_seek) {
                 if (evnt.Button == 1 && Math.Abs (pressed_x - evnt.X) <= 3.0) {
                     SeekValue = (long) (evnt.X / Allocation.Width * Duration); // seek to clicked position
                 }
-                OnSeekRequested();
+                OnSeekRequested ();
             }
             
-            return base.OnButtonReleaseEvent(evnt);
+            return base.OnButtonReleaseEvent (evnt);
         }
         
-        protected override void OnValueChanged()
+        protected override void OnValueChanged ()
         {
-            if(timeout == 0 && raise_seek_requested) {
-                timeout = GLib.Timeout.Add(timeout_delay, OnSeekRequested);
+            if (timeout == 0 && raise_seek_requested) {
+                timeout = GLib.Timeout.Add (timeout_delay, OnSeekRequested);
             }
             
-            base.OnValueChanged();
+            base.OnValueChanged ();
         }
         
-        private bool OnSeekRequested()
+        private bool OnSeekRequested ()
         {   
-            if(raise_seek_requested) {
+            if (raise_seek_requested) {
                 EventHandler handler = SeekRequested;
-                if(handler != null) {
-                    handler(this, new EventArgs());
+                if (handler != null) {
+                    handler (this, new EventArgs ());
                 }
             }
             
@@ -132,13 +132,13 @@ namespace Banshee.Widgets
         public long SeekValue {
             get { return (long)Value; }
             set {
-                if(!can_set_value) {
+                if (!can_set_value) {
                     return;
                 }
                 
                 raise_seek_requested = false;
                 
-                if(value > Duration) {
+                if (value > Duration) {
                     Duration = Int64.MaxValue;
                     Value = value;
                 } else {
@@ -154,13 +154,13 @@ namespace Banshee.Widgets
             set {
                 Adjustment.Upper = value;
                 EventHandler handler = DurationChanged;
-                if(handler != null) {
-                    handler(this, new EventArgs());
+                if (handler != null) {
+                    handler (this, EventArgs.Empty);
                 }
             }
         }
         
-        public void SetIdle()
+        public void SetIdle ()
         {
             Sensitive = false;
             SeekValue = 0;

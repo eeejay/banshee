@@ -37,7 +37,7 @@ namespace Hyena.Data.Gui.Accessibility
             return states;
         }
 
-        protected override int OnGetIndexInParent()
+        protected override int OnGetIndexInParent ()
         {
             return ((ICellAccessibleParent)Parent).GetCellIndex (this);
         }

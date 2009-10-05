@@ -120,7 +120,7 @@ namespace Hyena.Gui.Theming
 
         public abstract void DrawColumnHeaderFocus (Cairo.Context cr, Gdk.Rectangle alloc);
         
-        public abstract void DrawHeaderSeparator(Cairo.Context cr, Gdk.Rectangle alloc, int x);
+        public abstract void DrawHeaderSeparator (Cairo.Context cr, Gdk.Rectangle alloc, int x);
         
         public void DrawListBackground (Cairo.Context cr, Gdk.Rectangle alloc, bool baseColor)
         {
@@ -141,7 +141,7 @@ namespace Hyena.Gui.Theming
         
         public void DrawColumnHighlight (Cairo.Context cr, Gdk.Rectangle alloc)
         {
-            DrawColumnHighlight (cr, alloc, colors.GetWidgetColor(GtkColorClass.Background, StateType.Selected));
+            DrawColumnHighlight (cr, alloc, colors.GetWidgetColor (GtkColorClass.Background, StateType.Selected));
         }
         
         public abstract void DrawColumnHighlight (Cairo.Context cr, Gdk.Rectangle alloc, Cairo.Color color);

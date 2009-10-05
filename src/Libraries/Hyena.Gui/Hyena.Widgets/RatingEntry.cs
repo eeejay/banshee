@@ -395,7 +395,7 @@ namespace Hyena.Widgets
             Hyena.Log.Information ("RatingAccessible raw ctor..");
         }
 
-        public RatingAccessible (GLib.Object widget): base()
+        public RatingAccessible (GLib.Object widget): base ()
         {
             rating = widget as RatingEntry;
             Name = "Rating entry";
@@ -440,7 +440,7 @@ namespace Hyena.Widgets
         public static void Init ()
         {
             new RatingAccessibleFactory ();
-            Atk.Global.DefaultRegistry.SetFactoryType ((GLib.GType)typeof(RatingEntry), (GLib.GType)typeof (RatingAccessibleFactory));
+            Atk.Global.DefaultRegistry.SetFactoryType ((GLib.GType)typeof (RatingEntry), (GLib.GType)typeof (RatingAccessibleFactory));
         }
 
         protected override Atk.Object OnCreateAccessible (GLib.Object obj)

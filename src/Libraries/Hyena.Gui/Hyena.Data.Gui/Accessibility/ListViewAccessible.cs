@@ -20,9 +20,9 @@ namespace Hyena.Data.Gui.Accessibility
             Name = "ListView";
             Description = "ListView";
             Role = Atk.Role.Table;
-            Parent = list_view.Parent.RefAccessible();
+            Parent = list_view.Parent.RefAccessible ();
 
-            cell_cache = new Dictionary<int, ColumnCellAccessible>();
+            cell_cache = new Dictionary<int, ColumnCellAccessible> ();
 
             list_view.ModelChanged += (o, a) => OnModelChanged ();
             list_view.Model.Reloaded += (o, a) => OnModelChanged ();
@@ -44,7 +44,7 @@ namespace Hyena.Data.Gui.Accessibility
         }
 
 
-        protected override int OnGetIndexInParent()
+        protected override int OnGetIndexInParent ()
         {
             for (int i=0; i < Parent.NAccessibleChildren; i++)
                 if (Parent.RefAccessibleChild (i) == this)
@@ -53,16 +53,16 @@ namespace Hyena.Data.Gui.Accessibility
             return -1;
         }
 
-        protected override int OnGetNChildren()
+        protected override int OnGetNChildren ()
         {
             return n_columns * n_rows + n_columns;
         }
 
-        protected override Atk.Object OnRefChild(int index)
+        protected override Atk.Object OnRefChild (int index)
         {
             ColumnCellAccessible child;
 
-            if (cell_cache.ContainsKey(index))
+            if (cell_cache.ContainsKey (index))
             {
                 return cell_cache[index];
             }
@@ -79,7 +79,7 @@ namespace Hyena.Data.Gui.Accessibility
                 child = (ColumnCellAccessible) cell.GetAccessible (this);
             }
 
-            cell_cache.Add(index, child);
+            cell_cache.Add (index, child);
 
             return child;
         }
@@ -87,14 +87,14 @@ namespace Hyena.Data.Gui.Accessibility
         public override Atk.Object RefAccessibleAtPoint (int x, int y, Atk.CoordType coordType)
         {
             int row, col;
-            list_view.GetCellAtPoint(x, y, coordType, out row, out col);
+            list_view.GetCellAtPoint (x, y, coordType, out row, out col);
             return RefAt (row, col);
         }
 
         private void OnModelChanged ()
         {
             GLib.Signal.Emit (this, "model_changed");
-            cell_cache.Clear();
+            cell_cache.Clear ();
             /*var handler = ModelChanged;
             if (handler != null) {
                 handler (this, EventArgs.Empty);
@@ -141,7 +141,7 @@ namespace Hyena.Data.Gui.Accessibility
             int cache_index = GetCellIndex (cell);
             int minval = int.MinValue;
             if (cache_index == -1)
-                return new Gdk.Rectangle(minval, minval, minval, minval);
+                return new Gdk.Rectangle (minval, minval, minval, minval);
 
             if (cache_index - n_columns >= 0)
             {

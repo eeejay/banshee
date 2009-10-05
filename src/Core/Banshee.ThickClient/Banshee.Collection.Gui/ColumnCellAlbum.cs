@@ -57,10 +57,11 @@ namespace Banshee.Collection.Gui
 
         private class ColumnCellAlbumAccessible : ColumnCellAccessible
         {
-            public ColumnCellAlbumAccessible (object bound_object, ColumnCellAlbum cell, ICellAccessibleParent parent): base (bound_object, cell as ColumnCell, parent)
+            public ColumnCellAlbumAccessible (object bound_object, ColumnCellAlbum cell, ICellAccessibleParent parent)
+                : base (bound_object, cell as ColumnCell, parent)
             {
                 AlbumInfo bound_album_info = (AlbumInfo)bound_object;
-                Name = string.Format("{0} - {1}",
+                Name = String.Format ("{0} - {1}",
                                      bound_album_info.DisplayTitle,
                                      bound_album_info.DisplayArtistName);
             }
@@ -78,7 +79,7 @@ namespace Banshee.Collection.Gui
             }
             
             if (!(BoundObject is AlbumInfo)) {
-                throw new InvalidCastException("ColumnCellAlbum can only bind to AlbumInfo objects");
+                throw new InvalidCastException ("ColumnCellAlbum can only bind to AlbumInfo objects");
             }
             
             AlbumInfo album = (AlbumInfo)BoundObject;

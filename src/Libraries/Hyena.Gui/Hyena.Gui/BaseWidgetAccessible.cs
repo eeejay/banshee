@@ -121,8 +121,8 @@ namespace Hyena.Gui
         {
             int x_extents, y_extents, w, h;
             GetExtents (out x_extents, out y_extents, out w, out h, coordType);
-            Gdk.Rectangle extents = new Gdk.Rectangle(x_extents, y_extents, w, h);
-            return extents.Contains(x, y);
+            Gdk.Rectangle extents = new Gdk.Rectangle (x_extents, y_extents, w, h);
+            return extents.Contains (x, y);
         }
 
         public virtual Atk.Object RefAccessibleAtPoint (int x, int y, Atk.CoordType coordType)

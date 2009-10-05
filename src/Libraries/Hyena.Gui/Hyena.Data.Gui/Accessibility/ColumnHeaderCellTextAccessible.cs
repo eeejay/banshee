@@ -6,8 +6,8 @@ namespace Hyena.Data.Gui.Accessibility
 {
     class ColumnHeaderCellTextAccessible: ColumnCellTextAccessible, Atk.ActionImplementor
     {
-        private static string[] ActionDescriptions  = new string[] {"", Catalog.GetString("open context menu")};
-        private static string[] ActionNamesLocalized = new string[] {Catalog.GetString("click"), Catalog.GetString("menu")};
+        private static string[] ActionDescriptions  = new string[] {"", Catalog.GetString ("open context menu")};
+        private static string[] ActionNamesLocalized = new string[] {Catalog.GetString ("click"), Catalog.GetString ("menu")};
 
         private enum Actions
         {
@@ -42,7 +42,7 @@ namespace Hyena.Data.Gui.Accessibility
             if (action >= (int)Actions.LAST)
                 return "";
 
-            return ((Actions)action).ToString().ToLower();
+            return ((Actions)action).ToString ().ToLower ();
         }
 
         public string GetDescription (int action)
@@ -68,17 +68,19 @@ namespace Hyena.Data.Gui.Accessibility
         public bool DoAction (int action)
         {
             ICellAccessibleParent parent = (ICellAccessibleParent)Parent;
-            switch ((Actions)action)
-            {
-            case Actions.MENU: parent.InvokeColumnHeaderMenu (this); break;
-            case Actions.CLICK: parent.ClickColumnHeader (this); break;
+            switch ((Actions)action) {
+                case Actions.MENU: parent.InvokeColumnHeaderMenu (this); break;
+                case Actions.CLICK: parent.ClickColumnHeader (this); break;
             }
-            if (action == (int)Actions.MENU)
-                ((ICellAccessibleParent)Parent).InvokeColumnHeaderMenu(this);
+
+            if (action == (int)Actions.MENU) {
+                ((ICellAccessibleParent)Parent).InvokeColumnHeaderMenu (this);
+            }
+
             return true;
         }
 
-        public bool SetDescription(int action, string description)
+        public bool SetDescription (int action, string description)
         {
             return false;
         }

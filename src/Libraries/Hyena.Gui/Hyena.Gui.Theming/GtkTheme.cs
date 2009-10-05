@@ -146,7 +146,7 @@ namespace Hyena.Gui.Theming
             double offset = (double)cr.LineWidth / 2.0;
             CairoExtensions.RoundedRectangle (cr, alloc.X + offset, alloc.Y + offset,
                 alloc.Width - cr.LineWidth, alloc.Height - cr.LineWidth, Context.Radius, CairoCorners.All);
-            cr.Stroke();
+            cr.Stroke ();
         }
 
         public override void DrawFrameBorderFocused (Cairo.Context cr, Gdk.Rectangle alloc)
@@ -156,7 +156,7 @@ namespace Hyena.Gui.Theming
             double offset = (double)cr.LineWidth / 2.0;
             CairoExtensions.RoundedRectangle (cr, alloc.X + offset, alloc.Y + offset,
                 alloc.Width - cr.LineWidth, alloc.Height - cr.LineWidth, Context.Radius, CairoCorners.All);
-            cr.Stroke();
+            cr.Stroke ();
         }
         
         public override void DrawColumnHighlight (Cairo.Context cr, Gdk.Rectangle alloc, Cairo.Color color)
@@ -218,7 +218,7 @@ namespace Hyena.Gui.Theming
                 alloc.Height - (margin + line_width)*2.0 - top_offset,
                 Context.Radius/2.0, CairoCorners.None);
 
-            cr.Fill();
+            cr.Fill ();
 
             stroke_color.A = 1.0;
             cr.LineWidth = line_width;
@@ -229,7 +229,7 @@ namespace Hyena.Gui.Theming
                 alloc.Width - (line_width + margin)*2.0 - right_offset,
                 alloc.Height - (line_width + margin)*2.0 - right_offset,
                 Context.Radius/2.0, CairoCorners.All);
-            cr.Stroke();
+            cr.Stroke ();
         }
 
         public override void DrawHeaderSeparator (Cairo.Context cr, Gdk.Rectangle alloc, int x)
@@ -319,7 +319,7 @@ namespace Hyena.Gui.Theming
             }
         }
         
-        public override void DrawRowRule(Cairo.Context cr, int x, int y, int width, int height)
+        public override void DrawRowRule (Cairo.Context cr, int x, int y, int width, int height)
         {
             cr.Color = new Cairo.Color (rule_color.R, rule_color.G, rule_color.B, Context.FillAlpha);
             cr.Rectangle (x, y, width, height);

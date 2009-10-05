@@ -109,7 +109,7 @@ namespace Hyena.Data.Gui
                 Theme.DrawFrameBorder (cairo_context, Allocation);
 
             if (Model != null) {
-                PaintRows(damage);
+                PaintRows (damage);
             }
             
             PaintDraggingColumn (damage);
@@ -271,13 +271,13 @@ namespace Hyena.Data.Gui
                         if (HasFocus && !HeaderFocused) // Cursor out of selection.
                             Theme.DrawRowCursor (cairo_context, single_list_alloc.X, single_list_alloc.Y,
                                                  single_list_alloc.Width, single_list_alloc.Height,
-                                                 CairoExtensions.ColorShade(Theme.Colors.GetWidgetColor (GtkColorClass.Background, StateType.Selected), 0.85));
+                                                 CairoExtensions.ColorShade (Theme.Colors.GetWidgetColor (GtkColorClass.Background, StateType.Selected), 0.85));
                     }
                     
                     if (selection_height > 0) {
                         Cairo.Color selection_color = Theme.Colors.GetWidgetColor (GtkColorClass.Background, StateType.Selected);
                         if (!HasFocus || HeaderFocused)
-                            selection_color = CairoExtensions.ColorShade(selection_color, 1.1);
+                            selection_color = CairoExtensions.ColorShade (selection_color, 1.1);
 
                         Theme.DrawRowSelection (cairo_context, list_rendering_alloc.X, selection_y, list_rendering_alloc.Width, selection_height,
                                                 true, true, selection_color, CairoCorners.All);

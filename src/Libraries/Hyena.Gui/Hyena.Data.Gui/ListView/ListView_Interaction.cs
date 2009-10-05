@@ -42,8 +42,8 @@ namespace Hyena.Data.Gui
             get { return header_focused; }
             set {
                 header_focused = value;
-                InvalidateHeader();
-                InvalidateList();
+                InvalidateHeader ();
+                InvalidateList ();
             }
         }
 
@@ -198,7 +198,7 @@ namespace Hyena.Data.Gui
                     if (ActiveColumn + 1 < column_cache.Length)
                     {
                         ActiveColumn++;
-                        InvalidateHeader();
+                        InvalidateHeader ();
                     }
                     handled = true;
                     break;
@@ -207,7 +207,7 @@ namespace Hyena.Data.Gui
                     if (ActiveColumn - 1 >= 0)
                     {
                         ActiveColumn--;
-                        InvalidateHeader();
+                        InvalidateHeader ();
                     }
                     handled = true;
                     break;

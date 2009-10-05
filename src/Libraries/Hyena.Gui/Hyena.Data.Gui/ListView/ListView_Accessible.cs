@@ -61,12 +61,12 @@ namespace Hyena.Data.Gui
 
             int x = ListAllocation.X - HadjustmentValue;
             for (int index=0;index<column;index++)
-                x += GetColumnWidth(index);
+                x += GetColumnWidth (index);
 
-            Gdk.Rectangle rectangle = new Gdk.Rectangle(x, y, width, height);
+            Gdk.Rectangle rectangle = new Gdk.Rectangle (x, y, width, height);
 
             if (clip && !ListAllocation.Contains (rectangle))
-                return new Gdk.Rectangle(int.MinValue, int.MinValue, int.MinValue, int.MinValue);
+                return new Gdk.Rectangle (int.MinValue, int.MinValue, int.MinValue, int.MinValue);
 
             if (coord_type == Atk.CoordType.Window)
                 return rectangle;
@@ -83,7 +83,7 @@ namespace Hyena.Data.Gui
         public Gdk.Rectangle GetColumnHeaderCellExtents (int column, bool clip, Atk.CoordType coord_type)
         {
             if (!HeaderVisible)
-                return new Gdk.Rectangle(int.MinValue, int.MinValue,
+                return new Gdk.Rectangle (int.MinValue, int.MinValue,
                                          int.MinValue, int.MinValue);
             int width = GetColumnWidth (column);
             int height = HeaderHeight;
@@ -92,11 +92,11 @@ namespace Hyena.Data.Gui
             if (column != 0)
                 x += Theme.InnerBorderWidth;
             for (int index=0;index<column;index++)
-                x += GetColumnWidth(index);
+                x += GetColumnWidth (index);
 
             int y = Theme.BorderWidth + header_rendering_alloc.Y;
 
-            Gdk.Rectangle rectangle = new Gdk.Rectangle(x, y, width, height);
+            Gdk.Rectangle rectangle = new Gdk.Rectangle (x, y, width, height);
 
             if (coord_type == Atk.CoordType.Window)
                 return rectangle;
@@ -148,7 +148,7 @@ namespace Hyena.Data.Gui
         public static void Init ()
         {
             new ListViewAccessibleFactory<T> ();
-            Atk.Global.DefaultRegistry.SetFactoryType ((GLib.GType)typeof(ListView<T>), (GLib.GType)typeof (ListViewAccessibleFactory<T>));
+            Atk.Global.DefaultRegistry.SetFactoryType ((GLib.GType)typeof (ListView<T>), (GLib.GType)typeof (ListViewAccessibleFactory<T>));
         }
 
         protected override Atk.Object OnCreateAccessible (GLib.Object obj)

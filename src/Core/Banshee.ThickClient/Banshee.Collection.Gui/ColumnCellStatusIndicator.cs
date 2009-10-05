@@ -73,7 +73,7 @@ namespace Banshee.Collection.Gui
             }
         }
 
-        public void GetImagePosition(out int x, out int y, Atk.CoordType coordType)
+        public void GetImagePosition (out int x, out int y, Atk.CoordType coordType)
         {
             if (cell.GetTextAlternative (bound_object) != string.Empty)
             {
