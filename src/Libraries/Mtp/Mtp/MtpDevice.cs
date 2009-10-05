@@ -136,8 +136,13 @@ namespace Mtp
 			{
 				if (f.FolderId == this.device.default_album_folder)
 					albumFolder = f;
-				else if (f.FolderId == device.default_music_folder)
+				else if (f.FolderId == device.default_music_folder) {
 					musicFolder = f;
+					// Fix for devices that don't have an explicit playlist folder (BGO #590342)
+					if (device.default_playlist_folder == 0) {
+						playlistFolder = f;
+					}
+				}
 				else if (f.FolderId == device.default_organizer_folder)
 					organizerFolder = f;
 				else if (f.FolderId == device.default_picture_folder)
