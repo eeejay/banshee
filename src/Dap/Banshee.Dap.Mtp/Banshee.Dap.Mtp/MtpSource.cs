@@ -109,6 +109,10 @@ namespace Banshee.Dap.Mtp
                     if (mtp_serial.Contains (device.Serial)) {
                         mtp_device = devices[0];
                         mtp_source = this;
+                    } else if (device.Serial.Contains (mtp_serial.TrimStart('0'))) {
+                        // Special case for sony walkman players; BGO #543938
+                        mtp_device = devices[0];
+                        mtp_source = this;
                     }
                 }
 
