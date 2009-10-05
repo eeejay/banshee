@@ -453,7 +453,7 @@ namespace Banshee.NotificationArea
                 else {
                     current_nf.Body = message;
                     current_nf.Icon = image;
-                    current_nf.AttachWidget = notif_area.Widget;
+                    current_nf.AttachToWidget (notif_area.Widget);
                 }
                 current_nf.Urgency = Urgency.Low;
                 current_nf.Timeout = 4500;
