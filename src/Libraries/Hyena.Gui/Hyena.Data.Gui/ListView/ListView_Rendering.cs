@@ -102,8 +102,12 @@ namespace Hyena.Data.Gui
             if (header_visible && column_controller != null) {
                 PaintHeader (damage);
             }
-           
-            Theme.DrawFrameBorder (cairo_context, Allocation);
+
+            if (HasFocus)
+                Theme.DrawFrameBorderFocused (cairo_context, Allocation);
+            else
+                Theme.DrawFrameBorder (cairo_context, Allocation);
+
             if (Model != null) {
                 PaintRows(damage);
             }
@@ -159,6 +163,10 @@ namespace Hyena.Data.Gui
         {
             if (ci < 0 || column_cache.Length <= ci)
                 return;
+
+            if (ci == ActiveColumn && HasFocus && HeaderFocused) {
+                Theme.DrawColumnHeaderFocus (cairo_context, area);
+            }
 
             if (dragging) {
                 Theme.DrawColumnHighlight (cairo_context, area, 
@@ -259,14 +267,20 @@ namespace Hyena.Data.Gui
                         if (Selection.Contains (ri + 1)) {
                             corners &= ~(CairoCorners.BottomLeft | CairoCorners.BottomRight);
                         }
-                        
-                        Theme.DrawRowSelection (cairo_context, single_list_alloc.X, single_list_alloc.Y, 
-                            single_list_alloc.Width, single_list_alloc.Height, false, true, 
-                            Theme.Colors.GetWidgetColor (GtkColorClass.Background, StateType.Selected), corners);
+
+                        if (HasFocus && !HeaderFocused) // Cursor out of selection.
+                            Theme.DrawRowCursor (cairo_context, single_list_alloc.X, single_list_alloc.Y,
+                                                 single_list_alloc.Width, single_list_alloc.Height,
+                                                 CairoExtensions.ColorShade(Theme.Colors.GetWidgetColor (GtkColorClass.Background, StateType.Selected), 0.85));
                     }
                     
                     if (selection_height > 0) {
-                        Theme.DrawRowSelection (cairo_context, list_rendering_alloc.X, selection_y, list_rendering_alloc.Width, selection_height);
+                        Cairo.Color selection_color = Theme.Colors.GetWidgetColor (GtkColorClass.Background, StateType.Selected);
+                        if (!HasFocus || HeaderFocused)
+                            selection_color = CairoExtensions.ColorShade(selection_color, 1.1);
+
+                        Theme.DrawRowSelection (cairo_context, list_rendering_alloc.X, selection_y, list_rendering_alloc.Width, selection_height,
+                                                true, true, selection_color, CairoCorners.All);
                         selection_height = 0;
                     }
                     
@@ -285,10 +299,11 @@ namespace Hyena.Data.Gui
             }
             
             if (Selection != null && Selection.Count > 1 && 
-                !selected_focus_alloc.Equals (Rectangle.Zero) && HasFocus) {
-                Theme.DrawRowSelection (cairo_context, selected_focus_alloc.X, selected_focus_alloc.Y, 
-                    selected_focus_alloc.Width, selected_focus_alloc.Height, false, true, 
-                    Theme.Colors.GetWidgetColor (GtkColorClass.Dark, StateType.Selected));
+                !selected_focus_alloc.Equals (Rectangle.Zero) &&
+                HasFocus && !HeaderFocused) { // Cursor inside selection.
+                Theme.DrawRowCursor (cairo_context, selected_focus_alloc.X, selected_focus_alloc.Y,
+                    selected_focus_alloc.Width, selected_focus_alloc.Height,
+                    Theme.Colors.GetWidgetColor (GtkColorClass.Text, StateType.Selected));
             }
             
             foreach (int ri in selected_rows) {

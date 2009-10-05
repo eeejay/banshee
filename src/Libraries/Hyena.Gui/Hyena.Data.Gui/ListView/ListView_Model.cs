@@ -35,6 +35,10 @@ namespace Hyena.Data.Gui
 {
     public partial class ListView<T> : ListViewBase
     {
+        #pragma warning disable 0067
+        public event EventHandler ModelChanged;
+        #pragma warning restore 0067
+
         public void SetModel (IListModel<T> model)
         {
             SetModel (model, 0.0);
@@ -73,7 +77,13 @@ namespace Hyena.Data.Gui
             }
             
             RefreshViewForModel (vpos);
+
+            var handler = ModelChanged;
+            if (handler != null) {
+                handler (this, EventArgs.Empty);
+            }
         }
+
 
         private void RefreshViewForModel (double? vpos)
         {
