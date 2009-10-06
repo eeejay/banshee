@@ -58,7 +58,6 @@ namespace Hyena.Data.Gui
 
         public override Atk.Object GetAccessible (ICellAccessibleParent parent)
         {
-            last_text = GetText (BoundObject);
             return new ColumnCellTextAccessible (BoundObject, this, parent);
         }
 
