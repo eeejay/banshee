@@ -31,14 +31,14 @@ namespace Hyena.Data.Gui.Accessibility
 
         public bool RemoveSelection (int index)
         {
-            int row = list_view.Selection.RangeCollection [index/n_columns];
+            int row = list_view.Selection.RangeCollection [index / n_columns];
             return RemoveRowSelection (row);
         }
 
         public Atk.Object RefSelection (int index)
         {
-            int row = list_view.Selection.RangeCollection [index/n_columns];
-            int column = index%n_columns;
+            int row = list_view.Selection.RangeCollection [index / n_columns];
+            int column = index % n_columns;
             return RefAt (row, column);
         }
 

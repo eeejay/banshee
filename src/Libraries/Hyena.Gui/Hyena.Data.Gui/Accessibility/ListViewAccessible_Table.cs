@@ -45,9 +45,7 @@ namespace Hyena.Data.Gui.Accessibility
 
         public int GetColumnAtIndex (int index)
         {
-            if (NColumns == 0)
-                return -1;
-            return (index-NColumns)%NColumns;
+            return NColumns == 0 ? -1 : (index - NColumns) % NColumns;
         }
 
         public string GetColumnDescription (int column)
@@ -78,7 +76,7 @@ namespace Hyena.Data.Gui.Accessibility
         {
             if (NColumns == 0)
                 return -1;
-            return (index-NColumns)/NColumns;
+            return (index - NColumns) / NColumns;
         }
 
         public string GetRowDescription (int row)
@@ -122,7 +120,7 @@ namespace Hyena.Data.Gui.Accessibility
 
         public Atk.Object RefAt (int row, int column)
         {
-            int index = NColumns*row + column + NColumns;
+            int index = NColumns * row + column + NColumns;
             return OnRefChild (index);
         }
 
@@ -152,20 +150,5 @@ namespace Hyena.Data.Gui.Accessibility
         public void SetRowHeader (int row, Atk.Object header)
         {
         }
-
-        #pragma warning disable 0067
-
-        /*
-        public event Atk.ColumnDeletedHandler ColumnDeleted;
-        public event Atk.ColumnInsertedHandler ColumnInserted;
-        public event EventHandler ColumnReordered;
-        public event EventHandler ModelChanged;
-        public event Atk.RowDeletedHandler RowDeleted;
-        public event Atk.RowInsertedHandler RowInserted;
-        public event EventHandler RowReordered;
-        */
-
-        #pragma warning restore 0067
-
     }
 }

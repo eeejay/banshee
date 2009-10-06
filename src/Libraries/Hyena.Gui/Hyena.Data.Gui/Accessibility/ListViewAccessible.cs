@@ -7,13 +7,12 @@ using Hyena.Data.Gui;
 
 namespace Hyena.Data.Gui.Accessibility
 {
-    public partial class ListViewAccessible<T> : Hyena.Gui.BaseWidgetAccessible,
-             ICellAccessibleParent
+    public partial class ListViewAccessible<T> : Hyena.Gui.BaseWidgetAccessible, ICellAccessibleParent
     {
         private ListView<T> list_view;
         private Dictionary<int, ColumnCellAccessible> cell_cache;
 
-        public ListViewAccessible (GLib.Object widget): base (widget as Gtk.Widget)
+        public ListViewAccessible (GLib.Object widget) : base (widget as Gtk.Widget)
         {
             list_view = widget as ListView<T>;
             // TODO replace with list_view.Name?
@@ -43,12 +42,13 @@ namespace Hyena.Data.Gui.Accessibility
             return states;
         }
 
-
         protected override int OnGetIndexInParent ()
         {
-            for (int i=0; i < Parent.NAccessibleChildren; i++)
-                if (Parent.RefAccessibleChild (i) == this)
+            for (int i=0; i < Parent.NAccessibleChildren; i++) {
+                if (Parent.RefAccessibleChild (i) == this) {
                     return i;
+                }
+            }
 
             return -1;
         }
@@ -62,19 +62,20 @@ namespace Hyena.Data.Gui.Accessibility
         {
             ColumnCellAccessible child;
 
-            if (cell_cache.ContainsKey (index))
-            {
+            if (cell_cache.ContainsKey (index)) {
                 return cell_cache[index];
             }
-            if (0 > index - n_columns)
-            {
-                child = (ColumnCellAccessible) list_view.ColumnController.Where (c => c.Visible).ElementAtOrDefault (index).HeaderCell.GetAccessible (this);
-            }
-            else
-            {
-                int column = (index - n_columns)%n_columns;
-                int row = (index - n_columns)/n_columns;
-                var cell = list_view.ColumnController.Where (c => c.Visible).ElementAtOrDefault (column).GetCell (0);
+
+            var columns = list_view.ColumnController.Where (c => c.Visible);
+
+            if (index - n_columns < 0) {
+                child = columns.ElementAtOrDefault (index)
+                               .HeaderCell
+                               .GetAccessible (this) as ColumnCellAccessible;
+            } else {
+                int column = (index - n_columns) % n_columns;
+                int row = (index - n_columns) / n_columns;
+                var cell = columns.ElementAtOrDefault (column).GetCell (0);
                 cell.BindListItem (list_view.Model[row]);
                 child = (ColumnCellAccessible) cell.GetAccessible (this);
             }
@@ -115,15 +116,13 @@ namespace Hyena.Data.Gui.Accessibility
 
         private int n_columns {
             get { return list_view.ColumnController.Count (c => c.Visible); }
-            set {}
         }
 
         private int n_rows {
             get { return list_view.Model.Count; }
-            set {}
         }
 
-        # region ICellAccessibleParent
+        #region ICellAccessibleParent
 
         public int GetCellIndex (ColumnCellAccessible cell)
         {
@@ -167,18 +166,17 @@ namespace Hyena.Data.Gui.Accessibility
         public bool IsCellFocused (ColumnCellAccessible cell)
         {
             int cell_index = GetCellIndex (cell);
-            if (cell_index%NColumns != 0)
+            if (cell_index % NColumns != 0)
                 return false; // Only 0 column cells get focus now.
 
-            int row = cell_index/NColumns;
+            int row = cell_index / NColumns;
 
             return row == list_view.Selection.FocusedIndex;
         }
 
         public bool IsCellSelected (ColumnCellAccessible cell)
         {
-            int cell_index = GetCellIndex (cell);
-            return IsChildSelected (cell_index);
+            return IsChildSelected (GetCellIndex (cell));
         }
 
         public void InvokeColumnHeaderMenu (ColumnCellAccessible cell)
@@ -191,7 +189,6 @@ namespace Hyena.Data.Gui.Accessibility
             list_view.ClickColumnHeader (GetCellIndex (cell));
         }
 
-        # endregion ICellAccessibleParent
-
+        #endregion
     }
 }

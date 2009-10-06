@@ -7,12 +7,14 @@ namespace Hyena.Data.Gui.Accessibility
     {
         protected ColumnCell cell;
         protected object bound_object;
+        private ICellAccessibleParent cell_parent;
 
         public ColumnCellAccessible (object bound_object, ColumnCell cell, ICellAccessibleParent parent)
         {
             Role = Atk.Role.TableCell;
             this.bound_object = bound_object;
             this.cell = cell;
+            cell_parent = parent;
             Parent = (Atk.Object) parent;
         }
 
@@ -25,13 +27,13 @@ namespace Hyena.Data.Gui.Accessibility
             states.AddState (Atk.StateType.Sensitive);
             states.AddState (Atk.StateType.Visible);
 
-            if (((ICellAccessibleParent)Parent).IsCellShowing (this))
+            if (cell_parent.IsCellShowing (this))
                 states.AddState (Atk.StateType.Showing);
 
-            if (((ICellAccessibleParent)Parent).IsCellFocused (this))
+            if (cell_parent.IsCellFocused (this))
                 states.AddState (Atk.StateType.Focused);
 
-            if (((ICellAccessibleParent)Parent).IsCellSelected (this))
+            if (cell_parent.IsCellSelected (this))
                 states.AddState (Atk.StateType.Selected);
 
             return states;
@@ -39,7 +41,7 @@ namespace Hyena.Data.Gui.Accessibility
 
         protected override int OnGetIndexInParent ()
         {
-            return ((ICellAccessibleParent)Parent).GetCellIndex (this);
+            return cell_parent.GetCellIndex (this);
         }
 
         public double Alpha {
@@ -72,14 +74,14 @@ namespace Hyena.Data.Gui.Accessibility
 
         public void GetSize (out int w, out int h)
         {
-            Gdk.Rectangle rectangle = ((ICellAccessibleParent)Parent).GetCellExtents(this, Atk.CoordType.Screen);
+            Gdk.Rectangle rectangle = cell_parent.GetCellExtents(this, Atk.CoordType.Screen);
             w = rectangle.Width;
             h = rectangle.Height;
         }
 
         public void GetPosition (out int x, out int y, Atk.CoordType coordType)
         {
-            Gdk.Rectangle rectangle = ((ICellAccessibleParent)Parent).GetCellExtents(this, coordType);
+            Gdk.Rectangle rectangle = cell_parent.GetCellExtents(this, coordType);
 
             x = rectangle.X;
             y = rectangle.Y;
@@ -87,7 +89,7 @@ namespace Hyena.Data.Gui.Accessibility
 
         public void GetExtents (out int x, out int y, out int w, out int h, Atk.CoordType coordType)
         {
-            Gdk.Rectangle rectangle = ((ICellAccessibleParent)Parent).GetCellExtents(this, coordType);
+            Gdk.Rectangle rectangle = cell_parent.GetCellExtents(this, coordType);
 
             x = rectangle.X;
             y = rectangle.Y;
