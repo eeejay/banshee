@@ -191,7 +191,7 @@ namespace Hyena.Data.Gui
                 
                 double remaining_width = RecalculateColumnSizes (header_width, header_width);
                 
-                while (remaining_width != 0 && elastic_columns.Count > 0) {
+                while (remaining_width > 0 && elastic_columns.Count > 0) {
                     double total_elastic_width = 0.0;
                     foreach (int i in elastic_columns) {
                         total_elastic_width += column_cache[i].ElasticWidth;
