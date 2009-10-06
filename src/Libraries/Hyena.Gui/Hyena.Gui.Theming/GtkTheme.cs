@@ -151,7 +151,7 @@ namespace Hyena.Gui.Theming
 
         public override void DrawFrameBorderFocused (Cairo.Context cr, Gdk.Rectangle alloc)
         {
-            cr.LineWidth = BorderWidth*1.5;
+            cr.LineWidth = BorderWidth * 1.5;
             cr.Color = CairoExtensions.ColorShade (border_color, 0.8);
             double offset = (double)cr.LineWidth / 2.0;
             CairoExtensions.RoundedRectangle (cr, alloc.X + offset, alloc.Y + offset,
