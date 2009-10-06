@@ -56,9 +56,10 @@ namespace Hyena.Data.Gui
             get { return active_column; }
             set {
                 active_column = value;
-                EventHandler handler = ActiveColumnChanged;
-                    if (handler != null)
-                        handler (this, EventArgs.Empty);
+                var handler = ActiveColumnChanged;
+                if (handler != null) {
+                    handler (this, EventArgs.Empty);
+                }
             }
         }
 
@@ -185,18 +186,16 @@ namespace Hyena.Data.Gui
                 case Gdk.Key.J:
                 case Gdk.Key.Down:
                 case Gdk.Key.KP_Down:
-                    if (!HeaderFocused)
+                    if (!HeaderFocused) {
                         handled = KeyboardScroll (press.State, 1, true);
-                    else if (HeaderFocused)
-                    {
+                    } else if (HeaderFocused) {
                         handled = true;
                         HeaderFocused = false;
                     }
                     break;
                 case Gdk.Key.Right:
                 case Gdk.Key.KP_Right:
-                    if (ActiveColumn + 1 < column_cache.Length)
-                    {
+                    if (ActiveColumn + 1 < column_cache.Length) {
                         ActiveColumn++;
                         InvalidateHeader ();
                     }
@@ -204,8 +203,7 @@ namespace Hyena.Data.Gui
                     break;
                 case Gdk.Key.Left:
                 case Gdk.Key.KP_Left:
-                    if (ActiveColumn - 1 >= 0)
-                    {
+                    if (ActiveColumn - 1 >= 0) {
                         ActiveColumn--;
                         InvalidateHeader ();
                     }
@@ -239,10 +237,9 @@ namespace Hyena.Data.Gui
 
                 case Gdk.Key.Return:
                 case Gdk.Key.KP_Enter:
-                    if (!HeaderFocused)
+                    if (!HeaderFocused) {
                         handled = ActivateSelection ();
-                    else if (HeaderFocused && ActiveColumn >= 0)
-                    {
+                    } else if (HeaderFocused && ActiveColumn >= 0) {
                         OnColumnLeftClicked (
                             column_cache[ActiveColumn].Column);
                         handled = true;
