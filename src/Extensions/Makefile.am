@@ -6,6 +6,7 @@ SUBDIRS = \
 	Banshee.CoverArt \
 	Banshee.Daap \
 	Banshee.FileSystemQueue \
+	Banshee.InternetArchive \
 	Banshee.InternetRadio \
 	Banshee.Lastfm \
 	Banshee.MiniMode \
