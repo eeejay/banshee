@@ -35,10 +35,10 @@ namespace InternetArchive
     {
         private MediaType (string id, string name) : base (Field.MediaType, id, name) {}
 
-        private MediaType AddChildren (params MediaType [] children)
+        private MediaType AddChildren (params FieldValue [] children)
         {
             if (Children == null) {
-                Children = new List<MediaType> ();
+                Children = new List<FieldValue> ();
             }
 
             foreach (var child in children) {
@@ -48,52 +48,52 @@ namespace InternetArchive
             return this;
         }
 
-        public IList<MediaType> Children { get; set; }
+        public IList<FieldValue> Children { get; set; }
 
         public static MediaType [] Options = new MediaType [] {
             new MediaType ("movies", Catalog.GetString ("Moving Images")).AddChildren (
-                new MediaType ("movies.animationandcartoons", Catalog.GetString ("Animation & Cartoons")),
-                new MediaType ("movies.artsandmusicvideos", Catalog.GetString ("Arts & Music")),
-                new MediaType ("movies.computersandtechvideos", Catalog.GetString ("Computers & Technology")),
-                new MediaType ("movies.culturalandacademicfilms", Catalog.GetString ("Cultural & Academic Films")),
-                new MediaType ("movies.ephemera", Catalog.GetString ("Ephemeral Films")),
-                new MediaType ("movies.home_movies", Catalog.GetString ("Home Movies")),
-                new MediaType ("movies.moviesandfilms", Catalog.GetString ("Movies")),
-                new MediaType ("movies.newsandpublicaffairs", Catalog.GetString ("News & Public Affairs")),
-                new MediaType ("movies.opensource_movies", Catalog.GetString ("Open Source Movies")),
-                new MediaType ("movies.prelinger", Catalog.GetString ("Prelinger Archives")),
-                new MediaType ("movies.spiritualityandreligion", Catalog.GetString ("Spirituality & Religion")),
-                new MediaType ("movies.sports", Catalog.GetString ("Sports Videos")),
-                new MediaType ("movies.gamevideos", Catalog.GetString ("Videogame Videos")),
-                new MediaType ("movies.vlogs", Catalog.GetString ("Vlogs")),
-                new MediaType ("movies.youth_media", Catalog.GetString ("Youth Media"))
+                new FieldValue (Field.Collection, "animationandcartoons", Catalog.GetString ("Animation & Cartoons")),
+                new FieldValue (Field.Collection, "artsandmusicvideos", Catalog.GetString ("Arts & Music")),
+                new FieldValue (Field.Collection, "computersandtechvideos", Catalog.GetString ("Computers & Technology")),
+                new FieldValue (Field.Collection, "culturalandacademicfilms", Catalog.GetString ("Cultural & Academic Films")),
+                new FieldValue (Field.Collection, "ephemera", Catalog.GetString ("Ephemeral Films")),
+                new FieldValue (Field.Collection, "home_movies", Catalog.GetString ("Home Movies")),
+                new FieldValue (Field.Collection, "moviesandfilms", Catalog.GetString ("Movies")),
+                new FieldValue (Field.Collection, "newsandpublicaffairs", Catalog.GetString ("News & Public Affairs")),
+                new FieldValue (Field.Collection, "opensource_movies", Catalog.GetString ("Open Source Movies")),
+                new FieldValue (Field.Collection, "prelinger", Catalog.GetString ("Prelinger Archives")),
+                new FieldValue (Field.Collection, "spiritualityandreligion", Catalog.GetString ("Spirituality & Religion")),
+                new FieldValue (Field.Collection, "sports", Catalog.GetString ("Sports Videos")),
+                new FieldValue (Field.Collection, "gamevideos", Catalog.GetString ("Videogame Videos")),
+                new FieldValue (Field.Collection, "vlogs", Catalog.GetString ("Vlogs")),
+                new FieldValue (Field.Collection, "youth_media", Catalog.GetString ("Youth Media"))
             ),
             new MediaType ("texts", Catalog.GetString ("Texts")).AddChildren (
-                new MediaType ("texts.americana", Catalog.GetString ("American Libraries")),
-                new MediaType ("texts.toronto", Catalog.GetString ("Canadian Libraries")),
-                new MediaType ("texts.universallibrary", Catalog.GetString ("Universal Library")),
-                new MediaType ("texts.gutenberg", Catalog.GetString ("Project Gutenberg")),
-                new MediaType ("texts.iacl", Catalog.GetString ("Children's Library")),
-                new MediaType ("texts.biodiversity", Catalog.GetString ("Biodiversity Heritage Library")),
-                new MediaType ("texts.additional_collections", Catalog.GetString ("Additional Collections"))
+                new FieldValue (Field.Collection, "americana", Catalog.GetString ("American Libraries")),
+                new FieldValue (Field.Collection, "toronto", Catalog.GetString ("Canadian Libraries")),
+                new FieldValue (Field.Collection, "universallibrary", Catalog.GetString ("Universal Library")),
+                new FieldValue (Field.Collection, "gutenberg", Catalog.GetString ("Project Gutenberg")),
+                new FieldValue (Field.Collection, "iacl", Catalog.GetString ("Children's Library")),
+                new FieldValue (Field.Collection, "biodiversity", Catalog.GetString ("Biodiversity Heritage Library")),
+                new FieldValue (Field.Collection, "additional_collections", Catalog.GetString ("Additional Collections"))
             ),
             new MediaType ("audio", Catalog.GetString ("Audio")).AddChildren (
-                new MediaType ("audio.audio_bookspoetry", Catalog.GetString ("Audio Books & Poetry")),
-                new MediaType ("audio.audio_tech", Catalog.GetString ("Computers & Technology")),
-                new MediaType ("audio.GratefulDead", Catalog.GetString ("Grateful Dead")),
-                new MediaType ("audio.etree", Catalog.GetString ("Live Music Archive")),
-                new MediaType ("audio.audio_music", Catalog.GetString ("Music & Arts")),
-                new MediaType ("audio.netlabels", Catalog.GetString ("Netlabels")),
-                new MediaType ("audio.audio_news", Catalog.GetString ("News & Public Affairs")),
-                new MediaType ("audio.audio_foreign", Catalog.GetString ("Non-English Audio")),
-                new MediaType ("audio.opensource_audio", Catalog.GetString ("Open Source Audio")),
-                new MediaType ("audio.audio_podcast", Catalog.GetString ("Podcasts")),
-                new MediaType ("audio.radioprograms", Catalog.GetString ("Radio Programs")),
-                new MediaType ("audio.audio_religion", Catalog.GetString ("Spirituality & Religion"))
+                new FieldValue (Field.Collection, "audio_bookspoetry", Catalog.GetString ("Audio Books & Poetry")),
+                new FieldValue (Field.Collection, "audio_tech", Catalog.GetString ("Computers & Technology")),
+                new FieldValue (Field.Collection, "GratefulDead", Catalog.GetString ("Grateful Dead")),
+                new FieldValue (Field.Collection, "etree", Catalog.GetString ("Live Music Archive")),
+                new FieldValue (Field.Collection, "audio_music", Catalog.GetString ("Music & Arts")),
+                new FieldValue (Field.Collection, "netlabels", Catalog.GetString ("Netlabels")),
+                new FieldValue (Field.Collection, "audio_news", Catalog.GetString ("News & Public Affairs")),
+                new FieldValue (Field.Collection, "audio_foreign", Catalog.GetString ("Non-English Audio")),
+                new FieldValue (Field.Collection, "opensource_audio", Catalog.GetString ("Open Source Audio")),
+                new FieldValue (Field.Collection, "audio_podcast", Catalog.GetString ("Podcasts")),
+                new FieldValue (Field.Collection, "radioprograms", Catalog.GetString ("Radio Programs")),
+                new FieldValue (Field.Collection, "audio_religion", Catalog.GetString ("Spirituality & Religion"))
             ),
             new MediaType ("education", Catalog.GetString ("Education")),
             new MediaType ("software", Catalog.GetString ("Software")).AddChildren (
-                new MediaType ("software.clasp", Catalog.GetString ("CLASP"))
+                new FieldValue (Field.Collection, "clasp", Catalog.GetString ("CLASP"))
             )
         };
     }

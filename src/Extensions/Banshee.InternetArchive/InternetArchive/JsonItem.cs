@@ -43,14 +43,18 @@ namespace InternetArchive
             this.item = item;
         }
 
-        public override string Get (Field field)
+        public override T Get<T> (Field field)
         {
             object result;
             if (item.TryGetValue (field.Id, out result)) {
-                return result as string;
+                try {
+                return (T)result;
+                } catch {
+                    Console.WriteLine ("Couldn't cast {0} ({1}) as {2}", result, result.GetType (), typeof(T));
+                }
             }
 
-            return null;
+            return default (T);
         }
     }
 }

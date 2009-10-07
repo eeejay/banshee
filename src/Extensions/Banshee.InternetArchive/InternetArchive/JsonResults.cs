@@ -46,11 +46,6 @@ namespace InternetArchive
         {
             var json = new Deserializer (resultsString).Deserialize () as JsonObject;
 
-            if (Hyena.Log.Debugging) {
-                Hyena.Log.Debug ("Got JSON results from Internet Archive:");
-                json.Dump ();
-            }
-
             response_header = (JsonObject) json["responseHeader"];
             response_header_params = (JsonObject) response_header["params"];
 

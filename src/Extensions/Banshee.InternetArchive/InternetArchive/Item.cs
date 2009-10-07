@@ -38,6 +38,27 @@ namespace InternetArchive
         {
         }
 
-        public abstract string Get (Field field);
+        public string GetJoined (Field field, string with)
+        {
+            var ary = Get<System.Collections.IEnumerable> (field);
+            if (ary != null) {
+                return String.Join (with, ary.Cast<object> ().Select (o => o.ToString ()).ToArray ());
+            }
+
+            return null;
+        }
+
+        public string Url {
+            get {
+                string id = Get<string> (Field.Identifier);
+                if (id != null) {
+                    return String.Format ("http://www.archive.org/details/{0}", id);
+                }
+
+                return null;
+            }
+        }
+
+        public abstract T Get<T> (Field field);
     }
 }

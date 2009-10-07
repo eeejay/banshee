@@ -41,19 +41,12 @@ namespace InternetArchive
         coverage
 
         date
-        description
-        downloads
         foldoutcount
-        format
         headerImage
-        identifier
         imagecount
 
-        language
-        licenseurl
         mediatype
         month
-        num_reviews
         oai_updatedate
         publicdate
         rights
@@ -61,21 +54,26 @@ namespace InternetArchive
         scanningcentre
         source
         subject
-        title
         type
         volume
         week
-        year*/
+        */
 
-        public static Field MediaType  = new Field ("mediatype",  Catalog.GetString ("Media Type"));
-        public static Field Identifier = new Field ("identifier", Catalog.GetString ("ID"));
-        public static Field Title      = new Field ("title",      Catalog.GetString ("Title"));
-        public static Field Creator    = new Field ("creator",    Catalog.GetString ("Creator"));
-        public static Field Publisher  = new Field ("publisher",  Catalog.GetString ("Publisher"));
-        public static Field Downloads  = new Field ("downloads",  Catalog.GetString ("Downloads"));
-        public static Field Description= new Field ("description",Catalog.GetString ("Description"));
         public static Field AvgRating  = new Field ("avg_rating", Catalog.GetString ("Rating"));
+        public static Field Creator    = new Field ("creator",    Catalog.GetString ("Creator"));
+        public static Field Collection = new Field ("collection", Catalog.GetString ("Collection"));
+        public static Field Date       = new Field ("date",       Catalog.GetString ("Created"));
+        public static Field Description= new Field ("description",Catalog.GetString ("Description"));
+        public static Field Downloads  = new Field ("downloads",  Catalog.GetString ("Downloads"));
         public static Field Format     = new Field ("format",     Catalog.GetString ("Format"));
+        public static Field Identifier = new Field ("identifier", Catalog.GetString ("ID"));
+        public static Field Language   = new Field ("language",   Catalog.GetString ("Language"));
+        public static Field LicenseUrl = new Field ("licenseurl", Catalog.GetString ("License"));
+        public static Field MediaType  = new Field ("mediatype",  Catalog.GetString ("Media Type"));
+        public static Field NumReviews = new Field ("num_reviews",Catalog.GetString ("# Reviews"));
+        public static Field Publisher  = new Field ("publisher",  Catalog.GetString ("Publisher"));
+        public static Field Title      = new Field ("title",      Catalog.GetString ("Title"));
+        public static Field Year       = new Field ("year",       Catalog.GetString ("Year"));
 
         public string Name { get; private set; }
         public string Id { get; private set; }

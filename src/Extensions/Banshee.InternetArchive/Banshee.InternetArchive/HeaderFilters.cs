@@ -43,6 +43,7 @@ namespace Banshee.InternetArchive
 
         private ComboBox sort_combo, media_type_combo;
         private TreeStore media_type_store;
+        private Banshee.Widgets.SearchEntry search_entry;
 
         public HeaderFilters (Source source)
         {
@@ -50,9 +51,10 @@ namespace Banshee.InternetArchive
 
             Spacing = 6;
 
-            BuildSortCombo ();
             BuildMediaTypeCombo ();
-            BuildRefreshButton ();
+            BuildSortCombo ();
+            BuildSearchEntry ();
+            BuildSearchButton ();
 
             UpdateSearch ();
         }
@@ -60,28 +62,42 @@ namespace Banshee.InternetArchive
         private void BuildMediaTypeCombo ()
         {
             var store = media_type_store = new TreeStore (typeof (IA.MediaType), typeof (string));
+            var combo = media_type_combo = new ComboBox ();
+            combo.Model = store;
+
             foreach (var mediatype in IA.MediaType.Options.OrderBy (t => t.Name)) {
                 if (mediatype.Id != "software") {
                     var iter = store.AppendValues (mediatype, mediatype.Name);
 
                     if (mediatype.Children != null) {
                         foreach (var child in mediatype.Children.OrderBy (t => t.Name)) {
-                            store.AppendValues (iter, child, child.Name);
+                            var child_iter = store.AppendValues (iter, child, child.Name);
+
+                            // FIXME should remember the last selected one in a schema or per-source in the db
+                            if (child.Id == "etree")
+                                combo.SetActiveIter (child_iter);
                         }
                     }
                 }
             }
 
-            var combo = media_type_combo = new ComboBox ();
-            combo.Model = store;
-
             var cell = new CellRendererText ();
             combo.PackStart (cell, true);
             combo.AddAttribute (cell, "text", 1);
-            combo.Active = 0;
 
-            //PackStart (new Label (Catalog.GetString ("Show")), false, false, 0);
+            PackStart (new Label (Catalog.GetString ("Collection:")), false, false, 0);
             PackStart (combo, false, false, 0);
+        }
+
+        private void BuildSearchEntry ()
+        {
+            var entry = search_entry = new Banshee.Widgets.SearchEntry () {
+                WidthRequest = 200,
+                Visible = true,
+                EmptyMessage = String.Format (Catalog.GetString ("Optional Query"))
+            };
+
+            PackStart (entry, false, false, 0);
         }
 
         private void BuildSortCombo ()
@@ -91,15 +107,16 @@ namespace Banshee.InternetArchive
             combo.AppendText (Catalog.GetString ("Popular"));
             combo.AppendText (Catalog.GetString ("Popular This Week"));
             combo.AppendText (Catalog.GetString ("Highly Rated"));
+            combo.AppendText (Catalog.GetString ("Year"));
             combo.Active = 0;
 
-            //PackStart (new Label (Catalog.GetString ("Sort by")), false, false, 0);
+            PackStart (new Label (Catalog.GetString ("Sort by:")), false, false, 0);
             PackStart (combo, false, false, 0);
         }
 
-        private void BuildRefreshButton ()
+        private void BuildSearchButton ()
         {
-            var button = new Button (Stock.Refresh);
+            var button = new Hyena.Widgets.ImageButton (Catalog.GetString ("_Search"), Stock.Find);
             button.Clicked += (o, a) => {
                 UpdateSearch ();
                 source.Reload ();
@@ -112,17 +129,17 @@ namespace Banshee.InternetArchive
         {
             source.Search.Sorts.Clear ();
 
-            string [] sorts = { "downloads desc", "week asc", "avg_rating desc" };
+            string [] sorts = { "downloads desc", "week asc", "avg_rating desc", "year asc" };
             source.Search.Sorts.Add (new IA.Sort () { Id = sorts[sort_combo.Active] });
-
-            Console.WriteLine ("sort = {0}", sorts[sort_combo.Active]);
 
             TreeIter iter;
             if (media_type_combo.GetActiveIter (out iter)) {
-                var media_type = media_type_store.GetValue (iter, 0) as IA.MediaType;
-                Console.WriteLine ("media_type_combo.Active = {0}", media_type.Id);
-
+                var media_type = media_type_store.GetValue (iter, 0) as IA.FieldValue;
                 source.Search.Query = media_type.ToString ();
+
+                if (!String.IsNullOrEmpty (search_entry.Query)) {
+                    source.Search.Query += String.Format (" AND (title:\"{0}\" OR description:\"{0}\" OR creator:\"{0}\")", search_entry.Query);
+                }
             }
         }
     }

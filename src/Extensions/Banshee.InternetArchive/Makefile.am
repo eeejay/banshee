@@ -14,9 +14,12 @@ SOURCES = \
 	InternetArchive/JsonResults.cs \
 	InternetArchive/JsonItem.cs \
 	InternetArchive/Sort.cs \
+	Banshee.InternetArchive/Actions.cs \
 	Banshee.InternetArchive/HeaderFilters.cs \
 	Banshee.InternetArchive/Source.cs
 
-RESOURCES = Banshee.InternetArchive.addin.xml
+RESOURCES = \
+	Banshee.InternetArchive.addin.xml \
+	Resources/ActiveSourceUI.xml
 
 include $(top_srcdir)/build/build.mk

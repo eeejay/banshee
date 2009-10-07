@@ -73,14 +73,21 @@ namespace InternetArchive
         {
             NumResults = 50;
 
-            result_fields.Add (Field.Identifier);
-            result_fields.Add (Field.Title);
-            result_fields.Add (Field.Creator);
-            result_fields.Add (Field.Publisher);
-            result_fields.Add (Field.Downloads);
-            result_fields.Add (Field.AvgRating);
-            result_fields.Add (Field.Description);
-            result_fields.Add (Field.Format);
+            result_fields.AddRange (new Field [] {
+                Field.AvgRating,
+                Field.Creator,
+                Field.Date,
+                Field.Description,
+                Field.Downloads,
+                Field.Format,
+                Field.Identifier,
+                Field.Language,
+                Field.LicenseUrl,
+                Field.NumReviews,
+                Field.Publisher,
+                Field.Title,
+                Field.Year
+            });
 
             sorts.Add (new Sort () { Id = "avg_rating desc" });
         }

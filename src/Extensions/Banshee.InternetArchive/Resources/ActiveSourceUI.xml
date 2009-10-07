@@ -1,0 +1,31 @@
+<ui>
+  <toolbar name="HeaderToolbar">
+    <placeholder name="SourceActions">
+        <!--<toolitem name="PodcastAdd" action="PodcastAddAction" />
+        <toolitem name="PodcastUpdateAll" action="PodcastUpdateAllAction" />-->
+    </placeholder>
+  </toolbar>
+
+  <menubar name="MainMenu" action="MainMenuAction">
+    <menu name="EditMenu" action="EditMenuAction">
+      <placeholder name="BelowAddToPlaylist">
+        <separator />
+        <!--<menuitem name="PodcastItemDownload" action="PodcastItemDownloadAction" />
+        <menuitem name="PodcastItemDeleteFile" action="PodcastItemDeleteFileAction" />-->
+        <!--
+        <menuitem name="PodcastItemCancel" action="PodcastItemCancelAction" />-->
+        <!--<menuitem name="PodcastItemMarkNew" action="PodcastItemMarkNewAction" />
+        <menuitem name="PodcastItemMarkOld" action="PodcastItemMarkOldAction" />-->
+        <separator />
+      </placeholder>
+    </menu>
+  </menubar>
+
+  <popup name="TrackContextMenu" action="TrackContextMenuAction">
+    <placeholder name="BelowAddToPlaylist">
+        <separator />
+        <menuitem action="OpenItemWebsite" />
+        <separator />
+    </placeholder>
+  </popup>
+</ui>
