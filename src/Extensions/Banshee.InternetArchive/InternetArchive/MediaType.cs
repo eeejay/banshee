@@ -33,7 +33,7 @@ namespace InternetArchive
 {
     public class MediaType : FieldValue
     {
-        private MediaType (string id, string name) : base (id, name) {}
+        private MediaType (string id, string name) : base (Field.MediaType, id, name) {}
 
         private MediaType AddChildren (params MediaType [] children)
         {

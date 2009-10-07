@@ -26,6 +26,8 @@
 
 using System;
 
+using Mono.Unix;
+
 using Hyena.Query;
 
 namespace InternetArchive
@@ -38,7 +40,6 @@ namespace InternetArchive
         contributor
         coverage
 
-        creator
         date
         description
         downloads
@@ -55,7 +56,6 @@ namespace InternetArchive
         num_reviews
         oai_updatedate
         publicdate
-        publisher
         rights
 
         scanningcentre
@@ -67,11 +67,23 @@ namespace InternetArchive
         week
         year*/
 
-        public string Name { get; protected set; }
-        public string Id { get; set; }
+        public static Field MediaType  = new Field ("mediatype",  Catalog.GetString ("Media Type"));
+        public static Field Identifier = new Field ("identifier", Catalog.GetString ("ID"));
+        public static Field Title      = new Field ("title",      Catalog.GetString ("Title"));
+        public static Field Creator    = new Field ("creator",    Catalog.GetString ("Creator"));
+        public static Field Publisher  = new Field ("publisher",  Catalog.GetString ("Publisher"));
+        public static Field Downloads  = new Field ("downloads",  Catalog.GetString ("Downloads"));
+        public static Field Description= new Field ("description",Catalog.GetString ("Description"));
+        public static Field AvgRating  = new Field ("avg_rating", Catalog.GetString ("Rating"));
+        public static Field Format     = new Field ("format",     Catalog.GetString ("Format"));
 
-        public Field ()
+        public string Name { get; private set; }
+        public string Id { get; private set; }
+
+        public Field (string id, string name)
         {
+            Id = id;
+            Name = name;
         }
     }
 }

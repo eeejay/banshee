@@ -48,6 +48,8 @@ using Banshee.Preferences;
 using Banshee.ServiceStack;
 using Banshee.Sources;
 
+using IA=InternetArchive;
+
 namespace Banshee.InternetArchive
 {
     public class Source : Banshee.Sources.PrimarySource
@@ -55,9 +57,16 @@ namespace Banshee.InternetArchive
         private static string name = Catalog.GetString ("Internet Archive");
 
         private Gtk.Widget header_widget;
+        private IA.Search search;
+
+        public IA.Search Search { get { return search; } }
 
         public Source () : base (name, name, "internet-archive", 210)
         {
+            search = new IA.Search () {
+                Format = IA.ResultsFormat.Json
+            };
+
             IsLocal = false;
             // TODO Should probably support normal playlists at some point (but not smart playlists)
             SupportsPlaylists = false;
@@ -96,7 +105,7 @@ namespace Banshee.InternetArchive
             DatabaseTrackModel.CanReorder = false;
 
             if (header_widget == null) {
-                header_widget = new HeaderFilters ();
+                header_widget = new HeaderFilters (this);
                 header_widget.ShowAll ();
                 Properties.Set<Gtk.Widget> ("Nereid.SourceContents.HeaderWidget", header_widget);
             }
@@ -105,6 +114,42 @@ namespace Banshee.InternetArchive
         public override void Activate ()
         {
             base.Activate ();
+        }
+
+        public override void Reload ()
+        {
+            bool success = false;
+
+            try {
+                var results = new IA.JsonResults (search.GetResults ());
+
+                // TODO set the status bar w/ this
+                Console.WriteLine ("Have {0} total results, {1} current rows, and {2} is the offset", results.TotalResults, results.Count, results.Offset);
+
+                RemoveTrackRange (DatabaseTrackModel, new RangeCollection.Range (0, Count - 1));
+                DatabaseTrackModel.Clear ();
+
+                foreach (var item in results.Items) {
+                    var track = new DatabaseTrackInfo () {
+                        PrimarySource = this,
+                        ArtistName = item.Get (IA.Field.Creator) ?? Catalog.GetString ("Unknown"),
+                        TrackTitle = item.Get (IA.Field.Title),
+                        Comment    = Hyena.StringUtil.RemoveHtml (item.Get (IA.Field.Description))
+                    };
+
+                    track.Save (false);
+                }
+
+                base.Reload ();
+                success = true;
+            } catch (Exception e) {
+                Hyena.Log.Exception ("Error refreshing internet archive", e);
+            }
+
+            if (!success) {
+                // TODO differentiate between various errors types (network, invalid search, etc)
+                SetStatus (Catalog.GetString ("Error refreshing Internet Archive"), true);
+            }
         }
 
         /*public override bool AcceptsInputFromSource (Source source)

@@ -57,11 +57,12 @@ namespace InternetArchive
         List<Sort> sorts = new List<Sort> ();
         List<Field> result_fields = new List<Field> ();
         int NumResults;
-        ResultsFormat format;
         //bool indent = false;
 
-        public IList<Field> ReturnFields { get { return result_fields; } }
-        public IList<Sort>  SortBy { get { return sorts; } }
+        public IList<Field>  ReturnFields { get { return result_fields; } }
+        public IList<Sort>   Sorts { get { return sorts; } }
+        public ResultsFormat Format { get; set; }
+        public string Query { get; set; }
 
         static Search () {
             //UserAgent = "InternetArchiveSharp";
@@ -70,12 +71,16 @@ namespace InternetArchive
 
         public Search ()
         {
-            format = ResultsFormat.Json;
             NumResults = 50;
 
-            result_fields.Add (new Field () { Id = "identifier" });
-            result_fields.Add (new Field () { Id = "title" });
-            result_fields.Add (new Field () { Id = "creator" });
+            result_fields.Add (Field.Identifier);
+            result_fields.Add (Field.Title);
+            result_fields.Add (Field.Creator);
+            result_fields.Add (Field.Publisher);
+            result_fields.Add (Field.Downloads);
+            result_fields.Add (Field.AvgRating);
+            result_fields.Add (Field.Description);
+            result_fields.Add (Field.Format);
 
             sorts.Add (new Sort () { Id = "avg_rating desc" });
         }
@@ -84,7 +89,7 @@ namespace InternetArchive
         {
             var sb = new System.Text.StringBuilder ();
 
-            sb.AppendFormat ("q={0}", "(collection%3Aaudio+OR+mediatype%3Aaudio)+AND+-mediatype%3Acollection");
+            sb.AppendFormat ("q={0}", System.Web.HttpUtility.UrlEncode (Query));//"(collection%3Aaudio+OR+mediatype%3Aaudio)+AND+-mediatype%3Acollection");
 
             foreach (var field in result_fields) {
                 sb.AppendFormat ("&fl[]={0}", System.Web.HttpUtility.UrlEncode (field.Id));
@@ -95,7 +100,7 @@ namespace InternetArchive
             }
 
             sb.AppendFormat ("&rows={0}", NumResults);
-            sb.AppendFormat ("&fmt={0}", format.Id);
+            sb.AppendFormat ("&fmt={0}", Format.Id);
             sb.Append ("&xmlsearch=Search");
 
             return sb.ToString ();

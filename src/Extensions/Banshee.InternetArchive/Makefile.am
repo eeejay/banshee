@@ -9,6 +9,10 @@ SOURCES = \
 	InternetArchive/MediaType.cs \
 	InternetArchive/ResultsFormat.cs \
 	InternetArchive/Search.cs \
+	InternetArchive/Results.cs \
+	InternetArchive/Item.cs \
+	InternetArchive/JsonResults.cs \
+	InternetArchive/JsonItem.cs \
 	InternetArchive/Sort.cs \
 	Banshee.InternetArchive/HeaderFilters.cs \
 	Banshee.InternetArchive/Source.cs
@@ -16,4 +20,3 @@ SOURCES = \
 RESOURCES = Banshee.InternetArchive.addin.xml
 
 include $(top_srcdir)/build/build.mk
-

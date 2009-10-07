@@ -1,5 +1,5 @@
 //
-// FieldValue.cs
+// JsonItem.cs
 //  
 // Author:
 //       Gabriel Burt <gabriel.burt@gmail.com>
@@ -25,27 +25,32 @@
 // THE SOFTWARE.
 
 using System;
+using System.IO;
+using System.Net;
+using System.Linq;
+using System.Collections.Generic;
 
-using Hyena.Query;
+using Hyena.Json;
 
 namespace InternetArchive
 {
-    public class FieldValue
+    public class JsonItem : Item
     {
-        public Field  Field { get; private set; }
-        public string Name  { get; private set; }
-        public string Id    { get; private set; }
+        JsonObject item;
 
-        public FieldValue (Field field, string id, string name)
+        public JsonItem (JsonObject item)
         {
-            Field = field;
-            Id = id;
-            Name = name;
+            this.item = item;
         }
 
-        public override string ToString ()
+        public override string Get (Field field)
         {
-            return String.Format ("{0}:{1}", Field.Id, Id);
+            object result;
+            if (item.TryGetValue (field.Id, out result)) {
+                return result as string;
+            }
+
+            return null;
         }
     }
 }

@@ -39,30 +39,40 @@ namespace Banshee.InternetArchive
 {
     public class HeaderFilters : HBox
     {
-        public HeaderFilters ()
+        private Source source;
+
+        private ComboBox sort_combo, media_type_combo;
+        private TreeStore media_type_store;
+
+        public HeaderFilters (Source source)
         {
+            this.source = source;
+
             Spacing = 6;
 
-            BuildMediaTypeCombo ();
             BuildSortCombo ();
+            BuildMediaTypeCombo ();
+            BuildRefreshButton ();
+
+            UpdateSearch ();
         }
 
         private void BuildMediaTypeCombo ()
         {
-            var store = new TreeStore (typeof (string), typeof (string));
+            var store = media_type_store = new TreeStore (typeof (IA.MediaType), typeof (string));
             foreach (var mediatype in IA.MediaType.Options.OrderBy (t => t.Name)) {
                 if (mediatype.Id != "software") {
-                    var iter = store.AppendValues (mediatype.Id, mediatype.Name);
+                    var iter = store.AppendValues (mediatype, mediatype.Name);
 
                     if (mediatype.Children != null) {
                         foreach (var child in mediatype.Children.OrderBy (t => t.Name)) {
-                            store.AppendValues (iter, child.Id, child.Name);
+                            store.AppendValues (iter, child, child.Name);
                         }
                     }
                 }
             }
 
-            var combo = new ComboBox ();
+            var combo = media_type_combo = new ComboBox ();
             combo.Model = store;
 
             var cell = new CellRendererText ();
@@ -70,20 +80,50 @@ namespace Banshee.InternetArchive
             combo.AddAttribute (cell, "text", 1);
             combo.Active = 0;
 
-            PackStart (new Label (Catalog.GetString ("Show")), false, false, 0);
+            //PackStart (new Label (Catalog.GetString ("Show")), false, false, 0);
             PackStart (combo, false, false, 0);
         }
 
         private void BuildSortCombo ()
         {
-            var combo = ComboBox.NewText ();
+            var combo = sort_combo = ComboBox.NewText ();
 
-            combo.AppendText (Catalog.GetString ("Popular This Week"));
             combo.AppendText (Catalog.GetString ("Popular"));
-            combo.AppendText (Catalog.GetString ("Rated"));
+            combo.AppendText (Catalog.GetString ("Popular This Week"));
+            combo.AppendText (Catalog.GetString ("Highly Rated"));
+            combo.Active = 0;
 
-            PackStart (new Label (Catalog.GetString ("Sort by")), false, false, 0);
+            //PackStart (new Label (Catalog.GetString ("Sort by")), false, false, 0);
             PackStart (combo, false, false, 0);
+        }
+
+        private void BuildRefreshButton ()
+        {
+            var button = new Button (Stock.Refresh);
+            button.Clicked += (o, a) => {
+                UpdateSearch ();
+                source.Reload ();
+            };
+
+            PackStart (button, false, false, 0);
+        }
+
+        private void UpdateSearch ()
+        {
+            source.Search.Sorts.Clear ();
+
+            string [] sorts = { "downloads desc", "week asc", "avg_rating desc" };
+            source.Search.Sorts.Add (new IA.Sort () { Id = sorts[sort_combo.Active] });
+
+            Console.WriteLine ("sort = {0}", sorts[sort_combo.Active]);
+
+            TreeIter iter;
+            if (media_type_combo.GetActiveIter (out iter)) {
+                var media_type = media_type_store.GetValue (iter, 0) as IA.MediaType;
+                Console.WriteLine ("media_type_combo.Active = {0}", media_type.Id);
+
+                source.Search.Query = media_type.ToString ();
+            }
         }
     }
 }

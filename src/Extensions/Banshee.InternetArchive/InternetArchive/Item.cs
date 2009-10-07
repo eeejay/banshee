@@ -1,5 +1,5 @@
 //
-// FieldValue.cs
+// Item.cs
 //  
 // Author:
 //       Gabriel Burt <gabriel.burt@gmail.com>
@@ -25,27 +25,19 @@
 // THE SOFTWARE.
 
 using System;
-
-using Hyena.Query;
+using System.IO;
+using System.Net;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace InternetArchive
 {
-    public class FieldValue
+    public abstract class Item
     {
-        public Field  Field { get; private set; }
-        public string Name  { get; private set; }
-        public string Id    { get; private set; }
-
-        public FieldValue (Field field, string id, string name)
+        public Item ()
         {
-            Field = field;
-            Id = id;
-            Name = name;
         }
 
-        public override string ToString ()
-        {
-            return String.Format ("{0}:{1}", Field.Id, Id);
-        }
+        public abstract string Get (Field field);
     }
 }
