@@ -498,7 +498,7 @@ namespace Nereid
                     break;
             }
 
-            if (focus_search && !view_container.SearchEntry.HasFocus && !source_view.EditingRow) {
+            if (focus_search && view_container.SearchEntry.Visible && !view_container.SearchEntry.HasFocus && !source_view.EditingRow) {
                 view_container.SearchEntry.HasFocus = true;
                 return true;
             }
