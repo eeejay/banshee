@@ -369,8 +369,8 @@ namespace Banshee.Collection.Database
 
         [DatabaseColumn ("Uri")]
         protected string UriField {
-            get { return Uri.AbsoluteUri; }
-            set { Uri = new SafeUri (value); }
+            get { return Uri == null ? null : Uri.AbsoluteUri; }
+            set { Uri = value == null ? null : new SafeUri (value); }
         }
         
         [DatabaseColumn]
