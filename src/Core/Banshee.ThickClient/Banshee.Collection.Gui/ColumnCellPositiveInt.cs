@@ -34,10 +34,13 @@ namespace Banshee.Collection.Gui
 {
     public class ColumnCellPositiveInt : ColumnCellText
     {
+        public bool CultureFormatted { get; set; }
+
         public ColumnCellPositiveInt (string property, bool expand, int min_digits, int max_digits) : base (property, expand)
         {
             SetMinMaxStrings ((int)Math.Pow (10, min_digits) - 1, (int)Math.Pow (10, max_digits) - 1);
             Alignment = Pango.Alignment.Right;
+            CultureFormatted = true;
         }
         
         protected override string GetText (object obj)
@@ -47,7 +50,13 @@ namespace Banshee.Collection.Gui
             }
 
             int val = (int) obj;
-            return val > 0 ? val.ToString () : String.Empty;
+
+            if (val <= 0)
+                return "";
+            else if (CultureFormatted)
+                return val.ToString ("N0");
+            else
+                return val.ToString ();
         }
     }
 }

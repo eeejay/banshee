@@ -113,7 +113,7 @@ namespace Banshee.Collection.Gui
             album_artist_column = CreateText (BansheeQuery.AlbumArtistField, 0.225);
             genre_column        = CreateText (BansheeQuery.GenreField, 0.25);
             duration_column     = Create (BansheeQuery.DurationField, 0.10, true, new ColumnCellDuration (null, true));
-            year_column         = Create (BansheeQuery.YearField, 0.15, false, new ColumnCellPositiveInt (null, true, 4, 4));
+            year_column         = Create (BansheeQuery.YearField, 0.15, false, new ColumnCellPositiveInt (null, true, 4, 4) { CultureFormatted = false });
             file_size_column    = Create (BansheeQuery.FileSizeField, 0.15, false, new ColumnCellFileSize (null, true));
             bpm_column          = Create (BansheeQuery.BpmField, 0.10, false, new ColumnCellPositiveInt (null, true, 3, 3));
 
