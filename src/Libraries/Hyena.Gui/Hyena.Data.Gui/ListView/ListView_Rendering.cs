@@ -455,7 +455,7 @@ namespace Hyena.Data.Gui
         }
         
         private int row_height = 32;
-        protected int RowHeight {
+        public int RowHeight {
             get {
                 if (RecomputeRowHeight) {
                     row_height = RowHeightProvider != null 
