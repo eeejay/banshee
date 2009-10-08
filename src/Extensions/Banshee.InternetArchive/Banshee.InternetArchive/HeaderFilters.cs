@@ -92,7 +92,7 @@ namespace Banshee.InternetArchive
         private void BuildSearchEntry ()
         {
             var entry = search_entry = new Banshee.Widgets.SearchEntry () {
-                WidthRequest = 200,
+                WidthRequest = 150,
                 Visible = true,
                 EmptyMessage = String.Format (Catalog.GetString ("Optional Query"))
             };
@@ -108,6 +108,7 @@ namespace Banshee.InternetArchive
             combo.AppendText (Catalog.GetString ("Popular This Week"));
             combo.AppendText (Catalog.GetString ("Highly Rated"));
             combo.AppendText (Catalog.GetString ("Year"));
+            combo.AppendText (Catalog.GetString ("Recently Added"));
             combo.Active = 0;
 
             PackStart (new Label (Catalog.GetString ("Sort by:")), false, false, 0);
@@ -129,17 +130,31 @@ namespace Banshee.InternetArchive
         {
             source.Search.Sorts.Clear ();
 
-            string [] sorts = { "downloads desc", "week asc", "avg_rating desc", "year asc" };
+            string [] sorts = { "downloads desc", "week asc", "avg_rating desc", "year asc", "addeddate desc" };
             source.Search.Sorts.Add (new IA.Sort () { Id = sorts[sort_combo.Active] });
+
+            // And if the above sort value is the same for two items, sort by creator then by title
+            source.Search.Sorts.Add (new IA.Sort () { Id = "creatorSorter asc" });
+            source.Search.Sorts.Add (new IA.Sort () { Id = "titleSorter asc" });
 
             TreeIter iter;
             if (media_type_combo.GetActiveIter (out iter)) {
                 var media_type = media_type_store.GetValue (iter, 0) as IA.FieldValue;
-                source.Search.Query = media_type.ToString ();
+                string query = media_type.ToString ();
+
+                if (media_type is IA.Collection) {
+                    if ((media_type as IA.Collection).MediaType.Id == "music") {
+                        //query += " AND (format:mp3 OR format:ogg OR format:flac OR format:shorten)";
+                    }
+                }
+
+                query += " AND -mediatype:collection";//(format:mp3 OR format:ogg OR format:flac OR format:shorten)";
 
                 if (!String.IsNullOrEmpty (search_entry.Query)) {
-                    source.Search.Query += String.Format (" AND (title:\"{0}\" OR description:\"{0}\" OR creator:\"{0}\")", search_entry.Query);
+                    query += String.Format (" AND (title:\"{0}\" OR description:\"{0}\" OR creator:\"{0}\")", search_entry.Query);
                 }
+
+                source.Search.Query = query;
             }
         }
     }

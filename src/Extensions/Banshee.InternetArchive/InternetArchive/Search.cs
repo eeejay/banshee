@@ -57,7 +57,6 @@ namespace InternetArchive
         List<Sort> sorts = new List<Sort> ();
         List<Field> result_fields = new List<Field> ();
         int NumResults;
-        //bool indent = false;
 
         public IList<Field>  ReturnFields { get { return result_fields; } }
         public IList<Sort>   Sorts { get { return sorts; } }
@@ -65,7 +64,7 @@ namespace InternetArchive
         public string Query { get; set; }
 
         static Search () {
-            //UserAgent = "InternetArchiveSharp";
+            UserAgent = "InternetArchiveSharp";
             TimeoutMs = 20000;
         }
 
@@ -83,6 +82,7 @@ namespace InternetArchive
                 Field.Identifier,
                 Field.Language,
                 Field.LicenseUrl,
+                Field.MediaType,
                 Field.NumReviews,
                 Field.Publisher,
                 Field.Title,
@@ -96,7 +96,7 @@ namespace InternetArchive
         {
             var sb = new System.Text.StringBuilder ();
 
-            sb.AppendFormat ("q={0}", System.Web.HttpUtility.UrlEncode (Query));//"(collection%3Aaudio+OR+mediatype%3Aaudio)+AND+-mediatype%3Acollection");
+            sb.AppendFormat ("q={0}", System.Web.HttpUtility.UrlEncode (Query));
 
             foreach (var field in result_fields) {
                 sb.AppendFormat ("&fl[]={0}", System.Web.HttpUtility.UrlEncode (field.Id));

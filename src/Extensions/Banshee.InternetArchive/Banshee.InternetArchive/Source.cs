@@ -66,6 +66,9 @@ namespace Banshee.InternetArchive
 
         public Source () : base (name, name, "internet-archive", 210)
         {
+            IA.Search.UserAgent = Banshee.Web.Browser.UserAgent;
+            IA.Search.TimeoutMs = 12*1000;
+
             search = new IA.Search () {
                 Format = IA.ResultsFormat.Json
             };
@@ -77,30 +80,36 @@ namespace Banshee.InternetArchive
 
             Properties.SetString ("TrackView.ColumnControllerXml", String.Format (@"
                 <column-controller>
-                  <add-default column=""IndicatorColumn"" visible=""true"" />
-                  <add-default column=""TitleColumn"" visible=""true"" />
-                  <add-default column=""ArtistColumn"" visible=""true"" />
-                  <add-default column=""ComposerColumn"" visible=""true"" />
-                  <add-default column=""CommentColumn"" visible=""true"" />
+                  <add-default column=""TitleColumn"" />
+                  <add-default column=""ArtistColumn"" />
+                  <add-default column=""ComposerColumn"" />
+                  <add-default column=""CommentColumn"" />
                   <add-default column=""RatingColumn"" />
-                  <add-default column=""DurationColumn"" visible=""true"" />
-                  <add-default column=""GenreColumn"" />
                   <add-default column=""YearColumn"" />
-                  <add-default column=""FileSizeColumn"" visible=""true"" />
-                  <add-default column=""PlayCountColumn"" visible=""true"" />
-                  <add-default column=""MimeTypeColumn"" visible=""true"" />
+                  <add-default column=""PlayCountColumn"" />
+                  <add-default column=""MimeTypeColumn"" />
                   <add-default column=""LicenseUriColumn"" />
+                  <column modify-default=""TitleColumn"">
+                      <width>0.50</width>
+                  </column>
                   <column modify-default=""ArtistColumn"">
+                    <width>0.25</width>
                     <title>{0}</title><long-title>{0}</long-title>
                   </column>
                   <column modify-default=""PlayCountColumn"">
                     <title>{1}</title><long-title>{1}</long-title>
                   </column>
+                  <column modify-default=""RatingColumn""><visible>true</visible></column>
+                  <column modify-default=""YearColumn""><visible>true</visible></column>
+                  <column modify-default=""PlayCountColumn""><visible>true</visible></column>
+                  <column modify-default=""LicenseUriColumn""><visible>true</visible></column>
                   <column modify-default=""CommentColumn"">
                     <title>{2}</title><long-title>{2}</long-title>
+                    <visible>false</visible>
                   </column>
                   <column modify-default=""ComposerColumn"">
                     <title>{3}</title><long-title>{3}</long-title>
+                    <visible>false</visible>
                   </column>
                 </column-controller>",
                 Catalog.GetString ("Creator"), Catalog.GetString ("Downloads"),
@@ -139,41 +148,51 @@ namespace Banshee.InternetArchive
                 SetStatus (Catalog.GetString ("Searching the Internet Archive"), false, true, "gtk-find");
             });
 
+            IA.JsonResults results = null;
+
             try {
-                var results = new IA.JsonResults (search.GetResults ());
+                results = new IA.JsonResults (search.GetResults ());
                 total_results = results.TotalResults;
-
-                ServiceManager.DbConnection.BeginTransaction ();
-
-                ServiceManager.DbConnection.Execute ("DELETE FROM CoreTracks WHERE PrimarySourceID = ?", this.DbId);
-                DatabaseTrackModel.Clear ();
-
-                foreach (var item in results.Items) {
-                    var track = new DatabaseTrackInfo () {
-                        PrimarySource = this,
-                        ArtistName = item.GetJoined (IA.Field.Creator, ", ") ?? "",
-                        Comment    = Hyena.StringUtil.RemoveHtml (item.Get<string> (IA.Field.Description)),
-                        Composer   = item.GetJoined (IA.Field.Publisher, ", ") ?? "",
-                        LicenseUri = item.Get<string> (IA.Field.LicenseUrl),
-                        PlayCount  = (int) item.Get<double> (IA.Field.Downloads),
-                        Rating     = (int) Math.Round (item.Get<double> (IA.Field.AvgRating)),
-                        TrackTitle = item.Get<string> (IA.Field.Title),
-                        Uri        = new Banshee.Base.SafeUri (item.Url),
-                        MimeType   = item.GetJoined (IA.Field.Format, ", "),
-                        Year       = (int) item.Get<double> (IA.Field.Year)
-                    };
-
-                    if (track.Comment == "There is currently no description for this item.")
-                        track.Comment = null;
-
-                    track.Save (false);
-                }
-
-                ServiceManager.DbConnection.CommitTransaction ();
-                success = true;
             } catch (Exception e) {
-                ServiceManager.DbConnection.RollbackTransaction ();
                 Hyena.Log.Exception ("Error searching the Internet Archive", e);
+                results = null;
+            }
+
+            if (results != null) {
+                try {
+                    ServiceManager.DbConnection.BeginTransaction ();
+
+                    ServiceManager.DbConnection.Execute ("DELETE FROM CoreTracks WHERE PrimarySourceID = ?", this.DbId);
+                    DatabaseTrackModel.Clear ();
+
+                    foreach (var item in results.Items) {
+                        var track = new DatabaseTrackInfo () {
+                            PrimarySource = this,
+                            ArtistName = item.GetJoined (IA.Field.Creator, ", ") ?? "",
+                            Comment    = Hyena.StringUtil.RemoveHtml (item.Get<string> (IA.Field.Description)),
+                            Composer   = item.GetJoined (IA.Field.Publisher, ", ") ?? "",
+                            LicenseUri = item.Get<string> (IA.Field.LicenseUrl),
+                            PlayCount  = (int) item.Get<double> (IA.Field.Downloads),
+                            Rating     = (int) Math.Round (item.Get<double> (IA.Field.AvgRating)),
+                            TrackTitle = item.Get<string> (IA.Field.Title),
+                            Uri        = new Banshee.Base.SafeUri (item.WebpageUrl),
+                            MimeType   = item.GetJoined (IA.Field.Format, ", "),
+                            //MimeType   = item.GetJoined (IA.Field.MediaType, ", "),
+                            Year       = (int) item.Get<double> (IA.Field.Year)
+                        };
+
+                        if (track.Comment == "There is currently no description for this item.")
+                            track.Comment = null;
+
+                        track.Save (false);
+                    }
+
+                    ServiceManager.DbConnection.CommitTransaction ();
+                    success = true;
+                } catch (Exception e) {
+                    ServiceManager.DbConnection.RollbackTransaction ();
+                    Hyena.Log.Exception ("Error searching the Internet Archive", e);
+                }
             }
 
             if (success) {

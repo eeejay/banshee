@@ -1,5 +1,5 @@
 //
-// Item.cs
+// Collection.cs
 //  
 // Author:
 //       Gabriel Burt <gabriel.burt@gmail.com>
@@ -25,41 +25,16 @@
 // THE SOFTWARE.
 
 using System;
-using System.IO;
-using System.Net;
-using System.Linq;
 using System.Collections.Generic;
+
+using Mono.Unix;
 
 namespace InternetArchive
 {
-    public abstract class Item
+    public class Collection : FieldValue
     {
-        public Item ()
-        {
-        }
+        public Collection (string id, string name) : base (Field.Collection, id, name) {}
 
-        public string GetJoined (Field field, string with)
-        {
-            var ary = Get<System.Collections.IEnumerable> (field);
-            if (ary != null) {
-                return String.Join (with, ary.Cast<object> ().Select (o => o.ToString ()).ToArray ());
-            }
-
-            return null;
-        }
-
-        public string Id {
-            get { return Get<string> (Field.Identifier); }
-        }
-
-        public string JsonDetailsUrl {
-            get { return String.Format ("{0}&output=json", WebpageUrl); }
-        }
-
-        public string WebpageUrl {
-            get { return String.Format ("http://www.archive.org/details/{0}", Id); }
-        }
-
-        public abstract T Get<T> (Field field);
+        public MediaType MediaType { get; internal set; }
     }
 }

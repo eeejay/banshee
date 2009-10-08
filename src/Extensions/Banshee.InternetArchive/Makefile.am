@@ -4,6 +4,7 @@ LINK = $(REF_EXTENSION_INTERNETARCHIVE)
 INSTALL_DIR = $(EXTENSIONS_INSTALL_DIR)
 
 SOURCES = \
+	InternetArchive/Collection.cs \
 	InternetArchive/Field.cs \
 	InternetArchive/FieldValue.cs \
 	InternetArchive/MediaType.cs \
