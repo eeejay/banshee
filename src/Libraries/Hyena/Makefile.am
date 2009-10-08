@@ -45,6 +45,7 @@ SOURCES =  \
 	Hyena.Data/ISelectable.cs \
 	Hyena.Data/ISortable.cs \
 	Hyena.Data/ISortableColumn.cs \
+	Hyena.Data/MemoryListModel.cs \
 	Hyena.Data/ModelCache.cs \
 	Hyena.Data/ModelSelection.cs \
 	Hyena.Data/PropertyStore.cs \
