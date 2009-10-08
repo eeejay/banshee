@@ -32,26 +32,6 @@ using System.Collections.Generic;
 
 namespace InternetArchive
 {
-    public static class Test
-    {
-        public static void Main ()
-        {
-            Hyena.Log.Debugging = true;
-            var resp = new Search ().GetResults ();
-            Console.WriteLine ("response:\n{0}", resp);
-
-            var json = new Hyena.Json.Deserializer (resp);
-            Console.WriteLine ("json:\n");
-            (json.Deserialize () as Hyena.Json.JsonObject).Dump ();
-
-            /*title subject description 
-            creator 
-            downloads
-            num_reviews
-            licenseurl*/
-        }
-    }
-
     public class Search
     {
         List<Sort> sorts = new List<Sort> ();

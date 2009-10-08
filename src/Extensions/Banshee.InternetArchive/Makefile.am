@@ -16,6 +16,10 @@ SOURCES = \
 	InternetArchive/JsonItem.cs \
 	InternetArchive/Sort.cs \
 	Banshee.InternetArchive/Actions.cs \
+	Banshee.InternetArchive/File.cs \
+	Banshee.InternetArchive/Item.cs \
+	Banshee.InternetArchive/ItemSource.cs \
+	Banshee.InternetArchive/ItemSourceContents.cs \
 	Banshee.InternetArchive/HeaderFilters.cs \
 	Banshee.InternetArchive/Source.cs
 

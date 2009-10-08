@@ -34,6 +34,33 @@ using Hyena.Json;
 
 namespace InternetArchive
 {
+    public static class JsonExtensions
+    {
+        public static T Get<T> (this JsonObject item, string key)
+        {
+            object result;
+            if (item.TryGetValue (key, out result)) {
+                try {
+                    return (T)result;
+                } catch {
+                    Console.WriteLine ("Couldn't cast {0} ({1}) as {2} for key {3}", result, result.GetType (), typeof(T), key);
+                }
+            }
+
+            return default (T);
+        }
+
+        public static string GetJoined (this JsonObject item, string key, string with)
+        {
+            var ary = item.Get<System.Collections.IEnumerable> (key);
+            if (ary != null) {
+                return String.Join (with, ary.Cast<object> ().Select (o => o.ToString ()).ToArray ());
+            }
+
+            return null;
+        }
+    }
+
     public class JsonItem : Item
     {
         JsonObject item;
@@ -45,16 +72,7 @@ namespace InternetArchive
 
         public override T Get<T> (Field field)
         {
-            object result;
-            if (item.TryGetValue (field.Id, out result)) {
-                try {
-                return (T)result;
-                } catch {
-                    Console.WriteLine ("Couldn't cast {0} ({1}) as {2}", result, result.GetType (), typeof(T));
-                }
-            }
-
-            return default (T);
+            return item.Get<T> (field.Id);
         }
     }
 }

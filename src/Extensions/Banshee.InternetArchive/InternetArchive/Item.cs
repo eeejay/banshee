@@ -52,12 +52,46 @@ namespace InternetArchive
             get { return Get<string> (Field.Identifier); }
         }
 
-        public string JsonDetailsUrl {
+        private string JsonDetailsUrl {
             get { return String.Format ("{0}&output=json", WebpageUrl); }
         }
 
         public string WebpageUrl {
             get { return String.Format ("http://www.archive.org/details/{0}", Id); }
+        }
+
+        public string GetDetails ()
+        {
+            HttpWebResponse response = null;
+            string url = null;
+
+            try {
+                url = JsonDetailsUrl;
+                Hyena.Log.Debug ("ArchiveSharp Getting Details", url);
+
+                var request = (HttpWebRequest) WebRequest.Create (url);
+                request.UserAgent = Search.UserAgent;
+                request.Timeout   = Search.TimeoutMs;
+                request.KeepAlive = Search.KeepAlive;
+
+                response = (HttpWebResponse) request.GetResponse ();
+                using (Stream stream = response.GetResponseStream ()) {
+                    using (StreamReader reader = new StreamReader (stream)) {
+                        return reader.ReadToEnd ();
+                    }
+                }
+            } catch (Exception e) {
+                Hyena.Log.Exception (String.Format ("Error searching {0}", url), e);
+                return null;
+            } finally {
+                if (response != null) {
+                    if (response.StatusCode != HttpStatusCode.OK) {
+                        Hyena.Log.WarningFormat ("Got status {0} searching {1}", response.StatusCode, url);
+                    }
+                    response.Close ();
+                    response = null;
+                }
+            }
         }
 
         public abstract T Get<T> (Field field);

@@ -64,7 +64,7 @@ namespace Banshee.InternetArchive
 
         public IA.Search Search { get { return search; } }
 
-        public Source () : base (name, name, "internet-archive", 210)
+        public Source () : base (name, name, "internet-archive", 190)
         {
             IA.Search.UserAgent = Banshee.Web.Browser.UserAgent;
             IA.Search.TimeoutMs = 12*1000;
@@ -131,6 +131,9 @@ namespace Banshee.InternetArchive
                 header_widget.ShowAll ();
                 Properties.Set<Gtk.Widget> ("Nereid.SourceContents.HeaderWidget", header_widget);
             }
+
+            var src = new ItemSource ("Fake Name", "foo");
+            AddChildSource (src);
         }
 
         public override void Reload ()
@@ -261,6 +264,10 @@ namespace Banshee.InternetArchive
         }
 
         public override bool HasEditableTrackProperties {
+            get { return false; }
+        }
+
+        public override bool HasViewableTrackProperties {
             get { return false; }
         }
 
