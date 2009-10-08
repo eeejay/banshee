@@ -141,6 +141,9 @@ BANSHEE_CHECK_REMOTE_AUDIO
 dnl MonoTorrent support (optional)
 BANSHEE_CHECK_TORRENT
 
+dnl Moblin integration (optional)
+BANSHEE_CHECK_MOBLIN
+
 dnl i18n
 SHAMROCK_CONFIGURE_I18N($PACKAGE)
 
@@ -275,6 +278,7 @@ src/Extensions/Banshee.FileSystemQueue/Makefile
 src/Extensions/Banshee.InternetRadio/Makefile
 src/Extensions/Banshee.Lastfm/Makefile
 src/Extensions/Banshee.MiniMode/Makefile
+src/Extensions/Banshee.Moblin/Makefile
 src/Extensions/Banshee.MultimediaKeys/Makefile
 src/Extensions/Banshee.NotificationArea/Makefile
 src/Extensions/Banshee.NowPlaying/Makefile
@@ -321,6 +325,7 @@ ${PACKAGE}-${VERSION}
     DAAP Support:      ${enable_daap}
     Podcast Support:   ${enable_podcast}
     Boo Scripting:     ${enable_boo}
+    Moblin Support:    ${enable_moblin}
 
   Build/Development:
     Unit Tests:        ${do_tests} (requires nunit >= ${NUNIT_REQUIRED})

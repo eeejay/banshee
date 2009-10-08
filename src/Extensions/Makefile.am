@@ -9,6 +9,7 @@ SUBDIRS = \
 	Banshee.InternetRadio \
 	Banshee.Lastfm \
 	Banshee.MiniMode \
+	Banshee.Moblin \
 	Banshee.MultimediaKeys \
 	Banshee.NotificationArea \
 	Banshee.NowPlaying \

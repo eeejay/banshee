@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Addin 
+    id="Banshee.Moblin"
+    version="1.0"
+    compatVersion="1.0"
+    copyright="© 2009 Novell Inc. Licensed under the MIT X11 license."
+    name="Moblin Support"
+    category="User Interface"
+    description="Provides Moblin integration, including a custom media panel."
+    author="Aaron Bockover"
+    url="http://banshee-project.org/"
+    defaultEnabled="true">
+
+  <Dependencies>
+    <Addin id="Banshee.Services" version="1.0"/>
+    <Addin id="Banshee.ThickClient" version="1.0"/>
+  </Dependencies>
+  
+  <Extension path="/Banshee/ServiceManager/Service">
+    <Service class="Banshee.Moblin.MoblinService"/>
+  </Extension>
+   
+</Addin>
