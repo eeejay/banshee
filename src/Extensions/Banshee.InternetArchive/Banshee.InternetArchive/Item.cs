@@ -60,6 +60,8 @@ namespace Banshee.InternetArchive
             LoadDetails ();
         }
 
+#region Properties stored in database columns
+
         //[DatabaseColumn (PrimaryKey=true)]
         public long DbId { get; set; }
 
@@ -71,6 +73,10 @@ namespace Banshee.InternetArchive
 
         //[DatabaseColumn]
         public bool IsHidden { get; set; }
+
+#endregion
+
+#region Properties from the JSON object
 
         public string Title {
             get { return metadata.GetJoined ("title", System.Environment.NewLine); }
@@ -90,12 +96,15 @@ namespace Banshee.InternetArchive
 
         public IEnumerable<File> Files {
             get {
+                string location_root = String.Format ("http://{0}{1}", details.Get<string> ("server"), details.Get<string> ("dir"));
                 var files = details["files"] as JsonObject;
                 foreach (JsonObject file in files.Values) {
-                    yield return new File (file);
+                    yield return new File (file, location_root);
                 }
             }
         }
+
+#endregion
 
         private bool LoadDetails ()
         {
@@ -111,24 +120,25 @@ namespace Banshee.InternetArchive
             }*/
 
 
-            details = new Hyena.Json.Deserializer (System.IO.File.ReadAllText ("item.json")).Deserialize () as JsonObject;
+            /*details = new Hyena.Json.Deserializer (System.IO.File.ReadAllText ("item.json")).Deserialize () as JsonObject;
             metadata = details["metadata"] as JsonObject;
-            return details != null;
+            return details != null;*/
             
             // We don't; grab it from archive.org and parse it
-            /*string json_str = new IA.Item () { Id = Id }.GetDetails ();
+            string json_str = IA.Item.GetDetails (Id);
 
             if (json_str != null) {
                 details = new Hyena.Json.Deserializer (json_str).Deserialize () as JsonObject;
+                metadata = details["metadata"] as JsonObject;
 
                 if (details != null) {
                     JsonDetails = json_str;
-                    Save ();
+                    //Save ();
                     return true;
                 }
-            }*/
+            }
 
-            //return false;
+            return false;
         }
     }
 }

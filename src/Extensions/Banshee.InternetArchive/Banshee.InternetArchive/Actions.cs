@@ -42,6 +42,16 @@ namespace Banshee.InternetArchive
         public Actions (Source source) : base ("InternetArchive")
         {
             Add (
+                new ActionEntry ("ViewItemDetails", null, Catalog.GetString ("View Item Details"), null, null, (o, a) => {
+                    var item = source.TrackModel.FocusedItem;
+                    if (item != null && item.Uri != null) {
+                        string [] bits = item.Uri.AbsoluteUri.Split ('/');
+                        string id = bits[bits.Length - 1];
+                        var src = new ItemSource (item.TrackTitle, id);
+                        source.AddChildSource (src);
+                        Banshee.ServiceStack.ServiceManager.SourceManager.SetActiveSource (src);
+                    }
+                }),
                 new ActionEntry ("OpenItemWebsite", Stock.JumpTo, Catalog.GetString ("Open Webpage"), null, null, (o, a) => {
                     var item = source.TrackModel.FocusedItem;
                     if (item != null && item.Uri != null) {

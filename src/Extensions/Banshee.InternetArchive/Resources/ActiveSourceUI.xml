@@ -24,6 +24,7 @@
   <popup name="TrackContextMenu" action="TrackContextMenuAction">
     <placeholder name="BelowAddToPlaylist">
         <separator />
+        <menuitem action="ViewItemDetails" />
         <menuitem action="OpenItemWebsite" />
         <separator />
     </placeholder>

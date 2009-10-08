@@ -53,49 +53,21 @@ using IA=InternetArchive;
 
 namespace Banshee.InternetArchive
 {
-    public class ItemSource : Banshee.Sources.PrimarySource
+    public class ItemSource : Banshee.Sources.Source, ITrackModelSource, IDurationAggregator, IFileSizeAggregator
     {
-        //private Actions actions;
-        //private Gtk.Widget header_widget;
-        //private IA.Search search;
-        private string status_text = "";
         private Item item;
+        private MemoryTrackListModel track_model;
 
-        public ItemSource (string name, string id) : base (name, name, "internet-archive-" + id, 210)
+        public ItemSource (string name, string id) : base (name, name, 40, "internet-archive-" + id)
         {
             item = Item.LoadOrCreate (id);
+            track_model = new MemoryTrackListModel ();
+            track_model.Reloaded += delegate { OnUpdated (); };
 
-            IsLocal = false;
-            SupportsPlaylists = false;
-            //Properties.SetStringList ("Icon.Name", "video-x-generic", "video", "source-library");
-
-            //Properties.SetString ("ActiveSourceUIResource", "ItemActiveSourceUI.xml");
-            //Properties.Set<bool> ("ActiveSourceUIResourcePropagate", true);
-
-            //actions = new Actions (this);
-            //
-            Properties.Set<Gtk.Widget> ("Nereid.SourceContents", new ItemSourceContents (item));
-
-            AfterInitialized ();
-
-            DatabaseTrackModel.CanReorder = false;
-
-            if (item == null)
-                Console.WriteLine ("foo");
-
-            /*if (header_widget == null) {
-                header_widget = new HeaderFilters (this);
-                header_widget.ShowAll ();
-                Properties.Set<Gtk.Widget> ("Nereid.SourceContents.HeaderWidget", header_widget);
-            }*/
+            Properties.Set<Gtk.Widget> ("Nereid.SourceContents", new ItemSourceContents (this, item));
         }
 
-        public override void Reload ()
-        {
-            ThreadAssist.SpawnFromMain (ThreadedReload);
-        }
-
-        private void ThreadedReload ()
+        public void Reload ()
         {
         }
 
@@ -103,43 +75,64 @@ namespace Banshee.InternetArchive
             get { return 0; }
         }
 
-        protected override int StatusFormatsCount { get { return 1; } }
-
-        public override string GetStatusText ()
-        {
-            return status_text;
+        public override int FilteredCount {
+            get { return track_model.Count; }
         }
 
-        /*public override bool AcceptsInputFromSource (Source source)
-        {
-            return false;
-        }*/
+        public TimeSpan Duration {
+            get {
+                TimeSpan duration = TimeSpan.Zero;
+                foreach (var t in track_model) {
+                    duration += t.Duration;
+                }
+                return duration;
+            }
+        }
 
-        // DatabaseSource overrides
+        public long FileSize {
+            get { return track_model.Sum (t => t.FileSize); }
+        }
 
-        public override bool ShowBrowser { 
+#region ITrackModelSource
+
+        public TrackListModel TrackModel {
+            get { return track_model; }
+        }
+
+        public bool HasDependencies { get { return false; } }
+
+        public void RemoveSelectedTracks () {}
+        public void DeleteSelectedTracks () {}
+
+        public bool ConfirmRemoveTracks { get { return false; } }
+
+        public bool Indexable { get { return false; } }
+
+        public bool ShowBrowser { 
             get { return false; }
         }
 
-        public override bool CanShuffle {
+        public bool CanShuffle {
             get { return false; }
         }
 
-        public override bool CanAddTracks {
+        public bool CanRepeat {
             get { return false; }
         }
 
-        public override bool CanRemoveTracks {
+        public bool CanAddTracks {
             get { return false; }
         }
 
-        public override bool CanDeleteTracks {
+        public bool CanRemoveTracks {
             get { return false; }
         }
 
-        protected override bool HasArtistAlbum {
+        public bool CanDeleteTracks {
             get { return false; }
         }
+
+#endregion
 
         public override bool HasEditableTrackProperties {
             get { return false; }
@@ -151,24 +144,6 @@ namespace Banshee.InternetArchive
 
         public override bool CanSearch {
             get { return false; }
-        }
-
-        protected override void Initialize ()
-        {
-            base.Initialize ();
-
-            //InstallPreferences ();
-        }
-
-        public override void Dispose ()
-        {
-            /*if (actions != null) {
-                actions.Dispose ();
-            }*/
-
-            base.Dispose ();
-
-            //UninstallPreferences ();
         }
     }
 }

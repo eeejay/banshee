@@ -42,10 +42,12 @@ namespace Banshee.InternetArchive
     public class File
     {
         JsonObject file;
+        string location_root;
 
-        public File (JsonObject file)
+        public File (JsonObject file, string location_root)
         {
             this.file = file;
+            this.location_root = location_root;
         }
 
         private long GetLong (string i)
@@ -79,7 +81,7 @@ namespace Banshee.InternetArchive
         }
 
         public string Location {
-            get { return file.Get<string> ("location"); }
+            get { return location_root + file.Get<string> ("location"); }
         }
 
         public long Size {

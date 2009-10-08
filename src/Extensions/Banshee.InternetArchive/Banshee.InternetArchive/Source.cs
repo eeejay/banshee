@@ -131,9 +131,6 @@ namespace Banshee.InternetArchive
                 header_widget.ShowAll ();
                 Properties.Set<Gtk.Widget> ("Nereid.SourceContents.HeaderWidget", header_widget);
             }
-
-            var src = new ItemSource ("Fake Name", "foo");
-            AddChildSource (src);
         }
 
         public override void Reload ()

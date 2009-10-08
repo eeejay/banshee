@@ -52,21 +52,16 @@ namespace InternetArchive
             get { return Get<string> (Field.Identifier); }
         }
 
-        private string JsonDetailsUrl {
-            get { return String.Format ("{0}&output=json", WebpageUrl); }
-        }
-
         public string WebpageUrl {
             get { return String.Format ("http://www.archive.org/details/{0}", Id); }
         }
 
-        public string GetDetails ()
+        public static string GetDetails (string id)
         {
             HttpWebResponse response = null;
-            string url = null;
+            string url = String.Format ("http://www.archive.org/details/{0}&output=json", id);
 
             try {
-                url = JsonDetailsUrl;
                 Hyena.Log.Debug ("ArchiveSharp Getting Details", url);
 
                 var request = (HttpWebRequest) WebRequest.Create (url);
