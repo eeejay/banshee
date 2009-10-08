@@ -55,12 +55,12 @@ namespace Hyena.Data.Gui
         {
         }
 
-        protected void SetMinMaxStrings (object min_max)
+        public void SetMinMaxStrings (object min_max)
         {
             SetMinMaxStrings (min_max, min_max);
         }
         
-        protected void SetMinMaxStrings (object min, object max)
+        public void SetMinMaxStrings (object min, object max)
         {
             // Set the min/max strings from the min/max objects
             MinString = GetText (min);
