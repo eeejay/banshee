@@ -57,6 +57,7 @@ namespace Hyena.Data.Gui
 
         private bool resizable;
         private int header_width;
+        private double list_width, max_width;
         private int sort_column_index = -1;
         private int resizing_column_index = -1;
         private int pressed_column_index = -1;
@@ -72,6 +73,14 @@ namespace Hyena.Data.Gui
         
         private CachedColumn [] column_cache;
         private List<int> elastic_columns;
+
+        public int Width {
+            get { return (int)list_width; }
+        }
+
+        public int MaxWidth {
+            get { return (int)max_width + Theme.TotalBorderWidth*2; }
+        }
         
 #region Columns
         
@@ -203,6 +212,15 @@ namespace Hyena.Data.Gui
                     column_cache[i].Column.Width = column_cache[i].ElasticWidth / (double)header_width;
                 }
             }
+
+            double tmp_width = 0.0;
+            double tmp_max = 0.0;
+            foreach (var col in column_cache) {
+                tmp_width += col.ElasticWidth;
+                tmp_max += col.MaxWidth;
+            }
+            list_width = tmp_width;
+            max_width = tmp_max;
         }
         
         private double RecalculateColumnSizes (double total_width, double total_elastic_width)
