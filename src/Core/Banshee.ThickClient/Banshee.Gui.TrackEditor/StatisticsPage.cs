@@ -61,6 +61,7 @@ namespace Banshee.Gui.TrackEditor
             ShadowType = ShadowType.In;
             VscrollbarPolicy = PolicyType.Automatic;
             HscrollbarPolicy = PolicyType.Never;
+            BorderWidth = 2;
             
             view = new FixedTreeView (model);
             view.HeadersVisible = false;
@@ -145,9 +146,8 @@ namespace Banshee.Gui.TrackEditor
         
         public void LoadTrack (EditorTrackInfo track)
         {
-            BorderWidth = 2;
-            model = new ListStore (typeof (string), typeof (string), typeof (bool));
-            view.Model = model;
+            model = null;
+            CreateModel ();
             
             TagLib.File file = track.TaglibFile;
             
@@ -213,16 +213,26 @@ namespace Banshee.Gui.TrackEditor
             AddItem (Catalog.GetString ("File Size:"), String.Format ("{0} ({1} {2})", 
                 value.ToUserQuery (), bytes, Catalog.GetString ("bytes")));
         }
+
+        private void CreateModel ()
+        {
+            if (model == null) {
+                model = new ListStore (typeof (string), typeof (string), typeof (bool));
+                view.Model = model;
+            }
+        }
         
         public void AddItem (string name, object value)
         {
+            CreateModel ();
             if (name != null && value != null) {
                 model.AppendValues (name, value.ToString (), false);
             }
         }
-        
+
         public void AddSeparator ()
         {
+            CreateModel ();
             model.AppendValues (String.Empty, String.Empty, true);
         }
         
