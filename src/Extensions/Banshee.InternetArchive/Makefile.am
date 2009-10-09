@@ -21,6 +21,7 @@ SOURCES = \
 	Banshee.InternetArchive/ItemSource.cs \
 	Banshee.InternetArchive/ItemSourceContents.cs \
 	Banshee.InternetArchive/HeaderFilters.cs \
+	Banshee.InternetArchive/Review.cs \
 	Banshee.InternetArchive/Source.cs
 
 RESOURCES = \

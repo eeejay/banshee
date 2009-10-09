@@ -60,7 +60,7 @@ namespace Banshee.InternetArchive
 
         public ItemSource (string name, string id) : base (name, name, 40, "internet-archive-" + id)
         {
-            item = Item.LoadOrCreate (id);
+            item = Item.LoadOrCreate (id, name);
             track_model = new MemoryTrackListModel ();
             track_model.Reloaded += delegate { OnUpdated (); };
 

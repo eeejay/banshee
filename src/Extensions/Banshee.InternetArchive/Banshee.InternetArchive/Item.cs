@@ -42,21 +42,24 @@ namespace Banshee.InternetArchive
     public class Item
     {
         JsonObject details;
-        JsonObject metadata;
+        JsonObject metadata, misc, item, review_info;
+        JsonArray reviews;
 
-        public static Item LoadOrCreate (string id)
+        public static Item LoadOrCreate (string id, string title)
         {
             /*var item = Provider.LoadFromId (id);
             if (item != null)
                 return item;*/
 
-            return new Item (id);
+            return new Item (id, title);
         }
 
-        private Item (string id)
+        private Item (string id, string title)
         {
             Id = id;
+            Title = title;
             //Provider.Save ();
+
             LoadDetails ();
         }
 
@@ -69,6 +72,9 @@ namespace Banshee.InternetArchive
         public string Id { get; set; }
 
         //[DatabaseColumn]
+        public string Title { get; private set; }
+
+        //[DatabaseColumn]
         public string JsonDetails { get; set; }
 
         //[DatabaseColumn]
@@ -78,20 +84,85 @@ namespace Banshee.InternetArchive
 
 #region Properties from the JSON object
 
-        public string Title {
-            get { return metadata.GetJoined ("title", System.Environment.NewLine); }
-        }
-
         public string Description {
             get { return metadata.GetJoined ("description", System.Environment.NewLine); }
         }
 
         public string Creator {
-            get { return metadata.Get<string> ("creator"); }
+            get { return metadata.GetJoined ("creator", ", "); }
+        }
+
+        public string Publisher {
+            get { return metadata.GetJoined ("publisher", ", "); }
+        }
+
+        public string Year {
+            get { return metadata.GetJoined ("year", ", "); }
+        }
+
+        public string Subject {
+            get { return metadata.GetJoined ("subject", ", "); }
+        }
+
+        public string Source {
+            get { return metadata.GetJoined ("source", ", "); }
+        }
+
+        public string Taper {
+            get { return metadata.GetJoined ("taper", ", "); }
+        }
+
+        public string Lineage {
+            get { return metadata.GetJoined ("lineage", ", "); }
+        }
+
+        public string Transferer {
+            get { return metadata.GetJoined ("transferer", ", "); }
+        }
+
+        public DateTime DateAdded {
+            get { return GetMetadataDate ("addeddate"); }
+        }
+
+        public string AddedBy {
+            get { return metadata.GetJoined ("adder", ", "); }
+        }
+
+        public string Venue {
+            get { return metadata.GetJoined ("venue", ", "); }
+        }
+
+        public string Coverage {
+            get { return metadata.GetJoined ("coverage", ", "); }
+        }
+
+        public string ImageUrl {
+            get { return misc.Get<string> ("image"); }
+        }
+
+        public long DownloadsAllTime {
+            get { return (int)item.Get<double> ("downloads"); }
+        }
+
+        public long DownloadsLastMonth {
+            get { return (int)item.Get<double> ("month"); }
+        }
+
+        public long DownloadsLastWeek {
+            get { return (int)item.Get<double> ("week"); }
         }
 
         public DateTime DateCreated {
-            get { return DateTime.Parse (metadata.Get<string> ("date")); }
+            get { return GetMetadataDate ("date"); }
+        }
+
+        private DateTime GetMetadataDate (string key)
+        {
+            DateTime ret;
+            if (DateTime.TryParse (metadata.GetJoined (key, null), out ret))
+                return ret;
+            else
+                return DateTime.MinValue;
         }
 
         public IEnumerable<File> Files {
@@ -102,6 +173,26 @@ namespace Banshee.InternetArchive
                     yield return new File (file, location_root);
                 }
             }
+        }
+
+        public IEnumerable<Review> Reviews {
+            get {
+                if (reviews == null) {
+                    yield break;
+                }
+
+                foreach (JsonObject review in reviews) {
+                    yield return new Review (review);
+                }
+            }
+        }
+
+        public double AvgRating {
+            get { return review_info.Get<double> ("avg_rating"); }
+        }
+
+        public int NumReviews {
+            get { return review_info.Get<int> ("num_reviews"); }
         }
 
 #endregion
@@ -121,7 +212,16 @@ namespace Banshee.InternetArchive
 
 
             /*details = new Hyena.Json.Deserializer (System.IO.File.ReadAllText ("item.json")).Deserialize () as JsonObject;
+            details.Dump ();
             metadata = details["metadata"] as JsonObject;
+            misc = details["misc"] as JsonObject;
+            item = details["item"] as JsonObject;
+            var r = details["reviews"] as JsonObject;
+            if (r != null) {
+                reviews = r["reviews"] as JsonArray;
+                review_info = r["info"] as JsonObject;
+            }
+
             return details != null;*/
             
             // We don't; grab it from archive.org and parse it
@@ -130,6 +230,13 @@ namespace Banshee.InternetArchive
             if (json_str != null) {
                 details = new Hyena.Json.Deserializer (json_str).Deserialize () as JsonObject;
                 metadata = details["metadata"] as JsonObject;
+                misc = details["misc"] as JsonObject;
+                item = details["item"] as JsonObject;
+                var r = details["reviews"] as JsonObject;
+                if (r != null) {
+                    reviews = r["reviews"] as JsonArray;
+                    review_info = r["info"] as JsonObject;
+                }
 
                 if (details != null) {
                     JsonDetails = json_str;

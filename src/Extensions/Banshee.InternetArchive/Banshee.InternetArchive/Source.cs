@@ -131,6 +131,8 @@ namespace Banshee.InternetArchive
                 header_widget.ShowAll ();
                 Properties.Set<Gtk.Widget> ("Nereid.SourceContents.HeaderWidget", header_widget);
             }
+
+            //AddChildSource (new ItemSource ("Fooz", "fooz"));
         }
 
         public override void Reload ()
@@ -153,6 +155,9 @@ namespace Banshee.InternetArchive
             try {
                 results = new IA.JsonResults (search.GetResults ());
                 total_results = results.TotalResults;
+            } catch (System.Net.WebException e) {
+                Hyena.Log.Exception ("Error searching the Internet Archive", e);
+                results = null;
             } catch (Exception e) {
                 Hyena.Log.Exception ("Error searching the Internet Archive", e);
                 results = null;
@@ -212,6 +217,7 @@ namespace Banshee.InternetArchive
                 }
             } else {
                 // TODO differentiate between various errors types (network, invalid search, etc)
+                //if (error.Status == WebExceptionStatus.Timeout) 
                 ThreadAssist.ProxyToMain (delegate {
                     SetStatus (Catalog.GetString ("Error searching the Internet Archive"), true);
                 });

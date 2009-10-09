@@ -60,6 +60,12 @@ namespace Banshee.InternetArchive
                 })
             );
 
+            AddImportant (
+                new ActionEntry ("VisitInternetArchive", Stock.JumpTo, Catalog.GetString ("Visit Archive.org"), null, null, (o, a) => {
+                    Banshee.Web.Browser.Open ("http://archive.org");
+                })
+            );
+
             Register ();
         }
     }

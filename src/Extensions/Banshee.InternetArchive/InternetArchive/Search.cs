@@ -108,14 +108,16 @@ namespace InternetArchive
                 request.KeepAlive = KeepAlive;
 
                 response = (HttpWebResponse) request.GetResponse ();
+
+                if (response.StatusCode != HttpStatusCode.OK) {
+                    return null;
+                }
+
                 using (Stream stream = response.GetResponseStream ()) {
                     using (StreamReader reader = new StreamReader (stream)) {
                         return reader.ReadToEnd ();
                     }
                 }
-            } catch (Exception e) {
-                Hyena.Log.Exception (String.Format ("Error searching {0}", url), e);
-                return null;
             } finally {
                 if (response != null) {
                     if (response.StatusCode != HttpStatusCode.OK) {

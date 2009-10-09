@@ -1,5 +1,5 @@
 //
-// File.cs
+// Review.cs
 //
 // Authors:
 //   Gabriel Burt <gburt@novell.com>
@@ -39,47 +39,37 @@ using IA=InternetArchive;
 
 namespace Banshee.InternetArchive
 {
-    public class File
+    public class Review
     {
-        JsonObject file;
-        string location_root;
+        JsonObject review;
 
-        public File (JsonObject file, string location_root)
+        public Review (JsonObject review)
         {
-            this.file = file;
-            this.location_root = location_root;
+            this.review = review;
         }
 
-        public string Location {
-            get { return location_root + file.Get<string> ("location"); }
+        public long Id {
+            get { return (long) review.Get<double> ("review_id"); }
         }
 
-        public long Size {
-            get { return file.Get<long> ("size"); }
-        }
-
-        public int Track {
-            get { return file.Get<int> ("track"); }
-        }
-
-        public string Creator {
-            get { return file.Get<string> ("creator"); }
+        public int Stars {
+            get { return (int) review.Get<double> ("stars"); }
         }
 
         public string Title {
-            get { return file.Get<string> ("title"); }
+            get { return review.Get<string> ("reviewtitle"); }
         }
 
-        public int BitRate {
-            get { return file.Get<int> ("bitrate"); }
+        public string Body {
+            get { return review.Get<string> ("reviewbody"); }
         }
 
-        public string Format {
-            get { return file.Get<string> ("format"); }
+        public string Reviewer {
+            get { return review.Get<string> ("reviewer"); }
         }
 
-        public TimeSpan Length {
-            get { return file.Get<TimeSpan> ("length"); }
+        public DateTime DateReviewed {
+            get { return DateTime.Parse (review.Get<string> ("reviewdate")); }
         }
     }
 }
