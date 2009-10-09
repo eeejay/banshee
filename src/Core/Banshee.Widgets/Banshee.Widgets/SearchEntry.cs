@@ -364,7 +364,9 @@ namespace Banshee.Widgets
         }
 
         public string EmptyMessage {
-            get { return empty_message; }
+            get {
+                return entry.Sensitive ? empty_message : String.Empty;
+            }
             set {
                 empty_message = value;
                 entry.QueueDraw();
@@ -393,6 +395,15 @@ namespace Banshee.Widgets
         
         public Entry InnerEntry {
             get { return entry; }
+        }
+
+        protected override void OnStateChanged (Gtk.StateType previous_state)
+        {
+            base.OnStateChanged (previous_state);
+
+            entry.Sensitive = State != StateType.Insensitive;
+            filter_button.Sensitive = State != StateType.Insensitive;
+            clear_button.Sensitive = State != StateType.Insensitive;
         }
 
         private class FilterMenuItem : MenuItem /*CheckMenuItem*/
