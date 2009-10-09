@@ -118,6 +118,7 @@ namespace Banshee.InternetArchive
 
             Properties.SetString ("ActiveSourceUIResource", "ActiveSourceUI.xml");
             Properties.Set<bool> ("ActiveSourceUIResourcePropagate", true);
+            Properties.SetString ("GtkActionPath", "/InternetArchiveContextMenu");
 
             actions = new Actions (this);
 

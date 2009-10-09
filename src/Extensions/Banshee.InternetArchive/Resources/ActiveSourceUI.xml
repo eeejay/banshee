@@ -20,6 +20,10 @@
     </menu>
   </menubar>
 
+  <popup action="InternetArchiveContextMenu">
+    <menuitem action="VisitInternetArchive" />
+  </popup>
+
   <popup name="TrackContextMenu" action="TrackContextMenuAction">
     <placeholder name="BelowAddToPlaylist">
         <separator />
