@@ -27,12 +27,66 @@
 using System;
 using Gtk;
 
+using Hyena.Data.Gui;
+using Banshee.Collection.Gui;
+
+using Banshee.ServiceStack;
+using Banshee.Sources;
+using Banshee.PlayQueue;
+
 namespace Banshee.Moblin
 {
     public class MediaPanelContents : Table
     {
-        public MediaPanelContents () : base (1, 1, false)
+        private TerseTrackListView playqueue_view;
+        
+        public MediaPanelContents () : base (2, 2, false)
         {
+            BuildViews ();
+            FindPlayQueue ();
         }
+        
+        private void BuildViews ()
+        {
+            Attach (new Hyena.Widgets.ScrolledWindow () {
+                (playqueue_view = new TerseTrackListView () {
+                    HasFocus = true
+                })
+            }, 1, 2, 1, 2, AttachOptions.Shrink,
+                AttachOptions.Expand | AttachOptions.Fill, 0, 0);
+            
+            playqueue_view.SetSizeRequest (425, -1);
+            playqueue_view.ColumnController.Insert (new Column (null, "indicator",
+                new ColumnCellStatusIndicator (null), 0.05, true, 20, 20), 0);
+            
+            ShowAll ();
+        }
+
+#region PlayQueue
+
+        private void FindPlayQueue ()
+        {
+            Banshee.ServiceStack.ServiceManager.SourceManager.SourceAdded += delegate (SourceAddedArgs args) {
+                if (args.Source is Banshee.PlayQueue.PlayQueueSource) {
+                    InitPlayQueue (args.Source as Banshee.PlayQueue.PlayQueueSource);
+                }
+            };
+
+            foreach (Source src in ServiceManager.SourceManager.Sources) {
+                if (src is Banshee.PlayQueue.PlayQueueSource) {
+                    InitPlayQueue (src as Banshee.PlayQueue.PlayQueueSource);
+                }
+            }
+        }
+
+        private void InitPlayQueue (PlayQueueSource play_queue)
+        {
+            ServiceManager.SourceManager.SetActiveSource (play_queue);
+            //play_queue.TrackModel.Reloaded += HandleTrackModelReloaded;
+            playqueue_view.SetModel (play_queue.TrackModel);
+        }
+
+#endregion
+
     }
 }
