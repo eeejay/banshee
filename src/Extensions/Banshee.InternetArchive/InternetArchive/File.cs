@@ -1,5 +1,5 @@
 //
-// Review.cs
+// File.cs
 //
 // Authors:
 //   Gabriel Burt <gburt@novell.com>
@@ -34,42 +34,49 @@ using Mono.Unix;
 
 using Hyena.Json;
 
-using InternetArchive;
-using IA=InternetArchive;
-
-namespace Banshee.InternetArchive
+namespace InternetArchive
 {
-    public class Review
+    public class File
     {
-        JsonObject review;
+        JsonObject file;
+        string location_root;
 
-        public Review (JsonObject review)
+        public File (JsonObject file, string location_root)
         {
-            this.review = review;
+            this.file = file;
+            this.location_root = location_root;
         }
 
-        public long Id {
-            get { return (long) review.Get<double> ("review_id"); }
+        public string Location {
+            get { return location_root + file.Get<string> ("location"); }
         }
 
-        public int Stars {
-            get { return (int) review.Get<double> ("stars"); }
+        public long Size {
+            get { return file.Get<long> ("size"); }
+        }
+
+        public int Track {
+            get { return file.Get<int> ("track"); }
+        }
+
+        public string Creator {
+            get { return file.Get<string> ("creator"); }
         }
 
         public string Title {
-            get { return review.Get<string> ("reviewtitle"); }
+            get { return file.Get<string> ("title"); }
         }
 
-        public string Body {
-            get { return review.Get<string> ("reviewbody"); }
+        public int BitRate {
+            get { return file.Get<int> ("bitrate"); }
         }
 
-        public string Reviewer {
-            get { return review.Get<string> ("reviewer"); }
+        public string Format {
+            get { return file.Get<string> ("format"); }
         }
 
-        public DateTime DateReviewed {
-            get { return DateTime.Parse (review.Get<string> ("reviewdate")); }
+        public TimeSpan Length {
+            get { return file.Get<TimeSpan> ("length"); }
         }
     }
 }
