@@ -211,37 +211,27 @@ namespace Banshee.InternetArchive
             }*/
 
 
-            /*details = new Hyena.Json.Deserializer (System.IO.File.ReadAllText ("item.json")).Deserialize () as JsonObject;
-            details.Dump ();
-            metadata = details["metadata"] as JsonObject;
-            misc = details["misc"] as JsonObject;
-            item = details["item"] as JsonObject;
-            var r = details["reviews"] as JsonObject;
-            if (r != null) {
-                reviews = r["reviews"] as JsonArray;
-                review_info = r["info"] as JsonObject;
+            // Hack to load JSON data from local file instead of from archive.org
+            if (Id == "banshee-internet-archive-offline-mode") {
+                details = new Hyena.Json.Deserializer (System.IO.File.ReadAllText ("item2.json")).Deserialize () as JsonObject;
+            } else {
+                // We don't; grab it from archive.org and parse it
+                string json_str = IA.Item.GetDetails (Id);
+
+                if (json_str != null) {
+                    details = new Hyena.Json.Deserializer (json_str).Deserialize () as JsonObject;
+                    JsonDetails = json_str;
+                }
             }
 
-            return details != null;*/
-            
-            // We don't; grab it from archive.org and parse it
-            string json_str = IA.Item.GetDetails (Id);
-
-            if (json_str != null) {
-                details = new Hyena.Json.Deserializer (json_str).Deserialize () as JsonObject;
-                metadata = details["metadata"] as JsonObject;
-                misc = details["misc"] as JsonObject;
-                item = details["item"] as JsonObject;
-                var r = details["reviews"] as JsonObject;
+            if (details != null) {
+                metadata = details.Get<JsonObject> ("metadata");
+                misc     = details.Get<JsonObject> ("misc");
+                item     = details.Get<JsonObject> ("item");
+                var r    = details.Get<JsonObject> ("reviews");
                 if (r != null) {
-                    reviews = r["reviews"] as JsonArray;
-                    review_info = r["info"] as JsonObject;
-                }
-
-                if (details != null) {
-                    JsonDetails = json_str;
-                    //Save ();
-                    return true;
+                    reviews = r.Get<JsonArray> ("reviews");
+                    review_info = r.Get<JsonObject> ("info");
                 }
             }
 

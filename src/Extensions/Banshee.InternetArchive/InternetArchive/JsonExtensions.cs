@@ -38,6 +38,9 @@ namespace InternetArchive
     {
         public static T Get<T> (this JsonObject item, string key)
         {
+            if (item == null)
+                return default (T);
+
             object result;
             if (item.TryGetValue (key, out result)) {
                 try {
@@ -82,6 +85,9 @@ namespace InternetArchive
 
         public static string GetJoined (this JsonObject item, string key, string with)
         {
+            if (item == null)
+                return null;
+
             var ary = item.Get<System.Collections.IEnumerable> (key);
             if (ary != null) {
                 return String.Join (with, ary.Cast<object> ().Select (o => o.ToString ()).ToArray ());
