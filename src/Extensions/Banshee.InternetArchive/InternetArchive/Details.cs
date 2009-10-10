@@ -1,5 +1,5 @@
 //
-// Item.cs
+// Details.cs
 //
 // Authors:
 //   Gabriel Burt <gburt@novell.com>
@@ -27,6 +27,8 @@
 //
 
 using System;
+using System.IO;
+using System.Net;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -34,27 +36,24 @@ using Mono.Unix;
 
 using Hyena.Json;
 
-using InternetArchive;
-using IA=InternetArchive;
-
-namespace Banshee.InternetArchive
+namespace InternetArchive
 {
-    public class Item
+    public class Details
     {
         JsonObject details;
         JsonObject metadata, misc, item, review_info;
         JsonArray reviews;
 
-        public static Item LoadOrCreate (string id, string title)
+        public static Details LoadOrCreate (string id, string title)
         {
             /*var item = Provider.LoadFromId (id);
             if (item != null)
                 return item;*/
 
-            return new Item (id, title);
+            return new Details (id, title);
         }
 
-        private Item (string id, string title)
+        private Details (string id, string title)
         {
             Id = id;
             Title = title;
@@ -165,24 +164,24 @@ namespace Banshee.InternetArchive
                 return DateTime.MinValue;
         }
 
-        public IEnumerable<File> Files {
+        public IEnumerable<DetailsFile> Files {
             get {
                 string location_root = String.Format ("http://{0}{1}", details.Get<string> ("server"), details.Get<string> ("dir"));
                 var files = details["files"] as JsonObject;
                 foreach (JsonObject file in files.Values) {
-                    yield return new File (file, location_root);
+                    yield return new DetailsFile (file, location_root);
                 }
             }
         }
 
-        public IEnumerable<Review> Reviews {
+        public IEnumerable<DetailsReview> Reviews {
             get {
                 if (reviews == null) {
                     yield break;
                 }
 
                 foreach (JsonObject review in reviews) {
-                    yield return new Review (review);
+                    yield return new DetailsReview (review);
                 }
             }
         }
@@ -216,7 +215,7 @@ namespace Banshee.InternetArchive
                 details = new Hyena.Json.Deserializer (System.IO.File.ReadAllText ("item2.json")).Deserialize () as JsonObject;
             } else {
                 // We don't; grab it from archive.org and parse it
-                string json_str = IA.Item.GetDetails (Id);
+                string json_str = GetDetails (Id);
 
                 if (json_str != null) {
                     details = new Hyena.Json.Deserializer (json_str).Deserialize () as JsonObject;
@@ -236,6 +235,41 @@ namespace Banshee.InternetArchive
             }
 
             return false;
+        }
+
+        private static string GetDetails (string id)
+        {
+            HttpWebResponse response = null;
+            string url = String.Format ("http://www.archive.org/details/{0}&output=json", id);
+
+            try {
+                Hyena.Log.Debug ("ArchiveSharp Getting Details", url);
+
+                var request = (HttpWebRequest) WebRequest.Create (url);
+                request.UserAgent = Search.UserAgent;
+                request.Timeout   = Search.TimeoutMs;
+                request.KeepAlive = Search.KeepAlive;
+
+                response = (HttpWebResponse) request.GetResponse ();
+
+                if (response.StatusCode != HttpStatusCode.OK) {
+                    return null;
+                }
+
+                using (Stream stream = response.GetResponseStream ()) {
+                    using (StreamReader reader = new StreamReader (stream)) {
+                        return reader.ReadToEnd ();
+                    }
+                }
+            } finally {
+                if (response != null) {
+                    if (response.StatusCode != HttpStatusCode.OK) {
+                        Hyena.Log.WarningFormat ("Got status {0} searching {1}", response.StatusCode, url);
+                    }
+                    response.Close ();
+                    response = null;
+                }
+            }
         }
     }
 }

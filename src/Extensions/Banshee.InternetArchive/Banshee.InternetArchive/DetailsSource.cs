@@ -1,5 +1,5 @@
 //
-// ItemSource.cs
+// DetailsSource.cs
 //
 // Authors:
 //   Gabriel Burt <gburt@novell.com>
@@ -53,18 +53,18 @@ using IA=InternetArchive;
 
 namespace Banshee.InternetArchive
 {
-    public class ItemSource : Banshee.Sources.Source, ITrackModelSource, IDurationAggregator, IFileSizeAggregator
+    public class DetailsSource : Banshee.Sources.Source, ITrackModelSource, IDurationAggregator, IFileSizeAggregator
     {
-        private Item item;
+        private IA.Details item;
         private MemoryTrackListModel track_model;
 
-        public ItemSource (string name, string id) : base (name, name, 40, "internet-archive-" + id)
+        public DetailsSource (string name, string id) : base (name, name, 40, "internet-archive-" + id)
         {
-            item = Item.LoadOrCreate (id, name);
+            item = IA.Details.LoadOrCreate (id, name);
             track_model = new MemoryTrackListModel ();
             track_model.Reloaded += delegate { OnUpdated (); };
 
-            Properties.Set<Gtk.Widget> ("Nereid.SourceContents", new ItemSourceContents (this, item));
+            Properties.Set<Gtk.Widget> ("Nereid.SourceContents", new DetailsSourceContents (this, item));
         }
 
         public void Reload ()

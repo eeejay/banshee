@@ -1,5 +1,5 @@
 //
-// JsonResults.cs
+// SearchResults.cs
 //  
 // Author:
 //       Gabriel Burt <gabriel.burt@gmail.com>
@@ -28,41 +28,59 @@ using System;
 using System.IO;
 using System.Net;
 using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 
 using Hyena.Json;
 
 namespace InternetArchive
 {
-    public class JsonResults : Results
+    public sealed class SearchResults : IEnumerable<SearchResult>
     {
-        JsonObject response_header;
-        JsonObject response_header_params;
+        JsonArray results;
 
-        JsonObject response;
-        JsonArray  response_docs;
+        public int TotalResults { get; private set; }
+        public int Count  { get; private set; }
+        public int Offset { get; private set; }
 
-        public JsonResults (string resultsString)
+        public SearchResults (string resultsString)
         {
             var json = new Deserializer (resultsString).Deserialize () as JsonObject;
 
-            response_header = (JsonObject) json["responseHeader"];
-            response_header_params = (JsonObject) response_header["params"];
+            var response_header = json.Get<JsonObject> ("responseHeader");
+            if (response_header != null) {
+                var response_header_params = response_header.Get<JsonObject> ("params");
 
-            response = (JsonObject) json["response"];
-            response_docs = (JsonArray) response["docs"];
+                Count  = response_header_params.Get<int> ("rows");
+            }
 
-            TotalResults = (int) (double) response["numFound"];
-            Offset = (int) (double) response["start"];
-            Count  = Int32.Parse (response_header_params["rows"] as string);
+            var response = json.Get<JsonObject> ("response");
+            if (response != null) {
+                results = response.Get<JsonArray> ("docs");
+
+                TotalResults = (int) response.Get<double> ("numFound");
+                Offset = (int) response.Get<double> ("start");
+            }
         }
 
-        public override IEnumerable<Item> Items {
-            get {
-                foreach (object obj in response_docs) {
-                    yield return new JsonItem ((JsonObject) obj);
-                }
+        /*public IEnumerable GetEnumerator ()
+        {
+            return GetEnumerator ();
+        }*/
+
+        public IEnumerator<SearchResult> GetEnumerator ()
+        {
+            if (results == null)
+                yield break;
+
+            foreach (JsonObject obj in results) {
+                yield return new SearchResult (obj);
             }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator ()
+        {
+            return GetEnumerator ();
         }
     }
 }

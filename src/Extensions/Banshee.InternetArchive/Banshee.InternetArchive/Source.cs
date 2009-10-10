@@ -69,9 +69,7 @@ namespace Banshee.InternetArchive
             IA.Search.UserAgent = Banshee.Web.Browser.UserAgent;
             IA.Search.TimeoutMs = 12*1000;
 
-            search = new IA.Search () {
-                Format = IA.ResultsFormat.Json
-            };
+            search = new IA.Search ();
 
             IsLocal = false;
             // TODO Should probably support normal playlists at some point (but not smart playlists)
@@ -134,7 +132,7 @@ namespace Banshee.InternetArchive
             }
 
             if (ApplicationContext.CommandLine.Contains ("internet-archive-offline-mode")) {
-                AddChildSource (new ItemSource ("Local H Live at Levis L2 Lazer Rock Stage [Summerfest 1999] on 1999-06-24", "banshee-internet-archive-offline-mode"));
+                AddChildSource (new DetailsSource ("Local H Live at Levis L2 Lazer Rock Stage [Summerfest 1999] on 1999-06-24", "banshee-internet-archive-offline-mode"));
             }
         }
 
@@ -153,10 +151,10 @@ namespace Banshee.InternetArchive
                 SetStatus (Catalog.GetString ("Searching the Internet Archive"), false, true, "gtk-find");
             });
 
-            IA.JsonResults results = null;
+            IA.SearchResults results = null;
 
             try {
-                results = new IA.JsonResults (search.GetResults ());
+                results = search.GetResults ();
                 total_results = results.TotalResults;
             } catch (System.Net.WebException e) {
                 Hyena.Log.Exception ("Error searching the Internet Archive", e);
@@ -173,22 +171,22 @@ namespace Banshee.InternetArchive
                     ServiceManager.DbConnection.Execute ("DELETE FROM CoreTracks WHERE PrimarySourceID = ?", this.DbId);
                     DatabaseTrackModel.Clear ();
 
-                    foreach (var item in results.Items) {
+                    foreach (var result in results) {
                         var track = new DatabaseTrackInfo () {
                             PrimarySource = this,
-                            ArtistName = item.GetJoined (IA.Field.Creator, ", ") ?? "",
-                            Comment    = Hyena.StringUtil.RemoveHtml (item.Get<string> (IA.Field.Description)),
-                            Composer   = item.GetJoined (IA.Field.Publisher, ", ") ?? "",
-                            LicenseUri = item.Get<string> (IA.Field.LicenseUrl),
-                            PlayCount  = (int) item.Get<double> (IA.Field.Downloads),
-                            Rating     = (int) Math.Round (item.Get<double> (IA.Field.AvgRating)),
-                            TrackTitle = item.Get<string> (IA.Field.Title),
-                            Uri        = new Banshee.Base.SafeUri (item.WebpageUrl),
-                            MimeType   = item.GetJoined (IA.Field.Format, ", "),
-                            //MimeType   = item.GetJoined (IA.Field.MediaType, ", "),
-                            Year       = (int) item.Get<double> (IA.Field.Year)
+                            ArtistName = result.Creator ?? "",
+                            Comment    = Hyena.StringUtil.RemoveHtml (result.Description),
+                            Composer   = result.Publisher ?? "",
+                            LicenseUri = result.LicenseUrl,
+                            PlayCount  = result.Downloads,
+                            Rating     = (int) Math.Round (result.AvgRating),
+                            TrackTitle = result.Title,
+                            Uri        = new Banshee.Base.SafeUri (result.WebpageUrl),
+                            MimeType   = result.Format,
+                            Year       = result.Year
                         };
 
+                        // HACK to remove ugly empty description
                         if (track.Comment == "There is currently no description for this item.")
                             track.Comment = null;
 

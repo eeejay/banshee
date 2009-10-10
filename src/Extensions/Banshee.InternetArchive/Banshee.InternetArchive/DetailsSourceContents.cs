@@ -1,5 +1,5 @@
 //
-// ItemSourceContents.cs
+// DetailsSourceContents.cs
 //
 // Authors:
 //   Gabriel Burt <gburt@novell.com>
@@ -59,12 +59,12 @@ using IA=InternetArchive;
 
 namespace Banshee.InternetArchive
 {
-    public class ItemSourceContents : Gtk.HBox, Banshee.Sources.Gui.ISourceContents
+    public class DetailsSourceContents : Gtk.HBox, Banshee.Sources.Gui.ISourceContents
     {
-        private ItemSource source;
-        Item item;
+        private DetailsSource source;
+        IA.Details item;
 
-        public ItemSourceContents (ItemSource source, Item item)
+        public DetailsSourceContents (DetailsSource source, IA.Details item)
         {
             this.source = source;
             this.item = item;
@@ -81,7 +81,7 @@ namespace Banshee.InternetArchive
 
         public bool SetSource (ISource source)
         {
-            this.source = source as ItemSource;
+            this.source = source as DetailsSource;
             return this.source != null;
         }
 

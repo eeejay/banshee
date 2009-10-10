@@ -47,7 +47,7 @@ namespace Banshee.InternetArchive
                     if (item != null && item.Uri != null) {
                         string [] bits = item.Uri.AbsoluteUri.Split ('/');
                         string id = bits[bits.Length - 1];
-                        var src = new ItemSource (item.TrackTitle, id);
+                        var src = new DetailsSource (item.TrackTitle, id);
                         source.AddChildSource (src);
                         Banshee.ServiceStack.ServiceManager.SourceManager.SetActiveSource (src);
                     }

@@ -1,5 +1,5 @@
 //
-// JsonItem.cs
+// SearchResult.cs
 //  
 // Author:
 //       Gabriel Burt <gabriel.burt@gmail.com>
@@ -34,18 +34,67 @@ using Hyena.Json;
 
 namespace InternetArchive
 {
-    public class JsonItem : Item
+    public sealed class SearchResult
     {
         JsonObject item;
 
-        public JsonItem (JsonObject item)
+        internal SearchResult (JsonObject item)
         {
             this.item = item;
         }
 
-        public override T Get<T> (Field field)
+        public string Id {
+            get { return Get<string> (Field.Identifier); }
+        }
+
+        public string WebpageUrl {
+            get { return String.Format ("http://www.archive.org/details/{0}", Id); }
+        }
+
+        public string Creator {
+            get { return GetJoined (Field.Creator, ", ") ?? ""; }
+        }
+
+        public string Description {
+            get { return Hyena.StringUtil.RemoveHtml (Get<string> (Field.Description)); }
+        }
+
+        public string Publisher {
+            get { return GetJoined (Field.Publisher, ", ") ?? ""; }
+        }
+
+        public string LicenseUrl {
+            get { return Get<string> (Field.LicenseUrl); }
+        }
+
+        public int Downloads {
+            get { return (int) Get<double> (Field.Downloads); }
+        }
+
+        public double AvgRating {
+            get { return Get<double> (Field.AvgRating); }
+        }
+
+        public string Title {
+            get { return Get<string> (Field.Title); }
+        }
+
+        public string Format {
+            get { return GetJoined (Field.Format, ", "); }
+        }
+
+        public int Year {
+            get { return (int) Get<double> (Field.Year); }
+        }
+
+        public T Get<T> (Field field)
         {
             return item.Get<T> (field.Id);
+        }
+
+        public string GetJoined (Field field, string with)
+        {
+            return item.GetJoined (field.Id, with);
         }
     }
 }

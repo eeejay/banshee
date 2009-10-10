@@ -40,7 +40,6 @@ namespace InternetArchive
 
         public IList<Field>  ReturnFields { get { return result_fields; } }
         public IList<Sort>   Sorts { get { return sorts; } }
-        public ResultsFormat Format { get; set; }
         public string Query { get; set; }
 
         static Search () {
@@ -87,13 +86,13 @@ namespace InternetArchive
             }
 
             sb.AppendFormat ("&rows={0}", NumResults);
-            sb.AppendFormat ("&fmt={0}", Format.Id);
+            sb.AppendFormat ("&fmt={0}", "json");
             sb.Append ("&xmlsearch=Search");
 
             return sb.ToString ();
         }
 
-        public string GetResults ()
+        public SearchResults GetResults ()
         {
             HttpWebResponse response = null;
             string url = null;
@@ -115,7 +114,7 @@ namespace InternetArchive
 
                 using (Stream stream = response.GetResponseStream ()) {
                     using (StreamReader reader = new StreamReader (stream)) {
-                        return reader.ReadToEnd ();
+                        return new SearchResults (reader.ReadToEnd ());
                     }
                 }
             } finally {
