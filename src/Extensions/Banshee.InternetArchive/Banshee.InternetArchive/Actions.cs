@@ -53,9 +53,19 @@ namespace Banshee.InternetArchive
                     }
                 }),
                 new ActionEntry ("OpenItemWebsite", Stock.JumpTo, Catalog.GetString ("Open Webpage"), null, null, (o, a) => {
-                    var item = source.TrackModel.FocusedItem;
-                    if (item != null && item.Uri != null) {
-                        Banshee.Web.Browser.Open (item.Uri.AbsoluteUri);
+                    string uri = null;
+                    var src = ActiveSource as DetailsSource;
+                    if (src != null) {
+                        uri = src.Item.WebpageUrl;
+                    } else {
+                        var item = source.TrackModel.FocusedItem;
+                        if (item != null && item.Uri != null) {
+                            uri = item.Uri.AbsoluteUri;
+                        }
+                    }
+
+                    if (uri != null) {
+                        Banshee.Web.Browser.Open (uri);
                     }
                 })
             );

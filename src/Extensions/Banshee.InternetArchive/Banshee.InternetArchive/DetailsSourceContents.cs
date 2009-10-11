@@ -141,9 +141,9 @@ namespace Banshee.InternetArchive
             };
 
             AddToTable (table, Catalog.GetString ("Venue:"), item.Venue);
-            AddToTable (table, Catalog.GetString ("Coverage:"), item.Coverage);
+            AddToTable (table, Catalog.GetString ("Location:"), item.Coverage);
             if (item.DateCreated != DateTime.MinValue) {
-                AddToTable (table, Catalog.GetString ("Created:"), item.DateCreated);
+                AddToTable (table, Catalog.GetString ("Date:"), item.DateCreated);
             } else {
                 AddToTable (table, Catalog.GetString ("Year:"), item.Year);
             }
@@ -152,18 +152,18 @@ namespace Banshee.InternetArchive
 
             table.AddSeparator ();
 
-            AddToTable (table, Catalog.GetString ("Downloads (overall):"), item.DownloadsAllTime);
-            AddToTable (table, Catalog.GetString ("Downloads (last month):"), item.DownloadsLastMonth);
-            AddToTable (table, Catalog.GetString ("Downloads (last week):"), item.DownloadsLastWeek);
+            AddToTable (table, Catalog.GetString ("Downloads, overall:"), item.DownloadsAllTime);
+            AddToTable (table, Catalog.GetString ("Downloads, past month:"), item.DownloadsLastMonth);
+            AddToTable (table, Catalog.GetString ("Downloads, past week:"), item.DownloadsLastWeek);
 
             table.AddSeparator ();
 
-            AddToTable (table, Catalog.GetString ("Added:"), item.DateAdded);
-            AddToTable (table, Catalog.GetString ("Added by:"), item.AddedBy);
-            AddToTable (table, Catalog.GetString ("Source:"), item.Source);
-            AddToTable (table, Catalog.GetString ("Taper:"), item.Taper);
-            AddToTable (table, Catalog.GetString ("Lineage:"), item.Lineage);
-            AddToTable (table, Catalog.GetString ("Transferer:"), item.Transferer);
+            AddToTable (table, Catalog.GetString ("Added:"),      item.DateAdded);
+            AddToTable (table, Catalog.GetString ("Added by:"),   item.AddedBy);
+            AddToTable (table, Catalog.GetString ("Source:"),     item.Source);
+            AddToTable (table, Catalog.GetString ("Recorded by:"),item.Taper);
+            AddToTable (table, Catalog.GetString ("Lineage:"),    item.Lineage);
+            AddToTable (table, Catalog.GetString ("Transferred by:"), item.Transferer);
 
             expander.Child = table;
 

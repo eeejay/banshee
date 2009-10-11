@@ -25,6 +25,7 @@
 // THE SOFTWARE.
 
 using System;
+using System.Collections.Generic;
 
 using Mono.Unix;
 
@@ -59,6 +60,7 @@ namespace InternetArchive
         week
         */
 
+        private static List<Field> fields = new List<Field> ();
         public static Field AvgRating  = new Field ("avg_rating", Catalog.GetString ("Rating"));
         public static Field Creator    = new Field ("creator",    Catalog.GetString ("Creator"));
         public static Field Collection = new Field ("collection", Catalog.GetString ("Collection"));
@@ -70,10 +72,14 @@ namespace InternetArchive
         public static Field Language   = new Field ("language",   Catalog.GetString ("Language"));
         public static Field LicenseUrl = new Field ("licenseurl", Catalog.GetString ("License"));
         public static Field MediaType  = new Field ("mediatype",  Catalog.GetString ("Media Type"));
-        public static Field NumReviews = new Field ("num_reviews",Catalog.GetString ("# Reviews"));
+        public static Field NumReviews = new Field ("num_reviews",Catalog.GetString ("Review Count"));
         public static Field Publisher  = new Field ("publisher",  Catalog.GetString ("Publisher"));
         public static Field Title      = new Field ("title",      Catalog.GetString ("Title"));
         public static Field Year       = new Field ("year",       Catalog.GetString ("Year"));
+
+        public static IEnumerable<Field> Fields {
+            get { return fields; }
+        }
 
         public string Name { get; private set; }
         public string Id { get; private set; }
@@ -82,6 +88,9 @@ namespace InternetArchive
         {
             Id = id;
             Name = name;
+
+            fields.Add (this);
+            fields.Sort ((a, b) => a.Name.CompareTo (b.Name));
         }
     }
 }

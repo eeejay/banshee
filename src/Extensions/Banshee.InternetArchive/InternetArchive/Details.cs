@@ -194,6 +194,10 @@ namespace InternetArchive
             get { return review_info.Get<int> ("num_reviews"); }
         }
 
+        public string WebpageUrl {
+            get { return String.Format ("http://www.archive.org/details/{0}", Id); }
+        }
+
 #endregion
 
         private bool LoadDetails ()

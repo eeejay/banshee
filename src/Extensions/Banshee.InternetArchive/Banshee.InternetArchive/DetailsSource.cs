@@ -58,11 +58,18 @@ namespace Banshee.InternetArchive
         private IA.Details item;
         private MemoryTrackListModel track_model;
 
+        public IA.Details Item {
+            get { return item; }
+        }
+
         public DetailsSource (string name, string id) : base (name, name, 40, "internet-archive-" + id)
         {
             item = IA.Details.LoadOrCreate (id, name);
             track_model = new MemoryTrackListModel ();
             track_model.Reloaded += delegate { OnUpdated (); };
+
+            Properties.SetString ("ActiveSourceUIResource", "DetailsSourceActiveUI.xml");
+            Properties.SetString ("GtkActionPath", "/InternetArchiveDetailsContextMenu");
 
             Properties.Set<Gtk.Widget> ("Nereid.SourceContents", new DetailsSourceContents (this, item));
         }
@@ -112,12 +119,16 @@ namespace Banshee.InternetArchive
             get { return false; }
         }
 
+        public bool CanPlay {
+            get { return true; }
+        }
+
         public bool CanShuffle {
             get { return false; }
         }
 
         public bool CanRepeat {
-            get { return false; }
+            get { return true; }
         }
 
         public bool CanAddTracks {

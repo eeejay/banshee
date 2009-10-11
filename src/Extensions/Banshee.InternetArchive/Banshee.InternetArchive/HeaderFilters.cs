@@ -97,6 +97,34 @@ namespace Banshee.InternetArchive
                 EmptyMessage = String.Format (Catalog.GetString ("Optional Query"))
             };
 
+            // Add 'filter' items
+            var filter_fields = new List<IA.Field> ();
+            int i = 0;
+            foreach (var field in IA.Field.Fields.Where (f => (f != IA.Field.Collection && f != IA.Field.Identifier))) {
+                filter_fields.Add (field);
+                entry.AddFilterOption (i++, field.Name);
+            }
+
+            // Add the Help item
+            entry.Menu.Append (new SeparatorMenuItem ());
+            var help_item = new ImageMenuItem (Catalog.GetString ("_Help")) {
+                Image = new Image ("gtk-help", IconSize.Menu)
+            };
+            help_item.Activated += delegate { Banshee.Web.Browser.Open ("http://www.archive.org/advancedsearch.php"); };
+            entry.Menu.Append (help_item);
+            entry.Menu.ShowAll ();
+
+            entry.FilterChanged += (o, a) => {
+                // Only prepend the filter: part if the query doesn't already end in a :
+                string prev_query = entry.Query.EndsWith (":") ? null : entry.Query;
+                entry.Query = String.Format ("{0}:{1}", filter_fields[entry.ActiveFilterID].Id, prev_query);
+
+                var editable = entry.InnerEntry as Editable;
+                if (editable != null) {
+                    editable.Position = entry.Query.Length;
+                }
+            };
+
             PackStart (entry, false, false, 0);
         }
 
@@ -104,11 +132,11 @@ namespace Banshee.InternetArchive
         {
             var combo = sort_combo = ComboBox.NewText ();
 
-            combo.AppendText (Catalog.GetString ("Popular"));
-            combo.AppendText (Catalog.GetString ("Popular This Week"));
-            combo.AppendText (Catalog.GetString ("Highly Rated"));
-            combo.AppendText (Catalog.GetString ("Year"));
-            combo.AppendText (Catalog.GetString ("Recently Added"));
+            combo.AppendText (Catalog.GetString ("Downloads"));
+            combo.AppendText (Catalog.GetString ("Downloads This Week"));
+            combo.AppendText (Catalog.GetString ("Rating"));
+            combo.AppendText (Catalog.GetString ("Year Created"));
+            combo.AppendText (Catalog.GetString ("Date Added"));
             combo.Active = 0;
 
             PackStart (new Label (Catalog.GetString ("Sort by:")), false, false, 0);
@@ -142,16 +170,11 @@ namespace Banshee.InternetArchive
                 var media_type = media_type_store.GetValue (iter, 0) as IA.FieldValue;
                 string query = media_type.ToString ();
 
-                if (media_type is IA.Collection) {
-                    if ((media_type as IA.Collection).MediaType.Id == "music") {
-                        //query += " AND (format:mp3 OR format:ogg OR format:flac OR format:shorten)";
-                    }
-                }
-
-                query += " AND -mediatype:collection";//(format:mp3 OR format:ogg OR format:flac OR format:shorten)";
+                // Remove medialess 'collection' results
+                query += " AND -mediatype:collection";
 
                 if (!String.IsNullOrEmpty (search_entry.Query)) {
-                    query += String.Format (" AND (title:\"{0}\" OR description:\"{0}\" OR creator:\"{0}\")", search_entry.Query);
+                    query += String.Format (" AND {0}", search_entry.Query);
                 }
 
                 source.Search.Query = query;

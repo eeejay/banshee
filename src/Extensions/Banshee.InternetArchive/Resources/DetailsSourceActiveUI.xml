@@ -1,0 +1,18 @@
+<ui>
+  <toolbar name="HeaderToolbar">
+    <placeholder name="SourceActions">
+        <toolitem action="OpenItemWebsite" />
+    </placeholder>
+  </toolbar>
+
+  <popup action="InternetArchiveDetailsContextMenu">
+    <menuitem action="VisitInternetArchive" />
+  </popup>
+
+  <popup name="TrackContextMenu" action="TrackContextMenuAction">
+    <placeholder name="BelowAddToPlaylist">
+        <separator />
+        <separator />
+    </placeholder>
+  </popup>
+</ui>
