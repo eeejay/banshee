@@ -399,13 +399,6 @@ namespace Banshee.NotificationArea
             }
         }
 
-        private bool IsNotificationDaemon {
-            get {
-                var name = Notifications.Global.ServerInformation.Name;
-                return name == "notification-daemon" || name == "Notification Daemon";
-            }
-        }
-        
         private void ShowTrackNotification ()
         {
             // This has to happen before the next if, otherwise the last_* members aren't set correctly.
@@ -416,8 +409,17 @@ namespace Banshee.NotificationArea
             
             notify_last_title = current_track.DisplayTrackTitle;
             notify_last_artist = current_track.DisplayArtistName;
-
+            
             if (!show_notifications || elements_service.PrimaryWindow.HasToplevelFocus) {
+                return;
+            }
+            
+            bool is_notification_daemon = false;
+            try {
+                var name = Notifications.Global.ServerInformation.Name;
+                is_notification_daemon = name == "notification-daemon" || name == "Notification Daemon";
+            } catch {
+                // This will be reached if no notification daemon is running
                 return;
             }
             
@@ -432,11 +434,9 @@ namespace Banshee.NotificationArea
             Gdk.Pixbuf image = null;
             
             if (artwork_manager_service != null) {
-                if (IsNotificationDaemon) {
-                    image = artwork_manager_service.LookupScalePixbuf (current_track.ArtworkId, 42);
-                } else {
-                    image = artwork_manager_service.LookupPixbuf (current_track.ArtworkId);
-                }
+                image = is_notification_daemon
+                    ? artwork_manager_service.LookupScalePixbuf (current_track.ArtworkId, 42)
+                    : artwork_manager_service.LookupPixbuf (current_track.ArtworkId);
             }
             
             if (image == null) {
@@ -447,10 +447,10 @@ namespace Banshee.NotificationArea
             }
             
             try {
-                if (current_nf == null)
+                if (current_nf == null) {
                     current_nf = new Notification (Catalog.GetString ("Now Playing"), 
                         message, image, notif_area.Widget);
-                else {
+                } else {
                     current_nf.Body = message;
                     current_nf.Icon = image;
                     current_nf.AttachToWidget (notif_area.Widget);
