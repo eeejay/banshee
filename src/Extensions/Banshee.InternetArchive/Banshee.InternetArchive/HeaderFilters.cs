@@ -39,13 +39,13 @@ namespace Banshee.InternetArchive
 {
     public class HeaderFilters : HBox
     {
-        private Source source;
+        private SearchSource source;
 
         private ComboBox sort_combo, media_type_combo;
         private TreeStore media_type_store;
         private Banshee.Widgets.SearchEntry search_entry;
 
-        public HeaderFilters (Source source)
+        public HeaderFilters (SearchSource source)
         {
             this.source = source;
 

@@ -17,6 +17,6 @@
   </Dependencies>
 
   <Extension path="/Banshee/SourceManager/Source">
-    <Source class="Banshee.InternetArchive.Source"/>
+    <Source class="Banshee.InternetArchive.SearchSource"/>
   </Extension>
 </Addin>

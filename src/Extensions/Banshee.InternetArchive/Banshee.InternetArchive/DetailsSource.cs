@@ -69,7 +69,7 @@ namespace Banshee.InternetArchive
             track_model.Reloaded += delegate { OnUpdated (); };
 
             Properties.SetString ("ActiveSourceUIResource", "DetailsSourceActiveUI.xml");
-            Properties.SetString ("GtkActionPath", "/InternetArchiveDetailsContextMenu");
+            Properties.SetString ("GtkActionPath", "/IaDetailsSourcePopup");
 
             Properties.Set<Gtk.Widget> ("Nereid.SourceContents", new DetailsSourceContents (this, item));
         }

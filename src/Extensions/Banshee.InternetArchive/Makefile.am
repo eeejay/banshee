@@ -8,7 +8,7 @@ SOURCES = \
 	Banshee.InternetArchive/DetailsSource.cs \
 	Banshee.InternetArchive/DetailsSourceContents.cs \
 	Banshee.InternetArchive/HeaderFilters.cs \
-	Banshee.InternetArchive/Source.cs \
+	Banshee.InternetArchive/SearchSource.cs \
 	InternetArchive/Collection.cs \
 	InternetArchive/Details.cs \
 	InternetArchive/DetailsFile.cs \
@@ -24,7 +24,7 @@ SOURCES = \
 
 RESOURCES = \
 	Banshee.InternetArchive.addin.xml \
-	Resources/ActiveSourceUI.xml \
+	Resources/SearchSourceActiveUI.xml \
 	Resources/DetailsSourceActiveUI.xml
 
 include $(top_srcdir)/build/build.mk

@@ -5,7 +5,7 @@
     </placeholder>
   </toolbar>
 
-  <popup action="InternetArchiveDetailsContextMenu">
+  <popup action="IaDetailsSourcePopup">
     <menuitem action="VisitInternetArchive" />
   </popup>
 

@@ -1,5 +1,5 @@
 //
-// Source.cs
+// SearchSource.cs
 //
 // Authors:
 //   Gabriel Burt <gburt@novell.com>
@@ -53,7 +53,7 @@ using IA=InternetArchive;
 
 namespace Banshee.InternetArchive
 {
-    public class Source : Banshee.Sources.PrimarySource
+    public class SearchSource : Banshee.Sources.PrimarySource
     {
         private static string name = Catalog.GetString ("Internet Archive");
 
@@ -64,7 +64,7 @@ namespace Banshee.InternetArchive
 
         public IA.Search Search { get { return search; } }
 
-        public Source () : base (name, name, "internet-archive", 190)
+        public SearchSource () : base (name, name, "internet-archive", 190)
         {
             IA.Search.UserAgent = Banshee.Web.Browser.UserAgent;
             IA.Search.TimeoutMs = 12*1000;
@@ -114,8 +114,8 @@ namespace Banshee.InternetArchive
                 Catalog.GetString ("Description"), Catalog.GetString ("Publisher")
             ));
 
-            Properties.SetString ("ActiveSourceUIResource", "ActiveSourceUI.xml");
-            Properties.SetString ("GtkActionPath", "/InternetArchiveContextMenu");
+            Properties.SetString ("ActiveSourceUIResource", "SearchSourceActiveUI.xml");
+            Properties.SetString ("GtkActionPath", "/IaSearchSourcePopup");
 
             actions = new Actions (this);
 

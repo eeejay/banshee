@@ -39,7 +39,7 @@ namespace Banshee.InternetArchive
 {
     public class Actions : Banshee.Gui.BansheeActionGroup
     {
-        public Actions (Source source) : base ("InternetArchive")
+        public Actions (SearchSource source) : base ("InternetArchive")
         {
             Add (
                 new ActionEntry ("ViewItemDetails", null, Catalog.GetString ("View Item Details"), null, null, (o, a) => {

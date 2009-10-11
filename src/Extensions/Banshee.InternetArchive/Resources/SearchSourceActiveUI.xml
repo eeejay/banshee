@@ -20,7 +20,7 @@
     </menu>
   </menubar>
 
-  <popup action="InternetArchiveContextMenu">
+  <popup action="IaSearchSourcePopup">
     <menuitem action="VisitInternetArchive" />
   </popup>
 
