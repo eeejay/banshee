@@ -410,10 +410,16 @@ namespace Banshee.NotificationArea
             notify_last_title = current_track.DisplayTrackTitle;
             notify_last_artist = current_track.DisplayArtistName;
             
-            if (!show_notifications || elements_service.PrimaryWindow.HasToplevelFocus) {
+            if (!show_notifications) {
                 return;
             }
             
+            foreach (var window in elements_service.ContentWindows) {
+                if (window.HasToplevelFocus) {
+                    return;
+                }
+            }
+
             bool is_notification_daemon = false;
             try {
                 var name = Notifications.Global.ServerInformation.Name;

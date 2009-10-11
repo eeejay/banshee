@@ -111,6 +111,40 @@ namespace Banshee.Gui
             }
         }
         
+        private List<Window> content_windows;
+        public IEnumerable<Window> ContentWindows {
+            get {
+                if (PrimaryWindow != null) {
+                    yield return PrimaryWindow;
+                }
+                
+                if (content_windows != null) {
+                    foreach (var window in content_windows) {
+                        yield return window;
+                    }
+                }
+            }
+        }
+        
+        public void RegisterContentWindow (Window window)
+        {
+            if (content_windows == null) {
+                content_windows = new List<Window> ();
+            }
+            
+            content_windows.Add (window);
+        }
+        
+        public void UnregisterContentWindow (Window window)
+        {
+            if (content_windows != null) {
+                content_windows.Remove (window);
+                if (content_windows.Count == 0) {
+                    content_windows = null;
+                }
+            }
+        }
+        
         public PrimaryWindowCloseHandler PrimaryWindowClose {
             get { return primary_window_close_handler; }
             set { primary_window_close_handler = value; }
