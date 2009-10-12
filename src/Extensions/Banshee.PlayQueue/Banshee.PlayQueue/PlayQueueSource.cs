@@ -122,30 +122,38 @@ namespace Banshee.PlayQueue
             base.Initialize ();
 
             InstallPreferences ();
+            header_widget = CreateHeaderWidget ();
+            header_widget.ShowAll ();
 
-            header_widget = new HeaderWidget (populate_mode, populate_from_name);
-            header_widget.ModeChanged += delegate(object sender, ModeChangedEventArgs e) {
+            Properties.Set<Gtk.Widget> ("Nereid.SourceContents.HeaderWidget", header_widget);
+        }
+        
+        public HeaderWidget CreateHeaderWidget ()
+        {
+            var header_widget = new HeaderWidget (populate_mode, populate_from_name);
+            header_widget.ModeChanged += delegate (object sender, ModeChangedEventArgs e) {
                 populate_mode = e.Value;
                 PopulateModeSchema.Set ((int) e.Value);
                 UpdatePlayQueue ();
                 OnUpdated ();
             };
-            header_widget.SourceChanged += delegate(object sender, SourceChangedEventArgs e) {
+
+            header_widget.SourceChanged += delegate (object sender, SourceChangedEventArgs e) {
                 populate_from = e.Value;
                 if (populate_from == null) {
-                    populate_from_name = "";
-                    PopulateFromSchema.Set ("");
+                    populate_from_name = String.Empty;
+                    PopulateFromSchema.Set (String.Empty);
                     return;
                 }
+
                 populate_from_name = e.Value.Name;
                 PopulateFromSchema.Set (e.Value.Name);
                 source_set_at = DateTime.Now;
                 populate_from.Reload ();
                 Refresh ();
             };
-            header_widget.ShowAll ();
 
-            Properties.Set<Gtk.Widget> ("Nereid.SourceContents.HeaderWidget", header_widget);
+            return header_widget;
         }
 
 #region IPlayQueue, IDBusExportable
