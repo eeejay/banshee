@@ -8,6 +8,7 @@ SOURCES = \
 	Banshee.InternetArchive/DetailsSource.cs \
 	Banshee.InternetArchive/DetailsSourceContents.cs \
 	Banshee.InternetArchive/HeaderFilters.cs \
+	Banshee.InternetArchive/Item.cs \
 	Banshee.InternetArchive/SearchSource.cs \
 	InternetArchive/Collection.cs \
 	InternetArchive/Details.cs \

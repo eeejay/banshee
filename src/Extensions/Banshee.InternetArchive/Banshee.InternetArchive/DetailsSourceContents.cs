@@ -62,18 +62,22 @@ namespace Banshee.InternetArchive
     public class DetailsSourceContents : Gtk.HBox, Banshee.Sources.Gui.ISourceContents
     {
         private DetailsSource source;
-        IA.Details item;
+        private IA.Details details;
+        private Item item;
 
-        public DetailsSourceContents (DetailsSource source, IA.Details item)
+        public DetailsSourceContents (DetailsSource source, Item item)
         {
             this.source = source;
             this.item = item;
 
             Spacing = 6;
+        }
 
+        public void UpdateDetails ()
+        {
+            details = item.Details;
             BuildInfoBox ();
             BuildFilesBox ();
-
             ShowAll ();
         }
 
@@ -123,7 +127,7 @@ namespace Banshee.InternetArchive
             var desc_exp = CreateExpander (Catalog.GetString ("Description"));
 
             var desc = new Hyena.Widgets.WrapLabel () {
-                Markup = String.Format ("<small>{0}</small>", GLib.Markup.EscapeText (item.Description))
+                Markup = String.Format ("<small>{0}</small>", GLib.Markup.EscapeText (details.Description))
             };
 
             desc_exp.Child = desc;
@@ -140,42 +144,42 @@ namespace Banshee.InternetArchive
                 table.SetSizeRequest (a.Requisition.Width, a.Requisition.Height);
             };
 
-            AddToTable (table, Catalog.GetString ("Venue:"), item.Venue);
-            AddToTable (table, Catalog.GetString ("Location:"), item.Coverage);
-            if (item.DateCreated != DateTime.MinValue) {
-                AddToTable (table, Catalog.GetString ("Date:"), item.DateCreated);
+            AddToTable (table, Catalog.GetString ("Venue:"), details.Venue);
+            AddToTable (table, Catalog.GetString ("Location:"), details.Coverage);
+            if (details.DateCreated != DateTime.MinValue) {
+                AddToTable (table, Catalog.GetString ("Date:"), details.DateCreated);
             } else {
-                AddToTable (table, Catalog.GetString ("Year:"), item.Year);
+                AddToTable (table, Catalog.GetString ("Year:"), details.Year);
             }
-            AddToTable (table, Catalog.GetString ("Publisher:"), item.Publisher);
-            AddToTable (table, Catalog.GetString ("Subject:"), item.Subject);
+            AddToTable (table, Catalog.GetString ("Publisher:"), details.Publisher);
+            AddToTable (table, Catalog.GetString ("Subject:"), details.Subject);
 
             table.AddSeparator ();
 
-            AddToTable (table, Catalog.GetString ("Downloads, overall:"), item.DownloadsAllTime);
-            AddToTable (table, Catalog.GetString ("Downloads, past month:"), item.DownloadsLastMonth);
-            AddToTable (table, Catalog.GetString ("Downloads, past week:"), item.DownloadsLastWeek);
+            AddToTable (table, Catalog.GetString ("Downloads, overall:"), details.DownloadsAllTime);
+            AddToTable (table, Catalog.GetString ("Downloads, past month:"), details.DownloadsLastMonth);
+            AddToTable (table, Catalog.GetString ("Downloads, past week:"), details.DownloadsLastWeek);
 
             table.AddSeparator ();
 
-            AddToTable (table, Catalog.GetString ("Added:"),      item.DateAdded);
-            AddToTable (table, Catalog.GetString ("Added by:"),   item.AddedBy);
-            AddToTable (table, Catalog.GetString ("Source:"),     item.Source);
-            AddToTable (table, Catalog.GetString ("Recorded by:"),item.Taper);
-            AddToTable (table, Catalog.GetString ("Lineage:"),    item.Lineage);
-            AddToTable (table, Catalog.GetString ("Transferred by:"), item.Transferer);
+            AddToTable (table, Catalog.GetString ("Added:"),      details.DateAdded);
+            AddToTable (table, Catalog.GetString ("Added by:"),   details.AddedBy);
+            AddToTable (table, Catalog.GetString ("Source:"),     details.Source);
+            AddToTable (table, Catalog.GetString ("Recorded by:"),details.Taper);
+            AddToTable (table, Catalog.GetString ("Lineage:"),    details.Lineage);
+            AddToTable (table, Catalog.GetString ("Transferred by:"), details.Transferer);
 
             expander.Child = table;
 
             // Reviews
             Expander reviews = null;
-            if (item.NumReviews > 0) {
+            if (details.NumReviews > 0) {
                 reviews = CreateExpander (Catalog.GetString ("Reviews"));
                 var reviews_box = new VBox () { Spacing = 6 };
                 reviews.Child = reviews_box;
 
                 var sb = new System.Text.StringBuilder ();
-                foreach (var review in item.Reviews) {
+                foreach (var review in details.Reviews) {
                     var review_item = new Hyena.Widgets.WrapLabel ();
 
                     var title = review.Title;
@@ -279,7 +283,7 @@ namespace Banshee.InternetArchive
 
             string [] format_blacklist = new string [] { "zip", "m3u", "metadata", "fingerprint", "checksums", "text" };
             var formats = new List<string> ();
-            foreach (var f in item.Files) {
+            foreach (var f in details.Files) {
                 var track = new TrackInfo () {
                     Uri         = new SafeUri (f.Location),
                     FileSize    = f.Size,

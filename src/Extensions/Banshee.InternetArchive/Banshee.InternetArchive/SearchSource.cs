@@ -130,8 +130,8 @@ namespace Banshee.InternetArchive
                 Properties.Set<Gtk.Widget> ("Nereid.SourceContents.HeaderWidget", header_widget);
             }
 
-            if (ApplicationContext.CommandLine.Contains ("internet-archive-offline-mode")) {
-                AddChildSource (new DetailsSource ("Local H Live at Levis L2 Lazer Rock Stage [Summerfest 1999] on 1999-06-24", "banshee-internet-archive-offline-mode"));
+            foreach (var item in Item.LoadAll ()) {
+                AddChildSource (new DetailsSource (item));
             }
         }
 

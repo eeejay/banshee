@@ -40,46 +40,19 @@ namespace InternetArchive
 {
     public class Details
     {
-        JsonObject details;
-        JsonObject metadata, misc, item, review_info;
-        JsonArray reviews;
+        private string id, json;
+        private JsonObject details;
+        private JsonObject metadata, misc, item, review_info;
+        private JsonArray reviews;
 
-        public static Details LoadOrCreate (string id, string title)
+        public Details (string id) : this (id, null) {}
+
+        public Details (string id, string json)
         {
-            /*var item = Provider.LoadFromId (id);
-            if (item != null)
-                return item;*/
-
-            return new Details (id, title);
-        }
-
-        private Details (string id, string title)
-        {
-            Id = id;
-            Title = title;
-            //Provider.Save ();
-
+            this.id = id;
+            this.json = json;
             LoadDetails ();
         }
-
-#region Properties stored in database columns
-
-        //[DatabaseColumn (PrimaryKey=true)]
-        public long DbId { get; set; }
-
-        //[DatabaseColumn]
-        public string Id { get; set; }
-
-        //[DatabaseColumn]
-        public string Title { get; private set; }
-
-        //[DatabaseColumn]
-        public string JsonDetails { get; set; }
-
-        //[DatabaseColumn]
-        public bool IsHidden { get; set; }
-
-#endregion
 
 #region Properties from the JSON object
 
@@ -195,36 +168,25 @@ namespace InternetArchive
         }
 
         public string WebpageUrl {
-            get { return String.Format ("http://www.archive.org/details/{0}", Id); }
+            get { return String.Format ("http://www.archive.org/details/{0}", id); }
         }
 
 #endregion
 
-        private bool LoadDetails ()
+        private void LoadDetails ()
         {
-            // First see if we already have the Hyena.JsonObject parsed
-            if (details != null) {
-                return true;
+            if (json != null) {
+                // use the passed in json
+            } else if (id == "banshee-internet-archive-offline-mode") {
+                // Hack to load JSON data from local file instead of from archive.org
+                json = System.IO.File.ReadAllText ("item2.json");
+            } else {
+                // get it from archive.org
+                json = FetchDetails (id);
             }
 
-            // If not, see if we have a copy in the database, and parse that
-            /*if (JsonDetails != null) {
-                details = new Hyena.Json.Deserializer (JsonDetails).Deserialize () as JsonObject;
-                return true;
-            }*/
-
-
-            // Hack to load JSON data from local file instead of from archive.org
-            if (Id == "banshee-internet-archive-offline-mode") {
-                details = new Hyena.Json.Deserializer (System.IO.File.ReadAllText ("item2.json")).Deserialize () as JsonObject;
-            } else {
-                // We don't; grab it from archive.org and parse it
-                string json_str = GetDetails (Id);
-
-                if (json_str != null) {
-                    details = new Hyena.Json.Deserializer (json_str).Deserialize () as JsonObject;
-                    JsonDetails = json_str;
-                }
+            if (json != null) {
+                details = new Hyena.Json.Deserializer (json).Deserialize () as JsonObject;
             }
 
             if (details != null) {
@@ -237,11 +199,9 @@ namespace InternetArchive
                     review_info = r.Get<JsonObject> ("info");
                 }
             }
-
-            return false;
         }
 
-        private static string GetDetails (string id)
+        private static string FetchDetails (string id)
         {
             HttpWebResponse response = null;
             string url = String.Format ("http://www.archive.org/details/{0}&output=json", id);

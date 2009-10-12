@@ -53,25 +53,55 @@ using IA=InternetArchive;
 
 namespace Banshee.InternetArchive
 {
-    public class DetailsSource : Banshee.Sources.Source, ITrackModelSource, IDurationAggregator, IFileSizeAggregator
+    public class DetailsSource : Banshee.Sources.Source, ITrackModelSource, IDurationAggregator, IFileSizeAggregator, IUnmapableSource
     {
-        private IA.Details item;
+        private Item item;
         private MemoryTrackListModel track_model;
+        private DetailsSourceContents gui;
 
-        public IA.Details Item {
+        public Item Item {
             get { return item; }
         }
 
-        public DetailsSource (string name, string id) : base (name, name, 40, "internet-archive-" + id)
+        public DetailsSource (string id, string title) : this (Item.LoadOrCreate (id, title)) {}
+
+        public DetailsSource (Item item) : base (item.Title, item.Title, 40, "internet-archive-" + item.Id)
         {
-            item = IA.Details.LoadOrCreate (id, name);
+            this.item = item;
             track_model = new MemoryTrackListModel ();
             track_model.Reloaded += delegate { OnUpdated (); };
 
             Properties.SetString ("ActiveSourceUIResource", "DetailsSourceActiveUI.xml");
             Properties.SetString ("GtkActionPath", "/IaDetailsSourcePopup");
+            Properties.SetString ("UnmapSourceActionLabel", Catalog.GetString ("Close Item"));
 
-            Properties.Set<Gtk.Widget> ("Nereid.SourceContents", new DetailsSourceContents (this, item));
+            gui = new DetailsSourceContents (this, item);
+            Properties.Set<Gtk.Widget> ("Nereid.SourceContents", gui);
+
+            if (item.Details == null) {
+                SetStatus (Catalog.GetString ("Getting item details from the Internet Archive"), false, true, null);
+                ThreadAssist.SpawnFromMain (ThreadedLoad);
+            } else {
+                gui.UpdateDetails ();
+            }
+        }
+
+        private void ThreadedLoad ()
+        {
+            try {
+                item.LoadDetails ();
+                ThreadAssist.ProxyToMain (delegate {
+                    ClearMessages ();
+                    if (item.Details != null) {
+                        gui.UpdateDetails ();
+                    }
+                });
+            } catch (Exception e) {
+                ThreadAssist.ProxyToMain (delegate {
+                    SetStatus (Catalog.GetString ("Error getting item details from the Internet Archive"), true);
+                });
+                Hyena.Log.Exception ("Error loading IA item details", e);
+            }
         }
 
         public void Reload ()
@@ -144,6 +174,16 @@ namespace Banshee.InternetArchive
         }
 
 #endregion
+
+        public bool CanUnmap { get { return true; } }
+        public bool ConfirmBeforeUnmap { get { return false; } }
+
+        public bool Unmap ()
+        {
+            item.Delete ();
+            Parent.RemoveChildSource (this);
+            return true;
+        }
 
         public override bool HasEditableTrackProperties {
             get { return false; }
