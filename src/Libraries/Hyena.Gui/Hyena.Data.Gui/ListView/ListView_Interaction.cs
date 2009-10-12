@@ -4,6 +4,7 @@
 // Author:
 //   Aaron Bockover <abockover@novell.com>
 //   Gabriel Burt <gburt@novell.com>
+//   Eitan Isaacson <eitan@ascender.com>
 //
 // Copyright (C) 2007-2008 Novell, Inc.
 //

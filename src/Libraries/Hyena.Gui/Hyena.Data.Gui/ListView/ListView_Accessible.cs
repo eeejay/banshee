@@ -3,6 +3,7 @@
 //
 // Author:
 //   Gabriel Burt <gburt@novell.com>
+//   Eitan Isaacson <eitan@ascender.com>
 //
 // Copyright (C) 2009 Novell, Inc.
 //
