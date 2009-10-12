@@ -40,10 +40,20 @@ namespace Banshee.PlayQueue
 
         public QueueableSourceComboBox (string source_name)
         {
-            SourceRowRenderer renderer = new SourceRowRenderer ();
-            renderer.ParentWidget = this;
+            // FIXME: Would probably be nice to use this, but variable
+            // width reporting in SourceRowRenderer does not work as
+            // I would expect, so currently it's forced to 200px wide
+            // which causes quite a problem with a UI like Muinshee
+            // and the Moblin Media Panel
+            //
+            // SourceRowRenderer renderer = new SourceRowRenderer ();
+            // renderer.ParentWidget = this;
+
+            var renderer = new CellRendererText ();
             PackStart (renderer, true);
-            SetCellDataFunc (renderer, new CellLayoutDataFunc (SourceRowRenderer.CellDataHandler));
+            SetCellDataFunc (renderer, new CellLayoutDataFunc (
+                (layout, cell, model, iter) => renderer.Text = ((Source)model.GetValue (iter, 0)).Name
+            ));
 
             var store = new SourceModel ();
             filter = new TreeModelFilter (store, null);
