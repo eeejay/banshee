@@ -1,5 +1,5 @@
 // 
-// MediaPanelContents.cs
+// SearchHeader.cs
 //  
 // Author:
 //   Aaron Bockover <abockover@novell.com>
@@ -25,43 +25,52 @@
 // THE SOFTWARE.
 
 using System;
+using Mono.Unix;
 using Gtk;
 
-using Hyena.Data.Gui;
-using Banshee.Collection.Gui;
-
-using Banshee.ServiceStack;
-using Banshee.Sources;
-using Banshee.PlayQueue;
+using Hyena.Gui;
 
 namespace Banshee.Moblin
 {
-    public class MediaPanelContents : HBox
+    public class SearchHeader : HBox
     {
-        public MediaPanelContents () : base ()
+        public SearchHeader ()
         {
-            BuildViews ();
-            BorderWidth = 10;
             Spacing = 10;
+            BorderWidth = 10;
+            PackStart (new Label () { Markup = String.Format ("<big><b>{0}</b></big>",
+                Catalog.GetString ("Media")) }, false, false, 0);
+            PackStart (new SearchEntry (), true, true, 0);
         }
         
-        private void BuildViews ()
+        protected override bool OnExposeEvent (Gdk.EventExpose evnt)
         {
-            var left = new VBox ();
-            left.PackStart (new SearchHeader (), false, false, 0);
-            PackStart (left, true, true, 0);
-            PackStart (new PlayQueueBox (), false, false, 0);
-
-            ShowAll ();
-        }
-        
-        protected override void OnParentSet (Widget previous)
-        {
-            base.OnParentSet (previous);
-            
-            if (Parent != null) {
-                Parent.ModifyBg (StateType.Normal, Style.White);
+            if (!Visible || !IsMapped) {
+                return true;
             }
+            
+            RenderBackground (evnt.Window, evnt.Region);
+            foreach (var child in Children) {
+                PropagateExpose (child, evnt);
+            }
+            
+            return true;
+        }
+        
+        private void RenderBackground (Gdk.Window window, Gdk.Region region)
+        {   
+            Cairo.Context cr = Gdk.CairoHelper.Create (window);
+            
+            cr.Color = new Cairo.Color (0xe7 / (double)0xff,
+                0xea / (double)0xff, 0xfd / (double)0xff);
+            
+            CairoExtensions.RoundedRectangle (cr,
+                Allocation.X, Allocation.Y,
+                Allocation.Width, Allocation.Height, 5);
+            
+            cr.Fill ();
+            
+            CairoExtensions.DisposeContext (cr);
         }
     }
 }

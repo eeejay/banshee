@@ -1,5 +1,5 @@
 // 
-// MediaPanelContents.cs
+// PlaybackBox.cs
 //  
 // Author:
 //   Aaron Bockover <abockover@novell.com>
@@ -27,41 +27,26 @@
 using System;
 using Gtk;
 
-using Hyena.Data.Gui;
-using Banshee.Collection.Gui;
+using Banshee.Gui;
+using Banshee.Gui.Widgets;
 
 using Banshee.ServiceStack;
-using Banshee.Sources;
-using Banshee.PlayQueue;
 
 namespace Banshee.Moblin
 {
-    public class MediaPanelContents : HBox
+    public class PlaybackBox : HBox
     {
-        public MediaPanelContents () : base ()
+        public PlaybackBox ()
         {
-            BuildViews ();
-            BorderWidth = 10;
-            Spacing = 10;
-        }
+            var action_service = ServiceManager.Get<InterfaceActionService> ();
         
-        private void BuildViews ()
-        {
-            var left = new VBox ();
-            left.PackStart (new SearchHeader (), false, false, 0);
-            PackStart (left, true, true, 0);
-            PackStart (new PlayQueueBox (), false, false, 0);
-
-            ShowAll ();
-        }
-        
-        protected override void OnParentSet (Widget previous)
-        {
-            base.OnParentSet (previous);
+            PackStart (action_service.PlaybackActions["PreviousAction"].CreateToolItem (), false, false, 0);
+            PackStart (action_service.PlaybackActions["PlayPauseAction"].CreateToolItem (), false, false, 0);
+            PackStart (new NextButton (action_service), false, false, 0);
             
-            if (Parent != null) {
-                Parent.ModifyBg (StateType.Normal, Style.White);
-            }
+            var seek_slider = new ConnectedSeekSlider ();
+            seek_slider.Show ();
+            PackStart (seek_slider, false, false, 0);
         }
     }
 }

@@ -6,6 +6,11 @@ INSTALL_DIR = $(EXTENSIONS_INSTALL_DIR)
 SOURCES =  \
 	Banshee.Moblin/MediaPanelContents.cs \
 	Banshee.Moblin/MoblinService.cs \
+	Banshee.Moblin/MoblinTrackInfoDisplay.cs \
+	Banshee.Moblin/PlaybackBox.cs \
+	Banshee.Moblin/PlayQueueBox.cs \
+	Banshee.Moblin/SearchEntry.cs \
+	Banshee.Moblin/SearchHeader.cs \
 	Mutter/PanelClient.cs \
 	Mutter/PanelGtk.cs
 

@@ -92,5 +92,10 @@
     <Compile Include="Banshee.Moblin\MediaPanelContents.cs" />
     <Compile Include="Mutter\PanelClient.cs" />
     <Compile Include="Mutter\PanelGtk.cs" />
+    <Compile Include="Banshee.Moblin\SearchEntry.cs" />
+    <Compile Include="Banshee.Moblin\SearchHeader.cs" />
+    <Compile Include="Banshee.Moblin\PlayQueueBox.cs" />
+    <Compile Include="Banshee.Moblin\PlaybackBox.cs" />
+    <Compile Include="Banshee.Moblin\MoblinTrackInfoDisplay.cs" />
   </ItemGroup>
 </Project>
