@@ -132,14 +132,16 @@ namespace Hyena.Data.Gui.Accessibility
 
         private void OnSelectionFocusChanged (object o, EventArgs a)
         {
-            Atk.Object cell;
+            GLib.Signal.Emit (this, "active-descendant-changed", ActiveCell);
+        }
 
-            if (list_view.HeaderFocused)
-                cell = OnRefChild (list_view.ActiveColumn);
-            else
-                cell = RefAt (list_view.Selection.FocusedIndex, list_view.ActiveColumn);
-
-            GLib.Signal.Emit (this, "active-descendant-changed", cell.Handle);
+        private Atk.Object ActiveCell {
+            get {
+                if (list_view.HeaderFocused)
+                    return OnRefChild (list_view.ActiveColumn);
+                else
+                    return RefAt (list_view.Selection.FocusedIndex, list_view.ActiveColumn);
+            }
         }
 
         private int n_columns {
@@ -205,6 +207,11 @@ namespace Hyena.Data.Gui.Accessibility
         public bool IsCellSelected (ColumnCellAccessible cell)
         {
             return IsChildSelected (GetCellIndex (cell));
+        }
+
+        public bool IsCellActive (ColumnCellAccessible cell)
+        {
+            return (ActiveCell == (Atk.Object)cell);
         }
 
         public void InvokeColumnHeaderMenu (ColumnCellAccessible cell)

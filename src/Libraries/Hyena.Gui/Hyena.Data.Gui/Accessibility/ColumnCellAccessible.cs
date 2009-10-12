@@ -63,6 +63,9 @@ namespace Hyena.Data.Gui.Accessibility
             if (cell_parent.IsCellSelected (this))
                 states.AddState (Atk.StateType.Selected);
 
+            if (cell_parent.IsCellActive (this))
+                states.AddState (Atk.StateType.Active);
+
             return states;
         }
 
