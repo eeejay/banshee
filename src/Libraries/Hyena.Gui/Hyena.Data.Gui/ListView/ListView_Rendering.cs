@@ -386,6 +386,8 @@ namespace Hyena.Data.Gui
             cell_context.Opaque = opaque;
             cell.Render (cell_context, dragging ? StateType.Normal : state, area.Width, area.Height);
             cairo_context.Restore ();
+
+            AccessibleCellRedrawn (column_index, row_index);
         }
         
         private void PaintDraggingColumn (Rectangle clip)

@@ -217,6 +217,19 @@ namespace Hyena.Data.Gui.Accessibility
             list_view.ClickColumnHeader (GetCellIndex (cell));
         }
 
+        public void CellRedrawn (int column, int row)
+        {
+            int index;
+            if (row >= 0)
+                index = row * n_columns + column + n_columns;
+            else
+                index = column;
+
+            if (cell_cache.ContainsKey (index)) {
+                cell_cache[index].Redrawn();
+            }
+        }
+
         #endregion
     }
 }

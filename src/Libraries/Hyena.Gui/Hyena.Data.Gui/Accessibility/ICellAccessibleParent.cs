@@ -39,5 +39,6 @@ namespace Hyena.Data.Gui.Accessibility
         bool IsCellSelected (ColumnCellAccessible cell);
         void InvokeColumnHeaderMenu (ColumnCellAccessible column);
         void ClickColumnHeader (ColumnCellAccessible column);
+        void CellRedrawn (int column, int row);
     }
 }

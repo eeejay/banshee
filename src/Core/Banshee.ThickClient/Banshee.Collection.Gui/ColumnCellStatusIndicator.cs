@@ -44,8 +44,21 @@ namespace Banshee.Collection.Gui
 {
     class ColumnCellStatusIndicatorAccessible : ColumnCellAccessible, Atk.ImageImplementor
     {
+        private string image_description;
+
         public ColumnCellStatusIndicatorAccessible (object bound_object, ColumnCellStatusIndicator cell, ICellAccessibleParent parent) : base (bound_object, cell as ColumnCell, parent)
         {
+            image_description = cell.GetTextAlternative (bound_object);
+        }
+
+        public override void Redrawn ()
+        {
+            string new_image_description = cell.GetTextAlternative (bound_object);
+
+            if (image_description != new_image_description)
+                GLib.Signal.Emit (this, "visible-data-changed");
+
+            image_description = new_image_description;
         }
 
         public string ImageLocale { get { return null; } }
@@ -65,7 +78,7 @@ namespace Banshee.Collection.Gui
 
         public string ImageDescription {
             get {
-                return cell.GetTextAlternative (bound_object);
+                return image_description;
             }
         }
 

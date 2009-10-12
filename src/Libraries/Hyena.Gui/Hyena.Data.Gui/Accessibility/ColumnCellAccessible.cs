@@ -138,5 +138,9 @@ namespace Hyena.Data.Gui.Accessibility
         {
             return 0;
         }
+
+        public virtual void Redrawn ()
+        {
+        }
     }
 }

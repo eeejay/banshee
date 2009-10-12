@@ -141,6 +141,11 @@ namespace Hyena.Data.Gui
             OnColumnLeftClicked (col);
         }
 
+        private void AccessibleCellRedrawn (int column, int row)
+        {
+            ((ICellAccessibleParent) Accessible).CellRedrawn (column, row);
+        }
+
     }
 
     internal class ListViewAccessibleFactory<T> : Atk.ObjectFactory
