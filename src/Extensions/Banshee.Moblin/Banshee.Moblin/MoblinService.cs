@@ -104,6 +104,9 @@ namespace Banshee.Moblin
             window.WindowPosition = Gtk.WindowPosition.Center;
             window.Add (new MediaPanelContents ());
             window.ShowAll ();
+
+            elements_service.RegisterContentWindow (window);
+
             media_panel_window = window;
         }
 
