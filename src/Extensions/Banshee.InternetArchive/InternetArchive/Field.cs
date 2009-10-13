@@ -68,6 +68,7 @@ namespace InternetArchive
         public static Field Identifier = new Field ("identifier", Catalog.GetString ("ID"));
         public static Field Language   = new Field ("language",   Catalog.GetString ("Language"));
         public static Field LicenseUrl = new Field ("licenseurl", Catalog.GetString ("License"));
+        public static Field License    = new Field ("license",    Catalog.GetString ("License"));
         public static Field MediaType  = new Field ("mediatype",  Catalog.GetString ("Media Type"));
         public static Field NumReviews = new Field ("num_reviews",Catalog.GetString ("Review Count"));
         public static Field Publisher  = new Field ("publisher",  Catalog.GetString ("Publisher"));

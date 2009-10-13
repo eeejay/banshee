@@ -61,6 +61,7 @@ namespace InternetArchive
                 Field.Identifier,
                 Field.Language,
                 Field.LicenseUrl,
+                Field.License,
                 Field.MediaType,
                 Field.NumReviews,
                 Field.Publisher,

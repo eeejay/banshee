@@ -65,7 +65,7 @@ namespace InternetArchive
         }
 
         public string LicenseUrl {
-            get { return metadata.GetJoined (Field.LicenseUrl.Id, ", "); }
+            get { return metadata.GetJoined (Field.LicenseUrl.Id, null) ?? metadata.GetJoined ("license", null); }
         }
 
         public string Language {

@@ -64,7 +64,7 @@ namespace InternetArchive
         }
 
         public string LicenseUrl {
-            get { return Get<string> (Field.LicenseUrl); }
+            get { return Get<string> (Field.LicenseUrl) ?? item.GetJoined ("license", null); }
         }
 
         public int Downloads {
