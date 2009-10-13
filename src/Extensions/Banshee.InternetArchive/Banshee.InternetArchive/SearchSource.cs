@@ -63,6 +63,9 @@ namespace Banshee.InternetArchive
         private IA.Search search;
         private string status_text = "";
 
+        private int total_results = 0;
+        public int TotalResults { get { return total_results; } }
+
         public IA.Search Search { get { return search; } }
 
         public IListModel<IA.SearchResult> Model { get { return model; } }
@@ -109,13 +112,19 @@ namespace Banshee.InternetArchive
 
         public void Reload ()
         {
-            ThreadAssist.SpawnFromMain (ThreadedReload);
+            model.Clear ();
+            ThreadAssist.SpawnFromMain (ThreadedFetch);
         }
 
-        private void ThreadedReload ()
+        public void FetchMore ()
+        {
+            ThreadAssist.SpawnFromMain (ThreadedFetch);
+        }
+
+        private void ThreadedFetch ()
         {
             bool success = false;
-            int total_results = 0;
+            total_results = 0;
             status_text = "";
             Exception err = null;
 
@@ -136,7 +145,6 @@ namespace Banshee.InternetArchive
 
             if (results != null) {
                 try {
-                    model.Clear ();
 
                     foreach (var result in results) {
                         model.Add (result);

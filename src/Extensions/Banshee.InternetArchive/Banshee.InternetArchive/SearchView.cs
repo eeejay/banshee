@@ -82,6 +82,24 @@ namespace Banshee.InternetArchive
             var sw = new Gtk.ScrolledWindow ();
             sw.Child = list_view;
 
+            var last_hid_more = DateTime.MinValue;
+            string more_text = Catalog.GetString ("Fetch more results from the Internet Archive?");
+            list_view.Vadjustment.ValueChanged += (o, a) => {
+                var adj = list_view.Vadjustment;
+                if ((DateTime.Now - last_hid_more).TotalSeconds > 2 && adj.Value >= adj.Upper - adj.PageSize) {
+                    if (source.TotalResults > source.Model.Count) {
+                        source.SetStatus (more_text, true, false, "gtk-question");
+                        source.CurrentMessage.AddAction (new MessageAction (Catalog.GetString ("Fetch More"), delegate { source.FetchMore (); }));
+                    }
+                }
+            };
+
+            source.MessageNotify += (o, a) => {
+                if (source.CurrentMessage != null && source.CurrentMessage.Text == more_text && source.CurrentMessage.IsHidden) {
+                    last_hid_more = DateTime.Now;
+                }
+            };
+
             PackStart (sw, true, true, 0);
             ShowAll ();
         }
