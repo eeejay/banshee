@@ -103,6 +103,8 @@ namespace Banshee.InternetArchive
             foreach (var item in Item.LoadAll ()) {
                 AddChildSource (new DetailsSource (item));
             }
+
+            ShowIntroText ();
         }
 
         public void Reload ()
@@ -197,5 +199,25 @@ namespace Banshee.InternetArchive
                 actions.Dispose ();
             }
         }
+
+        private void ShowIntroText ()
+        {
+            if (show_intro.Get ()) {
+                string intro_txt = Catalog.GetString ("The Internet Archive, a 501(c)(3) non-profit, is building a digital library of Internet sites and other cultural artifacts in digital form. Like a paper library, we provide free access to researchers, historians, scholars, and the general public.");
+
+                SetStatus (intro_txt, true, false, "gtk-info");
+
+                MessageNotify += (o, a) => {
+                    var msg = CurrentMessage;
+                    if (msg != null) {
+                        if (msg.IsHidden && msg.Text == intro_txt) {
+                            show_intro.Set (false);
+                        }
+                    }
+                };
+            }
+        }
+
+        private SchemaEntry<bool> show_intro = new SchemaEntry<bool> ("plugins.internetarchive", "show_intro", true, null, null);
     }
 }
