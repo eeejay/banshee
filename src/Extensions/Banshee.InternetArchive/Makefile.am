@@ -6,7 +6,7 @@ INSTALL_DIR = $(EXTENSIONS_INSTALL_DIR)
 SOURCES = \
 	Banshee.InternetArchive/Actions.cs \
 	Banshee.InternetArchive/DetailsSource.cs \
-	Banshee.InternetArchive/DetailsSourceContents.cs \
+	Banshee.InternetArchive/DetailsView.cs \
 	Banshee.InternetArchive/HeaderFilters.cs \
 	Banshee.InternetArchive/Item.cs \
 	Banshee.InternetArchive/SearchSource.cs \

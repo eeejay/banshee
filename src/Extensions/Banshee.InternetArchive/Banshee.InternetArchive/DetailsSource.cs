@@ -57,7 +57,7 @@ namespace Banshee.InternetArchive
     {
         private Item item;
         private MemoryTrackListModel track_model;
-        private DetailsSourceContents gui;
+        private DetailsView gui;
 
         public Item Item {
             get { return item; }
@@ -75,7 +75,7 @@ namespace Banshee.InternetArchive
             Properties.SetString ("GtkActionPath", "/IaDetailsSourcePopup");
             Properties.SetString ("UnmapSourceActionLabel", Catalog.GetString ("Close Item"));
 
-            gui = new DetailsSourceContents (this, item);
+            gui = new DetailsView (this, item);
             Properties.Set<Gtk.Widget> ("Nereid.SourceContents", gui);
 
             if (item.Details == null) {

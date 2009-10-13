@@ -1,5 +1,5 @@
 //
-// DetailsSourceContents.cs
+// DetailsView.cs
 //
 // Authors:
 //   Gabriel Burt <gburt@novell.com>
@@ -59,13 +59,13 @@ using IA=InternetArchive;
 
 namespace Banshee.InternetArchive
 {
-    public class DetailsSourceContents : Gtk.HBox, Banshee.Sources.Gui.ISourceContents
+    public class DetailsView : Gtk.HBox, Banshee.Sources.Gui.ISourceContents
     {
         private DetailsSource source;
         private IA.Details details;
         private Item item;
 
-        public DetailsSourceContents (DetailsSource source, Item item)
+        public DetailsView (DetailsSource source, Item item)
         {
             this.source = source;
             this.item = item;
