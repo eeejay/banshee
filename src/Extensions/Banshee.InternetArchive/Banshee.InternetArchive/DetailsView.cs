@@ -360,7 +360,7 @@ namespace Banshee.InternetArchive
                     target_list_width += file_sw.VScrollbar.Allocation.Width + 2;
                 }
 
-                if (a.Allocation.Width != target_list_width) {
+                if (a.Allocation.Width != target_list_width && target_list_width > 0) {
                     file_sw.SetSizeRequest (target_list_width, -1);
                 }
             };
