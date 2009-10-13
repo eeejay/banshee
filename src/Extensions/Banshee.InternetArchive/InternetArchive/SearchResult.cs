@@ -87,6 +87,10 @@ namespace InternetArchive
             get { return GetJoined (Field.Format, ", "); }
         }
 
+        public string MediaType {
+            get { return Get<string> (Field.MediaType); }
+        }
+
         public int Year {
             get { return (int) Get<double> (Field.Year); }
         }

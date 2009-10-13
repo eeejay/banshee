@@ -49,7 +49,7 @@ namespace Banshee.InternetArchive
                     var item = source.FocusedItem;
                     if (item != null && item.Id != null) {
                         string id = item.Id;
-                        var src = new DetailsSource (id, item.Title);
+                        var src = new DetailsSource (id, item.Title, item.MediaType);
                         source.AddChildSource (src);
                         Banshee.ServiceStack.ServiceManager.SourceManager.SetActiveSource (src);
                     }

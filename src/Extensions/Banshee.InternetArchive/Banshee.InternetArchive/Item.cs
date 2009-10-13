@@ -55,11 +55,11 @@ namespace Banshee.InternetArchive
 {
     public class Item
     {
-        public static Item LoadOrCreate (string id, string title)
+        public static Item LoadOrCreate (string id, string title, string mediaType)
         {
             var item = Provider.FetchFirstMatching ("ID = ?", id);
             if (item == null) {
-                item = new Item (id, title);
+                item = new Item (id, title, mediaType);
                 Provider.Save (item);
             }
 
@@ -83,14 +83,18 @@ namespace Banshee.InternetArchive
         [DatabaseColumn("Title")]
         public string Title { get; private set; }
 
+        [DatabaseColumn("MediaType")]
+        public string MediaType { get; private set; }
+
         public IA.Details Details { get; private set; }
 
         public Item () {}
 
-        private Item (string id, string title)
+        private Item (string id, string title, string mediaType)
         {
             Id = id;
             Title = title;
+            MediaType = mediaType;
         }
 
         public void Delete ()
@@ -125,6 +129,7 @@ namespace Banshee.InternetArchive
                         ItemID         INTEGER PRIMARY KEY,
                         ID             TEXT UNIQUE NOT NULL,
                         Title          TEXT NOT NULL,
+                        MediaType      TEXT,
                         DetailsJson    TEXT)"
                 );
             }

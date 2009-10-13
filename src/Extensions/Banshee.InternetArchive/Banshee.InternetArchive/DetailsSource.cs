@@ -63,7 +63,7 @@ namespace Banshee.InternetArchive
             get { return item; }
         }
 
-        public DetailsSource (string id, string title) : this (Item.LoadOrCreate (id, title)) {}
+        public DetailsSource (string id, string title, string mediaType) : this (Item.LoadOrCreate (id, title, mediaType)) {}
 
         public DetailsSource (Item item) : base (item.Title, item.Title, 40, "internet-archive-" + item.Id)
         {
@@ -75,6 +75,9 @@ namespace Banshee.InternetArchive
             Properties.SetString ("GtkActionPath", "/IaDetailsSourcePopup");
             Properties.SetString ("UnmapSourceActionLabel", Catalog.GetString ("Close Item"));
 
+            SetIcon ();
+
+
             gui = new DetailsView (this, item);
             Properties.Set<Gtk.Widget> ("Nereid.SourceContents", gui);
 
@@ -83,6 +86,29 @@ namespace Banshee.InternetArchive
                 Load ();
             } else {
                 gui.UpdateDetails ();
+            }
+        }
+
+        private void SetIcon ()
+        {
+            if (item.MediaType == null)
+                return;
+
+            var media_type = IA.MediaType.Options.FirstOrDefault (mt =>
+                item.MediaType.Contains (mt.Id) || mt.Children.Any (c => item.MediaType.Contains (c.Id))
+            );
+
+            if (media_type == null)
+                return;
+
+            if (media_type.Id == "audio") {
+                Properties.SetStringList ("Icon.Name", "audio-x-generic", "audio");
+            } else if (media_type.Id == "movies") {
+                Properties.SetStringList ("Icon.Name", "video-x-generic", "video");
+            } else if (media_type.Id == "texts") {
+                Properties.SetStringList ("Icon.Name", "x-office-document", "document");
+            } else if (media_type.Id == "education") {
+                Properties.SetStringList ("Icon.Name", "video-x-generic", "video");
             }
         }
 
