@@ -68,23 +68,15 @@ namespace Banshee.InternetArchive
         {
             this.source = source;
 
-            list_view = new ListView<IA.SearchResult> () {
-                RulesHint = true,
-                IsEverReorderable = false,
-                ColumnController = new ColumnController ()
-            };
+            list_view = new ResultListView ();
 
             AddColumns ();
-
-            list_view.SetModel (source.Model);
-
-            list_view.PopupMenu += (o, a) => {
-                ServiceManager.Get<InterfaceActionService> ()["InternetArchive.IaResultPopup"].Activate ();
-            };
 
             list_view.RowActivated += (o, a) => {
                 ServiceManager.Get<InterfaceActionService> ()["InternetArchive.ViewItemDetails"].Activate ();
             };
+
+            list_view.SetModel (source.Model);
 
             // Packing
             var sw = new Gtk.ScrolledWindow ();
@@ -92,6 +84,22 @@ namespace Banshee.InternetArchive
 
             PackStart (sw, true, true, 0);
             ShowAll ();
+        }
+
+        private class ResultListView : ListView<IA.SearchResult>
+        {
+            public ResultListView ()
+            {
+                RulesHint = true;
+                IsEverReorderable = false;
+                ColumnController = new ColumnController ();
+            }
+
+            protected override bool OnPopupMenu ()
+            {
+                ServiceManager.Get<InterfaceActionService> ()["InternetArchive.IaResultPopup"].Activate ();
+                return true;
+            }
         }
 
         private void AddColumns ()
