@@ -102,6 +102,8 @@ namespace Banshee.InternetArchive
         {
             if (Details == null) {
                 Details = new IA.Details (Id, DetailsJson);
+                DetailsJson = Details.Json;
+                Provider.Save (this);
             }
         }
 

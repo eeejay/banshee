@@ -10,6 +10,7 @@ SOURCES = \
 	Banshee.InternetArchive/HeaderFilters.cs \
 	Banshee.InternetArchive/Item.cs \
 	Banshee.InternetArchive/SearchSource.cs \
+	Banshee.InternetArchive/SearchView.cs \
 	InternetArchive/Collection.cs \
 	InternetArchive/Details.cs \
 	InternetArchive/DetailsFile.cs \

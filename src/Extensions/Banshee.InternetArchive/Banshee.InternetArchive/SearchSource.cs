@@ -33,7 +33,7 @@ using System.Linq;
 using Mono.Unix;
 
 using Hyena.Collections;
-using Hyena.Data.Sqlite;
+using Hyena.Data;
 
 using Banshee.Base;
 using Banshee.Collection;
@@ -53,9 +53,10 @@ using IA=InternetArchive;
 
 namespace Banshee.InternetArchive
 {
-    public class SearchSource : Banshee.Sources.PrimarySource
+    public class SearchSource : Banshee.Sources.Source, IDisposable
     {
         private static string name = Catalog.GetString ("Internet Archive");
+        private MemoryListModel<IA.SearchResult> model = new MemoryListModel<IA.SearchResult> ();
 
         private Actions actions;
         private Gtk.Widget header_widget;
@@ -64,65 +65,32 @@ namespace Banshee.InternetArchive
 
         public IA.Search Search { get { return search; } }
 
-        public SearchSource () : base (name, name, "internet-archive", 190)
+        public IListModel<IA.SearchResult> Model { get { return model; } }
+
+        public IA.SearchResult FocusedItem {
+            get {
+                int focus = model.Selection.FocusedIndex;
+                if (focus >= 0 && focus < model.Count) {
+                    return model[focus];
+                }
+
+                return null;
+            }
+        }
+
+        public SearchSource () : base (name, name, 190, "internet-archive")
         {
             IA.Search.UserAgent = Banshee.Web.Browser.UserAgent;
             IA.Search.TimeoutMs = 12*1000;
 
             search = new IA.Search ();
 
-            IsLocal = false;
-            // TODO Should probably support normal playlists at some point (but not smart playlists)
-            SupportsPlaylists = false;
             //Properties.SetStringList ("Icon.Name", "video-x-generic", "video", "source-library");
-
-            Properties.SetString ("TrackView.ColumnControllerXml", String.Format (@"
-                <column-controller>
-                  <add-default column=""TitleColumn"" />
-                  <add-default column=""ArtistColumn"" />
-                  <add-default column=""ComposerColumn"" />
-                  <add-default column=""CommentColumn"" />
-                  <add-default column=""RatingColumn"" />
-                  <add-default column=""YearColumn"" />
-                  <add-default column=""PlayCountColumn"" />
-                  <add-default column=""MimeTypeColumn"" />
-                  <add-default column=""LicenseUriColumn"" />
-                  <column modify-default=""TitleColumn"">
-                      <width>0.50</width>
-                  </column>
-                  <column modify-default=""ArtistColumn"">
-                    <width>0.25</width>
-                    <title>{0}</title><long-title>{0}</long-title>
-                  </column>
-                  <column modify-default=""PlayCountColumn"">
-                    <title>{1}</title><long-title>{1}</long-title>
-                  </column>
-                  <column modify-default=""RatingColumn""><visible>true</visible></column>
-                  <column modify-default=""YearColumn""><visible>true</visible></column>
-                  <column modify-default=""PlayCountColumn""><visible>true</visible></column>
-                  <column modify-default=""LicenseUriColumn""><visible>true</visible></column>
-                  <column modify-default=""CommentColumn"">
-                    <title>{2}</title><long-title>{2}</long-title>
-                    <visible>false</visible>
-                  </column>
-                  <column modify-default=""ComposerColumn"">
-                    <title>{3}</title><long-title>{3}</long-title>
-                    <visible>false</visible>
-                  </column>
-                </column-controller>",
-                Catalog.GetString ("Creator"), Catalog.GetString ("Downloads"),
-                Catalog.GetString ("Description"), Catalog.GetString ("Publisher")
-            ));
 
             Properties.SetString ("ActiveSourceUIResource", "SearchSourceActiveUI.xml");
             Properties.SetString ("GtkActionPath", "/IaSearchSourcePopup");
 
             actions = new Actions (this);
-
-            AfterInitialized ();
-
-            DatabaseTrackModel.ForcedSortQuery = "CoreTracks.TrackID ASC";
-            DatabaseTrackModel.CanReorder = false;
 
             if (header_widget == null) {
                 header_widget = new HeaderFilters (this);
@@ -130,12 +98,14 @@ namespace Banshee.InternetArchive
                 Properties.Set<Gtk.Widget> ("Nereid.SourceContents.HeaderWidget", header_widget);
             }
 
+            Properties.Set<Gtk.Widget> ("Nereid.SourceContents", new SearchView (this));
+
             foreach (var item in Item.LoadAll ()) {
                 AddChildSource (new DetailsSource (item));
             }
         }
 
-        public override void Reload ()
+        public void Reload ()
         {
             ThreadAssist.SpawnFromMain (ThreadedReload);
         }
@@ -165,45 +135,24 @@ namespace Banshee.InternetArchive
 
             if (results != null) {
                 try {
-                    ServiceManager.DbConnection.BeginTransaction ();
-
-                    ServiceManager.DbConnection.Execute ("DELETE FROM CoreTracks WHERE PrimarySourceID = ?", this.DbId);
-                    DatabaseTrackModel.Clear ();
+                    model.Clear ();
 
                     foreach (var result in results) {
-                        var track = new DatabaseTrackInfo () {
-                            PrimarySource = this,
-                            ArtistName = result.Creator ?? "",
-                            Comment    = Hyena.StringUtil.RemoveHtml (result.Description),
-                            Composer   = result.Publisher ?? "",
-                            LicenseUri = result.LicenseUrl,
-                            PlayCount  = result.Downloads,
-                            Rating     = (int) Math.Round (result.AvgRating),
-                            TrackTitle = result.Title,
-                            Uri        = new Banshee.Base.SafeUri (result.WebpageUrl),
-                            MimeType   = result.Format,
-                            Year       = result.Year
-                        };
+                        model.Add (result);
 
                         // HACK to remove ugly empty description
-                        if (track.Comment == "There is currently no description for this item.")
-                            track.Comment = null;
-
-                        track.Save (false);
+                        //if (track.Comment == "There is currently no description for this item.")
+                            //track.Comment = null;
                     }
 
-                    ServiceManager.DbConnection.CommitTransaction ();
                     success = true;
                 } catch (Exception e) {
-                    ServiceManager.DbConnection.RollbackTransaction ();
                     Hyena.Log.Exception ("Error searching the Internet Archive", e);
                 }
             }
 
             if (success) {
-                base.Reload ();
-
-                int count = DatabaseTrackModel.Count;
+                int count = model.Count;
                 if (total_results == 0) {
                     ThreadAssist.ProxyToMain (delegate {
                         SetStatus (Catalog.GetString ("No matches. Try another search?"), false, false, "gtk-info");
@@ -222,6 +171,8 @@ namespace Banshee.InternetArchive
                     SetStatus (Catalog.GetString ("Error searching the Internet Archive"), true);
                 });
             }
+
+            model.Reload ();
         }
 
         public override int Count {
@@ -240,60 +191,11 @@ namespace Banshee.InternetArchive
             return false;
         }*/
 
-        // DatabaseSource overrides
-
-        public override bool ShowBrowser { 
-            get { return false; }
-        }
-
-        public override bool CanShuffle {
-            get { return false; }
-        }
-
-        public override bool CanAddTracks {
-            get { return false; }
-        }
-
-        public override bool CanRemoveTracks {
-            get { return false; }
-        }
-
-        public override bool CanDeleteTracks {
-            get { return false; }
-        }
-
-        protected override bool HasArtistAlbum {
-            get { return false; }
-        }
-
-        public override bool HasEditableTrackProperties {
-            get { return false; }
-        }
-
-        public override bool HasViewableTrackProperties {
-            get { return false; }
-        }
-
-        public override bool CanSearch {
-            get { return false; }
-        }
-
-        protected override void Initialize ()
-        {
-            base.Initialize ();
-
-            //InstallPreferences ();
-        }
-
-        public override void Dispose ()
+        public void Dispose ()
         {
             if (actions != null) {
                 actions.Dispose ();
             }
-
-            base.Dispose ();
-
-            //UninstallPreferences ();
         }
     }
 }

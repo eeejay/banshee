@@ -163,12 +163,20 @@ namespace InternetArchive
             get { return review_info.Get<double> ("avg_rating"); }
         }
 
+        public int AvgRatingInt {
+            get { return (int) Math.Round (AvgRating); }
+        }
+
         public int NumReviews {
             get { return review_info.Get<int> ("num_reviews"); }
         }
 
         public string WebpageUrl {
             get { return String.Format ("http://www.archive.org/details/{0}", id); }
+        }
+
+        public string Json {
+            get { return json; }
         }
 
 #endregion

@@ -75,6 +75,10 @@ namespace InternetArchive
             get { return Get<double> (Field.AvgRating); }
         }
 
+        public int AvgRatingInt {
+            get { return (int) Math.Round (AvgRating); }
+        }
+
         public string Title {
             get { return Get<string> (Field.Title); }
         }

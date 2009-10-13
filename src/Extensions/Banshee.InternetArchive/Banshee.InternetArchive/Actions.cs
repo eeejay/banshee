@@ -43,11 +43,10 @@ namespace Banshee.InternetArchive
         {
             Add (
                 new ActionEntry ("ViewItemDetails", null, Catalog.GetString ("View Item Details"), null, null, (o, a) => {
-                    var item = source.TrackModel.FocusedItem;
-                    if (item != null && item.Uri != null) {
-                        string [] bits = item.Uri.AbsoluteUri.Split ('/');
-                        string id = bits[bits.Length - 1];
-                        var src = new DetailsSource (id, item.TrackTitle);
+                    var item = source.FocusedItem;
+                    if (item != null && item.Id != null) {
+                        string id = item.Id;
+                        var src = new DetailsSource (id, item.Title);
                         source.AddChildSource (src);
                         Banshee.ServiceStack.ServiceManager.SourceManager.SetActiveSource (src);
                     }
@@ -58,9 +57,9 @@ namespace Banshee.InternetArchive
                     if (src != null) {
                         uri = src.Item.Details.WebpageUrl;
                     } else {
-                        var item = source.TrackModel.FocusedItem;
-                        if (item != null && item.Uri != null) {
-                            uri = item.Uri.AbsoluteUri;
+                        var item = source.FocusedItem;
+                        if (item != null) {
+                            uri = item.WebpageUrl;
                         }
                     }
 
