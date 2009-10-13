@@ -45,8 +45,8 @@ namespace Banshee.Collection.Gui
     public class ColumnCellCreativeCommons : ColumnCell, ISizeRequestCell, ITooltipCell
     {
         private static Gdk.Pixbuf [] pixbufs;
-        private static string [] attributes = new string [] {"by", "nc", "nd", "sa", "pd"};
-        private static string [] attributes_uc = new string [] {"BY", "NC", "ND", "SA", "PD"};
+        private static string [] attributes = new string [] {"by", "nc", "nd", "sa", "pd", "publicdomain"};
+        private static string [] attributes_uc = new string [] {"BY", "NC", "ND", "SA", "PD", "Public Domain"};
         private const string CC_ID = "creativecommons.org/licenses/";
         private static int CC_ID_LEN = CC_ID.Length;
         private const int ICON_SIZE = 16;
@@ -100,9 +100,12 @@ namespace Banshee.Collection.Gui
                 pixbufs = new Gdk.Pixbuf[attributes.Length];
             }
             
-            for (int i = 0; i < attributes.Length; i++) {
+            for (int i = 0; i < attributes.Length - 1; i++) {
                 pixbufs[i] = IconThemeUtils.LoadIcon (ICON_SIZE, String.Format ("creative-commons-{0}", attributes[i]));
             }
+
+            // HACK to enable 'publicdomain' to work
+            pixbufs[attributes.Length - 1] = pixbufs[attributes.Length - 2];
         }
 
         private IEnumerable<int> AttributesForBoundObject {
@@ -134,7 +137,8 @@ namespace Banshee.Collection.Gui
 
         public void GetWidthRange (Pango.Layout layout, out int min, out int max)
         {
-            min = max = ICON_SIZE * attributes.Length;
+            // -1 b/c of 2 public domain entries
+            min = max = ICON_SIZE * attributes.Length - 1;
         }
     }
 }
