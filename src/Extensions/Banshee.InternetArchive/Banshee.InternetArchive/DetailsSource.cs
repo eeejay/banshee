@@ -80,10 +80,15 @@ namespace Banshee.InternetArchive
 
             if (item.Details == null) {
                 SetStatus (Catalog.GetString ("Getting item details from the Internet Archive"), false, true, null);
-                ThreadAssist.SpawnFromMain (ThreadedLoad);
+                Load ();
             } else {
                 gui.UpdateDetails ();
             }
+        }
+
+        private void Load ()
+        {
+            ThreadAssist.SpawnFromMain (ThreadedLoad);
         }
 
         private void ThreadedLoad ()
@@ -97,10 +102,17 @@ namespace Banshee.InternetArchive
                     }
                 });
             } catch (Exception e) {
-                ThreadAssist.ProxyToMain (delegate {
-                    SetStatus (Catalog.GetString ("Error getting item details from the Internet Archive"), true);
-                });
                 Hyena.Log.Exception ("Error loading IA item details", e);
+
+                ThreadAssist.ProxyToMain (delegate {
+                    var web_e = e as System.Net.WebException;
+                    if (web_e != null && web_e.Status == System.Net.WebExceptionStatus.Timeout) {
+                        SetStatus (Catalog.GetString ("Timed out getting item details from the Internet Archive"), true);
+                        CurrentMessage.AddAction (new MessageAction (Catalog.GetString ("Try Again"), (o, a) => Load ()));
+                    } else {
+                        SetStatus (Catalog.GetString ("Error getting item details from the Internet Archive"), true);
+                    }
+                });
             }
         }
 

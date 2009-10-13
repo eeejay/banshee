@@ -64,6 +64,18 @@ namespace InternetArchive
             get { return metadata.GetJoined ("creator", ", "); }
         }
 
+        public string LicenseUrl {
+            get { return metadata.GetJoined (Field.LicenseUrl.Id, ", "); }
+        }
+
+        public string Language {
+            get { return metadata.GetJoined (Field.Language.Id, ", "); }
+        }
+
+        public string Contributor {
+            get { return metadata.GetJoined (Field.Contributor.Id, ", "); }
+        }
+
         public string Publisher {
             get { return metadata.GetJoined ("publisher", ", "); }
         }

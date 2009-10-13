@@ -37,16 +37,12 @@ namespace InternetArchive
     {
         /*avg_rating
         call_number
-        collection
-        contributor
         coverage
 
-        date
         foldoutcount
         headerImage
         imagecount
 
-        mediatype
         month
         oai_updatedate
         publicdate
@@ -64,6 +60,7 @@ namespace InternetArchive
         public static Field AvgRating  = new Field ("avg_rating", Catalog.GetString ("Rating"));
         public static Field Creator    = new Field ("creator",    Catalog.GetString ("Creator"));
         public static Field Collection = new Field ("collection", Catalog.GetString ("Collection"));
+        public static Field Contributor= new Field ("contributor",Catalog.GetString ("Contributor"));
         public static Field Date       = new Field ("date",       Catalog.GetString ("Created"));
         public static Field Description= new Field ("description",Catalog.GetString ("Description"));
         public static Field Downloads  = new Field ("downloads",  Catalog.GetString ("Downloads"));

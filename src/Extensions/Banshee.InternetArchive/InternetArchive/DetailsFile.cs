@@ -56,11 +56,22 @@ namespace InternetArchive
         }
 
         public int Track {
-            get { return file.Get<int> ("track"); }
+            get {
+                string track = file.Get<string> ("track");
+                if (track == null)
+                    return 0;
+
+                var bits = track.Split ('/', '-');
+                return Int32.Parse (bits[0]);
+            }
         }
 
         public string Creator {
             get { return file.Get<string> ("creator"); }
+        }
+
+        public string OriginalFile {
+            get { return file.Get<string> ("original"); }
         }
 
         public string Title {

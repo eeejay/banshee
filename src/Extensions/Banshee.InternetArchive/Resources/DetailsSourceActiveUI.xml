@@ -2,6 +2,7 @@
   <toolbar name="HeaderToolbar">
     <placeholder name="SourceActions">
         <toolitem action="OpenItemWebsite" />
+        <toolitem action="UnmapSourceAction"/>
     </placeholder>
   </toolbar>
 

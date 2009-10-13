@@ -127,7 +127,7 @@ namespace Banshee.InternetArchive
             var desc_exp = CreateExpander (Catalog.GetString ("Description"));
 
             var desc = new Hyena.Widgets.WrapLabel () {
-                Markup = String.Format ("<small>{0}</small>", GLib.Markup.EscapeText (details.Description))
+                Markup = String.Format ("<small>{0}</small>", GLib.Markup.EscapeText (Hyena.StringUtil.RemoveHtml (details.Description)))
             };
 
             desc_exp.Child = desc;
@@ -144,6 +144,7 @@ namespace Banshee.InternetArchive
                 table.SetSizeRequest (a.Requisition.Width, a.Requisition.Height);
             };
 
+            AddToTable (table, Catalog.GetString ("Creator:"), details.Creator);
             AddToTable (table, Catalog.GetString ("Venue:"), details.Venue);
             AddToTable (table, Catalog.GetString ("Location:"), details.Coverage);
             if (details.DateCreated != DateTime.MinValue) {
@@ -153,6 +154,8 @@ namespace Banshee.InternetArchive
             }
             AddToTable (table, Catalog.GetString ("Publisher:"), details.Publisher);
             AddToTable (table, Catalog.GetString ("Subject:"), details.Subject);
+            AddToTable (table, Catalog.GetString ("License URL:"), details.LicenseUrl);
+            AddToTable (table, Catalog.GetString ("Language:"), details.Language);
 
             table.AddSeparator ();
 
@@ -165,6 +168,7 @@ namespace Banshee.InternetArchive
             AddToTable (table, Catalog.GetString ("Added:"),      details.DateAdded);
             AddToTable (table, Catalog.GetString ("Added by:"),   details.AddedBy);
             AddToTable (table, Catalog.GetString ("Source:"),     details.Source);
+            AddToTable (table, Catalog.GetString ("Contributor:"), details.Contributor);
             AddToTable (table, Catalog.GetString ("Recorded by:"),details.Taper);
             AddToTable (table, Catalog.GetString ("Lineage:"),    details.Lineage);
             AddToTable (table, Catalog.GetString ("Transferred by:"), details.Transferer);
@@ -281,23 +285,49 @@ namespace Banshee.InternetArchive
             var file_sw = new Gtk.ScrolledWindow ();
             file_sw.Child = file_list;
 
-            var files = new List<TrackInfo> ();
+            var tracks = new List<TrackInfo> ();
 
-            string [] format_blacklist = new string [] { "zip", "m3u", "metadata", "fingerprint", "checksums", "text" };
+            var files = new List<IA.DetailsFile> (details.Files);
+
+            string [] format_blacklist = new string [] { "metadata", "fingerprint", "checksums", "xml", "m3u" };
             var formats = new List<string> ();
-            foreach (var f in details.Files) {
+            foreach (var f in files) {
                 var track = new TrackInfo () {
                     Uri         = new SafeUri (f.Location),
                     FileSize    = f.Size,
                     TrackNumber = f.Track,
-                    ArtistName  = f.Creator,
+                    ArtistName  = f.Creator ?? details.Creator,
+                    AlbumTitle  = item.Title,
                     TrackTitle  = f.Title,
                     BitRate     = f.BitRate,
                     MimeType    = f.Format,
                     Duration    = f.Length
                 };
 
-                files.Add (track);
+                // Fix up duration/track#/title
+                if ((f.Length == TimeSpan.Zero || f.Title == null || f.Track == 0) && !f.Location.Contains ("zip") && !f.Location.EndsWith ("m3u")) {
+                    foreach (var b in files) {
+                        if ((f.Title != null && f.Title == b.Title)
+                                || (f.OriginalFile != null && b.Location != null && b.Location.EndsWith (f.OriginalFile))
+                                || (f.OriginalFile != null && f.OriginalFile == b.OriginalFile)) {
+                            if (track.Duration == TimeSpan.Zero)
+                                track.Duration = b.Length;
+
+                            if (track.TrackTitle == null)
+                                track.TrackTitle = b.Title;
+
+                            if (track.TrackNumber == 0)
+                                track.TrackNumber = b.Track;
+
+                            if (track.Duration != TimeSpan.Zero && track.TrackTitle != null && track.TrackNumber != 0)
+                                break;
+                        }
+                    }
+                }
+
+                track.TrackTitle = track.TrackTitle ?? System.IO.Path.GetFileName (f.Location);
+
+                tracks.Add (track);
 
                 if (f.Format != null && !formats.Contains (f.Format)) {
                     if (!format_blacklist.Any (fmt => f.Format.ToLower ().Contains (fmt))) {
@@ -306,26 +336,25 @@ namespace Banshee.InternetArchive
                 }
             }
 
-            // HACK to fix up the times; sometimes the VBR MP3 file will have it but Ogg won't
-            foreach (var a in files) {
-                foreach (var b in files) {
-                    if (a.TrackTitle == b.TrackTitle) {
-                        a.Duration = b.Duration = a.Duration > b.Duration ? a.Duration : b.Duration;
-                    }
+            // Make these columns snugly fix their data
+            if (tracks.Count > 0) {
+                var max_track = tracks.Max (f => f.TrackNumber);
+                SetWidth (columns.TrackColumn,    max_track);
+                if (max_track == 0) {
+                    columns.TrackColumn.Visible = false;
                 }
+
+                SetWidth (columns.FileSizeColumn, tracks.Max (f => f.FileSize));
+                SetWidth (columns.DurationColumn, tracks.Max (f => f.Duration));
             }
 
-            // Make these columns snugly fix their data
-            (columns.TrackColumn.GetCell (0) as ColumnCellText).SetMinMaxStrings (files.Max (f => f.TrackNumber));
-            (columns.FileSizeColumn.GetCell (0) as ColumnCellText).SetMinMaxStrings (files.Max (f => f.FileSize));
-            //(columns.FileSizeColumn.GetCell (0) as ColumnCellText).Expand = false;
-            (columns.DurationColumn.GetCell (0) as ColumnCellText).SetMinMaxStrings (files.Max (f => f.Duration));
-
-            string max_title = "";
-            var sorted_by_title = files.OrderBy (f => f.TrackTitle == null ? 0 : f.TrackTitle.Length).ToList ();
-            var nine_tenths = sorted_by_title[(int)Math.Floor (.90 * sorted_by_title.Count)].TrackTitle;
-            var max = sorted_by_title[sorted_by_title.Count - 1].TrackTitle;
-            max_title = ((double)max.Length >= (double)(2.0 * (double)nine_tenths.Length)) ? nine_tenths : max;
+            string max_title = "     ";
+            if (tracks.Count > 0) {
+                var sorted_by_title = tracks.OrderBy (f => f.TrackTitle == null ? 0 : f.TrackTitle.Length).ToList ();
+                string nine_tenths = sorted_by_title[(int)Math.Floor (.90 * sorted_by_title.Count)].TrackTitle ?? "";
+                string max = sorted_by_title[sorted_by_title.Count - 1].TrackTitle ?? "";
+                max_title = ((double)max.Length >= (double)(2.0 * (double)nine_tenths.Length)) ? nine_tenths : max;
+            }
             (columns.TitleColumn.GetCell (0) as ColumnCellText).SetMinMaxStrings (max_title);
 
             file_list.ColumnController = file_columns;
@@ -340,7 +369,7 @@ namespace Banshee.InternetArchive
                 files_model.Clear ();
 
                 var selected_fmt = format_list.ActiveText;
-                foreach (var track in files) {
+                foreach (var track in tracks) {
                     if (track.MimeType == selected_fmt) {
                         files_model.Add (track);
                     }
@@ -349,8 +378,11 @@ namespace Banshee.InternetArchive
                 files_model.Reload ();
             };
 
+            // TODO replace this with a user-configurable format weighting preference
             if (formats.IndexOf ("VBR MP3") != -1) {
                 format_list.Active = formats.IndexOf ("VBR MP3");
+            } else if (formats.Count > 0) {
+                format_list.Active = 0;
             }
 
             vbox.PackStart (file_sw, true, true, 0);
@@ -369,6 +401,11 @@ namespace Banshee.InternetArchive
 
             //PackStart (vbox, true, true, 0);
             PackStart (vbox, false, false, 0);
+        }
+
+        private void SetWidth<T> (Column col, T max)
+        {
+            (col.GetCell (0) as ColumnCellText).SetMinMaxStrings (max, max);
         }
     }
 }

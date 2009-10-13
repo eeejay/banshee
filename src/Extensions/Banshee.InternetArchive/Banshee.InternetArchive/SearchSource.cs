@@ -117,6 +117,7 @@ namespace Banshee.InternetArchive
             bool success = false;
             int total_results = 0;
             status_text = "";
+            Exception err = null;
 
             ThreadAssist.ProxyToMain (delegate {
                 SetStatus (Catalog.GetString ("Searching the Internet Archive"), false, true, "gtk-find");
@@ -130,9 +131,7 @@ namespace Banshee.InternetArchive
             } catch (System.Net.WebException e) {
                 Hyena.Log.Exception ("Error searching the Internet Archive", e);
                 results = null;
-            } catch (Exception e) {
-                Hyena.Log.Exception ("Error searching the Internet Archive", e);
-                results = null;
+                err = e;
             }
 
             if (results != null) {
@@ -149,6 +148,7 @@ namespace Banshee.InternetArchive
 
                     success = true;
                 } catch (Exception e) {
+                    err = e;
                     Hyena.Log.Exception ("Error searching the Internet Archive", e);
                 }
             }
@@ -167,14 +167,21 @@ namespace Banshee.InternetArchive
                     );
                 }
             } else {
-                // TODO differentiate between various errors types (network, invalid search, etc)
-                //if (error.Status == WebExceptionStatus.Timeout) 
                 ThreadAssist.ProxyToMain (delegate {
-                    SetStatus (Catalog.GetString ("Error searching the Internet Archive"), true);
+                    var web_e = err as System.Net.WebException;
+                    if (web_e != null && web_e.Status == System.Net.WebExceptionStatus.Timeout) {
+                        SetStatus (Catalog.GetString ("Timed out searching the Internet Archive"), true);
+                        CurrentMessage.AddAction (new MessageAction (Catalog.GetString ("Try Again"), (o, a) => Reload ()));
+                    } else {
+                        SetStatus (Catalog.GetString ("Error searching the Internet Archive"), true);
+                    }
                 });
             }
 
-            model.Reload ();
+            ThreadAssist.ProxyToMain (delegate {
+                model.Reload ();
+                OnUpdated ();
+            });
         }
 
         public override int Count {
