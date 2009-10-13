@@ -39,7 +39,7 @@ namespace Hyena.Widgets
         private HBox box;
         private HBox button_box;
         private AnimatedImage image;
-        private Label label;
+        private WrapLabel label;
         private Button close_button;
 
         private Window win;
@@ -76,8 +76,7 @@ namespace Hyena.Widgets
             } catch {
             }
             
-            label = new Label ();
-            label.Xalign = 0.0f;
+            label = new WrapLabel ();
             label.Show ();
             
             box.PackStart (image, false, false, 0);
