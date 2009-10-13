@@ -217,7 +217,7 @@ namespace Hyena.Data.Gui
             double tmp_max = 0.0;
             foreach (var col in column_cache) {
                 tmp_width += col.ElasticWidth;
-                tmp_max += col.MaxWidth;
+                tmp_max += col.MaxWidth == Int32.MaxValue ? col.MinWidth : col.MaxWidth;
             }
             list_width = tmp_width;
             max_width = tmp_max;
