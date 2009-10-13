@@ -69,9 +69,14 @@ namespace Banshee.Library
 
             PreferencesPage.Add (new Section ("misc", Catalog.GetString ("Miscellaneous"), 10));
         }
+
+        public static string GetDefaultBaseDirectory ()
+        {
+            return Banshee.Base.Paths.GetXdgDirectoryUnderHome ("XDG_MUSIC_DIR", "Music");
+        }
         
         public override string DefaultBaseDirectory {
-            get { return Banshee.Base.Paths.GetXdgDirectoryUnderHome ("XDG_MUSIC_DIR", "Music"); }
+            get { return GetDefaultBaseDirectory (); }
         }
 
         public override IEnumerable<SmartPlaylistDefinition> DefaultSmartPlaylists {

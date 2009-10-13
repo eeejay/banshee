@@ -349,10 +349,10 @@ namespace Banshee.Database
         [DatabaseVersion (7)]
         private bool Migrate_7 ()
         {
-            Execute ("UPDATE CorePrimarySources SET StringID = 'MusicLibrarySource-Library' WHERE StringID = 'Library'");
-            Execute ("UPDATE CorePrimarySources SET StringID = 'VideoLibrarySource-VideoLibrary' WHERE StringID = 'VideoLibrary'");
-            Execute ("UPDATE CorePrimarySources SET StringID = 'PodcastSource-podcasting' WHERE StringID = 'podcasting'");
-            Execute ("DELETE FROM CoreCache; DELETE FROM CoreCacheModels");
+            try { Execute ("UPDATE CorePrimarySources SET StringID = 'MusicLibrarySource-Library' WHERE StringID = 'Library'"); } catch {}
+            try { Execute ("UPDATE CorePrimarySources SET StringID = 'VideoLibrarySource-VideoLibrary' WHERE StringID = 'VideoLibrary'"); } catch {}
+            try { Execute ("UPDATE CorePrimarySources SET StringID = 'PodcastSource-podcasting' WHERE StringID = 'podcasting'"); } catch {}
+            try { Execute ("DELETE FROM CoreCache; DELETE FROM CoreCacheModels"); } catch {}
             return true;
         }
         
@@ -725,7 +725,7 @@ namespace Banshee.Database
         {
             try {
                 // Make paths not relative for Music Library items
-                string library_path = Banshee.Library.LibrarySource.OldLocationSchema.Get ();
+                string library_path = Banshee.Library.LibrarySource.OldLocationSchema.Get (Banshee.Library.MusicLibrarySource.GetDefaultBaseDirectory ());
                 if (library_path != null) {
                     int podcast_src_id = connection.Query<int> ("SELECT PrimarySourceID FROM CorePrimarySources WHERE StringID = 'PodcastSource-PodcastLibrary'");
 
