@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: banshee\n"
 "Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=banshee&component=general\n"
-"POT-Creation-Date: 2009-09-21 20:29+0000\n"
-"PO-Revision-Date: 2009-10-02 11:45+0100\n"
+"POT-Creation-Date: 2009-10-08 12:49+0000\n"
+"PO-Revision-Date: 2009-10-09 08:49+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -26,16 +26,16 @@ msgstr "Kanali"
 
 #: ../data/audio-profiles/flac.xml.in.h:1
 msgid "Free Lossless Audio Codec"
-msgstr "Brezplačen kodek za kodiranje brez zvočnih izgub"
+msgstr "Brezplačni kodek za kodiranje brez zvočnih izgub"
 
 #: ../data/audio-profiles/flac.xml.in.h:2
 msgid "Free Lossless Audio Codec (FLAC) is an open source codec that compresses but does not degrade audio quality."
-msgstr "Brezplačen kodek za kodiranje brez zvočnih izgub je odprtokodni kodek, ki zvok stisne, vendar ne poslabša njegove kakovosti."
+msgstr "Brezplačni kodek za kodiranje brez zvočnih izgub je odprtokodni kodek, ki zvok stisne, vendar ne poslabša njegove kakovosti."
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:1
 #: ../data/audio-profiles/mp3-xing.xml.in.h:1
 msgid "A proprietary and older, but also popular, lossy audio format that produces larger files at lower bitrates."
-msgstr "Plačljivi in starejši priljubljni zvočni zapis, ki kodira zvok v večje datoteke s slabšo kakovostjo."
+msgstr "Priljubljeni starejši zakonsko zaščiteni zvočni zapis, ki kodira zvok v večje datoteke s slabšo kakovostjo."
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:2
 msgid "Average Bitrate"
@@ -73,7 +73,7 @@ msgstr "LAME prednastavljene"
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:9
 msgid "MP3 (LAME Encoder)"
-msgstr "MP3 (LAME kodirnik)"
+msgstr "MP3 (kodirnik LAME)"
 
 #: ../data/audio-profiles/mp3-lame.xml.in.h:10
 msgid "Medium"
@@ -108,7 +108,7 @@ msgstr "Najslabše"
 
 #: ../data/audio-profiles/mp3-xing.xml.in.h:3
 msgid "MP3 (Xing Encoder)"
-msgstr "MP3 (Xing kodirnik)"
+msgstr "MP3 (kodirnik Xing)"
 
 #: ../data/audio-profiles/vorbis.xml.in.h:1
 msgid "Audio quality"
@@ -180,7 +180,7 @@ msgstr "Waveform PCM"
 
 #: ../data/audio-profiles/wma.xml.in.h:1
 msgid "A proprietary lossy audio format with high quality output at a lower file size than MP3. A 96 kbps WMA is equivalent to a 128 kbps MP3."
-msgstr "Plačljivi kodek za kodiranje z zvočnimi izgubami in z visoko kakovostnim odvodom pri manjši velikosti datotek kot MP3. 96kbps WMA je enakovreden 128 kbps MP3."
+msgstr "Zakonsko zaščiteni kodek za kodiranje z zvočnimi izgubami in z visoko kakovostnim odvodom pri manjši velikosti datotek kot MP3. 96kbps WMA je enakovreden 128 kbps MP3."
 
 #: ../data/audio-profiles/wma.xml.in.h:2
 msgid "Audio Quality"
@@ -792,7 +792,7 @@ msgstr "Posodabljanje zbirke podatkov Banshee"
 
 #: ../src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:231
 msgid "Please wait while your old Banshee database is migrated to the new format."
-msgstr "Prosimo počakajte medtem ko se stara Banshee zbirka podatkov pretvorjena v novo obliko zapisa."
+msgstr "Počakajte, da se stara Banshee zbirka podatkov pretvori v novo obliko zapisa."
 
 #: ../src/Core/Banshee.Services/Banshee.Database/BansheeDbFormatMigrator.cs:1203
 msgid "Refreshing Metadata"
@@ -1572,7 +1572,7 @@ msgstr "Pametnega seznama predvajanja ni mogoče preseliti"
 #: ../src/Core/Banshee.Services/Banshee.SmartPlaylist/Migrator.cs:80
 #, csharp-format
 msgid "Please file a bug with this error: {0}"
-msgstr "Prosim napišite poročilo o hrošču s to napako: {0}"
+msgstr "Prosimo, napišite poročilo o hrošču s to napako: {0}"
 
 #: ../src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs:67
 #: ../src/Core/Banshee.ThickClient/Banshee.SmartPlaylist.Gui/Editor.cs:51
@@ -2195,7 +2195,7 @@ msgstr "Izvoz seznama predvajanj"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:99
 msgid "Unmap"
-msgstr ""
+msgstr "Izloči"
 
 #: ../src/Core/Banshee.ThickClient/Banshee.Gui/SourceActions.cs:102
 msgid "Source Properties"
@@ -2897,6 +2897,11 @@ msgstr "Izbor položaja knjižnice"
 msgid "Reset"
 msgstr "Počisti"
 
+#: ../src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/DefaultPreferenceWidgets.cs:121
+#, csharp-format
+msgid "Reset location to default ({0})"
+msgstr "Ponastavi mesto na privzeto ({0})"
+
 #: ../src/Core/Banshee.ThickClient/Banshee.Preferences.Gui/PreferenceDialog.cs:55
 msgid "Could not show preferences"
 msgstr "Ni mogoče prikazati nastavitev"
@@ -3005,11 +3010,11 @@ msgstr "Vzpostavljanje stika ..."
 msgid "Buffering"
 msgstr "Polnjenje medpomnilnika"
 
-#: ../src/Core/Banshee.Widgets/Banshee.Widgets/VolumeButton.cs:549
+#: ../src/Core/Banshee.Widgets/Banshee.Widgets/VolumeButton.cs:547
 msgid "Muted"
 msgstr "Nemo"
 
-#: ../src/Core/Banshee.Widgets/Banshee.Widgets/VolumeButton.cs:551
+#: ../src/Core/Banshee.Widgets/Banshee.Widgets/VolumeButton.cs:549
 msgid "Full Volume"
 msgstr "Polna glasnost"
 
@@ -3212,7 +3217,7 @@ msgid "Capacity"
 msgstr "Zmogljivost"
 
 #: ../src/Dap/Banshee.Dap.Ipod/Banshee.Dap.Ipod/IpodSource.cs:102
-#: ../src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:144
+#: ../src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:148
 msgid "Serial number"
 msgstr "Serijska številka"
 
@@ -3361,12 +3366,12 @@ msgid "Ringtones"
 msgstr "Melodije zvonenja"
 
 #: ../src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:78
-#: ../src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:117
+#: ../src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:121
 msgid "MTP Support Ignoring Device"
 msgstr "Podpora MTP je prezrla napravo"
 
 #: ../src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:79
-#: ../src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:118
+#: ../src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:122
 msgid "Banshee's MTP audio player support can only handle one device at a time."
 msgstr "Podpora Banshee MTP predvajalnika zvoka lahko upravlja z eno napravo na enkrat. "
 
@@ -3386,19 +3391,19 @@ msgstr "Napaka med iskanjem podpore MTP naprave"
 msgid "An MTP device was detected, but Banshee was unable to load support for it."
 msgstr "Zaznana je bila MTP naprava, vendar Banshee ni mogel naložiti podpore zanjo."
 
-#: ../src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:145
+#: ../src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:149
 #: ../src/Libraries/Hyena.Gui/Hyena.Gui.Dialogs/VersionInformationDialog.cs:66
 msgid "Version"
 msgstr "Različica"
 
-#: ../src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:147
+#: ../src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:151
 msgid "Battery level"
 msgstr "Raven baterije"
 
 #. user_event.Progress = (double)current / total;
 #. Translators: {0} is the name of the MTP audio device (eg Gabe's Zen Player), {1} is the
 #. track currently being loaded, and {2} is the total # of tracks that will be loaded.
-#: ../src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:163
+#: ../src/Dap/Banshee.Dap.Mtp/Banshee.Dap.Mtp/MtpSource.cs:167
 #, csharp-format
 msgid "Loading {0} - {1} of {2}"
 msgstr "Nalaganje {0} - {1} of {2}"
@@ -4243,16 +4248,16 @@ msgstr "Še vedno teče"
 msgid "Banshee was closed to the notification area. Use the <i>Quit</i> option to end your session."
 msgstr "Program Banshee je skrit v območju z obvestili. Uporabite možnost <i>Izhod</i> za končanje seje."
 
-#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:457
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:451
 #: ../src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/NowPlayingSource.cs:48
 msgid "Now Playing"
 msgstr "Predvaja se"
 
-#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:462
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:461
 msgid "Skip this item"
 msgstr "Preskoči predmet"
 
-#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:468
+#: ../src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs:465
 msgid "Cannot show notification"
 msgstr "Obvestil ni mogoče prikazati"
 
@@ -4307,7 +4312,7 @@ msgstr "Najdi iTunes mapo glasbe"
 #: ../src/Extensions/Banshee.PlayerMigration/Banshee.PlayerMigration/RhythmboxPlayerImportSource.cs:391
 #, csharp-format
 msgid "The iTunes library refers to your music directory as \"{0}\" but Banshee was not able to infer the location of this directory. Please locate it."
-msgstr "iTunes knjižnica mapo s glasbo imenuje z \"{0}\" toda Banshee ne more najti mesta te mape. Prosim, najdite jo."
+msgstr "Knjižnica iTunes mapo z glasbo imenuje \"{0}\", vendar mesta te mape ni mogoče najti. Določiti jo je treba ročno."
 
 #: ../src/Extensions/Banshee.PlayerMigration/Banshee.PlayerMigration/RhythmboxPlayerImportSource.cs:393
 msgid "iTunes Media Player"
@@ -4599,7 +4604,7 @@ msgstr "Naročilo na nov podcast"
 
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastSubscribeDialog.cs:100
 msgid "Please enter the URL of the podcast to which you would like to subscribe."
-msgstr "Prosimo vnesite URL podcasta, na katerega bi se radi naročili."
+msgstr "Prosimo, vnesite URL podcasta, na katerega bi se radi naročili."
 
 #: ../src/Extensions/Banshee.Podcasting/Banshee.Podcasting.Gui/PodcastManager/Dialog/PodcastSubscribeDialog.cs:112
 msgid "When new episodes are available:  "
@@ -4800,7 +4805,7 @@ msgstr "Last.fm prijava računa"
 
 #: ../src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginDialog.cs:79
 msgid "Please enter your Last.fm account credentials."
-msgstr "Prosim, vnesite uporabniške podatke Last.fm računa."
+msgstr "Prosimo, vnesite uporabniške podatke Last.fm računa."
 
 #: ../src/Libraries/Lastfm.Gui/Lastfm.Gui/AccountLoginDialog.cs:105
 msgid "Save and Log In"
@@ -4849,7 +4854,7 @@ msgstr "Za to postajo ni dovolj sosedov. "
 
 #: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:446
 msgid "The streaming system is offline for maintenance, please try again later."
-msgstr "Sistem pretakanja ni povezan zaradi vzdrževanja, prosim poskusite kasneje."
+msgstr "Sistem pretakanja ni povezan zaradi vzdrževanja. Poskusite kasneje."
 
 #: ../src/Libraries/Lastfm/Lastfm/RadioConnection.cs:447
 msgid "There was an unknown error."
