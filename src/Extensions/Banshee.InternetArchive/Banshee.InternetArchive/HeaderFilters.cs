@@ -44,6 +44,11 @@ namespace Banshee.InternetArchive
         private ComboBox sort_combo, media_type_combo;
         private TreeStore media_type_store;
         private Banshee.Widgets.SearchEntry search_entry;
+        private Button search_button;
+
+        public Widget SearchEntry {
+            get { return search_entry; }
+        }
 
         public HeaderFilters (SearchSource source)
         {
@@ -97,6 +102,8 @@ namespace Banshee.InternetArchive
                 EmptyMessage = String.Format (Catalog.GetString ("Optional Query"))
             };
 
+            entry.Activated += (o, a) => { search_button.Activate (); };
+
             // Add 'filter' items
             var filter_fields = new List<IA.Field> ();
             int i = 0;
@@ -145,7 +152,7 @@ namespace Banshee.InternetArchive
 
         private void BuildSearchButton ()
         {
-            var button = new Hyena.Widgets.ImageButton (Catalog.GetString ("_Search"), Stock.Find);
+            var button = search_button = new Hyena.Widgets.ImageButton (Catalog.GetString ("_Search"), Stock.Find);
             button.Clicked += (o, a) => {
                 UpdateSearch ();
                 source.Reload ();
