@@ -67,6 +67,10 @@ namespace Hyena.Data.Gui
         
         public bool ButtonEvent (int x, int y, bool pressed, Gdk.EventButton evnt)
         {
+            if (ReadOnly) {
+                return false;
+            }
+
             if (pressed) {
                 last_pressed_bound = BoundObjectParent;
                 return false;
@@ -82,6 +86,10 @@ namespace Hyena.Data.Gui
         
         public bool MotionEvent (int x, int y, Gdk.EventMotion evnt)
         {
+            if (ReadOnly) {
+                return false;
+            }
+
             int value = RatingFromPosition (x);
         
             if (hover_bound == BoundObjectParent && value == hover_value) {
@@ -144,5 +152,7 @@ namespace Hyena.Data.Gui
             get { return renderer.Ypad; }
             set { renderer.Ypad = value; }
         }
+
+        public bool ReadOnly { get; set; }
     }
 }
