@@ -42,6 +42,10 @@ namespace Banshee.InternetArchive
         public Actions (SearchSource source) : base ("InternetArchive")
         {
             Add (
+                new ActionEntry ("IaResultPopup", null, null, null, null, (o, a) => {
+                    ShowContextMenu ("/IaResultPopup");
+                }),
+
                 new ActionEntry ("ViewItemDetails", null, Catalog.GetString ("View Item Details"), null, null, (o, a) => {
                     var item = source.FocusedItem;
                     if (item != null && item.Id != null) {

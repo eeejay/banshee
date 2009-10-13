@@ -73,15 +73,25 @@ namespace Banshee.InternetArchive
                 IsEverReorderable = false,
                 ColumnController = new ColumnController ()
             };
+
             AddColumns ();
 
+            list_view.SetModel (source.Model);
+
+            list_view.PopupMenu += (o, a) => {
+                ServiceManager.Get<InterfaceActionService> ()["InternetArchive.IaResultPopup"].Activate ();
+            };
+
+            list_view.RowActivated += (o, a) => {
+                ServiceManager.Get<InterfaceActionService> ()["InternetArchive.ViewItemDetails"].Activate ();
+            };
+
+            // Packing
             var sw = new Gtk.ScrolledWindow ();
             sw.Child = list_view;
 
             PackStart (sw, true, true, 0);
             ShowAll ();
-
-            list_view.SetModel (source.Model);
         }
 
         private void AddColumns ()
