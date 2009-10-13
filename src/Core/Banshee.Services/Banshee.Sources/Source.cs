@@ -340,6 +340,7 @@ namespace Banshee.Sources
                 status_message.CanClose = can_close;
                 status_message.IsSpinning = is_spinning;
                 status_message.SetIconName (icon_name);
+                status_message.IsHidden = false;
                 status_message.ClearActions ();
             }
                 
