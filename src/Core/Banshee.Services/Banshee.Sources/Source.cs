@@ -395,6 +395,8 @@ namespace Banshee.Sources
                     messages.Clear ();
                     OnMessageNotify ();
                 }
+
+                status_message = null;
             }
         }
         
