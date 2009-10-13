@@ -223,6 +223,8 @@ namespace Banshee.InternetArchive
             frame.Child = sw;
             frame.ShowAll ();
 
+            sw.Child.ModifyBg (StateType.Normal, Style.Base (StateType.Normal));
+            sw.Child.ModifyFg (StateType.Normal, Style.Text (StateType.Normal));
             StyleSet += delegate {
                 sw.Child.ModifyBg (StateType.Normal, Style.Base (StateType.Normal));
                 sw.Child.ModifyFg (StateType.Normal, Style.Text (StateType.Normal));
