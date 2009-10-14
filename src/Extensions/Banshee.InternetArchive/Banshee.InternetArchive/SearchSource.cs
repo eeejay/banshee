@@ -113,20 +113,26 @@ namespace Banshee.InternetArchive
         public void Reload ()
         {
             model.Clear ();
-            ThreadAssist.SpawnFromMain (ThreadedFetch);
+            ThreadAssist.SpawnFromMain (delegate {
+                ThreadedFetch (0);
+            });
         }
 
         public void FetchMore ()
         {
-            ThreadAssist.SpawnFromMain (ThreadedFetch);
+            ThreadAssist.SpawnFromMain (delegate {
+                ThreadedFetch (search.Page + 1);
+            });
         }
 
-        private void ThreadedFetch ()
+        private void ThreadedFetch (int page)
         {
             bool success = false;
             total_results = 0;
             status_text = "";
             Exception err = null;
+            int old_page = search.Page;
+            search.Page = page;
 
             ThreadAssist.ProxyToMain (delegate {
                 SetStatus (Catalog.GetString ("Searching the Internet Archive"), false, true, "gtk-find");
@@ -175,11 +181,14 @@ namespace Banshee.InternetArchive
                     );
                 }
             } else {
+                search.Page = old_page;
                 ThreadAssist.ProxyToMain (delegate {
                     var web_e = err as System.Net.WebException;
                     if (web_e != null && web_e.Status == System.Net.WebExceptionStatus.Timeout) {
                         SetStatus (Catalog.GetString ("Timed out searching the Internet Archive"), true);
-                        CurrentMessage.AddAction (new MessageAction (Catalog.GetString ("Try Again"), (o, a) => Reload ()));
+                        CurrentMessage.AddAction (new MessageAction (Catalog.GetString ("Try Again"), (o, a) => {
+                            if (page == 0) Reload (); else FetchMore ();
+                        }));
                     } else {
                         SetStatus (Catalog.GetString ("Error searching the Internet Archive"), true);
                     }

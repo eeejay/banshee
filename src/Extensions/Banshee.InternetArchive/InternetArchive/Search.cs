@@ -41,6 +41,7 @@ namespace InternetArchive
         public IList<Field>  ReturnFields { get { return result_fields; } }
         public IList<Sort>   Sorts { get { return sorts; } }
         public string Query { get; set; }
+        public int Page { get; set; }
 
         static Search () {
             UserAgent = "InternetArchiveSharp";
@@ -87,6 +88,7 @@ namespace InternetArchive
             }
 
             sb.AppendFormat ("&rows={0}", NumResults);
+            sb.AppendFormat ("&page={0}", Page);
             sb.AppendFormat ("&fmt={0}", "json");
             sb.Append ("&xmlsearch=Search");
 
