@@ -28,6 +28,7 @@
 
 using System;
 
+using Banshee.Base;
 using Banshee.ServiceStack;
 using Banshee.Gui;
 
@@ -80,7 +81,9 @@ namespace Banshee.Moblin
         
         private void Initialize ()
         {
-            BuildPanel ();
+            if (ApplicationContext.CommandLine.Contains ("mutter-panel")) {
+                BuildPanel ();
+            }
         }
         
         public void Dispose ()
