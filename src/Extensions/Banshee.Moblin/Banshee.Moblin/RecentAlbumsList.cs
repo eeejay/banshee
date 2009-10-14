@@ -41,12 +41,22 @@ namespace Banshee.Moblin
     {
         private List<AlbumInfo> list = new List<AlbumInfo> ();
         private int max_count;
+        private HyenaSqliteCommand select_cmd;
 
         public event EventHandler Changed;
 
         public RecentAlbumsList (int maxCount)
         {
             max_count = maxCount;
+
+            select_cmd = new HyenaSqliteCommand (@"
+                SELECT a.AlbumID, a.Title, a.ArtistName, a.IsCompilation, MAX(t.LastPlayedStamp) as MaxLastPlayed
+                    FROM CoreAlbums a, CoreTracks t 
+                    WHERE t.PrimarySourceID = ? AND a.AlbumID = t.AlbumID AND a.Title != ''
+                    GROUP BY a.AlbumID
+                    ORDER BY MaxLastPlayed DESC
+                    LIMIT ?");
+
             Reload ();
             ServiceManager.PlaybackController.TrackStarted += (o, a) => Reload ();
         }
@@ -57,14 +67,14 @@ namespace Banshee.Moblin
 
         private void Reload ()
         {
-            // FIXME actually order by playback time
-            var albums = DatabaseAlbumInfo.Provider.FetchAllMatching (
-                "1=1 LIMIT ?",
-                max_count
-            );
+            list.Clear ();
 
-            foreach (var album in albums) {
-                list.Add (album);
+            using (var reader = ServiceManager.DbConnection.Query (select_cmd, 1, max_count)) {
+                while (reader.Read ()) {
+                    list.Add (new AlbumInfo (reader[1] as string) {
+                        ArtistName = reader[2] as string
+                    });
+                }
             }
 
             Dump ();
@@ -75,7 +85,7 @@ namespace Banshee.Moblin
         {
             Console.WriteLine ("RecentAlbumsList has {0} albums", list.Count);
             foreach (var album in list) {
-                Console.WriteLine ("Recent Album: {0}", album);
+                Console.WriteLine ("Recent Album: {0} by {1}", album.Title, album.ArtistName);
             }
         }
 
