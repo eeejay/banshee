@@ -102,5 +102,67 @@ namespace Mutter
         public uint Xid {
             get { return mpl_panel_client_get_xid (Handle); }
         }
+        
+        [GLib.Signal ("set-size")]
+        public event SetSizeHandler SetSizeEvent {
+            add { GLib.Signal.Lookup (this, "set-size", typeof (SetSizeArgs)).AddDelegate (value); }
+            remove { GLib.Signal.Lookup (this, "set-size", typeof (SetSizeArgs)).RemoveDelegate (value); }
+        }
+        
+        [GLib.Signal ("show-begin")]
+        public event EventHandler ShowBeginEvent {
+            add { GLib.Signal.Lookup (this, "show-begin").AddDelegate (value); }
+            remove { GLib.Signal.Lookup (this, "show-begin").RemoveDelegate (value); }
+        }
+        
+        [GLib.Signal ("show-end")]
+        public event EventHandler ShowEndEvent {
+            add { GLib.Signal.Lookup (this, "show-end").AddDelegate (value); }
+            remove { GLib.Signal.Lookup (this, "show-end").RemoveDelegate (value); }
+        }
+        
+        [GLib.Signal ("hide-begin")]
+        public event EventHandler HideBeginEvent {
+            add { GLib.Signal.Lookup (this, "hide-begin").AddDelegate (value); }
+            remove { GLib.Signal.Lookup (this, "hide-begin").RemoveDelegate (value); }
+        }
+        
+        [GLib.Signal ("hide-end")]
+        public event EventHandler HideEndEvent {
+            add { GLib.Signal.Lookup (this, "hide-end").AddDelegate (value); }
+            remove { GLib.Signal.Lookup (this, "hide-end").RemoveDelegate (value); }
+        }
+        
+        [GLib.Signal ("request-show")]
+        public event EventHandler RequestShowEvent {
+            add { GLib.Signal.Lookup (this, "request-show").AddDelegate (value); }
+            remove { GLib.Signal.Lookup (this, "request-show").RemoveDelegate (value); }
+        }
+        
+        [GLib.Signal ("request-hide")]
+        public event EventHandler RequestHideEvent {
+            add { GLib.Signal.Lookup (this, "request-hide").AddDelegate (value); }
+            remove { GLib.Signal.Lookup (this, "request-hide").RemoveDelegate (value); }
+        }
+        
+        [GLib.Signal ("request-focus")]
+        public event EventHandler RequestFocusEvent {
+            add { GLib.Signal.Lookup (this, "request-focus").AddDelegate (value); }
+            remove { GLib.Signal.Lookup (this, "request-focus").RemoveDelegate (value); }
+        }
+        
+        // FIXME: need to define an delegate and args class
+        
+        [GLib.Signal ("request-button-style")]
+        public event EventHandler RequestButtonStyleEvent {
+            add { GLib.Signal.Lookup (this, "request-button-style").AddDelegate (value); }
+            remove { GLib.Signal.Lookup (this, "request-button-style").RemoveDelegate (value); }
+        }
+        
+        [GLib.Signal ("request-tooltip")]
+        public event EventHandler RequestTooltipEvent {
+            add { GLib.Signal.Lookup (this, "request-tooltip").AddDelegate (value); }
+            remove { GLib.Signal.Lookup (this, "request-tooltip").RemoveDelegate (value); }
+        }
     }
 }

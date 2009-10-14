@@ -1,5 +1,5 @@
 // 
-// PanelGtk.cs
+// SetSizeHandler.cs
 //  
 // Author:
 //   Aaron Bockover <abockover@novell.com>
@@ -25,41 +25,18 @@
 // THE SOFTWARE.
 
 using System;
-using System.Runtime.InteropServices;
-
-using Gtk;
 
 namespace Mutter
 {
-    public class PanelGtk : PanelClient
-    {
-        [DllImport ("libmoblin-panel-gtk")]
-        private static extern IntPtr mpl_panel_gtk_get_type ();
-    
-        public static new GLib.GType GType {
-            get { return new GLib.GType (mpl_panel_gtk_get_type ()); }
+    public delegate void SetSizeHandler (object o, SetSizeArgs args);
+
+    public class SetSizeArgs : GLib.SignalArgs {
+        public uint Width {
+            get { return (uint)Args[0]; }
         }
-    
-        [DllImport ("libmoblin-panel-gtk")]
-        private static extern IntPtr mpl_panel_gtk_new (string name, string tooltip, string stylesheet,
-            string button_style, bool with_toolbar_service);
         
-        public PanelGtk (string name, string tooltip, string stylesheet,
-            string button_style, bool with_toolbar_service) : base (IntPtr.Zero)
-        {
-            Raw = mpl_panel_gtk_new (name, tooltip, stylesheet, button_style, with_toolbar_service);
-        }
-    
-        public PanelGtk (IntPtr raw) : base (raw)
-        {
-        }
-    
-        [DllImport ("libmoblin-panel-gtk")]
-        private static extern IntPtr mpl_panel_gtk_get_window (IntPtr panel);
-    
-        private Container container_window;
-        public Container Window {
-            get { return container_window ?? (container_window = new Container (mpl_panel_gtk_get_window (Handle))); }
+        public uint Height {
+            get { return (uint)Args[1]; }
         }
     }
 }
