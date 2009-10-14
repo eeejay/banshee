@@ -97,5 +97,8 @@
     <Compile Include="Banshee.Moblin\PlayQueueBox.cs" />
     <Compile Include="Banshee.Moblin\PlaybackBox.cs" />
     <Compile Include="Banshee.Moblin\MoblinTrackInfoDisplay.cs" />
+    <Compile Include="Banshee.Moblin\RecentAlbumsList.cs" />
+    <Compile Include="Banshee.Moblin\MoblinPanel.cs" />
+    <Compile Include="Mutter\SetSizeHandler.cs" />
   </ItemGroup>
 </Project>

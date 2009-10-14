@@ -19,5 +19,9 @@
   <Extension path="/Banshee/ServiceManager/Service">
     <Service class="Banshee.Moblin.MoblinService"/>
   </Extension>
+  
+  <Extension path="/Banshee/ThickClient/GtkBaseClient/PostInitializeGtk">
+    <PostInitializeGtk class="Banshee.Moblin.MoblinPanel"/>
+  </Extension>
    
 </Addin>

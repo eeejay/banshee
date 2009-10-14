@@ -5,6 +5,7 @@ INSTALL_DIR = $(EXTENSIONS_INSTALL_DIR)
 
 SOURCES =  \
 	Banshee.Moblin/MediaPanelContents.cs \
+	Banshee.Moblin/MoblinPanel.cs \
 	Banshee.Moblin/MoblinService.cs \
 	Banshee.Moblin/MoblinTrackInfoDisplay.cs \
 	Banshee.Moblin/PlaybackBox.cs \
@@ -14,7 +15,8 @@ SOURCES =  \
 	Banshee.Moblin/SearchEntry.cs \
 	Banshee.Moblin/SearchHeader.cs \
 	Mutter/PanelClient.cs \
-	Mutter/PanelGtk.cs
+	Mutter/PanelGtk.cs \
+	Mutter/SetSizeHandler.cs
 
 RESOURCES = Banshee.Moblin.addin.xml
 

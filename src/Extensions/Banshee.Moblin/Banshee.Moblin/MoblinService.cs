@@ -28,9 +28,13 @@
 
 using System;
 
+using Hyena;
+
 using Banshee.Base;
 using Banshee.ServiceStack;
 using Banshee.Gui;
+
+using Mutter;
 
 namespace Banshee.Moblin
 {
@@ -38,8 +42,6 @@ namespace Banshee.Moblin
     {
         private GtkElementsService elements_service;
         private InterfaceActionService interface_action_service;
-        
-        private Gtk.Widget media_panel_window;
         
         public MoblinService ()
         {
@@ -81,39 +83,31 @@ namespace Banshee.Moblin
         
         private void Initialize ()
         {
-            if (ApplicationContext.CommandLine.Contains ("mutter-panel")) {
-                BuildPanel ();
+            if (MoblinPanel.Instance != null) {
+                var container = MoblinPanel.Instance.ParentContainer;
+                foreach (var child in container.Children) {
+                    container.Remove (child);
+                }
+                container.Add (new MediaPanelContents ());
+                container.ShowAll ();
+                
+                if (MoblinPanel.Instance.ToolbarPanel != null) {
+                    container.SetSizeRequest (
+                        (int)MoblinPanel.Instance.ToolbarPanelWidth,
+                        (int)MoblinPanel.Instance.ToolbarPanelHeight);
+                }
             }
         }
         
         public void Dispose ()
         {
-            if (media_panel_window != null) {
-                media_panel_window.Hide ();
-                media_panel_window.Destroy ();
-                media_panel_window = null;
+            if (MoblinPanel.Instance != null) {
+                MoblinPanel.Instance.Dispose ();
             }
             
             interface_action_service = null;
             elements_service = null;
         }
-        
-#region Media Panel
-
-        private void BuildPanel ()
-        {
-            var window = new Gtk.Window ("Moblin Media Panel");
-            window.SetDefaultSize (990, 460);
-            window.WindowPosition = Gtk.WindowPosition.Center;
-            window.Add (new MediaPanelContents ());
-            window.ShowAll ();
-
-            elements_service.RegisterContentWindow (window);
-
-            media_panel_window = window;
-        }
-
-#endregion        
 
         string IService.ServiceName {
             get { return "MoblinService"; }
