@@ -4,7 +4,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.50727</ProductVersion>
-    <ProjectGuid>{74B2E4CC-2701-4C8B-A11D-6E4443F4B21B}</ProjectGuid>
+    <ProjectGuid>{4FBB954A-5CA9-44DC-97DA-7D549AC3EADB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <UseParentDirectoryAsNamespace>true</UseParentDirectoryAsNamespace>
     <AssemblyName>Banshee.Moblin</AssemblyName>
@@ -100,5 +100,6 @@
     <Compile Include="Banshee.Moblin\RecentAlbumsList.cs" />
     <Compile Include="Banshee.Moblin\MoblinPanel.cs" />
     <Compile Include="Mutter\SetSizeHandler.cs" />
+    <Compile Include="Banshee.Moblin\RecentAlbumsView.cs" />
   </ItemGroup>
 </Project>
