@@ -47,8 +47,10 @@ namespace Banshee.Moblin
         
         private void BuildViews ()
         {
-            var left = new VBox ();
+            var left = new VBox () { Spacing = 10 };
             left.PackStart (new SearchHeader (), false, false, 0);
+            left.PackStart (new RecentAlbumsView (), false, false, 0);
+
             PackStart (left, true, true, 0);
             PackStart (new PlayQueueBox (), false, false, 0);
 

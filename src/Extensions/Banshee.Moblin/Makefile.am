@@ -10,6 +10,7 @@ SOURCES =  \
 	Banshee.Moblin/PlaybackBox.cs \
 	Banshee.Moblin/PlayQueueBox.cs \
 	Banshee.Moblin/RecentAlbumsList.cs \
+	Banshee.Moblin/RecentAlbumsView.cs \
 	Banshee.Moblin/SearchEntry.cs \
 	Banshee.Moblin/SearchHeader.cs \
 	Mutter/PanelClient.cs \

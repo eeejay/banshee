@@ -84,8 +84,8 @@ namespace Banshee.Moblin
         private void Dump ()
         {
             Console.WriteLine ("RecentAlbumsList has {0} albums", list.Count);
-            foreach (var album in list) {
-                Console.WriteLine ("Recent Album: {0} by {1}", album.Title, album.ArtistName);
+            foreach (var album in Albums) {
+                Console.WriteLine ("Recent Album: {0} by {1} (ArtworkId: {2})", album.Title, album.ArtistName, album.ArtworkId);
             }
         }
 
