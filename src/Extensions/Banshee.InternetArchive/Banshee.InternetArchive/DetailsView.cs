@@ -289,7 +289,7 @@ namespace Banshee.InternetArchive
 
             var files = new List<IA.DetailsFile> (details.Files);
 
-            string [] format_blacklist = new string [] { "metadata", "fingerprint", "checksums", "xml", "m3u" };
+            string [] format_blacklist = new string [] { "metadata", "fingerprint", "checksums", "xml", "m3u", "dublin core", "unknown" };
             var formats = new List<string> ();
             foreach (var f in files) {
                 var track = new TrackInfo () {
@@ -409,7 +409,8 @@ namespace Banshee.InternetArchive
                     target_list_width += file_sw.VScrollbar.Allocation.Width + 2;
                 }
 
-                target_list_width = Math.Min (target_list_width, Allocation.Width / 2);
+                // Don't let the track list be more than 2/3 of the total view
+                target_list_width = Math.Min (target_list_width, (int) (2.0/3.0 * (double)Allocation.Width));
 
                 if (a.Allocation.Width != target_list_width && target_list_width > 0) {
                     file_sw.SetSizeRequest (target_list_width, -1);

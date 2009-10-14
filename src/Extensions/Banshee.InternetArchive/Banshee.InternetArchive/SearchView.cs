@@ -69,8 +69,10 @@ namespace Banshee.InternetArchive
             this.source = source;
 
             list_view = new ResultListView ();
-
+            var controller = new PersistentColumnController ("InternetArchive");
+            list_view.ColumnController = controller;
             AddColumns ();
+            controller.Load ();
 
             list_view.RowActivated += (o, a) => {
                 ServiceManager.Get<InterfaceActionService> ()["InternetArchive.ViewItemDetails"].Activate ();
@@ -110,7 +112,6 @@ namespace Banshee.InternetArchive
             {
                 RulesHint = true;
                 IsEverReorderable = false;
-                ColumnController = new ColumnController ();
             }
 
             protected override bool OnPopupMenu ()
