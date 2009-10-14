@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+banshee-1 --hide --mutter-panel --redirect-log

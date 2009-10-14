@@ -19,8 +19,9 @@ RESOURCES = Banshee.Moblin.addin.xml
 if HAVE_MOBLIN
 include $(top_srcdir)/build/build.mk
 module_SCRIPTS += Banshee.Moblin.dll.config
+bin_SCRIPTS = banshee-1-mutter
 else
 EXTRA_DIST = $(SOURCES) $(RESOURCES)
 endif
 
-EXTRA_DIST += Banshee.Moblin.dll.config
+EXTRA_DIST += Banshee.Moblin.dll.config banshee-1-mutter
