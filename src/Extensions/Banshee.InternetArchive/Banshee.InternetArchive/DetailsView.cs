@@ -360,9 +360,27 @@ namespace Banshee.InternetArchive
             file_list.ColumnController = file_columns;
             file_list.SetModel (files_model);
 
+            // Order the formats according to the preferences
+            string format_order = String.Format ("{0}{1}{2}", SearchSource.VideoTypes.Get (), SearchSource.AudioTypes.Get (), SearchSource.TextTypes.Get ()).ToLower ();
+
+            var sorted_formats = formats.Select (f => new { Format = f, Order = format_order.IndexOf (f.ToLower ()) })
+                                        .OrderBy (o => o.Order == -1 ? Int32.MaxValue : o.Order);
+
             var format_list = ComboBox.NewText ();
-            foreach (var fmt in formats) {
-                format_list.AppendText (fmt);
+            format_list.RowSeparatorFunc = (model, iter) => {
+                return (string)model.GetValue (iter, 0) == "---";
+            };
+
+            bool have_sep = false;
+            foreach (var fmt in sorted_formats) {
+                if (fmt.Order == -1 && !have_sep) {
+                    have_sep = true;
+                    if (format_list.Model.IterNChildren () > 0) {
+                        format_list.AppendText ("---");
+                    }
+                }
+
+                format_list.AppendText (fmt.Format);
             }
 
             format_list.Changed += (o, a) => {
@@ -378,10 +396,7 @@ namespace Banshee.InternetArchive
                 files_model.Reload ();
             };
 
-            // TODO replace this with a user-configurable format weighting preference
-            if (formats.IndexOf ("VBR MP3") != -1) {
-                format_list.Active = formats.IndexOf ("VBR MP3");
-            } else if (formats.Count > 0) {
+            if (formats.Count > 0) {
                 format_list.Active = 0;
             }
 
@@ -394,12 +409,13 @@ namespace Banshee.InternetArchive
                     target_list_width += file_sw.VScrollbar.Allocation.Width + 2;
                 }
 
+                target_list_width = Math.Min (target_list_width, Allocation.Width / 2);
+
                 if (a.Allocation.Width != target_list_width && target_list_width > 0) {
                     file_sw.SetSizeRequest (target_list_width, -1);
                 }
             };
 
-            //PackStart (vbox, true, true, 0);
             PackStart (vbox, false, false, 0);
         }
 

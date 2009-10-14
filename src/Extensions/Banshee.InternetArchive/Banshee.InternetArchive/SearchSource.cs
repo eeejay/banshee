@@ -86,6 +86,8 @@ namespace Banshee.InternetArchive
             IA.Search.UserAgent = Banshee.Web.Browser.UserAgent;
             IA.Search.TimeoutMs = 12*1000;
 
+            InstallPreferences ();
+
             search = new IA.Search ();
 
             //Properties.SetStringList ("Icon.Name", "video-x-generic", "video", "source-library");
@@ -222,6 +224,8 @@ namespace Banshee.InternetArchive
             if (actions != null) {
                 actions.Dispose ();
             }
+
+            UninstallPreferences ();
         }
 
         private void ShowIntroText ()
@@ -243,5 +247,64 @@ namespace Banshee.InternetArchive
         }
 
         private SchemaEntry<bool> show_intro = new SchemaEntry<bool> ("plugins.internetarchive", "show_intro", true, null, null);
+
+#region Preferences
+
+        private SourcePage pref_page;
+        private Section pref_section;
+
+        private void InstallPreferences ()
+        {
+            PreferenceService service = ServiceManager.Get<PreferenceService> ();
+            if (service == null) {
+                return;
+            }
+
+            pref_page = new Banshee.Preferences.SourcePage (this);
+
+            pref_section = pref_page.Add (new Section ("mediatypes", Catalog.GetString ("Preferred Media Types"), 20));
+
+            pref_section.Add (new SchemaPreference<string> (AudioTypes,
+                Catalog.GetString ("_Audio"), Catalog.GetString ("")));
+
+            pref_section.Add (new SchemaPreference<string> (VideoTypes,
+                Catalog.GetString ("_Video"), Catalog.GetString ("")));
+
+            pref_section.Add (new SchemaPreference<string> (TextTypes,
+                Catalog.GetString ("_Text"), Catalog.GetString ("")));
+        }
+
+        private void UninstallPreferences ()
+        {
+            PreferenceService service = ServiceManager.Get<PreferenceService> ();
+            if (service == null || pref_page == null) {
+                return;
+            }
+
+            pref_page.Dispose ();
+            pref_page = null;
+            pref_section = null;
+        }
+
+        public override string PreferencesPageId {
+            get { return pref_page.Id; }
+        }
+
+        public static readonly SchemaEntry<string> AudioTypes = new SchemaEntry<string> (
+            "plugins.internetarchive", "audio_types",
+            "Audio, VBR Mp3, Ogg Vorbis, 64Kbps MP3, Flac, VBR ZIP, 64Kbps MP3 ZIP",
+            "Ordered list of preferred mediatypes for audio items", null);
+
+        public static readonly SchemaEntry<string> VideoTypes = new SchemaEntry<string> (
+            "plugins.internetarchive", "video_types",
+            "Ogg Video, *Ogg*, 512Kb MPEG4, MPEG2",
+            "Ordered list of preferred mediatypes for video items", null);
+
+        public static readonly SchemaEntry<string> TextTypes = new SchemaEntry<string> (
+            "plugins.internetarchive", "text_types",
+            "Text PDF, Standard LuraTech PDF, *PDF*, ZIP, Text, Hypertext",
+            "Ordered list of preferred mediatypes for text items", null);
+
+#endregion
     }
 }

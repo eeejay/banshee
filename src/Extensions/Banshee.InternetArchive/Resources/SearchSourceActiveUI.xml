@@ -22,6 +22,7 @@
 
   <popup action="IaSearchSourcePopup">
     <menuitem action="VisitInternetArchive" />
+    <menuitem name="SourcePreferences" action="SourcePreferencesAction"/>
   </popup>
 
   <popup action="IaResultPopup">
