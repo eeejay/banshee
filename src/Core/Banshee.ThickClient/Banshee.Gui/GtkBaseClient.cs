@@ -29,6 +29,8 @@
 using System;
 using System.IO;
 
+using Mono.Addins;
+
 using Hyena;
 
 using Banshee.Base;
@@ -94,6 +96,15 @@ namespace Banshee.Gui
                 GLib.Thread.Init ();
             }
             Gtk.Application.Init ();
+            
+            foreach (TypeExtensionNode node in AddinManager.GetExtensionNodes
+                ("/Banshee/ThickClient/GtkBaseClient/PostInitializeGtk")) {
+                try {
+                    node.CreateInstance ();
+                } catch (Exception e) {
+                    Log.Exception ("PostInitializeGtk extension failed to run", e);
+                }
+            }
         }
         
         protected void Initialize (bool registerCommonServices)

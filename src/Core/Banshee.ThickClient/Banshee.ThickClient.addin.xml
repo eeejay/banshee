@@ -41,6 +41,11 @@
     <Description>Defines a new GTK+ source view, possibly in conjunction with a Source extension.</Description>
     <ExtensionNode name="SourceView"/>
   </ExtensionPoint>
+  
+  <ExtensionPoint path="/Banshee/ThickClient/GtkBaseClient/PostInitializeGtk">
+    <Description>An extension point that runs immediately after initializing GTK.</Description>
+    <ExtensionNode name="PostInitializeGtk"/>
+  </ExtensionPoint>
 
   <ExtensionPoint path="/Banshee/ThickClient/ContextPane">
     <Description>Defines a new GTK+ context page, for showing contextual information beneath the main track source view.</Description>
