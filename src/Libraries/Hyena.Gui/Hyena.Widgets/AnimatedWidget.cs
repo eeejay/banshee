@@ -167,7 +167,10 @@ namespace Hyena.Widgets
                         widget_alloc.Y = allocation.Height - widget_alloc.Height;
                     }
                 }
-                Widget.SizeAllocate (widget_alloc);
+
+                if (widget_alloc.Height > 0 && widget_alloc.Width > 0) {
+                    Widget.SizeAllocate (widget_alloc);
+                }
             }
         }
         
