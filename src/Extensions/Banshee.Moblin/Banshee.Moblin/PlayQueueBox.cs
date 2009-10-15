@@ -86,7 +86,10 @@ namespace Banshee.Moblin
 
             if (MoblinPanel.Instance.ToolbarPanel != null) {
                 int old_pref = play_queue.PlayedSongsPreference.Value;
-                MoblinPanel.Instance.ToolbarPanel.ShowBeginEvent += (o, a) => play_queue.PlayedSongsPreference.Value = 2;
+                MoblinPanel.Instance.ToolbarPanel.ShowBeginEvent += (o, a) => {
+                    old_pref = play_queue.PlayedSongsPreference.Value;
+                    play_queue.PlayedSongsPreference.Value = 2;
+                };
                 MoblinPanel.Instance.ToolbarPanel.HideBeginEvent += (o, a) => play_queue.PlayedSongsPreference.Value = old_pref;
             }
             
