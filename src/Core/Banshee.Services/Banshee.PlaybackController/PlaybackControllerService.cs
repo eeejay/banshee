@@ -344,7 +344,10 @@ namespace Banshee.PlaybackController
         
         private TrackInfo QueryTrackRandom (PlaybackShuffleMode mode, bool restart)
         {
-            var track = Source.TrackModel.GetRandom (source_set_at, mode, restart, last_was_skipped);
+            var track_shuffler = Source.TrackModel as Banshee.Collection.Database.DatabaseTrackListModel;
+            TrackInfo track = track_shuffler == null
+                ? Source.TrackModel.GetRandom (source_set_at)
+                : track_shuffler.GetRandom (source_set_at, mode, restart, last_was_skipped, Banshee.Collection.Database.Shuffler.Playback);
             // Reset to default of true, only ever set to false by EosTransition
             last_was_skipped = true;
             return track;

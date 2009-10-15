@@ -114,14 +114,14 @@ namespace Banshee.PlayQueue
 
     public sealed class SourceChangedEventArgs : EventArgs
     {
-        private ITrackModelSource value;
+        private DatabaseSource value;
 
-        public SourceChangedEventArgs (ITrackModelSource value)
+        public SourceChangedEventArgs (DatabaseSource value)
         {
             this.value = value;
         }
 
-        public ITrackModelSource Value {
+        public DatabaseSource Value {
             get { return this.value; }
         }
     }

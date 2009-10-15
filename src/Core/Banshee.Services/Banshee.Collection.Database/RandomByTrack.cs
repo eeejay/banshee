@@ -41,8 +41,10 @@ namespace Banshee.Collection.Database
     {
         private static string track_condition = String.Format ("{0} ORDER BY RANDOM()", RANDOM_CONDITION);
 
-        public RandomByTrack () : base (PlaybackShuffleMode.Song)
+        public RandomByTrack (Shuffler shuffler) : base (PlaybackShuffleMode.Song, shuffler)
         {
+            Condition = "1=1";
+            OrderBy = "RANDOM()";
         }
 
         public override bool Next (DateTime after)
@@ -50,9 +52,14 @@ namespace Banshee.Collection.Database
             return true;
         }
 
-        public override TrackInfo GetTrack (DateTime after)
+        public override TrackInfo GetPlaybackTrack (DateTime after)
         {
             return Cache.GetSingle (track_condition, after, after);
+        }
+
+        public override DatabaseTrackInfo GetShufflerTrack (DateTime after)
+        {
+            return GetTrack (ShufflerQuery, after);
         }
     }
 }

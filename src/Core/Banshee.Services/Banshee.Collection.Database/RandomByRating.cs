@@ -40,13 +40,25 @@ namespace Banshee.Collection.Database
     {
         private static string track_condition = String.Format ("AND (CoreTracks.Rating = ? OR (? = 3 AND CoreTracks.Rating = 0)) {0} ORDER BY RANDOM()", RANDOM_CONDITION);
 
-        public RandomByRating () : base (PlaybackShuffleMode.Rating)
+        public RandomByRating (Shuffler shuffler) : base (PlaybackShuffleMode.Rating, shuffler)
         {
+            Condition = "(CoreTracks.Rating = ? OR (? = 3 AND CoreTracks.Rating = 0))";
+            OrderBy = "RANDOM()";
         }
 
-        public override TrackInfo GetTrack (DateTime after)
+        public override TrackInfo GetPlaybackTrack (DateTime after)
         {
             var track = !IsReady ? null : Cache.GetSingle (track_condition, slot + 1, slot + 1, after, after);
+            Reset ();
+            return track;
+        }
+
+        public override DatabaseTrackInfo GetShufflerTrack (DateTime after)
+        {
+            if (!IsReady)
+                return null;
+
+            var track = GetTrack (ShufflerQuery, slot + 1, slot + 1, after);
             Reset ();
             return track;
         }
@@ -55,7 +67,7 @@ namespace Banshee.Collection.Database
             get { return 5; }
         }
 
-        protected override string QuerySql {
+        protected override string PlaybackSlotQuerySql {
             get {
                 return @"
                     SELECT
@@ -68,6 +80,23 @@ namespace Banshee.Collection.Database
                         CoreTracks.LastStreamError = 0 AND
                         (CoreTracks.LastPlayedStamp < ? OR CoreTracks.LastPlayedStamp IS NULL) AND
                         (CoreTracks.LastSkippedStamp < ? OR CoreTracks.LastSkippedStamp IS NULL)
+                        {3}
+                    GROUP BY Slot";
+            }
+        }
+
+        protected override string ShufflerSlotQuerySql {
+            get {
+                return @"
+                    SELECT
+                        (CoreTracks.Rating - 1) AS Slot, COUNT(*)
+                    FROM
+                        CoreTracks LEFT OUTER JOIN CoreShuffles ON (CoreShuffles.ShufflerId = " + Shuffler.DbId.ToString () +
+                    @" AND CoreShuffles.TrackID = CoreTracks.TrackID)
+                        {0}
+                    WHERE
+                        CoreTracks.LastStreamError = 0 AND
+                        (CoreShuffles.LastShuffledAt < ? OR CoreShuffles.LastShuffledAt IS NULL)
                         {3}
                     GROUP BY Slot";
             }

@@ -36,11 +36,13 @@ namespace Banshee.Collection.Database
     {
         private static string track_condition = String.Format ("AND (CoreTracks.Score BETWEEN ? AND ? OR (? = 50 AND CoreTracks.Score = 0)) {0} ORDER BY RANDOM()", RANDOM_CONDITION);
 
-        public RandomByScore () : base (PlaybackShuffleMode.Score)
+        public RandomByScore (Shuffler shuffler) : base (PlaybackShuffleMode.Score, shuffler)
         {
+            Condition = "(CoreTracks.Score BETWEEN ? AND ? OR (? = 50 AND CoreTracks.Score = 0))";
+            OrderBy = "RANDOM()";
         }
 
-        public override TrackInfo GetTrack (DateTime after)
+        public override TrackInfo GetPlaybackTrack (DateTime after)
         {
             int min = slot * 100 / Slots + 1;
             int max = (slot + 1) * 100 / Slots;
@@ -50,11 +52,24 @@ namespace Banshee.Collection.Database
             return track;
         }
 
+        public override DatabaseTrackInfo GetShufflerTrack (DateTime after)
+        {
+            if (!IsReady)
+                return null;
+
+            int min = slot * 100 / Slots + 1;
+            int max = (slot + 1) * 100 / Slots;
+
+            var track = GetTrack (ShufflerQuery, min, max, max, after);
+            Reset ();
+            return track;
+        }
+
         protected override int Slots {
             get { return 20; }
         }
 
-        protected override string QuerySql {
+        protected override string PlaybackSlotQuerySql {
             get {
                 // NOTE: SQLite wrongly assumes that (-1)/5 == 0, the CASE WHEN works around this.
                 return @"
@@ -68,6 +83,24 @@ namespace Banshee.Collection.Database
                         CoreTracks.LastStreamError = 0 AND
                         (CoreTracks.LastPlayedStamp < ? OR CoreTracks.LastPlayedStamp IS NULL) AND
                         (CoreTracks.LastSkippedStamp < ? OR CoreTracks.LastSkippedStamp IS NULL)
+                        {3}
+                    GROUP BY Slot";
+            }
+        }
+
+        protected override string ShufflerSlotQuerySql {
+            get {
+                // NOTE: SQLite wrongly assumes that (-1)/5 == 0, the CASE WHEN works around this.
+                return @"
+                    SELECT
+                        CASE WHEN IFNULL(CoreTracks.Score, 0) = 0 THEN -1 ELSE (CoreTracks.Score - 1) * 20 / 100 END AS Slot, COUNT(*)
+                    FROM
+                        CoreTracks LEFT OUTER JOIN CoreShuffles ON (CoreShuffles.ShufflerId = " + Shuffler.DbId.ToString () +
+                    @" AND CoreShuffles.TrackID = CoreTracks.TrackID)
+                        {0}
+                    WHERE
+                        CoreTracks.LastStreamError = 0 AND
+                        (CoreShuffles.LastShuffledAt < ? OR CoreShuffles.LastShuffledAt IS NULL)
                         {3}
                     GROUP BY Slot";
             }

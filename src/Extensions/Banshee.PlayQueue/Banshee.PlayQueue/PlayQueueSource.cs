@@ -58,6 +58,7 @@ namespace Banshee.PlayQueue
 
         private ITrackModelSource prior_playback_source;
         private DatabaseTrackInfo current_track;
+        private Shuffler shuffler;
         private long offset;
         private TrackInfo prior_playback_track;
         private PlayQueueActions actions;
@@ -70,7 +71,7 @@ namespace Banshee.PlayQueue
 
         private PlaybackShuffleMode populate_mode = (PlaybackShuffleMode) PopulateModeSchema.Get ();
         private string populate_from_name = PopulateFromSchema.Get ();
-        private ITrackModelSource populate_from = null;
+        private DatabaseSource populate_from = null;
         private int played_songs_number = PlayedSongsNumberSchema.Get ();
         private int upcoming_songs_number = UpcomingSongsNumberSchema.Get ();
         
@@ -107,7 +108,7 @@ namespace Banshee.PlayQueue
             ServiceManager.SourceManager.VideoLibrary.TracksDeleted += HandleTracksDeleted;
             
             populate_from = ServiceManager.SourceManager.Sources.FirstOrDefault (
-                source => source.Name == populate_from_name) as ITrackModelSource;
+                source => source.Name == populate_from_name) as DatabaseSource;
             if (populate_from != null) {
                 populate_from.Reload ();
             }
@@ -124,6 +125,8 @@ namespace Banshee.PlayQueue
             InstallPreferences ();
             header_widget = CreateHeaderWidget ();
             header_widget.ShowAll ();
+
+            shuffler = new Shuffler (UniqueId);
 
             Properties.Set<Gtk.Widget> ("Nereid.SourceContents.HeaderWidget", header_widget);
         }
@@ -568,8 +571,10 @@ namespace Banshee.PlayQueue
                 // Add songs from the selected source, skip if all tracks need to be populated.
                 bool skip = tracks_to_add == upcoming_songs_number;
                 for (int i = 0; i < tracks_to_add; i++) {
-                    var track = populate_from.TrackModel.GetRandom (
-                        source_set_at, populate_mode, false, skip && i == 0) as DatabaseTrackInfo;
+
+                    var track = populate_from.DatabaseTrackModel.GetRandom (
+                        source_set_at, populate_mode, false, skip && i == 0, shuffler) as DatabaseTrackInfo;
+
                     if (track != null) {
                         track.LastPlayed = DateTime.Now;
                         // track.Save() is quite slow, update LastPlayedStamp directly in the database.

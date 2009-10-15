@@ -39,12 +39,15 @@ namespace Banshee.Collection.Database
 {
     public class RandomByAlbum : RandomBy
     {
-        private static string track_condition = String.Format ("AND CoreTracks.AlbumID = ? {0} ORDER BY Disc ASC, TrackNumber ASC", RANDOM_CONDITION);
+        private static string last_played_condition = String.Format ("AND CoreTracks.AlbumID = ? {0} ORDER BY Disc ASC, TrackNumber ASC", RANDOM_CONDITION);
+
         private HyenaSqliteCommand album_query;
         private int? album_id;
 
-        public RandomByAlbum () : base (PlaybackShuffleMode.Album)
+        public RandomByAlbum (Shuffler shuffler) : base (PlaybackShuffleMode.Album, shuffler)
         {
+            Condition = "CoreTracks.AlbumID = ?";
+            OrderBy = "Disc ASC, TrackNumber ASC";
         }
 
         protected override void OnModelAndCacheUpdated ()
@@ -72,9 +75,17 @@ namespace Banshee.Collection.Database
             return IsReady;
         }
 
-        public override TrackInfo GetTrack (DateTime after)
+        public override TrackInfo GetPlaybackTrack (DateTime after)
         {
-            return album_id == null ? null : Cache.GetSingle (track_condition, (int)album_id, after, after);
+            return album_id == null ? null : Cache.GetSingle (last_played_condition, (int)album_id, after, after);
+        }
+
+        public override DatabaseTrackInfo GetShufflerTrack (DateTime after)
+        {
+            if (album_id == null)
+                return null;
+
+            return GetTrack (ShufflerQuery, (int)album_id, after);
         }
 
         private HyenaSqliteCommand AlbumQuery {

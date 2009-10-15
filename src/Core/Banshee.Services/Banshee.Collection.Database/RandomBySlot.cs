@@ -49,7 +49,7 @@ namespace Banshee.Collection.Database
         private HyenaSqliteCommand query;
         protected int slot;
 
-        public RandomBySlot (PlaybackShuffleMode mode) : base (mode)
+        public RandomBySlot (PlaybackShuffleMode mode, Shuffler shuffler) : base (mode, shuffler)
         {
         }
 
@@ -74,7 +74,11 @@ namespace Banshee.Collection.Database
             int default_slot = (Slots - 1) / 2;
 
             // Get the distribution for tracks that haven't been played since stamp.
-            using (var reader = ServiceManager.DbConnection.Query (Query, after, after)) {
+            var reader = Shuffler == Shuffler.Playback
+                ? ServiceManager.DbConnection.Query (SlotQuery, after, after)
+                : ServiceManager.DbConnection.Query (SlotQuery, after);
+
+            using (reader) {
                 while (reader.Read ()) {
                     int s = Convert.ToInt32 (reader[0]);
                     int count = Convert.ToInt32 (reader[1]);
@@ -121,10 +125,10 @@ namespace Banshee.Collection.Database
             return IsReady;
         }
 
-        private HyenaSqliteCommand Query {
+        private HyenaSqliteCommand SlotQuery {
             get {
                 if (query == null) {
-                    query = new HyenaSqliteCommand (String.Format (QuerySql,
+                    query = new HyenaSqliteCommand (String.Format (SlotQuerySql,
                         Model.JoinFragment,
                         Model.CachesJoinTableEntries
                             ? String.Format ("CoreCache.ItemID = {0}.{1} AND", Model.JoinTable, Model.JoinPrimaryKey)
@@ -137,7 +141,15 @@ namespace Banshee.Collection.Database
             }
         }
 
+        private string SlotQuerySql {
+            get {
+                return Shuffler == Shuffler.Playback ? PlaybackSlotQuerySql : ShufflerSlotQuerySql;
+            }
+        }
+
         protected abstract int Slots { get; }
-        protected abstract string QuerySql { get; }
+
+        protected abstract string PlaybackSlotQuerySql { get; }
+        protected abstract string ShufflerSlotQuerySql { get; }
     }
 }

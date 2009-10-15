@@ -103,11 +103,11 @@ namespace Banshee.PlayQueue
             return TreeIter.Zero;
         }
 
-        public ITrackModelSource Source {
+        public DatabaseSource Source {
             get {
                 TreeIter iter;
                 if (GetActiveIter (out iter)) {
-                    return filter.GetValue(iter, 0) as ITrackModelSource;
+                    return filter.GetValue(iter, 0) as DatabaseSource;
                 }
                 return null;
             }

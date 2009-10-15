@@ -338,64 +338,18 @@ namespace Banshee.Collection.Database
             }
         }
 
-#region Get random methods
+        public override TrackInfo GetRandom (DateTime notPlayedSince)
+        {
+            return GetRandom (notPlayedSince, PlaybackShuffleMode.Song, true, false, Shuffler.Playback);
+        }
 
-        private static RandomBy [] randoms = new RandomBy [] {
-            new RandomByTrack (), new RandomByArtist (), new RandomByAlbum (), new RandomByRating (), new RandomByScore()
-        };
-
-        private DateTime random_began_at = DateTime.MinValue;
-        private DateTime last_random = DateTime.MinValue;
-
-        public override TrackInfo GetRandom (DateTime notPlayedSince, PlaybackShuffleMode mode, bool repeat, bool lastWasSkipped)
+        public TrackInfo GetRandom (DateTime notPlayedSince, PlaybackShuffleMode mode, bool repeat, bool resetSinceTime, Shuffler shuffler)
         {
             lock (this) {
-                if (Count == 0) {
-                    return null;
-                }
-
-                if (random_began_at < notPlayedSince) {
-                    random_began_at = last_random = notPlayedSince;
-                }
-
-                TrackInfo track = GetRandomTrack (mode, repeat, lastWasSkipped);
-                if (track == null && (repeat || mode != PlaybackShuffleMode.Linear)) {
-                    random_began_at = (random_began_at == last_random) ? DateTime.Now : last_random;
-                    track = GetRandomTrack (mode, repeat, true);
-                }
-
-                last_random = DateTime.Now;
-                return track;
+                shuffler.SetModelAndCache (this, cache);
+                return shuffler.GetRandom (notPlayedSince, mode, repeat, resetSinceTime);
             }
         }
-
-        private TrackInfo GetRandomTrack (PlaybackShuffleMode mode, bool repeat, bool lastWasSkipped)
-        {
-            foreach (var r in randoms) {
-                r.SetModelAndCache (this, cache);
-                if (lastWasSkipped || r.Mode != mode) {
-                    r.Reset ();
-                }
-            }
-            
-            var random = randoms.First (r => r.Mode == mode);
-            if (random != null) {
-                if (!random.IsReady) {
-                    if (!random.Next (random_began_at) && repeat) {
-                        random_began_at = last_random;
-                        random.Next (random_began_at);
-                    }
-                }
-
-                if (random.IsReady) {
-                    return random.GetTrack (random_began_at);
-                }
-            }
-
-            return null;
-        }
-
-#endregion
 
         public override TrackInfo this[int index] {
             get {

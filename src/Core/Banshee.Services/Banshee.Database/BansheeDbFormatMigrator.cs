@@ -56,7 +56,7 @@ namespace Banshee.Database
         // NOTE: Whenever there is a change in ANY of the database schema,
         //       this version MUST be incremented and a migration method
         //       MUST be supplied to match the new version number
-        protected const int CURRENT_VERSION = 35;
+        protected const int CURRENT_VERSION = 36;
         protected const int CURRENT_METADATA_VERSION = 6;
         
 #region Migration Driver
@@ -802,6 +802,33 @@ namespace Banshee.Database
 
 #endregion
 
+#region Version 36
+
+        [DatabaseVersion (36)]
+        private bool Migrate_36 ()
+        {
+            Execute(@"
+                CREATE TABLE CoreShuffles (
+                    ShufflerId           INTEGER,
+                    TrackID             INTEGER,
+                    LastShuffledAt      INTEGER,
+                    CONSTRAINT one_entry_per_track UNIQUE (ShufflerID, TrackID)
+                )
+            ");
+            Execute("CREATE INDEX CoreShufflesIndex ON CoreShuffles (ShufflerId, TrackID, LastShuffledAt)");
+
+            Execute(@"
+                CREATE TABLE CoreShufflers (
+                    ShufflerId      INTEGER PRIMARY KEY,
+                    Id              TEXT UNIQUE
+                )
+            ");
+
+            return true;
+        }
+
+#endregion
+
 #pragma warning restore 0169
         
 #region Fresh database setup
@@ -1010,6 +1037,23 @@ namespace Banshee.Database
             // This index slows down queries were we shove data into the CoreCache.
             // Since we do that frequently, not using it.
             //Execute("CREATE INDEX CoreCacheModelId      ON CoreCache(ModelID)");
+
+            Execute(@"
+                CREATE TABLE CoreShuffles (
+                    ShufflerId           INTEGER,
+                    TrackID             INTEGER,
+                    LastShuffledAt      INTEGER,
+                    CONSTRAINT one_entry_per_track UNIQUE (ShufflerID, TrackID)
+                )
+            ");
+            Execute("CREATE INDEX CoreShufflesIndex ON CoreShuffles (ShufflerId, TrackID, LastShuffledAt)");
+
+            Execute(@"
+                CREATE TABLE CoreShufflers (
+                    ShufflerId      INTEGER PRIMARY KEY,
+                    Id              TEXT UNIQUE
+                )
+            ");
         }
         
 #endregion
