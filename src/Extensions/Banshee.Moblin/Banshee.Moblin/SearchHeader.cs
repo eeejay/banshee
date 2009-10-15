@@ -30,6 +30,10 @@ using Gtk;
 
 using Hyena.Gui;
 
+using Banshee.Collection;
+using Banshee.ServiceStack;
+using Banshee.Gui;
+
 namespace Banshee.Moblin
 {
     public class SearchHeader : HBox
@@ -39,8 +43,20 @@ namespace Banshee.Moblin
             Spacing = 10;
             BorderWidth = 10;
             PackStart (new Label () { Markup = String.Format ("<big><b>{0}</b></big>",
-                Catalog.GetString ("Media")) }, false, false, 0);
-            PackStart (new SearchEntry (), true, true, 0);
+                GLib.Markup.EscapeText (Catalog.GetString ("Media"))) }, false, false, 0);
+
+            var search = new SearchEntry ();
+            search.Entry.Activated += (o, e) => {
+                var source = ServiceManager.SourceManager.MusicLibrary;
+                if (source != null) {
+                    source.FilterType = (TrackFilterType)search.Entry.ActiveFilterID;
+                    source.FilterQuery = search.Entry.Query;
+                    ServiceManager.SourceManager.SetActiveSource (source);
+                    ServiceManager.Get<GtkElementsService> ().PrimaryWindow.Present ();
+                    search.Entry.Query = String.Empty;
+                }
+            };
+            PackStart (search, true, true, 0);
         }
         
         protected override bool OnExposeEvent (Gdk.EventExpose evnt)

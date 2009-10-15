@@ -105,7 +105,7 @@ namespace Banshee.Moblin
         private void OnSearchEntryFilterChanged (object o, EventArgs args)
         {
             /* Translators: this is a verb (command), not a noun (things) */
-            EmptyMessage = String.Format (Catalog.GetString ("Filter Results"));
+            EmptyMessage = String.Format (Catalog.GetString ("_Search").Replace ("_", String.Empty));
             /*search_entry.EmptyMessage = String.Format (Catalog.GetString ("Filter on {0}"),
                 search_entry.GetLabelForFilterID (search_entry.ActiveFilterID));*/
 
