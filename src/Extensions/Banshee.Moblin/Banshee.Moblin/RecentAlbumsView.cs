@@ -45,7 +45,7 @@ namespace Banshee.Moblin
         private RecentAlbumsList recent;
         private List<Image> images;
 
-        public RecentAlbumsView () : base (5, 3, true)
+        public RecentAlbumsView () : base (5, 3, false)
         {
             RowSpacing = ColumnSpacing = 12;
             Build ();

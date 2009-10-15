@@ -55,7 +55,7 @@ namespace Banshee.Moblin
                 Xpad = 10,
                 Markup = String.Format ("<b><big>{0}</big></b>",
                     GLib.Markup.EscapeText (Catalog.GetString ("Most Recently Played")))
-            });
+            }, false, false, 0);
             left.PackStart (new RecentAlbumsView (), false, false, 0);
 
             PackStart (left, true, true, 0);
