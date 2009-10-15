@@ -50,6 +50,7 @@ namespace Banshee.Moblin
         {
             var left = new VBox () { Spacing = 10 };
             left.PackStart (new SearchHeader (), false, false, 0);
+            
             left.PackStart (new Label () {
                 Xalign = 0.0f,
                 Xpad = 10,
@@ -57,6 +58,16 @@ namespace Banshee.Moblin
                     GLib.Markup.EscapeText (Catalog.GetString ("Most Recently Played")))
             }, false, false, 0);
             left.PackStart (new RecentAlbumsView (), false, false, 0);
+            
+            var button = new Button (Catalog.GetString ("Music Library"));
+            button.Clicked += (o, e) => {
+                ServiceManager.SourceManager.SetActiveSource (ServiceManager.SourceManager.MusicLibrary);
+                ServiceManager.Get<MoblinService> ().PresentPrimaryInterface ();
+            };
+            var hbox = new HBox ();
+            hbox.PackStart (button, false, false, 0);
+            hbox.ShowAll ();
+            left.PackStart (hbox, false, false, 0);
 
             PackStart (left, true, true, 0);
             PackStart (new PlayQueueBox (), false, false, 0);

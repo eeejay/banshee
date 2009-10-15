@@ -83,10 +83,6 @@ namespace Banshee.Moblin
             ServiceManager.SourceManager.SetActiveSource (play_queue);
             //play_queue.TrackModel.Reloaded += HandleTrackModelReloaded;
             playqueue_view.SetModel (play_queue.TrackModel);
-            
-            var header = play_queue.CreateHeaderWidget ();
-            PackStart (header, false, false, 0);
-            header.ShowAll ();
         }
     }
 }
