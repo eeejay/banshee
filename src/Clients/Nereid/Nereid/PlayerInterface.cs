@@ -58,8 +58,10 @@ namespace Nereid
     {
         // Major Layout Components
         private VBox primary_vbox;
+        private Table header_table;
+        private MainMenu main_menu;
         private Toolbar header_toolbar;
-        private Toolbar footer_toolbar;
+        private HBox footer_toolbar;
         private HPaned views_pane;
         private ViewContainer view_container;
         
@@ -68,6 +70,18 @@ namespace Nereid
         private CompositeTrackSourceContents composite_view;
         private ObjectListSourceContents object_view;
         private Label status_label;
+
+        public MainMenu MainMenu {
+            get { return main_menu; }
+        }
+
+        public Toolbar HeaderToolbar {
+            get { return header_toolbar; }
+        }
+
+        public Table HeaderTable {
+            get { return header_table; }
+        }
 
         protected PlayerInterface (IntPtr ptr) : base (ptr)
         {
@@ -107,11 +121,7 @@ namespace Nereid
         private void BuildPrimaryLayout ()
         {
             primary_vbox = new VBox ();
-            
-            Widget menu = new MainMenu ();
-            menu.Show ();
-            primary_vbox.PackStart (menu, false, false, 0);
-           
+
             BuildHeader ();
             BuildViews ();
             BuildFooter ();
@@ -122,6 +132,17 @@ namespace Nereid
         
         private void BuildHeader ()
         {
+            header_table = new Table (2, 2, false);
+            header_table.Show ();
+            primary_vbox.PackStart (header_table, false, false, 0);
+
+            main_menu = new MainMenu ();
+            main_menu.Show ();
+
+            header_table.Attach (main_menu, 0, 1, 0, 1,
+                AttachOptions.Expand | AttachOptions.Fill,
+                AttachOptions.Shrink, 0, 0);
+
             Alignment toolbar_alignment = new Alignment (0.0f, 0.0f, 1.0f, 1.0f);
             toolbar_alignment.TopPadding = 3;
             toolbar_alignment.BottomPadding = 3;
@@ -133,7 +154,9 @@ namespace Nereid
             toolbar_alignment.Add (header_toolbar);
             toolbar_alignment.ShowAll ();
             
-            primary_vbox.PackStart (toolbar_alignment, false, false, 0);
+            header_table.Attach (toolbar_alignment, 0, 2, 1, 2,
+                AttachOptions.Expand | AttachOptions.Fill,
+                AttachOptions.Shrink, 0, 0);
             
             Widget next_button = new NextButton (ActionService);
             next_button.Show ();
@@ -187,9 +210,7 @@ namespace Nereid
 
         private void BuildFooter ()
         {
-            footer_toolbar = (Toolbar)ActionService.UIManager.GetWidget ("/FooterToolbar");
-            footer_toolbar.ShowArrow = false;
-            footer_toolbar.ToolbarStyle = ToolbarStyle.BothHoriz;
+            footer_toolbar = new HBox () { BorderWidth = 2 };
 
             Widget task_status = new Banshee.Gui.Widgets.TaskStatusIcon ();
 
@@ -210,9 +231,9 @@ namespace Nereid
                 status_align.LeftPadding = (uint)args.Allocation.Width;
             };
 
-            ActionService.PopulateToolbarPlaceholder (footer_toolbar, "/FooterToolbar/TaskStatus", task_status, false);
-            ActionService.PopulateToolbarPlaceholder (footer_toolbar, "/FooterToolbar/StatusBar", status_align, true);
-            ActionService.PopulateToolbarPlaceholder (footer_toolbar, "/FooterToolbar/RepeatButton", repeat_button);
+            footer_toolbar.PackStart (task_status, false, false, 0);
+            footer_toolbar.PackStart (status_align, true, true, 0);
+            footer_toolbar.PackStart (repeat_button, false, false, 0);
 
             footer_toolbar.ShowAll ();
             primary_vbox.PackStart (footer_toolbar, false, true, 0);
@@ -262,7 +283,16 @@ namespace Nereid
             };
             
             header_toolbar.ExposeEvent += OnToolbarExposeEvent;
-            footer_toolbar.ExposeEvent += OnToolbarExposeEvent;
+        }
+
+        // Hack method for the Moblin extension to disable the custom
+        // theme overriding of the header toolbar rendering; we should
+        // probably just do away with it altogether, but it needs
+        // further evaluation.
+
+        public void DisableHeaderToolbarExposeEvent ()
+        {
+            header_toolbar.ExposeEvent -= OnToolbarExposeEvent;
         }
         
 #endregion
