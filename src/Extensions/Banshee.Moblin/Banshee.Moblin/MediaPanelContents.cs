@@ -26,6 +26,7 @@
 
 using System;
 using Gtk;
+using Mono.Unix;
 
 using Hyena.Data.Gui;
 using Banshee.Collection.Gui;
@@ -49,6 +50,12 @@ namespace Banshee.Moblin
         {
             var left = new VBox () { Spacing = 10 };
             left.PackStart (new SearchHeader (), false, false, 0);
+            left.PackStart (new Label () {
+                Xalign = 0.0f,
+                Xpad = 10,
+                Markup = String.Format ("<b><big>{0}</big></b>",
+                    GLib.Markup.EscapeText (Catalog.GetString ("Most Recently Played")))
+            });
             left.PackStart (new RecentAlbumsView (), false, false, 0);
 
             PackStart (left, true, true, 0);
