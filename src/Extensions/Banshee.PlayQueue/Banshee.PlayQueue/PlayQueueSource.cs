@@ -73,7 +73,6 @@ namespace Banshee.PlayQueue
         private ITrackModelSource populate_from = null;
         private int played_songs_number = PlayedSongsNumberSchema.Get ();
         private int upcoming_songs_number = UpcomingSongsNumberSchema.Get ();
-        public SchemaPreference<int> PlayedSongsPreference { get; private set; }
         
         public PlayQueueSource () : base (Catalog.GetString ("Play Queue"), null)
         {
@@ -752,15 +751,12 @@ namespace Banshee.PlayQueue
 
             pref_section = pref_page.Add (new Section ());
             pref_section.ShowLabel = false;
-
-            PlayedSongsPreference = new SchemaPreference<int> (PlayedSongsNumberSchema,
+            pref_section.Add (new SchemaPreference<int> (PlayedSongsNumberSchema,
                 Catalog.GetString ("Number of _played songs to show"), null, delegate {
                     played_songs_number = PlayedSongsNumberSchema.Get ();
                     UpdatePlayQueue ();
                 }
-            );
-            pref_section.Add (PlayedSongsPreference);
-
+            ));
             pref_section.Add (new SchemaPreference<int> (UpcomingSongsNumberSchema,
                 Catalog.GetString ("Number of _upcoming songs to show"), null, delegate {
                     upcoming_songs_number = UpcomingSongsNumberSchema.Get ();

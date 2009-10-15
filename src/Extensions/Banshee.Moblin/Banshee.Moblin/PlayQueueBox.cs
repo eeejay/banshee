@@ -83,12 +83,6 @@ namespace Banshee.Moblin
             ServiceManager.SourceManager.SetActiveSource (play_queue);
             //play_queue.TrackModel.Reloaded += HandleTrackModelReloaded;
             playqueue_view.SetModel (play_queue.TrackModel);
-
-            if (MoblinPanel.Instance.ToolbarPanel != null) {
-                int old_pref = play_queue.PlayedSongsPreference.Value;
-                MoblinPanel.Instance.ToolbarPanel.ShowBeginEvent += (o, a) => play_queue.PlayedSongsPreference.Value = 2;
-                MoblinPanel.Instance.ToolbarPanel.HideBeginEvent += (o, a) => play_queue.PlayedSongsPreference.Value = old_pref;
-            }
             
             var header = play_queue.CreateHeaderWidget ();
             PackStart (header, false, false, 0);
