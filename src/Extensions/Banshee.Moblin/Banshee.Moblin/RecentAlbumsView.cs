@@ -38,19 +38,19 @@ namespace Banshee.Moblin
 {
     public class RecentAlbumsView : Table
     {
-        const int icon_size = 48;
-        const int cols = 3;
-        const int rows = 4;
+        const int icon_size = 98;
+        const int cols = 5;
+        const int rows = 3;
 
         private RecentAlbumsList recent;
         private List<Image> images;
 
-        public RecentAlbumsView () : base (3, 4, true)
+        public RecentAlbumsView () : base (5, 3, true)
         {
             RowSpacing = ColumnSpacing = 12;
             Build ();
 
-            recent = new RecentAlbumsList (cols*rows);
+            recent = new RecentAlbumsList (cols * rows);
             recent.Changed += (o, a) => Reload ();
             Reload ();
         }
@@ -63,7 +63,7 @@ namespace Banshee.Moblin
                 for (uint i = 0; i < cols; i++) {
                     var image = new Image ();
                     images.Add (image);
-                    Attach (image, i, i+1, j, j+1);
+                    Attach (image, i, i + 1, j, j + 1);
                 }
             }
 
@@ -80,7 +80,7 @@ namespace Banshee.Moblin
                 images[i].Show ();
             }
 
-            for (int i = recent.Albums.Count; i < cols*rows; i++) {
+            for (int i = recent.Albums.Count; i < cols * rows; i++) {
                 images[i].Hide ();
             }
         }

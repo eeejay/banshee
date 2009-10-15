@@ -77,17 +77,17 @@ namespace Banshee.Moblin
                 }
             }
 
-            Dump ();
+            // Dump ();
             OnChanged ();
         }
 
-        private void Dump ()
+        /*private void Dump ()
         {
             Console.WriteLine ("RecentAlbumsList has {0} albums", list.Count);
             foreach (var album in Albums) {
                 Console.WriteLine ("Recent Album: {0} by {1} (ArtworkId: {2})", album.Title, album.ArtistName, album.ArtworkId);
             }
-        }
+        }*/
 
         private void OnChanged ()
         {
