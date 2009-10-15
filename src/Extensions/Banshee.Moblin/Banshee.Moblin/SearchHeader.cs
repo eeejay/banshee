@@ -52,8 +52,8 @@ namespace Banshee.Moblin
                     source.FilterType = (TrackFilterType)search.Entry.ActiveFilterID;
                     source.FilterQuery = search.Entry.Query;
                     ServiceManager.SourceManager.SetActiveSource (source);
-                    ServiceManager.Get<GtkElementsService> ().PrimaryWindow.Present ();
                     search.Entry.Query = String.Empty;
+                    ServiceManager.Get<MoblinService> ().PresentPrimaryInterface ();
                 }
             };
             PackStart (search, true, true, 0);
