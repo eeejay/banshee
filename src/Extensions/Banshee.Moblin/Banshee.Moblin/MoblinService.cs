@@ -83,6 +83,11 @@ namespace Banshee.Moblin
         
         private void Initialize ()
         {
+            Application.ShutdownRequested += () => {
+                elements_service.PrimaryWindow.Hide ();
+                return false;
+            };
+
             if (MoblinPanel.Instance != null) {
                 var container = MoblinPanel.Instance.ParentContainer;
                 foreach (var child in container.Children) {
