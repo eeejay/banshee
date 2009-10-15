@@ -26,6 +26,7 @@
 
 using System;
 using Gtk;
+using Mono.Unix;
 
 using Hyena.Data.Gui;
 using Banshee.Collection.Gui;
@@ -46,17 +47,23 @@ namespace Banshee.Moblin
             
             FindPlayQueue ();
             
+            PackStart (new Label () {
+                Markup = String.Format ("<b><big>{0}</big></b>", 
+                    GLib.Markup.EscapeText (Catalog.GetString ("Play Queue"))),
+                Xalign = 0.0f
+            }, false, false, 0);
+            
             PackStart (new PlaybackBox (), false, false, 0);
             
-            PackStart (new MoblinTrackInfoDisplay () {
-                HeightRequest = 64
-            }, false, false, 10);
-            
-            PackEnd (new Hyena.Widgets.ScrolledWindow () {
+            PackStart (new Hyena.Widgets.ScrolledWindow () {
                 (playqueue_view = new TerseTrackListView () {
                     HasFocus = true
                 })
             }, true, true, 0);
+            
+            PackStart (new MoblinTrackInfoDisplay () {
+                HeightRequest = 64
+            }, false, false, 10);
             
             playqueue_view.ColumnController.Insert (new Column (null, "indicator",
                 new ColumnCellStatusIndicator (null), 0.05, true, 20, 20), 0);
