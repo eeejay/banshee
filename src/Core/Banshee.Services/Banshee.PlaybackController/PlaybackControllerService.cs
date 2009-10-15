@@ -358,6 +358,8 @@ namespace Banshee.PlaybackController
 
         protected virtual void OnStopped ()
         {
+            player_engine.IncrementLastPlayed ();
+
             EventHandler handler = Stopped;
             if (handler != null) {
                 handler (this, EventArgs.Empty);
