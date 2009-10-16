@@ -432,6 +432,12 @@ namespace Banshee.Query
                     );
                     break;
 
+                case "score":
+                    sort_query = String.Format (@"
+                        CoreTracks.Score {0},
+                        CoreTracks.Playcount {0}, {1}", ascDesc, default_sort);
+                    break;
+
                 case "year":
                 case "bitrate":
                 case "bpm":
@@ -439,7 +445,6 @@ namespace Banshee.Query
                 case "disccount":
                 case "duration":
                 case "rating":
-                case "score":
                 case "playcount":
                 case "skipcount":
                 case "filesize":
