@@ -761,8 +761,11 @@ namespace Banshee.Sources
             builder.AppendFormat (Catalog.GetPluralString ("{0} item", "{0} items", count), count);
             
             if (this is IDurationAggregator && StatusFormatsCount > 0) {
-                builder.Append (STATUS_BAR_SEPARATOR);
-                duration_status_formatters[CurrentStatusFormat] (builder, ((IDurationAggregator)this).Duration);
+                var duration = ((IDurationAggregator)this).Duration;
+                if (duration > TimeSpan.Zero) {
+                    builder.Append (STATUS_BAR_SEPARATOR);
+                    duration_status_formatters[CurrentStatusFormat] (builder, ((IDurationAggregator)this).Duration);
+                }
             }
 
             if (this is IFileSizeAggregator) {
