@@ -178,7 +178,9 @@ namespace Banshee.InternetArchive
             // Reviews
             Expander reviews = null;
             if (details.NumReviews > 0) {
-                reviews = CreateExpander (Catalog.GetString ("Reviews"));
+                reviews = CreateExpander (String.Format (Catalog.GetPluralString (
+                    "Reviews ({0} reviewer)", "Reviews ({0} reviewers)", details.NumReviews), details.NumReviews
+                ));
                 var reviews_box = new VBox () { Spacing = 6 };
                 reviews.Child = reviews_box;
 
@@ -361,9 +363,9 @@ namespace Banshee.InternetArchive
             file_list.SetModel (files_model);
 
             // Order the formats according to the preferences
-            string format_order = String.Format ("{0}{1}{2}", SearchSource.VideoTypes.Get (), SearchSource.AudioTypes.Get (), SearchSource.TextTypes.Get ()).ToLower ();
+            string format_order = String.Format (", {0}, {1}, {2},", SearchSource.VideoTypes.Get (), SearchSource.AudioTypes.Get (), SearchSource.TextTypes.Get ()).ToLower ();
 
-            var sorted_formats = formats.Select (f => new { Format = f, Order = format_order.IndexOf (f.ToLower ()) })
+            var sorted_formats = formats.Select (f => new { Format = f, Order = Math.Max (format_order.IndexOf (", " + f.ToLower () + ","), format_order.IndexOf (f.ToLower ())) })
                                         .OrderBy (o => o.Order == -1 ? Int32.MaxValue : o.Order);
 
             var format_list = ComboBox.NewText ();

@@ -88,7 +88,7 @@ namespace Banshee.InternetArchive
 
             InstallPreferences ();
 
-            search = new IA.Search ();
+            search = new IA.Search () { NumResults = 100 };
 
             //Properties.SetStringList ("Icon.Name", "video-x-generic", "video", "source-library");
 
@@ -297,12 +297,12 @@ namespace Banshee.InternetArchive
 
         public static readonly SchemaEntry<string> VideoTypes = new SchemaEntry<string> (
             "plugins.internetarchive", "video_types",
-            "Ogg Video, *Ogg*, 512Kb MPEG4, MPEG2",
+            "Ogg Video, 512Kb MPEG4, MPEG2, h.264 MPEG4, DivX, Quicktime, MPEG1",
             "Ordered list of preferred mediatypes for video items", null);
 
         public static readonly SchemaEntry<string> TextTypes = new SchemaEntry<string> (
             "plugins.internetarchive", "text_types",
-            "Text PDF, Standard LuraTech PDF, *PDF*, ZIP, Text, Hypertext",
+            "Text PDF, Standard LuraTech PDF, Grayscale LuraTech PDF, ZIP, Text, Hypertext",
             "Ordered list of preferred mediatypes for text items", null);
 
 #endregion

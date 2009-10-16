@@ -126,9 +126,9 @@ namespace Banshee.InternetArchive
             var cols = new SortableColumn [] {
                 Create ("Title",       Catalog.GetString ("Title"), 0.9, true, new ColumnCellText (null, true)),
                 Create ("Creator",     Catalog.GetString ("Creator"), 0.15, true, new ColumnCellText (null, true)),
-                Create ("Producer",    Catalog.GetString ("Producer"), 0.15, false, new ColumnCellText (null, true)),
+                Create ("Publisher",   Catalog.GetString ("Publisher"), 0.15, false, new ColumnCellText (null, true)),
                 Create ("Description", Catalog.GetString ("Description"), 0.35, false, new ColumnCellText (null, true)),
-                Create ("AvgRatingInt",   Catalog.GetString ("Rating"), 0.15, true, new ColumnCellRating (null, true) { ReadOnly = true }),
+                Create ("AvgRatingInt",Catalog.GetString ("Rating"), 0.15, true, new ColumnCellRating (null, true) { ReadOnly = true }),
                 Create ("Year",        Catalog.GetString ("Year"), 0.15, true, new ColumnCellPositiveInt (null, true, 4, 4) { CultureFormatted = false }),
                 Create ("Downloads",   Catalog.GetString ("Downloads"), 0.15, true, new ColumnCellPositiveInt (null, true, 2, 5)),
                 Create ("Format",      Catalog.GetString ("Formats"), 0.15, false, new ColumnCellText (null, true)),

@@ -70,6 +70,8 @@ namespace Banshee.InternetArchive
             var combo = media_type_combo = new ComboBox ();
             combo.Model = store;
 
+            store.AppendValues (null, Catalog.GetString ("All"));
+
             foreach (var mediatype in IA.MediaType.Options.OrderBy (t => t.Name)) {
                 if (mediatype.Id != "software") {
                     var iter = store.AppendValues (mediatype, mediatype.Name);
@@ -165,7 +167,7 @@ namespace Banshee.InternetArchive
         {
             source.Search.Sorts.Clear ();
 
-            string [] sorts = { "downloads desc", "week asc", "avg_rating desc", "year asc", "addeddate desc" };
+            string [] sorts = { "downloads desc", "week desc", "avg_rating desc", "year asc", "addeddate desc" };
             source.Search.Sorts.Add (new IA.Sort () { Id = sorts[sort_combo.Active] });
 
             // And if the above sort value is the same for two items, sort by creator then by title
@@ -175,10 +177,10 @@ namespace Banshee.InternetArchive
             TreeIter iter;
             if (media_type_combo.GetActiveIter (out iter)) {
                 var media_type = media_type_store.GetValue (iter, 0) as IA.FieldValue;
-                string query = media_type.ToString ();
+                string query = media_type != null ? media_type.ToString () + " AND " : "";
 
                 // Remove medialess 'collection' results
-                query += " AND -mediatype:collection";
+                query += "-mediatype:collection";
 
                 if (!String.IsNullOrEmpty (search_entry.Query)) {
                     query += String.Format (" AND {0}", search_entry.Query);

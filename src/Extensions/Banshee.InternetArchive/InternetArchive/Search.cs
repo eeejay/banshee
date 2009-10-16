@@ -36,11 +36,11 @@ namespace InternetArchive
     {
         List<Sort> sorts = new List<Sort> ();
         List<Field> result_fields = new List<Field> ();
-        int NumResults;
 
         public IList<Field>  ReturnFields { get { return result_fields; } }
         public IList<Sort>   Sorts { get { return sorts; } }
         public string Query { get; set; }
+        public int NumResults { get; set; }
         public int Page { get; set; }
 
         static Search () {
@@ -51,25 +51,7 @@ namespace InternetArchive
         public Search ()
         {
             NumResults = 50;
-
-            result_fields.AddRange (new Field [] {
-                Field.AvgRating,
-                Field.Creator,
-                Field.Date,
-                Field.Description,
-                Field.Downloads,
-                Field.Format,
-                Field.Identifier,
-                Field.Language,
-                Field.LicenseUrl,
-                Field.License,
-                Field.MediaType,
-                Field.NumReviews,
-                Field.Publisher,
-                Field.Title,
-                Field.Year
-            });
-
+            result_fields.AddRange (Field.Fields);
             sorts.Add (new Sort () { Id = "avg_rating desc" });
         }
 
