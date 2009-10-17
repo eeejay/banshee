@@ -165,8 +165,9 @@ namespace InternetArchive
                     yield break;
                 }
 
-                foreach (JsonObject review in reviews) {
-                    yield return new DetailsReview (review);
+                // Return them in date-descending order
+                for (int i = reviews.Count - 1; i >= 0; i--) {
+                    yield return new DetailsReview (reviews[i] as JsonObject);
                 }
             }
         }

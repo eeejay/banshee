@@ -99,23 +99,56 @@ namespace Banshee.InternetArchive
 
 #endregion
 
-        private List<Expander> expanders = new List<Expander> ();
-        private Expander CreateExpander (string label)
+        private Widget CreateSection (string label, Widget child)
         {
-            var expander = new Expander (label) {
-                Expanded = true
-            };
+            var section = new VBox () { Spacing = 6 };
+            var header = new SectionHeader (label);
 
-            expanders.Add (expander);
+            section.PackStart (header, false, false, 0);
+            section.PackStart (child, false, false, 0);
 
-            return expander;
+            return section;
+        }
+
+        private class SectionHeader : EventBox
+        {
+            HBox box;
+            Arrow arrow;
+            Label label;
+
+            public SectionHeader (string headerString)
+            {
+                AppPaintable = true;
+
+                box = new HBox ();
+                box.Spacing = 6;
+                Child = box;
+                box.BorderWidth = 4;
+                label = new Label ("<b>" + headerString + "</b>") { Xalign = 0f, UseMarkup = true };
+                arrow = new Arrow (ArrowType.Down, ShadowType.None);
+
+                box.PackStart (arrow, false, false, 0);
+                box.PackStart (label, true, true, 0);
+
+                State = StateType.Selected;
+
+                bool changing_style = false;
+                StyleSet += (o, a) => {
+                    if (!changing_style) {
+                        changing_style = true;
+                        ModifyBg (StateType.Normal, Style.Background (StateType.Selected));
+                        changing_style = false;
+                    }
+                };
+            }
         }
 
         private void BuildInfoBox ()
         {
             var frame = new Hyena.Widgets.RoundedFrame ();
             var vbox = new VBox ();
-            vbox.Spacing = 0;
+            vbox.Spacing = 6;
+            vbox.BorderWidth = 2;
 
             // Title
             /*var title = new Label () {
@@ -124,20 +157,21 @@ namespace Banshee.InternetArchive
             };*/
 
             // Description
-            var desc_exp = CreateExpander (Catalog.GetString ("Description"));
-
             var desc = new Hyena.Widgets.WrapLabel () {
-                Markup = String.Format ("<small>{0}</small>", GLib.Markup.EscapeText (Hyena.StringUtil.RemoveHtml (details.Description)))
+                //Markup = String.Format ("<small>{0}</small>", GLib.Markup.EscapeText (Hyena.StringUtil.RemoveHtml (details.Description)))
+                Markup = String.Format ("{0}", GLib.Markup.EscapeText (Hyena.StringUtil.RemoveHtml (details.Description)))
             };
 
-            desc_exp.Child = desc;
+            var desc_exp = CreateSection (Catalog.GetString ("Description"), desc);
 
             // Details
-            var expander = CreateExpander (Catalog.GetString ("Details"));
             var table = new Banshee.Gui.TrackEditor.StatisticsPage () {
                 ShadowType = ShadowType.None,
                 BorderWidth = 0
             };
+
+            table.NameRenderer.Scale = Pango.Scale.Medium;
+            table.ValueRenderer.Scale = Pango.Scale.Medium;
 
             // Keep the table from needing to vertically scroll
             table.Child.SizeRequested += (o, a) => {
@@ -153,7 +187,7 @@ namespace Banshee.InternetArchive
                 AddToTable (table, Catalog.GetString ("Year:"), details.Year);
             }
             AddToTable (table, Catalog.GetString ("Publisher:"), details.Publisher);
-            AddToTable (table, Catalog.GetString ("Subject:"), details.Subject);
+            AddToTable (table, Catalog.GetString ("Keywords:"), details.Subject);
             AddToTable (table, Catalog.GetString ("License URL:"), details.LicenseUrl);
             AddToTable (table, Catalog.GetString ("Language:"), details.Language);
 
@@ -173,49 +207,64 @@ namespace Banshee.InternetArchive
             AddToTable (table, Catalog.GetString ("Lineage:"),    details.Lineage);
             AddToTable (table, Catalog.GetString ("Transferred by:"), details.Transferer);
 
-            expander.Child = table;
+            var expander = CreateSection (Catalog.GetString ("Details"), table);
 
             // Reviews
-            Expander reviews = null;
+            Widget reviews = null;
             if (details.NumReviews > 0) {
-                reviews = CreateExpander (String.Format (Catalog.GetPluralString (
+                var reviews_box = new VBox () { Spacing = 12, BorderWidth = 0 };
+                reviews = CreateSection (String.Format (Catalog.GetPluralString (
                     "Reviews ({0} reviewer)", "Reviews ({0} reviewers)", details.NumReviews), details.NumReviews
-                ));
-                var reviews_box = new VBox () { Spacing = 6 };
-                reviews.Child = reviews_box;
+                ), reviews_box);
+
+                string [] stars = {
+                    "\u2606\u2606\u2606\u2606\u2606",
+                    "\u2605\u2606\u2606\u2606\u2606",
+                    "\u2605\u2605\u2606\u2606\u2606",
+                    "\u2605\u2605\u2605\u2606\u2606",
+                    "\u2605\u2605\u2605\u2605\u2606",
+                    "\u2605\u2605\u2605\u2605\u2605"
+                };
 
                 var sb = new System.Text.StringBuilder ();
                 foreach (var review in details.Reviews) {
-                    var review_item = new Hyena.Widgets.WrapLabel ();
+                    //sb.Append ("<small>");
+
+                    var review_txt = new Hyena.Widgets.WrapLabel ();
 
                     var title = review.Title;
                     if (title != null) {
-                        sb.AppendFormat ("<small><b>{0}</b> ({1:0.0})</small>", GLib.Markup.EscapeText (title), review.Stars);
+                        sb.AppendFormat ("<b>{0}</b>\n", GLib.Markup.EscapeText (title));
                     }
+
+                    // Translators: {0} is the unicode-stars-rating, {1} is the name of a person who reviewed this item, and {1} is a date/time string
+                    sb.AppendFormat (Catalog.GetString ("{0} by {1} on {2}"),
+                        stars[review.Stars],
+                        GLib.Markup.EscapeText (review.Reviewer), 
+                        GLib.Markup.EscapeText (review.DateReviewed.ToLocalTime ().ToShortDateString ())
+                    );
 
                     var body = review.Body;
                     if (body != null) {
-                        if (title != null) {
-                            sb.Append ("\n");
-                        }
-
                         body = body.Replace ("\r\n", "\n");
                         body = body.Replace ("\n\n", "\n");
-                        sb.AppendFormat ("<small>{0}</small>", GLib.Markup.EscapeText (body));
+                        sb.Append ("\n");
+                        sb.Append (GLib.Markup.EscapeText (body));
                     }
 
-                    review_item.Markup = sb.ToString ();
+                    //sb.Append ("</small>");
+                    review_txt.Markup = sb.ToString ();
                     sb.Length = 0;
 
-                    reviews_box.PackStart (review_item, false, false, 0);
+                    reviews_box.PackStart (review_txt, false, false, 0);
                 }
             }
 
             // Packing
             vbox.PackStart (desc_exp, true, true,  0);
-            vbox.PackStart (new HSeparator (), false, false,  6);
+            //vbox.PackStart (new HSeparator (), false, false,  6);
             vbox.PackStart (expander, true, true,  0);
-            vbox.PackStart (new HSeparator (), false, false,  6);
+            //vbox.PackStart (new HSeparator (), false, false,  6);
             if (reviews != null) {
                 vbox.PackStart (reviews, true, true, 0);
             }
@@ -247,9 +296,10 @@ namespace Banshee.InternetArchive
                 } else if (val is DateTime) {
                     var dt = (DateTime)val;
                     if (dt != DateTime.MinValue) {
+                        var local_dt = dt.ToLocalTime ();
                         var str = dt.TimeOfDay == TimeSpan.Zero
-                            ? dt.ToShortDateString ()
-                            : dt.ToString ("g");
+                            ? local_dt.ToShortDateString ()
+                            : local_dt.ToString ("g");
                         table.AddItem (label, str);
                     }
                 } else {
@@ -340,14 +390,9 @@ namespace Banshee.InternetArchive
 
             // Make these columns snugly fix their data
             if (tracks.Count > 0) {
-                var max_track = tracks.Max (f => f.TrackNumber);
-                SetWidth (columns.TrackColumn,    max_track);
-                if (max_track == 0) {
-                    columns.TrackColumn.Visible = false;
-                }
-
-                SetWidth (columns.FileSizeColumn, tracks.Max (f => f.FileSize));
-                SetWidth (columns.DurationColumn, tracks.Max (f => f.Duration));
+                SetWidth (columns.TrackColumn,    tracks.Max (f => f.TrackNumber), 0);
+                SetWidth (columns.FileSizeColumn, tracks.Max (f => f.FileSize), 0);
+                SetWidth (columns.DurationColumn, tracks.Max (f => f.Duration), TimeSpan.Zero);
             }
 
             string max_title = "     ";
@@ -411,8 +456,8 @@ namespace Banshee.InternetArchive
                     target_list_width += file_sw.VScrollbar.Allocation.Width + 2;
                 }
 
-                // Don't let the track list be more than 2/3 of the total view
-                target_list_width = Math.Min (target_list_width, (int) (2.0/3.0 * (double)Allocation.Width));
+                // Don't let the track list be too wide
+                target_list_width = Math.Min (target_list_width, (int) (0.5 * (double)Allocation.Width));
 
                 if (a.Allocation.Width != target_list_width && target_list_width > 0) {
                     file_sw.SetSizeRequest (target_list_width, -1);
@@ -422,9 +467,12 @@ namespace Banshee.InternetArchive
             PackStart (vbox, false, false, 0);
         }
 
-        private void SetWidth<T> (Column col, T max)
+        private void SetWidth<T> (Column col, T max, T zero)
         {
             (col.GetCell (0) as ColumnCellText).SetMinMaxStrings (max, max);
+            if (zero.Equals (max)) {
+                col.Visible = false;
+            }
         }
     }
 }
