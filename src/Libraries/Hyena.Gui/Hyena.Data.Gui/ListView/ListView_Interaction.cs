@@ -258,6 +258,19 @@ namespace Hyena.Data.Gui
                         handled = true;
                     }
                     break;
+
+                case Gdk.Key.F10:
+                    if ((press.State & Gdk.ModifierType.ShiftMask) != 0)
+                        goto case Gdk.Key.Menu;
+                    break;
+
+                case Gdk.Key.Menu:
+                    // OnPopupMenu() is reserved for list items in derived classes.
+                    if (HeaderFocused) {
+                        InvokeColumnHeaderMenu (ActiveColumn);
+                        handled = true;
+                    }
+                    break;
             }
 
             if (handled) {
