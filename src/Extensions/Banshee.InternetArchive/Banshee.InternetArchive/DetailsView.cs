@@ -101,13 +101,20 @@ namespace Banshee.InternetArchive
 
         private Widget CreateSection (string label, Widget child)
         {
-            var section = new VBox () { Spacing = 6 };
-            var header = new SectionHeader (label);
-
-            section.PackStart (header, false, false, 0);
-            section.PackStart (child, false, false, 0);
-
+            var section = new Section (label, child);
             return section;
+        }
+
+        private class Section : VBox
+        {
+            public Section (string label, Widget child)
+            {
+                Spacing = 6;
+
+                var header = new SectionHeader (label, child);
+                PackStart (header, false, false, 0);
+                PackStart (child, false, false, 0);
+            }
         }
 
         private class SectionHeader : EventBox
@@ -115,14 +122,17 @@ namespace Banshee.InternetArchive
             HBox box;
             Arrow arrow;
             Label label;
+            Widget child;
 
-            public SectionHeader (string headerString)
+            public SectionHeader (string headerString, Widget child)
             {
+                this.child = child;
+
                 AppPaintable = true;
+                CanFocus = true;
 
                 box = new HBox ();
                 box.Spacing = 6;
-                Child = box;
                 box.BorderWidth = 4;
                 label = new Label ("<b>" + headerString + "</b>") { Xalign = 0f, UseMarkup = true };
                 arrow = new Arrow (ArrowType.Down, ShadowType.None);
@@ -140,6 +150,36 @@ namespace Banshee.InternetArchive
                         changing_style = false;
                     }
                 };
+
+                Child = box;
+
+                ButtonPressEvent += (o, a) => Toggle ();
+                KeyPressEvent += (o, a) => {
+                    var key = a.Event.Key;
+                    switch (key) {
+                        case Gdk.Key.Return:
+                        case Gdk.Key.KP_Enter:
+                        case Gdk.Key.space:
+                            Toggle ();
+                            a.RetVal = true;
+                            break;
+                    }
+                };
+            }
+
+            private void Toggle ()
+            {
+                Expanded = !Expanded;
+            }
+
+            private bool expanded = true;
+            private bool Expanded {
+                get { return expanded; }
+                set {
+                    arrow.ArrowType = value ? ArrowType.Down : ArrowType.Right;
+                    child.Visible = value;
+                    expanded = value;
+                }
             }
         }
 
@@ -149,12 +189,6 @@ namespace Banshee.InternetArchive
             var vbox = new VBox ();
             vbox.Spacing = 6;
             vbox.BorderWidth = 2;
-
-            // Title
-            /*var title = new Label () {
-                Xalign = 0f,
-                Markup = String.Format ("<big><b>{0}</b></big>", GLib.Markup.EscapeText (item.Title))
-            };*/
 
             // Description
             var desc = new Hyena.Widgets.WrapLabel () {
