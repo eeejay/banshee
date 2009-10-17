@@ -20,11 +20,6 @@
     </menu>
   </menubar>
 
-  <popup action="IaSearchSourcePopup">
-    <menuitem action="VisitInternetArchive" />
-    <menuitem name="SourcePreferences" action="SourcePreferencesAction"/>
-  </popup>
-
   <popup action="IaResultPopup">
     <menuitem action="ViewItemDetails" />
     <menuitem action="OpenItemWebsite" />

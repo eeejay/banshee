@@ -78,6 +78,8 @@ namespace Banshee.InternetArchive
                 })
             );
 
+            AddUiFromFile ("GlobalUI.xml");
+
             Register ();
         }
     }

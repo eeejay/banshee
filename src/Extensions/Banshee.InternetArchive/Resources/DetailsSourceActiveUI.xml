@@ -6,13 +6,6 @@
     </placeholder>
   </toolbar>
 
-  <popup action="IaDetailsSourcePopup">
-    <menuitem action="OpenItemWebsite" />
-    <menuitem action="VisitInternetArchive" />
-    <separator />
-    <menuitem action="UnmapSourceAction"/>
-  </popup>
-
   <popup name="TrackContextMenu" action="TrackContextMenuAction">
     <placeholder name="BelowAddToPlaylist">
         <separator />

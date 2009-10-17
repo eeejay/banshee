@@ -26,7 +26,8 @@ SOURCES = \
 
 RESOURCES = \
 	Banshee.InternetArchive.addin.xml \
-	Resources/SearchSourceActiveUI.xml \
-	Resources/DetailsSourceActiveUI.xml
+	Resources/DetailsSourceActiveUI.xml \
+	Resources/GlobalUI.xml \
+	Resources/SearchSourceActiveUI.xml
 
 include $(top_srcdir)/build/build.mk
