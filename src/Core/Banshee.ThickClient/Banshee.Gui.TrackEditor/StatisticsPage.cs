@@ -92,6 +92,9 @@ namespace Banshee.Gui.TrackEditor
             Add (view);
             ShowAll ();
         }
+
+        public CellRendererText NameRenderer { get { return name_renderer; } }
+        public CellRendererText ValueRenderer { get { return value_renderer; } }
         
         private bool RowSeparatorFunc (TreeModel model, TreeIter iter)
         {
