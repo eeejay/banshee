@@ -52,7 +52,7 @@ namespace InternetArchive
         {
             NumResults = 50;
             result_fields.AddRange (Field.Fields);
-            sorts.Add (new Sort () { Id = "avg_rating desc" });
+            sorts.Add (Sort.AvgRatingDesc);
         }
 
         private string GetQuery ()

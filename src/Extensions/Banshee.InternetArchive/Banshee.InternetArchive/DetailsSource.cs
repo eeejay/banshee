@@ -65,7 +65,7 @@ namespace Banshee.InternetArchive
 
         public DetailsSource (string id, string title, string mediaType) : this (Item.LoadOrCreate (id, title, mediaType)) {}
 
-        public DetailsSource (Item item) : base (item.Title, item.Title, 40, "internet-archive-" + item.Id)
+        public DetailsSource (Item item) : base (item.Title, item.Title, 195, "internet-archive-" + item.Id)
         {
             this.item = item;
             track_model = new MemoryTrackListModel ();
@@ -76,7 +76,6 @@ namespace Banshee.InternetArchive
             Properties.SetString ("UnmapSourceActionLabel", Catalog.GetString ("Close Item"));
 
             SetIcon ();
-
 
             gui = new DetailsView (this, item);
             Properties.Set<Gtk.Widget> ("Nereid.SourceContents", gui);
@@ -144,6 +143,10 @@ namespace Banshee.InternetArchive
 
         public void Reload ()
         {
+        }
+
+        public override string PreferencesPageId {
+            get { return Parent.PreferencesPageId; }
         }
 
         public override int Count {

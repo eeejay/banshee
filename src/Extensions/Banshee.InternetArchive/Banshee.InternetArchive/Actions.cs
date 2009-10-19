@@ -39,14 +39,14 @@ namespace Banshee.InternetArchive
 {
     public class Actions : Banshee.Gui.BansheeActionGroup
     {
-        public Actions (SearchSource source) : base ("InternetArchive")
+        public Actions (HomeSource source) : base ("InternetArchive")
         {
             Add (
                 new ActionEntry ("IaResultPopup", null, null, null, null, (o, a) => {
                     ShowContextMenu ("/IaResultPopup");
                 }),
                 new ActionEntry ("ViewItemDetails", null, Catalog.GetString ("View Item Details"), null, null, (o, a) => {
-                    var item = source.FocusedItem;
+                    var item = source.SearchSource.FocusedItem;
                     if (item != null && item.Id != null) {
                         string id = item.Id;
                         var src = new DetailsSource (id, item.Title, item.MediaType);
@@ -60,7 +60,7 @@ namespace Banshee.InternetArchive
                     if (src != null) {
                         uri = src.Item.Details.WebpageUrl;
                     } else {
-                        var item = source.FocusedItem;
+                        var item = source.SearchSource.FocusedItem;
                         if (item != null) {
                             uri = item.WebpageUrl;
                         }

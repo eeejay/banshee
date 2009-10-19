@@ -46,6 +46,9 @@ namespace Banshee.InternetArchive
         private Banshee.Widgets.SearchEntry search_entry;
         private Button search_button;
 
+        private Dictionary<IA.FieldValue, TreeIter> mediatypes;
+        private TreeIter all_iter;
+
         public Widget SearchEntry {
             get { return search_entry; }
         }
@@ -53,6 +56,15 @@ namespace Banshee.InternetArchive
         public HeaderFilters (SearchSource source)
         {
             this.source = source;
+            source.Updated += (o, a) => {
+                var s = source.SearchDescription;
+                if (s != null) {
+                    var iter = s.MediaType == null ? all_iter : mediatypes[s.MediaType];
+                    media_type_combo.SetActiveIter (iter);
+                    sort_combo.Active = Math.Max (Array.IndexOf (sorts, s.Sort), 0);
+                    search_entry.Query = s.Query ?? "";
+                }
+            };
 
             Spacing = 6;
 
@@ -60,8 +72,6 @@ namespace Banshee.InternetArchive
             BuildSortCombo ();
             BuildSearchEntry ();
             BuildSearchButton ();
-
-            UpdateSearch ();
         }
 
         private void BuildMediaTypeCombo ()
@@ -70,15 +80,18 @@ namespace Banshee.InternetArchive
             var combo = media_type_combo = new ComboBox ();
             combo.Model = store;
 
-            store.AppendValues (null, Catalog.GetString ("All"));
+            all_iter = store.AppendValues (null, Catalog.GetString ("All"));
 
+            mediatypes = new Dictionary<IA.FieldValue, TreeIter> ();
             foreach (var mediatype in IA.MediaType.Options.OrderBy (t => t.Name)) {
                 if (mediatype.Id != "software") {
                     var iter = store.AppendValues (mediatype, mediatype.Name);
+                    mediatypes.Add (mediatype, iter);
 
                     if (mediatype.Children != null) {
                         foreach (var child in mediatype.Children.OrderBy (t => t.Name)) {
                             var child_iter = store.AppendValues (iter, child, child.Name);
+                            mediatypes.Add (child, child_iter);
 
                             // FIXME should remember the last selected one in a schema or per-source in the db
                             if (child.Id == "etree")
@@ -141,11 +154,9 @@ namespace Banshee.InternetArchive
         {
             var combo = sort_combo = ComboBox.NewText ();
 
-            combo.AppendText (Catalog.GetString ("Downloads"));
-            combo.AppendText (Catalog.GetString ("Downloads This Week"));
-            combo.AppendText (Catalog.GetString ("Rating"));
-            combo.AppendText (Catalog.GetString ("Year Created"));
-            combo.AppendText (Catalog.GetString ("Date Added"));
+            foreach (var sort in sorts) {
+                combo.AppendText (sort.Name);
+            }
             combo.Active = 0;
 
             PackStart (new Label (Catalog.GetString ("Sort by:")), false, false, 0);
@@ -155,39 +166,23 @@ namespace Banshee.InternetArchive
         private void BuildSearchButton ()
         {
             var button = search_button = new Hyena.Widgets.ImageButton (Catalog.GetString ("_Search"), Stock.Find);
-            button.Clicked += (o, a) => {
-                UpdateSearch ();
-                source.Reload ();
-            };
+            button.Clicked += (o, a) => UpdateSearch ();
 
             PackStart (button, false, false, 0);
         }
 
+        private static IA.Sort [] sorts = { IA.Sort.DownloadsDesc, IA.Sort.WeekDesc, IA.Sort.DateCreatedDesc, IA.Sort.DateCreatedAsc, IA.Sort.DateAddedDesc, IA.Sort.AvgRatingDesc };
+
         private void UpdateSearch ()
         {
-            source.Search.Sorts.Clear ();
-
-            string [] sorts = { "downloads desc", "week desc", "avg_rating desc", "year asc", "addeddate desc" };
-            source.Search.Sorts.Add (new IA.Sort () { Id = sorts[sort_combo.Active] });
-
-            // And if the above sort value is the same for two items, sort by creator then by title
-            source.Search.Sorts.Add (new IA.Sort () { Id = "creatorSorter asc" });
-            source.Search.Sorts.Add (new IA.Sort () { Id = "titleSorter asc" });
-
+            IA.FieldValue media_type = null;
             TreeIter iter;
             if (media_type_combo.GetActiveIter (out iter)) {
-                var media_type = media_type_store.GetValue (iter, 0) as IA.FieldValue;
-                string query = media_type != null ? media_type.ToString () + " AND " : "";
-
-                // Remove medialess 'collection' results
-                query += "-mediatype:collection";
-
-                if (!String.IsNullOrEmpty (search_entry.Query)) {
-                    query += String.Format (" AND {0}", search_entry.Query);
-                }
-
-                source.Search.Query = query;
+                media_type = media_type_store.GetValue (iter, 0) as IA.FieldValue;
             }
+
+            var settings = new SearchDescription (null, search_entry.Query, sorts[sort_combo.Active], media_type);
+            source.SetSearch (settings);
         }
     }
 }

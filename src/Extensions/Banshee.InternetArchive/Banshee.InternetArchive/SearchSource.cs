@@ -45,7 +45,6 @@ using Banshee.Library;
 using Banshee.MediaEngine;
 using Banshee.PlaybackController;
 using Banshee.Playlist;
-using Banshee.Preferences;
 using Banshee.ServiceStack;
 using Banshee.Sources;
 
@@ -53,12 +52,11 @@ using IA=InternetArchive;
 
 namespace Banshee.InternetArchive
 {
-    public class SearchSource : Banshee.Sources.Source, IDisposable
+    public class SearchSource : Banshee.Sources.Source
     {
-        private static string name = Catalog.GetString ("Internet Archive");
+        private static string name = Catalog.GetString ("Search Results");
         private MemoryListModel<IA.SearchResult> model = new MemoryListModel<IA.SearchResult> ();
 
-        private Actions actions;
         private Gtk.Widget header_widget;
         private IA.Search search;
         private string status_text = "";
@@ -67,6 +65,7 @@ namespace Banshee.InternetArchive
         public int TotalResults { get { return total_results; } }
 
         public IA.Search Search { get { return search; } }
+        public SearchDescription SearchDescription { get; private set; }
 
         public IListModel<IA.SearchResult> Model { get { return model; } }
 
@@ -81,21 +80,17 @@ namespace Banshee.InternetArchive
             }
         }
 
-        public SearchSource () : base (name, name, 190, "internet-archive")
+        public SearchSource () : base (name, name, 190, "internet-archive-search")
         {
             IA.Search.UserAgent = Banshee.Web.Browser.UserAgent;
             IA.Search.TimeoutMs = 12*1000;
 
-            InstallPreferences ();
-
             search = new IA.Search () { NumResults = 100 };
 
-            //Properties.SetStringList ("Icon.Name", "video-x-generic", "video", "source-library");
+            Properties.SetStringList ("Icon.Name", "search", "gtk-search");
 
             Properties.SetString ("ActiveSourceUIResource", "SearchSourceActiveUI.xml");
             Properties.SetString ("GtkActionPath", "/IaSearchSourcePopup");
-
-            actions = new Actions (this);
 
             if (header_widget == null) {
                 header_widget = new HeaderFilters (this);
@@ -104,12 +99,15 @@ namespace Banshee.InternetArchive
             }
 
             Properties.Set<Gtk.Widget> ("Nereid.SourceContents", new SearchView (this));
+        }
 
-            foreach (var item in Item.LoadAll ()) {
-                AddChildSource (new DetailsSource (item));
-            }
-
-            ShowIntroText ();
+        public void SetSearch (SearchDescription settings)
+        {
+            SearchDescription = settings;
+            settings.ApplyTo (Search);
+            Reload ();
+            OnUpdated ();
+            ServiceManager.SourceManager.SetActiveSource (this);
         }
 
         public void Reload ()
@@ -203,6 +201,10 @@ namespace Banshee.InternetArchive
             });
         }
 
+        public override string PreferencesPageId {
+            get { return Parent.PreferencesPageId; }
+        }
+
         public override int Count {
             get { return 0; }
         }
@@ -213,98 +215,5 @@ namespace Banshee.InternetArchive
         {
             return status_text;
         }
-
-        /*public override bool AcceptsInputFromSource (Source source)
-        {
-            return false;
-        }*/
-
-        public void Dispose ()
-        {
-            if (actions != null) {
-                actions.Dispose ();
-            }
-
-            UninstallPreferences ();
-        }
-
-        private void ShowIntroText ()
-        {
-            if (show_intro.Get ()) {
-                string intro_txt = Catalog.GetString ("The Internet Archive, a 501(c)(3) non-profit, is building a digital library of Internet sites and other cultural artifacts in digital form. Like a paper library, we provide free access to researchers, historians, scholars, and the general public.");
-
-                SetStatus (intro_txt, true, false, "gtk-info");
-
-                MessageNotify += (o, a) => {
-                    var msg = CurrentMessage;
-                    if (msg != null) {
-                        if (msg.IsHidden && msg.Text == intro_txt) {
-                            show_intro.Set (false);
-                        }
-                    }
-                };
-            }
-        }
-
-        private SchemaEntry<bool> show_intro = new SchemaEntry<bool> ("plugins.internetarchive", "show_intro", true, null, null);
-
-#region Preferences
-
-        private SourcePage pref_page;
-        private Section pref_section;
-
-        private void InstallPreferences ()
-        {
-            PreferenceService service = ServiceManager.Get<PreferenceService> ();
-            if (service == null) {
-                return;
-            }
-
-            pref_page = new Banshee.Preferences.SourcePage (this);
-
-            pref_section = pref_page.Add (new Section ("mediatypes", Catalog.GetString ("Preferred Media Types"), 20));
-
-            pref_section.Add (new SchemaPreference<string> (AudioTypes,
-                Catalog.GetString ("_Audio"), Catalog.GetString ("")));
-
-            pref_section.Add (new SchemaPreference<string> (VideoTypes,
-                Catalog.GetString ("_Video"), Catalog.GetString ("")));
-
-            pref_section.Add (new SchemaPreference<string> (TextTypes,
-                Catalog.GetString ("_Text"), Catalog.GetString ("")));
-        }
-
-        private void UninstallPreferences ()
-        {
-            PreferenceService service = ServiceManager.Get<PreferenceService> ();
-            if (service == null || pref_page == null) {
-                return;
-            }
-
-            pref_page.Dispose ();
-            pref_page = null;
-            pref_section = null;
-        }
-
-        public override string PreferencesPageId {
-            get { return pref_page.Id; }
-        }
-
-        public static readonly SchemaEntry<string> AudioTypes = new SchemaEntry<string> (
-            "plugins.internetarchive", "audio_types",
-            "Audio, VBR Mp3, Ogg Vorbis, 64Kbps MP3, Flac, VBR ZIP, 64Kbps MP3 ZIP",
-            "Ordered list of preferred mediatypes for audio items", null);
-
-        public static readonly SchemaEntry<string> VideoTypes = new SchemaEntry<string> (
-            "plugins.internetarchive", "video_types",
-            "Ogg Video, 512Kb MPEG4, MPEG2, h.264 MPEG4, DivX, Quicktime, MPEG1",
-            "Ordered list of preferred mediatypes for video items", null);
-
-        public static readonly SchemaEntry<string> TextTypes = new SchemaEntry<string> (
-            "plugins.internetarchive", "text_types",
-            "Text PDF, Standard LuraTech PDF, Grayscale LuraTech PDF, ZIP, Text, Hypertext",
-            "Ordered list of preferred mediatypes for text items", null);
-
-#endregion
     }
 }

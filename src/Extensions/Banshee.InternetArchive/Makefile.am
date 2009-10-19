@@ -8,7 +8,10 @@ SOURCES = \
 	Banshee.InternetArchive/DetailsSource.cs \
 	Banshee.InternetArchive/DetailsView.cs \
 	Banshee.InternetArchive/HeaderFilters.cs \
+	Banshee.InternetArchive/HomeSource.cs \
+	Banshee.InternetArchive/HomeView.cs \
 	Banshee.InternetArchive/Item.cs \
+	Banshee.InternetArchive/SearchDescription.cs \
 	Banshee.InternetArchive/SearchSource.cs \
 	Banshee.InternetArchive/SearchView.cs \
 	InternetArchive/Collection.cs \
@@ -28,6 +31,7 @@ RESOURCES = \
 	Banshee.InternetArchive.addin.xml \
 	Resources/DetailsSourceActiveUI.xml \
 	Resources/GlobalUI.xml \
+	Resources/HomeSourceActiveUI.xml \
 	Resources/SearchSourceActiveUI.xml
 
 include $(top_srcdir)/build/build.mk

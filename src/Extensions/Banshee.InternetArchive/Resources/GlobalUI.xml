@@ -1,4 +1,9 @@
 <ui>
+  <popup action="IaHomeSourcePopup">
+    <menuitem action="VisitInternetArchive" />
+    <menuitem name="SourcePreferences" action="SourcePreferencesAction"/>
+  </popup>
+
   <popup action="IaSearchSourcePopup">
     <menuitem action="VisitInternetArchive" />
     <menuitem name="SourcePreferences" action="SourcePreferencesAction"/>
@@ -7,6 +12,7 @@
   <popup action="IaDetailsSourcePopup">
     <menuitem action="OpenItemWebsite" />
     <menuitem action="VisitInternetArchive" />
+    <menuitem name="SourcePreferences" action="SourcePreferencesAction"/>
     <separator />
     <menuitem action="UnmapSourceAction"/>
   </popup>

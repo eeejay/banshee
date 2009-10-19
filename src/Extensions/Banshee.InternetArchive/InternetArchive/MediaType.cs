@@ -33,14 +33,13 @@ namespace InternetArchive
 {
     public class MediaType : FieldValue
     {
-        public MediaType (string id, string name) : base (Field.MediaType, id, name) {}
+        public MediaType (string id, string name) : base (Field.MediaType, id, name)
+        {
+            Children = new List<Collection> ();
+        }
 
         public MediaType AddChildren (params Collection [] children)
         {
-            if (Children == null) {
-                Children = new List<Collection> ();
-            }
-
             foreach (var child in children) {
                 Children.Add (child);
                 child.MediaType = this;
@@ -50,6 +49,23 @@ namespace InternetArchive
         }
 
         public IList<Collection> Children { get; set; }
+
+        public static FieldValue Get (string id)
+        {
+            foreach (var type in Options) {
+                if (type.Id == id) {
+                    return type;
+                }
+
+                foreach (var collection in type.Children) {
+                    if (collection.Id == id) {
+                        return collection;
+                    }
+                }
+            }
+
+            return null;
+        }
 
         public static MediaType [] Options = new MediaType [] {
             new MediaType ("movies", Catalog.GetString ("Moving Images")).AddChildren (

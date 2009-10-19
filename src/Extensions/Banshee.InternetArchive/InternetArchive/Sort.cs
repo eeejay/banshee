@@ -26,6 +26,8 @@
 
 using System;
 
+using Mono.Unix;
+
 namespace InternetArchive
 {
     /*
@@ -86,10 +88,24 @@ namespace InternetArchive
 
     public class Sort
     {
-        public Sort ()
+        public static Sort DownloadsDesc  = new Sort ("downloads desc",  Catalog.GetString ("Downloads"));
+        public static Sort WeekDesc       = new Sort ("week desc",       Catalog.GetString ("Downloads This Week"));
+        public static Sort DateCreatedDesc= new Sort ("createdate desc", Catalog.GetString ("Newest"));
+        public static Sort DateCreatedAsc = new Sort ("createdate asc",  Catalog.GetString ("Oldest"));
+        public static Sort DateAddedDesc  = new Sort ("addeddate desc",  Catalog.GetString ("Recently Added"));
+        public static Sort AvgRatingDesc  = new Sort ("avg_rating desc", Catalog.GetString ("Rating"));
+        public static Sort TitleAsc       = new Sort ("titleSorter asc", Catalog.GetString ("Title"));
+        public static Sort CreatorAsc     = new Sort ("creatorSorter asc", Catalog.GetString ("Creator"));
+
+        public Sort () {}
+
+        public Sort (string id, string name)
         {
+            Id = id;
+            Name = name;
         }
 
-        public string Id { get; set; }
+        public string Id { get; private set; }
+        public string Name { get; private set; }
     }
 }

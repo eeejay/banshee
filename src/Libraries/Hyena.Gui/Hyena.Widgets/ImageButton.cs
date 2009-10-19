@@ -33,20 +33,32 @@ namespace Hyena.Widgets
 {
     public class ImageButton : Button
     {
+        private Image image;
+        private Label label;
+        private HBox hbox;
+
+        public Image ImageWidget { get { return image; } }
+        public Label LabelWidget { get { return label; } }
+
+        public uint InnerPadding {
+            get { return hbox.BorderWidth; }
+            set { hbox.BorderWidth = value; }
+        }
+
         public ImageButton (string text, string iconName) : this (text, iconName, Gtk.IconSize.Button)
         {
         }
         
         public ImageButton (string text, string iconName, Gtk.IconSize iconSize) : base ()
         {
-            Image image = new Image ();
+            image = new Image ();
             image.IconName = iconName;
             image.IconSize = (int) iconSize;
 
-            Label label = new Label ();
+            label = new Label ();
             label.MarkupWithMnemonic = text;
 
-            HBox hbox = new HBox ();
+            hbox = new HBox ();
             hbox.Spacing = 2;
             hbox.PackStart (image, false, false, 0);
             hbox.PackStart (label, true, true, 0);

@@ -99,7 +99,7 @@ namespace Banshee.InternetArchive
 
 #endregion
 
-        private Widget CreateSection (string label, Widget child)
+        private Section CreateSection (string label, Widget child)
         {
             var section = new Section (label, child);
             return section;
@@ -111,18 +111,21 @@ namespace Banshee.InternetArchive
             {
                 Spacing = 6;
 
-                var header = new SectionHeader (label, child);
-                PackStart (header, false, false, 0);
+                Header = new SectionHeader (label, child);
+                PackStart (Header, false, false, 0);
                 PackStart (child, false, false, 0);
             }
+
+            public SectionHeader Header { get; private set; }
         }
 
         private class SectionHeader : EventBox
         {
-            HBox box;
             Arrow arrow;
             Label label;
             Widget child;
+
+            public HBox Box { get; private set; }
 
             public SectionHeader (string headerString, Widget child)
             {
@@ -131,14 +134,14 @@ namespace Banshee.InternetArchive
                 AppPaintable = true;
                 CanFocus = true;
 
-                box = new HBox ();
-                box.Spacing = 6;
-                box.BorderWidth = 4;
+                Box = new HBox ();
+                Box.Spacing = 6;
+                Box.BorderWidth = 4;
                 label = new Label ("<b>" + headerString + "</b>") { Xalign = 0f, UseMarkup = true };
                 arrow = new Arrow (ArrowType.Down, ShadowType.None);
 
-                box.PackStart (arrow, false, false, 0);
-                box.PackStart (label, true, true, 0);
+                Box.PackStart (arrow, false, false, 0);
+                Box.PackStart (label, true, true, 0);
 
                 State = StateType.Selected;
 
@@ -151,7 +154,7 @@ namespace Banshee.InternetArchive
                     }
                 };
 
-                Child = box;
+                Child = Box;
 
                 ButtonPressEvent += (o, a) => Toggle ();
                 KeyPressEvent += (o, a) => {
@@ -244,13 +247,8 @@ namespace Banshee.InternetArchive
             var expander = CreateSection (Catalog.GetString ("Details"), table);
 
             // Reviews
-            Widget reviews = null;
+            Section reviews = null;
             if (details.NumReviews > 0) {
-                var reviews_box = new VBox () { Spacing = 12, BorderWidth = 0 };
-                reviews = CreateSection (String.Format (Catalog.GetPluralString (
-                    "Reviews ({0} reviewer)", "Reviews ({0} reviewers)", details.NumReviews), details.NumReviews
-                ), reviews_box);
-
                 string [] stars = {
                     "\u2606\u2606\u2606\u2606\u2606",
                     "\u2605\u2606\u2606\u2606\u2606",
@@ -259,6 +257,18 @@ namespace Banshee.InternetArchive
                     "\u2605\u2605\u2605\u2605\u2606",
                     "\u2605\u2605\u2605\u2605\u2605"
                 };
+
+                var reviews_box = new VBox () { Spacing = 12, BorderWidth = 0 };
+                reviews = CreateSection (Catalog.GetString ("Reviews"), reviews_box);
+
+                var avg_label = new Label (String.Format (Catalog.GetPluralString (
+                    // Translators: {0} is the number of reviewers, {1} is the average rating (not really relevant if there's only 1)
+                    "{0} reviewer", "{0} reviewers, avg {1}", details.NumReviews),
+                    details.NumReviews, stars[(int)Math.Round (details.AvgRating)]
+                ));
+                avg_label.TooltipText = String.Format ("{0:N2}", details.AvgRating);
+                avg_label.Xalign = 1.0f;
+                reviews.Header.Box.PackEnd (avg_label, false, false, 0);
 
                 var sb = new System.Text.StringBuilder ();
                 foreach (var review in details.Reviews) {
@@ -314,9 +324,11 @@ namespace Banshee.InternetArchive
 
             sw.Child.ModifyBg (StateType.Normal, Style.Base (StateType.Normal));
             sw.Child.ModifyFg (StateType.Normal, Style.Text (StateType.Normal));
+            sw.Child.ModifyText (StateType.Normal, Style.Text (StateType.Normal));
             StyleSet += delegate {
                 sw.Child.ModifyBg (StateType.Normal, Style.Base (StateType.Normal));
                 sw.Child.ModifyFg (StateType.Normal, Style.Text (StateType.Normal));
+                sw.Child.ModifyText (StateType.Normal, Style.Text (StateType.Normal));
             };
 
             PackStart (frame, true, true, 0);
@@ -422,6 +434,12 @@ namespace Banshee.InternetArchive
                 }
             }
 
+            // Order the formats according to the preferences
+            string format_order = String.Format (", {0}, {1}, {2},", HomeSource.VideoTypes.Get (), HomeSource.AudioTypes.Get (), HomeSource.TextTypes.Get ()).ToLower ();
+
+            var sorted_formats = formats.Select (f => new { Format = f, Order = Math.Max (format_order.IndexOf (", " + f.ToLower () + ","), format_order.IndexOf (f.ToLower ())) })
+                                        .OrderBy (o => o.Order == -1 ? Int32.MaxValue : o.Order);
+
             // Make these columns snugly fix their data
             if (tracks.Count > 0) {
                 SetWidth (columns.TrackColumn,    tracks.Max (f => f.TrackNumber), 0);
@@ -431,21 +449,17 @@ namespace Banshee.InternetArchive
 
             string max_title = "     ";
             if (tracks.Count > 0) {
-                var sorted_by_title = tracks.OrderBy (f => f.TrackTitle == null ? 0 : f.TrackTitle.Length).ToList ();
-                string nine_tenths = sorted_by_title[(int)Math.Floor (.90 * sorted_by_title.Count)].TrackTitle ?? "";
-                string max = sorted_by_title[sorted_by_title.Count - 1].TrackTitle ?? "";
-                max_title = ((double)max.Length >= (double)(2.0 * (double)nine_tenths.Length)) ? nine_tenths : max;
+                var sorted_by_title = files.Where (t => !t.Location.Contains ("zip"))
+                                           .OrderBy (f => f.Title == null ? 0 : f.Title.Length)
+                                           .ToList ();
+                string nine_tenths = sorted_by_title[(int)Math.Floor (.90 * sorted_by_title.Count)].Title ?? "";
+                string max = sorted_by_title[sorted_by_title.Count - 1].Title ?? "";
+                max_title = ((double)max.Length >= (double)(1.6 * (double)nine_tenths.Length)) ? nine_tenths : max;
             }
             (columns.TitleColumn.GetCell (0) as ColumnCellText).SetMinMaxStrings (max_title);
 
             file_list.ColumnController = file_columns;
             file_list.SetModel (files_model);
-
-            // Order the formats according to the preferences
-            string format_order = String.Format (", {0}, {1}, {2},", SearchSource.VideoTypes.Get (), SearchSource.AudioTypes.Get (), SearchSource.TextTypes.Get ()).ToLower ();
-
-            var sorted_formats = formats.Select (f => new { Format = f, Order = Math.Max (format_order.IndexOf (", " + f.ToLower () + ","), format_order.IndexOf (f.ToLower ())) })
-                                        .OrderBy (o => o.Order == -1 ? Int32.MaxValue : o.Order);
 
             var format_list = ComboBox.NewText ();
             format_list.RowSeparatorFunc = (model, iter) => {
