@@ -41,7 +41,7 @@ using Banshee.Configuration;
 namespace Banshee.Networking
 {
     public delegate void NetworkStateChangedHandler(object o, NetworkStateChangedArgs args);
-    
+
     public class NetworkStateChangedArgs : EventArgs
     {
         public bool Connected;
@@ -62,7 +62,7 @@ namespace Banshee.Networking
     {
         public event NetworkStateChangedHandler StateChanged;
         
-        private NetworkManager nm_manager;
+        private INetworkAvailabilityService manager;
         private State current_state;
         private bool disable_internet_access = false;
         
@@ -71,11 +71,11 @@ namespace Banshee.Networking
             InstallPreferences ();
             
             try {
-                ConnectToNetworkManager();
+                ConnectToManager ();
             } catch(Exception) {
-                nm_manager = null;
+                manager = null;
                 Log.Warning(
-                    Catalog.GetString("Cannot connect to NetworkManager"),
+                    Catalog.GetString("Cannot connect to NetworkManager or Wicd"),
                     Catalog.GetString("An available, working network connection will be assumed"),
                     false);
             }
@@ -86,11 +86,18 @@ namespace Banshee.Networking
             UninstallPreferences ();
         }
 
-        private void ConnectToNetworkManager()
+        private void ConnectToManager()
         {
-            nm_manager = new NetworkManager();
-            nm_manager.StateChange += OnNetworkManagerEvent;
-            current_state = nm_manager.State;
+            if (NetworkManager.ManagerPresent) {
+                manager = new NetworkManager ();
+            } else if (Wicd.ManagerPresent) {
+                manager = new Wicd ();
+            } else {
+                throw new NetworkUnavailableException ("Neither NetworkManager nor Wicd could be found");
+            }
+
+            manager.StateChange += OnNetworkManagerEvent;
+            current_state = manager.State;
         }
         
         private void OnNetworkManagerEvent(State new_state)
@@ -126,11 +133,11 @@ namespace Banshee.Networking
         }
         
         public bool Connected {
-            get { return disable_internet_access ? false : (nm_manager == null ? true : current_state == State.Connected); }
+            get { return disable_internet_access ? false : (manager == null ? true : current_state == State.Connected); }
         }
         
-        public NetworkManager Manager {
-            get { return nm_manager; }
+        public INetworkAvailabilityService Manager {
+            get { return manager; }
         }
         
 #region Offline Preference

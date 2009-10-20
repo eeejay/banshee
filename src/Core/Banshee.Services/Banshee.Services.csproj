@@ -171,7 +171,10 @@
     <Compile Include="Banshee.Metadata.Rhapsody\RhapsodyMetadataProvider.cs" />
     <Compile Include="Banshee.Metadata.Rhapsody\RhapsodyQueryJob.cs" />
     <Compile Include="Banshee.Networking\Network.cs" />
+    <Compile Include="Banshee.Networking\State.cs" />
     <Compile Include="Banshee.Networking\NetworkManager.cs" />
+    <Compile Include="Banshee.Networking\Wicd.cs" />
+    <Compile Include="Banshee.Networking\INetworkAvailabilityService.cs" />
     <Compile Include="Banshee.Database\BansheeModelProvider.cs" />
     <Compile Include="Banshee.Database\BansheeModelCache.cs" />
     <Compile Include="Banshee.PlaybackController\IPlaybackController.cs" />
