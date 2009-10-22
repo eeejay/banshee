@@ -1,11 +1,12 @@
 //
 // ListViewAccessible.cs
 //
-// Author:
+// Authors:
 //   Eitan Isaacson <eitan@ascender.com>
 //   Gabriel Burt <gburt@novell.com>
 //
-// Copyright (C) 2007-2008 Novell, Inc.
+// Copyright (C) 2009 Novell, Inc.
+// Copyright (C) 2009 Eitan Isaacson
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -233,7 +234,7 @@ namespace Hyena.Data.Gui.Accessibility
                 index = column;
 
             if (cell_cache.ContainsKey (index)) {
-                cell_cache[index].Redrawn();
+                cell_cache[index].Redrawn ();
             }
         }
 

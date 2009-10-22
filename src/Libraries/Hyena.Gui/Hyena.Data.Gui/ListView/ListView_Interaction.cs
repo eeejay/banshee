@@ -1,12 +1,13 @@
 //
 // ListView_Interaction.cs
 //
-// Author:
+// Authors:
 //   Aaron Bockover <abockover@novell.com>
 //   Gabriel Burt <gburt@novell.com>
 //   Eitan Isaacson <eitan@ascender.com>
 //
-// Copyright (C) 2007-2008 Novell, Inc.
+// Copyright (C) 2007-2009 Novell, Inc.
+// Copyright (C) 2009 Eitan Isaacson
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
