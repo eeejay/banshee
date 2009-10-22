@@ -445,9 +445,6 @@ namespace Banshee.Widgets
                 this.parent = parent;
                 HasFrame = false;
                 
-                layout = new Pango.Layout(PangoContext);
-                layout.FontDescription = PangoContext.FontDescription.Copy();
-
                 parent.StyleSet += OnParentStyleSet;
                 WidthChars = 1;
             }
@@ -491,6 +488,11 @@ namespace Banshee.Widgets
 
                 if(Text.Length > 0 || HasFocus || parent.EmptyMessage == null) {
                     return ret;
+                }
+
+                if (layout == null) {
+                    layout = new Pango.Layout(PangoContext);
+                    layout.FontDescription = PangoContext.FontDescription.Copy();
                 }
 
                 int width, height;
