@@ -58,11 +58,24 @@ namespace Banshee.Moblin
             protected override void OnClicked ()
             {
                 var source = ServiceManager.SourceManager.MusicLibrary;
+                var other_source = ServiceManager.SourceManager.VideoLibrary;
                 if (source != null) {
+                    if (other_source != null) {
+                        // HACK the Nereid search bar pulls the source's query value when
+                        // the active source is changed, so artificially ensure that happens
+                        ServiceManager.SourceManager.SetActiveSource (other_source);
+                    }
+
                     source.FilterType = TrackFilterType.None;
                     source.FilterQuery = String.Format ("artist=\"{0}\" album=\"{1}\"", Album.ArtistName, Album.Title);
                     ServiceManager.SourceManager.SetActiveSource (source);
                     ServiceManager.Get<MoblinService> ().PresentPrimaryInterface ();
+
+                    var player = ServiceManager.PlayerEngine;
+                    if (!player.IsPlaying () || player.CurrentState == Banshee.MediaEngine.PlayerState.Paused) {
+                        ServiceManager.PlaybackController.Source = source;
+                        ServiceManager.PlaybackController.Next ();
+                    }
                 }
             }
             
