@@ -32,7 +32,10 @@ using Gtk;
 using Hyena;
 
 using Banshee.Base;
+using Banshee.Collection;
+using Banshee.Sources;
 using Banshee.ServiceStack;
+using Banshee.MediaEngine;
 using Banshee.Gui;
 
 using Mutter;
@@ -43,6 +46,9 @@ namespace Banshee.Moblin
     {
         private GtkElementsService elements_service;
         private InterfaceActionService interface_action_service;
+        private SourceManager source_manager;
+        private PlayerEngineService player;
+        private Banshee.Sources.Source now_playing;
         
         public MoblinService ()
         {
@@ -52,6 +58,8 @@ namespace Banshee.Moblin
         {
             elements_service = ServiceManager.Get<GtkElementsService> ();
             interface_action_service = ServiceManager.Get<InterfaceActionService> ();
+            source_manager = ServiceManager.SourceManager;
+            player = ServiceManager.PlayerEngine;
         
             if (!ServiceStartup ()) {
                 ServiceManager.ServiceStarted += OnServiceStarted;
@@ -64,6 +72,10 @@ namespace Banshee.Moblin
                 interface_action_service = (InterfaceActionService)args.Service;
             } else if (args.Service is GtkElementsService) {
                 elements_service = (GtkElementsService)args.Service;
+            } else if (args.Service is SourceManager) {
+                source_manager = ServiceManager.SourceManager;
+            } else if (args.Service is PlayerEngineService) {
+                player = ServiceManager.PlayerEngine;
             }
                     
             ServiceStartup ();
@@ -71,7 +83,7 @@ namespace Banshee.Moblin
         
         private bool ServiceStartup ()
         {
-            if (elements_service == null || interface_action_service == null) {
+            if (elements_service == null || interface_action_service == null || source_manager == null || player == null) {
                 return false;
             }
             
@@ -108,6 +120,9 @@ namespace Banshee.Moblin
                 elements_service.PrimaryWindow.Hide ();
                 return false;
             };
+
+            FindNowPlaying ();
+            ServiceManager.PlayerEngine.ConnectEvent (OnPlayerStateChanged, PlayerEvent.StateChange | PlayerEvent.StartOfStream);
         }
         
         private void ReflectionHackeryUpTheNereid ()
@@ -173,6 +188,37 @@ namespace Banshee.Moblin
             // Set the internal engine volume to 100%
             // FIXME: We should have something like PlayerEngine.InternalVolumeEnabled = false
             ServiceManager.PlayerEngine.Volume = 100;
+        }
+
+        private void OnPlayerStateChanged (PlayerEventArgs args)
+        {
+            var player = ServiceManager.PlayerEngine;
+            if (player.CurrentState == PlayerState.Playing && player.CurrentTrack.HasAttribute (TrackMediaAttributes.VideoStream)) {
+                if (now_playing != null) {
+                    ServiceManager.SourceManager.SetActiveSource (now_playing);
+                }
+
+                PresentPrimaryInterface ();
+            }
+        }
+
+        private void FindNowPlaying ()
+        {
+            foreach (var src in ServiceManager.SourceManager.Sources) {
+                if (src.UniqueId.Contains ("now-playing")) {
+                    now_playing = src;
+                    break;
+                }
+            }
+
+            if (now_playing != null)
+                return;
+
+            Banshee.ServiceStack.ServiceManager.SourceManager.SourceAdded += (args) => {
+                if (now_playing == null && args.Source.UniqueId.Contains ("now-playing")) {
+                    now_playing = args.Source;
+                }
+            };
         }
         
         public void PresentPrimaryInterface ()
