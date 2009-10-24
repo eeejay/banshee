@@ -55,7 +55,9 @@ namespace Banshee.Gui.Widgets
 
         private void OnActionsChanged (object o, EventArgs args)
         {
-            menu.Sensitive = shuffle_actions.Sensitive;
+            if (!shuffle_actions.Sensitive) {
+                menu.Deactivate ();
+            }
             ToggleButton.Sensitive = shuffle_actions.Sensitive;
             if (Arrow != null) {
                 Arrow.Sensitive = shuffle_actions.Sensitive;
