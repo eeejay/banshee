@@ -176,6 +176,7 @@ namespace Banshee.Widgets
 
             if (isDefault) {
                 DefaultResponse = response;
+                button.GrabDefault ();
                 button.AddAccelerator ("activate",
                                accel_group,
                                (uint) Gdk.Key.Return, 
