@@ -27,6 +27,7 @@ application/x-extension-mp4
 application/x-flac
 application/x-flash-video
 application/x-id3
+application/x-linguist
 application/x-matroska
 application/x-miro
 application/x-musepack
@@ -36,9 +37,6 @@ application/x-quicktime-media-link
 application/x-quicktimeplayer
 application/x-shorten
 application/x-troff-msvideo
-# application/x-linguist is to support .ts Dirac files; see 
-# https://bugzilla.gnome.org/show_bug.cgi?id=599347
-application/x-linguist
 application/xspf+xml
 audio/3gpp
 audio/AMR
