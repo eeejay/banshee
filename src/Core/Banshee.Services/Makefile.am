@@ -118,11 +118,11 @@ SOURCES =  \
 	Banshee.Metadata/MetadataServiceJob.cs \
 	Banshee.Metadata/SaveTrackMetadataJob.cs \
 	Banshee.Metadata/SaveTrackMetadataService.cs \
-	Banshee.Networking/Network.cs \
-	Banshee.Networking/State.cs \
-	Banshee.Networking/NetworkManager.cs \
-	Banshee.Networking/Wicd.cs \
 	Banshee.Networking/INetworkAvailabilityService.cs \
+	Banshee.Networking/Network.cs \
+	Banshee.Networking/NetworkManager.cs \
+	Banshee.Networking/State.cs \
+	Banshee.Networking/Wicd.cs \
 	Banshee.PlatformServices/IScreensaverManager.cs \
 	Banshee.PlatformServices/ScreensaverManager.cs \
 	Banshee.PlaybackController/IBasicPlaybackController.cs \
