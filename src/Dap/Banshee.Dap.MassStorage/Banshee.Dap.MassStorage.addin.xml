@@ -33,7 +33,7 @@
         vendor-id="0x04e8" product-id="0x6603,0x6601"/>
     <MassStorageDevice class="Banshee.Dap.MassStorage.WebOSDevice"
         vendor-name="Palm" product-name="Pre"
-        vendor-id="0x0830" product-id="0x8004"/>
+        vendor-id="0x0830" product-id="0x8004,0x8002"/>
   </Extension>
 
 </Addin>
