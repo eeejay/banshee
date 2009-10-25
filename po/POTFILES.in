@@ -178,6 +178,8 @@ src/Extensions/Banshee.Lastfm/Resources/lastfm.glade
 src/Extensions/Banshee.MiniMode/Banshee.MiniMode/MiniModeService.cs
 src/Extensions/Banshee.MiniMode/Banshee.MiniMode/MiniModeWindow.cs
 src/Extensions/Banshee.MiniMode/Resources/minimode.glade
+src/Extensions/Banshee.Moblin/Banshee.Moblin/MediaPanelContents.cs
+src/Extensions/Banshee.Moblin/Banshee.Moblin/PlayQueueBox.cs
 src/Extensions/Banshee.Moblin/Banshee.Moblin/SearchEntry.cs
 src/Extensions/Banshee.Moblin/Banshee.Moblin/SearchHeader.cs
 src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAreaService.cs
