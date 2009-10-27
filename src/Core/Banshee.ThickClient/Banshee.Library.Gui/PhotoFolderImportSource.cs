@@ -64,7 +64,7 @@ namespace Banshee.Library.Gui
         }
         
         public string Name {
-            get { return Catalog.GetString ("Videos from Photos Folder"); }
+            get { return Catalog.GetString ("Videos From Photos Folder"); }
         }
 
         public string ImportLabel { get { return null; } }

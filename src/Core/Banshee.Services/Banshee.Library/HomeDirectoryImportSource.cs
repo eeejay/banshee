@@ -45,7 +45,7 @@ namespace Banshee.Library
         }
         
         public string Name {
-            get { return Catalog.GetString ("Home Directory"); }
+            get { return Catalog.GetString ("Home Folder"); }
         }
 
         public string ImportLabel { get { return null; } }
