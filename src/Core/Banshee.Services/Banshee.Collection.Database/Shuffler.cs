@@ -107,7 +107,7 @@ namespace Banshee.Collection.Database
                     r.Reset ();
                 }
             }
-            
+
             var random = randoms.First (r => r.Mode == mode);
             if (random != null) {
                 if (!random.IsReady) {

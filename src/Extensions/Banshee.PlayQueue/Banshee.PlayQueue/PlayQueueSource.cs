@@ -576,14 +576,6 @@ namespace Banshee.PlayQueue
                         source_set_at, populate_mode, false, skip && i == 0, shuffler) as DatabaseTrackInfo;
 
                     if (track != null) {
-                        track.LastPlayed = DateTime.Now;
-                        // track.Save() is quite slow, update LastPlayedStamp directly in the database.
-                        ServiceManager.DbConnection.Execute (@"
-                            UPDATE CoreTracks
-                            SET LastPlayedStamp = ?
-                            WHERE TrackID = ?",
-                            Hyena.DateTimeUtil.ToTimeT (track.LastPlayed), track.TrackId
-                        );
                         EnqueueId (track.TrackId, false, true);
                     }
                 }
