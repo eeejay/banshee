@@ -132,15 +132,13 @@ namespace Banshee.Gui
 
         private void OnImport (object o, EventArgs args)
         {
-            Banshee.Library.Gui.ImportDialog dialog = new Banshee.Library.Gui.ImportDialog ();            
-            try {
-                if (dialog.Run () != Gtk.ResponseType.Ok) {
-                    return;
-                }
-                    
-                dialog.ActiveSource.Import ();
-            } finally {
-                dialog.Destroy ();
+            var dialog = new Banshee.Library.Gui.ImportDialog ();
+            var res = dialog.Run ();
+            var src = dialog.ActiveSource;
+            dialog.Destroy ();
+
+            if (res == Gtk.ResponseType.Ok) {
+                src.Import ();
             }
         }
         
