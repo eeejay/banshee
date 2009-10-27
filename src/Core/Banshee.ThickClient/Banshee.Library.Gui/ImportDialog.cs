@@ -61,7 +61,6 @@ namespace Banshee.Library.Gui
                 Dialog.TransientFor = ServiceManager.Get<GtkElementsService> ().PrimaryWindow;
             }
             
-            Dialog.WidthRequest = 400;
             Dialog.WindowPosition = WindowPosition.CenterOnParent;
             Dialog.AddAccelGroup (accel_group);
             Dialog.DefaultResponse = ResponseType.Ok;
