@@ -84,6 +84,7 @@ src/Core/Banshee.ThickClient/Banshee.Gui/BaseClientWindow.cs
 src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/AboutDialog.cs
 src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/ConfirmShutdownDialog.cs
 src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/DefaultApplicationHelperDialog.cs
+src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/FileChooserDialog.cs
 src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/ImageFileChooserDialog.cs
 src/Core/Banshee.ThickClient/Banshee.Gui.Dialogs/OpenLocationDialog.cs
 src/Core/Banshee.ThickClient/Banshee.Gui/GlobalActions.cs
@@ -109,6 +110,7 @@ src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/TrackInfoDisplay.cs
 src/Core/Banshee.ThickClient/Banshee.Gui.Widgets/UserJobTile.cs
 src/Core/Banshee.ThickClient/Banshee.Library.Gui/FileImportSource.cs
 src/Core/Banshee.ThickClient/Banshee.Library.Gui/FolderImportSource.cs
+src/Core/Banshee.ThickClient/Banshee.Library.Gui/ImportDialog.cs
 src/Core/Banshee.ThickClient/Banshee.Library.Gui/PhotoFolderImportSource.cs
 src/Core/Banshee.ThickClient/Banshee.MediaProfiles.Gui/ProfileComboBox.cs
 src/Core/Banshee.ThickClient/Banshee.MediaProfiles.Gui/ProfileConfigurationDialog.cs
