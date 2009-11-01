@@ -121,6 +121,7 @@ namespace Banshee.Gui
             ThreadAssist.InitializeMainThread ();
             
             Gdk.Global.ProgramClass = Application.InternalName;
+            GLib.Global.ApplicationName = "Banshee";
 
             if (ApplicationContext.Debugging) {
                 GLib.Log.SetLogHandler ("Gtk", GLib.LogLevelFlags.Critical, GLib.Log.PrintTraceLogFunction);
