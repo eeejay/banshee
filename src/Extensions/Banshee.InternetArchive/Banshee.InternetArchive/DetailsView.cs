@@ -195,7 +195,6 @@ namespace Banshee.InternetArchive
 
             // Description
             var desc = new Hyena.Widgets.WrapLabel () {
-                //Markup = String.Format ("<small>{0}</small>", GLib.Markup.EscapeText (Hyena.StringUtil.RemoveHtml (details.Description)))
                 Markup = String.Format ("{0}", GLib.Markup.EscapeText (Hyena.StringUtil.RemoveHtml (details.Description)))
             };
 
@@ -475,6 +474,7 @@ namespace Banshee.InternetArchive
             };
 
             bool have_sep = false;
+            int active_format = 0;
             foreach (var fmt in sorted_formats) {
                 if (fmt.Order == -1 && !have_sep) {
                     have_sep = true;
@@ -484,6 +484,10 @@ namespace Banshee.InternetArchive
                 }
 
                 format_list.AppendText (fmt.Format);
+
+                if (active_format == 0 && fmt.Format == item.SelectedFormat) {
+                    active_format = format_list.Model.IterNChildren () - 1;
+                }
             }
 
             format_list.Changed += (o, a) => {
@@ -497,10 +501,13 @@ namespace Banshee.InternetArchive
                 }
 
                 files_model.Reload ();
+
+                item.SelectedFormat = selected_fmt;
+                item.Save ();
             };
 
             if (formats.Count > 0) {
-                format_list.Active = 0;
+                format_list.Active = active_format;
             }
 
             vbox.PackStart (file_sw, true, true, 0);

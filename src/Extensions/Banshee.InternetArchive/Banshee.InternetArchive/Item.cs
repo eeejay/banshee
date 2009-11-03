@@ -60,7 +60,7 @@ namespace Banshee.InternetArchive
             var item = Provider.FetchFirstMatching ("ID = ?", id);
             if (item == null) {
                 item = new Item (id, title, mediaType);
-                Provider.Save (item);
+                item.Save ();
             }
 
             return item;
@@ -74,17 +74,26 @@ namespace Banshee.InternetArchive
         [DatabaseColumn("ItemId", Constraints = DatabaseColumnConstraints.PrimaryKey)]
         private int DbId { get; set; }
 
-        [DatabaseColumn("DetailsJson")]
+        [DatabaseColumn]
         private string DetailsJson { get; set; }
 
-        [DatabaseColumn("ID")]
+        [DatabaseColumn]
         public string Id { get; private set; }
 
-        [DatabaseColumn("Title")]
+        [DatabaseColumn]
         public string Title { get; private set; }
 
-        [DatabaseColumn("MediaType")]
+        [DatabaseColumn]
         public string MediaType { get; private set; }
+
+        [DatabaseColumn]
+        public string SelectedFormat { get; set; }
+
+        [DatabaseColumn]
+        public string BookmarkFile { get; set; }
+
+        [DatabaseColumn]
+        public int BookmarkPosition { get; set; }
 
         public IA.Details Details { get; private set; }
 
@@ -107,8 +116,13 @@ namespace Banshee.InternetArchive
             if (Details == null) {
                 Details = new IA.Details (Id, DetailsJson);
                 DetailsJson = Details.Json;
-                Provider.Save (this);
+                Save ();
             }
+        }
+
+        public void Save ()
+        {
+            Provider.Save (this);
         }
 
         private static SqliteModelProvider<Item> provider;
@@ -130,7 +144,12 @@ namespace Banshee.InternetArchive
                         ID             TEXT UNIQUE NOT NULL,
                         Title          TEXT NOT NULL,
                         MediaType      TEXT,
-                        DetailsJson    TEXT)"
+                        DetailsJson    TEXT,
+
+                        SelectedFormat TEXT,
+                        BookmarkFile   TEXT,
+                        BookmarkPosition INTEGER DEFAULT 0
+                    )"
                 );
             }
         }
