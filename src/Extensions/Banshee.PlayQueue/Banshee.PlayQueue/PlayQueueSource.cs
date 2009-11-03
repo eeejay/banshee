@@ -59,7 +59,7 @@ namespace Banshee.PlayQueue
         private ITrackModelSource prior_playback_source;
         private DatabaseTrackInfo current_track;
         private Shuffler shuffler;
-        private long offset;
+        private long offset = -1;
         private TrackInfo prior_playback_track;
         private PlayQueueActions actions;
         private bool was_playing = false;
@@ -115,7 +115,12 @@ namespace Banshee.PlayQueue
 
             TrackModel.Reloaded += HandleReloaded;
 
-            Offset = CurrentOffsetSchema.Get ();
+            Offset = Math.Min (
+                CurrentOffsetSchema.Get (),
+                ServiceManager.DbConnection.Query<long> (@"
+                    SELECT MAX(ViewOrder)
+                    FROM CorePlaylistEntries
+                    WHERE PlaylistID = ?", DbId));
         }
 
         protected override void Initialize ()
