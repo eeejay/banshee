@@ -300,6 +300,7 @@ namespace Banshee.PlayQueue
                 // mark the first added track as current.
                 if (index != -1 && view_order == current_view_order) {
                     SetCurrentTrack (TrackModel[index] as DatabaseTrackInfo);
+                    SetAsPlaybackSourceUnlessPlaying ();
                 }
                 return true;
             }
@@ -309,8 +310,25 @@ namespace Banshee.PlayQueue
         private void SetAsPlaybackSourceUnlessPlaying ()
         {
             if (current_track != null && ServiceManager.PlaybackController.Source != this) {
-                PriorSource = ServiceManager.PlaybackController.Source;
-                ServiceManager.PlaybackController.NextSource = this;
+                bool set_source = !ServiceManager.PlayerEngine.IsPlaying ();
+                if (!set_source) {
+                    long view_order = ServiceManager.DbConnection.Query<long> (@"
+                        SELECT ViewOrder
+                        FROM CorePlaylistEntries
+                        WHERE PlaylistID = ? AND EntryID = ?",
+                        DbId, Convert.ToInt64 (current_track.CacheEntryId));
+                    long nongenerated = ServiceManager.DbConnection.Query<long> (@"
+                        SELECT COUNT(*)
+                        FROM CorePlaylistEntries
+                        WHERE PlaylistID = ? AND ViewOrder >= ? AND Generated = 0",
+                        DbId, view_order);
+                    set_source = nongenerated > 0;
+                }
+
+                if (set_source) {
+                    PriorSource = ServiceManager.PlaybackController.Source;
+                    ServiceManager.PlaybackController.NextSource = this;
+                }
             }
         }
 
