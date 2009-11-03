@@ -118,12 +118,16 @@ namespace Banshee.InternetArchive
                 new SearchDescription (Catalog.GetString ("Creative Commons"), "license:creativecommons", IA.Sort.DownloadsDesc, null),
                 new SearchDescription (Catalog.GetString ("History"), "subject:history", IA.Sort.DownloadsDesc, null),
                 new SearchDescription (Catalog.GetString ("Classic Cartoons"), "", IA.Sort.DateCreatedAsc, IA.MediaType.Get ("animationandcartoons")),
+                new SearchDescription (Catalog.GetString ("Speeches"), "subject:speeches OR title:speech", IA.Sort.DownloadsDesc, null),
+                new SearchDescription (Catalog.GetString ("For Children"), "subject:children", IA.Sort.DownloadsDesc, null),
+                new SearchDescription (Catalog.GetString ("Poetry"), "subject:poetry", IA.Sort.DownloadsDesc, null),
                 new SearchDescription (Catalog.GetString ("Creator is United States"), "creator:\"United States\"", IA.Sort.DownloadsDesc, null),
-                new SearchDescription (Catalog.GetString ("Oldest Movies"), "", IA.Sort.DateCreatedAsc, IA.MediaType.Get ("moviesandfilms")),
+                new SearchDescription (Catalog.GetString ("Old Movies"), "", IA.Sort.DateCreatedAsc, IA.MediaType.Get ("moviesandfilms")),
                 new SearchDescription (Catalog.GetString ("New From LibriVox"), "publisher:LibriVox", IA.Sort.DateAddedDesc, IA.MediaType.Get ("audio")),
-                new SearchDescription (Catalog.GetString ("Oldest Texts"), "", IA.Sort.DateCreatedAsc, IA.MediaType.Get ("texts")),
+                new SearchDescription (Catalog.GetString ("Old Texts"), "", IA.Sort.DateCreatedAsc, IA.MediaType.Get ("texts")),
                 new SearchDescription (Catalog.GetString ("Charlie Chaplin"), "\"Charlie Chaplin\"", IA.Sort.DownloadsDesc, null),
-                new SearchDescription (Catalog.GetString ("NASA"), "NASA", IA.Sort.DownloadsDesc, null)
+                new SearchDescription (Catalog.GetString ("NASA"), "NASA", IA.Sort.DownloadsDesc, null),
+                new SearchDescription (Catalog.GetString ("Library of Congress"), "creator:\"Library of Congress\"", IA.Sort.DownloadsDesc, null)
             };
 
             var examples = new FlowBox () { Spacing = 0 };
@@ -142,7 +146,7 @@ namespace Banshee.InternetArchive
                 Markup = Catalog.GetString ("The Internet Archive, a 501(c)(3) non-profit, is building a digital library of Internet sites and other cultural artifacts in digital form. Like a paper library, we provide free access to researchers, historians, scholars, and the general public.")
             };
 
-            var visit_button = new LinkButton ("http://archive.org/", "Visit the Internet Archive online at archive.org");
+            var visit_button = new LinkButton ("http://archive.org/", Catalog.GetString ("Visit the Internet Archive online at archive.org"));
             visit_button.Clicked += (o, a) => Banshee.Web.Browser.Open ("http://archive.org/");
             visit_button.Xalign = 0f;
             var visit_box = new HBox ();
@@ -283,7 +287,10 @@ namespace Banshee.InternetArchive
             public string IconName { get; private set; }
 
             public Category (string media_type, string name, int count, string icon_name)
-                : base (name, null, IA.Sort.DownloadsDesc, IA.MediaType.Get (media_type))
+                : this (media_type, name, null, count, icon_name) {}
+
+            public Category (string media_type, string name, string query, int count, string icon_name)
+                : base (name, query, IA.Sort.DownloadsDesc, IA.MediaType.Get (media_type))
             {
                 Count = count;
                 IconName = icon_name;
@@ -297,18 +304,12 @@ namespace Banshee.InternetArchive
             var categories = new Category [] {
                 new Category ("audio_bookspoetry", Catalog.GetString ("Audiobooks"), 4300, "audio-x-generic"),
                 new Category ("movies", Catalog.GetString ("Movies"), 200000, "video-x-generic"),
-                new Category ("education", Catalog.GetString ("Lectures"), 1290, "x-office-presentation"),
+                new Category (null, Catalog.GetString ("Lectures"), "subject:ocw OR creator:university OR mediatype:education OR publisher:University", 1290, "x-office-presentation"),
                 new Category ("etree", Catalog.GetString ("Concerts"), 69000, "audio-x-generic"),
                 new Category ("texts", Catalog.GetString ("Books"), 1600000, "x-office-document")
             };
 
             foreach (var cat in categories.OrderBy (c => c.Name)) {
-                /*var tile = new Banshee.Widgets.Tile () {
-                    PrimaryText = cat.Name,
-                    SecondaryText = String.Format ("Over {0:N0} items", cat.Count),
-                    Pixbuf = IconThemeUtils.LoadIcon (cat.IconName, 22)
-                };*/
-
                 var this_cat = cat;
                 var tile = new ImageButton (cat.Name, cat.IconName) {
                     InnerPadding = 4

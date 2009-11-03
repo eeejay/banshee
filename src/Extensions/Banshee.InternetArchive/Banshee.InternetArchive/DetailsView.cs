@@ -199,7 +199,7 @@ namespace Banshee.InternetArchive
                 Markup = String.Format ("{0}", GLib.Markup.EscapeText (Hyena.StringUtil.RemoveHtml (details.Description)))
             };
 
-            var desc_exp = CreateSection (Catalog.GetString ("Description"), desc);
+            var desc_expander = CreateSection (Catalog.GetString ("Description"), desc);
 
             // Details
             var table = new Banshee.Gui.TrackEditor.StatisticsPage () {
@@ -238,13 +238,14 @@ namespace Banshee.InternetArchive
 
             AddToTable (table, Catalog.GetString ("Added:"),      details.DateAdded);
             AddToTable (table, Catalog.GetString ("Added by:"),   details.AddedBy);
+            AddToTable (table, Catalog.GetString ("Collections:"),   details.Collections);
             AddToTable (table, Catalog.GetString ("Source:"),     details.Source);
             AddToTable (table, Catalog.GetString ("Contributor:"), details.Contributor);
             AddToTable (table, Catalog.GetString ("Recorded by:"),details.Taper);
             AddToTable (table, Catalog.GetString ("Lineage:"),    details.Lineage);
             AddToTable (table, Catalog.GetString ("Transferred by:"), details.Transferer);
 
-            var expander = CreateSection (Catalog.GetString ("Details"), table);
+            var details_expander = CreateSection (Catalog.GetString ("Details"), table);
 
             // Reviews
             Section reviews = null;
@@ -305,13 +306,17 @@ namespace Banshee.InternetArchive
             }
 
             // Packing
-            vbox.PackStart (desc_exp, true, true,  0);
-            //vbox.PackStart (new HSeparator (), false, false,  6);
-            vbox.PackStart (expander, true, true,  0);
-            //vbox.PackStart (new HSeparator (), false, false,  6);
+            vbox.PackStart (desc_expander, true, true,  0);
+            vbox.PackStart (details_expander, true, true,  0);
             if (reviews != null) {
                 vbox.PackStart (reviews, true, true, 0);
             }
+
+            string write_review_url = String.Format ("http://www.archive.org/write-review.php?identifier={0}", item.Id);
+            var write_review_button = new LinkButton (write_review_url, Catalog.GetString ("Write your own review"));
+            write_review_button.Clicked += (o, a) => Banshee.Web.Browser.Open (write_review_url);
+            write_review_button.Xalign = 0f;
+            vbox.PackStart (write_review_button, false, false, 0);
 
             var vbox2 = new VBox ();
             vbox2.PackStart (vbox, false, false, 0);
@@ -440,9 +445,12 @@ namespace Banshee.InternetArchive
             var sorted_formats = formats.Select (f => new { Format = f, Order = Math.Max (format_order.IndexOf (", " + f.ToLower () + ","), format_order.IndexOf (f.ToLower ())) })
                                         .OrderBy (o => o.Order == -1 ? Int32.MaxValue : o.Order);
 
+            // See if all the files contain their track #
+            bool all_tracks_have_num_in_title = tracks.All (t => t.TrackNumber == 0 || t.TrackTitle.Contains (t.TrackNumber.ToString ()));
+
             // Make these columns snugly fix their data
             if (tracks.Count > 0) {
-                SetWidth (columns.TrackColumn,    tracks.Max (f => f.TrackNumber), 0);
+                SetWidth (columns.TrackColumn,    all_tracks_have_num_in_title ? 0 : tracks.Max (f => f.TrackNumber), 0);
                 SetWidth (columns.FileSizeColumn, tracks.Max (f => f.FileSize), 0);
                 SetWidth (columns.DurationColumn, tracks.Max (f => f.Duration), TimeSpan.Zero);
             }

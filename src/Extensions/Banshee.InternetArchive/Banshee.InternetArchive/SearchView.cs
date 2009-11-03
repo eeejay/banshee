@@ -132,7 +132,8 @@ namespace Banshee.InternetArchive
                 Create ("Year",        Catalog.GetString ("Year"), 0.15, true, new ColumnCellPositiveInt (null, true, 4, 4) { CultureFormatted = false }),
                 Create ("Downloads",   Catalog.GetString ("Downloads"), 0.15, true, new ColumnCellPositiveInt (null, true, 2, 5)),
                 Create ("Format",      Catalog.GetString ("Formats"), 0.15, false, new ColumnCellText (null, true)),
-                Create ("LicenseUrl",  Catalog.GetString ("License"), 0.15, true, new ColumnCellCreativeCommons (null, true))
+                Create ("LicenseUrl",  Catalog.GetString ("License"), 0.15, true, new ColumnCellCreativeCommons (null, true)),
+                Create ("DateAdded",   Catalog.GetString ("Added"), 0.15, false, new ColumnCellDateTime (null, true) { Format = DateTimeFormat.ShortDate })
             };
 
             foreach (var col in cols) {

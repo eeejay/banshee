@@ -156,7 +156,7 @@ namespace Banshee.InternetArchive
 
         public static readonly SchemaEntry<string> TextTypes = new SchemaEntry<string> (
             "plugins.internetarchive", "text_types",
-            "Text PDF, Standard LuraTech PDF, Grayscale LuraTech PDF, ZIP, Text, Hypertext",
+            "Text PDF, Standard LuraTech PDF, Grayscale LuraTech PDF, Image Container PDF, ZIP, Text, Hypertext",
             "Ordered list of preferred mediatypes for text items", null);
 
 #endregion

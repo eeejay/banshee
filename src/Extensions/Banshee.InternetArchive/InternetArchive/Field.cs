@@ -62,6 +62,7 @@ namespace InternetArchive
         public static Field Collection = new Field ("collection", Catalog.GetString ("Collection"));
         public static Field Contributor= new Field ("contributor",Catalog.GetString ("Contributor"));
         public static Field Date       = new Field ("date",       Catalog.GetString ("Created"));
+        public static Field DateAdded  = new Field ("publicdate", Catalog.GetString ("Added"));
         public static Field Description= new Field ("description",Catalog.GetString ("Description"));
         public static Field Downloads  = new Field ("downloads",  Catalog.GetString ("Downloads"));
         public static Field Format     = new Field ("format",     Catalog.GetString ("Format"));

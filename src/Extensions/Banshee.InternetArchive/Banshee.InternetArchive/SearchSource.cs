@@ -171,7 +171,7 @@ namespace Banshee.InternetArchive
                 int count = model.Count;
                 if (total_results == 0) {
                     ThreadAssist.ProxyToMain (delegate {
-                        SetStatus (Catalog.GetString ("No matches. Try another search?"), false, false, "gtk-info");
+                        SetStatus (Catalog.GetString ("No matches."), false, false, "gtk-info");
                     });
                 } else {
                     ThreadAssist.ProxyToMain (ClearMessages);

@@ -51,6 +51,10 @@ namespace InternetArchive
             get { return String.Format ("http://www.archive.org/details/{0}", Id); }
         }
 
+        public DateTime DateAdded {
+            get { return GetDate (Field.DateAdded.Id); }
+        }
+
         public string Creator {
             get { return GetJoined (Field.Creator, ", ") ?? ""; }
         }
@@ -98,6 +102,12 @@ namespace InternetArchive
         public T Get<T> (Field field)
         {
             return item.Get<T> (field.Id);
+        }
+
+        public DateTime GetDate (string key)
+        {
+            DateTime ret;
+            return DateTime.TryParse (item.GetJoined (key, null), out ret) ? ret : DateTime.MinValue;
         }
 
         public string GetJoined (Field field, string with)

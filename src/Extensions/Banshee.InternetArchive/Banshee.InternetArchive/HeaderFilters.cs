@@ -68,6 +68,7 @@ namespace Banshee.InternetArchive
 
             Spacing = 6;
 
+            PackStart (new Label () { Visible = true }, true, true, 0);
             BuildMediaTypeCombo ();
             BuildSortCombo ();
             BuildSearchEntry ();
@@ -171,7 +172,7 @@ namespace Banshee.InternetArchive
             PackStart (button, false, false, 0);
         }
 
-        private static IA.Sort [] sorts = { IA.Sort.DownloadsDesc, IA.Sort.WeekDesc, IA.Sort.DateCreatedDesc, IA.Sort.DateCreatedAsc, IA.Sort.DateAddedDesc, IA.Sort.AvgRatingDesc };
+        private static IA.Sort [] sorts = { IA.Sort.DownloadsDesc, IA.Sort.WeekDesc, IA.Sort.DateCreatedDesc, IA.Sort.DateCreatedAsc, IA.Sort.DateAddedDesc, IA.Sort.TitleAsc, IA.Sort.AvgRatingDesc };
 
         private void UpdateSearch ()
         {

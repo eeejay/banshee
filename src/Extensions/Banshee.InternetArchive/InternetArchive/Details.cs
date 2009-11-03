@@ -104,6 +104,10 @@ namespace InternetArchive
             get { return metadata.GetJoined ("transferer", ", "); }
         }
 
+        public string Collections {
+            get { return metadata.GetJoined ("collection", ", "); }
+        }
+
         public DateTime DateAdded {
             get { return GetMetadataDate ("addeddate"); }
         }
