@@ -3,7 +3,7 @@ TARGET = library
 LINK = $(REF_EXTENSION_INTERNETARCHIVE)
 INSTALL_DIR = $(EXTENSIONS_INSTALL_DIR)
 
-SOURCES = \
+SOURCES =  \
 	Banshee.InternetArchive/Actions.cs \
 	Banshee.InternetArchive/DetailsSource.cs \
 	Banshee.InternetArchive/DetailsView.cs \
@@ -27,7 +27,7 @@ SOURCES = \
 	InternetArchive/SearchResults.cs \
 	InternetArchive/Sort.cs
 
-RESOURCES = \
+RESOURCES =  \
 	Banshee.InternetArchive.addin.xml \
 	Resources/DetailsSourceActiveUI.xml \
 	Resources/GlobalUI.xml \
