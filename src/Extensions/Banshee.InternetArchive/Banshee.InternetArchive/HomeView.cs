@@ -112,7 +112,6 @@ namespace Banshee.InternetArchive
             search_box.PackStart (entry, true, true, 0);
             search_box.PackStart (button, false, false, 0);
 
-            // Example searches
             var example_searches = new SearchDescription [] {
                 new SearchDescription (Catalog.GetString ("Staff Picks"), "pick:1", IA.Sort.WeekDesc, null),
                 new SearchDescription (Catalog.GetString ("Creative Commons"), "license:creativecommons", IA.Sort.DownloadsDesc, null),

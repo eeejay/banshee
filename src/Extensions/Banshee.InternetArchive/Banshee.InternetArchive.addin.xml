@@ -3,10 +3,10 @@
     id="Banshee.InternetArchive"
     version="1.0"
     compatVersion="1.0"
-    copyright="© 2008 Novell Inc. Licensed under the MIT X11 license."
+    copyright="© 2009 Novell Inc. Licensed under the MIT X11 license."
     name="Banshee.InternetArchive"
-    category=""
-    description="Browse and search the Internet Archive's vast collection."
+    category="User Interface"
+    description="Browse and search the Internet Archive's vast media collection."
     author="Gabriel Burt"
     url="http://banshee-project.org/"
     defaultEnabled="true">

@@ -42,7 +42,7 @@ namespace Hyena.Data
             list = new List<T> ();
             selection = new Selection ();
         }
-        
+
         public override void Clear ()
         {
             lock (list) {
@@ -51,7 +51,7 @@ namespace Hyena.Data
 
             OnCleared ();
         }
-        
+
         public override void Reload ()
         {
             OnReloaded ();
@@ -77,7 +77,7 @@ namespace Hyena.Data
                 list.Remove (item);
             }
         }
-    
+
         public override T this[int index] {
             get {
                 lock (list) {
