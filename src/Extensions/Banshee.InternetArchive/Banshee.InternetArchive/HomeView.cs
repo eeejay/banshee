@@ -101,7 +101,7 @@ namespace Banshee.InternetArchive
             };
 
             // Make the search entry text nice and big
-            var font = entry.InnerEntry.Style.FontDescription;
+            var font = entry.InnerEntry.Style.FontDescription.Copy ();
             font.Size = (int) (font.Size * Pango.Scale.XLarge);
             entry.InnerEntry.ModifyFont (font);
 
