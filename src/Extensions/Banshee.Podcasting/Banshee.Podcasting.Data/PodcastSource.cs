@@ -80,7 +80,11 @@ namespace Banshee.Podcasting.Gui
         public override bool CanDeleteTracks {
             get { return false; }
         }
-        
+
+        public override bool CanShuffle {
+            get { return false; }
+        }
+
         public PodcastFeedModel FeedModel {
             get { return feed_model; }
         }
