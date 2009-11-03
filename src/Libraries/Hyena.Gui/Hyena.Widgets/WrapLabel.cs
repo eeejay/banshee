@@ -102,8 +102,13 @@ namespace Hyena.Widgets
         protected override bool OnExposeEvent (Gdk.EventExpose evnt)
         {
             if (evnt.Window == GdkWindow) {
+                // Center the text vertically
+                int lw, lh;
+                layout.GetPixelSize (out lw, out lh);
+                int y = Allocation.Y + (Allocation.Height - lh) / 2;
+
                 Gtk.Style.PaintLayout (Style, GdkWindow, State, false, 
-                    evnt.Area, this, null, Allocation.X, Allocation.Y, layout);
+                    evnt.Area, this, null, Allocation.X, y, layout);
             }
 
             return true;

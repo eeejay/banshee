@@ -40,8 +40,10 @@ using Banshee.ServiceStack;
 
 namespace Banshee.Collection.Gui
 {
-    public class ColumnCellStatusIndicator : ColumnCell
+    public class ColumnCellStatusIndicator : ColumnCell, ISizeRequestCell
     {
+        const int padding = 2;
+
         protected enum Icon : int {
             Playing,
             Paused,
@@ -73,6 +75,14 @@ namespace Banshee.Collection.Gui
         public ColumnCellStatusIndicator (string property, bool expand) : base (property, expand)
         {
             LoadPixbufs ();
+            RestrictSize = true;
+        }
+
+        public bool RestrictSize { get; set; }
+
+        public void GetWidthRange (Pango.Layout layout, out int min_width, out int max_width)
+        {
+            min_width = max_width = pixbuf_size + 2 * padding;
         }
         
         protected virtual int PixbufCount {

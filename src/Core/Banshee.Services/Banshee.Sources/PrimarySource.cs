@@ -375,15 +375,6 @@ namespace Banshee.Sources
             get { return true; }
         }
 
-        public override void SetParentSource (Source source)
-        {
-            if (source is PrimarySource) {
-                throw new ArgumentException ("PrimarySource cannot have another PrimarySource as its parent");
-            }
-
-            base.SetParentSource (source);
-        }
-
         protected override void OnTracksAdded ()
         {
             ThreadAssist.SpawnFromMain (delegate {

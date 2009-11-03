@@ -1,0 +1,6 @@
+There is documentation of the Internet Archive's APIs at
+http://www.archive.org/help/
+
+Since that page mentions that JSON is the preferred format
+moving forward, this API wrapper uses the JSON APIs wherever
+possible.

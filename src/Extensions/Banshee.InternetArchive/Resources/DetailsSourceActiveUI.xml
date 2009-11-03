@@ -1,0 +1,15 @@
+<ui>
+  <toolbar name="HeaderToolbar">
+    <placeholder name="SourceActions">
+        <toolitem action="OpenItemWebsite" />
+        <toolitem action="UnmapSourceAction"/>
+    </placeholder>
+  </toolbar>
+
+  <popup name="TrackContextMenu" action="TrackContextMenuAction">
+    <placeholder name="BelowAddToPlaylist">
+        <separator />
+        <separator />
+    </placeholder>
+  </popup>
+</ui>

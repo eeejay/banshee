@@ -30,6 +30,8 @@ function find_extension_points () {
 function usage () {
 	echo "Usage: $0 <name> <path> [<extension-point> ...]"
 	echo
+	echo "Example: ./create-extension Banshee.InternetRadio Extensions/"
+	echo
 	show_extension_points
 	exit 1
 }

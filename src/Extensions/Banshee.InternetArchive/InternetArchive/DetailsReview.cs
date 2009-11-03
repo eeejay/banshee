@@ -1,10 +1,10 @@
-// 
-// ColumnCellPositiveInt.cs
 //
-// Author:
+// DetailsReview.cs
+//
+// Authors:
 //   Gabriel Burt <gburt@novell.com>
 //
-// Copyright (C) 2008 Novell, Inc.
+// Copyright (C) 2009 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -27,36 +27,46 @@
 //
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
-using Hyena.Data.Gui;
+using Mono.Unix;
 
-namespace Banshee.Collection.Gui
+using Hyena.Json;
+
+namespace InternetArchive
 {
-    public class ColumnCellPositiveInt : ColumnCellText
+    public class DetailsReview
     {
-        public bool CultureFormatted { get; set; }
+        JsonObject review;
 
-        public ColumnCellPositiveInt (string property, bool expand, int min_digits, int max_digits) : base (property, expand)
+        public DetailsReview (JsonObject review)
         {
-            SetMinMaxStrings ((int)Math.Pow (10, min_digits) - 1, (int)Math.Pow (10, max_digits) - 1);
-            Alignment = Pango.Alignment.Right;
-            CultureFormatted = true;
+            this.review = review;
         }
-        
-        protected override string GetText (object obj)
-        {
-            if (obj == null) {
-                return String.Empty;
-            }
 
-            int val = (int) obj;
+        public long Id {
+            get { return (long) review.Get<double> ("review_id"); }
+        }
 
-            if (val <= 0)
-                return "";
-            else if (CultureFormatted)
-                return val.ToString ("N0");
-            else
-                return val.ToString ();
+        public int Stars {
+            get { return (int) review.Get<double> ("stars"); }
+        }
+
+        public string Title {
+            get { return review.Get<string> ("reviewtitle"); }
+        }
+
+        public string Body {
+            get { return review.Get<string> ("reviewbody"); }
+        }
+
+        public string Reviewer {
+            get { return review.Get<string> ("reviewer"); }
+        }
+
+        public DateTime DateReviewed {
+            get { return DateTime.Parse (review.Get<string> ("reviewdate")); }
         }
     }
 }
