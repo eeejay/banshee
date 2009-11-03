@@ -399,6 +399,7 @@ namespace Hyena.Data.Gui
             int row_index = GetRowAtY (y);
 
             if (row_index < 0 || row_index >= Model.Count) {
+                Gtk.Drag.SourceUnset (this);
                 return true;
             }
             
