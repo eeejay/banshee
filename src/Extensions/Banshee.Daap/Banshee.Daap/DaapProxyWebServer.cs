@@ -3,8 +3,10 @@
  *  DaapProxyWebServer.cs
  *
  *  Copyright (C) 2005-2006 Novell, Inc.
+ *  Copyright (C) 2009 Neil Loknath
  *  Written by Aaron Bockover <aaron@aaronbock.net>
  *             James Wilcox <snorp@snorp.net>
+ *             Neil Loknath <neil.loknath@gmail.com>
  ****************************************************************************/
 
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
@@ -37,54 +39,30 @@ using System.Net.Sockets;
 using System.Threading;
 using System.Collections;
 
+using Banshee.Web;
+
 using DAAP = Daap;
 
 namespace Banshee.Daap
 {
-    internal class DaapProxyWebServer
+    internal class DaapProxyWebServer : BaseHttpServer
     {
-        private const int ChunkLength = 8192;
-
         private ushort port;
-        private Socket server;
-        private bool running;
-        private ArrayList clients = new ArrayList();
         private ArrayList databases = new ArrayList();
       
-        public DaapProxyWebServer() 
+        public DaapProxyWebServer() : base (new IPEndPoint(IPAddress.Any, 8089), "DAAP Proxy")
         {
         }
 
-        public void Start() 
+        public override void Start (int backlog) 
         {
-            server = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
             try {
-                server.Bind(new IPEndPoint(IPAddress.Any, 8089));
+                base.Start (backlog);
             } catch (System.Net.Sockets.SocketException) {
-                server.Bind(new IPEndPoint(IPAddress.Any, 0));
+                EndPoint = new IPEndPoint(IPAddress.Any, 0);
+                base.Start (backlog);
             }
             port = (ushort)(server.LocalEndPoint as IPEndPoint).Port;
-            server.Listen(10);
-
-            running = true;
-            Thread thread = new Thread(ServerLoop);
-            thread.Name = "DAAP Proxy";
-            thread.IsBackground = true;
-            thread.Start();
-        }
-
-        public void Stop() 
-        {
-            running = false;
-            
-            if(server != null) {
-                server.Close();
-                server = null;
-            }
-
-            foreach(Socket client in (ArrayList)clients.Clone()) {
-                client.Close();
-            }
         }
         
         public void RegisterDatabase(DAAP.Database database)
@@ -96,84 +74,8 @@ namespace Banshee.Daap
         {
             databases.Remove(database);
         }
-        
-        private void ServerLoop()
-        {
-            while(true) {
-                try {
-                    if(!running) {
-                        break;
-                    }
-                    
-                    Socket client = server.Accept();
-                    clients.Add(client);
-                    ThreadPool.QueueUserWorkItem(HandleConnection, client);
-                } catch(SocketException) {
-                    break;
-                }
-            }
-        }
-        
-        private void HandleConnection(object o) 
-        {
-            Socket client = (Socket)o;
 
-            try {
-                while(HandleRequest(client));
-            } catch(IOException) {
-            } catch(Exception e) {
-                Hyena.Log.Exception (e);
-            } finally {
-                clients.Remove(client);
-                client.Close();
-            }
-        }
-        
-        private bool HandleRequest(Socket client) 
-        {
-            if(!client.Connected) {
-                return false;
-            }
-            
-            bool keep_connection = true;
-            
-            using(StreamReader reader = new StreamReader(new NetworkStream(client, false))) {
-                string request = reader.ReadLine();
-                
-                if(request == null) {
-                    return false;
-                }
-                
-                string line = null;
-                
-                do {
-                    line = reader.ReadLine();
-                    if(line.ToLower() == "connection: close") {
-                        keep_connection = false;
-                    }
-                } while(line != String.Empty && line != null);
-                
-                string [] split_request = request.Split();
-                
-                if(split_request.Length < 3) {
-                    WriteResponse(client, HttpStatusCode.BadRequest, "Bad Request");
-                    return keep_connection;
-                } else {
-                    try {
-                        HandleValidRequest(client, split_request);
-                    } catch(IOException) {
-                        keep_connection = false;
-                    } catch(Exception e) {
-                        keep_connection = false;
-                        Console.Error.WriteLine("Trouble handling request {0}: {1}", split_request[1], e);
-                    }
-                }
-            }
-
-            return keep_connection;
-        }
-
-        private void HandleValidRequest(Socket client, string [] split_request)
+        protected override void HandleValidRequest(Socket client, string [] split_request, string [] body_request)
         {        
             if(split_request[1].StartsWith("/")) {
                split_request[1] = split_request[1].Substring(1);
@@ -291,73 +193,6 @@ namespace Banshee.Daap
             client.Close();
         }
 
-        private void WriteResponse(Socket client, HttpStatusCode code, string body) 
-        {
-            WriteResponse(client, code, Encoding.UTF8.GetBytes(body));
-        }
-        
-        private void WriteResponse(Socket client, HttpStatusCode code, byte [] body) 
-        {
-            if(!client.Connected) {
-                return;
-            }
-            
-            string headers = String.Empty;
-            headers += String.Format("HTTP/1.1 {0} {1}\r\n", (int)code, code.ToString());
-            headers += String.Format("Content-Length: {0}\r\n", body.Length);
-            headers += "Content-Type: text/html\r\n";
-            headers += "Connection: close\r\n";
-            headers += "\r\n";
-            
-            using(BinaryWriter writer = new BinaryWriter(new NetworkStream(client, false))) {
-                writer.Write(Encoding.UTF8.GetBytes(headers));
-                writer.Write(body);
-            }
-            
-            client.Close();
-        }
-
-        private void WriteResponseStream(Socket client, Stream response, long length, string filename)
-        {
-            using(BinaryWriter writer = new BinaryWriter(new NetworkStream(client, false))) {
-                string headers = "HTTP/1.1 200 OK\r\n";
-
-                if(length > 0) {
-                    headers += String.Format("Content-Length: {0}\r\n", length);
-                }
-                
-                if(filename != null) {
-                    headers += String.Format("Content-Disposition: attachment; filename=\"{0}\"\r\n",
-                        filename.Replace("\"", "\\\""));
-                }
-                
-                headers += "Connection: close\r\n";
-                headers += "\r\n";
-                
-                writer.Write(Encoding.UTF8.GetBytes(headers));
-
-                using(BinaryReader reader = new BinaryReader(response)) {
-                    while(true) {
-                        byte [] buffer = reader.ReadBytes(ChunkLength);
-                        if(buffer == null) {
-                            break;
-                        }
-                        
-                        writer.Write(buffer);
-                        
-                        if(buffer.Length < ChunkLength) {
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-
-        private static string Escape (string input)
-        {
-            return String.IsNullOrEmpty (input) ? "" : System.Web.HttpUtility.HtmlEncode (input);
-        }
-        
         private static string GetHtmlHeader(string title)
         {
             return String.Format("<html><head><title>{0} - Banshee DAAP Browser</title></head><body><h1>{0}</h1>", 
@@ -367,7 +202,7 @@ namespace Banshee.Daap
         private static string GetHtmlFooter()
         {
             return String.Format("<hr /><address>Generated on {0} by " + 
-                "Banshee DAAP Plugin (<a href=\"http://banshee-project.org\">http://banshee-project.org</a>)",
+                "Banshee DAAP Extension (<a href=\"http://banshee-project.org\">http://banshee-project.org</a>)",
                 DateTime.Now.ToString());
         }
 
