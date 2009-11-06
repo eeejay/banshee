@@ -74,7 +74,11 @@ namespace Banshee.Metadata.FileSystem
             string best_file = null;
             int items_in_directory = 0;
             bool found_definite_best = false;
-            int max_acceptable_items = Math.Max (30, track.TrackCount + 8);
+            int track_count = track.TrackCount;
+            if (track.DiscCount > 0) {
+                track_count = track.TrackCount * track.DiscCount;
+            }
+            int max_acceptable_items = Math.Max (30, track_count + 8);
             foreach (string file in Banshee.IO.Directory.GetFiles (directory)) {
                 // Ignore directories with tons of songs in them; this lookup is only intended for when the
                 // music file is in a directory specific to its album.
