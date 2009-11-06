@@ -63,6 +63,23 @@ namespace Banshee.PlayQueue
             store.Refresh ();
 
             SetActiveSource (source_name);
+
+            HasTooltip = true;
+            QueryTooltip += HandleQueryTooltip;
+        }
+
+        private void HandleQueryTooltip (object o, QueryTooltipArgs args)
+        {
+            var source = Source;
+            if (source != null && Child.Allocation.Width < Child.Requisition.Width) {
+                args.Tooltip.Text = source.Name;
+                args.RetVal = true;
+            }
+
+            // Work around ref counting SIGSEGV, see http://bugzilla.gnome.org/show_bug.cgi?id=478519#c9
+            if (args.Tooltip != null) {
+                args.Tooltip.Dispose ();
+            }
         }
 
         private void SetActiveSource (string name)
