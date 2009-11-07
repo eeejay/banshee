@@ -146,7 +146,10 @@ namespace Hyena.Data.Gui
 
         private void AccessibleCellRedrawn (int column, int row)
         {
-            ((ICellAccessibleParent) Accessible).CellRedrawn (column, row);
+            var accessible = Accessible as ICellAccessibleParent;
+            if (accessible != null) {
+                accessible.CellRedrawn (column, row);
+            }
         }
 
     }
