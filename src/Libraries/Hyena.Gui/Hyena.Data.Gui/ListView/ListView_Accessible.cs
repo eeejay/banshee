@@ -42,7 +42,9 @@ namespace Hyena.Data.Gui
     {
         static ListView ()
         {
+#if ENABLE_ATK
             ListViewAccessibleFactory<T>.Init ();
+#endif
         }
 
         public Gdk.Rectangle GetColumnCellExtents (int row, int column)
@@ -149,6 +151,7 @@ namespace Hyena.Data.Gui
 
     }
 
+#if ENABLE_ATK
     internal class ListViewAccessibleFactory<T> : Atk.ObjectFactory
     {
         public static void Init ()
@@ -167,4 +170,5 @@ namespace Hyena.Data.Gui
             return ListViewAccessible<T>.GType;
         }
     }
+#endif
 }

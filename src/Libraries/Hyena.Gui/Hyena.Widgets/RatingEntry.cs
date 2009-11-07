@@ -49,7 +49,9 @@ namespace Hyena.Widgets
 
         static RatingEntry ()
         {
+#if ENABLE_ATK
             RatingAccessibleFactory.Init ();
+#endif
         }
         
         public RatingEntry () : this (0) 
@@ -435,6 +437,7 @@ namespace Hyena.Widgets
         }
     }
 
+#if ENABLE_ATK
     internal class RatingAccessibleFactory : Atk.ObjectFactory
     {
         public static void Init ()
@@ -453,6 +456,7 @@ namespace Hyena.Widgets
             return RatingAccessible.GType;
         }
     }
+#endif
 
     [Hyena.Gui.TestModule ("Rating Entry")]
     internal class RatingEntryTestModule : Gtk.Window

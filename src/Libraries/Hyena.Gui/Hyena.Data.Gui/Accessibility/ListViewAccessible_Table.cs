@@ -125,7 +125,7 @@ namespace Hyena.Data.Gui.Accessibility
         }
 
 // Ensure https://bugzilla.novell.com/show_bug.cgi?id=512477 is fixed
-#if ATK_TABLE_OK
+#if ENABLE_ATK
         private static readonly int [] empty_int_array = new int[0];
         public int [] SelectedColumns {
             get { return empty_int_array; }
@@ -135,6 +135,8 @@ namespace Hyena.Data.Gui.Accessibility
             get { return list_view.Selection.ToArray (); }
         }
 #else
+        public int GetSelectedRows (out int row) { row = 0; return 0; }
+        public int GetSelectedColumns (out int cols) { cols = 0; return 0; }
 #endif
 
         public bool IsColumnSelected (int column)

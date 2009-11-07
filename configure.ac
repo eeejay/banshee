@@ -127,6 +127,11 @@ else
 	AM_CONDITIONAL(ENABLE_GNOME, false)
 fi
 
+AC_ARG_ENABLE(custom-widget-a11y, 
+	AC_HELP_STRING([--enable-custom-widget-a11y], [Enable custom widget accessibility]), 
+	enable_atk="yes", enable_atk="no")
+AM_CONDITIONAL(ENABLE_ATK, test "x$enable_atk" = "xyes")
+
 dnl DAP support (each module is optional)
 BANSHEE_CHECK_DAP_MTP
 BANSHEE_CHECK_DAP_IPOD
@@ -324,6 +329,7 @@ ${PACKAGE}-${VERSION}
 
   Build/Development:
     Unit Tests:        ${do_tests} (requires nunit >= ${NUNIT_REQUIRED})
+    Custom a11y:       ${enable_atk} (requires gtk-sharp 2.12 from svn with patch from BNC 512477)
     Release Build:     ${enable_release}
     Vendor Build ID:   ${vendor_build_id}
 
