@@ -93,6 +93,7 @@ namespace Bacon
             
             BuildButton();
             BuildPopup(min, max, step);
+            Accessible.Name = Catalog.GetString ("Volume");
             
             WidgetEventAfter += OnWidgetEventAfter;
         }

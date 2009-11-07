@@ -29,9 +29,11 @@
 using System;
 using Gtk;
 using Cairo;
+using Mono.Unix;
 
 using Hyena.Gui;
 using Hyena.Data.Gui;
+using Hyena.Data.Gui.Accessibility;
 using Banshee.Gui;
 
 using Banshee.Streaming;
@@ -40,6 +42,58 @@ using Banshee.ServiceStack;
 
 namespace Banshee.Collection.Gui
 {
+    class ColumnCellStatusIndicatorAccessible : ColumnCellAccessible, Atk.ImageImplementor
+    {
+        private string image_description;
+
+        public ColumnCellStatusIndicatorAccessible (object bound_object, ColumnCellStatusIndicator cell, ICellAccessibleParent parent) : base (bound_object, cell as ColumnCell, parent)
+        {
+            image_description = cell.GetTextAlternative (bound_object);
+        }
+
+        public override void Redrawn ()
+        {
+            string new_image_description = cell.GetTextAlternative (bound_object);
+
+            if (image_description != new_image_description)
+                GLib.Signal.Emit (this, "visible-data-changed");
+
+            image_description = new_image_description;
+        }
+
+        public string ImageLocale { get { return null; } }
+
+        public bool SetImageDescription (string description)
+        {
+            return false;
+        }
+
+        public void GetImageSize (out int width, out int height)
+        {
+            if (!String.IsNullOrEmpty (cell.GetTextAlternative (bound_object)))
+                width = height = 16;
+            else
+                width = height = Int32.MinValue;
+        }
+
+        public string ImageDescription {
+            get {
+                return image_description;
+            }
+        }
+
+        public void GetImagePosition (out int x, out int y, Atk.CoordType coordType)
+        {
+            if (!String.IsNullOrEmpty (cell.GetTextAlternative (bound_object))) {
+                GetPosition (out x, out y, coordType);
+                x += 4;
+                y += 4;
+            } else {
+                x = y = Int32.MinValue;
+            }
+        }
+    }
+
     public class ColumnCellStatusIndicator : ColumnCell, ISizeRequestCell
     {
         const int padding = 2;
@@ -50,6 +104,11 @@ namespace Banshee.Collection.Gui
             Error,
             Protected
         }
+
+        private string [] icon_names = new string[] {
+            Catalog.GetString ("Playing"), Catalog.GetString ("Paused"),
+            Catalog.GetString ("Error"), Catalog.GetString ("Protected"), ""
+        };
         
         private int pixbuf_size = 16;
         protected virtual int PixbufSize {
@@ -84,14 +143,47 @@ namespace Banshee.Collection.Gui
         {
             min_width = max_width = pixbuf_size + 2 * padding;
         }
-        
+
+        public override Atk.Object GetAccessible (ICellAccessibleParent parent)
+        {
+            return new ColumnCellStatusIndicatorAccessible (BoundObject, this, parent);
+        }
+
+        public override string GetTextAlternative (object obj)
+        {
+            var track = obj as TrackInfo;
+            if (track == null)
+                return "";
+
+            int icon_index = GetIconIndex (track);
+
+            if (icon_index < 0)
+                return "";
+            else
+                return icon_names[GetIconIndex (track)];
+        }
+
         protected virtual int PixbufCount {
             get { return 4; }
         }
         
         protected virtual int GetIconIndex (TrackInfo track)
         {
-            return -1;
+            int icon_index = -1;
+
+            if (track.PlaybackError != StreamPlaybackError.None) {
+                icon_index = (int)(track.PlaybackError == StreamPlaybackError.Drm
+                    ? Icon.Protected
+                    : Icon.Error);
+            } else if (track.IsPlaying) {
+                icon_index = (int)(ServiceManager.PlayerEngine.CurrentState == PlayerState.Paused
+                    ? Icon.Paused
+                    : Icon.Playing);
+            } else {
+                icon_index = -1;
+            }
+
+            return icon_index;
         }
         
         protected virtual void LoadPixbufs ()
@@ -109,9 +201,9 @@ namespace Banshee.Collection.Gui
                 pixbufs = new Gdk.Pixbuf[PixbufCount];
             }
             
-            pixbufs[(int)Icon.Playing] = IconThemeUtils.LoadIcon (PixbufSize, "media-playback-start");
-            pixbufs[(int)Icon.Paused] = IconThemeUtils.LoadIcon (PixbufSize, "media-playback-pause");
-            pixbufs[(int)Icon.Error] = IconThemeUtils.LoadIcon (PixbufSize, "emblem-unreadable", "dialog-error");
+            pixbufs[(int)Icon.Playing]   = IconThemeUtils.LoadIcon (PixbufSize, "media-playback-start");
+            pixbufs[(int)Icon.Paused]    = IconThemeUtils.LoadIcon (PixbufSize, "media-playback-pause");
+            pixbufs[(int)Icon.Error]     = IconThemeUtils.LoadIcon (PixbufSize, "emblem-unreadable", "dialog-error");
             pixbufs[(int)Icon.Protected] = IconThemeUtils.LoadIcon (PixbufSize, "emblem-readonly", "dialog-error");
         }
         
@@ -127,19 +219,7 @@ namespace Banshee.Collection.Gui
                 return;
             }
             
-            int icon_index = -1;
-
-            if (track.PlaybackError != StreamPlaybackError.None) {
-                icon_index = (int)(track.PlaybackError == StreamPlaybackError.Drm
-                    ? Icon.Protected
-                    : Icon.Error);
-            } else if (track.IsPlaying) {
-                icon_index = (int)(ServiceManager.PlayerEngine.CurrentState == PlayerState.Paused
-                    ? Icon.Paused
-                    : Icon.Playing);
-            } else {
-                icon_index = GetIconIndex (track);
-            }
+            int icon_index = GetIconIndex (track);
             
             if (icon_index < 0 || pixbufs == null || pixbufs[icon_index] == null) {
                 return;
@@ -167,7 +247,7 @@ namespace Banshee.Collection.Gui
                 context.Context.Fill ();
             }
         }
-        
+
         protected TrackInfo BoundTrack {
             get { return BoundObject as TrackInfo; }
         }

@@ -149,6 +149,15 @@
     <Compile Include="Hyena.Gui.Theatrics\Pulsator.cs" />
     <Compile Include="Hyena.Gui\PixbufImageSurface.cs" />
     <Compile Include="Hyena.Widgets\TextViewEditable.cs" />
+    <Compile Include="Hyena.Data.Gui\ListView\ListView_Accessible.cs" />
+    <Compile Include="Hyena.Gui\BaseWidgetAccessible.cs" />
+    <Compile Include="Hyena.Data.Gui\Accessibility\ColumnCellAccessible.cs" />
+    <Compile Include="Hyena.Data.Gui\Accessibility\ListViewAccessible.cs" />
+    <Compile Include="Hyena.Data.Gui\Accessibility\ICellAccessibleParent.cs" />
+    <Compile Include="Hyena.Data.Gui\Accessibility\ListViewAccessible_Table.cs" />
+    <Compile Include="Hyena.Data.Gui\Accessibility\ListViewAccessible_Selection.cs" />
+    <Compile Include="Hyena.Data.Gui\Accessibility\ColumnCellTextAccessible.cs" />
+    <Compile Include="Hyena.Data.Gui\Accessibility\ColumnHeaderCellTextAccessible.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
@@ -167,4 +176,7 @@
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
+  <ItemGroup>
+    <Folder Include="Hyena.Data.Gui\Accessibility\" />
+  </ItemGroup>
 </Project>

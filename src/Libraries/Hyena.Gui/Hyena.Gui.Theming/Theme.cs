@@ -114,9 +114,13 @@ namespace Hyena.Gui.Theming
         
         public abstract void DrawFrameBorder (Cairo.Context cr, Gdk.Rectangle alloc);
         
+        public abstract void DrawFrameBorderFocused (Cairo.Context cr, Gdk.Rectangle alloc);
+
         public abstract void DrawHeaderBackground (Cairo.Context cr, Gdk.Rectangle alloc);
+
+        public abstract void DrawColumnHeaderFocus (Cairo.Context cr, Gdk.Rectangle alloc);
         
-        public abstract void DrawHeaderSeparator(Cairo.Context cr, Gdk.Rectangle alloc, int x);
+        public abstract void DrawHeaderSeparator (Cairo.Context cr, Gdk.Rectangle alloc, int x);
         
         public void DrawListBackground (Cairo.Context cr, Gdk.Rectangle alloc, bool baseColor)
         {
@@ -137,7 +141,7 @@ namespace Hyena.Gui.Theming
         
         public void DrawColumnHighlight (Cairo.Context cr, Gdk.Rectangle alloc)
         {
-            DrawColumnHighlight (cr, alloc, colors.GetWidgetColor(GtkColorClass.Background, StateType.Selected));
+            DrawColumnHighlight (cr, alloc, colors.GetWidgetColor (GtkColorClass.Background, StateType.Selected));
         }
         
         public abstract void DrawColumnHighlight (Cairo.Context cr, Gdk.Rectangle alloc, Cairo.Color color);
@@ -158,7 +162,19 @@ namespace Hyena.Gui.Theming
         {
             DrawRowSelection (cr, x, y, width, height, filled, stroked, color, CairoCorners.All);
         }
-        
+
+        public void DrawRowCursor (Cairo.Context cr, int x, int y, int width, int height)
+        {
+            DrawRowCursor (cr, x, y, width, height, colors.GetWidgetColor (GtkColorClass.Background, StateType.Selected));
+        }
+
+        public void DrawRowCursor (Cairo.Context cr, int x, int y, int width, int height, Cairo.Color color)
+        {
+            DrawRowCursor (cr, x, y, width, height, color, CairoCorners.All);
+        }
+
+        public abstract void DrawRowCursor (Cairo.Context cr, int x, int y, int width, int height, Cairo.Color color, CairoCorners corners);
+
         public abstract void DrawRowSelection (Cairo.Context cr, int x, int y, int width, int height,
             bool filled, bool stroked, Cairo.Color color, CairoCorners corners);
         

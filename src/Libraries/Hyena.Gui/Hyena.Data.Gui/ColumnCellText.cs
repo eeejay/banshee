@@ -32,6 +32,7 @@ using Cairo;
 
 using Hyena.Gui;
 using Hyena.Gui.Theming;
+using Hyena.Data.Gui.Accessibility;
 
 namespace Hyena.Data.Gui
 {
@@ -53,6 +54,16 @@ namespace Hyena.Data.Gui
         
         public ColumnCellText (string property, bool expand) : base (property, expand)
         {
+        }
+
+        public override Atk.Object GetAccessible (ICellAccessibleParent parent)
+        {
+            return new ColumnCellTextAccessible (BoundObject, this, parent);
+        }
+
+        public override string GetTextAlternative (object obj)
+        {
+            return GetText (obj);
         }
 
         public void SetMinMaxStrings (object min_max)
