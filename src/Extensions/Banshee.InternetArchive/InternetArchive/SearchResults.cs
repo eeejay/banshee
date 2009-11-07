@@ -58,8 +58,8 @@ namespace InternetArchive
             if (response != null) {
                 results = response.Get<JsonArray> ("docs");
 
-                TotalResults = (int) response.Get<double> ("numFound");
-                Offset = (int) response.Get<double> ("start");
+                TotalResults = response.Get<int> ("numFound");
+                Offset = response.Get<int> ("start");
             }
         }
 

@@ -72,7 +72,7 @@ namespace InternetArchive
         }
 
         public int Downloads {
-            get { return (int) Get<double> (Field.Downloads); }
+            get { return Get<int> (Field.Downloads); }
         }
 
         public double AvgRating {
@@ -96,7 +96,7 @@ namespace InternetArchive
         }
 
         public int Year {
-            get { return (int) Get<double> (Field.Year); }
+            get { return Get<int> (Field.Year); }
         }
 
         public T Get<T> (Field field)

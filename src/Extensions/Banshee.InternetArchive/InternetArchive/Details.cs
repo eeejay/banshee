@@ -129,15 +129,15 @@ namespace InternetArchive
         }
 
         public long DownloadsAllTime {
-            get { return (int)item.Get<double> ("downloads"); }
+            get { return item.Get<int> ("downloads"); }
         }
 
         public long DownloadsLastMonth {
-            get { return (int)item.Get<double> ("month"); }
+            get { return item.Get<int> ("month"); }
         }
 
         public long DownloadsLastWeek {
-            get { return (int)item.Get<double> ("week"); }
+            get { return item.Get<int> ("week"); }
         }
 
         public DateTime DateCreated {

@@ -46,11 +46,11 @@ namespace InternetArchive
         }
 
         public long Id {
-            get { return (long) review.Get<double> ("review_id"); }
+            get { return review.Get<int> ("review_id"); }
         }
 
         public int Stars {
-            get { return (int) review.Get<double> ("stars"); }
+            get { return review.Get<int> ("stars"); }
         }
 
         public string Title {
