@@ -85,6 +85,7 @@ namespace Lastfm.Gui
         
             login_form = new AccountLoginForm (account);
             login_form.AddSignUpButton ();
+            login_form.AddAuthorizeButton ();
             login_form.Show ();
             
             vbox.PackStart (login_form, true, true, 0);
@@ -112,7 +113,6 @@ namespace Lastfm.Gui
                     login_form.Save ();
                 };
                 AddActionWidget (button, ResponseType.Ok);
-                login_form.SaveOnEnter (this);
             }
         }
         
@@ -132,6 +132,11 @@ namespace Lastfm.Gui
             login_form.AddSignUpButton ();
         }
         
+        public void AddAuthorizeButton ()
+        {
+            login_form.AddAuthorizeButton ();
+        }
+        
         public string Message {
             get { return message.Text; }
             set { message.Text = value; }
@@ -144,10 +149,6 @@ namespace Lastfm.Gui
         
         public string Username {
             get { return login_form.Username; }
-        }
-        
-        public string Password {
-            get { return login_form.Password; }
         }
     }
 }

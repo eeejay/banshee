@@ -31,39 +31,33 @@ using System;
 using System.Collections;
 using System.Text;
 
+using Hyena;
+
 namespace Lastfm
 {
     public class Account
-    {    
+    {
         public event EventHandler Updated;
 
+        // Only used during the authentication process
+        private string authentication_token;
+        
         private string username;
         public string UserName {
             get { return username; }
             set { username = value; }
         }
 
-        private string password; 
-        public string Password {
-            get { return password; }
-            set { password = value; }
+        private string session_key;
+        public string SessionKey {
+            get { return session_key; }
+            set { session_key = value; }
         }
 
-        public string CryptedPassword {
-            get {
-                // Okay, so this will explode if someone has a raw text password 
-                // that matches ^[a-f0-9]{32}$ ... likely? I hope not.
-            
-                if (password == null) {
-                    return null;
-                } else if (Hyena.CryptoUtil.IsMd5Encoded (password)) {
-                    return password;
-                }
-                
-                password = Hyena.CryptoUtil.Md5Encode (password);
-                return password;
-            }
-            set { password = String.IsNullOrEmpty (value) ? null : value; }
+        private bool subscriber;
+        public bool Subscriber {
+            get { return subscriber; }
+            set { subscriber = value; }
         }
 
         private string scrobble_url;
@@ -100,6 +94,51 @@ namespace Lastfm
             OnUpdated ();
         }
 
+        public StationError RequestAuthorization ()
+        {
+            LastfmRequest get_token = new LastfmRequest ("auth.getToken", RequestType.Read, ResponseFormat.Json);
+            get_token.Send ();
+            
+            var response = get_token.GetResponseObject ();
+            object error_code;
+            if (response.TryGetValue ("error", out error_code)) {
+                Log.WarningFormat ("Lastfm error {0} : {1}", (int)error_code, (string)response["message"]);
+                return (StationError) error_code;
+            }
+            
+            authentication_token = (string)response["token"];
+            Browser.Open (String.Format ("http://www.last.fm/api/auth/?api_key={0}&token={1}", LastfmCore.ApiKey, authentication_token));
+
+            return StationError.None;
+        }
+
+        public StationError FetchSessionKey ()
+        {
+            if (authentication_token == null) {
+                throw new InvalidOperationException ("RequestAuthorization should be called before calling FetchSessionKey");
+            }
+            
+            LastfmRequest get_session = new LastfmRequest ("auth.getSession", RequestType.SessionRequest, ResponseFormat.Json);
+            get_session.AddParameter ("token", authentication_token);
+            get_session.Send ();
+            var response = get_session.GetResponseObject ();
+            object error_code;
+            if (response.TryGetValue ("error", out error_code)) {
+                Log.WarningFormat ("Lastfm error {0} : {1}", (int)error_code, (string)response["message"]);
+                return (StationError) error_code;
+            }
+            
+            var session = (Hyena.Json.JsonObject)response["session"];
+            UserName = (string)session["name"];
+            SessionKey = (string)session["key"];
+            Subscriber = session["subscriber"].ToString ().Equals ("1");
+
+            // The authentication token is only valid once, and for a limited time
+            authentication_token = null;
+            
+            return StationError.None;
+        }
+        
         protected void OnUpdated ()
         {
             EventHandler handler = Updated;

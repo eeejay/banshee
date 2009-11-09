@@ -60,7 +60,7 @@ namespace Lastfm
         private const string CLIENT_ID = "bsh";
         private const string CLIENT_VERSION = "0.1";
         private const string SCROBBLER_URL = "http://post.audioscrobbler.com/";
-        private const string SCROBBLER_VERSION = "1.2";
+        private const string SCROBBLER_VERSION = "1.2.1";
 
         private string post_url;
         private string session_id = null;
@@ -184,7 +184,7 @@ namespace Lastfm
             switch (state) {
             case State.Idle:
                 if (LastfmCore.Account.UserName != null &&
-                    LastfmCore.Account.CryptedPassword != null && session_id == null) {
+                    LastfmCore.Account.SessionKey != null && session_id == null) {
                     
                     state = State.NeedHandshake;
                 } else {
@@ -383,8 +383,8 @@ namespace Lastfm
         private void Handshake ()
         {
             string timestamp = UnixTime();
-            string security_token = Hyena.CryptoUtil.Md5Encode
-                (LastfmCore.Account.CryptedPassword + timestamp);
+            string authentication_token = Hyena.CryptoUtil.Md5Encode
+                (LastfmCore.ApiSecret + timestamp);
             
             string api_url = LastfmCore.Account.ScrobbleUrl;
             if (String.IsNullOrEmpty (api_url)) {
@@ -393,13 +393,15 @@ namespace Lastfm
                 Log.DebugFormat ("Scrobbling to non-standard API URL: {0}", api_url);
             }
 
-            string uri = String.Format ("{0}?hs=true&p={1}&c={2}&v={3}&u={4}&t={5}&a={6}",
+            string uri = String.Format ("{0}?hs=true&p={1}&c={2}&v={3}&u={4}&t={5}&a={6}&api_key={7}&sk={8}",
                                         api_url,
                                         SCROBBLER_VERSION,
                                         CLIENT_ID, CLIENT_VERSION,
                                         HttpUtility.UrlEncode (LastfmCore.Account.UserName),
                                         timestamp,
-                                        security_token);
+                                        authentication_token,
+                                        LastfmCore.ApiKey,
+                                        LastfmCore.Account.SessionKey);
 
             current_web_req = (HttpWebRequest) WebRequest.Create (uri);
 
@@ -443,8 +445,8 @@ namespace Lastfm
                 Log.Warning ("Audioscrobbler sign-on failed", "Player is banned", false);
                                    
             } else if (line.StartsWith ("BADAUTH")) {
-                Log.Warning ("Audioscrobbler sign-on failed", Catalog.GetString ("Last.fm username or password is invalid."));
-                LastfmCore.Account.CryptedPassword = null;
+                Log.Warning ("Audioscrobbler sign-on failed", Catalog.GetString ("Last.fm username is invalid or Banshee is not authorized to access you account."));
+                LastfmCore.Account.SessionKey = null;
             } else if (line.StartsWith ("BADTIME")) {
                 Log.Warning ("Audioscrobbler sign-on failed", 
                                                   "timestamp provided was not close enough to the current time", false);
@@ -518,7 +520,6 @@ namespace Lastfm
                                         str_track_number,
                                         mbrainzid);
 
-            Console.WriteLine ("Submitting via non-uri handler.");            
             NowPlaying (data);
         }
         
@@ -621,7 +622,7 @@ namespace Lastfm
                     String.Format("Failed to post NowPlaying: {0}", e), false);
             }
             
-            // NowPlaying error/success is non-crutial.
+            // NowPlaying error/success is non-crucial.
             hard_failures++;
             if (hard_failures < 3) {
                 NowPlaying (current_now_playing_data);

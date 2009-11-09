@@ -38,6 +38,7 @@ using System.Web;
 using System.Threading;
 
 using Hyena;
+using Hyena.Json;
 using Mono.Unix;
 
 using Media.Playlists.Xspf;
@@ -59,21 +60,38 @@ namespace Lastfm
         NoAccount,
         NoNetwork,
         InvalidAccount,
+        NotAuthorized,
         Connecting,
         Connected
     };
 
-    // Error codes returned when trying to adjust.php to a new station
+    // Error codes returned by the API methods
     public enum StationError
     {
         None = 0,
-        NotEnoughContent = 1,
-        FewGroupMembers,
-        FewFans,
-        Unavailable,
-        Subscribe,
-        FewNeighbors,
-        Offline,
+        NotUsed = 1,
+        InvalidService,
+        InvalidMethod,
+        AuthenticationFailed,
+        InvalidFormat,
+        InvalidParameters,
+        InvalidResource,
+        TokenFailure,
+        InvalidSessionKey,
+        InvalidApiKey,
+        ServiceOffline,
+        SubscriptionError,
+        InvalidSignature,
+        TokenNotAuthorized,
+        ExpiredToken,
+
+        SubscriptionRequired = 18,
+
+        NotEnoughContent = 20,
+        NotEnoughMembers,
+        NotEnoughFans,
+        NotEnoughNeighbours,
+        
         Unknown // not an official code, just the fall back
     }
 
@@ -83,18 +101,8 @@ namespace Lastfm
         public event StateChangedHandler StateChanged;
 
         private ConnectionState state;
-        private string session;
-        private string base_url;
-        private string base_path;
         private string info_message;
         private bool network_connected = false;
-
-        private static Regex station_error_regex = new Regex ("error=(\\d+)", RegexOptions.Compiled);
-        
-        private bool subscriber;
-        public bool Subscriber {
-            get { return subscriber; }
-        }
 
         public string InfoMessage {
             get { return info_message; }
@@ -143,8 +151,13 @@ namespace Lastfm
             if (State == ConnectionState.Connecting || State == ConnectionState.Connected)
                 return;
 
-            if (LastfmCore.Account.UserName == null || LastfmCore.Account.CryptedPassword == null) {
+            if (LastfmCore.Account.UserName == null) {
                 State = ConnectionState.NoAccount;
+                return;
+            }
+            
+            if (LastfmCore.Account.SessionKey == null) {
+                State = ConnectionState.NotAuthorized;
                 return;
             }
 
@@ -153,16 +166,13 @@ namespace Lastfm
                 return;
             }
 
-            // Otherwise, we're good to try to connect
-            State = ConnectionState.Connecting;
-            Handshake ();
+            // Otherwise, we're good and consider ourselves connected
+            State = ConnectionState.Connected;
         }
 
-        public bool Love    (string artist, string title) { return PostTrackRequest ("loveTrack", artist, title); }
-        public bool UnLove  (string artist, string title) { return PostTrackRequest ("unLoveTrack", artist, title); }
-        public bool Ban     (string artist, string title) { return PostTrackRequest ("banTrack", artist, title); }
-        public bool UnBan   (string artist, string title) { return PostTrackRequest ("unBanTrack", artist, title); }
-
+        public bool Love    (string artist, string title) { return PostTrackRequest ("love", artist, title); }
+        public bool Ban     (string artist, string title) { return PostTrackRequest ("ban", artist, title); }
+        
         public StationError ChangeStationTo (string station)
         {
             lock (this) {
@@ -170,18 +180,13 @@ namespace Lastfm
                     return StationError.None;
 
                 try {
-                    Stream stream = Get (StationUrlFor (station));
-                    using (StreamReader strm = new StreamReader (stream)) {
-                        string body = strm.ReadToEnd ();
-                        if (body.IndexOf ("response=OK") == -1) {
-                            Match match = station_error_regex.Match (body);
-                            if (match.Success) {
-                                int i = Int32.Parse (match.Groups[1].Value);
-                                return (StationError) i;
-                            } else {
-                                return StationError.Unknown;
-                            }
-                        }
+                    
+                    LastfmRequest radio_tune = new LastfmRequest ("radio.tune", RequestType.Write, ResponseFormat.Json);
+                    radio_tune.AddParameter ("station", station);
+                    radio_tune.Send ();
+                    StationError error = radio_tune.GetError ();
+                    if (error != StationError.None) {
+                        return error;
                     }
 
                     this.station = station;
@@ -199,18 +204,19 @@ namespace Lastfm
                 if (station != Station)
                     return null;
 
-                string url = StationRefreshUrl;
                 Playlist pl = new Playlist ();
                 Stream stream = null;
+                LastfmRequest radio_playlist = new LastfmRequest ("radio.getPlaylist", RequestType.AuthenticatedRead, ResponseFormat.Raw);
                 try {
-                    stream = GetXspfStream (url);
+                    radio_playlist.Send ();
+                    stream = radio_playlist.GetResponseStream ();
                     pl.Load (stream);
                     Log.Debug (String.Format ("Adding {0} Tracks to Last.fm Station {1}", pl.TrackCount, station), null);
                 } catch (System.Net.WebException e) {
                     Log.Warning ("Error Loading Last.fm Station", e.Message, false);
                     return null;
                 } catch (Exception e) {
-                    string body = "Unable to get body";
+                    string body = null;
                     try {
                         using (StreamReader strm = new StreamReader (stream)) {
                             body = strm.ReadToEnd ();
@@ -218,7 +224,7 @@ namespace Lastfm
                     } catch {}
                     Log.Warning (
                         "Error loading station",
-                        String.Format ("Exception:\n{0}\n\nResponse Body:\n{1}", e.ToString (), body), false
+                        String.Format ("Exception:\n{0}\n\nResponse:\n{1}", e.ToString (), body ?? "Unable to get response"), false
                     );
                     return null;
                 }
@@ -231,8 +237,7 @@ namespace Lastfm
 
         private void Initialize ()
         {
-            subscriber = false;
-            base_url = base_path = session = station = info_message = null;
+            station = info_message = null;
         }
 
         private void HandleAccountUpdated (object o, EventArgs args)
@@ -256,195 +261,47 @@ namespace Lastfm
             }
         }
 
-        private void Handshake ()
-        {
-            ThreadPool.QueueUserWorkItem (delegate {
-                try {
-                    Stream stream = Get (String.Format (
-                        "http://ws.audioscrobbler.com/radio/handshake.php?version={0}&platform={1}&username={2}&passwordmd5={3}&language={4}&session=324234",
-                        "1.1.1",
-                        "linux", // FIXME
-                        LastfmCore.Account.UserName, LastfmCore.Account.CryptedPassword,
-                        "en" // FIXME
-                    ));
-
-                    // Set us as connecting, assuming the connection attempt wasn't changed out from under us
-                    if (ParseHandshake (new StreamReader (stream).ReadToEnd ()) && session != null) {
-                        State = ConnectionState.Connected;
-                        Log.Debug (String.Format ("Logged into Last.fm as {0} ({1}subscriber)",
-                            LastfmCore.Account.UserName, subscriber ? null : "not a "), null);
-                        return;
-                    }
-                } catch (Exception e) {
-                    Log.Debug ("Error in Last.fm Handshake", e.ToString ());
-                }
-                
-                // Must not have parsed correctly
-                Initialize ();
-                if (State == ConnectionState.Connecting)
-                    State = ConnectionState.Disconnected;
-            });
-        }
-
-        private bool ParseHandshake (string content) 
-        {
-            string [] lines = content.Split (new Char[] {'\n'});
-            foreach (string line in lines) {
-                string [] opts = line.Split (new Char[] {'='});
-
-                switch (opts[0].Trim ().ToLower ()) {
-                case "session":
-                    if (opts[1].ToLower () == "failed") {
-                        session = null;
-                        State = ConnectionState.InvalidAccount;
-                        Log.Warning (
-                            Catalog.GetString ("Failed to Login to Last.fm"),
-                            Catalog.GetString ("Either your username or password is invalid."),
-                            false
-                        );
-                        LastfmCore.Account.CryptedPassword = null;
-                        return false;
-                    }
-
-                    session = opts[1];
-                    break;
-
-                case "stream_url":
-                    //stream_url = opts[1];
-                    break;
-
-                case "subscriber":
-                    subscriber = (opts[1] != "0");
-                    break;
-
-                case "base_url":
-                    base_url = opts[1];
-                    break;
-
-                case "base_path":
-                    base_path = opts[1];
-                    break;
-                    
-                case "info_message":
-                    info_message = opts[1];
-                    break;
-
-                default:
-                    break;
-                }
-            }
-
-            return true;
-        }
-
-        // Basic HTTP helpers
-
-        private HttpStatusCode Post (string uri, string body)
-        {
-            if (!network_connected) {
-                //throw new NetworkUnavailableException ();
-                return HttpStatusCode.RequestTimeout;
-            }
-        
-            HttpWebRequest request = (HttpWebRequest) WebRequest.Create (uri);
-            request.UserAgent = LastfmCore.UserAgent;
-            request.Timeout = 10000;
-            request.Method = "POST";
-            request.KeepAlive = false;
-            request.ContentLength = body.Length;
-
-            using (StreamWriter writer = new StreamWriter (request.GetRequestStream ())) {
-                writer.Write (body);
-            }
-
-            HttpWebResponse response = (HttpWebResponse) request.GetResponse ();
-            using (Stream stream = response.GetResponseStream ()) {
-                /*using (StreamReader reader = new StreamReader (stream)) {
-                    Console.WriteLine ("Posted {0} got response {1}", body, reader.ReadToEnd ());
-                }*/
-            }
-            return response.StatusCode;
-        }
-
-        private Stream GetXspfStream (string uri)
-        {
-            return Get (uri, "application/xspf+xml");
-        }
-
-        private Stream Get (string uri)
-        {
-            return Get (uri, null);
-        }
-
-        private Stream Get (string uri, string accept)
-        {
-            if (!network_connected) {
-                //throw new NetworkUnavailableException ();
-                return null;
-            }
-        
-            HttpWebRequest request = (HttpWebRequest) WebRequest.Create (uri);
-            if (accept != null) {
-                request.Accept = accept;
-            }
-            request.UserAgent = LastfmCore.UserAgent;
-            request.Timeout = 10000;
-            request.KeepAlive = false;
-            request.AllowAutoRedirect = true;
-
-            HttpWebResponse response = (HttpWebResponse) request.GetResponse ();
-            return response.GetResponseStream ();
-        }
-
-        /* ArtistMetaDataRequest.cpp:    rpc.setMethod( "artistMetadata" );
-         * DeleteFriendRequest.cpp:    xmlrpc.setMethod( "removeFriend" );
-         * RecommendRequest.cpp:    xml_rpc.setMethod( "recommendItem" );
-         * SetTagRequest.cpp:            xml_rpc.setMethod( "tagArtist" );
-         * SetTagRequest.cpp:            xml_rpc.setMethod( "tagAlbum" );
-         * SetTagRequest.cpp:            xml_rpc.setMethod( "tagTrack" );
-         * SimilarTagsRequest.cpp:    xmlrpc.setMethod( "getSimilarTags" );
-         * TrackMetaDataRequest.cpp:    xmlrpc.setMethod( "trackMetadata" );
-         * TrackToIdRequest.cpp:    xmlrpc.setMethod( "trackToId" );
-         * UserPicturesRequest.cpp:    xmlrpc.setMethod( "getAvatarUrls" );
-         */
-
-
-        // URL generators for internal use
- 
-        private string XmlRpcUrl {
-            get { return String.Format ("http://{0}/1.0/rw/xmlrpc.php", base_url); }
-        }
-
-        private string StationUrlFor (string station) 
-        {
-            return String.Format (
-                "http://{0}{1}/adjust.php?session={2}&url={3}&lang=en",
-                base_url, base_path, session, HttpUtility.UrlEncode (station)
-            );
-        }
-
-        private string StationRefreshUrl {
-            get {
-                return String.Format (
-                    "http://{0}{1}/xspf.php?sk={2}&discovery=0&desktop=1.3.1.1",
-                    base_url, base_path, session
-                );
-            }
-        }
-
         // Translated error message strings
 
         public static string ErrorMessageFor (StationError error)
         {
             switch (error) {
-            case StationError.NotEnoughContent:  return Catalog.GetString ("There is not enough content to play this station.");
-            case StationError.FewGroupMembers:   return Catalog.GetString ("This group does not have enough members for radio.");
-            case StationError.FewFans:           return Catalog.GetString ("This artist does not have enough fans for radio.");
-            case StationError.Unavailable:       return Catalog.GetString ("This station is not available.");
-            case StationError.Subscribe:         return Catalog.GetString ("This station is only available to subscribers.");
-            case StationError.FewNeighbors:      return Catalog.GetString ("There are not enough neighbours for this station.");
-            case StationError.Offline:           return Catalog.GetString ("The streaming system is offline for maintenance, please try again later.");
-            case StationError.Unknown:           return Catalog.GetString ("There was an unknown error.");
+                case StationError.InvalidService:
+                case StationError.InvalidMethod:
+                    return Catalog.GetString ("This service does not exist.");
+                case StationError.AuthenticationFailed:
+                case StationError.SubscriptionError:
+                case StationError.SubscriptionRequired:
+                    return Catalog.GetString ("This station is only available to subscribers.");
+                case StationError.InvalidFormat:
+                    return Catalog.GetString ("This station is not available.");
+                case StationError.InvalidParameters:
+                    return Catalog.GetString ("The request is missing a required parameter.");
+                case StationError.InvalidResource:
+                    return Catalog.GetString ("The specified resource is invalid.");
+                case StationError.TokenFailure:
+                    return Catalog.GetString ("Server error, please try again later.");
+                case StationError.InvalidSessionKey:
+                    return Catalog.GetString ("Invalid authentication information, please re-authenticate.");
+                case StationError.InvalidApiKey:
+                    return Catalog.GetString ("The API key used by this application is invalid.");
+                case StationError.ServiceOffline:
+                    return Catalog.GetString ("The streaming system is offline for maintenance, please try again later.");
+                case StationError.InvalidSignature:
+                    return Catalog.GetString ("The method signature is invalid.");
+                case StationError.TokenNotAuthorized:
+                case StationError.ExpiredToken:
+                    return Catalog.GetString ("You need to allow Banshee to access your Last.fm account.");
+                case StationError.NotEnoughContent:
+                    return Catalog.GetString ("There is not enough content to play this station.");
+                case StationError.NotEnoughMembers:
+                    return Catalog.GetString ("This group does not have enough members for radio.");
+                case StationError.NotEnoughFans:
+                    return Catalog.GetString ("This artist does not have enough fans for radio.");
+                case StationError.NotEnoughNeighbours:
+                    return Catalog.GetString ("There are not enough neighbours for this station.");
+                case StationError.Unknown:
+                    return Catalog.GetString ("There was an unknown error.");
             }
             return String.Empty;
         }
@@ -452,93 +309,36 @@ namespace Lastfm
         public static string MessageFor (ConnectionState state)
         {
             switch (state) {
-            case ConnectionState.Disconnected:      return Catalog.GetString ("Not connected to Last.fm.");
-            case ConnectionState.NoAccount:         return Catalog.GetString ("Account details are needed before you can connect to Last.fm");
-            case ConnectionState.NoNetwork:         return Catalog.GetString ("No network connection detected.");
-            case ConnectionState.InvalidAccount:    return Catalog.GetString ("Last.fm username or password is invalid.");
-            case ConnectionState.Connecting:        return Catalog.GetString ("Connecting to Last.fm.");
-            case ConnectionState.Connected:         return Catalog.GetString ("Connected to Last.fm.");
+                case ConnectionState.Disconnected:
+                    return Catalog.GetString ("Not connected to Last.fm.");
+                case ConnectionState.NoAccount:
+                    return Catalog.GetString ("Account details are needed before you can connect to Last.fm");
+                case ConnectionState.NoNetwork:
+                    return Catalog.GetString ("No network connection detected.");
+                case ConnectionState.InvalidAccount:
+                    return Catalog.GetString ("Last.fm username is invalid.");
+                case ConnectionState.NotAuthorized:
+                    return Catalog.GetString ("You need to allow Banshee to access your Last.fm account.");
+                case ConnectionState.Connecting:
+                    return Catalog.GetString ("Connecting to Last.fm.");
+                case ConnectionState.Connected:
+                    return Catalog.GetString ("Connected to Last.fm.");
             }
             return String.Empty;
         }
 
-        // XML-RPC foo
-
         private bool PostTrackRequest (string method, string artist, string title)
-        {
-            return PostXmlRpc (LastFMXmlRpcRequest (method).AddStringParams (artist, title));
-        }
-
-        private bool PostXmlRpc (LameXmlRpcRequest request)
         {
             if (State != ConnectionState.Connected)
                 return false;
 
-            return Post (XmlRpcUrl, request.ToString ()) == HttpStatusCode.OK;
-        }
+            // track.love and track.ban do not return JSON
+            LastfmRequest track_request = new LastfmRequest (String.Concat ("track.", method), RequestType.Write, ResponseFormat.Raw);
+            track_request.AddParameter ("track", title);
+            track_request.AddParameter ("artist", artist);
+            track_request.Send ();
 
-        private string UnixTime ()
-        {
-            return ((int) (DateTime.Now - new DateTime (1970, 1, 1)).TotalSeconds).ToString ();
-        }
-
-        private LameXmlRpcRequest LastFMXmlRpcRequest (string method)
-        {
-            string time = UnixTime ();
-            string auth_hash = Hyena.CryptoUtil.Md5Encode (LastfmCore.Account.CryptedPassword + time);
-            return new LameXmlRpcRequest (method).AddStringParams (LastfmCore.Account.UserName, time, auth_hash);
-        }
-
-        protected class LameXmlRpcRequest
-        {
-            private StringBuilder sb = new StringBuilder ();
-            public LameXmlRpcRequest (string method_name)
-            {
-                sb.Append ("<?xml version=\"1.0\" encoding=\"us-ascii\"?>\n");
-                sb.Append ("<methodCall><methodName>");
-                sb.Append (Encode (method_name));
-                sb.Append ("</methodName>\n");
-                sb.Append ("<params>\n");
-            }
-
-            public LameXmlRpcRequest AddStringParams (params string [] values)
-            {
-                foreach (string value in values)
-                    AddStringParam (value);
-                return this;
-            }
-
-            public LameXmlRpcRequest AddStringParam (string value)
-            {
-                sb.Append ("<param><value><string>");
-                sb.Append (Encode (value));
-                sb.Append ("</string></value></param>\n");
-                return this;
-            }
-
-            public static string Encode (string val)
-            {
-                return HttpUtility.HtmlEncode (val);
-            }
-
-            private bool closed = false;
-            public override string ToString ()
-            {
-                if (!closed) {
-                    sb.Append ("</params>\n</methodCall>");
-                    closed = true;
-                }
-
-                return sb.ToString ();
-            }
-        }
-    }
-
-    public sealed class StringUtils {
-        public static string StringToUTF8 (string s)
-        {
-            byte [] ba = (new UnicodeEncoding ()).GetBytes (s);
-            return System.Text.Encoding.UTF8.GetString (ba);
+            return (track_request.GetError () == StationError.None);
         }
     }
 }

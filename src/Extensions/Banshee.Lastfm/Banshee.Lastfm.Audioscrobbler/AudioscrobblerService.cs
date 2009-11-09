@@ -81,7 +81,7 @@ namespace Banshee.Lastfm.Audioscrobbler
             
             if (account.UserName == null) {
                 account.UserName = LastUserSchema.Get ();
-                account.CryptedPassword = LastPassSchema.Get ();
+                account.SessionKey = LastSessionKeySchema.Get ();
                 account.ScrobbleUrl = LastScrobbleUrlSchema.Get ();
             }
             
@@ -103,8 +103,7 @@ namespace Banshee.Lastfm.Audioscrobbler
             
             // Update the Visit action menu item if we update our account info
             LastfmCore.Account.Updated += delegate (object o, EventArgs args) {
-                actions["AudioscrobblerVisitAction"].Sensitive = LastfmCore.Account.UserName != null 
-                    && LastfmCore.Account.CryptedPassword != null;
+                actions["AudioscrobblerVisitAction"].Sensitive = String.IsNullOrEmpty (LastfmCore.Account.UserName);
             };
             
             ServiceManager.PlayerEngine.ConnectEvent (OnPlayerEvent, 
@@ -315,8 +314,8 @@ namespace Banshee.Lastfm.Audioscrobbler
             "plugins.lastfm", "username", "", "Last.fm user", "Last.fm username"
         );
 
-        public static readonly SchemaEntry<string> LastPassSchema = new SchemaEntry<string> (
-            "plugins.lastfm", "password_hash", "", "Last.fm password", "Last.fm password (hashed)"
+        public static readonly SchemaEntry<string> LastSessionKeySchema = new SchemaEntry<string> (
+            "plugins.lastfm", "session_key", "", "Last.fm session key", "Last.fm sessions key used in authenticated calls"
         );
    
         public static readonly SchemaEntry<string> LastScrobbleUrlSchema = new SchemaEntry<string> (

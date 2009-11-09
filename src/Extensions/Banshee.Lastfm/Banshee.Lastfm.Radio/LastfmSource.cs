@@ -76,7 +76,8 @@ namespace Banshee.Lastfm.Radio
             // username we used so we can load the user's stations.
             if (account.UserName != null) {
                 account.UserName = LastUserSchema.Get ();
-                account.CryptedPassword = LastPassSchema.Get ();
+                account.SessionKey = LastSessionKeySchema.Get ();
+                account.Subscriber = LastIsSubscriberSchema.Get ();
             }
 
             if (LastfmCore.UserAgent == null) {
@@ -169,9 +170,9 @@ namespace Banshee.Lastfm.Radio
         private bool last_was_subscriber = false;
         public void SetUserName (string username)
         {
-            if (username != last_username || last_was_subscriber != Connection.Subscriber) {
+            if (username != last_username || last_was_subscriber != Account.Subscriber) {
                 last_username = username;
-                last_was_subscriber = Connection.Subscriber;
+                last_was_subscriber = Account.Subscriber;
                 LastfmSource.LastUserSchema.Set (last_username);
                 ClearChildSources ();
                 PauseSorting ();
@@ -216,10 +217,11 @@ namespace Banshee.Lastfm.Radio
         private void UpdateUI ()
         {
             bool have_user = Account.UserName != null;
-            bool have_pass = Account.CryptedPassword != null;
+            bool have_session_key = Account.SessionKey != null;
             
-            if (have_pass) {
-                LastPassSchema.Set (Account.CryptedPassword);
+            if (have_session_key) {
+                LastSessionKeySchema.Set (Account.SessionKey);
+                LastIsSubscriberSchema.Set (Account.Subscriber);
             }
             
             if (have_user) {
@@ -269,8 +271,12 @@ namespace Banshee.Lastfm.Radio
             "plugins.lastfm", "username", "", "Last.fm user", "Last.fm username"
         );
 
-        public static readonly SchemaEntry<string> LastPassSchema = new SchemaEntry<string> (
-            "plugins.lastfm", "password_hash", "", "Last.fm password", "Last.fm password (hashed)"
+        public static readonly SchemaEntry<string> LastSessionKeySchema = new SchemaEntry<string> (
+            "plugins.lastfm", "session_key", "", "Last.fm session key", "Last.fm session key used in authenticated calls"
+        );
+
+        public static readonly SchemaEntry<bool> LastIsSubscriberSchema = new SchemaEntry<bool> (
+            "plugins.lastfm", "subscriber", false, "User is Last.fm subscriber", "User is Last.fm subscriber"
         );
 
         public static readonly SchemaEntry<bool> ExpandedSchema = new SchemaEntry<bool> (

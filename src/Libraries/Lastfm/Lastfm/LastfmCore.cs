@@ -32,6 +32,20 @@ namespace Lastfm
 {
     public static class LastfmCore
     {
+        // The default API key and secret are for a "Non-commercial Use" API account.
+        // See http://www.last.fm/api/account for more information.
+        private static string api_key = "344e9141fffeb02201e1ae455d92ae9f";
+        public static string ApiKey {
+            get { return api_key; }
+            set { api_key = value; }
+        }
+
+        private static string api_secret = "af3f4459eebbe1bde84fa9f8cf1a75fb";
+        internal static string ApiSecret {
+            get { return api_secret; }
+            set { api_secret = value; }
+        }
+
         private static Account account;
         public static Account Account {
             get {

@@ -89,7 +89,7 @@ namespace Banshee.Lastfm.Radio
             int active_type = 0;
             int i = 0;
             foreach (StationType type in StationType.Types) {
-                if (!type.SubscribersOnly || lastfm.Connection.Subscriber) {
+                if (!type.SubscribersOnly || lastfm.Account.Subscriber) {
                     type_combo.AppendText (type.Label);
                     if (source != null && type == source.Type) {
                         active_type = i;

@@ -67,6 +67,7 @@
     <Compile Include="Lastfm.Data\LastfmData.cs" />
     <Compile Include="Lastfm.Data\LastfmUserData.cs" />
     <Compile Include="Lastfm.Data\LastfmAlbumData.cs" />
+    <Compile Include="Lastfm\LastfmRequest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
