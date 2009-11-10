@@ -87,6 +87,12 @@ namespace Banshee.Sources.Gui
             set { padding = value; }
         }
 
+        private int row_height = 22;
+        public int RowHeight {
+            get { return row_height; }
+            set { row_height = value; }
+        }
+
         public SourceRowRenderer ()
         {
         }
@@ -123,7 +129,7 @@ namespace Banshee.Sources.Gui
                 width = 0;
             }
             
-            height = (int)Math.Max (22, text_h) + Padding;
+            height = (int)Math.Max (RowHeight, text_h) + Padding;
         }
         
         protected override void Render (Gdk.Drawable drawable, Widget widget, Gdk.Rectangle background_area, 
@@ -145,7 +151,7 @@ namespace Banshee.Sources.Gui
             
             bool hide_counts = source.Count <= 0;
             
-            Pixbuf icon = SourceIconResolver.ResolveIcon (source);
+            Pixbuf icon = SourceIconResolver.ResolveIcon (source, RowHeight);
 
             if (state == StateType.Insensitive) {
                 // Code ported from gtk_cell_renderer_pixbuf_render()

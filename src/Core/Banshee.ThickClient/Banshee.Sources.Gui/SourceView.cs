@@ -36,6 +36,7 @@ using Mono.Unix;
 using Hyena.Gui.Theming;
 using Hyena.Gui.Theatrics;
 
+using Banshee.Configuration;
 using Banshee.ServiceStack;
 using Banshee.Sources;
 using Banshee.Playlist;
@@ -92,7 +93,8 @@ namespace Banshee.Sources.Gui
         
             focus_column = new TreeViewColumn ();
             renderer = new SourceRowRenderer ();
-            renderer.Padding = 5;
+            renderer.RowHeight = RowHeight.Get ();
+            renderer.Padding = RowPadding.Get ();
             focus_column.PackStart (renderer, true);
             focus_column.SetCellDataFunc (renderer, new CellLayoutDataFunc (SourceRowRenderer.CellDataHandler));
             AppendColumn (focus_column);
@@ -468,5 +470,14 @@ namespace Banshee.Sources.Gui
 
 #endregion        
 
+#region Property Schemas
+
+        private static SchemaEntry<int> RowHeight = new SchemaEntry<int> (
+            "player_window", "source_view_row_height", 22, "The height of each source row in the SourceView.  22 is the default.", "");
+
+        private static SchemaEntry<int> RowPadding = new SchemaEntry<int> (
+            "player_window", "source_view_row_padding", 5, "The padding between sources in the SourceView.  5 is the default.", "");
+
+#endregion
     }
 }
