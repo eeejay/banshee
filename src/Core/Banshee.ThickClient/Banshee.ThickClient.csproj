@@ -276,6 +276,7 @@
     <Compile Include="Banshee.ContextPane\BaseContextPage.cs" />
     <Compile Include="Banshee.ContextPane\ContextPageManager.cs" />
     <Compile Include="Banshee.ContextPane\ContextPane.cs" />
+    <Compile Include="Banshee.Query.Gui\PlaybackErrorQueryValueEntry.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>

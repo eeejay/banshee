@@ -135,6 +135,7 @@ SOURCES =  \
 	Banshee.Preferences.Gui/SectionBox.cs \
 	Banshee.Preferences.Gui/WidgetFactory.cs \
 	Banshee.Query.Gui/BansheeQueryBox.cs \
+	Banshee.Query.Gui/PlaybackErrorQueryValueEntry.cs \
 	Banshee.Query.Gui/PlaylistQueryValueEntry.cs \
 	Banshee.Query.Gui/RatingQueryValueEntry.cs \
 	Banshee.Query.Gui/SmartPlaylistQueryValueEntry.cs \

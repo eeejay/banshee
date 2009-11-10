@@ -134,7 +134,8 @@ namespace Banshee.Collection.Database
             BansheeQuery.LastSkippedField,
             BansheeQuery.PlayCountField,
             BansheeQuery.LastPlayedField,
-            BansheeQuery.RatingField
+            BansheeQuery.RatingField,
+            BansheeQuery.PlaybackErrorField
         };
 
         public void Save (bool notify, params QueryField [] fields_changed)

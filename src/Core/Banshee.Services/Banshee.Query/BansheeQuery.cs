@@ -330,13 +330,21 @@ namespace Banshee.Query
             "score"
         );
         
+        public static QueryField PlaybackErrorField = new QueryField (
+            "playbackerror", "PlaybackError",
+            Catalog.GetString ("Playback Error"), "CoreTracks.LastStreamError", typeof(PlaybackErrorQueryValue),
+            //Translators: These are unique search fields (and nouns). Please, no spaces. Blank ok.
+            Catalog.GetString ("playbackerror"),
+            "playbackerror", "error"
+        );
+
 #endregion
 
         public static QueryFieldSet FieldSet = new QueryFieldSet (
             ArtistField, AlbumField, AlbumArtistField, TitleField, TrackNumberField, TrackCountField, DiscNumberField, DiscCountField,
             YearField, GenreField, ComposerField, ConductorField, GroupingField, CommentField, LicenseUriField, RatingField, PlayCountField,
             SkipCountField, FileSizeField, UriField, DurationField, MimeTypeField, LastPlayedField, LastSkippedField,
-            BpmField, BitRateField, DateAddedField, PlaylistField, SmartPlaylistField, ScoreField
+            BpmField, BitRateField, DateAddedField, PlaylistField, SmartPlaylistField, ScoreField, PlaybackErrorField
         );
 
         // Type Initializer

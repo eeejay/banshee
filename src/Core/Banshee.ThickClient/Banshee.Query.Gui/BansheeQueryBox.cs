@@ -47,6 +47,7 @@ namespace Banshee.Query.Gui
             QueryValueEntry.AddSubType (typeof(RatingQueryValueEntry), typeof(RatingQueryValue));
             QueryValueEntry.AddSubType (typeof(PlaylistQueryValueEntry), typeof(PlaylistQueryValue));
             QueryValueEntry.AddSubType (typeof(SmartPlaylistQueryValueEntry), typeof(SmartPlaylistQueryValue));
+            QueryValueEntry.AddSubType (typeof(PlaybackErrorQueryValueEntry), typeof(PlaybackErrorQueryValue));
         }
     }
 }

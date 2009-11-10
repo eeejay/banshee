@@ -299,6 +299,7 @@
     <Compile Include="Banshee.PlatformServices\IScreensaverManager.cs" />
     <Compile Include="Banshee.Collection.Database\RandomByScore.cs" />
     <Compile Include="Banshee.Collection.Database\RandomBySlot.cs" />
+    <Compile Include="Banshee.Query\PlaybackErrorQueryValue.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Banshee.Services.addin.xml" />

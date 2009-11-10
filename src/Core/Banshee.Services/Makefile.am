@@ -161,6 +161,7 @@ SOURCES =  \
 	Banshee.Query/AbstractPlaylistQueryValue.cs \
 	Banshee.Query/BansheeQuery.cs \
 	Banshee.Query/NaturalIntegerQueryValue.cs \
+	Banshee.Query/PlaybackErrorQueryValue.cs \
 	Banshee.Query/PlaylistQueryValue.cs \
 	Banshee.Query/RatingQueryValue.cs \
 	Banshee.Query/SmartPlaylistQueryValue.cs \
