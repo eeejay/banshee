@@ -340,7 +340,7 @@ ${PACKAGE}-${VERSION}
 
   Build/Development:
     Unit Tests:        ${do_tests} (requires nunit >= ${NUNIT_REQUIRED})
-    Custom a11y:       ${enable_atk} (requires gtk-sharp 2.12 from svn with patch from BNC 512477)
+    Custom a11y:       ${enable_atk} (requires gtk-sharp 2.12 from svn)
     Release Build:     ${enable_release}
     Vendor Build ID:   ${vendor_build_id}
 
