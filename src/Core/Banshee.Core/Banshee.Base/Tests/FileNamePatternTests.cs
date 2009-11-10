@@ -70,6 +70,60 @@ namespace Banshee.Base.Tests
                 track.TrackNumber, track.TrackCount),
                 built);
         }
+
+        [Test]
+        public void OptionalTokens ()
+        {
+            var track = new TrackInfo {
+                ArtistName = "Esoteric",
+                AlbumTitle = "The Maniacal Vale",
+                TrackTitle = "Silence",
+                DiscNumber = 2,
+                DiscCount = 2,
+                TrackNumber = 1,
+                Year = 2008,
+                Grouping = ""
+            };
+            var pattern =
+                "{%grouping%%path_sep%}" +
+                "%album_artist%%path_sep%" +
+                "{%year% }%album%{ (disc %disc_number% of %disc_count%)}%path_sep%" +
+                "{%track_number%. }%title%.oga";
+            Assert.AreEqual (
+                "Esoteric/2008 The Maniacal Vale (disc 2 of 2)/01. Silence.oga",
+                FileNamePattern.Convert (pattern, conversion => conversion.Handler (track, null)));
+        }
+
+        [Test]
+        public void OptionalTokenShouldBeEmptyIfZero ()
+        {
+            var track = new TrackInfo {
+                DiscNumber = 0
+            };
+            var pattern = "{ (disc %disc_number%)}";
+            Assert.IsEmpty (FileNamePattern.Convert (pattern, conversion => conversion.Handler (track, null)));
+        }
+
+        [Test]
+        public void OptionalTokenShouldBeEmptyIfEmpty ()
+        {
+            var track = new TrackInfo {
+                Genre = ""
+            };
+            var pattern = "{ (%genre%)}";
+            Assert.IsEmpty (FileNamePattern.Convert (pattern, conversion => conversion.Handler (track, null)));
+        }
+
+        [Test]
+        public void OptionalTokenShouldBeEmptyIfOnlyOneIsZero ()
+        {
+            var track = new TrackInfo {
+                DiscNumber = 0,
+                DiscCount = 2
+            };
+            var pattern = "{ (disc %disc_number% of %disc_count%)}";
+            Assert.IsEmpty (FileNamePattern.Convert (pattern, conversion => conversion.Handler (track, null)));
+        }
     }
 }
 
