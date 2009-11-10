@@ -4,7 +4,7 @@
         <menuitem name="Connect" action="LastfmConnectAction" />
         <menu name='SortChildren' action='SortChildrenAction' />
         <separator />
-        <menuitem name="SourceProperties" action="SourcePropertiesAction" />
+        <menuitem name="SourcePreferences" action="SourcePreferencesAction"/>
     </popup>
 
     <popup name="LastfmStationSourcePopup" action="LastfmStationSourcePopupAction">

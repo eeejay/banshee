@@ -42,6 +42,7 @@ using Banshee.Sources;
 using Banshee.MediaEngine;
 using Banshee.ServiceStack;
 using Banshee.Networking;
+using Banshee.Preferences;
 
 using Banshee.Sources.Gui;
 
@@ -109,6 +110,7 @@ namespace Banshee.Lastfm.Radio
             Properties.Set<bool> ("Nereid.SourceContents.HeaderVisible", false);
 
             actions = new LastfmActions (this);
+            InstallPreferences ();
 
             ServiceManager.SourceManager.AddSource (this);
 
@@ -120,6 +122,7 @@ namespace Banshee.Lastfm.Radio
             ServiceManager.Get<DBusCommandService> ().ArgumentPushed -= OnCommandLineArgument;
             Connection.StateChanged -= HandleConnectionStateChanged;
             Connection.Dispose ();
+            UninstallPreferences ();
             actions.Dispose ();
             
             actions = null;
@@ -261,6 +264,84 @@ namespace Banshee.Lastfm.Radio
                     delegate { lastfm.Account.SignUp (); }));
             }
             status_message.ThawNotify ();
+        }
+
+        private SourcePage pref_page;
+        private Section pref_section;
+
+        private void InstallPreferences ()
+        {
+            PreferenceService service = ServiceManager.Get<PreferenceService> ();
+            if (service == null) {
+                return;
+            }
+
+            service.InstallWidgetAdapters += OnPreferencesServiceInstallWidgetAdapters;
+            pref_page = new Banshee.Preferences.SourcePage (this);
+            pref_section = pref_page.Add (new Section ("mediatypes", Catalog.GetString ("Account"), 20));
+            pref_section.ShowLabel = false;
+
+            pref_section.Add (new SchemaPreference<string> (LastUserSchema,
+                Catalog.GetString ("_Username"), Catalog.GetString ("")));
+            pref_section.Add (new VoidPreference ("lastfm-auth-banshee"));
+            pref_section.Add (new VoidPreference ("lastfm-authorized"));
+        }
+
+        private void UninstallPreferences ()
+        {
+            PreferenceService service = ServiceManager.Get<PreferenceService> ();
+            if (service == null || pref_page == null) {
+                return;
+            }
+
+            service.InstallWidgetAdapters -= OnPreferencesServiceInstallWidgetAdapters;
+            pref_page.Dispose ();
+            pref_page = null;
+        }
+
+        private void OnPreferencesServiceInstallWidgetAdapters (object o, EventArgs args)
+        {
+            if (pref_section == null) {
+                return;
+            }
+
+            var auth_button = new Gtk.Button (Catalog.GetString ("Authorize Banshee with Last.fm"));
+            auth_button.Clicked += delegate {
+                account.SessionKey = null;
+                account.RequestAuthorization ();
+            };
+
+            var auth_label = new Gtk.Label (String.IsNullOrEmpty (account.UserName) || account.SessionKey == null
+                    ? Catalog.GetString ("Banshee not authorized")
+                    : Catalog.GetString ("Banshee authorized!")) {
+                Xalign = 0f
+            };
+
+            var auth_refresh_button = new Gtk.Button (Gtk.Stock.Refresh);
+            auth_refresh_button.Clicked += delegate {
+                if (String.IsNullOrEmpty (account.UserName) || account.SessionKey == null) {
+                    account.UserName = LastUserSchema.Get ();
+                    account.FetchSessionKey ();
+                    account.Save ();
+                    LastSessionKeySchema.Set (account.SessionKey);
+                }
+
+                auth_label.Text = account.SessionKey != null
+                    ? Catalog.GetString ("Banshee authorized!")
+                    : Catalog.GetString ("Banshee not authorized");
+            };
+
+            var auth_box = new Gtk.HBox ();
+            auth_box.PackStart (auth_button, false, false, 0);
+            auth_box.PackEnd (auth_refresh_button, false, false, 0);
+            auth_box.ShowAll ();
+
+            pref_section["lastfm-auth-banshee"].DisplayWidget = auth_box;
+            pref_section["lastfm-authorized"].DisplayWidget = auth_label;
+        }
+
+        public override string PreferencesPageId {
+            get { return pref_page.Id; }
         }
 
         public static readonly SchemaEntry<bool> EnabledSchema = new SchemaEntry<bool> (

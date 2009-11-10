@@ -544,7 +544,7 @@ namespace Banshee.Lastfm.Radio
         public override bool HasProperties {
             get { return true; }
         }
-        
+
         public static List<StationSource> LoadAll (LastfmSource lastfm, string creator)
         {
             List<StationSource> stations = new List<StationSource> ();
