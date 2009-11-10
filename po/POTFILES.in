@@ -62,6 +62,7 @@ src/Core/Banshee.Services/Banshee.Playlists.Formats/XspfPlaylistFormat.cs
 src/Core/Banshee.Services/Banshee.Preferences/Page.cs
 src/Core/Banshee.Services/Banshee.Preferences/PreferenceService.cs
 src/Core/Banshee.Services/Banshee.Query/BansheeQuery.cs
+src/Core/Banshee.Services/Banshee.Query/PlaybackErrorQueryValue.cs
 src/Core/Banshee.Services/Banshee.ServiceStack/Application.cs
 src/Core/Banshee.Services/Banshee.SmartPlaylist/Migrator.cs
 src/Core/Banshee.Services/Banshee.SmartPlaylist/SmartPlaylistSource.cs
@@ -165,6 +166,17 @@ src/Extensions/Banshee.Daap/Banshee.Daap/DaapLoginDialog.cs
 src/Extensions/Banshee.Daap/Banshee.Daap/DaapPlaylistSource.cs
 src/Extensions/Banshee.Daap/Banshee.Daap/DaapSource.cs
 src/Extensions/Banshee.FileSystemQueue/Banshee.FileSystemQueue/FileSystemQueueSource.cs
+src/Extensions/Banshee.InternetArchive/Banshee.InternetArchive/Actions.cs
+src/Extensions/Banshee.InternetArchive/Banshee.InternetArchive/DetailsSource.cs
+src/Extensions/Banshee.InternetArchive/Banshee.InternetArchive/DetailsView.cs
+src/Extensions/Banshee.InternetArchive/Banshee.InternetArchive/HeaderFilters.cs
+src/Extensions/Banshee.InternetArchive/Banshee.InternetArchive/HomeSource.cs
+src/Extensions/Banshee.InternetArchive/Banshee.InternetArchive/HomeView.cs
+src/Extensions/Banshee.InternetArchive/Banshee.InternetArchive/SearchSource.cs
+src/Extensions/Banshee.InternetArchive/Banshee.InternetArchive/SearchView.cs
+src/Extensions/Banshee.InternetArchive/InternetArchive/Field.cs
+src/Extensions/Banshee.InternetArchive/InternetArchive/MediaType.cs
+src/Extensions/Banshee.InternetArchive/InternetArchive/Sort.cs
 src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSourceContents.cs
 src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/InternetRadioSource.cs
 src/Extensions/Banshee.InternetRadio/Banshee.InternetRadio/StationEditor.cs
@@ -225,6 +237,7 @@ src/Libraries/Hyena.Gui/Hyena.Query.Gui/RelativeTimeSpanQueryValueEntry.cs
 src/Libraries/Hyena.Gui/Hyena.Query.Gui/TimeSpanQueryValueEntry.cs
 src/Libraries/Hyena.Gui/Hyena.Widgets/RatingMenuItem.cs
 src/Libraries/Hyena/Hyena.Query/DateQueryValue.cs
+src/Libraries/Hyena/Hyena.Query/EnumQueryValue.cs
 src/Libraries/Hyena/Hyena.Query/IntegerQueryValue.cs
 src/Libraries/Hyena/Hyena.Query/NullQueryValue.cs
 src/Libraries/Hyena/Hyena.Query/RelativeTimeSpanQueryValue.cs
