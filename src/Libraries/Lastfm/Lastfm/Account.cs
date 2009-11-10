@@ -107,7 +107,7 @@ namespace Lastfm
             }
             
             authentication_token = (string)response["token"];
-            Browser.Open (String.Format ("http://www.last.fm/api/auth/?api_key={0}&token={1}", LastfmCore.ApiKey, authentication_token));
+            Browser.Open (String.Format ("http://www.last.fm/api/auth?api_key={0}&token={1}", LastfmCore.ApiKey, authentication_token));
 
             return StationError.None;
         }
