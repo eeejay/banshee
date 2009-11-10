@@ -264,7 +264,7 @@ namespace Banshee.InternetArchive
                 var avg_label = new Label (String.Format (Catalog.GetPluralString (
                     // Translators: {0} is the number of reviewers, {1} is the average rating (not really relevant if there's only 1)
                     "{0} reviewer", "{0} reviewers, avg {1}", details.NumReviews),
-                    details.NumReviews, stars[(int)Math.Round (details.AvgRating)]
+                    details.NumReviews, stars[Math.Max (0, Math.Min (5, (int)Math.Round (details.AvgRating)))]
                 ));
                 avg_label.TooltipText = String.Format ("{0:N2}", details.AvgRating);
                 avg_label.Xalign = 1.0f;
@@ -283,7 +283,7 @@ namespace Banshee.InternetArchive
 
                     // Translators: {0} is the unicode-stars-rating, {1} is the name of a person who reviewed this item, and {1} is a date/time string
                     sb.AppendFormat (Catalog.GetString ("{0} by {1} on {2}"),
-                        stars[review.Stars],
+                        stars[Math.Max (0, Math.Min (5, review.Stars))],
                         GLib.Markup.EscapeText (review.Reviewer), 
                         GLib.Markup.EscapeText (review.DateReviewed.ToLocalTime ().ToShortDateString ())
                     );
