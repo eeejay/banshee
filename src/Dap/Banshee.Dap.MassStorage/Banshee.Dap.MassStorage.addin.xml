@@ -33,7 +33,7 @@
         vendor-id="0x04e8" product-id="0x6603,0x6601,0x6640"/>
     <MassStorageDevice class="Banshee.Dap.MassStorage.AndroidDevice"
         vendor-name="Motorola" product-name="Motorola Droid"
-        vendor-id="0x22b8" product-id="0x41d9"/>
+        vendor-id="0x22b8" product-id="0x41d9,0x41db"/>
     <MassStorageDevice class="Banshee.Dap.MassStorage.AndroidDevice"
         vendor-name="Huawei" product-name="Pulse"
         vendor-id="0x12d1" product-id="0x1501"/>
