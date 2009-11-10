@@ -113,7 +113,7 @@ namespace Banshee.Preferences.Gui
             
             Alignment alignment = new Alignment (0.0f, 0.0f, 1.0f, 1.0f);
             alignment.TopPadding = (uint)(frame == null ? 0 : 5);
-            alignment.LeftPadding = 12;
+            alignment.LeftPadding = section.ShowLabel ? (uint)12 : (uint)0;
             alignment.Show ();
             
             if (frame != null) {
