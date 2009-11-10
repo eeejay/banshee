@@ -75,6 +75,7 @@ src/Core/Banshee.Services/Banshee.Web/Browser.cs
 src/Core/Banshee.ThickClient/Banshee.Addins.Gui/AddinDetailsDialog.cs
 src/Core/Banshee.ThickClient/Banshee.Addins.Gui/AddinTile.cs
 src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellDiscAndCount.cs
+src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellStatusIndicator.cs
 src/Core/Banshee.ThickClient/Banshee.Collection.Gui/ColumnCellTrackAndCount.cs
 src/Core/Banshee.ThickClient/Banshee.Collection.Gui/DefaultColumnController.cs
 src/Core/Banshee.ThickClient/Banshee.Collection.Gui/TrackListView.cs
@@ -124,6 +125,7 @@ src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView.cs
 src/Core/Banshee.ThickClient/Banshee.Sources.Gui/SourceView_DragAndDrop.cs
 src/Core/Banshee.ThickClient/Resources/banshee-dialogs.glade
 src/Core/Banshee.Widgets/Banshee.Widgets/DiscUsageDisplay.cs
+src/Core/Banshee.Widgets/Banshee.Widgets/SeekSlider.cs
 src/Core/Banshee.Widgets/Banshee.Widgets/StreamPositionLabel.cs
 src/Core/Banshee.Widgets/Banshee.Widgets/VolumeButton.cs
 src/Dap/Banshee.Dap/Banshee.Dap/DapLibrarySync.cs
@@ -211,6 +213,7 @@ src/Extensions/Banshee.Sample/Banshee.Sample/SampleSource.cs
 src/Extensions/Banshee.SqlDebugConsole/Banshee.SqlDebugConsole/SqlActions.cs
 src/Extensions/Banshee.Wikipedia/Banshee.Wikipedia/ContextPage.cs
 src/Extensions/Banshee.Wikipedia/Banshee.Wikipedia/WikipediaView.cs
+src/Libraries/Hyena.Gui/Hyena.Data.Gui/Accessibility/ColumnHeaderCellTextAccessible.cs
 src/Libraries/Hyena.Gui/Hyena.Data.Gui/ListView/ListView_Header.cs
 src/Libraries/Hyena.Gui/Hyena.Gui.Dialogs/ExceptionDialog.cs
 src/Libraries/Hyena.Gui/Hyena.Gui.Dialogs/VersionInformationDialog.cs
