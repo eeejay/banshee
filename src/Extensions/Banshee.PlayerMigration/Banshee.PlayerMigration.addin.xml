@@ -4,10 +4,10 @@
     version="1.0"
     compatVersion="1.0"
     copyright="Licensed under the MIT X11 license."
-    name="Importers for Amarok and Rhythmbox"
+    name="Importers for Amarok, Rhythmbox and iTunes"
     category="Core"
-    description="Import your Amarok or Rhythmbox music library"
-    author="Paul Lange, Sebastian Dröge"
+    description="Import your Amarok, Rhythmbox or iTunes music library"
+    author="Paul Lange, Sebastian Dröge, Scott Peterson, Alexander Kojevnikov"
     url="http://banshee-project.org/"
     defaultEnabled="true">
 
@@ -18,6 +18,7 @@
   <Extension path="/Banshee/Library/ImportSource">
     <ImportSource class="Banshee.PlayerMigration.RhythmboxPlayerImportSource"/>
     <ImportSource class="Banshee.PlayerMigration.AmarokPlayerImportSource"/>
+    <ImportSource class="Banshee.PlayerMigration.ItunesPlayerImportSource"/>
   </Extension>
 
 </Addin>

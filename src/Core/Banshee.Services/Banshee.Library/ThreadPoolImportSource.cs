@@ -141,7 +141,7 @@ namespace Banshee.Library
 
         public void Import ()
         {
-            if (importing) {
+            if (importing || !ConfirmImport ()) {
                 return;
             }
             
@@ -158,7 +158,12 @@ namespace Banshee.Library
             ImportCore ();
             DestroyUserJob ();
         }
-        
+
+        protected virtual bool ConfirmImport ()
+        {
+            return true;
+        }
+
         protected abstract void ImportCore ();
         
     }
