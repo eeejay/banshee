@@ -202,6 +202,8 @@ src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/NotificationAre
 src/Extensions/Banshee.NotificationArea/Banshee.NotificationArea/X11NotificationAreaBox.cs
 src/Extensions/Banshee.NowPlaying/Banshee.NowPlaying/NowPlayingSource.cs
 src/Extensions/Banshee.PlayerMigration/Banshee.PlayerMigration/AmarokPlayerImportSource.cs
+src/Extensions/Banshee.PlayerMigration/Banshee.PlayerMigration/ItunesPlayerImportDialogs.cs
+src/Extensions/Banshee.PlayerMigration/Banshee.PlayerMigration/ItunesPlayerImportSource.cs
 src/Extensions/Banshee.PlayerMigration/Banshee.PlayerMigration/RhythmboxPlayerImportSource.cs
 src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/HeaderWidget.cs
 src/Extensions/Banshee.PlayQueue/Banshee.PlayQueue/PlayQueueActions.cs
