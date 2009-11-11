@@ -481,6 +481,12 @@ namespace Banshee.PlayQueue
                         ServiceManager.PlaybackController.StopWhenFinished = true;
                     }
                 }
+                if (ServiceManager.PlaybackController.StopWhenFinished) {
+                    if (current_track != null && ServiceManager.PlayerEngine.CurrentTrack == current_track) {
+                        int index = TrackModel.IndexOf (current_track) + 1;
+                        SetCurrentTrack (index < Count ? TrackModel[index] as DatabaseTrackInfo : null);
+                    }
+                }
             } else if (args.Event == PlayerEvent.StartOfStream) {
                 if (TrackModel.IndexOf (ServiceManager.PlayerEngine.CurrentTrack) != -1) {
                     SetCurrentTrack (ServiceManager.PlayerEngine.CurrentTrack as DatabaseTrackInfo);
