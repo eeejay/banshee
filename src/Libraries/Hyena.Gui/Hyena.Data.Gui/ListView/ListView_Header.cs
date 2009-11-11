@@ -271,14 +271,16 @@ namespace Hyena.Data.Gui
                 ISortable sortable = Model as ISortable;
 
                 // Change the sort-type with every click
-                switch (sort_column.SortType) {
-                    case SortType.Ascending:    sort_column.SortType = SortType.Descending; break;
-                    case SortType.Descending:   sort_column.SortType = SortType.None; break;
-                    case SortType.None:         sort_column.SortType = SortType.Ascending; break;
+                if (sort_column == ColumnController.SortColumn) {
+                    switch (sort_column.SortType) {
+                        case SortType.Ascending:    sort_column.SortType = SortType.Descending; break;
+                        case SortType.Descending:   sort_column.SortType = SortType.None; break;
+                        case SortType.None:         sort_column.SortType = SortType.Ascending; break;
+                    }
                 }
 
-                // If we're switching to a different column or we aren't reorderable and the type is None, sort Ascending
-                if (sort_column != ColumnController.SortColumn || (!IsEverReorderable && sort_column.SortType == SortType.None)) {
+                // If we're switching from a different column, or we aren't reorderable, make sure sort type isn't None
+                if ((sort_column != ColumnController.SortColumn || !IsEverReorderable) && sort_column.SortType == SortType.None) {
                     sort_column.SortType = SortType.Ascending;
                 }
 
