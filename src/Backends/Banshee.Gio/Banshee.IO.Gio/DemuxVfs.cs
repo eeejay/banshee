@@ -37,11 +37,16 @@ namespace Banshee.IO.Gio
     {
         private GLib.File file;
         private GLib.FileInfo file_info;
+        private string path;
 
         public DemuxVfs (string path)
         {
-            file = FileFactory.NewForPath (path);
-            file_info = file.QueryInfo ("access::can-read,access::can-write", FileQueryInfoFlags.None, null);
+            this.path = path;
+            file = path.StartsWith ("/") ? FileFactory.NewForPath (path) : FileFactory.NewForUri (path);
+
+            if (file.Exists) {
+                file_info = file.QueryInfo ("etag::value,access::can-read,access::can-write", FileQueryInfoFlags.None, null);
+            }
         }
 
         public void CloseStream (System.IO.Stream stream)
@@ -58,15 +63,21 @@ namespace Banshee.IO.Gio
         }
 
         public System.IO.Stream WriteStream {
-            get { return new GioStream (file.Create (FileCreateFlags.None, null)); }
+            // FIXME we really need GFileIOStream here, but that depends on glib 2.22 (and a binding for it in gio#)
+            // as-is, this stream is write-only (not readable) which breaks taglib-sharp
+            get { return new GioStream (file.Exists
+                    ? file.Replace (file_info.Etag, false, FileCreateFlags.None, null)
+                    : file.Create (FileCreateFlags.None, null)
+                );
+            }
         }
 
         public bool IsReadable {
-            get { return file_info.GetAttributeBoolean ("access::can-read"); }
+            get { return file_info == null ? true : file_info.GetAttributeBoolean ("access::can-read"); }
         }
 
         public bool IsWritable {
-            get { return file_info.GetAttributeBoolean ("access::can-write"); }
+            get { return file_info == null ? true : file_info.GetAttributeBoolean ("access::can-write"); }
         }
     }
 }

@@ -128,6 +128,65 @@ namespace Banshee.IO.Gio
         }
 
         [Test]
+        public void DemuxCreateFile ()
+        {
+            var newf = Uri ("newfile");
+            var newp = Path ("newfile");
+            Assert.IsFalse (file.Exists (newf));
+
+            var demux = new DemuxVfs (newp);
+            Assert.IsTrue (demux.IsWritable);
+            Assert.IsTrue (demux.IsReadable);
+
+            var stream = demux.WriteStream;
+            Assert.IsTrue (stream.CanWrite);
+            stream.WriteByte (0xAB);
+            demux.CloseStream (stream);
+
+            Assert.IsTrue (file.Exists (newf));
+        }
+
+        [Test]
+        public void DemuxOverwriteFile ()
+        {
+            Assert.IsTrue (file.Exists (foo));
+            Assert.AreEqual (3, file.GetSize (foo));
+
+            var demux = new DemuxVfs (foo.AbsoluteUri);
+            Assert.IsTrue (demux.IsWritable);
+            Assert.IsTrue (demux.IsReadable);
+            var stream = demux.WriteStream;
+            Assert.IsTrue (stream.CanWrite);
+
+            // Make sure can read from WriteStream - required by TagLib#
+            // FIXME - depends on glib 2.22 and new gio# - see gio DemuxVfs.cs
+            Assert.AreEqual ((byte)'b', stream.ReadByte (), "Known failure, bug in Gio backend, depends on glib 2.22 for fix");
+            stream.Position = 0;
+
+            stream.WriteByte (0xAB);
+
+            demux.CloseStream (stream);
+            Assert.IsTrue (file.Exists (foo));
+            Assert.AreEqual (1, file.GetSize (foo));
+        }
+
+        [Test]
+        public void DemuxReadFile ()
+        {
+            Assert.IsTrue (file.Exists (foo));
+
+            var demux = new DemuxVfs (foo.AbsoluteUri);
+            var stream = demux.ReadStream;
+
+            // foo contains 'bar'
+            Assert.AreEqual ((byte)'b', stream.ReadByte ());
+            Assert.AreEqual ((byte)'a', stream.ReadByte ());
+            Assert.AreEqual ((byte)'r', stream.ReadByte ());
+
+            demux.CloseStream (stream);
+        }
+
+        [Test]
         public void GetFileProperties ()
         {
             Assert.AreEqual (3, file.GetSize (foo));
