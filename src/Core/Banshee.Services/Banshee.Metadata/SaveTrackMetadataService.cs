@@ -91,16 +91,15 @@ namespace Banshee.Metadata
                 if (job != null) {
                     job.WriteEnabled  = WriteEnabled.Value;
                     job.RenameEnabled = RenameEnabled.Value;
-                    return;
                 } else {
-                    job = new SaveTrackMetadataJob ();
-                    job.WriteEnabled  = WriteEnabled.Value;
-                    job.RenameEnabled = RenameEnabled.Value;
+                    var new_job = new SaveTrackMetadataJob ();
+                    new_job.WriteEnabled  = WriteEnabled.Value;
+                    new_job.RenameEnabled = RenameEnabled.Value;
+                    new_job.Finished += delegate { lock (sync) { job = null; } };
+                    job = new_job;
+                    job.Register ();
                 }
             }
-
-            job.Finished += delegate { job = null; };
-            job.Register ();
         }
 
         private void OnTracksChanged (Source sender, TrackEventArgs args)
