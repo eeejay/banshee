@@ -74,6 +74,7 @@ namespace Banshee.Addins.Gui
             Attach (image, 0, 1, 0, 3, AttachOptions.Shrink, AttachOptions.Fill | AttachOptions.Expand, 0, 0);
             
             title = new Label ();
+            SetLabelStyle (title);
             title.Show ();
             title.Xalign = 0.0f;
             title.Markup = String.Format ("<b>{0}</b>", GLib.Markup.EscapeText (addin.Name));
@@ -83,6 +84,7 @@ namespace Banshee.Addins.Gui
                 AttachOptions.Expand | AttachOptions.Fill, 0, 0);
             
             description = new WrapLabel ();
+            SetLabelStyle (description);
             description.Show ();
             description.Text = addin.Description.Description;
             description.Wrap = false;
@@ -92,6 +94,7 @@ namespace Banshee.Addins.Gui
                 AttachOptions.Expand | AttachOptions.Fill, 0, 0);
                 
             authors = new WrapLabel ();
+            SetLabelStyle (authors);
             authors.Markup = String.Format (
                 "<small><b>{0}</b> <i>{1}</i></small>", 
                 Catalog.GetString ("Authors:"),
@@ -131,7 +134,30 @@ namespace Banshee.Addins.Gui
             
             UpdateState ();
         }
-        
+
+        private void SetLabelStyle (Widget label)
+        {
+            bool changing_styles = false;
+            label.StyleSet += delegate {
+                if (changing_styles) {
+                    return;
+                }
+
+                changing_styles = true;
+                label.ModifyBg (StateType.Normal, label.Style.Base (StateType.Normal));
+                label.ModifyBg (StateType.Active, label.Style.Base (StateType.Active));
+                label.ModifyBg (StateType.Prelight, label.Style.Base (StateType.Prelight));
+                label.ModifyBg (StateType.Selected, label.Style.Base (StateType.Selected));
+                label.ModifyBg (StateType.Insensitive, label.Style.Base (StateType.Insensitive));
+                label.ModifyFg (StateType.Normal, label.Style.Text (StateType.Normal));
+                label.ModifyFg (StateType.Active, label.Style.Text (StateType.Active));
+                label.ModifyFg (StateType.Prelight, label.Style.Text (StateType.Prelight));
+                label.ModifyFg (StateType.Selected, label.Style.Text (StateType.Selected));
+                label.ModifyFg (StateType.Insensitive, label.Style.Text (StateType.Insensitive));
+                changing_styles = false;
+            };
+        }
+
         protected override void OnRealized ()
         {
             WidgetFlags |= WidgetFlags.NoWindow;
