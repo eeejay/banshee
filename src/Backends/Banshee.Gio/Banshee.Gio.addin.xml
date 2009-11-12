@@ -6,7 +6,7 @@
     copyright="© 2009 Novell Inc. Licensed under the MIT X11 license."
     category="required:Backends"
     description="GIO IO backend"
-    defaultEnabled="true">
+    defaultEnabled="false">
 
   <Dependencies>
     <Addin id="Banshee.Core" version="1.0"/>

@@ -37,11 +37,9 @@ namespace Banshee.IO.Gio
     {
         private GLib.File file;
         private GLib.FileInfo file_info;
-        private string path;
 
         public DemuxVfs (string path)
         {
-            this.path = path;
             file = path.StartsWith ("/") ? FileFactory.NewForPath (path) : FileFactory.NewForUri (path);
 
             if (file.Exists) {

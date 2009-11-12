@@ -93,7 +93,7 @@ namespace Banshee.IO
         
         internal static readonly SchemaEntry<string> ProviderSchema = new SchemaEntry<string> (
             "core", "io_provider",
-            "Banshee.IO.Gio.Provider",
+            "Banshee.IO.Unix.Provider",
             "Set the IO provider backend in Banshee",
             "Can be either \"Banshee.IO.SystemIO.Provider\" (.NET System.IO), " + 
                 "\"Banshee.IO.Gio.Provider\" (GIO), or " +
