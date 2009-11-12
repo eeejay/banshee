@@ -30,7 +30,6 @@ namespace Banshee.Widgets
 {
     public class HigMessageDialog : Gtk.Dialog
     {    
-        private Gtk.AccelGroup accel_group;
         private Gtk.Image image;
         private Gtk.VBox label_vbox;
         private Gtk.Label message_label;
@@ -51,9 +50,6 @@ namespace Banshee.Widgets
 
             VBox.Spacing = 12;
             ActionArea.Layout = Gtk.ButtonBoxStyle.End;
-
-            accel_group = new Gtk.AccelGroup ();
-            AddAccelGroup (accel_group);
 
             Gtk.HBox hbox = new Gtk.HBox (false, 12);
             hbox.BorderWidth = 5;
@@ -175,13 +171,9 @@ namespace Banshee.Widgets
             AddActionWidget (button, response);
 
             if (isDefault) {
+                Default = button;
                 DefaultResponse = response;
                 button.GrabDefault ();
-                button.AddAccelerator ("activate",
-                               accel_group,
-                               (uint) Gdk.Key.Return, 
-                               0,
-                               Gtk.AccelFlags.Visible);
             }
         }
 
