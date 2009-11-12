@@ -43,6 +43,7 @@ using Banshee.Gui;
 using Banshee.Collection.Gui;
 using Banshee.MediaEngine;
 
+using Hyena.Gui;
 using Hyena.Widgets;
 
 namespace Banshee.NotificationArea 
@@ -428,11 +429,11 @@ namespace Banshee.NotificationArea
                 // This will be reached if no notification daemon is running
                 return;
             }
-            
-            string message = String.Format ("{0}\n<i>{1}</i>", 
-                GLib.Markup.EscapeText (current_track.DisplayTrackTitle),
-                GLib.Markup.EscapeText (current_track.DisplayArtistName));
-            
+
+            string message = GetByFrom (
+                current_track.ArtistName, current_track.DisplayArtistName,
+                current_track.AlbumTitle, current_track.DisplayAlbumTitle);
+
             if (artwork_manager_service == null) {
                 artwork_manager_service = ServiceManager.Get<ArtworkManager> ();
             }
@@ -454,7 +455,7 @@ namespace Banshee.NotificationArea
             
             try {
                 if (current_nf == null) {
-                    current_nf = new Notification (Catalog.GetString ("Now Playing"), 
+                    current_nf = new Notification (current_track.DisplayTrackTitle,
                         message, image, notif_area.Widget);
                 } else {
                     current_nf.Body = message;
@@ -471,7 +472,50 @@ namespace Banshee.NotificationArea
                 Hyena.Log.Warning (Catalog.GetString ("Cannot show notification"), e.Message, false);
             }
         }
+
+        private Cairo.Color TextLightColor {
+            get {
+                return Hyena.Gui.Theming.GtkTheme.GetCairoTextMidColor (notif_area.Widget);
+            }
+        }
+
+        private string MarkupFormat (string fmt, params string [] args)
+        {
+            string [] new_args = new string [args.Length + 2];
+            new_args[0] = String.Format ("<span color=\"{0}\" size=\"small\">",
+                CairoExtensions.ColorGetHex (TextLightColor, false));
+            new_args[1] = "</span>";
+
+            for (int i = 0; i < args.Length; i++) {
+                new_args[i + 2] = GLib.Markup.EscapeText (args[i]);
+            }
+
+            return String.Format (fmt, new_args);
+        }
         
+        private string GetByFrom (string artist, string display_artist, string album, string display_album)
+        {
+            bool has_artist = !String.IsNullOrEmpty (artist);
+            bool has_album = !String.IsNullOrEmpty (album);
+
+            string markup = null;
+            if (has_artist && has_album) {
+                // Translators: {0} and {1} are for markup so ignore them, {2} and {3}
+                // are Artist Name and Album Title, respectively;
+                // e.g. 'by Parkway Drive from Killing with a Smile'
+                markup = MarkupFormat (Catalog.GetString ("{0}by{1} {2}\n{0}from{1} {3}"), display_artist, display_album);
+            } else if (has_album) {
+                // Translators: {0} and {1} are for markup so ignore them, {2} is for Album Title;
+                // e.g. 'from Killing with a Smile'
+                markup = MarkupFormat (Catalog.GetString ("{0}from{1} {2}"), display_album);
+            } else {
+                // Translators: {0} and {1} are for markup so ignore them, {2} is for Artist Name;
+                // e.g. 'by Parkway Drive'
+                markup = MarkupFormat (Catalog.GetString ("{0}by{1} {2}"), display_artist);
+            }
+            return markup;
+        }
+
         private void OnSongSkipped (object o, ActionArgs args)
         {
             if (args.Action == "skip-song") {
