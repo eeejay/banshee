@@ -282,10 +282,9 @@ namespace Banshee.Lastfm.Radio
             pref_section = pref_page.Add (new Section ("mediatypes", Catalog.GetString ("Account"), 20));
             pref_section.ShowLabel = false;
 
-            user_pref = new SchemaPreference<string> (LastUserSchema, Catalog.GetString ("_Username"), Catalog.GetString (""));
+            user_pref = new SchemaPreference<string> (LastUserSchema, Catalog.GetString ("_Username"));
             pref_section.Add (user_pref);
-            pref_section.Add (new VoidPreference ("lastfm-auth-banshee"));
-            pref_section.Add (new VoidPreference ("lastfm-authorized"));
+            pref_section.Add (new VoidPreference ("lastfm-signup"));
         }
 
         private void UninstallPreferences ()
@@ -300,35 +299,35 @@ namespace Banshee.Lastfm.Radio
             pref_page = null;
         }
 
-        private bool HaveUsername { get { return !String.IsNullOrEmpty (user_pref.Value); } }
+        private bool Authorized { get { return !String.IsNullOrEmpty (account.SessionKey); } }
+        private bool NeedAuth { get { return !String.IsNullOrEmpty (user_pref.Value) && !Authorized; } }
 
-        private void OnPreferencesServiceInstallWidgetAdapters (object o, EventArgs args)
+        private void OnPreferencesServiceInstallWidgetAdapters (object sender, EventArgs args)
         {
             if (pref_section == null) {
                 return;
             }
 
-            var auth_button = new Gtk.Button (Catalog.GetString ("Authorize Banshee with Last.fm")) {
-                Sensitive = HaveUsername
-            };
+            var user_entry = new Gtk.Entry (user_pref.Value ?? "");
+            user_entry.Changed += (o, a) => { user_pref.Value = user_entry.Text; };
 
-            user_pref.ValueChanged += (s) => { auth_button.Sensitive = HaveUsername; };
+            var auth_button = new Gtk.Button (Authorized ? Catalog.GetString ("Authorized!") : Catalog.GetString ("Authorize..."));
+            user_pref.ValueChanged += (s) => { auth_button.Sensitive = NeedAuth; };
+            auth_button.Sensitive = NeedAuth;
+            auth_button.TooltipText = Catalog.GetString ("Open Last.fm in a browser, giving you the option to authorize Banshee to work with your account");
             auth_button.Clicked += delegate {
                 account.SessionKey = null;
                 account.RequestAuthorization ();
             };
 
-            var auth_label = new Gtk.Label (!HaveUsername) || account.SessionKey == null
-                    ? Catalog.GetString ("Banshee not authorized")
-                    : Catalog.GetString ("Banshee authorized!")) {
-                Xalign = 0f
-            };
+            var signup_button = new Gtk.LinkButton (account.SignUpUrl, Catalog.GetString ("Sign up for Last.fm"));
+            signup_button.Xalign = 0f;
 
-            var auth_refresh_button = new Gtk.Button (Gtk.Stock.Refresh) {
-                Sensitive = HaveUsername
-            };
-            user_pref.ValueChanged += (s) => { auth_refresh_button.Sensitive = HaveUsername; };
-            auth_refresh_button.Clicked += delegate {
+            var refresh_button = new Gtk.Button (new Gtk.Image (Gtk.Stock.Refresh, Gtk.IconSize.Button));
+            user_pref.ValueChanged += (s) => { refresh_button.Sensitive = NeedAuth; };
+            refresh_button.Sensitive = NeedAuth;
+            refresh_button.TooltipText = Catalog.GetString ("Check if Banshee has been authorized");
+            refresh_button.Clicked += delegate {
                 if (String.IsNullOrEmpty (account.UserName) || account.SessionKey == null) {
                     account.UserName = LastUserSchema.Get ();
                     account.FetchSessionKey ();
@@ -336,18 +335,22 @@ namespace Banshee.Lastfm.Radio
                     LastSessionKeySchema.Set (account.SessionKey);
                 }
 
-                auth_label.Text = account.SessionKey != null
-                    ? Catalog.GetString ("Banshee authorized!")
-                    : Catalog.GetString ("Banshee not authorized");
+                auth_button.Sensitive = refresh_button.Sensitive = NeedAuth;
+                auth_button.Label = Authorized
+                    ? Catalog.GetString ("Authorized!")
+                    : Catalog.GetString ("Authorize...");
             };
 
-            var auth_box = new Gtk.HBox ();
+            var auth_box = new Gtk.HBox () { Spacing = 6 };
+            auth_box.PackStart (user_entry, true, true, 0);
             auth_box.PackStart (auth_button, false, false, 0);
-            auth_box.PackEnd (auth_refresh_button, false, false, 0);
+            auth_box.PackStart (refresh_button, false, false, 0);
             auth_box.ShowAll ();
 
-            pref_section["lastfm-auth-banshee"].DisplayWidget = auth_box;
-            pref_section["lastfm-authorized"].DisplayWidget = auth_label;
+            signup_button.Visible = String.IsNullOrEmpty (user_pref.Value);
+
+            user_pref.DisplayWidget = auth_box;
+            pref_section["lastfm-signup"].DisplayWidget = signup_button;
         }
 
         public override string PreferencesPageId {
