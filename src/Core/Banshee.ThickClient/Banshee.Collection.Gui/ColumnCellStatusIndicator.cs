@@ -157,7 +157,7 @@ namespace Banshee.Collection.Gui
 
             int icon_index = GetIconIndex (track);
 
-            if (icon_index < 0)
+            if ((icon_index < 0) || (icon_index >= icon_names.Length))
                 return "";
             else
                 return icon_names[GetIconIndex (track)];
