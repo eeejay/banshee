@@ -133,7 +133,7 @@ namespace Hyena.Data.Gui.Accessibility
 
         private void OnSelectionFocusChanged (object o, EventArgs a)
         {
-            GLib.Signal.Emit (this, "active-descendant-changed", ActiveCell);
+            GLib.Signal.Emit (this, "active-descendant-changed", ActiveCell.Handle);
         }
 
         private Atk.Object ActiveCell {
