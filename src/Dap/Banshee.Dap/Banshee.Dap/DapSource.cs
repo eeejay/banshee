@@ -199,9 +199,8 @@ namespace Banshee.Dap
             AddDapProperty (Catalog.GetString ("Vendor"), device.Vendor);
             
             if (acceptable_mimetypes == null) {
-                acceptable_mimetypes = HasMediaCapabilities 
-                    ? MediaCapabilities.PlaybackMimeTypes 
-                    : new string [] { "taglib/mp3" };
+                acceptable_mimetypes = HasMediaCapabilities ? MediaCapabilities.PlaybackMimeTypes : null;
+                acceptable_mimetypes = acceptable_mimetypes ?? new string [] { "taglib/mp3" };
             }
             
             AddChildSource (music_group_source = new MusicGroupSource (this));
