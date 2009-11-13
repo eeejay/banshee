@@ -291,6 +291,11 @@ namespace Banshee.Streaming
                 if (parser.Parse(new SafeUri(uri))) {
                     foreach(Dictionary<string, object> element in parser.Elements) {
                         if(element.ContainsKey("uri")) {
+                            // mms can be a nested link
+                            string element_uri = element["uri"].ToString();
+                            if(element_uri.StartsWith("mms:", StringComparison.CurrentCultureIgnoreCase)){
+                                LoadStreamUri("http" + element_uri.Substring(element_uri.IndexOf(":")));
+                            }
                             stream_uris.Add(new SafeUri(((Uri)element["uri"]).AbsoluteUri));
                         }
                     }
