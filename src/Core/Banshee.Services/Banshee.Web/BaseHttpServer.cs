@@ -44,6 +44,8 @@ namespace Banshee.Web
     public abstract class BaseHttpServer
     {
         protected Socket server;
+        private int backlog;
+        private ushort port;
 
         protected readonly ArrayList clients = new ArrayList();
 
@@ -88,6 +90,10 @@ namespace Banshee.Web
             get { return chunk_length; }
         }
 
+        public ushort Port {
+            get { return port; }
+        }
+
         public void Start ()
         {
             Start (10);
@@ -102,12 +108,8 @@ namespace Banshee.Web
             if (running) {
                 return;
             }
-            
-            server = new Socket (this.EndPoint.AddressFamily, SocketType.Stream, ProtocolType.IP);
-            server.Bind (this.EndPoint);
-            
-            server.Listen (backlog);
 
+            this.backlog = backlog;
             running = true;
             Thread thread = new Thread (ServerLoop);
             thread.Name = this.Name;
@@ -131,6 +133,12 @@ namespace Banshee.Web
         
         private void ServerLoop ()
         {
+            server = new Socket (this.EndPoint.AddressFamily, SocketType.Stream, ProtocolType.IP);
+            server.Bind (this.EndPoint);
+            server.Listen (backlog);
+
+            port = (ushort)(server.LocalEndPoint as IPEndPoint).Port;
+
             while (true) {
                 try {
                     if (!running) {

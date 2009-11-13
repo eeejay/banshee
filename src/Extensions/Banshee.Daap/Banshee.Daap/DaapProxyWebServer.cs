@@ -47,7 +47,6 @@ namespace Banshee.Daap
 {
     internal class DaapProxyWebServer : BaseHttpServer
     {
-        private ushort port;
         private ArrayList databases = new ArrayList();
       
         public DaapProxyWebServer() : base (new IPEndPoint(IPAddress.Any, 8089), "DAAP Proxy")
@@ -62,7 +61,6 @@ namespace Banshee.Daap
                 EndPoint = new IPEndPoint(IPAddress.Any, 0);
                 base.Start (backlog);
             }
-            port = (ushort)(server.LocalEndPoint as IPEndPoint).Port;
         }
         
         public void RegisterDatabase(DAAP.Database database)
@@ -216,12 +214,6 @@ namespace Banshee.Daap
             return String.Format("<hr /><address>Generated on {0} by " + 
                 "Banshee DAAP Extension (<a href=\"http://banshee-project.org\">http://banshee-project.org</a>)",
                 DateTime.Now.ToString());
-        }
-
-        public ushort Port {
-            get { 
-                return port;
-            }
         }
 
         private static IPAddress local_address = IPAddress.Parse("127.0.0.1");
