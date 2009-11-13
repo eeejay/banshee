@@ -458,6 +458,7 @@ namespace Banshee.NotificationArea
                     current_nf = new Notification (current_track.DisplayTrackTitle,
                         message, image, notif_area.Widget);
                 } else {
+                    current_nf.Summary = current_track.DisplayTrackTitle;
                     current_nf.Body = message;
                     current_nf.Icon = image;
                     current_nf.AttachToWidget (notif_area.Widget);
