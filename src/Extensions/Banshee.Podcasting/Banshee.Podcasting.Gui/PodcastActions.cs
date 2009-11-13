@@ -559,8 +559,7 @@ namespace Banshee.Podcasting.Gui
         private void OnPodcastItemDownload (object sender, EventArgs e)
         {
             foreach (PodcastTrackInfo pi in PodcastTrackInfo.From (GetSelectedItems ())) {
-                if (pi.Enclosure.DownloadStatus != FeedDownloadStatus.Downloaded)
-                    pi.Enclosure.AsyncDownload ();
+                pi.Enclosure.AsyncDownload ();
             }
         }
         

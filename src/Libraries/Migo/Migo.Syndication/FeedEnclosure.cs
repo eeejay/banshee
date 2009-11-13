@@ -117,8 +117,9 @@ namespace Migo.Syndication
         
         public void AsyncDownload ()
         {
-            if (DownloadedAt == DateTime.MinValue)
+            if (DownloadedAt == DateTime.MinValue && DownloadStatus == FeedDownloadStatus.None) {
                 Manager.QueueDownload (this);
+            }
         }
         
         public void CancelAsyncDownload ()
