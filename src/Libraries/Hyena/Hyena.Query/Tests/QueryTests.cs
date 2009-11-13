@@ -141,6 +141,8 @@ namespace Hyena.Query.Tests
                 "by:baz -on:bar",
                 "by:baz -on:bar",
                 "by:baz (plays>3 or plays<2)",
+                "by:on", // bgo#601065
+                "on:by",
             };
     
             AssertForEach<string> (tests, UserQueryParsesAndGenerates);

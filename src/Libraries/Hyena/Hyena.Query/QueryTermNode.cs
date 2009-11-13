@@ -48,11 +48,12 @@ namespace Hyena.Query
             string field_alias = field_set.FindAlias (token);
             if (field_alias != null) {
                 term.Field = field_set [field_alias];
+                string token_without_field = token.Substring (field_alias.Length);
 
                 foreach (QueryValue val in term.Field.CreateQueryValues ()) {
                     term.Value = val;
 
-                    string op_alias = term.Value.OperatorSet.FindAlias (token);
+                    string op_alias = term.Value.OperatorSet.FindAlias (token_without_field);
                     if (op_alias != null) {
                         term.Operator = term.Value.OperatorSet [op_alias];
                         int field_separator = token.IndexOf (op_alias);
