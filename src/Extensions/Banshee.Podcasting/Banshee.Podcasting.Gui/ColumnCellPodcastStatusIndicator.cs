@@ -28,6 +28,7 @@
 
 using System;
 using Gtk;
+using Mono.Unix;
 
 using Hyena.Data.Gui;
 using Banshee.Gui;
@@ -51,16 +52,18 @@ namespace Banshee.Podcasting.Gui
         protected override int PixbufCount {
             get { return base.PixbufCount + 2; }
         }
-        
+
         protected override void LoadPixbufs ()
         {
             base.LoadPixbufs ();
             
             // Downloading
             Pixbufs[base.PixbufCount + 0] = IconThemeUtils.LoadIcon (PixbufSize, "document-save", "go-bottom");
+            StatusNames[base.PixbufCount + 0] = Catalog.GetString ("Downloading");
             
             // Podcast is Downloaded
             Pixbufs[base.PixbufCount + 1] = IconThemeUtils.LoadIcon (PixbufSize, "podcast-new");
+            StatusNames[base.PixbufCount + 1] = Catalog.GetString ("New");
         }
         
         protected override int GetIconIndex (TrackInfo track)

@@ -105,10 +105,10 @@ namespace Banshee.Collection.Gui
             Protected
         }
 
-        private string [] icon_names = new string[] {
-            Catalog.GetString ("Playing"), Catalog.GetString ("Paused"),
-            Catalog.GetString ("Error"), Catalog.GetString ("Protected"), ""
-        };
+        private string [] status_names;
+        protected string [] StatusNames {
+            get { return status_names; }
+        }
         
         private int pixbuf_size = 16;
         protected virtual int PixbufSize {
@@ -157,10 +157,10 @@ namespace Banshee.Collection.Gui
 
             int icon_index = GetIconIndex (track);
 
-            if ((icon_index < 0) || (icon_index >= icon_names.Length))
+            if ((icon_index < 0) || (icon_index >= status_names.Length))
                 return "";
             else
-                return icon_names[GetIconIndex (track)];
+                return status_names[icon_index];
         }
 
         protected virtual int PixbufCount {
@@ -200,11 +200,22 @@ namespace Banshee.Collection.Gui
             if (pixbufs == null) {
                 pixbufs = new Gdk.Pixbuf[PixbufCount];
             }
-            
+
             pixbufs[(int)Icon.Playing]   = IconThemeUtils.LoadIcon (PixbufSize, "media-playback-start");
             pixbufs[(int)Icon.Paused]    = IconThemeUtils.LoadIcon (PixbufSize, "media-playback-pause");
             pixbufs[(int)Icon.Error]     = IconThemeUtils.LoadIcon (PixbufSize, "emblem-unreadable", "dialog-error");
             pixbufs[(int)Icon.Protected] = IconThemeUtils.LoadIcon (PixbufSize, "emblem-readonly", "dialog-error");
+
+            if (status_names == null) {
+                status_names = new string[PixbufCount];
+                for (int i=0; i<PixbufCount; i++)
+                    status_names[i] = "";
+            }
+
+            status_names[(int)Icon.Playing]   = Catalog.GetString ("Playing");
+            status_names[(int)Icon.Paused]    = Catalog.GetString ("Paused");
+            status_names[(int)Icon.Error]     = Catalog.GetString ("Error");
+            status_names[(int)Icon.Protected] = Catalog.GetString ("Protected");
         }
         
         public override void NotifyThemeChange ()
