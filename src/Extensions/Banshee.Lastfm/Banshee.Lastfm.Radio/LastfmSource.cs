@@ -268,6 +268,7 @@ namespace Banshee.Lastfm.Radio
 
         private SourcePage pref_page;
         private Section pref_section;
+        private SchemaPreference<string> user_pref;
 
         private void InstallPreferences ()
         {
@@ -281,8 +282,8 @@ namespace Banshee.Lastfm.Radio
             pref_section = pref_page.Add (new Section ("mediatypes", Catalog.GetString ("Account"), 20));
             pref_section.ShowLabel = false;
 
-            pref_section.Add (new SchemaPreference<string> (LastUserSchema,
-                Catalog.GetString ("_Username"), Catalog.GetString ("")));
+            user_pref = new SchemaPreference<string> (LastUserSchema, Catalog.GetString ("_Username"), Catalog.GetString (""));
+            pref_section.Add (user_pref);
             pref_section.Add (new VoidPreference ("lastfm-auth-banshee"));
             pref_section.Add (new VoidPreference ("lastfm-authorized"));
         }
@@ -299,25 +300,34 @@ namespace Banshee.Lastfm.Radio
             pref_page = null;
         }
 
+        private bool HaveUsername { get { return !String.IsNullOrEmpty (user_pref.Value); } }
+
         private void OnPreferencesServiceInstallWidgetAdapters (object o, EventArgs args)
         {
             if (pref_section == null) {
                 return;
             }
 
-            var auth_button = new Gtk.Button (Catalog.GetString ("Authorize Banshee with Last.fm"));
+            var auth_button = new Gtk.Button (Catalog.GetString ("Authorize Banshee with Last.fm")) {
+                Sensitive = HaveUsername
+            };
+
+            user_pref.ValueChanged += (s) => { auth_button.Sensitive = HaveUsername; };
             auth_button.Clicked += delegate {
                 account.SessionKey = null;
                 account.RequestAuthorization ();
             };
 
-            var auth_label = new Gtk.Label (String.IsNullOrEmpty (account.UserName) || account.SessionKey == null
+            var auth_label = new Gtk.Label (!HaveUsername) || account.SessionKey == null
                     ? Catalog.GetString ("Banshee not authorized")
                     : Catalog.GetString ("Banshee authorized!")) {
                 Xalign = 0f
             };
 
-            var auth_refresh_button = new Gtk.Button (Gtk.Stock.Refresh);
+            var auth_refresh_button = new Gtk.Button (Gtk.Stock.Refresh) {
+                Sensitive = HaveUsername
+            };
+            user_pref.ValueChanged += (s) => { auth_refresh_button.Sensitive = HaveUsername; };
             auth_refresh_button.Clicked += delegate {
                 if (String.IsNullOrEmpty (account.UserName) || account.SessionKey == null) {
                     account.UserName = LastUserSchema.Get ();
