@@ -33,6 +33,7 @@ using System.Collections.Generic;
 using Mono.Unix;
 
 using Lastfm;
+using Lastfm.Gui;
 using Hyena.Data;
 
 using Banshee.Base;
@@ -349,8 +350,12 @@ namespace Banshee.Lastfm.Radio
 
             signup_button.Visible = String.IsNullOrEmpty (user_pref.Value);
 
+            var button_box = new Gtk.HBox () { Spacing = 6 };
+            button_box.PackStart (new Badge (account) { Visible = true}, false, false, 0);
+            button_box.PackStart (signup_button, true, true, 0);
+
             user_pref.DisplayWidget = auth_box;
-            pref_section["lastfm-signup"].DisplayWidget = signup_button;
+            pref_section["lastfm-signup"].DisplayWidget = button_box;
         }
 
         public override string PreferencesPageId {
