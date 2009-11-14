@@ -40,7 +40,6 @@ using Mono.Unix;
 using Hyena;
 
 using Lastfm;
-using Lastfm.Gui;
 
 using Banshee.MediaEngine;
 using Banshee.Base;
@@ -127,11 +126,7 @@ namespace Banshee.Lastfm.Audioscrobbler
 
                 new ActionEntry ("AudioscrobblerVisitAction", null,
                     Catalog.GetString ("Visit _User Profile Page"), null,
-                    Catalog.GetString ("Visit Your Last.fm Profile Page"), OnVisitOwnProfile),
-
-                new ActionEntry ("AudioscrobblerConfigureAction", Stock.Properties,
-                    Catalog.GetString ("_Configure..."), null,
-                    Catalog.GetString ("Configure the Last.fm Extension"), OnConfigurePlugin)
+                    Catalog.GetString ("Visit Your Last.fm Profile Page"), OnVisitOwnProfile)
             });
 
             actions.Add (new ToggleActionEntry [] {
@@ -279,17 +274,6 @@ namespace Banshee.Lastfm.Audioscrobbler
                     iterate_countdown = 4 * 4;
                     break;
             }
-        }
-
-        private void OnConfigurePlugin (object o, EventArgs args)
-        {
-            AccountLoginDialog dialog = new AccountLoginDialog (account, true);
-            dialog.SaveOnEdit = true;
-            if (account.UserName == null) {
-                dialog.AddSignUpButton ();
-            }
-            dialog.Run ();
-            dialog.Destroy ();
         }
 
         private void OnVisitOwnProfile (object o, EventArgs args)

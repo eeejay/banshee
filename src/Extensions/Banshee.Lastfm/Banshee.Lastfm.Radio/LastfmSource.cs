@@ -102,7 +102,6 @@ namespace Banshee.Lastfm.Radio
             Properties.Set<bool> ("ActiveSourceUIResourcePropagate", true);
             Properties.SetString ("GtkActionPath", "/LastfmSourcePopup");
             Properties.SetString ("Icon.Name", "lastfm-audioscrobbler");
-            Properties.SetString ("SourcePropertiesActionLabel", Catalog.GetString ("Edit Last.fm Settings"));
             Properties.SetString ("SortChildrenActionLabel", Catalog.GetString ("Sort Stations by"));
             Properties.Set<LastfmColumnController> ("TrackView.ColumnController", new LastfmColumnController ());
 
@@ -210,7 +209,7 @@ namespace Banshee.Lastfm.Radio
         }
 
         public override bool HasProperties {
-            get { return true; }
+            get { return false; }
         }
 
         private void HandleConnectionStateChanged (object sender, ConnectionStateChangedArgs args)

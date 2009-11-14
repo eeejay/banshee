@@ -200,9 +200,7 @@ namespace Banshee.Lastfm.Radio
         private void OnSourceProperties (object o, EventArgs args)
         {
             Source source = Actions.SourceActions.ActionSource;
-            if (source is LastfmSource) {
-                ShowLoginDialog ();
-            } else if (source is StationSource) {
+            if (source is StationSource) {
                 StationEditor editor = new StationEditor (lastfm, source as StationSource);
                 editor.RunDialog ();
             }
@@ -368,13 +366,13 @@ namespace Banshee.Lastfm.Radio
 
         public void ShowLoginDialog ()
         {
-            AccountLoginDialog dialog = new AccountLoginDialog (lastfm.Account, true);
-            dialog.SaveOnEdit = false;
-            if (lastfm.Account.UserName == null) {
-                dialog.AddSignUpButton ();
+            try {
+                Banshee.Preferences.Gui.PreferenceDialog dialog = new Banshee.Preferences.Gui.PreferenceDialog ();
+                dialog.ShowSourcePageId (lastfm.PreferencesPageId);
+                dialog.Run ();
+                dialog.Destroy ();
+            } catch (ApplicationException) {
             }
-            dialog.Run ();
-            dialog.Destroy ();
         }
 
         private void OnPlayerEvent (PlayerEventArgs args)
