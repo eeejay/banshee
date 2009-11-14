@@ -279,7 +279,7 @@ namespace Banshee.Lastfm.Radio
 
             service.InstallWidgetAdapters += OnPreferencesServiceInstallWidgetAdapters;
             pref_page = new Banshee.Preferences.SourcePage (this);
-            pref_section = pref_page.Add (new Section ("mediatypes", Catalog.GetString ("Account"), 20));
+            pref_section = pref_page.Add (new Section ("lastfm-account", Catalog.GetString ("Account"), 20));
             pref_section.ShowLabel = false;
 
             user_pref = new SchemaPreference<string> (LastUserSchema, Catalog.GetString ("_Username"));
