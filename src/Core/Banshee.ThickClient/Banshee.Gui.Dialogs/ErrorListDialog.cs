@@ -25,7 +25,7 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
- 
+
 using System;
 using System.Collections;
 using Mono.Unix;
@@ -41,32 +41,32 @@ namespace Banshee.Gui.Dialogs
         [Widget] private TreeView list_view;
         [Widget] private Image icon_image;
         [Widget] private Expander details_expander;
-        
+
         private ListStore simple_model;
         private AccelGroup accel_group;
-        
+
         public ErrorListDialog() : base("ErrorListDialog")
         {
             accel_group = new AccelGroup();
             Dialog.AddAccelGroup(accel_group);
-		    
+		
             list_view.SetSizeRequest(-1, 120);
             details_expander.Activated += delegate {
                 ConfigureGeometry();
             };
-            
+
             Dialog.Realized += delegate {
                 ConfigureGeometry();
             };
         }
-        
+
         private void ConfigureGeometry()
         {
             Gdk.Geometry limits = new Gdk.Geometry();
-            
+
             limits.MinWidth = Dialog.SizeRequest().Width;
             limits.MaxWidth = Gdk.Screen.Default.Width;
-            
+
             if(details_expander.Expanded) {
                 limits.MinHeight = Dialog.SizeRequest().Height + list_view.SizeRequest().Height;
                 limits.MaxHeight = Gdk.Screen.Default.Height;
@@ -74,8 +74,8 @@ namespace Banshee.Gui.Dialogs
                 limits.MinHeight = -1;
                 limits.MaxHeight = -1;
             }
-            
-            Dialog.SetGeometryHints(Dialog, limits, 
+
+            Dialog.SetGeometryHints(Dialog, limits,
                 Gdk.WindowHints.MaxSize | Gdk.WindowHints.MinSize);
         }
 
@@ -83,7 +83,7 @@ namespace Banshee.Gui.Dialogs
         {
             AddButton(message, response, false);
         }
-        
+
         public void AddStockButton(string stock, ResponseType response)
         {
             AddStockButton(stock, response, false);
@@ -98,7 +98,7 @@ namespace Banshee.Gui.Dialogs
         {
             AddButton(stock, response, isDefault, true);
         }
-        
+
         public void AddButton(string message, ResponseType response, bool isDefault, bool isStock)
         {
             Button button = new Button(message);
@@ -110,32 +110,32 @@ namespace Banshee.Gui.Dialogs
 
             if(isDefault) {
                 Dialog.DefaultResponse = response;
-                button.AddAccelerator("activate", accel_group, (uint)Gdk.Key.Return, 
+                button.AddAccelerator("activate", accel_group, (uint)Gdk.Key.Return,
                     0, AccelFlags.Visible);
             }
         }
-        
+
         public string Header {
-            set { 
+            set {
                 Dialog.Title = value;
-                header_label.Markup = String.Format("<b><big>{0}</big></b>", 
+                header_label.Markup = String.Format("<b><big>{0}</big></b>",
                     GLib.Markup.EscapeText(value));
             }
         }
-        
+
         public void AppendString(string item)
         {
             if(list_view.Model == null) {
                 CreateSimpleModel();
             }
-            
+
             if(list_view.Model != simple_model) {
                 throw new ApplicationException("A custom model is in use");
             }
-            
+
             simple_model.AppendValues(item);
         }
-        
+
         private void CreateSimpleModel()
         {
             simple_model = new ListStore(typeof(string));
@@ -143,19 +143,19 @@ namespace Banshee.Gui.Dialogs
             list_view.AppendColumn("Error", new CellRendererText(), "text", 0);
             list_view.HeadersVisible = false;
         }
-        
+
         public string Message {
             set { message_label.Text = value; }
         }
-        
+
         public string IconName {
             set { icon_image.SetFromIconName(value, IconSize.Dialog); }
         }
-        
+
         public string IconNameStock {
             set { icon_image.SetFromStock(value, IconSize.Dialog); }
         }
-        
+
         public TreeView ListView {
             get { return list_view; }
         }

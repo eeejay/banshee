@@ -46,17 +46,17 @@ namespace Banshee.Torrent
         public static readonly string BusName = "org.monotorrent.dbus";
         public static readonly string EngineName = "banshee";
         public static readonly ObjectPath ServicePath = new ObjectPath ("/org/monotorrent/service");
-        
+
         private Bus bus;
         private IEngine engine;
         private ITorrentService service;
         /*private IEngineSettings settings;
-        
+
         public int MaxDownloadSpeed {
             get { return settings.GetGlobalMaxDownloadSpeed (); }
             set { settings.SetGlobalMaxDownloadSpeed (value); }
         }
-        
+
         public int MaxUploadSpeed {
             get { return settings.GetGlobalMaxUploadSpeed (); }
             set { settings.SetGlobalMaxUploadSpeed (value); }
@@ -65,17 +65,17 @@ namespace Banshee.Torrent
         public string ServiceName {
             get { return "TorrentService"; }
         }
-        
+
         public TorrentService ()
         {
         }
-        
+
         public IDownloader Download (string torrentUri, string savePath)
         {
             // Get the associated downloader
             ObjectPath path = engine.RegisterTorrent (torrentUri, savePath);
             IDownloader downloader = bus.GetObject <IDownloader> (BusName, path);
-            
+
             if (downloader.GetState () == TorrentState.Stopped) {
                 downloader.Start ();
                 Console.WriteLine ("Started: {0}", downloader.GetPath ());
@@ -84,7 +84,7 @@ namespace Banshee.Torrent
             }
             return downloader;
         }
-        
+
         public void Dispose ()
         {
             if (service != null) {
@@ -119,18 +119,18 @@ namespace Banshee.Torrent
                     return;
                 }
             }
-            
+
             // Register with Migo so we can handle .torrent downloads
             if (!RegisteredInMigo)
                 Migo.DownloadCore.DownloadManager.Register ("torrent", typeof (TorrentFileDownloadTask));
             RegisteredInMigo = true;
-            
+
             // Get the engine from DBus which we will use to download torrents with
             // and load the details for any existing downloads
             engine = bus.GetObject <IEngine> (BusName, service.GetEngine (EngineName));
             CheckExistingDownloads ();
         }
-        
+
         private void CheckExistingDownloads ()
         {
             //UserJobManager manager = (UserJobManager)ServiceManager.Get ("UserJobManager");

@@ -39,7 +39,7 @@ namespace Hyena.Query
     public class NullQueryValue : QueryValue
     {
         public static readonly Operator IsNullOrEmpty  = new Operator ("empty", Catalog.GetString ("empty"), "IN (NULL, '', 0)", true, "!");
-        
+
         public static readonly NullQueryValue Instance = new NullQueryValue ();
 
         public override string XmlElementName {
@@ -63,7 +63,7 @@ namespace Hyena.Query
         public override void ParseUserQuery (string input)
         {
         }
-        
+
         public override void LoadString (string input)
         {
         }

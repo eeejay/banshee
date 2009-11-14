@@ -40,45 +40,45 @@ namespace Banshee.Dap.Gui
         private DapSource source;
         private SegmentedBar disk_bar;
         private Alignment disk_bar_align;
-        
+
         public DapInfoBar (DapSource source)
         {
             this.source = source;
             source.Updated += OnSourceUpdated;
-            
+
             BuildWidget ();
         }
-        
+
         protected override void OnDestroyed ()
         {
             base.OnDestroyed ();
             source.Updated -= OnSourceUpdated;
             source = null;
         }
-        
+
         private void BuildWidget ()
         {
             HBox box = new HBox ();
-            
+
             disk_bar_align = new Alignment (0.5f, 0.5f, 1.0f, 1.0f);
             disk_bar = new SegmentedBar ();
             disk_bar.ValueFormatter = DapValueFormatter;
-            
+
             disk_bar.AddSegmentRgb (Catalog.GetString ("Audio"), 0, 0x3465a4);
             disk_bar.AddSegmentRgb (Catalog.GetString ("Video"), 0, 0x73d216);
             disk_bar.AddSegmentRgb (Catalog.GetString ("Other"), 0, 0xf57900);
             disk_bar.AddSegment (Catalog.GetString ("Free Space"), 0, disk_bar.RemainderColor, false);
-            
+
             UpdateUsage ();
 
             disk_bar_align.Add (disk_bar);
 
             box.PackStart (disk_bar_align, true, true, 0);
             disk_bar_align.TopPadding = 6;
-            
+
             Add (box);
             box.ShowAll ();
-            
+
             SizeAllocated += delegate (object o, Gtk.SizeAllocatedArgs args) {
                 SetBackground ();
                 disk_bar.HorizontalPadding = (int)(args.Allocation.Width * 0.25);
@@ -92,11 +92,11 @@ namespace Banshee.Dap.Gui
             }
 
             long size = (long)(source.BytesCapacity * segment.Percent);
-            return size <= 0 
+            return size <= 0
                 ? Catalog.GetString ("None")
                 : new Hyena.Query.FileSizeQueryValue (size).ToUserQuery ();
         }
-        
+
         private void OnSourceUpdated (object o, EventArgs args)
         {
             if (source.Sync.Syncing)
@@ -110,18 +110,18 @@ namespace Banshee.Dap.Gui
                 }
             });
         }
-        
+
         protected override void OnStyleSet (Style previous_style)
         {
             base.OnStyleSet (previous_style);
             SetBackground ();
         }
-        
+
         private void SetBackground ()
         {
             Cairo.Color light = CairoExtensions.GdkColorToCairoColor (Style.Background (StateType.Normal));
             Cairo.Color dark = CairoExtensions.ColorShade (light, 0.85);
-            
+
             Cairo.LinearGradient grad = new Cairo.LinearGradient (0, Allocation.Y, 0, Allocation.Y + Allocation.Height);
             grad.AddColorStop (0, dark);
             grad.AddColorStop (1, light);
@@ -132,7 +132,7 @@ namespace Banshee.Dap.Gui
         {
             long data = source.BytesUsed - source.BytesMusic - source.BytesVideo;
             double cap = (double)source.BytesCapacity;
-        
+
             disk_bar.UpdateSegment (0, source.BytesMusic / cap);
             disk_bar.UpdateSegment (1, source.BytesVideo / cap);
             disk_bar.UpdateSegment (2, data / cap);

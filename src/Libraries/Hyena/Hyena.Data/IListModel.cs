@@ -36,19 +36,19 @@ namespace Hyena.Data
     {
         event EventHandler Cleared;
         event EventHandler Reloaded;
-        
+
         void Clear ();
         void Reload ();
-        
+
         int Count { get; }
         bool CanReorder { get; }
     }
-    
+
     public interface IListModel<T> : IListModel
     {
         T this[int index] { get; }
     }
-    
+
     public interface IObjectListModel : IListModel<object>
     {
         ColumnDescription [] ColumnDescriptions { get; }

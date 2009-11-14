@@ -35,18 +35,18 @@ namespace Banshee.Gui.TrackEditor
     public class PageNavigationEntry : HBox, IEditorField, ICanUndo
     {
         public event EventHandler Changed;
-        
+
         private TextEntry entry;
         private TrackEditorDialog dialog;
         private Button forward_button;
         public Button ForwardButton {
             get { return forward_button; }
         }
-        
+
         public PageNavigationEntry (TrackEditorDialog dialog) : this (dialog, null, null)
         {
         }
-        
+
         public PageNavigationEntry (TrackEditorDialog dialog, string completionTable, string completionColumn)
         {
             this.dialog = dialog;
@@ -54,20 +54,20 @@ namespace Banshee.Gui.TrackEditor
             entry.Changed += OnChanged;
             entry.Activated += EditNextTitle;
             entry.KeyPressEvent += delegate (object o, KeyPressEventArgs args) {
-                if ((args.Event.Key == Gdk.Key.Return || args.Event.Key == Gdk.Key.KP_Enter) && 
+                if ((args.Event.Key == Gdk.Key.Return || args.Event.Key == Gdk.Key.KP_Enter) &&
                     (args.Event.State & Gdk.ModifierType.ControlMask) != 0 && dialog.CanGoBackward) {
                     dialog.NavigateBackward ();
                     entry.GrabFocus ();
                 }
             };
             entry.Show ();
-            
+
             Spacing = 1;
             PackStart (entry, true, true, 0);
-            
+
             if (dialog.TrackCount > 1) {
-                dialog.Navigated += delegate { 
-                    forward_button.Sensitive = dialog.CanGoForward; 
+                dialog.Navigated += delegate {
+                    forward_button.Sensitive = dialog.CanGoForward;
                 };
                 forward_button = EditorUtilities.CreateSmallStockButton (Stock.GoForward);
                 object tooltip_host = Hyena.Gui.TooltipSetter.CreateHost ();
@@ -86,17 +86,17 @@ namespace Banshee.Gui.TrackEditor
                 entry.GrabFocus ();
             }
         }
-        
+
         public void ConnectUndo (EditorTrackInfo track)
         {
             entry.ConnectUndo (track);
         }
-        
+
         public void DisconnectUndo ()
         {
             entry.DisconnectUndo ();
         }
-                
+
         private void OnChanged (object o, EventArgs args)
         {
             EventHandler handler = Changed;
@@ -108,11 +108,11 @@ namespace Banshee.Gui.TrackEditor
         protected override bool OnMnemonicActivated (bool group_cycling) {
             return entry.MnemonicActivate(group_cycling);
         }
-    
+
         public TextEntry Entry {
             get { return entry; }
         }
-        
+
         public string Text {
             get { return entry.Text; }
             set { entry.Text = value; }

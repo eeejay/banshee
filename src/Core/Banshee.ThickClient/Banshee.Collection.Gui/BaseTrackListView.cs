@@ -51,13 +51,13 @@ namespace Banshee.Collection.Gui
             RulesHint = true;
             RowOpaquePropertyName = "Enabled";
             RowBoldPropertyName = "IsPlaying";
-            
+
             ServiceManager.PlayerEngine.ConnectEvent (
                 OnPlayerEvent, PlayerEvent.StartOfStream | PlayerEvent.StateChange);
-            
+
             ForceDragSourceSet = true;
             IsEverReorderable = true;
-            
+
             RowActivated += delegate (object o, RowActivatedArgs<TrackInfo> args) {
                 ITrackModelSource source = ServiceManager.SourceManager.ActiveSource as ITrackModelSource;
                 if (source != null && source.TrackModel == Model) {
@@ -75,7 +75,7 @@ namespace Banshee.Collection.Gui
         protected override TargetEntry [] DragDropSourceEntries {
             get { return source_targets; }
         }
-        
+
         protected override bool OnKeyPressEvent (Gdk.EventKey press)
         {
             // Have o act the same as enter - activate the selection
@@ -155,7 +155,7 @@ namespace Banshee.Collection.Gui
             base.OnDragSourceSet ();
             Drag.SourceSetIconName (this, "audio-x-generic");
         }
-        
+
         protected override bool OnDragDrop (Gdk.DragContext context, int x, int y, uint time_)
         {
             y = TranslateToListY (y);
@@ -167,17 +167,17 @@ namespace Banshee.Collection.Gui
                     if (row != GetRowAtY (y + RowHeight / 2)) {
                         row += 1;
                     }
-                    
+
                     if (playlist.TrackModel.Selection.Contains (row)) {
                         // can't drop within the selection
                         return false;
                     }
-                    
+
                     playlist.ReorderSelectedTracks (row);
                     return true;
                 }
             }
-            
+
             return false;
         }
 

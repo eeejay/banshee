@@ -18,10 +18,10 @@
 // distribute, sublicense, and/or sell copies of the Software, and to
 // permit persons to whom the Software is furnished to do so, subject to
 // the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be
 // included in all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 // MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -34,7 +34,7 @@
 /********************************************************
  * ADO.NET 2.0 Data Provider for Sqlite Version 3.X
  * Written by Robert Simpson (robert@blackcastlesoft.com)
- * 
+ *
  * Released to the public domain, use at your own risk!
  ********************************************************/
 #if NET_2_0
@@ -81,7 +81,7 @@ namespace Mono.Data.Sqlite
     /// <summary>
     /// Default constructor
     /// </summary>
-    public SqliteParameter() 
+    public SqliteParameter()
       : this(null, (DbType)(-1), 0, null, DataRowVersion.Current)
     {
     }
@@ -211,7 +211,7 @@ namespace Mono.Data.Sqlite
     /// <param name="parameterSize">The size of the parameter</param>
     /// <param name="sourceColumn">The source column</param>
     /// <param name="rowVersion">The row version information</param>
-    public SqliteParameter(string parameterName, DbType parameterType, int parameterSize, string sourceColumn, DataRowVersion rowVersion)      
+    public SqliteParameter(string parameterName, DbType parameterType, int parameterSize, string sourceColumn, DataRowVersion rowVersion)
     {
       _parameterName = parameterName;
       _dbType = (int)parameterType;
@@ -241,7 +241,7 @@ namespace Mono.Data.Sqlite
     /// <param name="scale">Ignored</param>
     /// <param name="sourceColumn">The source column</param>
     /// <param name="rowVersion">The row version information</param>
-    /// <param name="value">The initial value to assign the parameter</param>   
+    /// <param name="value">The initial value to assign the parameter</param>
 #if !PLATFORM_COMPACTFRAMEWORK
     [EditorBrowsable(EditorBrowsableState.Advanced)]
 #endif
@@ -319,7 +319,7 @@ namespace Mono.Data.Sqlite
       {
         return _nullable;
       }
-      set 
+      set
       {
         _nullable = value;
       }
@@ -461,7 +461,7 @@ namespace Mono.Data.Sqlite
       set
       {
         _objValue = value;
-        if (_dbType == -1 && _objValue != null && _objValue != DBNull.Value) // If the DbType has never been assigned, try to glean one from the value's datatype 
+        if (_dbType == -1 && _objValue != null && _objValue != DBNull.Value) // If the DbType has never been assigned, try to glean one from the value's datatype
           _dbType = (int)SqliteConvert.TypeToDbType(_objValue.GetType());
       }
     }

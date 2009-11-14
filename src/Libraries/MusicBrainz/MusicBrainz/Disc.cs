@@ -33,7 +33,7 @@ namespace MusicBrainz
         internal Disc ()
         {
         }
-        
+
         internal Disc (XmlReader reader)
         {
             reader.Read ();

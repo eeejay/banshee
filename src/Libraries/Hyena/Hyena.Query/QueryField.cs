@@ -48,7 +48,7 @@ namespace Hyena.Query
             get { return name; }
             set { name = value; }
         }
-        
+
         private string property_name;
         public string PropertyName {
             get { return property_name; }
@@ -174,7 +174,7 @@ namespace Hyena.Query
         public static string ToTermString (string alias, string op, string value)
         {
             value = String.Format (
-                "{1}{0}{1}", 
+                "{1}{0}{1}",
                 value, value.IndexOf (" ") == -1 ? String.Empty : "\""
             );
 

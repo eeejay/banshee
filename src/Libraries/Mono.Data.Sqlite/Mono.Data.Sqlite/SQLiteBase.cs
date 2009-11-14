@@ -18,10 +18,10 @@
 // distribute, sublicense, and/or sell copies of the Software, and to
 // permit persons to whom the Software is furnished to do so, subject to
 // the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be
 // included in all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 // MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -34,7 +34,7 @@
 /********************************************************
  * ADO.NET 2.0 Data Provider for SQLite Version 3.X
  * Written by Robert Simpson (robert@blackcastlesoft.com)
- * 
+ *
  * Released to the public domain, use at your own risk!
  ********************************************************/
 #if NET_2_0
@@ -112,7 +112,7 @@ namespace Mono.Data.Sqlite
     /// <param name="stmt">The statement to finalize</param>
     internal abstract void FinalizeStatement(SqliteStatement stmt);
     /// <summary>
-    /// Resets a prepared statement so it can be executed again.  If the error returned is SQLITE_SCHEMA, 
+    /// Resets a prepared statement so it can be executed again.  If the error returned is SQLITE_SCHEMA,
     /// transparently attempt to rebuild the SQL statement and throw an error if that was not possible.
     /// </summary>
     /// <param name="stmt">The statement to reset</param>
@@ -178,7 +178,7 @@ namespace Mono.Data.Sqlite
     internal abstract void SetRollbackHook(SqliteRollbackCallback func);
 
     internal abstract long GetLastInsertRowId ();
-    
+
     internal abstract object GetValue(SqliteStatement stmt, int index, SqliteType typ);
 
     protected virtual void Dispose(bool bDisposing)

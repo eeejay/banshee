@@ -35,7 +35,7 @@ namespace Banshee.Preferences
         public VoidPreference (string id) : base (id, null)
         {
         }
-        
+
         public VoidPreference (string id, string name) : base (id, name)
         {
         }

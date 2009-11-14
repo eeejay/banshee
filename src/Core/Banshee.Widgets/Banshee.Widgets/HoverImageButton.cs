@@ -5,24 +5,24 @@
  *  Written by Aaron Bockover <abockover@novell.com>
  ****************************************************************************/
 
-/*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
+/*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW:
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
- *  copy of this software and associated documentation files (the "Software"),  
- *  to deal in the Software without restriction, including without limitation  
- *  the rights to use, copy, modify, merge, publish, distribute, sublicense,  
- *  and/or sell copies of the Software, and to permit persons to whom the  
+ *  copy of this software and associated documentation files (the "Software"),
+ *  to deal in the Software without restriction, including without limitation
+ *  the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ *  and/or sell copies of the Software, and to permit persons to whom the
  *  Software is furnished to do so, subject to the following conditions:
  *
- *  The above copyright notice and this permission notice shall be included in 
+ *  The above copyright notice and this permission notice shall be included in
  *  all copies or substantial portions of the Software.
  *
- *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
- *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
- *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
- *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
- *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
- *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  *  DEALINGS IN THE SOFTWARE.
  */
 
@@ -61,7 +61,7 @@ namespace Banshee.Widgets
             Add(image);
         }
 
-        public HoverImageButton(IconSize size, string icon_name) : 
+        public HoverImageButton(IconSize size, string icon_name) :
             this(size, new string [] { icon_name })
         {
         }
@@ -79,7 +79,7 @@ namespace Banshee.Widgets
                 handler(this, EventArgs.Empty);
             }
         }
-        
+
         private bool changing_style = false;
         protected override void OnStyleSet(Style previous_style)
         {
@@ -130,7 +130,7 @@ namespace Banshee.Widgets
             HasFocus = true;
             is_pressed = true;
             QueueDraw();
-            
+
             return base.OnButtonPressEvent(evnt);
         }
 
@@ -150,12 +150,12 @@ namespace Banshee.Widgets
         protected override bool OnExposeEvent(Gdk.EventExpose evnt)
         {
             base.OnExposeEvent(evnt);
-            
+
             PropagateExpose(Child, evnt);
-            
+
             if(HasFocus && draw_focus) {
                 Style.PaintFocus(Style, GdkWindow, StateType.Normal, evnt.Area, this, "button",
-                    0, 0, Allocation.Width, Allocation.Height); 
+                    0, 0, Allocation.Width, Allocation.Height);
             }
 
             return true;
@@ -163,7 +163,7 @@ namespace Banshee.Widgets
 
         private void UpdateImage()
         {
-            image.Pixbuf = is_hovering || is_pressed || HasFocus 
+            image.Pixbuf = is_hovering || is_pressed || HasFocus
                 ? active_pixbuf : normal_pixbuf;
         }
 
@@ -199,43 +199,43 @@ namespace Banshee.Widgets
         {
             return (byte)Math.Max(0, Math.Min(255, val));
         }
-        
+
         private unsafe Gdk.Pixbuf ColorShiftPixbuf(Gdk.Pixbuf src, byte shift)
         {
             Gdk.Pixbuf dest = new Gdk.Pixbuf(src.Colorspace, src.HasAlpha, src.BitsPerSample, src.Width, src.Height);
-            
+
             byte *src_pixels_orig = (byte *)src.Pixels;
             byte *dest_pixels_orig = (byte *)dest.Pixels;
-            
+
             for(int i = 0; i < src.Height; i++) {
                 byte *src_pixels = src_pixels_orig + i * src.Rowstride;
                 byte *dest_pixels = dest_pixels_orig + i * dest.Rowstride;
-                
+
                 for(int j = 0; j < src.Width; j++) {
                     *(dest_pixels++) = PixelClamp(*(src_pixels++) + shift);
                     *(dest_pixels++) = PixelClamp(*(src_pixels++) + shift);
                     *(dest_pixels++) = PixelClamp(*(src_pixels++) + shift);
-                    
+
                     if(src.HasAlpha) {
                         *(dest_pixels++) = *(src_pixels++);
                     }
                 }
             }
-            
+
             return dest;
         }
 
         public string [] IconNames {
             get { return icon_names; }
-            set { 
-                icon_names = value; 
+            set {
+                icon_names = value;
                 LoadPixbufs();
             }
         }
 
         public IconSize IconSize {
             get { return icon_size; }
-            set { 
+            set {
                 icon_size = value;
                 LoadPixbufs();
             }

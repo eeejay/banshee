@@ -44,7 +44,7 @@ namespace Banshee.Daap
             Properties.SetStringList ("Icon.Name", "applications-internet", "network-server");
             TypeUniqueId = "daap-container";
         }
-        
+
         public override bool? AutoExpand {
             get { return ExpandedSchema.Get (); }
         }
@@ -57,7 +57,7 @@ namespace Banshee.Daap
         public override bool CanActivate {
             get { return false; }
         }
-        
+
         public override bool CanRename {
             get { return false; }
         }

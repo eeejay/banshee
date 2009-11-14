@@ -40,33 +40,33 @@ namespace Hyena.Query
         DepthFirst,
         BreadthFirst
     }
-    
+
     public abstract class QueryNode
     {
         private QueryListNode parent;
         private int source_column;
         private int source_line;
-        
+
         public QueryNode()
         {
         }
-        
+
         public QueryNode(QueryListNode parent)
         {
             Parent = parent;
             Parent.AddChild(this);
         }
-        
+
         protected void PrintIndent(int depth)
         {
             Console.Write(String.Empty.PadLeft(depth * 2, ' '));
         }
-        
+
         public void Dump()
         {
             Dump(0);
         }
-        
+
         internal virtual void Dump(int depth)
         {
             PrintIndent(depth);
@@ -115,12 +115,12 @@ namespace Hyena.Query
                 }
             }
         }
-        
+
         public IEnumerable<T> SearchForValues<T> () where T : QueryValue
         {
             return SearchForValues<T> (QueryNodeSearchMethod.DepthFirst);
         }
-        
+
         public IEnumerable<T> SearchForValues<T> (QueryNodeSearchMethod method) where T : QueryValue
         {
             if (method == QueryNodeSearchMethod.DepthFirst) {
@@ -129,7 +129,7 @@ namespace Hyena.Query
                 return SearchForValuesByBreadth<T> ();
             }
         }
-        
+
         private static IEnumerable<T> SearchForValuesByDepth<T> (QueryNode node) where T : QueryValue
         {
             QueryListNode list = node as QueryListNode;
@@ -149,7 +149,7 @@ namespace Hyena.Query
                 }
             }
         }
-        
+
         private IEnumerable<T> SearchForValuesByBreadth<T> () where T : QueryValue
         {
             Queue<QueryNode> queue = new Queue<QueryNode> ();
@@ -214,17 +214,17 @@ namespace Hyena.Query
         }
 
         public abstract void AppendSql (StringBuilder sb, QueryFieldSet fieldSet);
-        
+
         public QueryListNode Parent {
             get { return parent; }
             set { parent = value; }
         }
-        
+
         public int SourceColumn {
             get { return source_column; }
             set { source_column = value; }
         }
-        
+
         public int SourceLine {
             get { return source_line; }
             set { source_line = value; }

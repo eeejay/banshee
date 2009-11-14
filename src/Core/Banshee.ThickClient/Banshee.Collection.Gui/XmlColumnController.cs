@@ -42,21 +42,21 @@ namespace Banshee.Collection.Gui
         public XmlColumnController (string xml) : base (false)
         {
             XmlTextReader reader = new XmlTextReader (new StringReader (xml));
-            
+
             while (reader.Read ()) {
                 if (reader.NodeType == XmlNodeType.Element && reader.Name == "column-controller") {
                     ReadColumnController (reader, reader.Depth);
                 }
             }
-            
+
             Load ();
         }
-        
+
         private void ReadColumnController (XmlTextReader reader, int depth)
         {
             string sort_column = null;
             bool sort_asc = true;
-            
+
             while (reader.Read ()) {
                 if (reader.NodeType == XmlNodeType.Element) {
                     switch (reader.Name) {
@@ -87,7 +87,7 @@ namespace Banshee.Collection.Gui
                     break;
                 }
             }
-            
+
             if (sort_column != null) {
                 foreach (Column col in Columns) {
                     if (col.Id == sort_column) {
@@ -102,11 +102,11 @@ namespace Banshee.Collection.Gui
                 }
             }
         }
-        
+
         private void ReadColumn (XmlTextReader reader, int depth)
         {
             string modify_default = null;
-            
+
             string title = null;
             string long_title = null;
             string sort_key = null;
@@ -114,25 +114,25 @@ namespace Banshee.Collection.Gui
             int max_width = -1;
             int min_width = -1;
             bool visible = true;
-            
+
             string renderer_type = null;
             string renderer_property = null;
             bool renderer_expand = true;
-            
+
             while (reader.MoveToNextAttribute ()) {
                 if (reader.Name == "modify-default") {
                     modify_default = reader.Value;
                     break;
                 }
             }
-                
+
             while (reader.Read ()) {
                 if (reader.NodeType == XmlNodeType.EndElement && reader.Depth == depth) {
                     break;
                 } else if (reader.NodeType != XmlNodeType.Element) {
                     continue;
                 }
-                
+
                 switch (reader.Name) {
                     case "title": title = reader.ReadString (); break;
                     case "long-title": long_title = reader.ReadString (); break;
@@ -152,10 +152,10 @@ namespace Banshee.Collection.Gui
                         break;
                 }
             }
-            
+
             if (modify_default != null) {
                 Column column = GetDefaultColumn (modify_default);
-                    
+
                 if (title != null) {
                     column.Title = title;
                 }
@@ -163,27 +163,27 @@ namespace Banshee.Collection.Gui
                 if (long_title != null) {
                     column.LongTitle = long_title;
                 }
-                
+
                 if (renderer_type != null) {
                     ColumnCell renderer = GetCellRenderer (renderer_type, renderer_property, renderer_expand);
                     column.RemoveCell (0);
                     column.PackStart (renderer);
                 }
-                
+
                 if (renderer_property != null) {
                     column.GetCell (0).Property = renderer_property;
                 }
-                
+
                 if (column.Visible != visible) {
                     column.Visible = visible;
                 }
-                
+
                 if (column is SortableColumn && sort_key != null) {
                     ((SortableColumn)column).SortKey = sort_key;
                 }
             } else {
                 ColumnCell renderer = GetCellRenderer (renderer_type, renderer_property, renderer_expand);
-                
+
                 Column column = sort_key == null
                     ? new Column (title, renderer, width, visible)
                     : new SortableColumn (title, renderer, width, sort_key, visible);
@@ -195,35 +195,35 @@ namespace Banshee.Collection.Gui
                 if (min_width != -1) {
                     column.MinWidth = min_width;
                 }
-                
+
                 Add (column);
             }
         }
-        
+
         private ColumnCell GetCellRenderer (string typeName, string property, bool expand)
         {
             Type type = null;
-                
+
             foreach (Assembly asm in AppDomain.CurrentDomain.GetAssemblies ()) {
                 type = asm.GetType (typeName, false, true);
                 if (type != null) {
                     break;
                 }
             }
-            
+
             if (type == null) {
                 throw new TypeLoadException (typeName);
             }
-            
+
             return (ColumnCell)Activator.CreateInstance (type, property, expand);
         }
-        
+
         private bool ParseBoolean (string value)
         {
             value = value.ToLower ();
             return value == "true";
         }
-        
+
         private Column GetDefaultColumn (string propertyName)
         {
             PropertyInfo property = GetType ().GetProperty (propertyName);

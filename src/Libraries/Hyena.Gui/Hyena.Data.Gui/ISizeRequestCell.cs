@@ -30,7 +30,7 @@
 using System;
 
 namespace Hyena.Data.Gui
-{   
+{
     public interface ISizeRequestCell
     {
         bool RestrictSize { get; set; }

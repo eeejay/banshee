@@ -186,7 +186,7 @@ namespace Banshee.InternetArchive
 
         public bool Indexable { get { return false; } }
 
-        public bool ShowBrowser { 
+        public bool ShowBrowser {
             get { return false; }
         }
 

@@ -53,19 +53,19 @@ namespace Banshee.FileSystemQueue
         private bool actions_loaded = false;
         private bool play_enqueued = false;
         private string path_to_play;
-        
-        public FileSystemQueueSource () : base (Catalog.GetString ("File System Queue"), 
+
+        public FileSystemQueueSource () : base (Catalog.GetString ("File System Queue"),
             Catalog.GetString ("File System Queue"), "file-system-queue", 30)
         {
             TypeUniqueId = "file-system-queue";
             Properties.SetStringList ("Icon.Name", "system-file-manager");
             Properties.Set<bool> ("AutoAddSource", false);
             IsLocal = true;
-            
+
             ServiceManager.Get<DBusCommandService> ().ArgumentPushed += OnCommandLineArgument;
-            
+
             AfterInitialized ();
-            
+
             InterfaceActionService uia_service = ServiceManager.Get<InterfaceActionService> ();
             uia_service.GlobalActions.AddImportant (
                 new ActionEntry ("ClearFileSystemQueueAction", Stock.Clear,
@@ -73,29 +73,29 @@ namespace Banshee.FileSystemQueue
                     Catalog.GetString ("Remove all tracks from the file system queue"),
                     OnClearFileSystemQueue)
             );
-            
+
             uia_service.GlobalActions.Add (new ToggleActionEntry [] {
                 new ToggleActionEntry ("ClearFileSystemQueueOnQuitAction", null,
-                    Catalog.GetString ("Clear on Quit"), null, 
-                    Catalog.GetString ("Clear the file system queue when quitting"), 
+                    Catalog.GetString ("Clear on Quit"), null,
+                    Catalog.GetString ("Clear the file system queue when quitting"),
                     OnClearFileSystemQueueOnQuit, ClearOnQuitSchema.Get ())
             });
-            
+
             uia_service.UIManager.AddUiFromResource ("GlobalUI.xml");
-            
+
             Properties.SetString ("ActiveSourceUIResource", "ActiveSourceUI.xml");
             Properties.SetString ("GtkActionPath", "/FileSystemQueueContextMenu");
-            
+
             actions_loaded = true;
-            
+
             UpdateActions ();
             ServiceManager.SourceManager.ActiveSourceChanged += delegate { Banshee.Base.ThreadAssist.ProxyToMain (UpdateActions); };
             TrackModel.Reloaded += OnTrackModelReloaded;
-            
+
             Reload ();
 
             play_enqueued = ApplicationContext.CommandLine.Contains ("play-enqueued");
-            
+
             foreach (string path in ApplicationContext.CommandLine.Files) {
                 // If it looks like a URI with a protocol, leave it as is
                 if (System.Text.RegularExpressions.Regex.IsMatch (path, "^\\w+\\:\\/")) {
@@ -107,7 +107,7 @@ namespace Banshee.FileSystemQueue
                 }
             }
         }
-        
+
         public void Enqueue (string path)
         {
             try {
@@ -127,7 +127,7 @@ namespace Banshee.FileSystemQueue
                             if (args.Error != null || path_to_play != null) {
                                 return;
                             }
-                            
+
                             path_to_play = args.Path;
                             if (args.Track == null) {
                                 // Play immediately if the track is already in the source,
@@ -150,7 +150,7 @@ namespace Banshee.FileSystemQueue
                         }
                     };
                 }
-            
+
                 if (PlaylistFileUtil.PathHasPlaylistExtension (path)) {
                     Banshee.Kernel.Scheduler.Schedule (new DelegateJob (delegate {
                         // If it's in /tmp it probably came from Firefox - just play it
@@ -165,22 +165,22 @@ namespace Banshee.FileSystemQueue
                 }
             }
         }
-        
+
         private void PlayEnqueued ()
-        {   
+        {
             if (!play_enqueued || path_to_play == null) {
                 return;
             }
-            
+
             SafeUri uri = null;
-            
+
             ServiceManager.PlaybackController.NextSource = this;
-            
+
             try {
                 uri = new SafeUri (path_to_play);
             } catch {
             }
-            
+
             if (uri == null) {
                 return;
             }
@@ -202,7 +202,7 @@ namespace Banshee.FileSystemQueue
         public override bool CanDeleteTracks {
             get { return false; }
         }
-        
+
         public override void Dispose ()
         {
             ServiceManager.Get<DBusCommandService> ().ArgumentPushed -= OnCommandLineArgument;
@@ -211,7 +211,7 @@ namespace Banshee.FileSystemQueue
             }
             base.Dispose ();
         }
-        
+
         private void OnCommandLineArgument (string argument, object value, bool isFile)
         {
             if (!isFile) {
@@ -221,9 +221,9 @@ namespace Banshee.FileSystemQueue
                 }
                 return;
             }
-            
+
             Log.DebugFormat ("FSQ Enqueue: {0}", argument);
-            
+
             try {
                 if (Banshee.IO.Directory.Exists (argument) || Banshee.IO.File.Exists (new SafeUri (argument))) {
                     Enqueue (argument);
@@ -231,16 +231,16 @@ namespace Banshee.FileSystemQueue
             } catch {
             }
         }
-        
+
         protected override void OnUpdated ()
         {
             base.OnUpdated ();
-            
+
             if (actions_loaded) {
                 UpdateActions ();
             }
         }
-        
+
         private void OnTrackModelReloaded (object sender, EventArgs args)
         {
             if (Count > 0 && !visible) {
@@ -250,12 +250,12 @@ namespace Banshee.FileSystemQueue
                 ServiceManager.SourceManager.RemoveSource (this);
                 visible = false;
             }
-            
+
             if (Count > 0) {
                 PlayEnqueued ();
             }
         }
-        
+
         private void OnClearFileSystemQueue (object o, EventArgs args)
         {
             // Delete any child playlists
@@ -270,28 +270,28 @@ namespace Banshee.FileSystemQueue
             RemoveTrackRange ((DatabaseTrackListModel)TrackModel, new Hyena.Collections.RangeCollection.Range (0, Count));
             Reload ();
         }
-        
+
         private void OnClearFileSystemQueueOnQuit (object o, EventArgs args)
         {
             InterfaceActionService uia_service = ServiceManager.Get<InterfaceActionService> ();
             if (uia_service == null) {
                 return;
             }
-            
+
             ToggleAction action = (ToggleAction)uia_service.GlobalActions["ClearFileSystemQueueOnQuitAction"];
             ClearOnQuitSchema.Set (action.Active);
         }
-        
+
         private void UpdateActions ()
-        {   
+        {
             InterfaceActionService uia_service = ServiceManager.Get<InterfaceActionService> ();
             if (uia_service == null) {
                 return;
             }
-            
+
             uia_service.GlobalActions.UpdateAction ("ClearFileSystemQueueAction", true, Count > 0);
         }
-        
+
         public static readonly SchemaEntry<bool> ClearOnQuitSchema = new SchemaEntry<bool> (
             "plugins.file_system_queue", "clear_on_quit",
             false,

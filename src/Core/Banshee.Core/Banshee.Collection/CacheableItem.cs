@@ -34,7 +34,7 @@ namespace Banshee.Collection
 {
     public class CacheableItem : ICacheableItem
     {
-    
+
 #region Implement ICacheableItem
 
         private object cache_entry_id;

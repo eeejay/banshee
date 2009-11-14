@@ -61,15 +61,15 @@ namespace Banshee.Networking
     public class Network : IService, IRegisterOnDemandService, IDisposable
     {
         public event NetworkStateChangedHandler StateChanged;
-        
+
         private INetworkAvailabilityService manager;
         private State current_state;
         private bool disable_internet_access = false;
-        
+
         public Network ()
         {
             InstallPreferences ();
-            
+
             try {
                 ConnectToManager ();
             } catch(Exception) {
@@ -80,7 +80,7 @@ namespace Banshee.Networking
                     false);
             }
         }
-        
+
         public void Dispose ()
         {
             UninstallPreferences ();
@@ -99,7 +99,7 @@ namespace Banshee.Networking
             manager.StateChange += OnNetworkManagerEvent;
             current_state = manager.State;
         }
-        
+
         private void OnNetworkManagerEvent(State new_state)
         {
             try {
@@ -110,7 +110,7 @@ namespace Banshee.Networking
                     if (Connected != was_connected) {
                         OnStateChanged ();
                     }
-                    
+
                 }
             } catch(Exception) {
             }
@@ -124,22 +124,22 @@ namespace Banshee.Networking
                 state_changed_args.Connected = Connected;
                 handler(this, state_changed_args);
             }
-            
+
             if(Connected) {
                 Log.Debug("Network Connection Established", "Connected");
             } else {
                 Log.Debug("Network Connection Unavailable", "Disconnected");
             }
         }
-        
+
         public bool Connected {
             get { return disable_internet_access ? false : (manager == null ? true : current_state == State.Connected); }
         }
-        
+
         public INetworkAvailabilityService Manager {
             get { return manager; }
         }
-        
+
 #region Offline Preference
 
         private PreferenceBase disable_internet_access_preference;
@@ -147,13 +147,13 @@ namespace Banshee.Networking
         private void InstallPreferences ()
         {
             disable_internet_access = DisableInternetAccess.Get ();
-            
+
             PreferenceService service = ServiceManager.Get<PreferenceService> ();
             if (service == null) {
                 return;
             }
-            
-            disable_internet_access_preference = service["general"]["misc"].Add (new SchemaPreference<bool> (DisableInternetAccess, 
+
+            disable_internet_access_preference = service["general"]["misc"].Add (new SchemaPreference<bool> (DisableInternetAccess,
                 Catalog.GetString ("_Disable features requiring Internet access"),
                 Catalog.GetString ("Some features require a broadband Internet connection such as Last.fm or cover art fetching"),
                 delegate {
@@ -165,20 +165,20 @@ namespace Banshee.Networking
                 }
             ));
         }
-        
+
         private void UninstallPreferences ()
         {
             PreferenceService service = ServiceManager.Get<PreferenceService> ();
             if (service == null) {
                 return;
             }
-            
+
             service["general"]["misc"].Remove (disable_internet_access_preference);
             disable_internet_access_preference = null;
         }
-        
+
         public static readonly SchemaEntry<bool> DisableInternetAccess = new SchemaEntry<bool> (
-            "core", "disable_internet_access", 
+            "core", "disable_internet_access",
             false,
             "Disable internet access",
             "Do not allow components to have internet access within Banshee"

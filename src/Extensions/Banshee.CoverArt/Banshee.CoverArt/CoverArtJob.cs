@@ -54,7 +54,7 @@ namespace Banshee.CoverArt
     {
         private DateTime last_scan = DateTime.MinValue;
         private TimeSpan retry_every = TimeSpan.FromDays (7);
-        
+
         public CoverArtJob (DateTime lastScan) : base (Catalog.GetString ("Downloading Cover Art"))
         {
             last_scan = lastScan;
@@ -71,7 +71,7 @@ namespace Banshee.CoverArt
                     WHERE
                         CoreTracks.PrimarySourceID = ? AND
                         CoreTracks.DateUpdatedStamp > ? AND
-                        CoreTracks.AlbumID = CoreAlbums.AlbumID AND 
+                        CoreTracks.AlbumID = CoreAlbums.AlbumID AND
                         CoreAlbums.ArtistID = CoreArtists.ArtistID AND
                         CoreTracks.AlbumID NOT IN (
                             SELECT AlbumID FROM CoverArtDownloads WHERE
@@ -80,12 +80,12 @@ namespace Banshee.CoverArt
             );
 
             SelectCommand = new HyenaSqliteCommand (@"
-                SELECT DISTINCT CoreAlbums.AlbumID, CoreAlbums.Title, CoreArtists.Name, CoreTracks.Uri 
+                SELECT DISTINCT CoreAlbums.AlbumID, CoreAlbums.Title, CoreArtists.Name, CoreTracks.Uri
                     FROM CoreTracks, CoreArtists, CoreAlbums
                     WHERE
                         CoreTracks.PrimarySourceID = ? AND
                         CoreTracks.DateUpdatedStamp > ? AND
-                        CoreTracks.AlbumID = CoreAlbums.AlbumID AND 
+                        CoreTracks.AlbumID = CoreAlbums.AlbumID AND
                         CoreAlbums.ArtistID = CoreArtists.ArtistID AND
                         CoreTracks.AlbumID NOT IN (
                             SELECT AlbumID FROM CoverArtDownloads WHERE
@@ -101,7 +101,7 @@ namespace Banshee.CoverArt
             CanCancel = true;
             DelayShow = true;
         }
-        
+
         public void Start ()
         {
             Register ();

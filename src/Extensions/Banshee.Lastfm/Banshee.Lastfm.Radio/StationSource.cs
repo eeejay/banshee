@@ -49,7 +49,7 @@ using Banshee.MediaEngine;
 using Banshee.Collection;
 using Banshee.ServiceStack;
 using Banshee.PlaybackController;
- 
+
 namespace Banshee.Lastfm.Radio
 {
     public class StationSource : Source, ITrackModelSource, IUnmapableSource, IDisposable, IBasicPlaybackController
@@ -71,9 +71,9 @@ namespace Banshee.Lastfm.Radio
             }
             return null;
         }
-        
+
         private MemoryTrackListModel track_model;
-        
+
         private LastfmSource lastfm;
         public LastfmSource LastfmSource {
             get { return lastfm; }
@@ -113,7 +113,7 @@ namespace Banshee.Lastfm.Radio
         }
 
         private int dbid;
-        
+
         // For StationSources that already exist in the db
         protected StationSource (LastfmSource lastfm, int dbId, string name, string type, string arg, int playCount) : base (generic_name, name, 150, dbId.ToString ())
         {
@@ -174,7 +174,7 @@ namespace Banshee.Lastfm.Radio
             HyenaSqliteCommand command = new HyenaSqliteCommand (
                 @"INSERT INTO LastfmStations (Creator, Name, Type, Arg, PlayCount)
                     VALUES (?, ?, ?, ?, ?)",
-                lastfm.Account.UserName, Name, 
+                lastfm.Account.UserName, Name,
                 Type.ToString (), Arg, PlayCount
             );
 
@@ -195,7 +195,7 @@ namespace Banshee.Lastfm.Radio
             Station = Type.GetStationFor (Arg);
             OnUpdated ();
         }
-        
+
         //private bool shuffle;
         public override void Activate ()
         {
@@ -289,15 +289,15 @@ namespace Banshee.Lastfm.Radio
                     current_track = i;
             }
         }
-        
+
 #region IBasicPlaybackController
 
         bool IBasicPlaybackController.First ()
         {
             return ((IBasicPlaybackController)this).Next (false);
         }
-        
-        private bool playback_requested;    
+
+        private bool playback_requested;
         bool IBasicPlaybackController.Next (bool restart)
         {
             TrackInfo next = NextTrack;
@@ -308,12 +308,12 @@ namespace Banshee.Lastfm.Radio
             }
             return true;
         }
-        
+
         bool IBasicPlaybackController.Previous (bool restart)
         {
             return true;
         }
-        
+
 #endregion
 
         public TrackInfo NextTrack {
@@ -330,7 +330,7 @@ namespace Banshee.Lastfm.Radio
                 return (left < 0) ? 0 : left;
             }
         }
-        
+
         public bool HasDependencies {
             get { return false; }
         }
@@ -388,7 +388,7 @@ namespace Banshee.Lastfm.Radio
 
         private void OnPlayerEvent (PlayerEventArgs args)
         {
-            if (((PlayerEventStateChangeArgs)args).Current == PlayerState.Loaded && 
+            if (((PlayerEventStateChangeArgs)args).Current == PlayerState.Loaded &&
                 track_model.Contains (ServiceManager.PlayerEngine.CurrentTrack)) {
                 CurrentTrack = ServiceManager.PlayerEngine.CurrentTrack;
 
@@ -417,7 +417,7 @@ namespace Banshee.Lastfm.Radio
                 }
             }
         }
-        
+
         private void HandleConnectionStateChanged (object sender, ConnectionStateChangedArgs args)
         {
             UpdateUI (args.State);
@@ -504,7 +504,7 @@ namespace Banshee.Lastfm.Radio
         public bool ShowBrowser {
             get { return false; }
         }
-        
+
         public bool Indexable {
             get { return false; }
         }
@@ -540,7 +540,7 @@ namespace Banshee.Lastfm.Radio
             base.Rename (newName);
             Save ();
         }
-        
+
         public override bool HasProperties {
             get { return true; }
         }

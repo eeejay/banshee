@@ -39,26 +39,26 @@ namespace RemoteClient
         {
             RemoteClientExample client = new RemoteClientExample ();
             client.Start ();
-            
+
             while (true) {
                 NDesk.DBus.Bus.Session.Iterate ();
             }
         }
-    
+
         protected override void IndexResult (IDictionary<string, object> result)
         {
             Console.WriteLine (result["URI"]);
         }
-        
+
         protected override void OnShutdownWhileIndexing ()
         {
         }
-        
-        protected override int CollectionCount { 
+
+        protected override int CollectionCount {
             get { return 0; }
         }
-        
-        protected override DateTime CollectionLastModified { 
+
+        protected override DateTime CollectionLastModified {
             get { return DateTime.MinValue; }
         }
     }

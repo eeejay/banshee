@@ -39,7 +39,7 @@ namespace Banshee.HalBackend
         internal Hal.Device HalDevice {
             get { return device; }
         }
-        
+
         private Hal.Manager manager;
         protected Hal.Manager HalManager {
             get { return manager; }
@@ -50,7 +50,7 @@ namespace Banshee.HalBackend
             this.manager = manager;
             this.device = device;
         }
-        
+
         private string uuid;
         public string Uuid {
             get { return uuid ?? (uuid = device.Udi); /*String.IsNullOrEmpty (HalDevice["usb.serial"]) ? device.Udi : HalDevice["usb.serial"];*/ }
@@ -93,47 +93,47 @@ namespace Banshee.HalBackend
                 return media_capabilities;
             }
         }
-        
+
         public bool PropertyExists (string key)
         {
             return device.PropertyExists (key);
         }
-        
+
         public string GetPropertyString (string key)
         {
             return device.GetPropertyString (key);
         }
-        
+
         public double GetPropertyDouble (string key)
         {
             return device.GetPropertyDouble (key);
         }
-        
+
         public bool GetPropertyBoolean (string key)
         {
             return device.GetPropertyBoolean (key);
         }
-        
+
         public int GetPropertyInteger (string key)
         {
             return device.GetPropertyInteger (key);
         }
-        
+
         public ulong GetPropertyUInt64 (string key)
         {
             return device.GetPropertyUInt64 (key);
         }
-        
+
         public string [] GetPropertyStringList (string key)
         {
             return device.GetPropertyStringList (key);
         }
-        
+
         public IUsbDevice ResolveRootUsbDevice ()
         {
             return UsbDevice.Resolve (HalManager, CollectUsbDeviceStack (device).Peek ());
         }
-        
+
         private static Stack<Hal.Device> CollectUsbDeviceStack (Hal.Device device)
         {
             Stack<Hal.Device> device_stack = new Stack<Hal.Device> ();
@@ -156,12 +156,12 @@ namespace Banshee.HalBackend
                 int _usb_product_id = -1;
 
                 // Figure out the IDs if they exist
-                if (tmp_device.PropertyExists ("usb.vendor_id") && 
+                if (tmp_device.PropertyExists ("usb.vendor_id") &&
                     tmp_device.PropertyExists ("usb.product_id")) {
                     _usb_vendor_id = tmp_device.GetPropertyInteger ("usb.vendor_id");
                     _usb_product_id = tmp_device.GetPropertyInteger ("usb.product_id");
                     have_usb_ids = true;
-                } else if (tmp_device.PropertyExists("usb_device.vendor_id") && 
+                } else if (tmp_device.PropertyExists("usb_device.vendor_id") &&
                     tmp_device.PropertyExists("usb_device.product_id")) {
                     _usb_vendor_id = tmp_device.GetPropertyInteger("usb_device.vendor_id");
                     _usb_product_id = tmp_device.GetPropertyInteger("usb_device.product_id");
@@ -185,7 +185,7 @@ namespace Banshee.HalBackend
                 device_stack.Push (tmp_device);
                 tmp_device = tmp_device.Parent;
             }
-            
+
             return device_stack;
         }
     }

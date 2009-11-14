@@ -44,17 +44,17 @@ namespace Banshee.Dap
     public abstract class MediaGroupSource : SmartPlaylistSource
     {
         private DapSource parent;
-        
+
         public MediaGroupSource (DapSource parent, string name) : base (name, parent)
         {
             this.parent = parent;
-            
-            Properties.Set<Gtk.Widget> ("Nereid.SourceContents.FooterWidget", 
+
+            Properties.Set<Gtk.Widget> ("Nereid.SourceContents.FooterWidget",
                 parent.Properties.Get<Gtk.Widget> ("Nereid.SourceContents.FooterWidget"));
-            
+
             if (this is IPurchasedMusicSource) {
                 PurchasedMusicActions.Create ();
-                
+
                 Properties.Set<Assembly> ("ActiveSourceUIResource.Assembly", Assembly.GetExecutingAssembly ());
                 Properties.SetString ("ActiveSourceUIResource", "PurchasedMusicSourceUI.xml");
             }
@@ -65,18 +65,18 @@ namespace Banshee.Dap
             base.AfterInitialized ();
             Reload ();
         }
-        
+
         protected override void OnUpdated ()
         {
             base.OnUpdated ();
             if (parent != null) {
                 parent.RaiseUpdated ();
             }
-            
+
             if (AutoHide) {
                 bool contains_me = parent.ContainsChildSource (this);
                 int count = Count;
-                
+
                 if (count == 0 && contains_me) {
                     parent.RemoveChildSource (this);
                 } else if (count > 0 && !contains_me) {
@@ -89,29 +89,29 @@ namespace Banshee.Dap
         {
             return (source is DatabaseSource) && source.Parent != Parent && source != Parent;
         }*/
-        
+
         private bool auto_hide;
         public virtual bool AutoHide {
             get { return auto_hide; }
             set { auto_hide = value; }
         }
-        
+
         public override string ConditionSql {
             get { return base.ConditionSql; }
-            protected set { 
+            protected set {
                 base.ConditionSql = value;
                 Save ();
             }
         }
-        
+
         public override bool CanRename {
             get { return false; }
         }
-        
+
         public override bool CanUnmap {
             get { return false; }
         }
-        
+
         public override bool HasProperties {
             get { return false; }
         }

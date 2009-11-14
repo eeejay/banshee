@@ -40,38 +40,38 @@ namespace Banshee.Hardware
     {
         private IHardwareManager manager;
         private Dictionary<string, ICustomDeviceProvider> custom_device_providers = new Dictionary<string, ICustomDeviceProvider> ();
-        
+
         public event DeviceAddedHandler DeviceAdded;
         public event DeviceRemovedHandler DeviceRemoved;
-        
+
         public HardwareManager ()
         {
             foreach (TypeExtensionNode node in AddinManager.GetExtensionNodes ("/Banshee/Platform/HardwareManager")) {
                 try {
                     if (manager != null) {
                         throw new Exception (String.Format (
-                            "A HardwareManager has already been loaded ({0}). Only one can be loaded.", 
+                            "A HardwareManager has already been loaded ({0}). Only one can be loaded.",
                             manager.GetType ().FullName));
                     }
-                    
+
                     manager = (IHardwareManager)node.CreateInstance (typeof (IHardwareManager));
                 } catch (Exception e) {
                     Log.Warning ("Hardware manager extension failed to load", e.Message);
                 }
             }
-            
+
             if (manager == null) {
                 throw new Exception ("No HardwareManager extensions could be loaded. Hardware support will be disabled.");
             }
-            
+
             manager.DeviceAdded += OnDeviceAdded;
             manager.DeviceRemoved += OnDeviceRemoved;
-            
+
             ServiceManager.Get<DBusCommandService> ().ArgumentPushed += OnCommandLineArgument;
 
             AddinManager.AddExtensionNodeHandler ("/Banshee/Platform/HardwareDeviceProvider", OnExtensionChanged);
         }
-        
+
         public void Dispose ()
         {
             lock (this) {
@@ -83,25 +83,25 @@ namespace Banshee.Hardware
                 }
 
                 ServiceManager.Get<DBusCommandService> ().ArgumentPushed -= OnCommandLineArgument;
-                
+
                 if (custom_device_providers != null) {
                     foreach (ICustomDeviceProvider provider in custom_device_providers.Values) {
                         provider.Dispose ();
                     }
-                    
+
                     custom_device_providers.Clear ();
                     custom_device_providers = null;
                 }
-                
+
                 AddinManager.RemoveExtensionNodeHandler ("/Banshee/Platform/HardwareDeviceProvider", OnExtensionChanged);
             }
         }
-        
-        private void OnExtensionChanged (object o, ExtensionNodeEventArgs args) 
+
+        private void OnExtensionChanged (object o, ExtensionNodeEventArgs args)
         {
             lock (this) {
                 TypeExtensionNode node = (TypeExtensionNode)args.ExtensionNode;
-                
+
                 if (args.Change == ExtensionChange.Add && !custom_device_providers.ContainsKey (node.Id)) {
                     custom_device_providers.Add (node.Id, (ICustomDeviceProvider)node.CreateInstance ());
                 } else if (args.Change == ExtensionChange.Remove && custom_device_providers.ContainsKey (node.Id)) {
@@ -125,9 +125,9 @@ namespace Banshee.Hardware
                     }
                 }
             }
-            
+
             remove { device_command -= value; }
-        }           
+        }
 
         private Banshee.Hardware.DeviceCommand startup_device_command;
         private bool startup_device_command_checked = false;
@@ -167,7 +167,7 @@ namespace Banshee.Hardware
         }
 
 #endregion
-        
+
         private void OnDeviceAdded (object o, DeviceAddedArgs args)
         {
             lock (this) {
@@ -175,16 +175,16 @@ namespace Banshee.Hardware
                 if (handler != null) {
                     DeviceAddedArgs raise_args = args;
                     IDevice cast_device = CastToCustomDevice<IDevice> (args.Device);
-                    
+
                     if (cast_device != args.Device) {
                         raise_args = new DeviceAddedArgs (cast_device);
                     }
-                    
+
                     handler (this, raise_args);
                 }
             }
         }
-        
+
         private void OnDeviceRemoved (object o, DeviceRemovedArgs args)
         {
             lock (this) {
@@ -194,7 +194,7 @@ namespace Banshee.Hardware
                 }
             }
         }
-        
+
         private T CastToCustomDevice<T> (T device) where T : class, IDevice
         {
             foreach (ICustomDeviceProvider provider in custom_device_providers.Values) {
@@ -203,10 +203,10 @@ namespace Banshee.Hardware
                     return new_device;
                 }
             }
-            
+
             return device;
         }
-        
+
         private IEnumerable<T> CastToCustomDevice<T> (IEnumerable<T> devices) where T : class, IDevice
         {
             foreach (T device in devices) {
@@ -218,34 +218,34 @@ namespace Banshee.Hardware
         {
             return CastToCustomDevice<IDevice> (manager.GetAllDevices ());
         }
-        
+
         public IEnumerable<IBlockDevice> GetAllBlockDevices ()
         {
             return CastToCustomDevice<IBlockDevice> (manager.GetAllBlockDevices ());
         }
-        
+
         public IEnumerable<ICdromDevice> GetAllCdromDevices ()
         {
             return CastToCustomDevice<ICdromDevice> (manager.GetAllCdromDevices ());
         }
-        
+
         public IEnumerable<IDiskDevice> GetAllDiskDevices ()
         {
             return CastToCustomDevice<IDiskDevice> (manager.GetAllDiskDevices ());
         }
-        
+
         public void Test ()
         {
             Console.WriteLine ("All Block Devices:");
             PrintBlockDeviceList (GetAllBlockDevices ());
-            
+
             Console.WriteLine ("All CD-ROM Devices:");
             PrintBlockDeviceList (GetAllCdromDevices ());
-            
+
             Console.WriteLine ("All Disk Devices:");
             PrintBlockDeviceList (GetAllDiskDevices ());
         }
-        
+
         private void PrintBlockDeviceList (System.Collections.IEnumerable devices)
         {
             foreach (IBlockDevice device in devices) {
@@ -255,9 +255,9 @@ namespace Banshee.Hardware
                 }
             }
         }
-             
+
         string IService.ServiceName {
             get { return "HardwareManager"; }
-        } 
+        }
     }
 }

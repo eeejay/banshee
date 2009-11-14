@@ -33,15 +33,15 @@ namespace Banshee.Preferences
     public class Preference<T> : PreferenceBase
     {
         private T value;
-        
+
         public Preference (string id, string name) : this (id, name, null)
         {
         }
-        
+
         public Preference (string id, string name, string description) : this (id, name, description, default (T))
         {
         }
-        
+
         public Preference (string id, string name, string description, T value)
         {
             Id = id;
@@ -49,7 +49,7 @@ namespace Banshee.Preferences
             Description = description;
             this.value = value;
         }
-        
+
         public virtual T Value {
             get { return this.value; }
             set {
@@ -57,7 +57,7 @@ namespace Banshee.Preferences
                 OnValueChanged ();
             }
         }
-        
+
         public override object BoxedValue {
             get { return (object)Value; }
             set { Value = (T)value; }

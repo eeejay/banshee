@@ -50,29 +50,29 @@ namespace Banshee.Daap
         private DAAP.Client client;
         private DAAP.Database database;
         private bool connected = false;
-        
+
         public DAAP.Database Database {
             get { return database; }
         }
 
         private bool is_activating;
-        
-        public DaapSource (DAAP.Service service) : base (Catalog.GetString ("Music Share"), service.Name, 
+
+        public DaapSource (DAAP.Service service) : base (Catalog.GetString ("Music Share"), service.Name,
                                                     (service.Address.ToString () + service.Port).Replace (":", "").Replace (".", ""), 300)
         {
             this.service = service;
             Properties.SetString ("UnmapSourceActionLabel", Catalog.GetString ("Disconnect"));
             Properties.SetString ("UnmapSourceActionIconName", "gtk-disconnect");
-            
+
             SupportsPlaylists = false;
             SavedCount = 0;
             UpdateIcon ();
-            
+
             AfterInitialized ();
         }
-        
-        
-        
+
+
+
         private void UpdateIcon ()
         {
             if (service != null && !service.IsProtected) {
@@ -81,7 +81,7 @@ namespace Banshee.Daap
                 Properties.SetStringList ("Icon.Name", "system-lock-screen", "computer", "network-server");
             }
         }
-        
+
         public override void CopyTrackTo (DatabaseTrackInfo track, SafeUri uri, BatchUserJob job)
         {
             if (track.PrimarySource == this && track.Uri.Scheme.StartsWith ("http")) {
@@ -91,25 +91,25 @@ namespace Banshee.Daap
             }
         }
 
-        
+
         public override void Activate ()
         {
             if (client != null || is_activating) {
                 return;
             }
-            
+
             ClearErrorView ();
-            
+
             is_activating = true;
             base.Activate ();
-            
+
             SetStatus (String.Format (Catalog.GetString ("Connecting to {0}"), service.Name), false);
-            
+
             ThreadAssist.Spawn (delegate {
                 try {
                     client = new DAAP.Client (service);
                     client.Updated += OnClientUpdated;
-                    
+
                     if (client.AuthenticationMethod == DAAP.AuthenticationMethod.None) {
                         client.Login ();
                     } else {
@@ -121,11 +121,11 @@ namespace Banshee.Daap
                     });
                     Hyena.Log.Exception (e);
                 }
-               
+
                 is_activating = false;
             });
         }
-        
+
         private void ShowErrorView (DaapErrorType error_type)
         {
             PurgeTracks ();
@@ -136,12 +136,12 @@ namespace Banshee.Daap
             Properties.Set<Banshee.Sources.Gui.ISourceContents> ("Nereid.SourceContents", error_view);
             HideStatus ();
         }
-        
+
         private void ClearErrorView ()
         {
             Properties.Remove ("Nereid.SourceContents");
         }
-        
+
         internal bool Disconnect (bool logout)
         {
             // Stop currently playing track if its from us.
@@ -153,23 +153,23 @@ namespace Banshee.Daap
                     }
                 }
             } catch {}
-            
+
             connected = false;
-            
+
             // Remove tracks associated with this source, since we don't want
             // them after we unmap - we'll refetch.
             PurgeTracks ();
-            
+
             if (client != null) {
                 if (logout) {
                     client.Logout ();
                 }
-                
+
                 client.Dispose ();
                 client = null;
                 database = null;
             }
-            
+
             if (database != null) {
                 try {
                     DaapService.ProxyServer.UnregisterDatabase (database);
@@ -178,30 +178,30 @@ namespace Banshee.Daap
                 database.TrackRemoved -= OnDatabaseTrackRemoved;
                 database = null;
             }
-            
+
             List<Source> children = new List<Source> (Children);
             foreach (Source child in children) {
                 if (child is Banshee.Sources.IUnmapableSource) {
                     (child as Banshee.Sources.IUnmapableSource).Unmap ();
                 }
             }
-            
+
             ClearChildSources ();
-            
+
             return true;
         }
-        
+
         public override void Dispose ()
         {
             Disconnect (true);
             base.Dispose ();
         }
-        
+
         private void PromptLogin ()
         {
             SetStatus (Catalog.GetString ("Logging in to {0}."), false);
-            
-            DaapLoginDialog dialog = new DaapLoginDialog (client.Name, 
+
+            DaapLoginDialog dialog = new DaapLoginDialog (client.Name,
             client.AuthenticationMethod == DAAP.AuthenticationMethod.UserAndPassword);
             if (dialog.Run () == (int) Gtk.ResponseType.Ok) {
                 AuthenticatedLogin (dialog.Username, dialog.Password);
@@ -211,7 +211,7 @@ namespace Banshee.Daap
 
             dialog.Destroy ();
         }
-        
+
         private void AuthenticatedLogin (string username, string password)
         {
             ThreadAssist.Spawn (delegate {
@@ -224,7 +224,7 @@ namespace Banshee.Daap
                 }
             });
         }
-        
+
         private void OnClientUpdated (object o, EventArgs args)
         {
             try {
@@ -233,16 +233,16 @@ namespace Banshee.Daap
                     DaapService.ProxyServer.RegisterDatabase (database);
                     database.TrackAdded += OnDatabaseTrackAdded;
                     database.TrackRemoved += OnDatabaseTrackRemoved;
-                    
+
                     SetStatus (String.Format (Catalog.GetPluralString (
                         "Loading {0} track", "Loading {0} tracks", database.TrackCount),
                         database.TrackCount), false
                     );
-                    
+
                     // Notify (eg reload the source before sync is done) at most 5 times
                     int notify_every = Math.Max (250, (database.Tracks.Count / 4));
                     notify_every -= notify_every % 250;
-                    
+
                     int count = 0;
                     DaapTrackInfo daap_track = null;
 
@@ -250,7 +250,7 @@ namespace Banshee.Daap
                     conn.BeginTransaction ();
                     foreach (DAAP.Track track in database.Tracks) {
                         daap_track = new DaapTrackInfo (track, this);
-                        
+
                         // Only notify once in a while because otherwise the source Reloading slows things way down
                         if (++count % notify_every == 0) {
                             conn.CommitTransaction ();
@@ -261,21 +261,21 @@ namespace Banshee.Daap
                         }
                     }
                     conn.CommitTransaction ();
-                    
+
                     // Save the last track once more to trigger the NotifyTrackAdded
                     if (daap_track != null) {
                         daap_track.Save ();
                     }
-                    
+
                     SetStatus (Catalog.GetString ("Loading playlists"), false);
                     AddPlaylistSources ();
                     connected = true;
                     Reload ();
                     HideStatus ();
                 }
-                
+
                 Name = client.Name;
-                
+
                 UpdateIcon ();
                 OnUpdated ();
             } catch (Exception e) {
@@ -286,7 +286,7 @@ namespace Banshee.Daap
                 });
             }
         }
-        
+
         private void AddPlaylistSources ()
         {
             foreach (DAAP.Playlist pl in database.Playlists) {
@@ -300,18 +300,18 @@ namespace Banshee.Daap
                 });
             }
         }
-        
+
         public void OnDatabaseTrackAdded (object o, DAAP.TrackArgs args)
         {
             DaapTrackInfo track = new DaapTrackInfo (args.Track, this);
             track.Save ();
         }
-        
+
         public void OnDatabaseTrackRemoved (object o, DAAP.TrackArgs args)
         {
             //RemoveTrack (
         }
-        
+
         public override bool CanRemoveTracks {
             get { return false; }
         }
@@ -329,27 +329,27 @@ namespace Banshee.Daap
             // Disconnect and clear out our tracks and such.
             Disconnect (true);
             ShowErrorView (DaapErrorType.UserDisconnect);
-            
+
             return true;
         }
-        
+
         public bool CanUnmap {
             get { return connected; }
         }
-        
+
         public bool ConfirmBeforeUnmap {
             get { return false; }
         }
-        
+
         public void Import ()
         {
             ServiceManager.SourceManager.MusicLibrary.MergeSourceInput (this, SourceMergeType.All);
         }
-        
+
         public bool CanImport {
             get { return connected; }
         }
-        
+
         int IImportSource.SortOrder {
             get { return 30; }
         }
@@ -357,7 +357,7 @@ namespace Banshee.Daap
         string IImportSource.ImportLabel {
             get { return null; }
         }
-        
+
         public string [] IconNames {
             get { return Properties.GetStringList ("Icon.Name"); }
         }

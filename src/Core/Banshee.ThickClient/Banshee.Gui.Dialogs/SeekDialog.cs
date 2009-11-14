@@ -42,15 +42,15 @@ namespace Banshee.Gui.Dialogs
     {
         [Widget] private VBox seek_box;
         private ConnectedSeekSlider seek_slider;
-        
+
         public SeekDialog () : base ("SeekDialog")
         {
             seek_slider = new ConnectedSeekSlider ();
             seek_slider.StreamPositionLabel.FormatString = "<big>{0}</big>";
-            
+
             seek_box.PackStart (seek_slider, false, false, 0);
             seek_box.ShowAll ();
-            
+
             Dialog.SetSizeRequest (300, -1);
         }
     }

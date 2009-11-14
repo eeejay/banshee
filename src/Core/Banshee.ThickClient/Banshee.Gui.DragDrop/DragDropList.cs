@@ -33,8 +33,8 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Gtk;
 
-namespace Banshee.Gui.DragDrop 
-{   
+namespace Banshee.Gui.DragDrop
+{
     public class DragDropList<T> : List<T>
     {
         public DragDropList() : base()
@@ -45,7 +45,7 @@ namespace Banshee.Gui.DragDrop
         {
             Add(o);
         }
-        
+
         public DragDropList(T o, Gtk.SelectionData selectionData, Gdk.Atom target) : base()
         {
             Add(o);
@@ -57,13 +57,13 @@ namespace Banshee.Gui.DragDrop
             byte [] data = this;
             selectionData.Set(target, 8, data, data.Length);
         }
-        
+
         public static implicit operator byte [](DragDropList<T> transferrable)
         {
             IntPtr handle = (IntPtr)GCHandle.Alloc(transferrable);
             return System.Text.Encoding.ASCII.GetBytes(Convert.ToString(handle));
         }
-        
+
         public static implicit operator DragDropList<T>(byte [] transferrable)
         {
             try {
@@ -77,7 +77,7 @@ namespace Banshee.Gui.DragDrop
                 return null;
             }
         }
-        
+
         public static implicit operator DragDropList<T>(Gtk.SelectionData transferrable)
         {
             return transferrable.Data;

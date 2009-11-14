@@ -1,4 +1,4 @@
-// 
+//
 // LayoutGroup.cs
 //
 // Author:
@@ -36,44 +36,44 @@ namespace Hyena.CommandLine
         private List<LayoutOption> options;
         private string id;
         private string title;
-        
+
         public LayoutGroup (string id, string title, List<LayoutOption> options)
         {
             this.id = id;
             this.title = title;
             this.options = options;
         }
-        
-        public LayoutGroup (string id, string title, params LayoutOption [] options) 
+
+        public LayoutGroup (string id, string title, params LayoutOption [] options)
             : this (id, title, new List<LayoutOption> (options))
         {
         }
-        
+
         public IEnumerator<LayoutOption> GetEnumerator ()
         {
             return options.GetEnumerator ();
         }
-        
+
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator ()
         {
             return GetEnumerator ();
         }
-        
+
         public void Add (LayoutOption option)
         {
             options.Add (option);
         }
-        
+
         public void Add (string name, string description)
         {
             options.Add (new LayoutOption (name, description));
         }
-        
+
         public void Remove (LayoutOption option)
         {
             options.Remove (option);
         }
-        
+
         public void Remove (string optionName)
         {
             LayoutOption option = FindOption (optionName);
@@ -81,7 +81,7 @@ namespace Hyena.CommandLine
                 options.Remove (option);
             }
         }
-        
+
         private LayoutOption FindOption (string name)
         {
             foreach (LayoutOption option in options) {
@@ -89,27 +89,27 @@ namespace Hyena.CommandLine
                     return option;
                 }
             }
-            
+
             return null;
         }
-        
+
         public LayoutOption this[int index] {
             get { return options[index]; }
             set { options[index] = value; }
         }
-        
+
         public int Count {
             get { return options.Count; }
         }
-        
+
         public string Id {
             get { return id; }
         }
-        
+
         public string Title {
             get { return title; }
         }
-        
+
         public IList<LayoutOption> Options {
             get { return options; }
         }

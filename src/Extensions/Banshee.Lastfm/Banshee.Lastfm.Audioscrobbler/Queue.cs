@@ -67,9 +67,9 @@ namespace Banshee.Lastfm.Audioscrobbler
                 this.start_time = (long) (start_time.ToUniversalTime () - epoch).TotalSeconds;
                 // TODO
                 //this.musicbrainzid = track.MusicBrainzId;
-                
+
                 this.musicbrainzid = "";
-                
+
                 // set trackauth value, otherwise empty string is default
                 if (track is LastfmTrackInfo) {
                     this.track_auth = (track as LastfmTrackInfo).TrackAuth;
@@ -93,31 +93,31 @@ namespace Banshee.Lastfm.Audioscrobbler
             public long StartTime {
                 get { return start_time; }
             }
-            
+
             public string Artist {
                 get { return artist; }
             }
-            
+
             public string Album {
                 get { return album; }
             }
-            
+
             public string Title {
                 get { return title; }
             }
-            
+
             public int TrackNumber {
                 get { return track_number; }
             }
-            
+
             public int Duration {
                 get { return duration; }
             }
-            
+
             public string MusicBrainzId {
                 get { return musicbrainzid; }
             }
-            
+
             public string TrackAuth {
                 get { return track_auth; }
             }
@@ -143,7 +143,7 @@ namespace Banshee.Lastfm.Audioscrobbler
             string xmlfilepath = Path.Combine (Banshee.Base.Paths.ExtensionCacheRoot, "last.fm");
             xml_path = Path.Combine (xmlfilepath, "audioscrobbler-queue.xml");
             queue = new List<QueuedTrack> ();
-            
+
             if (!Directory.Exists(xmlfilepath)) {
                 Directory.CreateDirectory (xmlfilepath);
             }
@@ -166,7 +166,7 @@ namespace Banshee.Lastfm.Audioscrobbler
 
             writer.WriteStartElement ("AudioscrobblerQueue");
             foreach (QueuedTrack track in queue) {
-                writer.WriteStartElement ("QueuedTrack");    
+                writer.WriteStartElement ("QueuedTrack");
                 writer.WriteElementString ("Artist", track.Artist);
                 writer.WriteElementString ("Album", track.Album);
                 writer.WriteElementString ("Title", track.Title);
@@ -193,7 +193,7 @@ namespace Banshee.Lastfm.Audioscrobbler
                 XmlNodeList nodes = doc.SelectNodes (query);
 
                 foreach (XmlNode node in nodes) {
-                    string artist = "";    
+                    string artist = "";
                     string album = "";
                     string title = "";
                     int track_number = 0;
@@ -225,7 +225,7 @@ namespace Banshee.Lastfm.Audioscrobbler
                     queue.Add (new QueuedTrack (artist, album, title, track_number, duration,
                         start_time, musicbrainzid, track_auth));
                 }
-            } catch { 
+            } catch {
             }
         }
 
@@ -239,14 +239,14 @@ namespace Banshee.Lastfm.Audioscrobbler
                 if (i == 49) break;
 
                 QueuedTrack track = (QueuedTrack) queue[i];
-                
+
                 string str_track_number = String.Empty;
                 if (track.TrackNumber != 0)
                     str_track_number = track.TrackNumber.ToString();
-                 
-                string source = "P"; /* chosen by user */   
+
+                string source = "P"; /* chosen by user */
                 if (track.TrackAuth.Length != 0) {
-                    // from last.fm 
+                    // from last.fm
                     source = "L" + track.TrackAuth;
                 }
 
@@ -255,13 +255,13 @@ namespace Banshee.Lastfm.Audioscrobbler
                     HttpUtility.UrlEncode (track.Artist),
                     HttpUtility.UrlEncode (track.Title),
                     track.StartTime.ToString (),
-                    source, 
-                    ""  /* rating: L/B/S */, 
+                    source,
+                    ""  /* rating: L/B/S */,
                     track.Duration.ToString (),
                     HttpUtility.UrlEncode (track.Album),
                     str_track_number,
                     track.MusicBrainzId,
-                    
+
                     i);
             }
 

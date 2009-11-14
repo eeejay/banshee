@@ -131,7 +131,7 @@ namespace Banshee.ServiceStack
         {
             OnFinished ();
         }
-   
+
         protected abstract void IterateCore (HyenaDataReader reader);
     }
 }

@@ -5,27 +5,27 @@
  *  Written by Aaron Bockover <aaron@abock.org>
  ****************************************************************************/
 
-/*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
+/*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW:
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
- *  copy of this software and associated documentation files (the "Software"),  
- *  to deal in the Software without restriction, including without limitation  
- *  the rights to use, copy, modify, merge, publish, distribute, sublicense,  
- *  and/or sell copies of the Software, and to permit persons to whom the  
+ *  copy of this software and associated documentation files (the "Software"),
+ *  to deal in the Software without restriction, including without limitation
+ *  the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ *  and/or sell copies of the Software, and to permit persons to whom the
  *  Software is furnished to do so, subject to the following conditions:
  *
- *  The above copyright notice and this permission notice shall be included in 
+ *  The above copyright notice and this permission notice shall be included in
  *  all copies or substantial portions of the Software.
  *
- *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
- *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
- *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
- *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
- *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
- *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  *  DEALINGS IN THE SOFTWARE.
  */
- 
+
 using System;
 using System.Reflection;
 using System.Collections;
@@ -37,12 +37,12 @@ namespace Abakos.Compiler
     public class FunctionAttribute : Attribute
     {
         private string name;
-        
+
         public FunctionAttribute(string name)
         {
             this.name = name;
         }
-        
+
         public string Name {
             get { return name; }
             set { name = value; }
@@ -58,30 +58,30 @@ namespace Abakos.Compiler
             public MethodInfo Method;
             public int ArgumentCount;
         }
-        
+
         private static List<Assembly> assemblies = new List<Assembly>();
         private static Dictionary<string,FunctionCache> cached_functions;
-         
+
         static FunctionTable()
         {
             //assemblies.Add(Assembly.GetExecutingAssembly());
         }
-        
+
         public static IEnumerable<FunctionCache> Functions {
             get { return cached_functions.Values; }
         }
-         
+
         public static void AddAssembly(Assembly assembly)
         {
             if(!assemblies.Contains(assembly)) {
                 assemblies.Add(assembly);
             }
         }
-        
+
         private static void LoadFunctionCache()
         {
             cached_functions = new Dictionary<string,FunctionCache>();
-        
+
             foreach(Assembly assembly in assemblies) {
                 foreach(Type type in assembly.GetTypes()) {
                     foreach(MethodInfo method in type.GetMethods()) {
@@ -90,14 +90,14 @@ namespace Abakos.Compiler
                             if(attribute == null) {
                                 continue;
                             }
-                            
+
                             LoadFunction(attribute, method);
                         }
                     }
                 }
             }
         }
-        
+
         private static void LoadFunction(FunctionAttribute attribute, MethodInfo method)
         {
             ParameterInfo [] parameters = method.GetParameters();
@@ -109,8 +109,8 @@ namespace Abakos.Compiler
             cache.RawSymbols = method.ReturnType == typeof(Symbol);
 
             if(parameters != null) {
-                if(parameters.Length == 1 && parameters[0].ParameterType.IsArray && 
-                    parameters[0].ParameterType.HasElementType && 
+                if(parameters.Length == 1 && parameters[0].ParameterType.IsArray &&
+                    parameters[0].ParameterType.HasElementType &&
                     parameters[0].ParameterType.GetElementType() == method.ReturnType) {
                     cache.ArgumentCount = -1;
                 } else {
@@ -126,22 +126,22 @@ namespace Abakos.Compiler
 
             cached_functions.Add(cache.Name, cache);
         }
-        
+
         public static Symbol Execute(FunctionSymbol symbol, Stack<Symbol> arguments)
         {
             if(cached_functions == null) {
                 LoadFunctionCache();
             }
-            
+
             if(!cached_functions.ContainsKey(symbol.Name)) {
                 throw new InvalidFunctionException(symbol.Name);
             }
-            
+
             FunctionCache function = cached_functions[symbol.Name];
             if(arguments.Count != function.ArgumentCount && function.ArgumentCount >= 0) {
                 throw new ArgumentException(symbol.Name);
             }
-            
+
             if(function.RawSymbols) {
                 if(function.ArgumentCount == -1) {
                     return (Symbol)function.Method.Invoke(null, new object [] { arguments.ToArray() });
@@ -149,9 +149,9 @@ namespace Abakos.Compiler
                     return (Symbol)function.Method.Invoke(null, arguments.ToArray());
                 }
             }
-            
+
             ArrayList resolved_arguments = new ArrayList();
-            
+
             while(arguments.Count > 0) {
                 Symbol argument = arguments.Pop();
                 if(!(argument is ValueSymbol)) {
@@ -159,15 +159,15 @@ namespace Abakos.Compiler
                 }
                 resolved_arguments.Add((argument as ValueSymbol).Value);
             }
-            
+
             double retval;
-            
+
             if(function.ArgumentCount == -1) {
                 retval = (double)function.Method.Invoke(null, new object [] { resolved_arguments.ToArray(typeof(double)) });
             } else {
                 retval = (double)function.Method.Invoke(null, resolved_arguments.ToArray());
             }
-            
+
             return new NumberSymbol(retval);
         }
     }
@@ -177,13 +177,13 @@ namespace Abakos.Compiler
         public FunctionSymbol(string name) : base(name, 4)
         {
         }
-        
+
         public static new FunctionSymbol FromString(string token)
         {
             return new FunctionSymbol(token);
         }
     }
-    
+
     public static class MathFunctions
     {
         [Function("sum")]
@@ -192,16 +192,16 @@ namespace Abakos.Compiler
             if(args == null) {
                 return 0.0;
             }
-            
+
             double sum = 0.0;
-            
+
             foreach(double arg in args) {
                 sum += arg;
             }
-            
+
             return sum;
         }
-      
+
         [Function("min")]
         public static double Min(double [] args)
         {
@@ -228,7 +228,7 @@ namespace Abakos.Compiler
             if(args == null || args.Length != 2) {
                 throw new ArgumentException("closest_power requires 2 arguments");
             }
-            
+
             int pow = (int)args[0];
             while(pow < args[1]) {
                 pow <<= 1;
@@ -236,7 +236,7 @@ namespace Abakos.Compiler
 
             return (double)pow;
         }
-     
+
          [Function("lt_jmp")]
         public static double LessThan(double [] args)
         {
@@ -246,7 +246,7 @@ namespace Abakos.Compiler
 
             return args[0] < args[1] ? args[2] : args[3];
         }
-         
+
         [Function("gt_jmp")]
         public static double GreaterThan(double [] args)
         {
@@ -256,7 +256,7 @@ namespace Abakos.Compiler
 
             return args[0] > args[1] ? args[2] : args[3];
         }
- 
+
         [Function("lte_jmp")]
         public static double LessThanOrEqualTo(double [] args)
         {
@@ -266,7 +266,7 @@ namespace Abakos.Compiler
 
             return args[0] <= args[1] ? args[2] : args[3];
         }
-         
+
         [Function("gte_jmp")]
         public static double GreaterThanOrEqualTo(double [] args)
         {

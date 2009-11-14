@@ -36,14 +36,14 @@ namespace Hyena.Widgets
     public class AccordionPane : Bin
     {
         private List<Gtk.Paned> panes = new List<Paned> ();
-        
-        private Box 
-        
+
+        private Box
+
         public AccordionPane () : base ()
         {
         }
     }
-    
+
 #region Test Module
 
     [Hyena.Gui.TestModule ("Accordion Pane")]
@@ -53,7 +53,7 @@ namespace Hyena.Widgets
         {
             VBox pbox = new VBox ();
             Add (pbox);
-            
+
             Menu m = new Menu ();
             MenuBar b = new MenuBar ();
             MenuItem item = new MenuItem ("Rate Me!");
@@ -65,29 +65,29 @@ namespace Hyena.Widgets
             m.Append (new ImageMenuItem ("gtk-remove", null));
             m.ShowAll ();
             pbox.PackStart (b, false, false, 0);
-            
+
             VBox box = new VBox ();
             box.BorderWidth = 10;
             box.Spacing = 10;
             pbox.PackStart (box, true, true, 0);
-            
+
             RatingEntry entry1 = new RatingEntry ();
             box.PackStart (entry1, true, true, 0);
-            
+
             RatingEntry entry2 = new RatingEntry ();
             box.PackStart (entry2, false, false, 0);
-            
+
             box.PackStart (new Entry ("Normal GtkEntry"), false, false, 0);
-            
+
             RatingEntry entry3 = new RatingEntry ();
             Pango.FontDescription fd = entry3.PangoContext.FontDescription.Copy ();
             fd.Size = (int)(fd.Size * Pango.Scale.XXLarge);
             entry3.ModifyFont (fd);
             box.PackStart (entry3, true, true, 0);
-            
+
             pbox.ShowAll ();
         }
     }
-    
+
 #endregion
 }

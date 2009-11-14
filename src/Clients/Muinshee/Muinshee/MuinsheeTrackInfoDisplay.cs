@@ -33,7 +33,7 @@ using Hyena.Gui;
 using Banshee.Collection.Gui;
 
 namespace Muinshee
-{    
+{
     public class MuinsheeTrackInfoDisplay : Banshee.Gui.Widgets.ClassicTrackInfoDisplay
     {
         private ImageSurface idle_album;
@@ -50,9 +50,9 @@ namespace Muinshee
         {
             idle_album = idle_album ?? PixbufImageSurface.Create (Banshee.Gui.IconThemeUtils.LoadIcon (
                 ArtworkSizeRequest, "media-optical"), true);
-            
-            ArtworkRenderer.RenderThumbnail (cr, idle_album, false, Allocation.X, Allocation.Y, 
-                ArtworkSizeRequest, ArtworkSizeRequest, 
+
+            ArtworkRenderer.RenderThumbnail (cr, idle_album, false, Allocation.X, Allocation.Y,
+                ArtworkSizeRequest, ArtworkSizeRequest,
                 false, 0, true, BackgroundColor);
         }
     }

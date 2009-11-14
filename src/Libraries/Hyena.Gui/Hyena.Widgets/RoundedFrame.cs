@@ -42,9 +42,9 @@ namespace Hyena.Widgets
         protected Theme Theme {
             get { return theme; }
         }
-        
+
         private int frame_width = 3;
-        
+
         private Widget child;
         private Gdk.Rectangle child_allocation;
         private bool fill_color_set;
@@ -56,24 +56,24 @@ namespace Hyena.Widgets
         protected RoundedFrame (IntPtr ptr) : base (ptr)
         {
         }
-        
+
         public RoundedFrame ()
         {
         }
-        
+
         public void SetFillColor (Cairo.Color color)
         {
             fill_color = color;
             fill_color_set = true;
             QueueDraw ();
         }
-        
+
         public void UnsetFillColor ()
         {
             fill_color_set = false;
             QueueDraw ();
         }
-        
+
         public Pattern FillPattern {
             get { return fill_pattern; }
             set {
@@ -81,12 +81,12 @@ namespace Hyena.Widgets
                 QueueDraw ();
             }
         }
-        
+
         public bool DrawBorder {
             get { return draw_border; }
             set { draw_border = value; QueueDraw (); }
         }
-        
+
 #region Gtk.Widget Overrides
 
         protected override void OnRealized ()
@@ -98,7 +98,7 @@ namespace Hyena.Widgets
         protected override void OnSizeRequested (ref Requisition requisition)
         {
             if (child != null && child.Visible) {
-                // Add the child's width/height        
+                // Add the child's width/height
                 Requisition child_requisition = child.SizeRequest ();
                 requisition.Width = Math.Max (0, child_requisition.Width);
                 requisition.Height = child_requisition.Height;
@@ -106,7 +106,7 @@ namespace Hyena.Widgets
                 requisition.Width = 0;
                 requisition.Height = 0;
             }
-            
+
             // Add the frame border
             requisition.Width += ((int)BorderWidth + frame_width) * 2;
             requisition.Height += ((int)BorderWidth + frame_width) * 2;
@@ -115,40 +115,40 @@ namespace Hyena.Widgets
         protected override void OnSizeAllocated (Gdk.Rectangle allocation)
         {
             base.OnSizeAllocated (allocation);
-            
+
             child_allocation = new Gdk.Rectangle ();
-            
+
             if (child == null || !child.Visible) {
                 return;
             }
-            
+
             child_allocation.X = (int)BorderWidth + frame_width;
             child_allocation.Y = (int)BorderWidth + frame_width;
             child_allocation.Width = (int)Math.Max (1, Allocation.Width - child_allocation.X * 2);
-            child_allocation.Height = (int)Math.Max (1, Allocation.Height - child_allocation.Y - 
+            child_allocation.Height = (int)Math.Max (1, Allocation.Height - child_allocation.Y -
                 (int)BorderWidth - frame_width);
-                
+
             child_allocation.X += Allocation.X;
             child_allocation.Y += Allocation.Y;
-            
+
             child.SizeAllocate (child_allocation);
         }
-        
+
         protected override void OnSetScrollAdjustments (Adjustment hadj, Adjustment vadj)
         {
-            // This is to satisfy the gtk_widget_set_scroll_adjustments 
-            // inside of GtkScrolledWindow so it doesn't complain about 
+            // This is to satisfy the gtk_widget_set_scroll_adjustments
+            // inside of GtkScrolledWindow so it doesn't complain about
             // its child not being scrollable.
         }
-        
+
         protected override bool OnExposeEvent (Gdk.EventExpose evnt)
         {
             if (!IsDrawable) {
                 return false;
             }
- 
+
             Cairo.Context cr = Gdk.CairoHelper.Create (evnt.Window);
-                
+
             try {
                 DrawFrame (cr, evnt.Area);
                 if (child != null) {
@@ -160,18 +160,18 @@ namespace Hyena.Widgets
                 ((IDisposable)cr).Dispose ();
             }
         }
-        
+
         private void DrawFrame (Cairo.Context cr, Gdk.Rectangle clip)
         {
             int x = child_allocation.X - frame_width;
             int y = child_allocation.Y - frame_width;
             int width = child_allocation.Width + 2 * frame_width;
             int height = child_allocation.Height + 2 * frame_width;
-            
+
             Gdk.Rectangle rect = new Gdk.Rectangle (x, y, width, height);
-            
+
             theme.Context.ShowStroke = draw_border;
-            
+
             if (fill_color_set) {
                 theme.DrawFrameBackground (cr, rect, fill_color);
             } else if (fill_pattern != null) {

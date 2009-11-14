@@ -32,13 +32,13 @@ using Gtk;
 using Banshee.ServiceStack;
 
 namespace Banshee.Preferences.Gui
-{ 
+{
     public class PageComboBox : ComboBox
     {
         private ListStore model;
         private Notebook notebook;
         private IList<Page> pages;
-        
+
         public PageComboBox (IList<Page> pages, Notebook notebook)
         {
             this.pages = pages;
@@ -80,10 +80,10 @@ namespace Banshee.Preferences.Gui
                 }
             }
         }
-        
+
         protected override void OnChanged ()
         {
             notebook.CurrentPage = Active;
         }
-    } 
+    }
 }

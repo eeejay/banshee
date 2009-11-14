@@ -34,37 +34,37 @@ using Banshee.Base;
 namespace Banshee.IO.SystemIO
 {
     public class DemuxVfs : Banshee.IO.IDemuxVfs
-    {   
+    {
         private FileInfo file_info;
-        
+
         public DemuxVfs (string path)
         {
             file_info = new FileInfo (path);
         }
-                
+
         public void CloseStream (Stream stream)
         {
             stream.Close ();
         }
-        
-        public string Name { 
+
+        public string Name {
             get { return file_info.FullName; }
         }
-        
+
         public Stream ReadStream {
             get { return file_info.Open (FileMode.Open, FileAccess.Read, FileShare.Read); }
         }
-        
+
         public Stream WriteStream {
             get { return file_info.Open (FileMode.Open, FileAccess.ReadWrite); }
         }
-   
+
         public bool IsReadable {
             get {
                 try {
                     ReadStream.Close ();
                     return true;
-                } catch { 
+                } catch {
                     return false;
                 }
             }
@@ -75,7 +75,7 @@ namespace Banshee.IO.SystemIO
                 try {
                     WriteStream.Close ();
                     return true;
-                } catch { 
+                } catch {
                     return false;
                 }
             }

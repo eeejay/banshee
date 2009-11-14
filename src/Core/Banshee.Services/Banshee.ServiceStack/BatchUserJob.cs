@@ -1,4 +1,4 @@
-// 
+//
 // BatchUserJob.cs
 //
 // Author:

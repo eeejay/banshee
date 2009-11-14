@@ -33,17 +33,17 @@ using Banshee.Web;
 
 namespace Banshee.GnomeBackend
 {
-    public class GnomeService : IExtensionService, IDisposable 
+    public class GnomeService : IExtensionService, IDisposable
     {
         private Brasero brasero;
         internal Brasero Brasero {
             get { return brasero; }
         }
-        
+
         public GnomeService ()
         {
         }
-        
+
         public void Initialize ()
         {
             try {
@@ -52,30 +52,30 @@ namespace Banshee.GnomeBackend
             } catch {
                 brasero = null;
             }
-        
+
             if (Browser.OpenHandler == null) {
                 Browser.OpenHandler = OpenUrl;
             }
         }
-        
+
         public void Dispose ()
         {
             if (brasero != null) {
                 brasero.Dispose ();
                 brasero = null;
             }
-        
+
             if (Browser.OpenHandler == (Banshee.Web.Browser.OpenUrlHandler) OpenUrl) {
                 Browser.OpenHandler = null;
             }
         }
-        
+
         private bool OpenUrl (string url)
         {
             Hyena.Log.Debug ("Opening URL via gnome-open", url);
             return Gnome.Url.Show (url);
         }
-        
+
         string IService.ServiceName {
             get { return "GnomeService"; }
         }

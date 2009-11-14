@@ -35,23 +35,23 @@ namespace Banshee.Sources
     {
         private bool updated_when_frozen;
         private int freeze_count;
-        
+
         private List<MessageAction> actions;
-        
+
         private Source source;
         private bool is_spinning;
         private bool is_hidden;
         private bool can_close;
         private string text;
         private string [] icon_names;
-        
+
         public event EventHandler Updated;
-        
+
         public SourceMessage (Source source)
         {
             this.source = source;
         }
-        
+
         public void AddAction (MessageAction action)
         {
             lock (this) {
@@ -62,7 +62,7 @@ namespace Banshee.Sources
                 OnUpdated ();
             }
         }
-        
+
         public void ClearActions ()
         {
             lock (this) {
@@ -72,51 +72,51 @@ namespace Banshee.Sources
                 OnUpdated ();
             }
         }
-        
+
         public void SetIconName (params string [] name)
         {
             icon_names = name;
         }
-        
+
         public string [] IconNames {
             get { return icon_names; }
         }
-        
+
         public void FreezeNotify ()
         {
             lock (this) {
                 freeze_count++;
             }
         }
-        
+
         public void ThawNotify ()
         {
             lock (this) {
                 if (freeze_count > 0) {
                     freeze_count--;
                 }
-                
+
                 if (freeze_count == 0 && updated_when_frozen) {
                     OnUpdated ();
                 }
             }
         }
-        
+
         protected virtual void OnUpdated ()
         {
             if (freeze_count != 0) {
                 updated_when_frozen = true;
                 return;
             }
-            
+
             updated_when_frozen = false;
-            
+
             EventHandler handler = Updated;
             if (handler != null) {
                 handler (this, EventArgs.Empty);
             }
         }
-        
+
         public bool IsSpinning {
             get { return is_spinning; }
             set { lock (this) { is_spinning = value; OnUpdated (); } }
@@ -131,17 +131,17 @@ namespace Banshee.Sources
             get { return can_close; }
             set { lock (this) { can_close = value; OnUpdated (); } }
         }
-        
+
         public Source Source {
             get { return source; }
             set { lock (this) { source = value; OnUpdated (); } }
         }
-        
+
         public string Text {
             get { return text; }
-            set { lock (this) { text = value; OnUpdated (); } }  
+            set { lock (this) { text = value; OnUpdated (); } }
         }
-        
+
         public IEnumerable<MessageAction> Actions {
             get { return actions; }
         }

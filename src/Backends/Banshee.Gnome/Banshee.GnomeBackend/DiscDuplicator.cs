@@ -44,34 +44,34 @@ namespace Banshee.GnomeBackend
                     "Neither Brasero nor Nautilus CD Burner could be found to duplicate this disc."));
             }
         }
-        
+
         private bool RunBrasero (string device)
         {
             GnomeService gnome = ServiceManager.Get<GnomeService> ();
             if (gnome == null || gnome.Brasero == null) {
                 return false;
             }
-            
+
             try {
                 gnome.Brasero.Run (String.Format ("-c {0}", device));
             } catch (Exception e) {
                 Log.Exception (e);
                 return false;
             }
-            
+
             return true;
         }
-        
+
         private bool RunNcb (string device)
-        {    
+        {
             try {
-                System.Diagnostics.Process.Start ("nautilus-cd-burner", 
+                System.Diagnostics.Process.Start ("nautilus-cd-burner",
                     String.Format ("--source-device={0}", device));
             } catch (Exception e) {
                 Log.Exception (e);
                 return false;
             }
-            
+
             return false;
         }
     }

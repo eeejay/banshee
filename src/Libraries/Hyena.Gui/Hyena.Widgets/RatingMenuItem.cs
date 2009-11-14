@@ -1,4 +1,4 @@
-// 
+//
 // RatingMenuItem.cs
 //
 // Author:
@@ -42,20 +42,20 @@ namespace Hyena.Widgets
         {
             box = new HBox ();
             box.Spacing = 5;
-            
+
             Label label = new Label ();
-            label.Markup = String.Format ("<i>{0}</i>", 
+            label.Markup = String.Format ("<i>{0}</i>",
                 GLib.Markup.EscapeText (Catalog.GetString ("Rating:")));
             box.PackStart (label, false, false, 0);
             label.Show ();
-            
+
             entry = new RatingEntry ();
             entry.HasFrame = false;
             entry.PreviewOnHover = true;
             entry.AlwaysShowEmptyStars = true;
             entry.Changed += OnEntryChanged;
             box.PackStart (entry, false, false, 0);
-            
+
             box.ShowAll ();
             Add (box);
         }
@@ -86,7 +86,7 @@ namespace Hyena.Widgets
         {
             return entry.HandleMotionNotify (evnt.State, TransformX (evnt.X));
         }
-        
+
         protected override bool OnLeaveNotifyEvent (Gdk.EventCrossing evnt)
         {
             return entry.HandleLeaveNotify (evnt);
@@ -101,14 +101,14 @@ namespace Hyena.Widgets
         {
             return entry.HandleKeyPress (evnt);
         }
-        
+
         private void OnEntryChanged (object o, EventArgs args)
         {
             if (can_activate) {
                 Activate ();
             }
         }
-        
+
         public void Reset (int value)
         {
             can_activate = false;
@@ -116,12 +116,12 @@ namespace Hyena.Widgets
             entry.ClearHover ();
             can_activate = true;
         }
-        
+
         public int Value {
             get { return entry.Value; }
             set { entry.Value = value; }
         }
-        
+
         public RatingEntry RatingEntry {
             get { return entry; }
         }

@@ -34,7 +34,7 @@ using Hyena.Collections;
 using Banshee.Base;
 
 namespace Banshee.IO
-{  
+{
     public class DirectoryScannerPipelineElement : QueuePipelineElement<string>
     {
         protected override string ProcessItem (string item)
@@ -42,23 +42,23 @@ namespace Banshee.IO
             ScanForFiles (item);
             return null;
         }
-        
+
         private void ScanForFiles (string source)
         {
             CheckForCanceled ();
-            
+
             bool is_regular_file = false;
             bool is_directory = false;
-            
+
             SafeUri source_uri = new SafeUri (source);
-            
+
             try {
                 is_regular_file = Banshee.IO.File.Exists (source_uri);
                 is_directory = !is_regular_file && Banshee.IO.Directory.Exists (source);
             } catch {
                 return;
             }
-            
+
             if (is_regular_file) {
                 try {
                     if (!Path.GetFileName (source).StartsWith (".")) {

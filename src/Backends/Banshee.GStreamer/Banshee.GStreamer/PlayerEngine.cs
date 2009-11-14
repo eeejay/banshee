@@ -1,4 +1,4 @@
-// 
+//
 // PlayerEngine.cs
 //
 // Author:
@@ -60,17 +60,17 @@ namespace Banshee.GStreamer
     internal delegate IntPtr VideoPipelineSetupHandler (IntPtr player, IntPtr bus);
 
     internal delegate void GstTaggerTagFoundCallback (IntPtr player, string tagName, ref GLib.Value value);
-    
-    public class PlayerEngine : Banshee.MediaEngine.PlayerEngine, 
+
+    public class PlayerEngine : Banshee.MediaEngine.PlayerEngine,
         IEqualizer, IVisualizationDataSource, ISupportClutter
     {
         private uint GST_CORE_ERROR = 0;
         private uint GST_LIBRARY_ERROR = 0;
         private uint GST_RESOURCE_ERROR = 0;
-        private uint GST_STREAM_ERROR = 0; 
-    
+        private uint GST_STREAM_ERROR = 0;
+
         private HandleRef handle;
-        
+
         private BansheePlayerEosCallback eos_callback;
         private BansheePlayerErrorCallback error_callback;
         private BansheePlayerStateChangedCallback state_changed_callback;
@@ -79,11 +79,11 @@ namespace Banshee.GStreamer
         private BansheePlayerVisDataCallback vis_data_callback;
         private VideoPipelineSetupHandler video_pipeline_setup_callback;
         private GstTaggerTagFoundCallback tag_found_callback;
-        
+
         private bool buffering_finished;
         private int pending_volume = -1;
         private bool xid_is_set = false;
-        
+
         private event VisualizationDataHandler data_available = null;
         public event VisualizationDataHandler DataAvailable {
             add {
@@ -95,7 +95,7 @@ namespace Banshee.GStreamer
 
                 data_available += value;
             }
-            
+
             remove {
                 if (value == null) {
                     return;
@@ -117,16 +117,16 @@ namespace Banshee.GStreamer
         public PlayerEngine ()
         {
             IntPtr ptr = bp_new ();
-            
+
             if (ptr == IntPtr.Zero) {
                 throw new ApplicationException (Catalog.GetString ("Could not initialize GStreamer library"));
             }
-            
+
             handle = new HandleRef (this, ptr);
-            
-            bp_get_error_quarks (out GST_CORE_ERROR, out GST_LIBRARY_ERROR, 
+
+            bp_get_error_quarks (out GST_CORE_ERROR, out GST_LIBRARY_ERROR,
                 out GST_RESOURCE_ERROR, out GST_STREAM_ERROR);
-            
+
             eos_callback = new BansheePlayerEosCallback (OnEos);
             error_callback = new BansheePlayerErrorCallback (OnError);
             state_changed_callback = new BansheePlayerStateChangedCallback (OnStateChange);
@@ -135,7 +135,7 @@ namespace Banshee.GStreamer
             vis_data_callback = new BansheePlayerVisDataCallback (OnVisualizationData);
             video_pipeline_setup_callback = new VideoPipelineSetupHandler (OnVideoPipelineSetup);
             tag_found_callback = new GstTaggerTagFoundCallback (OnTagFound);
-            
+
             bp_set_eos_callback (handle, eos_callback);
             bp_set_iterate_callback (handle, iterate_callback);
             bp_set_error_callback (handle, error_callback);
@@ -144,7 +144,7 @@ namespace Banshee.GStreamer
             bp_set_tag_found_callback (handle, tag_found_callback);
             bp_set_video_pipeline_setup_callback (handle, video_pipeline_setup_callback);
         }
-        
+
         protected override void Initialize ()
         {
             if (!bp_initialize_pipeline (handle)) {
@@ -154,15 +154,15 @@ namespace Banshee.GStreamer
             }
 
             OnStateChanged (PlayerState.Ready);
-            
+
             if (pending_volume >= 0) {
                 Volume = (ushort)pending_volume;
             }
-            
+
             InstallPreferences ();
             ReplayGainEnabled = ReplayGainEnabledSchema.Get ();
         }
-        
+
         public override void Dispose ()
         {
             UninstallPreferences ();
@@ -170,13 +170,13 @@ namespace Banshee.GStreamer
             bp_destroy (handle);
             handle = new HandleRef (this, IntPtr.Zero);
         }
-        
+
         public override void Close (bool fullShutdown)
         {
             bp_stop (handle, fullShutdown);
             base.Close (fullShutdown);
         }
-        
+
         protected override void OpenUri (SafeUri uri)
         {
             // The GStreamer engine can use the XID of the main window if it ever
@@ -189,7 +189,7 @@ namespace Banshee.GStreamer
                 }
                 xid_is_set = true;
             }
-                
+
             IntPtr uri_ptr = GLib.Marshaller.StringToPtrGStrdup (uri.AbsoluteUri);
             try {
                 if (!bp_open (handle, uri_ptr)) {
@@ -199,17 +199,17 @@ namespace Banshee.GStreamer
                 GLib.Marshaller.Free (uri_ptr);
             }
         }
-        
+
         public override void Play ()
         {
             bp_play (handle);
         }
-        
+
         public override void Pause ()
         {
             bp_pause (handle);
         }
-        
+
         public override void VideoExpose (IntPtr window, bool direct)
         {
             bp_video_window_expose (handle, window, direct);
@@ -218,11 +218,11 @@ namespace Banshee.GStreamer
         public override IntPtr [] GetBaseElements ()
         {
             IntPtr [] elements = new IntPtr[3];
-            
+
             if (bp_get_pipeline_elements (handle, out elements[0], out elements[1], out elements[2])) {
                 return elements;
             }
-            
+
             return null;
         }
 
@@ -231,12 +231,12 @@ namespace Banshee.GStreamer
             Close (false);
             OnEventChanged (PlayerEvent.EndOfStream);
         }
-        
+
         private void OnIterate (IntPtr player)
         {
             OnEventChanged (PlayerEvent.Iterate);
         }
-        
+
         private void OnStateChange (IntPtr player, GstState old_state, GstState new_state, GstState pending_state)
         {
             if (old_state == GstState.Ready && new_state == GstState.Paused && pending_state == GstState.Playing) {
@@ -253,11 +253,11 @@ namespace Banshee.GStreamer
                 return;
             }
         }
-        
+
         private void OnError (IntPtr player, uint domain, int code, IntPtr error, IntPtr debug)
         {
             Close (true);
-            
+
             string error_message = error == IntPtr.Zero
                 ? Catalog.GetString ("Unknown Error")
                 : GLib.Marshaller.Utf8PtrToString (error);
@@ -271,9 +271,9 @@ namespace Banshee.GStreamer
                             break;
                         default:
                             break;
-                    }        
+                    }
                 }
-                
+
                 Log.Error (String.Format ("GStreamer resource error: {0}", domain_code), false);
             } else if (domain == GST_STREAM_ERROR) {
                 GstStreamError domain_code = (GstStreamError) code;
@@ -286,7 +286,7 @@ namespace Banshee.GStreamer
                             break;
                     }
                 }
-                
+
                 Log.Error (String.Format("GStreamer stream error: {0}", domain_code), false);
             } else if (domain == GST_CORE_ERROR) {
                 GstCoreError domain_code = (GstCoreError) code;
@@ -299,191 +299,191 @@ namespace Banshee.GStreamer
                             break;
                     }
                 }
-                
+
                 if (domain_code != GstCoreError.MissingPlugin) {
                     Log.Error (String.Format("GStreamer core error: {0}", (GstCoreError) code), false);
                 }
             } else if (domain == GST_LIBRARY_ERROR) {
                 Log.Error (String.Format("GStreamer library error: {0}", (GstLibraryError) code), false);
             }
-            
+
             OnEventChanged (new PlayerEventErrorArgs (error_message));
         }
-        
+
         private void OnBuffering (IntPtr player, int progress)
         {
             if (buffering_finished && progress >= 100) {
                 return;
             }
-            
+
             buffering_finished = progress >= 100;
             OnEventChanged (new PlayerEventBufferingArgs ((double) progress / 100.0));
         }
-        
+
         private void OnTagFound (IntPtr player, string tagName, ref GLib.Value value)
         {
             OnTagFound (ProcessNativeTagResult (tagName, ref value));
         }
-        
+
         private void OnVisualizationData (IntPtr player, int channels, int samples, IntPtr data, int bands, IntPtr spectrum)
         {
             VisualizationDataHandler handler = data_available;
-            
+
             if (handler == null) {
                 return;
             }
-            
+
             float [] flat = new float[channels * samples];
             Marshal.Copy (data, flat, 0, flat.Length);
-            
+
             float [][] cbd = new float[channels][];
             for (int i = 0; i < channels; i++) {
                 float [] channel = new float[samples];
                 Array.Copy (flat, i * samples, channel, 0, samples);
                 cbd[i] = channel;
             }
-            
+
             float [] spec = new float[bands];
             Marshal.Copy (spectrum, spec, 0, bands);
-            
+
             try {
                 handler (cbd, new float[][] { spec });
             } catch (Exception e) {
                 Log.Exception ("Uncaught exception during visualization data post.", e);
             }
         }
-        
+
         private static StreamTag ProcessNativeTagResult (string tagName, ref GLib.Value valueRaw)
         {
             if (tagName == String.Empty || tagName == null) {
                 return StreamTag.Zero;
             }
-        
+
             object value = null;
-            
+
             try {
                 value = valueRaw.Val;
             } catch {
                 return StreamTag.Zero;
             }
-            
+
             if (value == null) {
                 return StreamTag.Zero;
             }
-            
+
             StreamTag item;
             item.Name = tagName;
             item.Value = value;
-            
+
             return item;
         }
-        
+
         public override ushort Volume {
             get { return (ushort)Math.Round (bp_get_volume (handle) * 100.0); }
-            set { 
+            set {
                 if ((IntPtr)handle == IntPtr.Zero) {
                     pending_volume = value;
                     return;
                 }
-                
+
                 bp_set_volume (handle, value / 100.0);
                 OnEventChanged (PlayerEvent.Volume);
             }
         }
-        
+
         public override uint Position {
             get { return (uint)bp_get_position(handle); }
-            set { 
+            set {
                 bp_set_position (handle, (ulong)value);
                 OnEventChanged (PlayerEvent.Seek);
             }
         }
-        
+
         public override bool CanSeek {
             get { return bp_can_seek (handle); }
         }
-        
+
         public override uint Length {
             get { return (uint)bp_get_duration (handle); }
         }
-        
+
         public override string Id {
             get { return "gstreamer"; }
         }
-        
+
         public override string Name {
             get { return "GStreamer 0.10"; }
         }
-        
+
         private bool? supports_equalizer = null;
         public override bool SupportsEqualizer {
-            get { 
+            get {
                 if (supports_equalizer == null) {
-                    supports_equalizer = bp_equalizer_is_supported (handle); 
+                    supports_equalizer = bp_equalizer_is_supported (handle);
                 }
-                
+
                 return supports_equalizer.Value;
             }
         }
-        
+
         public override VideoDisplayContextType VideoDisplayContextType {
             get { return bp_video_get_display_context_type (handle); }
         }
-        
+
         public override IntPtr VideoDisplayContext {
             set { bp_video_set_display_context (handle, value); }
             get { return bp_video_get_display_context (handle); }
         }
-        
+
         public double AmplifierLevel {
             set {
                 double scale = Math.Pow (10.0, value / 20.0);
                 bp_equalizer_set_preamp_level (handle, scale);
             }
         }
-        
+
         public int [] BandRange {
             get {
                 int min = -1;
                 int max = -1;
-                
+
                 bp_equalizer_get_bandrange (handle, out min, out max);
-                
+
                 return new int [] { min, max };
             }
         }
-        
+
         public uint [] EqualizerFrequencies {
             get {
                 uint count = bp_equalizer_get_nbands (handle);
                 double [] freq = new double[count];
 
                 bp_equalizer_get_frequencies (handle, out freq);
-                
+
                 uint [] ret = new uint[count];
                 for (int i = 0; i < count; i++) {
                     ret[i] = (uint)freq[i];
                 }
-                
+
                 return ret;
             }
         }
-        
+
         public void SetEqualizerGain (uint band, double gain)
         {
             bp_equalizer_set_gain (handle, band, gain);
         }
-        
+
         private static string [] source_capabilities = { "file", "http", "cdda" };
         public override IEnumerable SourceCapabilities {
             get { return source_capabilities; }
         }
-                
+
         private static string [] decoder_capabilities = { "ogg", "wma", "asf", "flac" };
         public override IEnumerable ExplicitDecoderCapabilities {
             get { return decoder_capabilities; }
         }
-        
+
         private bool ReplayGainEnabled {
             get { return bp_replaygain_get_enabled (handle); }
             set { bp_replaygain_set_enabled (handle, value); }
@@ -508,7 +508,7 @@ namespace Banshee.GStreamer
         }
 
         public bool IsClutterVideoSinkInitialized {
-            get { return 
+            get { return
                 clutter_video_sink_enabled &&
                 clutter_video_texture != IntPtr.Zero &&
                 clutter_video_sink != IntPtr.Zero;
@@ -522,7 +522,7 @@ namespace Banshee.GStreamer
                     if (clutter_video_sink != IntPtr.Zero) {
                         // FIXME: does this get unreffed by the pipeline?
                     }
-                    
+
                     clutter_video_sink = clutter_gst_video_sink_new (clutter_video_texture);
                 } else if (!clutter_video_sink_enabled && clutter_video_sink != IntPtr.Zero) {
                     clutter_video_sink = IntPtr.Zero;
@@ -539,7 +539,7 @@ namespace Banshee.GStreamer
         }
 
 #endregion
-        
+
 #region Preferences
 
         private PreferenceBase replaygain_preference;
@@ -550,60 +550,60 @@ namespace Banshee.GStreamer
             if (service == null) {
                 return;
             }
-            
-            replaygain_preference = service["general"]["misc"].Add (new SchemaPreference<bool> (ReplayGainEnabledSchema, 
+
+            replaygain_preference = service["general"]["misc"].Add (new SchemaPreference<bool> (ReplayGainEnabledSchema,
                 Catalog.GetString ("_Enable ReplayGain correction"),
                 Catalog.GetString ("For tracks that have ReplayGain data, automatically scale (normalize) playback volume"),
                 delegate { ReplayGainEnabled = ReplayGainEnabledSchema.Get (); }
             ));
         }
-        
+
         private void UninstallPreferences ()
         {
             PreferenceService service = ServiceManager.Get<PreferenceService> ();
             if (service == null) {
                 return;
             }
-            
+
             service["general"]["misc"].Remove (replaygain_preference);
             replaygain_preference = null;
         }
-        
+
         public static readonly SchemaEntry<bool> ReplayGainEnabledSchema = new SchemaEntry<bool> (
-            "player_engine", "replay_gain_enabled", 
+            "player_engine", "replay_gain_enabled",
             false,
             "Enable ReplayGain",
             "If ReplayGain data is present on tracks when playing, allow volume scaling"
         );
 
 #endregion
-        
+
         [DllImport ("libbanshee.dll")]
         private static extern IntPtr bp_new ();
-        
+
         [DllImport ("libbanshee.dll")]
         private static extern bool bp_initialize_pipeline (HandleRef player);
 
         [DllImport ("libbanshee.dll")]
         private static extern void bp_destroy (HandleRef player);
-        
+
         [DllImport ("libbanshee.dll")]
         private static extern void bp_set_eos_callback (HandleRef player, BansheePlayerEosCallback cb);
-        
+
         [DllImport ("libbanshee.dll")]
         private static extern void bp_set_error_callback (HandleRef player, BansheePlayerErrorCallback cb);
-        
+
         [DllImport ("libbanshee.dll")]
         private static extern void bp_set_vis_data_callback (HandleRef player, BansheePlayerVisDataCallback cb);
-        
+
         [DllImport ("libbanshee.dll")]
-        private static extern void bp_set_state_changed_callback (HandleRef player, 
+        private static extern void bp_set_state_changed_callback (HandleRef player,
             BansheePlayerStateChangedCallback cb);
-            
+
         [DllImport ("libbanshee.dll")]
         private static extern void bp_set_iterate_callback (HandleRef player,
             BansheePlayerIterateCallback cb);
-        
+
         [DllImport ("libbanshee.dll")]
         private static extern void bp_set_buffering_callback (HandleRef player,
             BansheePlayerBufferingCallback cb);
@@ -611,86 +611,86 @@ namespace Banshee.GStreamer
         [DllImport ("libbanshee.dll")]
         private static extern void bp_set_video_pipeline_setup_callback (HandleRef player,
             VideoPipelineSetupHandler cb);
-        
+
         [DllImport ("libbanshee.dll")]
         private static extern void bp_set_tag_found_callback (HandleRef player,
             GstTaggerTagFoundCallback cb);
-        
+
         [DllImport ("libbanshee.dll")]
         private static extern bool bp_open (HandleRef player, IntPtr uri);
-        
+
         [DllImport ("libbanshee.dll")]
         private static extern void bp_stop (HandleRef player, bool nullstate);
-        
+
         [DllImport ("libbanshee.dll")]
         private static extern void bp_pause (HandleRef player);
-        
+
         [DllImport ("libbanshee.dll")]
         private static extern void bp_play (HandleRef player);
-        
+
         [DllImport ("libbanshee.dll")]
         private static extern void bp_set_volume (HandleRef player, double volume);
-        
+
         [DllImport("libbanshee.dll")]
         private static extern double bp_get_volume (HandleRef player);
-        
+
         [DllImport ("libbanshee.dll")]
         private static extern bool bp_can_seek (HandleRef player);
-        
+
         [DllImport ("libbanshee.dll")]
         private static extern bool bp_set_position (HandleRef player, ulong time_ms);
-        
+
         [DllImport ("libbanshee.dll")]
         private static extern ulong bp_get_position (HandleRef player);
-        
+
         [DllImport ("libbanshee.dll")]
         private static extern ulong bp_get_duration (HandleRef player);
-        
+
         [DllImport ("libbanshee.dll")]
         private static extern bool bp_get_pipeline_elements (HandleRef player, out IntPtr playbin,
             out IntPtr audiobin, out IntPtr audiotee);
-            
+
         [DllImport ("libbanshee.dll")]
         private static extern void bp_set_application_gdk_window (HandleRef player, IntPtr window);
-        
+
         [DllImport ("libbanshee.dll")]
         private static extern VideoDisplayContextType bp_video_get_display_context_type (HandleRef player);
-        
+
         [DllImport ("libbanshee.dll")]
         private static extern void bp_video_set_display_context (HandleRef player, IntPtr displayContext);
-        
+
         [DllImport ("libbanshee.dll")]
         private static extern IntPtr bp_video_get_display_context (HandleRef player);
-        
+
         [DllImport ("libbanshee.dll")]
         private static extern void bp_video_window_expose (HandleRef player, IntPtr displayContext, bool direct);
-                                                                   
+
         [DllImport ("libbanshee.dll")]
-        private static extern void bp_get_error_quarks (out uint core, out uint library, 
+        private static extern void bp_get_error_quarks (out uint core, out uint library,
             out uint resource, out uint stream);
-        
+
         [DllImport ("libbanshee.dll")]
         private static extern bool bp_equalizer_is_supported (HandleRef player);
-        
+
         [DllImport ("libbanshee.dll")]
         private static extern void bp_equalizer_set_preamp_level (HandleRef player, double level);
-        
+
         [DllImport ("libbanshee.dll")]
         private static extern void bp_equalizer_set_gain (HandleRef player, uint bandnum, double gain);
-        
+
         [DllImport ("libbanshee.dll")]
         private static extern void bp_equalizer_get_bandrange (HandleRef player, out int min, out int max);
-        
+
         [DllImport ("libbanshee.dll")]
         private static extern uint bp_equalizer_get_nbands (HandleRef player);
-        
+
         [DllImport ("libbanshee.dll")]
         private static extern void bp_equalizer_get_frequencies (HandleRef player,
             [MarshalAs (UnmanagedType.LPArray)] out double [] freq);
-            
+
         [DllImport ("libbanshee.dll")]
         private static extern void bp_replaygain_set_enabled (HandleRef player, bool enabled);
-        
+
         [DllImport ("libbanshee.dll")]
         private static extern bool bp_replaygain_get_enabled (HandleRef player);
 

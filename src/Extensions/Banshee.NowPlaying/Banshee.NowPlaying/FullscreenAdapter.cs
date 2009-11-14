@@ -39,7 +39,7 @@ namespace Banshee.NowPlaying
         private IFullscreenAdapter adapter;
         private bool probed = false;
         private bool first_fullscreen = false;
-        
+
         public void Fullscreen (Window window, bool fullscreen)
         {
             if (!first_fullscreen && !fullscreen) {
@@ -47,21 +47,21 @@ namespace Banshee.NowPlaying
             } else if (fullscreen) {
                 first_fullscreen = true;
             }
-        
+
             if (adapter != null) {
                 try {
                     adapter.Fullscreen (window, fullscreen);
                 } catch (Exception e) {
                     Log.Exception ("IFullscreenAdapter extension failed, so disabling", e);
                     DisposeAdapter ();
-                }   
-                
+                }
+
                 return;
             } else if (probed) {
                 DefaultFullscreen (window, fullscreen);
                 return;
             }
-            
+
             foreach (TypeExtensionNode node in AddinManager.GetExtensionNodes ("/Banshee/NowPlaying/FullscreenAdapter")) {
                 try {
                     adapter = (IFullscreenAdapter)node.CreateInstance (typeof (IFullscreenAdapter));
@@ -71,17 +71,17 @@ namespace Banshee.NowPlaying
                     Log.Exception ("IFullscreenAdapter extension failed to load", e);
                 }
             }
-            
+
             probed = true;
             Fullscreen (window, fullscreen);
         }
-        
+
         public void Dispose ()
         {
             DisposeAdapter ();
             probed = false;
         }
-        
+
         private void DisposeAdapter ()
         {
             if (adapter != null) {
@@ -90,11 +90,11 @@ namespace Banshee.NowPlaying
                 } catch (Exception e) {
                     Log.Exception ("IFullscreenAdapter failed to dispose", e);
                 }
-                
+
                 adapter = null;
             }
         }
-        
+
         private void DefaultFullscreen (Window window, bool fullscreen)
         {
             if (fullscreen) {

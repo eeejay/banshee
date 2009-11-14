@@ -1,4 +1,4 @@
-// 
+//
 // RatingActionProxy.cs
 //
 // Author:

@@ -65,12 +65,12 @@ namespace Lastfm
         private string post_url;
         private string session_id = null;
         private string now_playing_url;
-        
+
         private bool connected = false; /* if we're connected to network or not */
         public bool Connected {
             get { return connected; }
         }
-        
+
         private bool started = false; /* engine has started and was/is connected to AS */
         public bool Started {
             get { return started; }
@@ -81,32 +81,32 @@ namespace Lastfm
         private DateTime last_upload_failed_logged;
 
         private IQueue queue;
-        
+
         private int hard_failures = 0;
         private int hard_failure_retry_sec = 60;
-        
+
         private HttpWebRequest now_playing_post;
         private bool now_playing_started;
         private string current_now_playing_data;
         private HttpWebRequest current_web_req;
         private IAsyncResult current_async_result;
         private State state;
-        
+
         internal AudioscrobblerConnection (IQueue queue)
         {
             LastfmCore.Account.Updated += AccountUpdated;
-            
+
             state = State.Idle;
             this.queue = queue;
         }
-        
+
         private void AccountUpdated (object o, EventArgs args)
         {
             Stop ();
             session_id = null;
             Start ();
         }
-        
+
         public void UpdateNetworkState (bool connected)
         {
             Log.DebugFormat ("Audioscrobbler state: {0}", connected ? "connected" : "disconnected");
@@ -114,17 +114,17 @@ namespace Lastfm
         }
 
         public void Start ()
-        {            
+        {
             if (started) {
                 return;
             }
-            
+
             started = true;
             hard_failures = 0;
             queue.TrackAdded += delegate(object o, EventArgs args) {
                 StartTransitionHandler ();
             };
-            
+
             queue.Load ();
             StartTransitionHandler ();
         }
@@ -135,13 +135,13 @@ namespace Lastfm
                 // Don't run if we're not actually started.
                 return;
             }
-            
+
             if (timer == null) {
                 timer = new System.Timers.Timer ();
                 timer.Interval = TICK_INTERVAL;
                 timer.AutoReset = true;
                 timer.Elapsed += new ElapsedEventHandler (StateTransitionHandler);
-                
+
                 timer.Start ();
             } else if (!timer.Enabled) {
                 timer.Start ();
@@ -157,7 +157,7 @@ namespace Lastfm
             }
 
             queue.Save ();
-            
+
             started = false;
         }
 
@@ -174,18 +174,18 @@ namespace Lastfm
             if (!connected) {
                 return;
             }
-                        
+
             if ((state == State.Idle || state == State.NeedTransmit) && hard_failures > 2) {
                 state = State.NeedHandshake;
                 hard_failures = 0;
             }
-            
+
             // and address changes in our engine state
             switch (state) {
             case State.Idle:
                 if (LastfmCore.Account.UserName != null &&
                     LastfmCore.Account.SessionKey != null && session_id == null) {
-                    
+
                     state = State.NeedHandshake;
                 } else {
                     if (queue.Count > 0 && session_id != null) {
@@ -197,13 +197,13 @@ namespace Lastfm
                         StopTransitionHandler ();
                     }
                 }
-                
+
                 break;
             case State.NeedHandshake:
                 if (DateTime.Now > next_interval) {
                     Handshake ();
                 }
-                
+
                 break;
             case State.NeedTransmit:
                 if (DateTime.Now > next_interval) {
@@ -253,7 +253,7 @@ namespace Lastfm
             current_web_req.Method = "POST";
             current_web_req.ContentType = "application/x-www-form-urlencoded";
             current_web_req.ContentLength = sb.Length;
-            
+
             //Console.WriteLine ("Sending {0} ({1} bytes) to {2}", sb.ToString (), sb.Length, post_url);
 
             TransmitState ts = new TransmitState ();
@@ -267,7 +267,7 @@ namespace Lastfm
                 next_interval = DateTime.Now + new TimeSpan (0, 0, RETRY_SECONDS);
                 hard_failures++;
                 state = State.Idle;
-                
+
                 current_web_req.Abort();
             }
         }
@@ -324,14 +324,14 @@ namespace Lastfm
 
             string line;
             line = sr.ReadLine ();
-            
+
             DateTime now = DateTime.Now;
             if (line.StartsWith ("FAILED")) {
                 if (now - last_upload_failed_logged > TimeSpan.FromMinutes(FAILURE_LOG_MINUTES)) {
                     Log.Warning ("Audioscrobbler upload failed", line.Substring ("FAILED".Length).Trim(), false);
                     last_upload_failed_logged = now;
                 }
-                
+
                 // retransmit the queue on the next interval
                 hard_failures++;
                 state = State.NeedTransmit;
@@ -341,7 +341,7 @@ namespace Lastfm
                     Log.Warning ("Audioscrobbler upload failed", "session ID sent was invalid", false);
                     last_upload_failed_logged = now;
                 }
-                
+
                 // attempt to re-handshake (and retransmit) on the next interval
                 session_id = null;
                 next_interval = DateTime.Now + new TimeSpan (0, 0, RETRY_SECONDS);
@@ -353,20 +353,20 @@ namespace Lastfm
                     Log.Debug ("Audioscrobbler upload succeeded");
                     last_upload_failed_logged = DateTime.MinValue;
                 }
-                
+
                 hard_failures = 0;
-                
+
                 // we succeeded, pop the elements off our queue
                 queue.RemoveRange (0, ts.Count);
                 queue.Save ();
-                
+
                 state = State.Idle;
             } else {
                 if (now - last_upload_failed_logged > TimeSpan.FromMinutes(FAILURE_LOG_MINUTES)) {
                     Log.Warning ("Audioscrobbler upload failed", String.Format ("Unrecognized response: {0}", line), false);
                     last_upload_failed_logged = now;
                 }
-                
+
                 state = State.Idle;
             }
         }
@@ -374,18 +374,18 @@ namespace Lastfm
         //
         // Async code for handshaking
         //
-        
+
         private string UnixTime ()
         {
             return ((int) (DateTime.UtcNow - new DateTime (1970, 1, 1)).TotalSeconds).ToString ();
         }
-        
+
         private void Handshake ()
         {
             string timestamp = UnixTime();
             string authentication_token = Hyena.CryptoUtil.Md5Encode
                 (LastfmCore.ApiSecret + timestamp);
-            
+
             string api_url = LastfmCore.Account.ScrobbleUrl;
             if (String.IsNullOrEmpty (api_url)) {
                 api_url = SCROBBLER_URL;
@@ -443,12 +443,12 @@ namespace Lastfm
             line = sr.ReadLine ();
             if (line.StartsWith ("BANNED")) {
                 Log.Warning ("Audioscrobbler sign-on failed", "Player is banned", false);
-                                   
+
             } else if (line.StartsWith ("BADAUTH")) {
                 Log.Warning ("Audioscrobbler sign-on failed", Catalog.GetString ("Last.fm username is invalid or Banshee is not authorized to access you account."));
                 LastfmCore.Account.SessionKey = null;
             } else if (line.StartsWith ("BADTIME")) {
-                Log.Warning ("Audioscrobbler sign-on failed", 
+                Log.Warning ("Audioscrobbler sign-on failed",
                                                   "timestamp provided was not close enough to the current time", false);
             } else if (line.StartsWith ("FAILED")) {
                 Log.Warning ("Audioscrobbler sign-on failed",
@@ -460,13 +460,13 @@ namespace Lastfm
                 Log.Error ("Audioscrobbler sign-on failed", String.Format ("Unknown error: {0}", line.Trim()));
                 hard_failure = true;
             }
-            
+
             if (success == true) {
-                Log.Debug ("Audioscrobbler sign-on succeeded", "Session ID received"); 
+                Log.Debug ("Audioscrobbler sign-on succeeded", "Session ID received");
                 session_id = sr.ReadLine ().Trim ();
                 now_playing_url = sr.ReadLine ().Trim ();
                 post_url = sr.ReadLine ().Trim ();
-                
+
                 hard_failures = 0;
                 hard_failure_retry_sec = 60;
             } else {
@@ -480,37 +480,37 @@ namespace Lastfm
 
             state = State.Idle;
         }
-        
+
         //
         // Async code for now playing
-        
+
         public void NowPlaying (string artist, string title, string album, double duration,
                                 int tracknum)
         {
             NowPlaying (artist, title, album, duration, tracknum, "");
         }
-        
+
         public void NowPlaying (string artist, string title, string album, double duration,
                                 int tracknum, string mbrainzid)
         {
             if (String.IsNullOrEmpty(artist) || String.IsNullOrEmpty(title) || !connected) {
                 return;
             }
-        
+
             string str_track_number = String.Empty;
             if (tracknum != 0) {
                 str_track_number = tracknum.ToString();
             }
-            
+
             // Fall back to prefixing the URL with a # in case we haven't actually
             // authenticated yet. We replace it with the now_playing_url and session_id
             // later on in NowPlaying(uri).
             string dataprefix = "#";
-            
+
             if (session_id != null) {
                 dataprefix = String.Format ("s={0}", session_id);
             }
-            
+
             string data = String.Format ("{0}&a={1}&t={2}&b={3}&l={4}&n={5}&m={6}",
                                         dataprefix,
                                         HttpUtility.UrlEncode(artist),
@@ -522,13 +522,13 @@ namespace Lastfm
 
             NowPlaying (data);
         }
-        
+
         private void NowPlaying (string data)
-        {            
+        {
             if (now_playing_started) {
                 return;
             }
-            
+
             // If the URI begins with #, then we know the URI was created before we
             // had actually authenticated. So, because we didn't know the session_id and
             // now_playing_url previously, we should now, so we put that in and create our
@@ -538,9 +538,9 @@ namespace Lastfm
                                       session_id,
                                       data.Substring (1));
             }
-            
+
             current_now_playing_data = data;
-            
+
             if (session_id == null) {
                 // Go connect - we'll come back later in main timer loop.
                 Start ();
@@ -563,7 +563,7 @@ namespace Lastfm
             } catch (Exception ex) {
                 Log.Warning ("Audioscrobbler NowPlaying failed",
                                   String.Format ("Exception while creating request: {0}", ex), false);
-                
+
                 // Reset current_now_playing_data if it was the problem.
                 current_now_playing_data = null;
             }
@@ -597,7 +597,7 @@ namespace Lastfm
                 if (line == null) {
                     Log.Warning ("Audioscrobbler NowPlaying failed", "No response", false);
                 }
-                
+
                 if (line.StartsWith ("BADSESSION")) {
                     Log.Warning ("Audioscrobbler NowPlaying failed", "Session ID sent was invalid", false);
                     // attempt to re-handshake on the next interval
@@ -607,21 +607,21 @@ namespace Lastfm
                     StartTransitionHandler ();
                     return;
                 } else if (line.StartsWith ("OK")) {
-                    // NowPlaying submitted  
+                    // NowPlaying submitted
                     Log.DebugFormat ("Submitted NowPlaying track to Audioscrobbler");
                     now_playing_started = false;
                     now_playing_post = null;
                     current_now_playing_data = null;
                     return;
                 } else {
-                    Log.Warning ("Audioscrobbler NowPlaying failed", "Unexpected or no response", false);       
+                    Log.Warning ("Audioscrobbler NowPlaying failed", "Unexpected or no response", false);
                 }
             }
             catch (Exception e) {
-                Log.Warning ("Audioscrobbler NowPlaying failed", 
+                Log.Warning ("Audioscrobbler NowPlaying failed",
                     String.Format("Failed to post NowPlaying: {0}", e), false);
             }
-            
+
             // NowPlaying error/success is non-crucial.
             hard_failures++;
             if (hard_failures < 3) {

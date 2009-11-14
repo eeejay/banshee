@@ -1,4 +1,4 @@
-// 
+//
 // PlayerInterface.cs
 //
 // Author:
@@ -64,11 +64,11 @@ namespace Muinshee
         private Toolbar header_toolbar;
 
         private MuinsheeActions actions;
-        
+
         // Major Interaction Components
         private TerseTrackListView track_view;
         private Label list_label;
-        
+
         public PlayerInterface () : base (Catalog.GetString ("Banshee Media Player"), "muinshee", -1, 450)
         {
         }
@@ -110,8 +110,8 @@ namespace Muinshee
             }
         }
 
-#region System Overrides 
-        
+#region System Overrides
+
         public override void Dispose ()
         {
             lock (this) {
@@ -123,19 +123,19 @@ namespace Muinshee
                 Gtk.Application.Quit ();
             }
         }
-        
-#endregion        
+
+#endregion
 
 #region Interface Construction
-        
+
         private void BuildPrimaryLayout ()
         {
             main_vbox = new VBox ();
-            
+
             Widget menu = new MainMenu ();
             menu.Show ();
             main_vbox.PackStart (menu, false, false, 0);
-           
+
             BuildHeader ();
 
             content_vbox = new VBox ();
@@ -147,30 +147,30 @@ namespace Muinshee
 
             BuildTrackInfo ();
             BuildViews ();
-            
+
             main_vbox.ShowAll ();
             Add (main_vbox);
         }
-        
+
         private void BuildHeader ()
         {
             Alignment toolbar_alignment = new Alignment (0.0f, 0.0f, 1.0f, 1.0f);
             toolbar_alignment.TopPadding = 3;
             toolbar_alignment.BottomPadding = 3;
-            
+
             header_toolbar = (Toolbar)ActionService.UIManager.GetWidget ("/MuinsheeHeaderToolbar");
             header_toolbar.ShowArrow = false;
             header_toolbar.ToolbarStyle = ToolbarStyle.BothHoriz;
-            
+
             toolbar_alignment.Add (header_toolbar);
             toolbar_alignment.ShowAll ();
-            
+
             main_vbox.PackStart (toolbar_alignment, false, false, 0);
-            
+
             Widget next_button = new NextButton (ActionService);
             next_button.Show ();
             ActionService.PopulateToolbarPlaceholder (header_toolbar, "/MuinsheeHeaderToolbar/NextArrowButton", next_button);
-            
+
             ConnectedVolumeButton volume_button = new ConnectedVolumeButton ();
             volume_button.Show ();
             ActionService.PopulateToolbarPlaceholder (header_toolbar, "/MuinsheeHeaderToolbar/VolumeButton", volume_button);
@@ -212,16 +212,16 @@ namespace Muinshee
         }
 
 #endregion
-        
+
 #region Events and Logic Setup
-        
+
         protected override void ConnectEvents ()
         {
             base.ConnectEvents ();
             ServiceManager.SourceManager.SourceUpdated += OnSourceUpdated;
             header_toolbar.ExposeEvent += OnToolbarExposeEvent;
         }
-        
+
 #endregion
 
 #region Service Event Handlers
@@ -232,9 +232,9 @@ namespace Muinshee
                 UpdateSourceInformation ();
             }
         }
-        
+
 #endregion
-        
+
 #region Helper Functions
 
         private void HandleTrackModelReloaded (object sender, EventArgs args)
@@ -263,7 +263,7 @@ namespace Muinshee
         IDBusExportable IDBusExportable.Parent {
             get { return null; }
         }
-        
+
         string IDBusObjectName.ExportObjectName {
             get { return "MuinsheeClientWindow"; }
         }

@@ -87,7 +87,7 @@ namespace Banshee.Bpm
 
             if (last_tap != 0) {
                 int period = now - last_tap;
-                
+
                 Console.WriteLine ("{0} ms since last tap; eq {1} BPM", period, 60000/period);
                 tap_periods[tap_index] = period;
                 tap_index = (tap_index + 1) % (NUM_PERIODS - 1);

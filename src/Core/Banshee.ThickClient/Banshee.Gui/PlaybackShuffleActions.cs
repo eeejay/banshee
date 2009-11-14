@@ -63,13 +63,13 @@ namespace Banshee.Gui
         }
 
         public event EventHandler Changed;
-        
+
         public PlaybackShuffleActions (InterfaceActionService actionService, PlaybackActions playbackActions)
             : base (actionService, "PlaybackShuffle")
         {
             playback_actions = playbackActions;
             Actions.AddActionGroup (this);
-            
+
             Add (new ActionEntry [] {
                 new ActionEntry ("ShuffleMenuAction", null,
                     Catalog.GetString ("Shuffle"), null,
@@ -77,21 +77,21 @@ namespace Banshee.Gui
             });
 
             Add (new RadioActionEntry [] {
-                new RadioActionEntry ("ShuffleOffAction", null, 
+                new RadioActionEntry ("ShuffleOffAction", null,
                     Catalog.GetString ("Shuffle _Off"), null,
                     Catalog.GetString ("Do not shuffle playlist"),
                     (int)PlaybackShuffleMode.Linear),
-                    
+
                 new RadioActionEntry ("ShuffleSongAction", null,
                     Catalog.GetString ("Shuffle by _Song"), null,
                     Catalog.GetString ("Play songs randomly from the playlist"),
                     (int)PlaybackShuffleMode.Song),
-                    
+
                 new RadioActionEntry ("ShuffleArtistAction", null,
                     Catalog.GetString ("Shuffle by A_rtist"), null,
                     Catalog.GetString ("Play all songs by an artist, then randomly choose another artist"),
                     (int)PlaybackShuffleMode.Artist),
-                    
+
                 new RadioActionEntry ("ShuffleAlbumAction", null,
                     Catalog.GetString ("Shuffle by A_lbum"), null,
                     Catalog.GetString ("Play all songs from an album, then randomly choose another album"),
@@ -107,7 +107,7 @@ namespace Banshee.Gui
                     Catalog.GetString ("Play songs randomly, prefer higher scored songs"),
                     (int)PlaybackShuffleMode.Score)
             }, 0, OnActionChanged);
-                
+
             this["ShuffleOffAction"].StockId = Gtk.Stock.MediaNext;
             this["ShuffleSongAction"].IconName = "media-playlist-shuffle";
             this["ShuffleArtistAction"].IconName = "media-playlist-shuffle";
@@ -124,7 +124,7 @@ namespace Banshee.Gui
             } else {
                 Active = (RadioAction)this["ShuffleOffAction"];
             }
-            
+
             Active.Activate ();
         }
 
@@ -176,20 +176,20 @@ namespace Banshee.Gui
                 handler (this, EventArgs.Empty);
             }
         }
-        
+
         public void AttachSubmenu (string menuItemPath)
         {
             MenuItem parent = Actions.UIManager.GetWidget (menuItemPath) as MenuItem;
             parent.Submenu = CreateMenu ();
         }
-        
+
         public MenuItem CreateSubmenu ()
         {
             MenuItem parent = (MenuItem)this["ShuffleMenuAction"].CreateMenuItem ();
             parent.Submenu = CreateMenu ();
             return parent;
         }
-            
+
         public Menu CreateMenu ()
         {
             Menu menu = new Gtk.Menu ();
@@ -227,7 +227,7 @@ namespace Banshee.Gui
 
         private static string ActionNameToConfigId (string actionName)
         {
-            return StringUtil.CamelCaseToUnderCase (actionName.Substring (0, 
+            return StringUtil.CamelCaseToUnderCase (actionName.Substring (0,
                 actionName.Length - (actionName.EndsWith ("Action") ? 6 : 0)));
         }
 

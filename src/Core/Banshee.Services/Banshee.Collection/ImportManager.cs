@@ -48,7 +48,7 @@ namespace Banshee.Collection
         private class ImportElement : QueuePipelineElement<string>
         {
             private ImportManager manager;
-            
+
             public ImportElement (ImportManager manager)
             {
                 this.manager = manager;
@@ -59,7 +59,7 @@ namespace Banshee.Collection
                 base.Enqueue (item);
                 manager.UpdateScannerProgress ();
             }
-        
+
             protected override string ProcessItem (string item)
             {
                 try {
@@ -67,50 +67,50 @@ namespace Banshee.Collection
                 } catch (Exception e) {
                     Hyena.Log.Exception (e);
                 }
-                return null;   
+                return null;
             }
         }
-        
+
 #endregion
-        
+
         private static NumberFormatInfo number_format = new NumberFormatInfo ();
-        
+
         private DirectoryScannerPipelineElement scanner_element;
         private ImportElement import_element;
-        
+
         private readonly object user_job_mutex = new object ();
         private UserJob user_job;
         private uint timer_id;
-        
+
         public event ImportEventHandler ImportRequested;
-        
+
         public ImportManager ()
         {
             AddElement (scanner_element = new DirectoryScannerPipelineElement ());
             AddElement (import_element = new ImportElement (this));
         }
-        
+
 #region Public API
-                      
+
         public virtual void Enqueue (UriList uris)
         {
             CreateUserJob ();
-            
+
             foreach (string path in uris.LocalPaths) {
                 base.Enqueue (path);
             }
         }
-        
+
         public override void Enqueue (string source)
         {
             Enqueue (new UriList (source));
         }
-        
+
         public void Enqueue (string [] paths)
         {
             Enqueue (new UriList (paths));
         }
-        
+
         public bool IsImportInProgress {
             get { return import_element.Processing; }
         }
@@ -120,20 +120,20 @@ namespace Banshee.Collection
             get { return keep_user_job_hidden; }
             set { keep_user_job_hidden = value; }
         }
-        
+
 #endregion
-        
+
 #region User Job / Interaction
-        
+
         private void CreateUserJob ()
         {
             lock (user_job_mutex) {
                 if (user_job != null || KeepUserJobHidden) {
                     return;
                 }
-                
+
                 timer_id = Log.DebugTimerStart ();
-                
+
                 user_job = new UserJob (Title, Catalog.GetString ("Scanning for media"));
                 user_job.SetResources (Resource.Cpu, Resource.Disk, Resource.Database);
                 user_job.PriorityHints = PriorityHints.SpeedSensitive | PriorityHints.DataLossIfStopped;
@@ -147,42 +147,42 @@ namespace Banshee.Collection
                 }
             }
         }
-        
+
         private void DestroyUserJob ()
         {
             lock (user_job_mutex) {
                 if (user_job == null) {
                     return;
                 }
-                
+
                 if (!KeepUserJobHidden) {
                     Log.DebugTimerPrint (timer_id, Title + " duration: {0}");
                 }
-                
+
                 user_job.CancelRequested -= OnCancelRequested;
                 user_job.Finish ();
                 user_job = null;
             }
         }
-        
+
         private void OnCancelRequested (object o, EventArgs args)
         {
             scanner_element.Cancel ();
         }
-        
+
         protected void UpdateProgress (string message)
         {
             CreateUserJob ();
             if (user_job != null) {
                 double new_progress = (double)import_element.ProcessedCount / (double)import_element.TotalCount;
                 double old_progress = user_job.Progress;
-                
+
                 if (new_progress >= 0.0 && new_progress <= 1.0 && Math.Abs (new_progress - old_progress) > 0.001) {
                     lock (number_format) {
-                        string disp_progress = String.Format (ProgressMessage, 
-                            import_element.ProcessedCount, 
+                        string disp_progress = String.Format (ProgressMessage,
+                            import_element.ProcessedCount,
                             import_element.TotalCount);
-                        
+
                         user_job.Title = disp_progress;
                         user_job.Status = String.IsNullOrEmpty (message) ? Catalog.GetString ("Scanning...") : message;
                         user_job.Progress = new_progress;
@@ -190,9 +190,9 @@ namespace Banshee.Collection
                 }
             }
         }
-        
+
         private DateTime last_enqueue_display = DateTime.Now;
-        
+
         private void UpdateScannerProgress ()
         {
             CreateUserJob ();
@@ -200,18 +200,18 @@ namespace Banshee.Collection
                 if (DateTime.Now - last_enqueue_display > TimeSpan.FromMilliseconds (400)) {
                     lock (number_format) {
                         number_format.NumberDecimalDigits = 0;
-                        user_job.Status = String.Format (Catalog.GetString ("Scanning ({0} files)..."), 
+                        user_job.Status = String.Format (Catalog.GetString ("Scanning ({0} files)..."),
                             import_element.TotalCount.ToString ("N", number_format));
                         last_enqueue_display = DateTime.Now;
                     }
                 }
             }
         }
-        
+
 #endregion
-        
+
 #region Protected Import Hooks
-        
+
         protected virtual void OnImportRequested (string path)
         {
             ImportEventHandler handler = ImportRequested;
@@ -223,17 +223,17 @@ namespace Banshee.Collection
                 UpdateProgress (null);
             }
         }
-        
+
         protected override void OnFinished ()
         {
             DestroyUserJob ();
             base.OnFinished ();
         }
-        
+
 #endregion
 
 #region Properties
-        
+
         private string title = Catalog.GetString ("Importing Media");
         public string Title {
             get { return title; }
@@ -256,11 +256,11 @@ namespace Banshee.Collection
         public bool Threaded {
             set { import_element.Threaded = scanner_element.Threaded = value; }
         }
-        
+
         protected int TotalCount {
             get { return import_element == null ? 0 : import_element.TotalCount; }
         }
-        
+
 #endregion
 
     }

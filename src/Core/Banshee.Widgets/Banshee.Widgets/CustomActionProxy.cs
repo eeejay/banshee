@@ -1,4 +1,4 @@
-// 
+//
 // CustomActionProxy.cs
 //
 // Author:
@@ -126,7 +126,7 @@ namespace Banshee.Widgets
         {
             return null;
         }
-        
+
         protected virtual ToolItem GetNewToolItem () {
             return null;
         }

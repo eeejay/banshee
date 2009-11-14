@@ -40,16 +40,16 @@ namespace Banshee.Hardware
         string Vendor { get; }
 
         IDeviceMediaCapabilities MediaCapabilities { get; }
-        
+
         bool PropertyExists (string key);
-        
+
         string GetPropertyString (string key);
         double GetPropertyDouble (string key);
         bool GetPropertyBoolean (string key);
         int GetPropertyInteger (string key);
         ulong GetPropertyUInt64 (string key);
         string [] GetPropertyStringList (string key);
-        
+
         IUsbDevice ResolveRootUsbDevice ();
     }
 }

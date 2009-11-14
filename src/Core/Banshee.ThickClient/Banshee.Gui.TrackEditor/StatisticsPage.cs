@@ -55,26 +55,26 @@ namespace Banshee.Gui.TrackEditor
         private CellRendererText value_renderer;
         private ListStore model;
         private TreeView view;
-        
+
         public StatisticsPage ()
         {
             ShadowType = ShadowType.In;
             VscrollbarPolicy = PolicyType.Automatic;
             HscrollbarPolicy = PolicyType.Never;
             BorderWidth = 2;
-            
+
             view = new FixedTreeView (model);
             view.HeadersVisible = false;
             view.RowSeparatorFunc = new TreeViewRowSeparatorFunc (RowSeparatorFunc);
             view.HasTooltip = true;
             view.QueryTooltip += HandleQueryTooltip;
-            
+
             name_renderer = new CellRendererText ();
             name_renderer.Alignment = Pango.Alignment.Right;
             name_renderer.Weight = (int)Pango.Weight.Bold;
             name_renderer.Xalign = 1.0f;
             name_renderer.Scale = Pango.Scale.Small;
-            
+
             value_renderer = new CellRendererText ();
             value_renderer.Ellipsize = Pango.EllipsizeMode.End;
             value_renderer.Editable = true;
@@ -85,17 +85,17 @@ namespace Banshee.Gui.TrackEditor
                     entry.IsEditable = false;
                 }
             };
-            
+
             view.AppendColumn (Catalog.GetString ("Name"), name_renderer, "text", 0);
             view.AppendColumn (Catalog.GetString ("Value"), value_renderer, "text", 1);
-            
+
             Add (view);
             ShowAll ();
         }
 
         public CellRendererText NameRenderer { get { return name_renderer; } }
         public CellRendererText ValueRenderer { get { return value_renderer; } }
-        
+
         private bool RowSeparatorFunc (TreeModel model, TreeIter iter)
         {
             return (bool)model.GetValue (iter, 2);
@@ -136,7 +136,7 @@ namespace Banshee.Gui.TrackEditor
                 args.Tooltip.Dispose ();
             }
         }
-        
+
         protected override void OnStyleSet (Style previous_style)
         {
             base.OnStyleSet (previous_style);
@@ -146,14 +146,14 @@ namespace Banshee.Gui.TrackEditor
         public void Initialize (TrackEditorDialog dialog)
         {
         }
-        
+
         public void LoadTrack (EditorTrackInfo track)
         {
             model = null;
             CreateModel ();
-            
+
             TagLib.File file = track.TaglibFile;
-            
+
             if (track.Uri.IsLocalPath) {
                 string path = track.Uri.AbsolutePath;
                 AddItem (Catalog.GetString ("File Name:"), System.IO.Path.GetFileName (path));
@@ -167,53 +167,53 @@ namespace Banshee.Gui.TrackEditor
                 AddItem (Catalog.GetString ("URI:"), track.Uri.AbsoluteUri);
                 AddFileSizeItem (track.FileSize);
             }
-            
+
             AddSeparator ();
-            
+
             if (file != null) {
                 System.Text.StringBuilder builder = new System.Text.StringBuilder ();
                 Banshee.Sources.DurationStatusFormatters.ConfusingPreciseFormatter (builder, file.Properties.Duration);
-                AddItem (Catalog.GetString ("Duration:"), String.Format ("{0} ({1}ms)", 
+                AddItem (Catalog.GetString ("Duration:"), String.Format ("{0} ({1}ms)",
                     builder, file.Properties.Duration.TotalMilliseconds));
-                
-                AddItem (Catalog.GetString ("Audio Bitrate:"), String.Format ("{0} KB/sec", 
+
+                AddItem (Catalog.GetString ("Audio Bitrate:"), String.Format ("{0} KB/sec",
                     file.Properties.AudioBitrate));
-                AddItem (Catalog.GetString ("Audio Sample Rate:"), String.Format ("{0} Hz", 
-                    file.Properties.AudioSampleRate)); 
+                AddItem (Catalog.GetString ("Audio Sample Rate:"), String.Format ("{0} Hz",
+                    file.Properties.AudioSampleRate));
                 AddItem (Catalog.GetString ("Audio Channels:"), file.Properties.AudioChannels);
-                
+
                 if ((file.Properties.MediaTypes & TagLib.MediaTypes.Video) != 0) {
-                    AddItem (Catalog.GetString ("Video Dimensions:"), String.Format ("{0}x{1}", 
+                    AddItem (Catalog.GetString ("Video Dimensions:"), String.Format ("{0}x{1}",
                         file.Properties.VideoWidth, file.Properties.VideoHeight));
                 }
-                
+
                 foreach (TagLib.ICodec codec in file.Properties.Codecs) {
                     if (codec != null) {
                         /* Translators: {0} is the description of the codec */
-                        AddItem (String.Format (Catalog.GetString ("{0} Codec:"), 
+                        AddItem (String.Format (Catalog.GetString ("{0} Codec:"),
                             codec.MediaTypes.ToString ()), codec.Description);
                     }
                 }
-                
+
                 AddItem (Catalog.GetString ("Container Formats:"), file.TagTypes.ToString ());
                 AddSeparator ();
             }
-            
-            AddItem (Catalog.GetString ("Imported On:"), track.DateAdded > DateTime.MinValue 
+
+            AddItem (Catalog.GetString ("Imported On:"), track.DateAdded > DateTime.MinValue
                 ? track.DateAdded.ToString () : Catalog.GetString ("Unknown"));
-            AddItem (Catalog.GetString ("Last Played:"), track.LastPlayed > DateTime.MinValue 
+            AddItem (Catalog.GetString ("Last Played:"), track.LastPlayed > DateTime.MinValue
                 ? track.LastPlayed.ToString () : Catalog.GetString ("Unknown"));
-            AddItem (Catalog.GetString ("Last Skipped:"), track.LastSkipped > DateTime.MinValue 
+            AddItem (Catalog.GetString ("Last Skipped:"), track.LastSkipped > DateTime.MinValue
                 ? track.LastSkipped.ToString () : Catalog.GetString ("Unknown"));
             AddItem (Catalog.GetString ("Play Count:"), track.PlayCount);
             AddItem (Catalog.GetString ("Skip Count:"), track.SkipCount);
             AddItem (Catalog.GetString ("Score:"), track.Score);
         }
-        
+
         private void AddFileSizeItem (long bytes)
         {
             Hyena.Query.FileSizeQueryValue value = new Hyena.Query.FileSizeQueryValue (bytes);
-            AddItem (Catalog.GetString ("File Size:"), String.Format ("{0} ({1} {2})", 
+            AddItem (Catalog.GetString ("File Size:"), String.Format ("{0} ({1} {2})",
                 value.ToUserQuery (), bytes, Catalog.GetString ("bytes")));
         }
 
@@ -224,7 +224,7 @@ namespace Banshee.Gui.TrackEditor
                 view.Model = model;
             }
         }
-        
+
         public void AddItem (string name, object value)
         {
             CreateModel ();
@@ -238,23 +238,23 @@ namespace Banshee.Gui.TrackEditor
             CreateModel ();
             model.AppendValues (String.Empty, String.Empty, true);
         }
-        
+
         public int Order {
             get { return 40; }
         }
-        
+
         public string Title {
             get { return Catalog.GetString ("Properties"); }
         }
-        
-        public PageType PageType { 
+
+        public PageType PageType {
             get { return PageType.View; }
         }
-        
-        public Gtk.Widget TabWidget { 
+
+        public Gtk.Widget TabWidget {
             get { return null; }
         }
-        
+
         public Gtk.Widget Widget {
             get { return this; }
         }

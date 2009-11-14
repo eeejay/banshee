@@ -40,41 +40,41 @@ using Banshee.Sources.Gui;
 namespace Banshee.NowPlaying
 {
     public class NowPlayingInterface : VBox, ISourceContents
-    {   
+    {
         private NowPlayingSource source;
         private Hyena.Widgets.RoundedFrame frame;
         private Gtk.Window video_window;
         private FullscreenAdapter fullscreen_adapter;
         private ScreensaverManager screensaver;
         private NowPlayingContents contents;
-        
+
         public NowPlayingInterface ()
         {
             GtkElementsService service = ServiceManager.Get<GtkElementsService> ();
-            
+
             contents = new NowPlayingContents ();
-            
+
             // This is my really sweet hack - it's where the video widget
             // is sent when the source is not active. This keeps the video
             // widget from being completely destroyed, causing problems with
             // its internal windowing and GstXOverlay. It's also conveniently
-            // the window that is used to do fullscreen video. Sweeeeeeeeeet. 
+            // the window that is used to do fullscreen video. Sweeeeeeeeeet.
             video_window = new FullscreenWindow (service.PrimaryWindow);
             video_window.Hidden += OnFullscreenWindowHidden;
             video_window.Realize ();
             video_window.Add (contents);
-            
+
             frame = new Hyena.Widgets.RoundedFrame ();
             frame.SetFillColor (new Cairo.Color (0, 0, 0));
             frame.DrawBorder = false;
             frame.Show ();
-            
+
             PackStart (frame, true, true, 0);
-            
+
             fullscreen_adapter = new FullscreenAdapter ();
             screensaver = new ScreensaverManager ();
         }
-        
+
         public override void Dispose ()
         {
             base.Dispose ();
@@ -88,7 +88,7 @@ namespace Banshee.NowPlaying
                 contents.Reparent (video_window);
             }
         }
-        
+
         private void MoveVideoInternal ()
         {
             if (contents.Parent != frame) {
@@ -96,13 +96,13 @@ namespace Banshee.NowPlaying
                 contents.Show ();
             }
         }
-        
+
         protected override void OnRealized ()
         {
             base.OnRealized ();
             MoveVideoInternal ();
         }
-        
+
         protected override void OnUnrealized ()
         {
             MoveVideoExternal (false);
@@ -125,12 +125,12 @@ namespace Banshee.NowPlaying
         internal void OverrideFullscreen ()
         {
             FullscreenHandler (false);
-            
-            InterfaceActionService service = ServiceManager.Get<InterfaceActionService> (); 
+
+            InterfaceActionService service = ServiceManager.Get<InterfaceActionService> ();
             if (service == null || service.ViewActions == null) {
                 return;
             }
-            
+
             previous_fullscreen_handler = service.ViewActions.Fullscreen;
             service.ViewActions.Fullscreen = FullscreenHandler;
             DisableFullscreenAction ();
@@ -139,15 +139,15 @@ namespace Banshee.NowPlaying
         internal void RelinquishFullscreen ()
         {
             FullscreenHandler (false);
-            
-            InterfaceActionService service = ServiceManager.Get<InterfaceActionService> (); 
+
+            InterfaceActionService service = ServiceManager.Get<InterfaceActionService> ();
             if (service == null || service.ViewActions == null) {
                 return;
             }
-            
+
             service.ViewActions.Fullscreen = previous_fullscreen_handler;
         }
-        
+
         private void OnFullscreenWindowHidden (object o, EventArgs args)
         {
             MoveVideoInternal ();
@@ -168,11 +168,11 @@ namespace Banshee.NowPlaying
                 video_window.Hide ();
             }
         }
-        
+
 #endregion
-        
+
 #region ISourceContents
-        
+
         public bool SetSource (ISource src)
         {
             this.source = source as NowPlayingSource;
@@ -191,7 +191,7 @@ namespace Banshee.NowPlaying
         public Widget Widget {
             get { return this; }
         }
-        
+
 #endregion
 
     }

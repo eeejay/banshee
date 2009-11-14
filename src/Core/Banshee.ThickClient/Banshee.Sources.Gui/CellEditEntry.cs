@@ -35,12 +35,12 @@ namespace Banshee.Sources.Gui
     {
         public string path;
         private bool fired_edit_done = false;
-    
+
         public CellEditEntry () : base ()
         {
             MaxLength = 256;
         }
-        
+
         protected override bool OnFocusOutEvent (Gdk.EventFocus focus)
         {
             if (!fired_edit_done) {
@@ -49,7 +49,7 @@ namespace Banshee.Sources.Gui
             RemoveWidget ();
             return base.OnFocusOutEvent (focus);
         }
-        
+
         protected override void OnEditingDone ()
         {
             fired_edit_done = true;

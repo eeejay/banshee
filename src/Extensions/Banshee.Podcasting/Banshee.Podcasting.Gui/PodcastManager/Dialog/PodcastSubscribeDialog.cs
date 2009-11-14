@@ -5,24 +5,24 @@
  *  Written by Mike Urbanski <michael.c.urbanski@gmail.com>
  ****************************************************************************/
 
-/*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
+/*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW:
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
- *  copy of this software and associated documentation files (the "Software"),  
- *  to deal in the Software without restriction, including without limitation  
- *  the rights to use, copy, modify, merge, publish, distribute, sublicense,  
- *  and/or sell copies of the Software, and to permit persons to whom the  
+ *  copy of this software and associated documentation files (the "Software"),
+ *  to deal in the Software without restriction, including without limitation
+ *  the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ *  and/or sell copies of the Software, and to permit persons to whom the
  *  Software is furnished to do so, subject to the following conditions:
  *
- *  The above copyright notice and this permission notice shall be included in 
+ *  The above copyright notice and this permission notice shall be included in
  *  all copies or substantial portions of the Software.
  *
- *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
- *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
- *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
- *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
- *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
- *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  *  DEALINGS IN THE SOFTWARE.
  */
 
@@ -46,7 +46,7 @@ namespace Banshee.Podcasting.Gui
     {
         private Entry url_entry;
         private Gtk.AccelGroup accelGroup;
-        private SyncPreferenceComboBox syncCombo;        
+        private SyncPreferenceComboBox syncCombo;
 
         public string Url {
             get { return url_entry.Text; }
@@ -78,11 +78,11 @@ namespace Banshee.Podcasting.Gui
             box.Spacing = 12;
 
             Image image = new Image (IconThemeUtils.LoadIcon (48, "podcast"));
-            
+
             image.Yalign = 0.0f;
-            
+
             box.PackStart(image, false, true, 0);
-            
+
             VBox contentBox = new VBox();
             contentBox.Spacing = 12;
 
@@ -91,7 +91,7 @@ namespace Banshee.Podcasting.Gui
                 "<big><b>{0}</b></big>",
                 GLib.Markup.EscapeText (Catalog.GetString ("Subscribe to New Podcast"))
             );
-            
+
             header.Justify = Justification.Left;
             header.SetAlignment (0.0f, 0.0f);
 
@@ -99,7 +99,7 @@ namespace Banshee.Podcasting.Gui
             message.Markup = Catalog.GetString (
                 "Please enter the URL of the podcast to which you would like to subscribe."
             );
-            
+
             message.Wrap = true;
 
             VBox sync_vbox = new VBox ();
@@ -111,7 +111,7 @@ namespace Banshee.Podcasting.Gui
             Label sync_text = new Label (
                 Catalog.GetString ("When new episodes are available:  ")
             );
-            
+
             sync_text.SetAlignment (0.0f, 0.0f);
             sync_text.Justify = Justification.Left;
 
@@ -142,7 +142,7 @@ namespace Banshee.Podcasting.Gui
             table.RowSpacing = 6;
             table.ColumnSpacing = 12;
 
-            table.Attach ( 
+            table.Attach (
                 new Label (Catalog.GetString ("URL:")), 0, 1, 0, 1,
                 AttachOptions.Shrink, AttachOptions.Shrink, 0, 0
             );
@@ -150,7 +150,7 @@ namespace Banshee.Podcasting.Gui
             table.Attach (
                 url_entry, 1, 2, 0, 1,
                 AttachOptions.Expand | AttachOptions.Fill,
-                AttachOptions.Shrink, 0, 0            
+                AttachOptions.Shrink, 0, 0
             );
 
             table.Attach (
@@ -168,7 +168,7 @@ namespace Banshee.Podcasting.Gui
 
             AddButton (Gtk.Stock.Cancel, Gtk.ResponseType.Cancel, true);
             AddButton (Catalog.GetString ("Subscribe"), ResponseType.Ok, true);
-            
+
             box.ShowAll ();
             VBox.Add (box);
         }
@@ -185,7 +185,7 @@ namespace Banshee.Podcasting.Gui
                 DefaultResponse = response;
 
                 button.AddAccelerator (
-                    "activate", accelGroup, 
+                    "activate", accelGroup,
                     (uint) Gdk.Key.Escape, 0, Gtk.AccelFlags.Visible
                 );
             }

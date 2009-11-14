@@ -37,7 +37,7 @@ namespace Banshee.PlaybackController
     internal class PlaybackControllerDatabaseStack : IStackProvider<TrackInfo>
     {
         private Stack<TrackInfo> stack = new Stack<TrackInfo> ();
-    
+
     	public TrackInfo Peek ()
     	{
     	    return stack.Peek ();

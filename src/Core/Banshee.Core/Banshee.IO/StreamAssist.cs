@@ -37,7 +37,7 @@ namespace Banshee.IO
         {
             Save (from, to, 8192, true);
         }
-        
+
         public static void Save (Stream from, Stream to, bool close)
         {
             Save (from, to, 8192, close);
@@ -49,7 +49,7 @@ namespace Banshee.IO
                 long bytes_read = 0;
                 byte [] buffer = new byte[bufferSize];
                 int chunk_bytes_read = 0;
-                
+
                 while ((chunk_bytes_read = from.Read (buffer, 0, buffer.Length)) > 0) {
                     to.Write (buffer, 0, chunk_bytes_read);
                     bytes_read += chunk_bytes_read;

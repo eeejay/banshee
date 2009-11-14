@@ -36,40 +36,40 @@ namespace Hyena.SExpEngine
     {
         private string [] names;
         private bool evaluate_variables;
-        
+
         public FunctionAttribute(params string [] names)
         {
             this.evaluate_variables = true;
             this.names = names;
         }
-        
+
         public FunctionAttribute(bool evaluateVariables, params string [] names)
         {
             this.evaluate_variables = evaluateVariables;
             this.names = names;
         }
-        
+
         public string [] Names {
             get { return names; }
         }
-        
+
         public bool EvaluateVariables {
             get { return evaluate_variables; }
         }
     }
-    
+
     public abstract class FunctionSet
     {
         private EvaluatorBase evaluator;
-        
+
         public void Load(EvaluatorBase evaluator)
         {
             this.evaluator = evaluator;
-            
+
             foreach(MethodInfo method in GetType().GetMethods()) {
                 string [] names = null;
                 bool evaluate_variables = true;
-                
+
                 foreach(Attribute attr in method.GetCustomAttributes(false)) {
                     if(attr is FunctionAttribute) {
                         names = (attr as FunctionAttribute).Names;
@@ -77,20 +77,20 @@ namespace Hyena.SExpEngine
                         break;
                     }
                 }
-                
+
                 if(names == null || names.Length == 0) {
                     continue;
                 }
-                
+
                 evaluator.RegisterFunction(this, method, names, evaluate_variables);
             }
         }
-        
+
         public TreeNode Evaluate(TreeNode node)
         {
             return evaluator.Evaluate(node);
         }
-        
+
         protected EvaluatorBase Evaluator {
             get { return evaluator; }
         }

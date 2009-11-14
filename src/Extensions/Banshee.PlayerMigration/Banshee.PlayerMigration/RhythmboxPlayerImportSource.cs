@@ -83,7 +83,7 @@ namespace Banshee.PlayerMigration
                 LogError (SafeUri.UriToFilename (db_uri), "Unable to open Rhythmbox library.");
                 return;
             }
-            
+
             count = db_root.ChildNodes.Count;
             processed = 0;
 
@@ -106,7 +106,7 @@ namespace Banshee.PlayerMigration
             }
 
             XmlElement playlists_root = null;
-            
+
             if (playlists_available) {
                 if (IsValidXmlDocument (rhythmbox_playlists_uri)) {
                     Stream stream_playlists = Banshee.IO.File.OpenRead (rhythmbox_playlists_uri);
@@ -114,7 +114,7 @@ namespace Banshee.PlayerMigration
                     xml_doc_playlists.Load (stream_playlists);
                     playlists_root = xml_doc_playlists.DocumentElement;
                     stream_playlists.Close ();
- 
+
                     if (playlists_root == null || !playlists_root.HasChildNodes || playlists_root.Name != "rhythmdb-playlists") {
                         playlists_available = false;
                     } else {
@@ -129,7 +129,7 @@ namespace Banshee.PlayerMigration
             ImportSongs (import_manager, db_root.SelectNodes ("/rhythmdb/entry[@type='song']"));
 
             //ImportPodcasts (import_manager, db_root.SelectNodes ("/rhythmdb/entry[@type='podcast-post']"));
-            
+
             if (playlists_available) {
                 ImportStaticPlaylists(playlists_root.SelectNodes ("/rhythmdb-playlists/playlist[@type='static']"));
             }
@@ -162,7 +162,7 @@ namespace Banshee.PlayerMigration
                 }
 
                 processed++;
-                    
+
                 string title = String.Empty,
                        genre = String.Empty,
                        artist = String.Empty,
@@ -222,7 +222,7 @@ namespace Banshee.PlayerMigration
                         // parsing InnerText failed
                     }
                 }
-                
+
                 if (uri == null) {
                     continue;
                 }
@@ -231,7 +231,7 @@ namespace Banshee.PlayerMigration
 
                 try {
                     DatabaseTrackInfo track = manager.ImportTrack (uri);
-                    
+
                     if (track == null) {
                         LogError (SafeUri.UriToFilename (uri), Catalog.GetString ("Unable to import song."));
                         continue;
@@ -244,11 +244,11 @@ namespace Banshee.PlayerMigration
                     track.TrackNumber = track_number;
                     track.Year = year;
                     track.DateAdded = date_added;
-                    
+
                     track.Rating = (rating >= 0 && rating <= 5) ? rating : 0;
                     track.PlayCount = (play_count >= 0) ? play_count : 0;
                     track.LastPlayed = last_played;
-                    
+
                     track.Save (false);
                 } catch (Exception e) {
                     LogError (SafeUri.UriToFilename (uri), e);
@@ -267,7 +267,7 @@ namespace Banshee.PlayerMigration
                 }
 
                 processed++;
-                    
+
                 string title = String.Empty, feed = String.Empty;
                 SafeUri uri = null;
 
@@ -292,7 +292,7 @@ namespace Banshee.PlayerMigration
                         // parsing InnerText failed
                     }
                 }
-                
+
                 if (uri == null) {
                     continue;
                 }
@@ -301,16 +301,16 @@ namespace Banshee.PlayerMigration
 
                 try {
                     DatabaseTrackInfo track = manager.ImportTrack (uri);
-                    
+
                     if (track == null) {
                         LogError (SafeUri.UriToFilename (uri), Catalog.GetString ("Unable to import podcast."));
                         continue;
                     }
-                    
+
                     track.TrackTitle = title;
                     track.AlbumTitle = feed;
                     track.Genre = "Podcast";
-                    
+
                     track.Save (false);
                 } catch (Exception e) {
                     LogError (SafeUri.UriToFilename (uri), e);
@@ -326,34 +326,34 @@ namespace Banshee.PlayerMigration
                 }
 
                 processed++;
-                
+
                 try {
                     string title = String.Empty;
                     if (list.HasAttribute ("name")) {
                         title = list.GetAttribute ("name");
                     }
-                    
+
                     UpdateUserJob (processed, count, "", title);
-        
+
                     PlaylistSource playlist = new PlaylistSource (title, ServiceManager.SourceManager.MusicLibrary);
                     playlist.Save ();
                     ServiceManager.SourceManager.MusicLibrary.AddChildSource (playlist);
-        
-                    
+
+
                     HyenaSqliteCommand insert_command = new HyenaSqliteCommand (String.Format (
                         @"INSERT INTO CorePlaylistEntries (PlaylistID, TrackID) VALUES ({0}, ?)", playlist.DbId));
-        
+
                     foreach (XmlElement entry in list.ChildNodes) {
                         if (entry.Name != "location") {
                             continue;
                         }
-                        
+
                         int track_id = ServiceManager.SourceManager.MusicLibrary.GetTrackIdForUri (entry.InnerText);
                         if (track_id > 0) {
                             ServiceManager.DbConnection.Execute (insert_command, track_id);
                         }
                     }
-                            
+
                     playlist.Reload ();
                     playlist.NotifyUser ();
                 } catch (Exception e) {
@@ -361,11 +361,11 @@ namespace Banshee.PlayerMigration
                 }
             }
         }
-        
+
         public override bool CanImport {
             get { return Banshee.IO.File.Exists (rhythmbox_db_uri) || Banshee.IO.File.Exists (rhythmbox_db_uri_old); }
         }
-        
+
         public override string Name {
             get { return Catalog.GetString ("Rhythmbox Music Player"); }
         }
@@ -373,7 +373,7 @@ namespace Banshee.PlayerMigration
         public override string [] IconNames {
             get { return new string [] { "rhythmbox", "system-search" }; }
         }
-        
+
         public override int SortOrder {
             get { return 40; }
         }

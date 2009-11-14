@@ -42,17 +42,17 @@ namespace Banshee.MediaEngine
     {
         public const int VolumeDelta = 10;
         public const int SkipDelta = 10;
-    
+
         public event PlayerEventHandler EventChanged;
-        
+
         private TrackInfo current_track;
         private SafeUri current_uri;
         private PlayerState current_state = PlayerState.NotReady;
         private PlayerState last_state = PlayerState.NotReady;
-        
+
         // will be changed to PlayerState.Idle after going to PlayerState.Ready
-        private PlayerState idle_state = PlayerState.NotReady; 
-        
+        private PlayerState idle_state = PlayerState.NotReady;
+
         protected abstract void OpenUri (SafeUri uri);
 
         internal protected virtual bool DelayedInitialize {
@@ -71,30 +71,30 @@ namespace Banshee.MediaEngine
             current_uri = null;
             OnStateChanged (idle_state);
         }
-        
+
         public virtual void Close (bool fullShutdown)
         {
             OnStateChanged (idle_state);
         }
-        
+
         public virtual void Dispose ()
         {
             Close (true);
         }
-        
+
         public void Open (TrackInfo track)
         {
             current_uri = track.Uri;
             current_track = track;
-            
+
             HandleOpen (track.Uri);
         }
-        
+
         public void Open (SafeUri uri)
         {
             current_uri = uri;
             current_track = new UnknownTrackInfo (uri);
-            
+
             HandleOpen (uri);
         }
 
@@ -103,7 +103,7 @@ namespace Banshee.MediaEngine
             if (current_state != PlayerState.Idle && current_state != PlayerState.NotReady && current_state != PlayerState.Contacting) {
                 Close (false);
             }
-        
+
             try {
                 OnStateChanged (PlayerState.Loading);
                 OpenUri (uri);
@@ -112,7 +112,7 @@ namespace Banshee.MediaEngine
                 OnEventChanged (new PlayerEventErrorArgs (e.Message));
             }
         }
-        
+
         public abstract void Play ();
 
         public abstract void Pause ();
@@ -121,46 +121,46 @@ namespace Banshee.MediaEngine
         {
             throw new NotImplementedException ("Engine must implement VideoExpose since this method only gets called when SupportsVideo is true");
         }
-        
+
         public virtual IntPtr [] GetBaseElements ()
         {
             return null;
         }
-        
+
         protected virtual void OnStateChanged (PlayerState state)
         {
             if (current_state == state) {
                 return;
             }
-            
+
             if (idle_state == PlayerState.NotReady && state != PlayerState.Ready) {
                 Hyena.Log.Warning ("Engine must transition to the ready state before other states can be entered", false);
                 return;
             } else if (idle_state == PlayerState.NotReady && state == PlayerState.Ready) {
                 idle_state = PlayerState.Idle;
             }
-            
+
             last_state = current_state;
             current_state = state;
-            
+
             Log.DebugFormat ("Player state change: {0} -> {1}", last_state, current_state);
-            
+
             OnEventChanged (new PlayerEventStateChangeArgs (last_state, current_state));
-            
+
             // Going to the Ready state automatically transitions to the Idle state
             // The Ready state is advertised so one-time startup processes can easily
             // happen outside of the engine itself
-            
+
             if (state == PlayerState.Ready) {
                 OnStateChanged (PlayerState.Idle);
             }
         }
-        
+
         protected void OnEventChanged (PlayerEvent evnt)
         {
             OnEventChanged (new PlayerEventArgs (evnt));
         }
-        
+
         protected virtual void OnEventChanged (PlayerEventArgs args)
         {
             if (ThreadAssist.InMainThread) {
@@ -171,7 +171,7 @@ namespace Banshee.MediaEngine
                 });
             }
         }
-        
+
         private void RaiseEventChanged (PlayerEventArgs args)
         {
             PlayerEventHandler handler = EventChanged;
@@ -179,9 +179,9 @@ namespace Banshee.MediaEngine
                 handler (args);
             }
         }
-        
+
         private uint track_info_updated_timeout = 0;
-        
+
         protected void OnTagFound (StreamTag tag)
         {
             if (tag.Equals (StreamTag.Zero) || current_track == null || current_track.Uri.IsFile) {
@@ -189,82 +189,82 @@ namespace Banshee.MediaEngine
             }
 
             StreamTagger.TrackInfoMerge (current_track, tag);
-            
+
             if (track_info_updated_timeout <= 0) {
                 track_info_updated_timeout = Application.RunTimeout (250, OnTrackInfoUpdated);
             }
         }
-        
+
         private bool OnTrackInfoUpdated ()
         {
             TrackInfoUpdated ();
             track_info_updated_timeout = 0;
             return false;
         }
-        
+
         public void TrackInfoUpdated ()
         {
             OnEventChanged (PlayerEvent.TrackInfoUpdated);
         }
-        
+
         public TrackInfo CurrentTrack {
             get { return current_track; }
         }
-        
+
         public SafeUri CurrentUri {
             get { return current_uri; }
         }
-        
+
         public PlayerState CurrentState {
             get { return current_state; }
         }
-        
+
         public PlayerState LastState {
             get { return last_state; }
         }
-        
+
         public abstract ushort Volume {
             get;
             set;
         }
-        
+
         public virtual bool CanSeek {
             get { return true; }
         }
-        
+
         public abstract uint Position {
             get;
             set;
         }
-        
+
         public abstract uint Length {
             get;
         }
-        
+
         public abstract IEnumerable SourceCapabilities {
             get;
         }
-        
+
         public abstract IEnumerable ExplicitDecoderCapabilities {
             get;
         }
-        
+
         public abstract string Id {
             get;
         }
-        
+
         public abstract string Name {
             get;
         }
-        
+
         public abstract bool SupportsEqualizer {
             get;
         }
-        
+
         public abstract VideoDisplayContextType VideoDisplayContextType {
             get;
         }
-        
+
         public virtual IntPtr VideoDisplayContext {
             set { }
             get { return IntPtr.Zero; }

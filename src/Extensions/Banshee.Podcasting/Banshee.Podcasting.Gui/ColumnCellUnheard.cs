@@ -49,7 +49,7 @@ namespace Banshee.Podcasting.Gui
         public ColumnCellUnheard () : base (null, true)
         {
         }
-    
+
         protected override string GetText (object obj)
         {
             OldNewFilter val = (OldNewFilter) obj;

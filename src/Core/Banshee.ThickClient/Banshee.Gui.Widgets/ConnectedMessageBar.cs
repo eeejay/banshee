@@ -42,66 +42,66 @@ namespace Banshee.Gui.Widgets
     public class ConnectedMessageBar : MessageBar
     {
         private Source source;
-        
+
         private class ActionButton : Button
         {
             private MessageAction action;
-            
+
             public ActionButton (MessageAction action) : base (action.Label)
             {
                 this.action = action;
             }
-            
+
             protected override void OnClicked ()
             {
                 action.Activate ();
             }
         }
-        
+
         public ConnectedMessageBar ()
         {
             CloseClicked += OnCloseClicked;
             ServiceManager.SourceManager.ActiveSourceChanged += OnActiveSourceChanged;
             ConnectSource (ServiceManager.SourceManager.ActiveSource);
-            
+
             LeftPadding = 15;
         }
-        
+
         private void ConnectSource (Source source)
         {
             if (source == this.source)
                 return;
 
             this.source = source;
-            
+
             if (this.source != null) {
                 this.source.MessageNotify += OnSourceMessageNotify;
                 Update ();
             }
         }
-        
+
         private void Update ()
         {
             ThreadAssist.ProxyToMain (InnerUpdate);
         }
-        
+
         private void InnerUpdate ()
         {
             if (source == null || source.CurrentMessage == null || source.CurrentMessage.IsHidden) {
                 Hide ();
                 return;
             }
-            
+
             Message = source.CurrentMessage.Text;
             Pixbuf = null;
             ShowCloseButton = source.CurrentMessage.CanClose;
             Spinning = source.CurrentMessage.IsSpinning;
-            
+
             Pixbuf = source.CurrentMessage.IconNames == null ? null :
                 IconThemeUtils.LoadIcon (22, source.CurrentMessage.IconNames);
-            
+
             ClearButtons ();
-            
+
             if (source.CurrentMessage.Actions != null) {
                 foreach (MessageAction action in source.CurrentMessage.Actions) {
                     Button button = new ActionButton (action);
@@ -109,24 +109,24 @@ namespace Banshee.Gui.Widgets
                     AddButton (button);
                 }
             }
-            
+
             Show ();
         }
-        
+
         private void OnCloseClicked (object o, EventArgs args)
         {
             source.CurrentMessage.IsHidden = true;
         }
-        
+
         private void OnActiveSourceChanged (SourceEventArgs args)
         {
             if (source != null && source != args.Source) {
                 source.MessageNotify -= OnSourceMessageNotify;
             }
-            
+
             ConnectSource (args.Source);
         }
-        
+
         private void OnSourceMessageNotify (object o, EventArgs args)
         {
             Update ();

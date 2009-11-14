@@ -40,20 +40,20 @@ namespace Banshee.Base.Tests
         {
             Assert.AreEqual (expected, CoverArtSpec.EscapePart (original));
         }
-        
+
         [Test]
         public void TestEmpty ()
         {
             AssertEscaped (null, null);
             AssertEscaped ("", null);
         }
-        
+
         [Test]
         public void TestLowercased ()
         {
             AssertEscaped ("A", "a");
         }
-        
+
         [Test]
         public void TestUnwanted ()
         {
@@ -76,12 +76,12 @@ namespace Banshee.Base.Tests
             AssertEscaped ("`", "");
             AssertEscaped ("'", "");
             AssertEscaped ("\"", "");
-            
+
             // Banshee-specific: strip *everything* non-ASCII
             AssertEscaped ("\u00e9toile", "toile");
             AssertEscaped ("e\u0301", "e");
         }
-        
+
         [Test]
         public void TestStripNotes ()
         {

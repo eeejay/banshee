@@ -1,4 +1,4 @@
-// 
+//
 // TrackFilterType.cs
 //
 // Author:

@@ -43,24 +43,24 @@ namespace Banshee.Preferences.Gui
     public class PreferenceDialog : BansheeDialog
     {
         private PreferenceService service;
-        
+
         private Dictionary<string, NotebookPage> pages = new Dictionary<string, NotebookPage> ();
         private Notebook notebook;
-        
+
         public PreferenceDialog () : base (Catalog.GetString ("Preferences"))
         {
             service = ServiceManager.Get<PreferenceService> ();
-            
+
             if (service == null) {
-                Log.Error (Catalog.GetString ("Could not show preferences"), 
+                Log.Error (Catalog.GetString ("Could not show preferences"),
                     Catalog.GetString ("The preferences service could not be found."), true);
-                
+
                 throw new ApplicationException ();
             }
-            
+
             DefaultPreferenceWidgets.Load (service);
             service.RequestWidgetAdapters ();
-            
+
             BuildDialog ();
             LoadPages ();
         }
@@ -81,40 +81,40 @@ namespace Banshee.Preferences.Gui
                 }
             }
         }
-        
+
         private void BuildDialog ()
         {
             SetDefaultSize (-1, 400);
 
             AddDefaultCloseButton ();
-            
+
             if (service.Count > 1) {
                 notebook = new Notebook ();
                 notebook.Show ();
-            
+
                 VBox.PackStart (notebook, true, true, 0);
             }
         }
-        
+
         private void LoadPages ()
         {
             foreach (Page page in service) {
                 LoadPage (page);
             }
         }
-        
+
         private void LoadPage (Page page)
         {
             if (pages.ContainsKey (page.Id)) {
-                Log.Warning (String.Format ("Preferences notebook already contains a page with the id `{0}'", 
+                Log.Warning (String.Format ("Preferences notebook already contains a page with the id `{0}'",
                     page.Id), false);
                 return;
             }
-            
+
             NotebookPage page_ui = new NotebookPage (page);
             page_ui.Show ();
             pages.Add (page.Id, page_ui);
-            
+
             if (service.Count == 1) {
                 VBox.PackStart (page_ui, false, false, 0);
             } else {

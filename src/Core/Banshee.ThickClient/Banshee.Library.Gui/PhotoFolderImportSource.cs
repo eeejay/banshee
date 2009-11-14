@@ -37,18 +37,18 @@ namespace Banshee.Library.Gui
     public class PhotoFolderImportSource : IImportSource
     {
         private string [] photo_folders;
-        
+
         public PhotoFolderImportSource ()
         {
             string personal = Environment.GetFolderPath (Environment.SpecialFolder.Personal);
             string desktop = Environment.GetFolderPath (Environment.SpecialFolder.Desktop);
-            
+
             photo_folders = new string [] {
                 Environment.GetFolderPath (Environment.SpecialFolder.MyPictures),
                 Paths.Combine (desktop, "Photos"), Paths.Combine (desktop, "photos"),
                 Paths.Combine (personal, "Photos"), Paths.Combine (personal, "photos")
             };
-            
+
             // Make sure we don't accidentally scan the entire home or desktop directory
             for (int i = 0; i < photo_folders.Length; i++) {
                 if (photo_folders[i] == personal || photo_folders[i] == desktop) {
@@ -56,27 +56,27 @@ namespace Banshee.Library.Gui
                 }
             }
         }
-    
+
         public void Import ()
         {
             Hyena.Log.DebugFormat ("Importing photo folder: {0}", PhotoFolder);
             Banshee.ServiceStack.ServiceManager.Get<LibraryImportManager> ().Enqueue (PhotoFolder);
         }
-        
+
         public string Name {
             get { return Catalog.GetString ("Videos From Photos Folder"); }
         }
 
         public string ImportLabel { get { return null; } }
-        
+
         public string [] IconNames {
             get { return new string [] { "gtk-open" }; }
         }
-        
+
         public bool CanImport {
             get { return PhotoFolder != null; }
         }
-        
+
         private string PhotoFolder {
             get {
                 foreach (string folder in photo_folders) {
@@ -87,7 +87,7 @@ namespace Banshee.Library.Gui
                 return null;
             }
         }
-        
+
         public int SortOrder {
             get { return 0; }
         }

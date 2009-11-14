@@ -37,13 +37,13 @@ namespace Banshee.Equalizer.Gui
         private Scale scale;
         private Label label;
         private object tooltip_host;
-        
+
         public event EventHandler ValueChanged;
-    
+
         public EqualizerBandScale (uint band, int median, int min, int max, string labelText)
         {
             this.band = band;
-            
+
             label = new Label ();
             label.Markup = String.Format ("<small>{0}</small>", GLib.Markup.EscapeText (labelText));
             label.Xalign = 0.0f;
@@ -55,38 +55,38 @@ namespace Banshee.Equalizer.Gui
             scale.DrawValue = false;
             scale.Inverted = true;
             scale.ValueChanged += OnValueChanged;
-            
+
             scale.Show ();
             label.Show ();
-            
+
             PackStart (scale, false, false, 0);
             PackStart (label, false, false, 0);
-            
+
             tooltip_host = Hyena.Gui.TooltipSetter.CreateHost ();
         }
-        
+
         private void OnValueChanged (object o, EventArgs args)
         {
             EventHandler handler = ValueChanged;
             if(handler != null) {
                 handler(this, new EventArgs ());
             }
-            
+
             Hyena.Gui.TooltipSetter.Set (tooltip_host, scale, ((int)Math.Round (scale.Value / 10.0)).ToString ());
         }
-        
+
         public int Value {
             get { return (int)Math.Round (scale.Value); }
             set { scale.Value = (double) value; }
         }
-        
+
         public bool LabelVisible {
             get { return label.Visible; }
             set { label.Visible = value; }
         }
-        
+
         public uint Band {
             get { return band; }
         }
-    }   
+    }
 }

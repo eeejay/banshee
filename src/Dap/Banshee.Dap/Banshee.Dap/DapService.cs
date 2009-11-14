@@ -64,9 +64,9 @@ namespace Banshee.Dap
 
                 sources = new Dictionary<string, DapSource> ();
                 supported_dap_types = new List<TypeExtensionNode> ();
-                
+
                 AddinManager.AddExtensionNodeHandler ("/Banshee/Dap/DeviceClass", OnExtensionChanged);
-                
+
                 ServiceManager.HardwareManager.DeviceAdded += OnHardwareDeviceAdded;
                 ServiceManager.HardwareManager.DeviceRemoved += OnHardwareDeviceRemoved;
                 ServiceManager.HardwareManager.DeviceCommand += OnDeviceCommand;
@@ -75,29 +75,29 @@ namespace Banshee.Dap
             }
         }
 
-        private void OnExtensionChanged (object o, ExtensionNodeEventArgs args) 
+        private void OnExtensionChanged (object o, ExtensionNodeEventArgs args)
         {
             lock (sync) {
                 TypeExtensionNode node = (TypeExtensionNode)args.ExtensionNode;
-                
+
                 if (args.Change == ExtensionChange.Add) {
                     Log.DebugFormat ("Dap support extension loaded: {0}", node.Addin.Id);
                     supported_dap_types.Add (node);
-    
+
                     // See if any existing devices are handled by this new DAP support
                     foreach (IDevice device in ServiceManager.HardwareManager.GetAllDevices ()) {
                         MapDevice (device);
                     }
                 } else if (args.Change == ExtensionChange.Remove) {
                     supported_dap_types.Remove (node);
-                    
+
                     Queue<DapSource> to_remove = new Queue<DapSource> ();
                     foreach (DapSource source in sources.Values) {
                         if (source.AddinId == node.Addin.Id) {
                             to_remove.Enqueue (source);
                         }
                     }
-                    
+
                     while (to_remove.Count > 0) {
                         UnmapDevice (to_remove.Dequeue ().Device.Uuid);
                     }
@@ -113,17 +113,17 @@ namespace Banshee.Dap
                     return;
 
                 AddinManager.RemoveExtensionNodeHandler ("/Banshee/Dap/DeviceClass", OnExtensionChanged);
-                
+
                 ServiceManager.HardwareManager.DeviceAdded -= OnHardwareDeviceAdded;
                 ServiceManager.HardwareManager.DeviceRemoved -= OnHardwareDeviceRemoved;
                 ServiceManager.HardwareManager.DeviceCommand -= OnDeviceCommand;
                 ServiceManager.SourceManager.SourceRemoved -= OnSourceRemoved;
-                
+
                 List<DapSource> dap_sources = new List<DapSource> (sources.Values);
                 foreach (DapSource source in dap_sources) {
                     UnmapDevice (source.Device.Uuid);
                 }
-                
+
                 sources.Clear ();
                 sources = null;
                 supported_dap_types.Clear ();
@@ -131,7 +131,7 @@ namespace Banshee.Dap
                 initialized = false;
             }
         }
-        
+
         private DapSource FindDeviceSource (IDevice device)
         {
             foreach (TypeExtensionNode node in supported_dap_types) {
@@ -148,10 +148,10 @@ namespace Banshee.Dap
                     Log.Exception (e);
                 }
             }
-            
+
             return null;
         }
-        
+
         private void MapDevice (IDevice device)
         {
             Scheduler.Schedule (new MapDeviceJob (this, device));
@@ -171,7 +171,7 @@ namespace Banshee.Dap
             public string Uuid {
                 get { return device.Uuid; }
             }
-            
+
             public void Run ()
             {
                 DapSource source = null;
@@ -180,19 +180,19 @@ namespace Banshee.Dap
                         if (service.sources.ContainsKey (device.Uuid)) {
                             return;
                         }
-                        
+
                         if (device is ICdromDevice || device is IDiscVolume) {
                             return;
                         }
-                        
+
                         if (device is IVolume && (device as IVolume).ShouldIgnore) {
                             return;
                         }
-                        
+
                         if (device.MediaCapabilities == null && !(device is IBlockDevice) && !(device is IVolume)) {
                             return;
                         }
-                        
+
                         source = service.FindDeviceSource (device);
                         if (source != null) {
                             Log.DebugFormat ("Found DAP support ({0}) for device {1}", source.GetType ().FullName, source.Name);
@@ -207,7 +207,7 @@ namespace Banshee.Dap
                     ThreadAssist.ProxyToMain (delegate {
                         ServiceManager.SourceManager.AddSource (source);
                         source.NotifyUser ();
-                        
+
                         // If there are any queued device commands, see if they are to be
                         // handled by this new DAP (e.g. --device-activate=file:///media/disk)
                         try {
@@ -230,7 +230,7 @@ namespace Banshee.Dap
                 }
             }
         }
-        
+
         internal void UnmapDevice (string uuid)
         {
             DapSource source = null;
@@ -261,18 +261,18 @@ namespace Banshee.Dap
                 UnmapDevice (dap_source.Device.Uuid);
             }
         }
-        
+
         private void OnHardwareDeviceAdded (object o, DeviceAddedArgs args)
         {
             MapDevice (args.Device);
         }
-        
+
         private void OnHardwareDeviceRemoved (object o, DeviceRemovedArgs args)
         {
             UnmapDevice (args.DeviceUuid);
         }
-        
-      
+
+
 #region DeviceCommand Handling
 
         private void HandleDeviceCommand (DapSource source, DeviceCommandAction action)
@@ -281,7 +281,7 @@ namespace Banshee.Dap
                 ServiceManager.SourceManager.SetActiveSource (source);
             }
         }
-        
+
         private void OnDeviceCommand (object o, DeviceCommand command)
         {
             lock (this) {
@@ -293,16 +293,16 @@ namespace Banshee.Dap
                         return;
                     }
                 }
-                
+
                 if (unhandled_device_commands == null) {
                     unhandled_device_commands = new List<DeviceCommand> ();
                 }
                 unhandled_device_commands.Add (command);
             }
         }
-        
+
 #endregion
-        
+
         string IService.ServiceName {
             get { return "DapService"; }
         }

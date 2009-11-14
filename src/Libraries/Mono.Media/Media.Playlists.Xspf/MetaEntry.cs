@@ -33,20 +33,20 @@ namespace Media.Playlists.Xspf
     public struct MetaEntry
     {
         public static readonly MetaEntry Zero;
-    
+
         private Uri rel;
         private string value;
-        
+
         public MetaEntry(Uri rel, string value)
         {
             this.rel = rel;
             this.value = value;
         }
-        
+
         public Uri Rel {
             get { return rel; }
         }
-        
+
         public string Value {
             get { return value; }
         }

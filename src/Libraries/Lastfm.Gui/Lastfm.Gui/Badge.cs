@@ -38,10 +38,10 @@ namespace Lastfm.Gui
     {
         private static Gdk.Pixbuf pixbuf = Gdk.Pixbuf.LoadFromResource ("badge.png");
         private static Gdk.Pixbuf pixbuf_hover = Gdk.Pixbuf.LoadFromResource ("badge-hover.png");
-        
+
         private Image image;
         private bool link = true;
-        
+
         public Badge (Account account) : base (account.HomePageUrl)
         {
             image = new Image ();
@@ -49,27 +49,27 @@ namespace Lastfm.Gui
             image.Xalign = 0.0f;
             Image = image;
         }
-                
+
         protected override bool OnEnterNotifyEvent (Gdk.EventCrossing evnt)
         {
             if (link) {
                 (Image as Image).Pixbuf = pixbuf_hover;
             }
-            
+
             return base.OnEnterNotifyEvent (evnt);
         }
 
         protected override bool OnLeaveNotifyEvent (Gdk.EventCrossing evnt)
         {
             (Image as Image).Pixbuf = pixbuf;
-            
+
             return base.OnLeaveNotifyEvent (evnt);
         }
-        
+
         public static Gdk.Pixbuf Pixbuf {
             get { return pixbuf; }
         }
-        
+
         public static Gdk.Pixbuf PixbufHover {
             get { return pixbuf_hover; }
         }

@@ -37,7 +37,7 @@ namespace Banshee.RemoteAudio
         public string Name {
             get { return name; }
         }
-        
+
         private IPAddress host;
         public IPAddress Host {
             get { return host; }

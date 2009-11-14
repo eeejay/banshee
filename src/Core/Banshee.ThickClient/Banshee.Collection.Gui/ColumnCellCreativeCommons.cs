@@ -1,4 +1,4 @@
-// 
+//
 // ColumnCellCreativeCommons.cs
 //
 // Author:
@@ -66,14 +66,14 @@ namespace Banshee.Collection.Gui
 
                 Cairo.Rectangle pixbuf_area = new Cairo.Rectangle (draw_x,
                     (cellHeight - render_pixbuf.Height) / 2, render_pixbuf.Width, render_pixbuf.Height);
-                
+
                 if (!context.Opaque) {
                     context.Context.Save ();
                 }
-                
+
                 Gdk.CairoHelper.SetSourcePixbuf (context.Context, render_pixbuf, pixbuf_area.X, pixbuf_area.Y);
                 context.Context.Rectangle (pixbuf_area);
-                
+
                 if (!context.Opaque) {
                     context.Context.Clip ();
                     context.Context.PaintWithAlpha (0.5);
@@ -99,7 +99,7 @@ namespace Banshee.Collection.Gui
             if (pixbufs == null) {
                 pixbufs = new Gdk.Pixbuf[attributes.Length];
             }
-            
+
             for (int i = 0; i < attributes.Length - 1; i++) {
                 pixbufs[i] = IconThemeUtils.LoadIcon (ICON_SIZE, String.Format ("creative-commons-{0}", attributes[i]));
             }

@@ -81,7 +81,7 @@ namespace Banshee.Gui
                     Catalog.GetString ("New _Smart Playlist _From Search"), null,
                     Catalog.GetString ("Create a new smart playlist from the current search"), OnNewSmartPlaylistFromSearch),*/
 
-                new ActionEntry ("SourceContextMenuAction", null, 
+                new ActionEntry ("SourceContextMenuAction", null,
                     String.Empty, null, null, OnSourceContextMenu),
 
                 new ActionEntry ("ImportSourceAction", null,
@@ -97,15 +97,15 @@ namespace Banshee.Gui
 
                 new ActionEntry ("UnmapSourceAction", null,
                     Catalog.GetString ("Unmap"), "<shift>Delete", null, OnUnmapSource),
-                    
+
                 new ActionEntry ("SourcePropertiesAction", null,
                     Catalog.GetString ("Source Properties"), null, null, OnSourceProperties),
-                    
-                new ActionEntry ("SortChildrenAction", Stock.SortDescending, 
+
+                new ActionEntry ("SortChildrenAction", Stock.SortDescending,
                     Catalog.GetString ("Sort Children by"), null, null,
                     OnSortChildrenMenu),
 
-                new ActionEntry ("SourcePreferencesAction", null, Catalog.GetString ("Preferences"), null, 
+                new ActionEntry ("SourcePreferencesAction", null, Catalog.GetString ("Preferences"), null,
                     Catalog.GetString ("Edit preferences related to this source"), OnSourcePreferences),
 
             });
@@ -122,7 +122,7 @@ namespace Banshee.Gui
                     Catalog.GetString ("Refresh"), null,
                     Catalog.GetString ("Refresh this randomly sorted smart playlist"), OnRefreshSmartPlaylist)
             );
-            
+
             //ServiceManager.SourceManager.SourceUpdated += OnPlayerEngineStateChanged;
             //ServiceManager.SourceManager.SourceViewChanged += OnPlayerEngineStateChanged;
             //ServiceManager.SourceManager.SourceAdded += OnPlayerEngineStateChanged;
@@ -130,18 +130,18 @@ namespace Banshee.Gui
             ServiceManager.SourceManager.ActiveSourceChanged += HandleActiveSourceChanged;
             Actions.GlobalActions["EditMenuAction"].Activated += HandleEditMenuActivated;
         }
-            
+
 #region State Event Handlers
 
         private void HandleActiveSourceChanged (SourceEventArgs args)
         {
             Banshee.Base.ThreadAssist.ProxyToMain (delegate {
                 UpdateActions ();
-                
+
                 if (last_source != null) {
                     last_source.Updated -= HandleActiveSourceUpdated;
                 }
-                
+
                 if (ActiveSource != null) {
                     ActiveSource.Updated += HandleActiveSourceUpdated;
                 }
@@ -152,7 +152,7 @@ namespace Banshee.Gui
         {
             UpdateActions ();
         }
-        
+
         private void HandleActiveSourceUpdated (object o, EventArgs args)
         {
             Banshee.Base.ThreadAssist.ProxyToMain (delegate {
@@ -235,7 +235,7 @@ namespace Banshee.Gui
                 return;
             }
 
-            menu.Show (); 
+            menu.Show ();
             menu.Popup (null, null, null, 0, Gtk.Global.CurrentEventTime);
             menu.SelectionDone += delegate {
                 SourceView.ResetHighlight ();
@@ -265,19 +265,19 @@ namespace Banshee.Gui
 
             string uri = null;
             PlaylistFormatDescription format = null;
-            int response = chooser.Run ();            
-            if (response == (int) ResponseType.Ok) {                    
+            int response = chooser.Run ();
+            if (response == (int) ResponseType.Ok) {
                 uri = chooser.Uri;
                 // Get the format that the user selected.
                 format = chooser.GetExportFormat ();
-            }             
-            chooser.Destroy (); 
+            }
+            chooser.Destroy ();
 
             if (uri == null) {
                 // User cancelled export.
                 return;
             }
-            
+
             try {
                 IPlaylistFormat playlist = (IPlaylistFormat)Activator.CreateInstance (format.Type);
                 SafeUri suri = new SafeUri (uri);
@@ -354,7 +354,7 @@ namespace Banshee.Gui
         {
             UpdateActions (false);
         }
-        
+
         private void UpdateActions (bool force)
         {
             Source source = ActionSource;
@@ -378,7 +378,7 @@ namespace Banshee.Gui
                 UpdateAction ("NewSmartPlaylistAction", playlists_writable, true, source);
                 /*UpdateAction ("NewSmartPlaylistFromSearchAction", (source is LibrarySource || source.Parent is LibrarySource),
                         !String.IsNullOrEmpty (source.FilterQuery), source);*/
-                    
+
                 ActionGroup browser_actions = Actions.FindActionGroup ("BrowserView");
                 if (browser_actions != null) {
                     IFilterableSource filterable_source = source as IFilterableSource;
@@ -390,7 +390,7 @@ namespace Banshee.Gui
 
                 last_source = source;
             }
-            
+
             if (source != null) {
                 UpdateAction ("SortChildrenAction", source.ChildSortTypes.Length > 0 && source.Children.Count > 1, true, source);
             }
@@ -405,11 +405,11 @@ namespace Banshee.Gui
         {
             string key = "no_confirm_unmap_" + source.GetType ().Name.ToLower ();
             bool do_not_ask = ConfigurationClient.Get<bool> ("sources", key, false);
-            
+
             if (do_not_ask) {
                 return true;
             }
-        
+
             Banshee.Widgets.HigMessageDialog dialog = new Banshee.Widgets.HigMessageDialog (
                 ServiceManager.Get<GtkElementsService> ("GtkElementsService").PrimaryWindow,
                 Gtk.DialogFlags.Modal,
@@ -418,9 +418,9 @@ namespace Banshee.Gui
                 String.Format (Catalog.GetString ("Are you sure you want to delete this {0}?"),
                     source.GenericName.ToLower ()),
                 source.Name);
-            
+
             dialog.AddButton (Gtk.Stock.Delete, Gtk.ResponseType.Ok, false);
-            
+
             Gtk.Alignment alignment = new Gtk.Alignment (0.0f, 0.0f, 0.0f, 0.0f);
             alignment.TopPadding = 10;
             Gtk.CheckButton confirm_button = new Gtk.CheckButton (String.Format (Catalog.GetString (
@@ -431,13 +431,13 @@ namespace Banshee.Gui
             alignment.Add (confirm_button);
             alignment.ShowAll ();
             dialog.LabelVBox.PackStart (alignment, false, false, 0);
-            
+
             try {
                 if (dialog.Run () == (int)Gtk.ResponseType.Ok) {
                     ConfigurationClient.Set<bool> ("sources", key, do_not_ask);
                     return true;
                 }
-                
+
                 return false;
             } finally {
                 dialog.Destroy ();
@@ -485,6 +485,6 @@ namespace Banshee.Gui
         }
 
 #endregion
-        
+
     }
 }

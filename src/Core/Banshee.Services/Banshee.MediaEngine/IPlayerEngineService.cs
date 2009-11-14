@@ -1,4 +1,4 @@
-// 
+//
 // IPlayerEngineService.cs
 //
 // Author:
@@ -39,20 +39,20 @@ namespace Banshee.MediaEngine
     {
         event DBusPlayerEventHandler EventChanged;
         event DBusPlayerStateHandler StateChanged;
-    
+
         void Open (string uri);
-        
+
         void Close ();
         void Pause ();
         void Play ();
         void TogglePlaying ();
-        
+
         IDictionary<string, object> CurrentTrack { get; }
         string CurrentUri { get; }
-        
+
         string CurrentState { get; }
         string LastState { get; }
-    
+
         ushort Volume { get; set; }
         uint Position { get; set; }
         bool CanSeek { get; }

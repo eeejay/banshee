@@ -37,8 +37,8 @@ namespace Hyena.SExpEngine
         {
             if(args.Length != 1) {
                 throw new ArgumentException("cast must have only one argument");
-            } 
-            
+            }
+
             TreeNode arg = Evaluate(args[0]);
 
             if(arg is DoubleLiteral) {
@@ -47,34 +47,34 @@ namespace Hyena.SExpEngine
                 return new DoubleLiteral((int)(arg as IntLiteral).Value);
             } else if(arg is StringLiteral) {
                 return new DoubleLiteral(Convert.ToDouble((arg as StringLiteral).Value));
-            } 
-            
+            }
+
             throw new ArgumentException("can only cast double, int, or string literals");
         }
-        
+
         [Function("cast-int")]
         public virtual TreeNode OnCastInt(TreeNode [] args)
         {
             DoubleLiteral result = (DoubleLiteral)OnCastDouble(args);
             return new IntLiteral((int)result.Value);
         }
-        
+
         [Function("cast-bool")]
         public virtual TreeNode OnCastBool(TreeNode [] args)
         {
             DoubleLiteral result = (DoubleLiteral)OnCastDouble(args);
             return new BooleanLiteral((int)result.Value != 0);
         }
-        
+
         [Function("cast-string")]
         public virtual TreeNode OnCastString(TreeNode [] args)
         {
             if(args.Length != 1) {
                 throw new ArgumentException("cast must have only one argument");
             }
-            
+
             TreeNode arg = Evaluate(args[0]);
-            
+
             if(arg is DoubleLiteral) {
                 return new StringLiteral(Convert.ToString((arg as DoubleLiteral).Value));
             } else if(arg is IntLiteral) {
@@ -82,7 +82,7 @@ namespace Hyena.SExpEngine
             } else if(arg is StringLiteral) {
                 return arg;
             }
-            
+
             throw new ArgumentException("can only cast double, int, or string literals");
         }
     }

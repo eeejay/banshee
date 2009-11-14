@@ -26,7 +26,7 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
- 
+
 using System;
 using System.Collections.Generic;
 
@@ -45,7 +45,7 @@ namespace Banshee.Widgets
         public TileView(int initialColumnCount) : base(null, null)
         {
             current_column_count = initialColumnCount;
-            
+
             Table table = new Table(1, 1, true);
 
             table.Show();
@@ -54,7 +54,7 @@ namespace Banshee.Widgets
 
             Show ();
         }
-        
+
         public void AddWidget(Widget widget)
         {
             widgets.Add(widget);
@@ -66,7 +66,7 @@ namespace Banshee.Widgets
             widgets.Remove(widget);
             LayoutTableDefault(cached_tables[0], widgets);
         }
-        
+
         public void ClearWidgets()
         {
             widgets.Clear();
@@ -76,7 +76,7 @@ namespace Banshee.Widgets
         protected override void OnSizeAllocated(Gdk.Rectangle allocation)
         {
             Widget child = null;
-            
+
             if(Children != null && Children.Length > 0) {
                 child = Children[0];
             }
@@ -86,10 +86,10 @@ namespace Banshee.Widgets
                 SetSize((uint)allocation.Width, (uint)allocation.Height);
                 return;
             }
-            
+
             if(cached_tables.Count == 0) {
                 base.OnSizeAllocated(allocation);
-                
+
                 Gdk.Rectangle child_allocation;
                 child_allocation.X = 0;
                 child_allocation.Y = 0;
@@ -100,16 +100,16 @@ namespace Banshee.Widgets
                 SetSize((uint)child_allocation.Width, (uint)child_allocation.Height);
                 return;
             }
-            
+
             Table first_table = cached_tables[0];
             int usable_area = allocation.Width - (child.Requisition.Width - first_table.Requisition.Width);
             int new_column_count = RelayoutTablesIfNeeded(usable_area, current_column_count);
-            
+
             if(current_column_count != new_column_count) {
                 child.SizeRequest();
                 current_column_count = new_column_count;
             }
-            
+
             base.OnSizeAllocated(allocation);
             SetSizeRequest (child.Allocation.Width, child.Allocation.Height);
             SetSize ((uint)child.Allocation.Width, (uint)child.Allocation.Height);
@@ -120,38 +120,38 @@ namespace Banshee.Widgets
             if(widget.Children == null) {
                 return;
             }
-            
+
             while(widget.Children.Length > 0) {
                 widget.Remove(widget.Children[0]);
             }
         }
-        
+
         private void ResizeTable(Table table, int columns, IList<Widget> list)
         {
             RemoveContainerEntries(table);
-            
+
             double rows = (double)list.Count / (double)columns;
             double remainder = rows - (int)rows;
-            
+
             if(remainder != 0.0) {
                 rows++;
             }
-            
+
             if(rows > 0 && columns > 0) {
                 table.Resize((uint)rows, (uint)columns);
             }
         }
-        
+
         private void RelayoutTable(Table table, IList<Widget> widgets)
         {
             uint maxcols = table.NColumns;
             uint row = 0, col = 0;
-            
+
             foreach(Widget widget in widgets) {
                 table.Attach(widget, col, col + 1, row, row + 1,
                     AttachOptions.Expand | AttachOptions.Fill,
                     AttachOptions.Expand | AttachOptions.Fill, 0, 0);
-                
+
                 if(++col == maxcols) {
                     col = 0;
                     row++;
@@ -164,7 +164,7 @@ namespace Banshee.Widgets
             ResizeTable(table, current_column_count, widgets);
             RelayoutTable(table, widgets);
         }
-        
+
         private void RelayoutTables(int columnCount)
         {
             foreach(Table table in cached_tables) {
@@ -197,12 +197,12 @@ namespace Banshee.Widgets
             if(column_count < 1) {
                 column_count = 1;
             }
-            
+
             if(currentColumnCount != column_count) {
                 RelayoutTables(column_count);
                 return column_count;
             }
-            
+
             return currentColumnCount;
         }
     }

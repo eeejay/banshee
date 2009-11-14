@@ -34,21 +34,21 @@ namespace Banshee.Sources
     {
         private bool is_stock;
         private string label;
-        
+
         public event EventHandler Activated;
-        
+
         public MessageAction (string label) : this (label, false, null)
         {
         }
-        
+
         public MessageAction (string label, EventHandler handler) : this (label, false, handler)
         {
         }
-        
+
         public MessageAction (string label, bool isStock) : this (label, isStock, null)
         {
         }
-        
+
         public MessageAction (string label, bool isStock, EventHandler handler)
         {
             this.label = label;
@@ -57,12 +57,12 @@ namespace Banshee.Sources
                 this.Activated += handler;
             }
         }
-        
+
         public void Activate ()
         {
             OnActivated ();
         }
-        
+
         protected virtual void OnActivated ()
         {
             EventHandler handler = Activated;
@@ -70,12 +70,12 @@ namespace Banshee.Sources
                 handler (this, EventArgs.Empty);
             }
         }
-        
+
         public bool IsStock {
             get { return is_stock; }
             set { is_stock = value; }
         }
-        
+
         public string Label {
             get { return label; }
             set { label = value; }

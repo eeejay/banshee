@@ -44,7 +44,7 @@ namespace Hyena.Gui.Theming
 
         private Cairo.Color selection_fill;
         private Cairo.Color selection_stroke;
-        
+
         private Cairo.Color view_fill;
         private Cairo.Color view_fill_transparent;
 
@@ -69,7 +69,7 @@ namespace Hyena.Gui.Theming
         {
             selection_fill = colors.GetWidgetColor (GtkColorClass.Dark, StateType.Active);
             selection_stroke = colors.GetWidgetColor (GtkColorClass.Background, StateType.Selected);
-            
+
             view_fill = colors.GetWidgetColor (GtkColorClass.Base, StateType.Normal);
             view_fill_transparent = view_fill;
             view_fill_transparent.A = 0;
@@ -78,59 +78,59 @@ namespace Hyena.Gui.Theming
 #region Drawing
 
         public abstract void DrawPie (double fraction);
-        
+
         public abstract void DrawArrow (Cairo.Context cr, Gdk.Rectangle alloc, Hyena.Data.SortType type);
-        
+
         public void DrawFrame (Cairo.Context cr, Gdk.Rectangle alloc, bool baseColor)
         {
             DrawFrameBackground (cr, alloc, baseColor);
             DrawFrameBorder (cr, alloc);
         }
-        
+
         public void DrawFrame (Cairo.Context cr, Gdk.Rectangle alloc, Cairo.Color color)
         {
             DrawFrameBackground (cr, alloc, color);
             DrawFrameBorder (cr, alloc);
         }
-        
+
         public void DrawFrameBackground (Cairo.Context cr, Gdk.Rectangle alloc, bool baseColor)
         {
-            DrawFrameBackground (cr, alloc,  baseColor 
+            DrawFrameBackground (cr, alloc,  baseColor
                 ? colors.GetWidgetColor (GtkColorClass.Base, StateType.Normal)
                 : colors.GetWidgetColor (GtkColorClass.Background, StateType.Normal));
         }
-        
+
         public void DrawFrameBackground (Cairo.Context cr, Gdk.Rectangle alloc, Cairo.Color color)
         {
             DrawFrameBackground (cr, alloc, color, null);
         }
-        
+
         public void DrawFrameBackground (Cairo.Context cr, Gdk.Rectangle alloc, Cairo.Pattern pattern)
         {
             DrawFrameBackground (cr, alloc, black , pattern);
         }
-        
+
         public abstract void DrawFrameBackground (Cairo.Context cr, Gdk.Rectangle alloc, Cairo.Color color, Cairo.Pattern pattern);
-        
+
         public abstract void DrawFrameBorder (Cairo.Context cr, Gdk.Rectangle alloc);
-        
+
         public abstract void DrawFrameBorderFocused (Cairo.Context cr, Gdk.Rectangle alloc);
 
         public abstract void DrawHeaderBackground (Cairo.Context cr, Gdk.Rectangle alloc);
 
         public abstract void DrawColumnHeaderFocus (Cairo.Context cr, Gdk.Rectangle alloc);
-        
+
         public abstract void DrawHeaderSeparator (Cairo.Context cr, Gdk.Rectangle alloc, int x);
-        
+
         public void DrawListBackground (Cairo.Context cr, Gdk.Rectangle alloc, bool baseColor)
         {
-            DrawListBackground (cr, alloc,  baseColor 
+            DrawListBackground (cr, alloc,  baseColor
                 ? colors.GetWidgetColor (GtkColorClass.Base, StateType.Normal)
                 : colors.GetWidgetColor (GtkColorClass.Background, StateType.Normal));
         }
-        
+
         public abstract void DrawListBackground (Cairo.Context cr, Gdk.Rectangle alloc, Cairo.Color color);
-        
+
         public void DrawColumnHighlight (Cairo.Context cr, double cellWidth, double cellHeight)
         {
             Gdk.Rectangle alloc = new Gdk.Rectangle ();
@@ -138,25 +138,25 @@ namespace Hyena.Gui.Theming
             alloc.Height = (int)cellHeight;
             DrawColumnHighlight (cr, alloc);
         }
-        
+
         public void DrawColumnHighlight (Cairo.Context cr, Gdk.Rectangle alloc)
         {
             DrawColumnHighlight (cr, alloc, colors.GetWidgetColor (GtkColorClass.Background, StateType.Selected));
         }
-        
+
         public abstract void DrawColumnHighlight (Cairo.Context cr, Gdk.Rectangle alloc, Cairo.Color color);
-        
+
         public void DrawRowSelection (Cairo.Context cr, int x, int y, int width, int height)
         {
             DrawRowSelection (cr, x, y, width, height, true);
         }
-        
+
         public void DrawRowSelection (Cairo.Context cr, int x, int y, int width, int height, bool filled)
         {
-            DrawRowSelection (cr, x, y, width, height, filled, true, 
+            DrawRowSelection (cr, x, y, width, height, filled, true,
                 colors.GetWidgetColor (GtkColorClass.Background, StateType.Selected), CairoCorners.All);
         }
-        
+
         public void DrawRowSelection (Cairo.Context cr, int x, int y, int width, int height,
             bool filled, bool stroked, Cairo.Color color)
         {
@@ -177,33 +177,33 @@ namespace Hyena.Gui.Theming
 
         public abstract void DrawRowSelection (Cairo.Context cr, int x, int y, int width, int height,
             bool filled, bool stroked, Cairo.Color color, CairoCorners corners);
-        
+
         public abstract void DrawRowRule (Cairo.Context cr, int x, int y, int width, int height);
 
         public Cairo.Color ViewFill {
             get { return view_fill; }
         }
-        
+
         public Cairo.Color ViewFillTransparent {
             get { return view_fill_transparent; }
         }
-        
+
         public Cairo.Color SelectionFill {
             get { return selection_fill; }
         }
-        
+
         public Cairo.Color SelectionStroke {
             get { return selection_stroke; }
         }
-        
+
         public virtual int BorderWidth {
             get { return 1; }
         }
-        
+
         public virtual int InnerBorderWidth {
             get { return 4; }
         }
-        
+
         public int TotalBorderWidth {
             get { return BorderWidth + InnerBorderWidth; }
         }
@@ -223,7 +223,7 @@ namespace Hyena.Gui.Theming
                 contexts.Push (context);
             }
         }
-        
+
         public ThemeContext PopContext ()
         {
             lock (this) {
@@ -241,7 +241,7 @@ namespace Hyena.Gui.Theming
 
         public static double Clamp (double min, double max, double value)
         {
-             return Math.Max (min, Math.Min (max, value)); 
+             return Math.Max (min, Math.Min (max, value));
         }
 
 #endregion

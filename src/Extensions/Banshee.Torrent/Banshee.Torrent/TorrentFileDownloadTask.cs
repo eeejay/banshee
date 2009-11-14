@@ -37,26 +37,26 @@ namespace Banshee.Torrent
     {
         private MonoTorrent.DBus.IDownloader downloader;
         private MonoTorrent.DBus.ITorrent torrent;
-        
+
         public TorrentFileDownloadTask (string remoteUri, string localPath, object userState)
             : base (remoteUri, localPath.Substring (0, localPath.Length - 8), userState)
         {
         }
-        
+
         public override long BytesReceived {
             get {
                 if (downloader == null)
                     return 0;
-                
-                return (long)(downloader.GetProgress () / 100.0 * torrent.GetSize ()); 
+
+                return (long)(downloader.GetProgress () / 100.0 * torrent.GetSize ());
             }
         }
-        
+
         public override void CancelAsync ()
         {
             if (downloader == null)
                 return;
-            
+
             downloader.Stop ();
             SetStatus (TaskStatus.Cancelled);
             OnTaskCompleted (null, true);
@@ -68,9 +68,9 @@ namespace Banshee.Torrent
             TorrentService s = Banshee.ServiceStack.ServiceManager.Get<TorrentService> ();
             downloader = s.Download (RemoteUri.ToString (), Path.GetDirectoryName (LocalPath));
             torrent = TorrentService.Bus.GetObject <ITorrent> (TorrentService.BusName, downloader.GetTorrent ());
-            
+
             downloader.StateChanged += OnDownloaderStateChanged;
-            
+
             // There are no events on the torrent IDownloader to indicate when the stats have updated
             // Manually ping the SetProgress event, otherwise migo never notices progress changing
             System.Threading.ThreadPool.QueueUserWorkItem (UpdateProgress);
@@ -80,16 +80,16 @@ namespace Banshee.Torrent
         {
             if (downloader == null)
                 return;
-            
+
             SetStatus (TaskStatus.Paused);
             downloader.Pause ();
         }
-        
+
         public override void Resume ()
         {
             if (downloader == null)
                 return;
-            
+
             SetStatus (TaskStatus.Running);
             downloader.Stop ();
         }
@@ -98,7 +98,7 @@ namespace Banshee.Torrent
         {
             if (downloader == null)
                 return;
-            
+
             SetStatus (TaskStatus.Stopped);
             OnTaskCompleted (null, false);
             downloader.Stop ();
@@ -115,7 +115,7 @@ namespace Banshee.Torrent
 
         private void UpdateProgress (object o)
         {
-            while (Progress != 100 && 
+            while (Progress != 100 &&
                    (Status == TaskStatus.Running || Status == TaskStatus.Paused || Status == TaskStatus.Running)) {
                 System.Threading.Thread.Sleep (2000);
                 SetProgress ((int)downloader.GetProgress ());

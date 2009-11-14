@@ -1,4 +1,4 @@
-// 
+//
 // BooScriptService.cs
 //
 // Author:
@@ -44,18 +44,18 @@ namespace Banshee.BooScript
     public class BooScriptService : IExtensionService
     {
         private static string scripts_directory = Path.Combine (Paths.ApplicationData, "boo-scripts");
-        
+
         private bool initialized;
-        
+
         void IExtensionService.Initialize ()
         {
             lock (this) {
                 if (initialized) {
                     return;
                 }
-                
+
                 Directory.CreateDirectory (scripts_directory);
-                
+
                 if (ApplicationContext.CommandLine.Contains ("run-scripts")) {
                     foreach (string file in ApplicationContext.CommandLine.Files) {
                         if (Path.GetExtension (file) == ".boo") {
@@ -63,64 +63,64 @@ namespace Banshee.BooScript
                         }
                     }
                 }
-            
+
                 foreach (string file in Directory.GetFiles (scripts_directory, "*.boo")) {
                     RunBooScript (file);
                 }
-                
+
                 initialized = true;
             }
         }
-        
+
         public void Dispose ()
         {
         }
-        
+
 #region Boo Scripting Engine
 
         private void RunBooScript (string file)
         {
             uint timer_id = Log.DebugTimerStart ();
-        
+
             BooCompiler compiler = new BooCompiler ();
             compiler.Parameters.Ducky = true;
             compiler.Parameters.Pipeline = new CompileToMemory ();
             compiler.Parameters.Input.Add (new FileInput (file));
-            
+
             foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies ()) {
                 compiler.Parameters.References.Add (assembly);
             }
-            
+
             CompilerContext context = compiler.Run ();
-            
+
             if (context.GeneratedAssembly == null) {
                 foreach (CompilerError error in context.Errors) {
-                    Log.Warning (String.Format ("BooScript: compiler error: {0} ({1})", 
+                    Log.Warning (String.Format ("BooScript: compiler error: {0} ({1})",
                         error.ToString (), file), false);
                 }
-                
+
                 return;
             }
-            
+
             try {
                 Type script_module = context.GeneratedAssembly.GetTypes ()[0];
-                
+
                 if (script_module == null) {
                     Log.Warning (String.Format ("BooScript: could not find module in script ({0})", file), false);
                     return;
                 }
-                
+
                 MethodInfo main_entry = script_module.Assembly.EntryPoint;
                 main_entry.Invoke (null, new object[main_entry.GetParameters ().Length]);
-                        
+
                 Log.DebugTimerPrint (timer_id, "BooScript: compiled and invoked: {0}");
             } catch (Exception e) {
                 Log.Exception ("BooScript: scripted failed", e);
             }
         }
 
-#endregion                
-        
+#endregion
+
         string IService.ServiceName {
             get { return "BooScriptService"; }
         }

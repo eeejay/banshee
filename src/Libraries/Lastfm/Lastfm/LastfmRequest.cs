@@ -50,11 +50,11 @@ namespace Lastfm
         Json,
         Raw
     }
-    
+
     public class LastfmRequest
     {
         private const string API_ROOT = "http://ws.audioscrobbler.com/2.0/";
-        
+
         private Dictionary<string, string> parameters = new Dictionary<string, string> ();
         private Stream response_stream;
 
@@ -63,7 +63,7 @@ namespace Lastfm
 
         public LastfmRequest (string method) : this (method, RequestType.Read, ResponseFormat.Json)
         {}
-        
+
         public LastfmRequest (string method, RequestType request_type, ResponseFormat response_format)
         {
             this.method = method;
@@ -74,15 +74,15 @@ namespace Lastfm
         private string method;
         public string Method { get; set; }
 
-        
+
         private RequestType request_type;
         public RequestType RequestType { get; set; }
 
-        
+
         private ResponseFormat response_format;
         public ResponseFormat ResponseFormat { get; set; }
 
-        
+
         public void AddParameter (string param_name, string param_value)
         {
             parameters.Add (param_name, param_value);
@@ -98,7 +98,7 @@ namespace Lastfm
             if (method == null) {
                 throw new InvalidOperationException ("The method name should be set");
             }
-            
+
             if (response_format == ResponseFormat.Json) {
                 AddParameter ("format", "json");
             } else if (response_format == ResponseFormat.Raw) {
@@ -111,7 +111,7 @@ namespace Lastfm
                 response_stream = Get (BuildGetUrl ());
             }
         }
-        
+
         public JsonObject GetResponseObject ()
         {
             Deserializer deserializer = new Deserializer (response_stream);
@@ -121,19 +121,19 @@ namespace Lastfm
             if (json_obj == null) {
                 throw new ApplicationException ("Lastfm invalid response : not a JSON object");
             }
-            
+
             return json_obj;
         }
 
         public StationError GetError ()
         {
             StationError error = StationError.None;
-            
+
             string response;
             using (StreamReader sr = new StreamReader (response_stream)) {
                 response = sr.ReadToEnd ();
             }
-            
+
             if (response.Contains ("<lfm status=\"failed\">")) {
                 // XML reply indicates an error
                 Match match = Regex.Match (response, "<error code=\"(\\d+)\">");
@@ -156,13 +156,13 @@ namespace Lastfm
 
             return error;
         }
-        
+
         private string BuildGetUrl ()
         {
             if (request_type == RequestType.AuthenticatedRead) {
                 parameters.Add ("sk", LastfmCore.Account.SessionKey);
             }
-            
+
             StringBuilder url = new StringBuilder (API_ROOT);
             url.AppendFormat ("?method={0}", method);
             url.AppendFormat ("&api_key={0}", LastfmCore.ApiKey);
@@ -172,7 +172,7 @@ namespace Lastfm
             if (request_type == RequestType.AuthenticatedRead || request_type == RequestType.SessionRequest) {
                 url.AppendFormat ("&api_sig={0}", GetSignature ());
             }
-            
+
             return url.ToString ();
         }
 
@@ -190,11 +190,11 @@ namespace Lastfm
 
             return data.ToString ();
         }
-        
+
         private string GetSignature ()
         {
             SortedDictionary<string, string> sorted_params = new SortedDictionary<string, string> (parameters);
-            
+
             if (!sorted_params.ContainsKey ("api_key")) {
                 sorted_params.Add ("api_key", LastfmCore.ApiKey);
             }
@@ -210,7 +210,7 @@ namespace Lastfm
                 signature.Append (parm.Value);
             }
             signature.Append (LastfmCore.ApiSecret);
-            
+
             return Hyena.CryptoUtil.Md5Encode (signature.ToString (), Encoding.UTF8);
         }
 
@@ -235,7 +235,7 @@ namespace Lastfm
             HttpWebResponse response = (HttpWebResponse) request.GetResponse ();
             return response.GetResponseStream ();
         }
-       
+
         private Stream Post (string uri, string data)
         {
             // Do not trust docs : it doesn't work if parameters are in the request body

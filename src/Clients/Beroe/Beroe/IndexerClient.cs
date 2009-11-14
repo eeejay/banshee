@@ -61,20 +61,20 @@ namespace Beroe
                 Log.Error ("Another indexer is already running");
                 return;
             }
-            
+
             Log.Information ("Indexer client started");
-            
+
             Startup ();
         }
-        
+
         private static void ActAsRemoteClient ()
         {
         }
-        
+
         private static void Startup ()
         {
             ThreadAssist.InitializeMainThread ();
-            
+
             ServiceManager.Initialize ();
             ServiceManager.RegisterService<DBusServiceManager> ();
             ServiceManager.RegisterService<BansheeDbConnection> ();
@@ -83,32 +83,32 @@ namespace Beroe
             ServiceManager.RegisterService<CollectionIndexerService> ();
             ServiceManager.RegisterService<IndexerClient> ();
             ServiceManager.Run ();
-            
+
             ServiceManager.Get<IndexerClient> ().Run ();
         }
-        
+
         private string [] reboot_args;
-        
+
         public void Run ()
         {
             ServiceManager.Get<CollectionIndexerService> ().ShutdownHandler = DBusConnection.QuitMainLoop;
-        
+
             ServiceManager.SourceManager.AddSource (new Banshee.Library.MusicLibrarySource ());
             ServiceManager.SourceManager.AddSource (new Banshee.Library.VideoLibrarySource ());
-            
+
             DBusConnection.RunMainLoop ();
-            
+
             ServiceManager.Shutdown ();
-            
+
             if (reboot_args != null) {
                 Log.Debug ("Rebooting");
-                
+
                 System.Text.StringBuilder builder = new System.Text.StringBuilder ();
                 foreach (string arg in reboot_args) {
                     builder.AppendFormat ("\"{0}\" ", arg);
                 }
-                
-                // FIXME: Using Process.Start sucks, but DBus doesn't let you specify 
+
+                // FIXME: Using Process.Start sucks, but DBus doesn't let you specify
                 // extra command line arguments
                 DBusConnection.Disconnect ("CollectionIndexer");
                 Process.Start ("banshee-1", builder.ToString ());
@@ -116,12 +116,12 @@ namespace Beroe
                 // Bus.Session.Iterate ();
             }
         }
-        
+
         public void Hello ()
         {
             Log.Debug ("Received a Hello over DBus");
         }
-        
+
         public void RebootWhenFinished (string [] args)
         {
             lock (this) {
@@ -134,11 +134,11 @@ namespace Beroe
                 });
             }
         }
-        
+
         IDBusExportable IDBusExportable.Parent {
             get { return null; }
         }
-        
+
         string IService.ServiceName {
             get { return "IndexerClient"; }
         }

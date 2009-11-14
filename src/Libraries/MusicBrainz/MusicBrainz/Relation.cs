@@ -64,12 +64,12 @@ namespace MusicBrainz
         public string BeginDate {
             get { return begin; }
         }
-        
+
         public string EndDate {
             get { return end; }
         }
     }
-    
+
     public sealed class Relation<T> : RelationBase<T> where T : MusicBrainzObject
     {
         internal Relation (string type,
@@ -95,7 +95,7 @@ namespace MusicBrainz
         {
         }
     }
-    
+
     public enum RelationDirection
     {
         Forward,

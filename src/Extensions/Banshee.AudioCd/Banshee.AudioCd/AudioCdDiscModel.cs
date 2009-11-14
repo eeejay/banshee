@@ -46,45 +46,45 @@ namespace Banshee.AudioCd
     {
         // 44.1 kHz sample rate * 16 bit channel resolution * 2 channels (stereo)
         private const long PCM_FACTOR = 176400;
-    
+
         private IDiscVolume volume;
-        
+
         public event EventHandler MetadataQueryStarted;
         public event EventHandler MetadataQueryFinished;
         public event EventHandler EnabledCountChanged;
-        
+
         private bool metadata_query_success;
         private DateTime metadata_query_start_time;
-        
+
         public bool MetadataQuerySuccess {
             get { return metadata_query_success; }
         }
-        
+
         private TimeSpan duration;
         public TimeSpan Duration {
             get { return duration; }
         }
-        
+
         private long file_size;
         public long FileSize {
             get { return file_size; }
         }
-        
+
         public AudioCdDiscModel (IDiscVolume volume)
         {
             this.volume = volume;
             disc_title = Catalog.GetString ("Audio CD");
         }
-        
+
         public void NotifyUpdated ()
         {
             OnReloaded ();
         }
-        
+
         public void LoadModelFromDisc ()
         {
             Clear ();
-        
+
             LocalDisc mb_disc = LocalDisc.GetFromDevice (volume.DeviceNode);
             if (mb_disc == null) {
                 throw new ApplicationException ("Could not read contents of the disc. Platform may not be supported.");
@@ -102,47 +102,47 @@ namespace Banshee.AudioCd
                 track.TrackTitle = String.Format (Catalog.GetString ("Track {0}"), track.TrackNumber);
                 track.FileSize = PCM_FACTOR * (uint)track.Duration.TotalSeconds;
                 Add (track);
-                
+
                 duration += track.Duration;
                 file_size += track.FileSize;
             }
-            
+
             EnabledCount = Count;
-            
+
             Reload ();
-            
+
             ThreadPool.QueueUserWorkItem (LoadDiscMetadata, mb_disc);
         }
-        
+
         private void LoadDiscMetadata (object state)
         {
             try {
                 LocalDisc mb_disc = (LocalDisc)state;
-                
+
                 OnMetadataQueryStarted (mb_disc);
-                
+
                 Release release = Release.Query (mb_disc).PerfectMatch ();
-    
+
                 var tracks = release.GetTracks ();
                 if (release == null || tracks.Count != Count) {
                     OnMetadataQueryFinished (false);
                     return;
                 }
-                            
+
                 disc_title = release.GetTitle ();
-                
+
                 int disc_number = 1;
                 int i = 0;
-                
+
                 foreach (Disc disc in release.GetDiscs ()) {
                     i++;
                     if (disc.Id == mb_disc.Id) {
                         disc_number = i;
                     }
                 }
-                
+
                 DateTime release_date = DateTime.MaxValue;
-     
+
                 foreach (Event release_event in release.GetEvents ()) {
                     if (release_event.Date != null) {
                         try {
@@ -152,7 +152,7 @@ namespace Banshee.AudioCd
                                 date_str.Length > 4 ? date_str : date_str + "-01",
                                 ApplicationContext.InternalCultureInfo
                             );
-    
+
                             if (date < release_date) {
                                 release_date = date;
                             }
@@ -160,46 +160,46 @@ namespace Banshee.AudioCd
                         }
                     }
                 }
-                
+
                 DatabaseArtistInfo artist = new DatabaseArtistInfo ();
                 var mb_artist = release.GetArtist ();
                 artist.Name = mb_artist.GetName ();
                 artist.NameSort = mb_artist.GetSortName ();
                 artist.MusicBrainzId = mb_artist.Id;
                 bool is_compilation = false;
-                
+
                 DatabaseAlbumInfo album = new DatabaseAlbumInfo ();
                 album.Title = disc_title;
                 album.ArtistName = artist.Name;
                 album.MusicBrainzId = release.Id;
                 album.ReleaseDate = release_date == DateTime.MaxValue ? DateTime.MinValue : release_date;
-                
+
                 i = 0;
                 foreach (Track track in tracks) {
                     AudioCdTrackInfo model_track = (AudioCdTrackInfo)this[i++];
                     var mb_track_artist = track.GetArtist ();
-                    
+
                     model_track.MusicBrainzId = track.Id;
                     model_track.TrackTitle = track.GetTitle ();
                     model_track.ArtistName = mb_track_artist.GetName ();
                     model_track.AlbumTitle = disc_title;
                     model_track.DiscNumber = disc_number;
                     model_track.Album = album;
-    
+
                     model_track.Artist = new DatabaseArtistInfo ();
                     model_track.Artist.Name = model_track.ArtistName;
                     model_track.Artist.NameSort = mb_track_artist.GetSortName ();
                     model_track.Artist.MusicBrainzId = mb_track_artist.Id;
-                    
+
                     if (release_date != DateTime.MinValue) {
                         model_track.Year = release_date.Year;
                     }
-    
+
                     if (!is_compilation && mb_track_artist.Id != artist.MusicBrainzId) {
                         is_compilation = true;
                     }
                 }
-    
+
                 if (is_compilation) {
                     album.IsCompilation = true;
                     for (i = 0; i < tracks.Count; i++) {
@@ -209,44 +209,44 @@ namespace Banshee.AudioCd
                         model_track.AlbumArtistSort = artist.NameSort;
                     }
                 }
-                
+
                 OnMetadataQueryFinished (true);
             } catch (Exception ex) {
                 Log.DebugException (ex);
                 OnMetadataQueryFinished (false);
             }
         }
-        
+
         private void OnMetadataQueryStarted (LocalDisc mb_disc)
         {
             metadata_query_success = false;
             metadata_query_start_time = DateTime.Now;
             Log.InformationFormat ("Querying MusicBrainz for Disc Release ({0})", mb_disc.Id);
-        
-            ThreadAssist.ProxyToMain (delegate { 
+
+            ThreadAssist.ProxyToMain (delegate {
                 EventHandler handler = MetadataQueryStarted;
                 if (handler != null) {
                     handler (this, EventArgs.Empty);
                 }
             });
         }
-        
+
         private void OnMetadataQueryFinished (bool success)
         {
             metadata_query_success = success;
-            Log.InformationFormat ("Query finished (success: {0}, {1} seconds)", 
+            Log.InformationFormat ("Query finished (success: {0}, {1} seconds)",
                 success, (DateTime.Now - metadata_query_start_time).TotalSeconds);
-            
+
             ThreadAssist.ProxyToMain (delegate {
                 Reload ();
-                
+
                 EventHandler handler = MetadataQueryFinished;
                 if (handler != null) {
                     handler (this, EventArgs.Empty);
                 }
             });
         }
-        
+
         private void OnEnabledCountChanged ()
         {
             EventHandler handler = EnabledCountChanged;
@@ -254,45 +254,45 @@ namespace Banshee.AudioCd
                 handler (this, EventArgs.Empty);
             }
         }
-        
+
         private ICdromDevice Drive {
             get { return Volume == null ? null : (Volume.Parent as ICdromDevice); }
         }
-        
+
         public bool LockDoor ()
         {
             ICdromDevice drive = Drive;
             return drive != null ? drive.LockDoor () : false;
         }
-        
+
         public bool UnlockDoor ()
         {
             ICdromDevice drive = Drive;
             return drive != null ? drive.UnlockDoor () : false;
         }
-        
+
         public bool IsDoorLocked {
-            get { 
+            get {
                 ICdromDevice drive = Drive;
                 return drive != null ? drive.IsDoorLocked : false;
             }
         }
-        
+
         public IDiscVolume Volume {
             get { return volume; }
         }
-        
+
         private string disc_title;
         public string Title {
             get { return disc_title; }
         }
-        
+
         private int enabled_count;
         public int EnabledCount {
             get { return enabled_count; }
-            internal set { 
-                enabled_count = value; 
-                OnEnabledCountChanged (); 
+            internal set {
+                enabled_count = value;
+                OnEnabledCountChanged ();
             }
         }
     }

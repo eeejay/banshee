@@ -1,4 +1,4 @@
-// 
+//
 // ColumnCellPositiveInt.cs
 //
 // Author:
@@ -42,7 +42,7 @@ namespace Banshee.Collection.Gui
             Alignment = Pango.Alignment.Right;
             CultureFormatted = true;
         }
-        
+
         protected override string GetText (object obj)
         {
             if (obj == null) {

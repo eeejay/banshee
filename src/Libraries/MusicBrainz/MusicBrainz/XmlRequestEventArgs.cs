@@ -28,7 +28,7 @@ namespace MusicBrainz
     {
         public readonly Uri Uri;
         public readonly bool FromCache;
-        
+
         internal XmlRequestEventArgs (Uri uri, bool fromCache)
         {
             Uri = uri;

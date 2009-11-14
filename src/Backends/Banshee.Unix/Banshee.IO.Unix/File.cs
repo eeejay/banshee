@@ -41,7 +41,7 @@ namespace Banshee.IO.Unix
         private bool is_directory;
         private bool is_regular_file;
         private long mtime;
-        
+
         internal FileStat (string path)
         {
             buf = new Stat ();
@@ -52,11 +52,11 @@ namespace Banshee.IO.Unix
             is_directory &= ! ((buf.st_mode & FilePermissions.S_IFSOCK) == FilePermissions.S_IFSOCK);
             mtime = buf.st_mtime;
         }
-        
+
         internal bool IsDirectory {
             get { return is_directory; }
         }
-        
+
         internal bool IsRegularFile {
             get { return is_regular_file; }
         }
@@ -89,19 +89,19 @@ namespace Banshee.IO.Unix
         {
             System.IO.File.Copy (from.LocalPath, to.LocalPath, overwrite);
         }
-        
+
         public Stream OpenRead (SafeUri uri)
         {
             return new UnixFileInfo (uri.LocalPath).OpenRead ();
         }
-        
+
         public Stream OpenWrite (SafeUri uri, bool overwrite)
         {
-            return overwrite 
+            return overwrite
                 ? new UnixFileInfo (uri.LocalPath).Open (FileMode.Create, FileAccess.ReadWrite, FilePermissions.DEFFILEMODE)
                 : new UnixFileInfo (uri.LocalPath).OpenWrite ();
         }
-        
+
         public long GetSize (SafeUri uri)
         {
             try {

@@ -1,4 +1,4 @@
-// 
+//
 // PlatformUtil.cs
 //
 // Author:

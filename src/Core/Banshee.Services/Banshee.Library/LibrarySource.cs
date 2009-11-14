@@ -59,8 +59,8 @@ namespace Banshee.Library
             IsLocal = true;
             base_dir_schema = CreateSchema<string> ("library-location", null, "The base directory under which files for this library are stored", null);
             AfterInitialized ();
-            
-            Section library_section = PreferencesPage.Add (new Section ("library-location", 
+
+            Section library_section = PreferencesPage.Add (new Section ("library-location",
                 // Translators: {0} is the library name, eg 'Music Library' or 'Podcasts'
                 String.Format (Catalog.GetString ("{0} Folder"), Name), 2));
 
@@ -106,9 +106,9 @@ namespace Banshee.Library
                 base.BaseDirectory = value;
             }
         }
-        
+
         public abstract string DefaultBaseDirectory { get; }
-        
+
         public override bool Indexable {
             get { return true; }
         }
@@ -125,7 +125,7 @@ namespace Banshee.Library
             } catch (System.IO.FileNotFoundException) {
             } catch (System.IO.DirectoryNotFoundException) {
             }
-            
+
             return true;
         }
 

@@ -44,18 +44,18 @@ namespace Banshee.HalBackend
                 } else if (typeof (T) == typeof (IDiskDevice)) {
                     return DiskDevice.Resolve (manager, device);
                 }
-                
-                return (BlockDevice)CdromDevice.Resolve (manager, device) 
+
+                return (BlockDevice)CdromDevice.Resolve (manager, device)
                     ?? (BlockDevice)DiskDevice.Resolve (manager, device);
             }
-            
+
             return null;
         }
-        
+
         protected BlockDevice (Hal.Manager manager, Hal.Device device) : base (manager, device)
         {
         }
-        
+
         public string DeviceNode {
             get { return HalDevice["block.device"]; }
         }
@@ -67,7 +67,7 @@ namespace Banshee.HalBackend
         public IEnumerable<IVolume> Volumes {
             get { return this; }
         }
-        
+
         public IEnumerator<IVolume> GetEnumerator ()
         {
             foreach (Hal.Device hal_device in HalDevice.GetChildrenAsDevice (HalManager)) {
@@ -77,12 +77,12 @@ namespace Banshee.HalBackend
                 }
             }
         }
-        
+
         IEnumerator IEnumerable.GetEnumerator ()
         {
             return GetEnumerator ();
         }
-        
+
         public override string ToString ()
         {
             return DeviceNode;

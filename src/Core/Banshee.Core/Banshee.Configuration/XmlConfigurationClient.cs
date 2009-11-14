@@ -42,24 +42,24 @@ namespace Banshee.Configuration
         private const string namespace_tag_name = "namespace";
         private const string value_tag_name = "value";
         private const string tag_identifier_attribute_name = "name";
-        
+
         private static string file_path {
             get {
                 return Path.Combine(Paths.ApplicationData, "config.xml");
             }
         }
         private static XmlDocument xml_document;
-        
+
         private static System.Timers.Timer timer;
         private static object timer_mutex = new object();
         private static volatile bool delay_write;
-        
+
         public XmlConfigurationClient()
         {
             timer = new System.Timers.Timer(100); // a 10th of a second
             timer.Elapsed += new ElapsedEventHandler(OnTimerElapsedEvent);
             timer.AutoReset = true;
-            
+
             xml_document = new XmlDocument();
             bool make_new_xml = true;
             if(File.Exists(file_path)) {
@@ -73,33 +73,33 @@ namespace Banshee.Configuration
                 xml_document.LoadXml("<configuration />");
             }
         }
-        
+
         public T Get<T>(SchemaEntry<T> entry)
         {
             return Get<T>(entry.Namespace, entry.Key, entry.DefaultValue);
         }
-        
+
         public T Get<T>(SchemaEntry<T> entry, T fallback)
         {
             return Get<T>(entry.Namespace, entry.Key, fallback);
         }
-        
+
         public T Get<T>(string key, T fallback)
         {
             return Get<T>(null, key, fallback);
         }
-        
+
         public T Get<T>(string namespce, string key, T fallback)
         {
             lock(xml_document) {
                 XmlNode namespace_node = GetNamespaceNode(namespce == null
                     ? new string [] {null_namespace}
                     : namespce.Split('.'), false);
-                
+
                 if(namespace_node == null) {
                     return fallback;
                 }
-                
+
                 foreach(XmlNode node in namespace_node.ChildNodes) {
                     if(node.Attributes[tag_identifier_attribute_name].Value == key && node.Name == value_tag_name) {
                         XmlSerializer serializer = new XmlSerializer(typeof(T));
@@ -110,17 +110,17 @@ namespace Banshee.Configuration
                 return fallback;
             }
         }
-        
+
         public void Set<T>(SchemaEntry<T> entry, T value)
         {
             Set(entry.Namespace, entry.Key, value);
         }
-        
+
         public void Set<T>(string key, T value)
         {
             Set(null, key, value);
         }
-        
+
         public void Set<T>(string namespce, string key, T value)
         {
             lock(xml_document) {
@@ -134,11 +134,11 @@ namespace Banshee.Configuration
                 if(fragment.FirstChild is XmlDeclaration) {
                     fragment.RemoveChild(fragment.FirstChild); // This is only a problem with Microsoft's System.Xml
                 }
-                
+
                 XmlNode namespace_node = GetNamespaceNode(namespce == null
                     ? new string [] {null_namespace}
                     : namespce.Split('.'), true);
-                
+
                 bool found = false;
                 foreach(XmlNode node in namespace_node.ChildNodes) {
                     if(node.Attributes[tag_identifier_attribute_name].Value == key && node.Name == value_tag_name) {
@@ -158,16 +158,16 @@ namespace Banshee.Configuration
                 QueueWrite();
             }
         }
-        
+
         private XmlNode GetNamespaceNode(string [] namespace_parts, bool create)
         {
             return GetNamespaceNode(xml_document.DocumentElement, namespace_parts, create);
         }
-        
+
         private XmlNode GetNamespaceNode(XmlNode parent_node, string [] namespace_parts, bool create)
         {
             XmlNode node = parent_node.FirstChild ?? parent_node;
-            
+
             do {
                 if(node.Name == namespace_tag_name && node.Attributes[tag_identifier_attribute_name].Value == namespace_parts[0]) {
                     if(namespace_parts.Length > 1) {
@@ -182,7 +182,7 @@ namespace Banshee.Configuration
                     node = node.NextSibling;
                 }
             } while(node != null);
-            
+
             if(create) {
                 XmlNode appending_node = parent_node;
                 foreach(string s in namespace_parts) {
@@ -197,7 +197,7 @@ namespace Banshee.Configuration
             }
             return node;
         }
-        
+
         // Queue XML file writes to minimize disk access
         private static void QueueWrite()
         {
@@ -209,7 +209,7 @@ namespace Banshee.Configuration
                 }
             }
         }
-        
+
         private static void OnTimerElapsedEvent(object o, ElapsedEventArgs args)
         {
             lock(timer_mutex) {

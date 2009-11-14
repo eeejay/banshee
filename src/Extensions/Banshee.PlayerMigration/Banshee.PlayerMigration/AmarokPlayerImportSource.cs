@@ -58,7 +58,7 @@ namespace Banshee.PlayerMigration
                     "Unable to open Amarok database: {0}", e.Message));
                 return;
             }
-            
+
             int count = 0;
             try {
                 count = conn.Query<int> ("SELECT COUNT(*) FROM tags");
@@ -86,7 +86,7 @@ namespace Banshee.PlayerMigration
                        AND tags.genre = genre.id
                        AND tags.year = year.id"
                 );
-                
+
                 HyenaSqliteCommand stats_cmd = new HyenaSqliteCommand (@"
                                                      SELECT DISTINCT (rating+rating%2)/2, playcounter, createdate, accessdate
                                                      FROM   statistics
@@ -103,7 +103,7 @@ namespace Banshee.PlayerMigration
 
                      try {
                          string path = (string) reader[1];
-                         
+
                          SafeUri uri = null;
                          if (path.StartsWith ("./")) {
                              uri = new SafeUri (path.Substring (1));
@@ -116,7 +116,7 @@ namespace Banshee.PlayerMigration
                          string title = (string) reader[2];
                          string artist = (string) reader[3];
                          //Console.WriteLine ("Amarok import has {0}/{1} - {2}", artist, title, uri);
-                         
+
                          // the following fields are not critical and can be skipped if something goes wrong
                          int rating = 0, playcount = 0;
                          long created = 0, accessed = 0;
@@ -135,14 +135,14 @@ namespace Banshee.PlayerMigration
                          } catch (Exception) {}
 
                          UpdateUserJob (processed, count, artist, title);
-                     
+
                          try {
                              DatabaseTrackInfo track = import_manager.ImportTrack (uri);
-                            
+
                              if (track == null) {
                                  throw new Exception (String.Format (Catalog.GetString ("Unable to import track: {0}"), uri.AbsoluteUri));
                              }
-                            
+
                              if (rating > 0 || playcount > 0 || created > 0 || accessed > 0) {
                                  track.Rating = rating;
                                  track.PlayCount = playcount;
@@ -162,7 +162,7 @@ namespace Banshee.PlayerMigration
                  }
                  reader.Close ();
                  import_manager.NotifyAllSources ();
-                 
+
                  // TODO migrating more than the podcast subscriptions (eg whether to auto sync them etc) means 1) we need to have those features
                  // and 2) we need to depend on Migo and/or the Podcast extension
                  DBusCommandService cmd_service = ServiceManager.Get<DBusCommandService> ();
@@ -171,7 +171,7 @@ namespace Banshee.PlayerMigration
                          cmd_service.PushFile (podcast_url.Replace ("http:", "feed:"));
                      }
                  }
-                 
+
             } catch (Exception e) {
                 Hyena.Log.Exception (e);
                 LogError (amarok_db_path, Catalog.GetString ("Importing from Amarok failed"));
@@ -179,11 +179,11 @@ namespace Banshee.PlayerMigration
                 conn.Dispose ();
             }
         }
-        
+
         public override bool CanImport {
             get { return Banshee.IO.File.Exists (new SafeUri (amarok_db_path)); }
         }
-        
+
         public override string Name {
             get { return Catalog.GetString ("Amarok"); }
         }
@@ -191,7 +191,7 @@ namespace Banshee.PlayerMigration
         public override string [] IconNames {
             get { return new string [] { "system-search" }; }
         }
-        
+
         public override int SortOrder {
             get { return 40; }
         }

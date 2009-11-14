@@ -41,9 +41,9 @@ namespace Banshee.Base
     {
         public delegate string ExpandTokenHandler (TrackInfo track, object replace);
         public delegate string FilterHandler (string path);
-        
+
         public static FilterHandler Filter;
-        
+
         public struct Conversion
         {
             private readonly string token;
@@ -77,18 +77,18 @@ namespace Banshee.Base
                 get { return token_string; }
             }
         }
-    
+
         private static SortedList<string, Conversion> conversion_table;
 
         public static void AddConversion (string token, string name, ExpandTokenHandler handler)
         {
             conversion_table.Add (token, new Conversion (token, name, handler));
         }
-        
+
         static FileNamePattern ()
         {
             conversion_table = new SortedList<string, Conversion> ();
-            
+
             AddConversion ("track_artist", Catalog.GetString ("Track Artist"),
                 delegate (TrackInfo t, object r) {
                     return Escape (t == null ? (string)r : t.DisplayArtistName);
@@ -120,46 +120,46 @@ namespace Banshee.Base
                     return Escape (t == null ? (string)r : t.Composer);
             });
 
-            AddConversion ("genre", Catalog.GetString ("Genre"),  
+            AddConversion ("genre", Catalog.GetString ("Genre"),
                 delegate (TrackInfo t, object r) {
                     return Escape (t == null ? (string)r : t.DisplayGenre);
             });
 
-            AddConversion ("album", Catalog.GetString ("Album"),  
+            AddConversion ("album", Catalog.GetString ("Album"),
                 delegate (TrackInfo t, object r) {
                     return Escape (t == null ? (string)r : t.DisplayAlbumTitle);
             });
-            
-            AddConversion ("title", Catalog.GetString ("Title"),  
+
+            AddConversion ("title", Catalog.GetString ("Title"),
                 delegate (TrackInfo t, object r) {
                     return Escape (t == null ? (string)r : t.DisplayTrackTitle);
             });
-             
-            AddConversion ("year", Catalog.GetString ("Year"),  
+
+            AddConversion ("year", Catalog.GetString ("Year"),
                 delegate (TrackInfo t, object r) {
                     int year = t == null ? (int)r : t.Year;
                     return year > 0 ? String.Format ("{0}", year) : null;
             });
-             
-            AddConversion ("track_count", Catalog.GetString ("Count"),  
+
+            AddConversion ("track_count", Catalog.GetString ("Count"),
                 delegate (TrackInfo t, object r) {
                     int track_count = t == null ? (int)r : t.TrackCount;
                     return track_count > 0 ? String.Format ("{0:00}", track_count) : null;
             });
-             
-            AddConversion ("track_number", Catalog.GetString ("Number"),  
+
+            AddConversion ("track_number", Catalog.GetString ("Number"),
                 delegate (TrackInfo t, object r) {
                     int track_number = t == null ? (int)r : t.TrackNumber;
                     return track_number > 0 ? String.Format ("{0:00}", track_number) : null;
             });
-             
-            AddConversion ("track_count_nz", Catalog.GetString ("Count (unsorted)"),  
+
+            AddConversion ("track_count_nz", Catalog.GetString ("Count (unsorted)"),
                 delegate (TrackInfo t, object r) {
                     int track_count = t == null ? (int)r : t.TrackCount;
                     return track_count > 0 ? String.Format ("{0}", track_count) : null;
             });
-             
-            AddConversion ("track_number_nz", Catalog.GetString ("Number (unsorted)"),  
+
+            AddConversion ("track_number_nz", Catalog.GetString ("Number (unsorted)"),
                 delegate (TrackInfo t, object r) {
                     int track_number = t == null ? (int)r : t.TrackNumber;
                     return track_number > 0 ? String.Format ("{0}", track_number) : null;
@@ -181,29 +181,29 @@ namespace Banshee.Base
                 delegate (TrackInfo t, object r) {
                     return Escape (t == null ? (string)r : t.Grouping);
             });
-            
+
             AddConversion ("path_sep", Path.DirectorySeparatorChar.ToString (),
                 delegate (TrackInfo t, object r) {
                     return Path.DirectorySeparatorChar.ToString ();
             });
         }
-        
+
         public static IEnumerable<Conversion> PatternConversions {
             get { return conversion_table.Values; }
         }
-        
+
         public static string DefaultFolder {
             get { return "%album_artist%%path_sep%%album%"; }
         }
-        
+
         public static string DefaultFile {
             get { return "%track_number%. %title%"; }
         }
-        
+
         public static string DefaultPattern {
             get { return CreateFolderFilePattern (DefaultFolder, DefaultFile); }
         }
-        
+
         private static string [] suggested_folders = new string [] {
             DefaultFolder,
             "%album_artist%%path_sep%%album_artist% - %album%",
@@ -212,11 +212,11 @@ namespace Banshee.Base
             "%album%",
             "%album_artist%"
         };
-        
+
         public static string [] SuggestedFolders {
             get { return suggested_folders; }
         }
-    
+
         private static string [] suggested_files = new string [] {
             DefaultFile,
             "%track_number%. %track_artist% - %title%",
@@ -225,20 +225,20 @@ namespace Banshee.Base
             "%track_artist% (%album%) - %track_number% - %title%",
             "%title%"
         };
-        
+
         public static string [] SuggestedFiles {
             get { return suggested_files; }
         }
-        
+
         private static string OnFilter (string input)
         {
             string repl_pattern = input;
-            
+
             FilterHandler filter_handler = Filter;
             if (filter_handler != null) {
                 repl_pattern = filter_handler (repl_pattern);
             }
-            
+
             return repl_pattern;
         }
 
@@ -303,7 +303,7 @@ namespace Banshee.Base
             foreach (Conversion conversion in PatternConversions) {
                 pattern = pattern.Replace (conversion.TokenString, handler (conversion));
             }
-            
+
             return pattern;
         }
 
@@ -319,17 +319,17 @@ namespace Banshee.Base
             } else if (ext[0] != '.') {
                 ext = String.Format (".{0}", ext);
             }
-            
+
             string songpath = CreateFromTrackInfo (track) + ext;
             songpath = Hyena.StringUtil.EscapePath (songpath);
-            string dir = Path.GetFullPath (Path.Combine (base_dir, 
+            string dir = Path.GetFullPath (Path.Combine (base_dir,
                 Path.GetDirectoryName (songpath)));
             string filename = Path.Combine (dir, Path.GetFileName (songpath));
-                
+
             if (!Banshee.IO.Directory.Exists (dir)) {
                 Banshee.IO.Directory.Create (dir);
             }
-            
+
             return filename;
         }
 

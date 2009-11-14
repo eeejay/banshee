@@ -40,7 +40,7 @@ namespace Banshee.Collection
             selection = new SelectAllSelection ();
             selection.SelectAll ();
         }
-        
+
         public ArtistListModel(IDBusExportable parent) : base(parent)
         {
             selection = new SelectAllSelection ();

@@ -42,36 +42,36 @@ namespace Migo.Syndication
         public static SqliteModelProvider<FeedEnclosure> Provider {
             get { return provider; }
         }
-        
+
         public static void Init () {
             provider = new MigoModelProvider<FeedEnclosure> (FeedsManager.Instance.Connection, "PodcastEnclosures");
         }
-        
+
         private string mimetype;
-        private FeedDownloadStatus download_status;        
+        private FeedDownloadStatus download_status;
         private FeedDownloadError last_download_error;
         private long file_size;
         private TimeSpan duration;
         private string keywords;
-        
+
         private string local_path;
         private FeedItem item;
         private string url;
-        
+
         private readonly object sync = new object ();
-        
+
 #region Constructors
 
         public FeedEnclosure ()
         {
         }
-        
+
 #endregion
 
 #region Public Properties
 
-        public FeedItem Item { 
-            get { return item ?? (item = FeedItem.Provider.FetchSingle (item_id)); } 
+        public FeedItem Item {
+            get { return item ?? (item = FeedItem.Provider.FetchSingle (item_id)); }
             internal set {
                 item = value;
                 if (item != null && item.DbId > 0) {
@@ -92,21 +92,21 @@ namespace Migo.Syndication
         }
 
 #region Public Methods
-        
+
         public void Save (bool save_item)
         {
             Provider.Save (this);
-            
+
             if (save_item) {
                 Item.Save ();
             }
         }
-        
+
         public void Save ()
         {
             Save (true);
         }
-        
+
         public void Delete (bool and_delete_file)
         {
             if (and_delete_file) {
@@ -114,14 +114,14 @@ namespace Migo.Syndication
             }
             Provider.Delete (this);
         }
-        
+
         public void AsyncDownload ()
         {
             if (DownloadedAt == DateTime.MinValue && DownloadStatus == FeedDownloadStatus.None) {
                 Manager.QueueDownload (this);
             }
         }
-        
+
         public void CancelAsyncDownload ()
         {
             Manager.CancelDownload (this);
@@ -131,7 +131,7 @@ namespace Migo.Syndication
         {
             Manager.StopDownload (this);
         }
-        
+
         // Deletes file associated with enclosure.
         // Does not cancel an active download like the WRP.
         public void DeleteFile ()
@@ -144,7 +144,7 @@ namespace Migo.Syndication
                         Directory.Delete (Path.GetDirectoryName (local_path));
                     } catch {}
                 }
-                
+
                 LocalPath = null;
                 DownloadStatus = FeedDownloadStatus.None;
                 LastDownloadError = FeedDownloadError.None;
@@ -161,17 +161,17 @@ namespace Migo.Syndication
             string tmpLocalPath;
             string fullPath = path;
             string localEnclosurePath = Item.Feed.LocalEnclosurePath;
-            
+
             if (!localEnclosurePath.EndsWith (Path.DirectorySeparatorChar.ToString ())) {
                 localEnclosurePath += Path.DirectorySeparatorChar;
             }
-            
+
             if (!fullPath.EndsWith (Path.DirectorySeparatorChar.ToString ())) {
                 fullPath += Path.DirectorySeparatorChar;
-            }           
-            
+            }
+
             fullPath += filename;
-            tmpLocalPath = localEnclosurePath+filename;            
+            tmpLocalPath = localEnclosurePath+filename;
 
             try {
                 if (!Directory.Exists (path)) {
@@ -188,24 +188,24 @@ namespace Migo.Syndication
 
                 if (File.Exists (tmpLocalPath)) {
                     int lastDot = tmpLocalPath.LastIndexOf (".");
-                    
+
                     if (lastDot == -1) {
                         lastDot = tmpLocalPath.Length-1;
                     }
-                    
+
                     string rep = String.Format (
-                        "-{0}", 
+                        "-{0}",
                         Guid.NewGuid ().ToString ()
                                        .Replace ("-", String.Empty)
                                        .ToLower ()
                     );
-                    
+
                     tmpLocalPath = tmpLocalPath.Insert (lastDot, rep);
                 }
-            
+
                 File.Move (fullPath, tmpLocalPath);
                 File.SetAttributes (tmpLocalPath, FileAttributes.ReadOnly);
-                
+
                 try {
                     Directory.Delete (path);
                 } catch {}
@@ -219,59 +219,59 @@ namespace Migo.Syndication
             LocalPath = tmpLocalPath;
             Url = url;
             MimeType = mimeType;
-                            
+
             DownloadStatus = FeedDownloadStatus.Downloaded;
             LastDownloadError = FeedDownloadError.None;
             Save ();
         }
-        
+
 #endregion
 
 #region Database Columns
-        
+
         private long dbid;
         [DatabaseColumn ("EnclosureID", Constraints = DatabaseColumnConstraints.PrimaryKey)]
-        public override long DbId { 
+        public override long DbId {
             get { return dbid; }
             protected set { dbid = value; }
         }
-        
+
         [DatabaseColumn ("ItemID", Index = "PodcastEnclosuresItemIDIndex")]
         protected long item_id;
         public long ItemId {
             get { return Item.DbId; }
         }
-        
+
         [DatabaseColumn]
-        public string LocalPath { 
+        public string LocalPath {
             get { return local_path; }
             set { local_path = value; }
         }
-        
+
         [DatabaseColumn]
-        public string Url { 
-            get { return url; } 
+        public string Url {
+            get { return url; }
             set { url = value; }
         }
-        
+
         [DatabaseColumn]
-        public string Keywords { 
-            get { return keywords; } 
+        public string Keywords {
+            get { return keywords; }
             set { keywords = value; }
         }
-        
+
         [DatabaseColumn]
-        public TimeSpan Duration { 
-            get { return duration; } 
+        public TimeSpan Duration {
+            get { return duration; }
             set { duration = value; }
         }
-        
+
         [DatabaseColumn]
-        public long FileSize { 
-            get { return file_size; } 
+        public long FileSize {
+            get { return file_size; }
             set { file_size = value; }
         }
-        
+
         [DatabaseColumn]
         public string MimeType {
             get { return mimetype; }
@@ -282,23 +282,23 @@ namespace Migo.Syndication
                 }
             }
         }
-        
+
         private DateTime downloaded_at;
         [DatabaseColumn]
         public DateTime DownloadedAt {
             get { return downloaded_at; }
             internal set { downloaded_at = value; }
         }
-        
+
         [DatabaseColumn]
-        public FeedDownloadStatus DownloadStatus { 
+        public FeedDownloadStatus DownloadStatus {
             get {
                 lock (sync) {
                     return download_status;
                 }
             }
-            
-            internal set { 
+
+            internal set {
                 lock (sync) {
                     download_status = value;
                 }

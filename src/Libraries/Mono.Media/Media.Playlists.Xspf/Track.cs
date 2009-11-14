@@ -25,7 +25,7 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
- 
+
 using System;
 using System.Xml;
 using System.Collections.Generic;
@@ -36,25 +36,25 @@ namespace Media.Playlists.Xspf
     public class Track : XspfBaseObject
     {
         // TODO: Add attribution, extension support
-        
+
         private Uri base_uri;
-    
+
         private string album;
-        
+
         private uint track_num;
         private TimeSpan duration;
-    
+
         private List<Uri> locations = new List<Uri>();
         private List<Uri> identifiers = new List<Uri>();
-        
+
         private Playlist parent;
-        
+
         private XmlNode ctor_node;
-        
+
         public Track()
         {
         }
-        
+
         internal void Load(Playlist playlist, XmlNode node, XmlNamespaceManager xmlns)
         {
             XmlAttribute base_attr = node.Attributes["xml:base"];
@@ -67,142 +67,142 @@ namespace Media.Playlists.Xspf
             } else {
                 base_uri = playlist.ResolvedBaseUri;
             }
-            
+
             LoadBase(node, xmlns);
-            
+
             ctor_node = node;
-            
+
             album = XmlUtil.ReadString(node, xmlns, "xspf:album");
 
             track_num = XmlUtil.ReadUInt(node, xmlns, "xspf:trackNum");
             duration = TimeSpan.FromMilliseconds(XmlUtil.ReadUInt(node, xmlns, "xspf:duration"));
-            
+
             locations = XmlUtil.ReadUris(node, xmlns, ResolvedBaseUri, "xspf:location");
             identifiers = XmlUtil.ReadUris(node, xmlns, ResolvedBaseUri, "xspf:identifier");
         }
-        
+
         public void Save(XmlWriter writer)
         {
             SaveBase(writer);
-            
+
             if(album != null) {
                 writer.WriteElementString("album", album);
             }
-            
+
             // Only write valid (ie non-0) track numbers
             if (TrackNumber > 0) {
                 writer.WriteElementString ("trackNum", TrackNumber.ToString ());
             }
-            
+
             foreach(Uri uri in locations) {
                 string escaped = uri.IsAbsoluteUri? uri.AbsoluteUri : Uri.EscapeUriString (uri.ToString ());
                 writer.WriteElementString ("location", escaped);
             }
         }
-        
+
         // XXX: Better solution could probably be achieved?
         public string GetExtendedValue (string key)
         {
             foreach (XmlNode n in ctor_node) {
-                if (n.LocalName == key) {                    
+                if (n.LocalName == key) {
                     return n.InnerText;
                 }
             }
-            
+
             return null;
         }
-        
+
         public Uri GetLocationAt(int position)
         {
             return locations[position];
         }
-        
+
         public void InsertLocation(int position, Uri uri)
         {
             locations.Insert(position, uri);
         }
-        
+
         public void ReplaceLocation(int position, Uri uri)
         {
             locations.RemoveAt(position);
             locations.Insert(position, uri);
         }
-        
+
         public void AddLocation(Uri uri)
         {
             locations.Add(uri);
         }
-        
+
         public void RemoveLocation(Uri uri)
         {
             locations.Remove(uri);
         }
-        
+
         public void ClearLocations()
         {
             locations.Clear();
         }
-        
+
         public Uri GetIdentifierAt(int position)
         {
             return identifiers[position];
         }
-        
+
         public void InsertIdentifier(int position, Uri uri)
         {
             identifiers.Insert(position, uri);
         }
-        
+
         public void AddIdentifier(Uri uri)
         {
             identifiers.Add(uri);
         }
-        
+
         public void RemoveIdentifier(Uri uri)
         {
             identifiers.Remove(uri);
         }
-        
+
         public void ClearIdentifiers()
         {
             identifiers.Clear();
         }
-        
+
         public override Uri ResolvedBaseUri {
             get { return base_uri; }
         }
-        
+
         public string Album {
             get { return album; }
             set { album = value; }
         }
-        
+
         public uint TrackNumber {
             get { return track_num; }
             set { track_num = value; }
         }
-        
+
         public TimeSpan Duration {
             get { return duration; }
             set { duration = value; }
         }
-                
+
         public ReadOnlyCollection<Uri> Locations {
             get { return new ReadOnlyCollection<Uri>(locations); }
         }
-        
+
         public ReadOnlyCollection<Uri> Identifiers {
             get { return new ReadOnlyCollection<Uri>(identifiers); }
         }
-        
+
         public int LocationCount {
             get { return locations.Count; }
         }
-        
+
         public int IdentifierCount {
             get { return identifiers.Count; }
         }
-        
+
         public Playlist Parent {
             internal set { parent = value; }
             get { return parent; }

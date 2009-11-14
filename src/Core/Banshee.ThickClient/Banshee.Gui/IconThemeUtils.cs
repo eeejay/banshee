@@ -35,7 +35,7 @@ namespace Banshee.Gui
     public static class IconThemeUtils
     {
         private static Assembly executing_assembly = Assembly.GetExecutingAssembly ();
-    
+
         public static bool HasIcon (string name)
         {
             return IconTheme.Default.HasIcon (name);
@@ -54,7 +54,7 @@ namespace Banshee.Gui
                     return pixbuf;
                 }
             }
-            
+
             return null;
         }
 
@@ -81,7 +81,7 @@ namespace Banshee.Gui
                 }
             } catch {
             }
-            
+
             if (!fallBackOnResource) {
                 return null;
             }

@@ -36,7 +36,7 @@ namespace Banshee.Gui
     public class PersistentPaneController
     {
         private static Dictionary<string, PersistentPaneController> controllers = new Dictionary<string, PersistentPaneController> ();
-        
+
         private string @namespace;
         private string key;
         private int fallback;
@@ -44,17 +44,17 @@ namespace Banshee.Gui
         private bool pending_changes;
         private Paned pane;
         private int last_position;
-        
+
         public static void Control (Paned pane, string name)
         {
-            Control (pane, String.Format ("interface.panes.{0}", name), "position", pane.Position); 
+            Control (pane, String.Format ("interface.panes.{0}", name), "position", pane.Position);
         }
-        
+
         public static void Control (Paned pane, SchemaEntry<int> entry)
         {
-            Control (pane, entry.Namespace, entry.Key, entry.DefaultValue); 
+            Control (pane, entry.Namespace, entry.Key, entry.DefaultValue);
         }
-        
+
         private static void Control (Paned pane, string @namespace, string key, int defaultValue)
         {
             string dict_key = String.Format ("{0}.{1}", @namespace, key);
@@ -64,7 +64,7 @@ namespace Banshee.Gui
                 controllers.Add (dict_key, new PersistentPaneController (pane, @namespace, key, defaultValue));
             }
         }
-        
+
         private PersistentPaneController (Paned pane, string @namespace, string key, int fallback)
         {
             this.@namespace = @namespace;
@@ -72,17 +72,17 @@ namespace Banshee.Gui
             this.fallback = fallback;
             Paned = pane;
         }
-        
+
         private Paned Paned {
             set {
                 if (pane == value) {
                     return;
                 }
-                
+
                 if (pane != null) {
                     //pane.MoveHandle -= OnPaneMoved;
                 }
-                
+
                 pane = value;
                 pane.Position = ConfigurationClient.Get<int> (@namespace, key, fallback);
                 //pane.MoveHandle += OnPaneMoved;
@@ -90,12 +90,12 @@ namespace Banshee.Gui
                 pane.SizeAllocated += OnPaneMoved;
             }
         }
-        
+
         private void OnPaneMoved (object sender, EventArgs args)
         {
             Save ();
         }
-        
+
         private void Save ()
         {
             if (timer_id == 0) {
@@ -104,7 +104,7 @@ namespace Banshee.Gui
                 pending_changes = true;
             }
         }
-        
+
         private bool OnTimeout ()
         {
             if (pending_changes) {

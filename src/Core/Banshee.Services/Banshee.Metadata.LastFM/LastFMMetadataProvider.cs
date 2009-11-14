@@ -3,9 +3,9 @@
 //
 // Author:
 //   Peter de Kraker <peterdk.dev@umito.nl>
-// 
+//
 // Based on RhapsodyMetadataProvider.cs
-//   
+//
 // Copyright (C) 2006-2008 Novell, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining
@@ -42,7 +42,7 @@ namespace Banshee.Metadata.LastFM
         public LastFMMetadataProvider () : base ()
         {
         }
-        
+
         public override IMetadataLookupJob CreateJob (IBasicTrackInfo track)
         {
             return new LastFMQueryJob (track);

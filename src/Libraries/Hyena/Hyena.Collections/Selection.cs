@@ -39,9 +39,9 @@ namespace Hyena.Collections
 #if NET_1_1
     internal
 #else
-    public 
+    public
 #endif
-    
+
     class Selection :
 #if NET_2_0
         IEnumerable<int>
@@ -52,11 +52,11 @@ namespace Hyena.Collections
         RangeCollection ranges = new RangeCollection ();
         private int max_index;
         private int first_selected_index;
-        
+
         public event EventHandler Changed;
         public event EventHandler FocusChanged;
         private int focused_index = -1;
-        
+
         public Selection ()
         {
         }
@@ -79,16 +79,16 @@ namespace Hyena.Collections
                 handler (this, EventArgs.Empty);
             }
         }
-        
+
         public void ToggleSelect (int index)
         {
             if (!ranges.Remove (index)) {
                 ranges.Add (index);
             }
-            
+
             OnChanged ();
         }
-        
+
         public void Select (int index)
         {
             ranges.Add (index);
@@ -103,7 +103,7 @@ namespace Hyena.Collections
             if (Count == 1)
                 first_selected_index = index;
         }
-        
+
         public void Unselect (int index)
         {
             if (ranges.Remove (index))
@@ -114,7 +114,7 @@ namespace Hyena.Collections
         {
             ranges.Remove (index);
         }
-                    
+
         public bool Contains(int index)
         {
             return ranges.Contains (index);
@@ -132,7 +132,7 @@ namespace Hyena.Collections
             else
                 Select (end);
         }
-        
+
         public void SelectRange (int a, int b)
         {
             int start = Math.Min (a, b);
@@ -145,7 +145,7 @@ namespace Hyena.Collections
 
             if (Count == i)
                 first_selected_index = a;
-            
+
             OnChanged ();
         }
 
@@ -167,38 +167,38 @@ namespace Hyena.Collections
             SelectRange (0, max_index);
         }
 
-        public void Clear () 
+        public void Clear ()
         {
             Clear (true);
         }
-        
+
         public void Clear (bool raise)
         {
             if (ranges.Count <= 0) {
                 return;
             }
-            
+
             ranges.Clear ();
             if (raise)
                 OnChanged ();
         }
-        
+
         public int Count {
             get { return ranges.Count; }
         }
-        
+
         public int MaxIndex {
             set { max_index = value; }
             get { return max_index; }
         }
-        
+
         public virtual bool AllSelected {
-            get { 
+            get {
                 if (ranges.RangeCount == 1) {
                     RangeCollection.Range range = ranges.Ranges[0];
                     return range.Start == 0 && range.End == max_index;
                 }
-                
+
                 return false;
             }
         }
@@ -210,21 +210,21 @@ namespace Hyena.Collections
         public RangeCollection.Range [] Ranges {
             get { return ranges.Ranges; }
         }
-        
+
         public int FirstIndex {
             get { return Count > 0 ? ranges[0] : -1; }
         }
-        
+
         public int LastIndex {
             get { return Count > 0 ? ranges[Count - 1]: -1; }
         }
-        
+
 #if NET_2_0
         public IEnumerator<int> GetEnumerator ()
         {
             return ranges.GetEnumerator ();
         }
-        
+
         IEnumerator IEnumerable.GetEnumerator ()
         {
             return GetEnumerator ();

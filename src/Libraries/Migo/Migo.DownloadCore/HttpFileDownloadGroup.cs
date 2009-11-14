@@ -5,27 +5,27 @@
  *  Written by Mike Urbanski <michael.c.urbanski@gmail.com>
  ****************************************************************************/
 
-/*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
+/*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW:
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
- *  copy of this software and associated documentation files (the "Software"),  
- *  to deal in the Software without restriction, including without limitation  
- *  the rights to use, copy, modify, merge, publish, distribute, sublicense,  
- *  and/or sell copies of the Software, and to permit persons to whom the  
+ *  copy of this software and associated documentation files (the "Software"),
+ *  to deal in the Software without restriction, including without limitation
+ *  the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ *  and/or sell copies of the Software, and to permit persons to whom the
  *  Software is furnished to do so, subject to the following conditions:
  *
- *  The above copyright notice and this permission notice shall be included in 
+ *  The above copyright notice and this permission notice shall be included in
  *  all copies or substantial portions of the Software.
  *
- *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
- *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
- *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
- *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
- *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
- *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  *  DEALINGS IN THE SOFTWARE.
  */
- 
+
 using System;
 using System.Timers;  // migrate to System.Threading.Timer
 using System.Threading;
@@ -43,38 +43,38 @@ namespace Migo.DownloadCore
 	{
 	    DownloadGroupStatusManager dsm;
 
-        private DateTime lastTick;	        
+        private DateTime lastTick;	
 
         private bool disposed;
         private long transferRate;
-        private long transferRatePreviously;        
+        private long transferRatePreviously;
         private long bytesThisInterval = 0;
-        
+
         private System.Timers.Timer transferTimer;
-	 
+	
 	    private Dictionary<HttpFileDownloadTask,long> transferRateDict;
-	 
+	
         public HttpFileDownloadGroup (int maxDownloads, TaskCollection<HttpFileDownloadTask> tasks)
-            : base (maxDownloads, tasks, new DownloadGroupStatusManager ()) 
-        {   
+            : base (maxDownloads, tasks, new DownloadGroupStatusManager ())
+        {
             dsm = StatusManager as DownloadGroupStatusManager;
-            
-            transferRateDict = 
+
+            transferRateDict =
                 new Dictionary<HttpFileDownloadTask,long> (dsm.MaxRunningTasks);
-            
+
             InitTransferTimer ();
         }
-        
+
         public override void Dispose ()
         {
             Dispose (null);
         }
-        
+
         public override void Dispose (AutoResetEvent handle)
         {
-            if (SetDisposed ()) {                
+            if (SetDisposed ()) {
                 if (transferTimer != null) {
-                    transferTimer.Enabled = false;            
+                    transferTimer.Enabled = false;
                     transferTimer.Elapsed -= OnTransmissionTimerElapsedHandler;
                     transferTimer.Dispose ();
                     transferTimer = null;
@@ -83,11 +83,11 @@ namespace Migo.DownloadCore
                 base.Dispose (handle);
             }
         }
-        
+
         private bool SetDisposed ()
         {
             bool ret = false;
-            
+
             lock (SyncRoot) {
                 if (!disposed) {
                     ret = disposed = true;
@@ -95,48 +95,48 @@ namespace Migo.DownloadCore
             }
 
             return ret;
-        }        
-        
+        }
+
         protected override void OnStarted ()
         {
             lock (SyncRoot) {
                 transferTimer.Enabled = true;
                 base.OnStarted ();
             }
-        }       
-     
+        }
+
         protected override void OnStopped ()
         {
             lock (SyncRoot) {
-                transferTimer.Enabled = false;   
+                transferTimer.Enabled = false;
                 base.OnStopped ();
             }
-        }        
-        
+        }
+
         protected override void OnTaskStarted (HttpFileDownloadTask task)
         {
             lock (SyncRoot) {
                 transferRateDict.Add (task, task.BytesReceived);
                 base.OnTaskStarted (task);
             }
-        }       
-     
+        }
+
         protected override void OnTaskStopped (HttpFileDownloadTask task)
         {
             lock (SyncRoot) {
                 if (transferRateDict.ContainsKey (task)) {
                     long bytesLastCheck = transferRateDict[task];
                     if (task.BytesReceived > bytesLastCheck) {
-                        bytesThisInterval += (task.BytesReceived - bytesLastCheck);                        
+                        bytesThisInterval += (task.BytesReceived - bytesLastCheck);
                     }
-  
+
                     transferRateDict.Remove (task);                	
                 }
 
                 base.OnTaskStopped (task);
             }
-        }  
-     
+        }
+
         protected virtual void SetTransferRate (long bytesPerSecond)
         {
             lock (SyncRoot) {
@@ -147,31 +147,31 @@ namespace Migo.DownloadCore
         private void InitTransferTimer ()
         {
             transferTimer = new System.Timers.Timer ();
-                
+
             transferTimer.Elapsed += OnTransmissionTimerElapsedHandler;
             transferTimer.Interval = (1500 * 1); // 1.5 seconds
             transferTimer.Enabled = false;
-        }   
+        }
 
         private long CalculateTransferRate ()
         {
             long bytesPerSecond;
-            
+
             TimeSpan duration = (DateTime.Now - lastTick);
             double secondsElapsed = duration.TotalSeconds;
 
             if ((int)secondsElapsed == 0) {
                 return 0;
             }
-            
+
             long tmpCur;
             long tmpPrev;
-            
+
             foreach (HttpFileDownloadTask dt in CurrentTasks) {
                 tmpCur = dt.BytesReceived;
                 tmpPrev = transferRateDict[dt];
                 transferRateDict[dt] = tmpCur;
-                
+
                 bytesThisInterval += (tmpCur - tmpPrev);
             }
 
@@ -180,41 +180,41 @@ namespace Migo.DownloadCore
             );
 
 
-            lastTick = DateTime.Now;                        
-            bytesThisInterval = 0;                
-            
+            lastTick = DateTime.Now;
+            bytesThisInterval = 0;
+
             return bytesPerSecond;
-        }        
+        }
 
         protected override void Reset ()
         {
-            lastTick = DateTime.Now;	        
+            lastTick = DateTime.Now;	
 
             transferRate = -1;
-            transferRatePreviously = -1;        
-            
+            transferRatePreviously = -1;
+
             base.Reset ();
         }
 
-        protected virtual void OnTransmissionTimerElapsedHandler (object source, 
+        protected virtual void OnTransmissionTimerElapsedHandler (object source,
                                                                   ElapsedEventArgs e)
-        {           
+        {
             lock (SyncRoot) {
                 UpdateTransferRate ();
             }
         }
-        
+
         protected virtual void UpdateTransferRate ()
-        {            
+        {
             transferRate = CalculateTransferRate ();
-                        
+
             if (transferRatePreviously == 0) {
                 transferRatePreviously = transferRate;
             }
-            
+
             transferRate = ((transferRate + transferRatePreviously) / 2);
-            SetTransferRate (transferRate);       
-            transferRatePreviously = transferRate;            
+            SetTransferRate (transferRate);
+            transferRatePreviously = transferRate;
         }
 	}
 }

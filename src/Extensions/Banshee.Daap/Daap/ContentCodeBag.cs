@@ -1,17 +1,17 @@
 /*
  * daap-sharp
  * Copyright (C) 2005  James Willcox <snorp@snorp.net>
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
@@ -49,7 +49,7 @@ namespace Daap {
     internal class ContentCodeBag {
 
         private const int ChunkLength = 8192;
-        
+
         private static ContentCodeBag defaultBag;
         private Dictionary <int, ContentCode> codes = new Dictionary <int, ContentCode> ();
 
@@ -59,7 +59,7 @@ namespace Daap {
 
                     // this is crappy
                     // Alex: Agreed. :)
-                    
+
                     string name = "content-codes";
                     using (BinaryReader reader = new BinaryReader(Assembly.GetExecutingAssembly().GetManifestResourceStream(name))) {
                         MemoryStream buf = new MemoryStream();
@@ -116,7 +116,7 @@ namespace Daap {
 
         internal ContentNode ToNode () {
             List <ContentNode> nodes = new List <ContentNode> ();
-            
+
             foreach (int number in codes.Keys) {
                 ContentCode code = (ContentCode) codes[number];
 
@@ -154,9 +154,9 @@ namespace Daap {
                 if (dictNode.Name != "dmap.dictionary") {
                     continue;
                 }
-                
+
                 ContentCode code = new ContentCode ();
-                
+
                 foreach (ContentNode item in (dictNode.Value as ContentNode[])) {
                     switch (item.Name) {
                     case "dmap.contentcodesnumber":
@@ -173,7 +173,7 @@ namespace Daap {
 
                 bag.codes[code.Number] = code;
             }
-            
+
             return bag;
         }
     }

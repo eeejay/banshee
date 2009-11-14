@@ -41,7 +41,7 @@ namespace Migo.Syndication
         private Dictionary<Feed, FeedUpdateTask> update_feed_map;
         private TaskList<FeedUpdateTask> update_task_list;
         private TaskGroup<FeedUpdateTask> update_task_group;
-        
+
 #region Public Properties and Events
 
         public event Action<FeedItem> ItemAdded;
@@ -50,33 +50,33 @@ namespace Migo.Syndication
         public event EventHandler FeedsChanged;
 
 #endregion
-        
+
 #region Constructor
-        
+
         public FeedManager ()
         {
             update_feed_map = new Dictionary<Feed, FeedUpdateTask> ();
             update_task_list = new TaskList<FeedUpdateTask> ();
-            
+
             // Limit to 4 feeds downloading at a time
             update_task_group = new TaskGroup<FeedUpdateTask> (2, update_task_list);
-            
+
             update_task_group.TaskStopped += OnUpdateTaskStopped;
             update_task_group.TaskAssociated += OnUpdateTaskAdded;
-            
+
             // TODO
             // Start timeout to refresh feeds every so often
         }
 
 #endregion
-        
+
 #region Public Methods
 
         public bool IsUpdating (Feed feed)
         {
             return update_feed_map.ContainsKey (feed);
         }
-        
+
         public Feed CreateFeed (string url, FeedAutoDownload autoDownload)
         {
             return CreateFeed (url, autoDownload, true);
@@ -93,7 +93,7 @@ namespace Migo.Syndication
                 feed.Save ();
                 feed.Update ();
             }
-            
+
             return feed;
         }
 
@@ -103,17 +103,17 @@ namespace Migo.Syndication
                 if (disposed) {
                     return;
                 }
-                
+
                 if (!update_feed_map.ContainsKey (feed)) {
                     FeedUpdateTask task = new FeedUpdateTask (feed);
                     update_feed_map[feed] = task;
-                    lock (update_task_list.SyncRoot) { 
+                    lock (update_task_list.SyncRoot) {
                         update_task_list.Add (task);
                     }
                 }
-            }        
+            }
         }
-        
+
         public void CancelUpdate (Feed feed)
         {
             lock (update_task_group.SyncRoot) {
@@ -122,7 +122,7 @@ namespace Migo.Syndication
                 }
             }
         }
-        
+
         public void Dispose (System.Threading.AutoResetEvent disposeHandle)
         {
             lock (update_task_group.SyncRoot) {
@@ -131,17 +131,17 @@ namespace Migo.Syndication
                     //update_task_group.Handle.WaitOne ();
                     update_task_group.Dispose ();
                     //disposeHandle.WaitOne ();
-                    
+
                     update_task_group.TaskStopped -= OnUpdateTaskStopped;
                     update_task_group.TaskAssociated -= OnUpdateTaskAdded;
                     update_task_group = null;
                 }
-               
+
                 update_task_list = null;
                 disposed = true;
             }
-        }        
-                
+        }
+
 #endregion
 
 #region Internal Methods
@@ -153,7 +153,7 @@ namespace Migo.Syndication
                 handler (this, EventArgs.Empty);
             }
         }
-        
+
         internal void OnItemAdded (FeedItem item)
         {
             Action<FeedItem> handler = ItemAdded;
@@ -161,7 +161,7 @@ namespace Migo.Syndication
                 handler (item);
             }
         }
-        
+
         internal void OnItemChanged (FeedItem item)
         {
             Action<FeedItem> handler = ItemChanged;
@@ -169,7 +169,7 @@ namespace Migo.Syndication
                 handler (item);
             }
         }
-        
+
         internal void OnItemRemoved (FeedItem item)
         {
             Action<FeedItem> handler = ItemRemoved;
@@ -183,7 +183,7 @@ namespace Migo.Syndication
 #region Private Methods
 
         private void OnUpdateTaskAdded (object sender, TaskEventArgs<FeedUpdateTask> e)
-        {   
+        {
             lock (update_task_group.SyncRoot) {
                 update_task_group.Execute ();
             }
@@ -194,13 +194,13 @@ namespace Migo.Syndication
             lock (update_task_group.SyncRoot) {
                 FeedUpdateTask fut = e.Task as FeedUpdateTask;
                 update_feed_map.Remove (fut.Feed);
-                
+
                 lock (update_task_list.SyncRoot) {
                     update_task_list.Remove (e.Task);
                 }
             }
         }
-        
+
 #endregion
 
     }

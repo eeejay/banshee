@@ -41,10 +41,10 @@ namespace Banshee.Hardware
 
         bool ShouldIgnore { get; }
         string FileSystem { get; }
-        
+
         bool CanEject { get; }
         void Eject ();
-        
+
         bool CanUnmount { get; }
         void Unmount ();
     }

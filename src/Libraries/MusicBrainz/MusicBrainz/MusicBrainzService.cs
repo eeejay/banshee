@@ -35,15 +35,15 @@ namespace MusicBrainz
                 service_url = value;
             }
         }
-        
+
         static RequestCachePolicy cache_policy;
         public static RequestCachePolicy CachePolicy {
             get { return cache_policy; }
             set { cache_policy = value; }
         }
-        
+
         public static event EventHandler<XmlRequestEventArgs> XmlRequest;
-        
+
         internal static void OnXmlRequest (string url, bool fromCache)
         {
             EventHandler<XmlRequestEventArgs> handler = XmlRequest;

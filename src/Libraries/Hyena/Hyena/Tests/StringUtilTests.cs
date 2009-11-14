@@ -33,7 +33,7 @@ using System;
 using System.IO;
 using NUnit.Framework;
 using Hyena;
-    
+
 namespace Hyena.Tests
 {
     [TestFixture]
@@ -46,11 +46,11 @@ namespace Hyena.Tests
                 Camel = camel;
                 Under = under;
             }
-    
+
             public string Camel;
             public string Under;
         }
-    
+
         private Map [] u_to_c_maps = new Map [] {
             new Map ("Hello", "hello"),
             new Map ("HelloWorld", "hello_world"),
@@ -64,7 +64,7 @@ namespace Hyena.Tests
             new Map (null, ""),
             new Map ("H", "h")
         };
-    
+
         [Test]
         public void UnderCaseToCamelCase ()
         {
@@ -72,7 +72,7 @@ namespace Hyena.Tests
                 Assert.AreEqual (map.Camel, StringUtil.UnderCaseToCamelCase (map.Under));
             }
         }
-    
+
         private Map [] c_to_u_maps = new Map [] {
             new Map ("Hello", "hello"),
             new Map ("HelloWorld", "hello_world"),
@@ -84,7 +84,7 @@ namespace Hyena.Tests
             new Map ("", null),
             new Map ("H", "h")
         };
-    
+
         [Test]
         public void CamelCaseToUnderCase ()
         {
@@ -92,7 +92,7 @@ namespace Hyena.Tests
                 Assert.AreEqual (map.Under, StringUtil.CamelCaseToUnderCase (map.Camel));
             }
         }
-    
+
         [Test]
         public void DoubleToTenthsPrecision ()
         {
@@ -108,7 +108,7 @@ namespace Hyena.Tests
             Assert.AreEqual ("1.000,3", StringUtil.DoubleToTenthsPrecision (1000.32));
             Assert.AreEqual ("9.233",   StringUtil.DoubleToTenthsPrecision (9233));
         }
-    
+
         [Test]
         public void DoubleToPluralInt ()
         {
@@ -129,11 +129,11 @@ namespace Hyena.Tests
             Assert.AreEqual ("foobar", StringUtil.RemoveNewlines (@"foo
 bar"));
             Assert.AreEqual ("foobar baz", StringUtil.RemoveNewlines (@"foo
-bar 
+bar
 baz"));
             Assert.AreEqual ("haswindows newline andunix", StringUtil.RemoveNewlines (@"has
 windows
- newline 
+ newline
 andunix"));
         }
 
@@ -147,11 +147,11 @@ andunix"));
             Assert.AreEqual ("foobar", StringUtil.RemoveHtml ("foo<baz/>bar"));
             Assert.AreEqual ("foobar", StringUtil.RemoveHtml ("foo</baz>bar"));
             Assert.AreEqual ("foobazbar", StringUtil.RemoveHtml ("foo<a href=\"http://lkjdflkjdflkjj\">baz</a>bar"));
-            Assert.AreEqual ("foobaz foo bar", StringUtil.RemoveHtml (@"foo<a 
+            Assert.AreEqual ("foobaz foo bar", StringUtil.RemoveHtml (@"foo<a
 href=http://lkjdflkjdflkjj>baz foo< /a> bar"));
         }
     }
-    
+
     [TestFixture]
     public class SearchKeyTests
     {
@@ -159,14 +159,14 @@ href=http://lkjdflkjdflkjj>baz foo< /a> bar"));
         {
             Assert.AreEqual (after, StringUtil.SearchKey (before));
         }
-        
+
         [Test]
         public void TestEmpty ()
         {
             AssertSearchKey ("", "");
             AssertSearchKey (null, null);
         }
-        
+
         // Test that resulting search keys are in lower-case
         [Test]
         public void TestLowercase ()
@@ -174,14 +174,14 @@ href=http://lkjdflkjdflkjj>baz foo< /a> bar"));
             AssertSearchKey ("A", "a");
             AssertSearchKey ("\u0104", "a");
         }
-        
+
         // Test that combining diacritics are removed from Latin characters.
         [Test]
         public void TestRemoveDiacritics ()
         {
             AssertSearchKey ("\u00e9", "e");
             AssertSearchKey ("e\u0301", "e");
-            
+
             AssertSearchKey ("\u014d", "o");
             AssertSearchKey ("o\u0304", "o");
 
@@ -209,7 +209,7 @@ href=http://lkjdflkjdflkjj>baz foo< /a> bar"));
             AssertSearchKey ("ż", "z");
             AssertSearchKey ("Ż", "z");
         }
-        
+
         // Test that combining diacritics are preserved, and combined, for non-Latin characters.
         [Test]
         public void TestPreserveDiacritics ()
@@ -217,7 +217,7 @@ href=http://lkjdflkjdflkjj>baz foo< /a> bar"));
             AssertSearchKey ("\u304c", "\u304c");
             AssertSearchKey ("\u304b\u3099", "\u304c");
         }
-        
+
         // Test that some non-Latin characters are converted to Latin counterparts.
         [Test]
         public void TestEquivalents ()
@@ -225,7 +225,7 @@ href=http://lkjdflkjdflkjj>baz foo< /a> bar"));
             AssertSearchKey ("\u00f8", "o");
             AssertSearchKey ("\u0142", "l");
         }
-        
+
         // Test that some kinds of punctuation are removed.
         [Test]
         public void TestRemovePunctuation ()
@@ -236,16 +236,16 @@ href=http://lkjdflkjdflkjj>baz foo< /a> bar"));
             AssertSearchKey ("?", "");
             AssertSearchKey ("/", "");
         }
-        
+
         [Test] // http://bugzilla.gnome.org/show_bug.cgi?id=573484
         public void TestCollapseSpaces ()
         {
             AssertSearchKey ("  a  \t  b  ", "a b");
             AssertSearchKey ("100 % techno", "100 techno");
-            
+
             // Character in the set of special overrides
             AssertSearchKey ("a \u00f8", "a o");
-            
+
             // Invalid combining character
             AssertSearchKey ("a \u0301", "a");
         }
@@ -263,7 +263,7 @@ href=http://lkjdflkjdflkjj>baz foo< /a> bar"));
         {
             AssertProduces (input, input);
         }
-        
+
         [Test]
         public void TestEmpty ()
         {
@@ -293,7 +293,7 @@ href=http://lkjdflkjdflkjj>baz foo< /a> bar"));
             AssertProduces ("Greetings! -* 你好?", "Greetings! -_ 你好_");
         }
     }
-    
+
     [TestFixture]
     public class SortKeyTests
     {
@@ -301,19 +301,19 @@ href=http://lkjdflkjdflkjj>baz foo< /a> bar"));
         {
             Assert.AreEqual (after, StringUtil.SortKey (before));
         }
-        
+
         [Test]
         public void TestNull ()
         {
             AssertSortKey (null, null);
         }
-        
+
         [Test]
         public void TestEmpty ()
         {
             AssertSortKey ("", new byte[] {1, 1, 1, 1, 0});
         }
-        
+
         [Test]
         public void TestSortKey ()
         {
@@ -379,7 +379,7 @@ href=http://lkjdflkjdflkjj>baz foo< /a> bar"));
                 String.Format ("foo{0}01. bar.ogg", dir_sep));
         }
     }
-    
+
     [TestFixture]
     public class SubstringCountTests
     {
@@ -387,21 +387,21 @@ href=http://lkjdflkjdflkjj>baz foo< /a> bar"));
         {
             Assert.AreEqual (expected, StringUtil.SubstringCount (haystack, needle));
         }
-        
+
         [Test]
         public void TestEmpty ()
         {
             AssertCount ("", "a", 0);
             AssertCount ("a", "", 0);
         }
-        
+
         [Test]
         public void TestNoMatches ()
         {
             AssertCount ("a", "b", 0);
             AssertCount ("with needle in", "long needle", 0);
         }
-        
+
         [Test]
         public void TestMatches ()
         {

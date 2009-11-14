@@ -31,20 +31,20 @@ namespace MusicBrainz
     // A person-like entity, such as an artist or a label.
     public abstract class MusicBrainzEntity : MusicBrainzObject
     {
-        
+
         #region Private
-        
+
         string name;
         string sort_name;
         string disambiguation;
         string begin_date;
         string end_date;
         ReadOnlyCollection<string> aliases;
-        
+
         #endregion
-        
+
         #region Constructors
-        
+
         internal MusicBrainzEntity (string id, string parameters) : base (id, parameters)
         {
         }
@@ -52,9 +52,9 @@ namespace MusicBrainz
         internal MusicBrainzEntity (XmlReader reader, bool all_rels_loaded) : base (reader, all_rels_loaded)
         {
         }
-        
+
         #endregion
-        
+
         #region Protected
 
         internal override void CreateIncCore (StringBuilder builder)
@@ -103,7 +103,7 @@ namespace MusicBrainz
                 break;
             }
         }
-        
+
         internal static string CreateNameParameter (string name)
         {
             StringBuilder builder = new StringBuilder (name.Length + 6);
@@ -111,7 +111,7 @@ namespace MusicBrainz
             Utils.PercentEncode (builder, name);
             return builder.ToString ();
         }
-        
+
         #endregion
 
         #region Public
@@ -150,13 +150,13 @@ namespace MusicBrainz
         {
             return GetPropertyOrNew (ref aliases);
         }
-        
+
         public override string ToString ()
         {
             return name;
         }
-        
+
         #endregion
-        
+
     }
 }

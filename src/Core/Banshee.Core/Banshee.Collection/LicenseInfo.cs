@@ -34,7 +34,7 @@ namespace CreativeCommons
     public class LicenseInfo
     {
     }
-    
+
     [Flags]
     public enum Permissions
     {
@@ -45,7 +45,7 @@ namespace CreativeCommons
         HighIncomNationUse,
         Sharing
     }
-    
+
     [Flags]
     public enum Requirements
     {
@@ -55,21 +55,21 @@ namespace CreativeCommons
         ShareAlike,
         SourceCode
     }
-    
+
     [Flags]
     public enum Prohibitions
     {
         None = 0,
         CommercialUse
     }
-        
-    public class CreativeCommonsLicenseInfo 
+
+    public class CreativeCommonsLicenseInfo
     {
         private static string [] known_licenses = new string [] {
             "http://creativecommons.org/licenses/by/2.5/rdf",
             "http://creativecommons.org/licenses/by/3.0/rdf",
         };
-        
+
         public static IEnumerable<CreativeCommonsLicenseInfo> KnownLicenses {
             get {
                 foreach (string known_license in known_licenses) {
@@ -77,18 +77,18 @@ namespace CreativeCommons
                         FromLicenseUrl (known_license);
                     }
                 }
-                
+
                 foreach (CreativeCommonsLicenseInfo license in licenses.Values) {
                     if (license != null)
                         yield return license;
                 }
             }
         }
-    
+
         private Permissions permissions;
         private Requirements requirements;
         private Prohibitions prohibitions;
-        
+
         private bool is_deprecated;
         private string title;
         private string version;
@@ -97,14 +97,14 @@ namespace CreativeCommons
         private string legal_url;
         private string jurisdiction_url;
         private string creator_url;
-        
+
         /*public static CreateiveCommonsLicenseInfo FromCodeName (string code_name)
         {
             return null;
         }*/
-        
+
         private static Dictionary<string, CreativeCommonsLicenseInfo> licenses = new Dictionary<string, CreativeCommonsLicenseInfo> ();
-        
+
         public static CreateiveCommonsLicenseInfo FromLicenseUrl (string license_url)
         {
             if (String.IsNullOrEmpty (license_url))
@@ -113,16 +113,16 @@ namespace CreativeCommons
             string rdf_url = GetRdfUrl (license_url);
             if (rdf_url == null)
                 return null;
-                
+
             if (licenses.ContainsKey (rdf_url)) {
                 return licenses[rdf_url];
             }
-            
+
             CreativeCommonsLicenseInfo license = null; // Grab from web and parse
             licenses[rdf_url] = license;
             return license;
         }
-        
+
         private static string GetRdfUrl (string license_url)
         {
             if (license_uri.StartsWith ("http://creativecommons.org/licenses/")) {
@@ -135,12 +135,12 @@ namespace CreativeCommons
             }
             return null;
         }
-                
+
 
         public LicenseInfo ()
         {
         }
-        
+
         /*public void GetLicenseInfo (string license_uri)
         {
             if (String.IsNullOrEmpty (license_uri))
@@ -151,7 +151,7 @@ namespace CreativeCommons
             }
         }*/
     }
-    
+
     public class CreativeCommonsRdfParser
     {
         public static CreativeCommonsLicenseInfo (string xml_blob)

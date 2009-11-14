@@ -47,7 +47,7 @@ namespace Banshee.GnomeBackend
     public class Brasero : IDisposable
     {
         private string brasero_exec;
-        
+
         public Brasero ()
         {
             brasero_exec = Paths.FindProgramInPath ("brasero");
@@ -55,7 +55,7 @@ namespace Banshee.GnomeBackend
                 throw new FileNotFoundException ("brasero");
             }
         }
-        
+
         public void Initialize ()
         {
             InterfaceActionService uia_service = ServiceManager.Get<InterfaceActionService> ();
@@ -65,71 +65,71 @@ namespace Banshee.GnomeBackend
                     Catalog.GetString ("Write selected tracks to an audio CD"),
                     OnBurnDisc)
             });
-            
+
             Gtk.Action action = uia_service.TrackActions["BurnDiscAction"];
             action.IconName = "media-write-cd";
-            
+
             uia_service.UIManager.AddUiFromResource ("GlobalUI.xml");
-            
+
             UpdateActions ();
             uia_service.TrackActions.SelectionChanged += delegate { Banshee.Base.ThreadAssist.ProxyToMain (UpdateActions); };
             ServiceManager.SourceManager.ActiveSourceChanged += delegate { Banshee.Base.ThreadAssist.ProxyToMain (UpdateActions); };
         }
-        
+
         public void Dispose ()
         {
         }
-        
+
         private void OnBurnDisc (object o, EventArgs args)
         {
             DatabaseSource source = ServiceManager.SourceManager.ActiveSource as DatabaseSource;
             if (source == null) {
                 return;
             }
-            
+
             StringBuilder file_args = new StringBuilder ();
             file_args.Append ("-a");
-            
+
             foreach (TrackInfo track in source.TrackModel.SelectedItems) {
                 if (track.Uri.IsLocalPath) {
                     file_args.AppendFormat (" \"{0}\"", track.Uri.AbsolutePath.Replace ("\"", "\\\""));
                 }
             }
-            
+
             try {
                 Run (file_args.ToString ());
             } catch (Exception e) {
                 Log.Exception ("Problem starting Brasero", e);
-                Log.Error (Catalog.GetString ("Could not write CD"), 
+                Log.Error (Catalog.GetString ("Could not write CD"),
                     Catalog.GetString ("Brasero could not be started"), true);
             }
         }
-        
+
         internal void Run (string args)
         {
             ProcessStartInfo psi = new ProcessStartInfo (brasero_exec, args);
             psi.UseShellExecute = false;
             Process.Start (psi);
         }
-        
+
         private void UpdateActions ()
         {
             InterfaceActionService uia_service = ServiceManager.Get<InterfaceActionService> ();
             Gtk.Action action = uia_service.TrackActions["BurnDiscAction"];
-            
+
             bool visible = false;
             bool sensitive = false;
-            
+
             DatabaseSource source = ServiceManager.SourceManager.ActiveSource as DatabaseSource;
             // FIXME: Figure out how to handle non-music-library sources
             if (source != null) {
                 if (source is MusicLibrarySource || source.Parent is MusicLibrarySource) {
                     visible = true;
                 }
-                
+
                 sensitive = source.TrackModel.Selection.Count > 0;
             }
-            
+
             action.Sensitive = sensitive;
             action.Visible = visible;
         }

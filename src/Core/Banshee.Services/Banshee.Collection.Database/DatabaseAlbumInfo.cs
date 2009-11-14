@@ -64,7 +64,7 @@ namespace Banshee.Collection.Database
         private static int last_artist_id;
         private static string last_title;
         private static DatabaseAlbumInfo last_album;
-        
+
         public static void Reset ()
         {
             last_artist_id = -1;
@@ -89,7 +89,7 @@ namespace Banshee.Collection.Database
             }
             return db.Query (default_select_command, artist_id, title);
         }
-        
+
         public static DatabaseAlbumInfo FindOrCreate (DatabaseArtistInfo artist, DatabaseAlbumInfo album)
         {
             if (album.Title == last_title && artist.DbId == last_artist_id && last_album != null) {
@@ -110,7 +110,7 @@ namespace Banshee.Collection.Database
                         last_album.ArtistName = artist.Name;
                         save = true;
                     }
-                    
+
                     // Ditto artist sort name
                     if (last_album.ArtistNameSort != artist.NameSort) {
                         last_album.ArtistNameSort = artist.NameSort;
@@ -140,7 +140,7 @@ namespace Banshee.Collection.Database
                     last_album = album;
                 }
             }
-            
+
             last_title = album.Title;
             last_artist_id = artist.DbId;
             return last_album;
@@ -184,19 +184,19 @@ namespace Banshee.Collection.Database
             get { return artist_id; }
             set { artist_id = value; }
         }
-        
+
         [DatabaseColumn("MusicBrainzID")]
         public override string MusicBrainzId {
             get { return base.MusicBrainzId; }
             set { base.MusicBrainzId = value; }
         }
-        
+
         [DatabaseColumn]
         public override DateTime ReleaseDate {
             get { return base.ReleaseDate; }
             set { base.ReleaseDate = value; }
         }
-        
+
         [DatabaseColumn]
         public override bool IsCompilation {
             get { return base.IsCompilation; }
@@ -208,13 +208,13 @@ namespace Banshee.Collection.Database
             get { return base.Title; }
             set { base.Title = value; }
         }
-        
+
         [DatabaseColumn]
         public override string TitleSort {
             get { return base.TitleSort; }
             set { base.TitleSort = value; }
         }
-        
+
         [DatabaseColumn(Select = false)]
         internal byte[] TitleSortKey {
             get { return Hyena.StringUtil.SortKey (TitleSort ?? DisplayTitle); }
@@ -241,7 +241,7 @@ namespace Banshee.Collection.Database
         internal byte[] ArtistNameSortKey {
             get { return Hyena.StringUtil.SortKey (ArtistNameSort ?? DisplayArtistName); }
         }
-        
+
         [DatabaseColumn(Select = false)]
         internal string ArtistNameLowered {
             get { return Hyena.StringUtil.SearchKey (DisplayArtistName); }

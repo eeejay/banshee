@@ -62,7 +62,7 @@ namespace Hyena.Query
 
             return null;
         }
-        
+
         public static QueryValue CreateFromStringValue (string input, QueryField field)
         {
             if (field == null) {

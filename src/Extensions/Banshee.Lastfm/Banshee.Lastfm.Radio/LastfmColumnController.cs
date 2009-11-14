@@ -43,7 +43,7 @@ namespace Banshee.Lastfm.Radio
                 AlbumColumn,
                 DurationColumn
             );
-            
+
             DefaultSortColumn = ArtistColumn;
             Load ();
         }

@@ -43,29 +43,29 @@ using Hyena.Tests;
 namespace Banshee.Base.Tests
 {
     // FIXME: These tests don't really belong here
-    
+
     [TestFixture]
     public class TaglibReadWriteTests : TestBase
     {
         private string [] files;
-        
+
         [TestFixtureSetUp]
         public void Setup ()
         {
             Mono.Addins.AddinManager.Initialize (BinDir);
-            
+
             files = new string [] {
                 Path.Combine (TestsDir, "data/test.mp3")
             };
         }
-    
+
         [Test]
         public void TestSystemIO ()
         {
             Banshee.IO.Provider.SetProvider (new Banshee.IO.SystemIO.Provider ());
             WriteMetadata (files, ChangeTrack, VerifyTrack);
         }
-    
+
         [Test]
         public void TestUnixIO ()
         {
@@ -158,9 +158,9 @@ namespace Banshee.Base.Tests
                 AssertForEach<string> (files, delegate (string uri) {
                     string extension = System.IO.Path.GetExtension (uri);
                     newuri = new SafeUri (Path.Combine (TestsDir, "data/test_write." + extension));
-    
+
                     Banshee.IO.File.Copy (new SafeUri (uri), newuri, true);
-    
+
                     ChangeAndVerify (newuri, change, verify);
                 });
             } finally {
@@ -169,25 +169,25 @@ namespace Banshee.Base.Tests
                     Banshee.IO.File.Delete (newuri);
             }
         }
-    
+
         private void ChangeAndVerify (SafeUri uri, Action<TrackInfo> change, Action<TrackInfo> verify)
         {
             TagLib.File file = StreamTagger.ProcessUri (uri);
             TrackInfo track = new TrackInfo ();
             StreamTagger.TrackInfoMerge (track, file);
-    
+
             // Make changes
             change (track);
-    
+
             // Save changes
             bool saved = StreamTagger.SaveToFile (track);
             Assert.IsTrue (saved);
-    
+
             // Read changes
             file = StreamTagger.ProcessUri (uri);
             track = new TrackInfo ();
             StreamTagger.TrackInfoMerge (track, file);
-    
+
             // Verify changes
             verify (track);
         }
@@ -213,14 +213,14 @@ namespace Banshee.Base.Tests
         }
 
         private Type unix_io_type;
-    
+
         private Banshee.IO.IProvider CreateUnixIOProvider ()
         {
             if (unix_io_type == null) {
                 Assembly asm = Assembly.LoadFrom (BinDir + "/Banshee.Unix.dll");
                 unix_io_type = asm.GetType ("Banshee.IO.Unix.Provider");
             }
-            
+
             return (Banshee.IO.IProvider)Activator.CreateInstance (unix_io_type);
         }
     }

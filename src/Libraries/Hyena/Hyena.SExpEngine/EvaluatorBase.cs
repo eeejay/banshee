@@ -39,12 +39,12 @@ namespace Hyena.SExpEngine
     public class EvaluationException : ApplicationException
     {
         public EvaluationException(TreeNode node, string token, Exception inner) : base(String.Format(
-            "Evaluation exception at token `{0} ({1})' [{2},{3}]", 
+            "Evaluation exception at token `{0} ({1})' [{2},{3}]",
             node.GetType(), token, node.Line, node.Column), inner)
         {
         }
     }
-    
+
     public class UnknownVariableException : ApplicationException
     {
         public UnknownVariableException(string var) : base(var)
@@ -60,171 +60,171 @@ namespace Hyena.SExpEngine
             public MethodInfo MethodInfo;
             public bool EvaluateVariables;
         }
-    
+
         private TreeNode expression;
         private TreeNode function_table_expression = new TreeNode();
-        
+
         private string input;
         private Dictionary<string, object> functions = new Dictionary<string, object>();
         private List<Exception> exceptions = new List<Exception>();
-        
+
         public EvaluatorBase()
         {
             expression = function_table_expression;
         }
-        
+
         public EvaluatorBase(TreeNode expression)
         {
             this.expression = expression;
         }
-        
+
         public EvaluatorBase(string input)
         {
             expression = function_table_expression;
             this.input = input;
         }
-        
+
         public void RegisterVariable(string name, string value)
         {
             expression.RegisterFunction(name, value);
         }
-        
+
         public void RegisterVariable(string name, bool value)
         {
             expression.RegisterFunction(name, value);
         }
-        
+
         public void RegisterVariable(string name, int value)
         {
             expression.RegisterFunction(name, value);
         }
-        
+
         public void RegisterVariable(string name, double value)
         {
             expression.RegisterFunction(name, value);
         }
-        
+
         public void RegisterVariable(string name, SExpVariableResolutionHandler value)
         {
             expression.RegisterFunction(name, value);
         }
-        
+
         public void RegisterVariable(string name, TreeNode value)
         {
             expression.RegisterFunction(name, value);
         }
-        
+
         public void RegisterFunction(SExpFunctionHandler handler, params string [] names)
         {
             foreach(string name in names) {
                 if(functions.ContainsKey(name)) {
                     functions.Remove(name);
                 }
-                
+
                 functions.Add(name, handler);
             }
         }
-        
+
         public void RegisterFunction(object o, MethodInfo method, string [] names)
         {
             RegisterFunction(o, method, names, true);
         }
-        
+
         public void RegisterFunction(object o, MethodInfo method, string [] names, bool evaluateVariables)
         {
             MethodInfoContainer container = new MethodInfoContainer();
             container.MethodInfo = method;
             container.Object = o;
             container.EvaluateVariables = evaluateVariables;
-        
+
             foreach(string name in names) {
                 if(functions.ContainsKey(name)) {
                     functions.Remove(name);
                 }
-                
+
                 functions.Add(name, container);
             }
         }
-        
+
         public void RegisterFunctionSet(FunctionSet functionSet)
         {
             functionSet.Load(this);
         }
-        
+
         public TreeNode EvaluateTree(TreeNode expression)
         {
             this.expression = expression;
             this.input = null;
             return Evaluate();
         }
-        
+
         public TreeNode EvaluateString(string input)
         {
             this.expression = null;
             this.input = input;
             return Evaluate();
         }
-        
+
         public TreeNode Evaluate()
         {
             exceptions.Clear();
-            
+
             try {
                 if(expression == null) {
                     Parser parser = new Parser();
                     expression = parser.Parse(input);
                     expression.CopyFunctionsFrom(function_table_expression);
                 }
-                
+
                 return Evaluate(expression);
-            } catch(Exception e) {    
+            } catch(Exception e) {
                 Exception next = e;
-                
+
                 do {
                     if(next != null) {
                         exceptions.Add(next);
                         next = next.InnerException;
                     }
                 } while(next != null && next.InnerException != null);
-            
+
                 if(next != null) {
                     exceptions.Add(next);
                 }
             }
-            
+
             return null;
         }
-       
+
         public TreeNode Evaluate(TreeNode node)
         {
             if(!node.HasChildren || node is FunctionNode) {
                 return EvaluateNode(node);
             }
-            
+
             TreeNode final_result_node = new TreeNode();
-            
+
             foreach(TreeNode child_node in node.Children) {
                 TreeNode result_node = EvaluateNode(child_node);
-                
+
                 if(result_node != null) {
                     final_result_node.AddChild(result_node);
                 }
-                
+
                 if(child_node is FunctionNode) {
                     if(functions.ContainsKey((child_node as FunctionNode).Function)) {
                         break;
                     }
-                    
+
                     FunctionNode impl = ResolveFunction(child_node as FunctionNode);
                     if(impl != null && impl.RequiresArguments) {
                         break;
                     }
                 }
             }
-            
+
             return final_result_node.ChildCount == 1 ? final_result_node.Children[0] : final_result_node;
         }
-        
+
         private TreeNode EvaluateNode(TreeNode node)
         {
             TreeNode result_node = null;
@@ -237,25 +237,25 @@ namespace Hyena.SExpEngine
                     if(e is TargetInvocationException) {
                         ee = e.InnerException;
                     }
-                
+
                     throw new EvaluationException(node, (node as FunctionNode).Function, ee);
                 }
             } else if(node is LiteralNodeBase) {
                 result_node = node;
             } else {
                 result_node = Evaluate(node);
-            } 
-            
+            }
+
             return result_node;
         }
-        
+
         private TreeNode EvaluateFunction(FunctionNode node)
         {
             object handler = null;
-            
+
             TreeNode parent = node.Parent;
             TreeNode [] args = null;
-            
+
             if(!functions.ContainsKey(node.Function)) {
                 handler = ResolveFunction(node);
                 if(handler == null) {
@@ -267,16 +267,16 @@ namespace Hyena.SExpEngine
 
             if(parent.Children[0] == node) {
                 args = new TreeNode[parent.ChildCount - 1];
-                
+
                 for(int i = 0; i < args.Length; i++) {
                     args[i] = parent.Children[i + 1];
-                    
+
                     if(handler is MethodInfoContainer && !(handler as MethodInfoContainer).EvaluateVariables) {
                         continue;
                     }
                 }
             }
-            
+
             if(handler is FunctionNode) {
                 return (handler as FunctionNode).Evaluate(this, args);
             } else if(handler is SExpFunctionHandler) {
@@ -293,39 +293,39 @@ namespace Hyena.SExpEngine
         internal FunctionNode ResolveFunction(FunctionNode node)
         {
             TreeNode shift_node = node;
-            
+
             do {
                 if(shift_node.Functions.ContainsKey(node.Function)) {
                     return shift_node.Functions[node.Function];
                 }
-                
+
                 shift_node = shift_node.Parent;
             } while(shift_node != null);
-            
+
             return null;
         }
-        
+
         public bool Success {
             get { return exceptions.Count == 0; }
         }
-        
+
         public TreeNode ExpressionTree {
             get { return expression; }
         }
-        
+
         public ReadOnlyCollection<Exception> Exceptions {
             get { return new ReadOnlyCollection<Exception>(exceptions); }
         }
-        
+
         public string ErrorMessage {
             get {
                 if(exceptions.Count == 0) {
                     return null;
                 } else if(exceptions.Count >= 2) {
-                    return String.Format("{0}: {1}", exceptions[exceptions.Count - 2].Message, 
+                    return String.Format("{0}: {1}", exceptions[exceptions.Count - 2].Message,
                         exceptions[exceptions.Count - 1].Message);
                 }
-                
+
                 return exceptions[0].Message;
             }
         }

@@ -47,38 +47,38 @@ namespace Banshee.Metadata.Rhapsody
     public class RhapsodyQueryJob : MetadataServiceJob
     {
         private static Uri base_uri = new Uri("http://www.rhapsody.com/");
-        
+
         public RhapsodyQueryJob(IBasicTrackInfo track)
         {
             Track = track;
         }
-        
+
         public override void Run()
         {
             if (Track == null || (Track.MediaAttributes & TrackMediaAttributes.Podcast) != 0) {
                 return;
             }
-        
+
             string artwork_id = Track.ArtworkId;
-            
+
             if(artwork_id == null || CoverArtSpec.CoverExists(artwork_id) || !InternetConnected) {
                 return;
             }
-            
+
             Uri data_uri = new Uri(base_uri, String.Format("/{0}/data.xml", artwork_id.Replace('-', '/')));
-        
+
             XmlDocument doc = new XmlDocument();
             HttpWebResponse response = GetHttpStream (data_uri);
             if (response == null) {
                 return;
             }
-            
+
             string [] content_types = response.Headers.GetValues ("Content-Type");
             if (content_types.Length == 0 || content_types[0] != "text/xml") {
                 response.Close ();
                 return;
             }
-            
+
             using (Stream stream = response.GetResponseStream ()) {
                 doc.Load (stream);
             }
@@ -89,17 +89,17 @@ namespace Banshee.Metadata.Rhapsody
                 string second_attempt = art_node.Attributes["src"].Value;
                 string first_attempt = second_attempt.Replace("170x170", "500x500");
 
-                if(SaveHttpStreamCover(new Uri(first_attempt), artwork_id, null) || 
+                if(SaveHttpStreamCover(new Uri(first_attempt), artwork_id, null) ||
                     SaveHttpStreamCover(new Uri(second_attempt), artwork_id, null)) {
                     Log.Debug ("Downloaded cover art from Rhapsody", artwork_id);
                     StreamTag tag = new StreamTag();
                     tag.Name = CommonTags.AlbumCoverId;
                     tag.Value = artwork_id;
-                
+
                     AddTag(tag);
                 }
             }
-            
+
             response.Close ();
         }
     }

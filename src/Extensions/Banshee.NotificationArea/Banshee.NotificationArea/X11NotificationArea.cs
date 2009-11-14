@@ -31,7 +31,7 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-// NOTE: throughout IntPtr is used for the Xlib long type, as this tends to 
+// NOTE: throughout IntPtr is used for the Xlib long type, as this tends to
 // have the correct width and does not require any configure checks.
 
 using System;
@@ -94,7 +94,7 @@ public class X11NotificationArea : Plug
 			ev.window = (IntPtr) Id;
 			ev.format = 8;
 			ev.message_type = message_data_atom;
-       
+
 			int len = Math.Min (arr.Length - index, 20);
 			memcpy (ref ev.data, (IntPtr)((int)unmanaged_arr + index), (IntPtr)len);
 		
@@ -254,7 +254,7 @@ public class X11NotificationArea : Plug
 	private FilterReturn ManagerFilter (IntPtr xevent, Event evnt)
 	{
 		XAnyEvent xev = (XAnyEvent) Marshal.PtrToStructure (xevent, typeof(XAnyEvent));
-   
+
 		if (xev.type == XEventName.ClientMessage){
 			XClientMessageEvent xclient = (XClientMessageEvent) Marshal.PtrToStructure (xevent, typeof(XClientMessageEvent));
 
@@ -277,7 +277,7 @@ public class X11NotificationArea : Plug
 				ManagerWindowDestroyed();
 			}
 		}
-   
+
 		return FilterReturn.Continue;
 	}
 
@@ -285,11 +285,11 @@ public class X11NotificationArea : Plug
 	{
 		if (manager_window != IntPtr.Zero) {
 			Gdk.Window gdkwin = Gdk.Window.ForeignNewForDisplay (Display, (uint) manager_window);
-       
+
 			if (gdkwin != null) {
 				gdkwin.RemoveFilter (filter);
 			}
-       
+
 			manager_window = IntPtr.Zero;
 			UpdateManagerWindow (true);
 		}
@@ -309,14 +309,14 @@ public class X11NotificationArea : Plug
 		}
 
 		display = gdk_x11_display_get_xdisplay (Display.Handle);
-   
+
 		gdk_error_trap_push ();
 		type = IntPtr.Zero;
-   
-		result = XGetWindowProperty (display, manager_window, orientation_atom, (IntPtr) 0, 
-					     (IntPtr) System.Int32.MaxValue, false, (IntPtr) XAtom.Cardinal, out type, out format, 
+
+		result = XGetWindowProperty (display, manager_window, orientation_atom, (IntPtr) 0,
+					     (IntPtr) System.Int32.MaxValue, false, (IntPtr) XAtom.Cardinal, out type, out format,
 					     out nitems, out bytes_after, out prop_return);
-   
+
 		error = gdk_error_trap_pop ();
 
 		if (error != 0 || result != 0) {
@@ -324,8 +324,8 @@ public class X11NotificationArea : Plug
 		}
 
 		if (type == (IntPtr) XAtom.Cardinal) {
-			orientation = ((SystemTrayOrientation) Marshal.ReadInt32 (prop_return) == SystemTrayOrientation.Horz) 
-				? Orientation.Horizontal 
+			orientation = ((SystemTrayOrientation) Marshal.ReadInt32 (prop_return) == SystemTrayOrientation.Horz)
+				? Orientation.Horizontal
 				: Orientation.Vertical;
 		}
 
@@ -371,14 +371,14 @@ public class X11NotificationArea : Plug
 	private extern static IntPtr XSelectInput (IntPtr display, IntPtr window, IntPtr mask);
 
 	[DllImport ("libX11.so.6")]
-	private extern static int XSendEvent (IntPtr display, IntPtr window, bool propagate, IntPtr event_mask, 
+	private extern static int XSendEvent (IntPtr display, IntPtr window, bool propagate, IntPtr event_mask,
 					     ref XClientMessageEvent send_event);
 
 	[DllImport ("libX11.so.6")]
-	private extern static int XGetWindowProperty (IntPtr display, IntPtr w, IntPtr property, IntPtr long_offset, 
+	private extern static int XGetWindowProperty (IntPtr display, IntPtr w, IntPtr property, IntPtr long_offset,
 						     IntPtr long_length, bool deleteProp, IntPtr req_type,
-						     out IntPtr actual_type_return, out int actual_format_return, 
-						     out IntPtr nitems_return, out IntPtr bytes_after_return, 
+						     out IntPtr actual_type_return, out int actual_format_return,
+						     out IntPtr nitems_return, out IntPtr bytes_after_return,
 						     out IntPtr prop_return);
 
 	[Flags]
@@ -466,7 +466,7 @@ public class X11NotificationArea : Plug
 	}
 
 	[StructLayout(LayoutKind.Sequential)]
-	private struct XAnyEvent 
+	private struct XAnyEvent
 	{
 		internal XEventName    type;
 		internal IntPtr        serial;
@@ -476,7 +476,7 @@ public class X11NotificationArea : Plug
 	}
 
 	[StructLayout(LayoutKind.Sequential)]
-	private struct XPropertyEvent 
+	private struct XPropertyEvent
 	{
 		internal XEventName    type;
 		internal IntPtr        serial;
@@ -489,7 +489,7 @@ public class X11NotificationArea : Plug
 	}
 
 	[StructLayout(LayoutKind.Sequential)]
-	private struct XClientMessageEvent 
+	private struct XClientMessageEvent
 	{
 		internal XEventName     type;
 		internal IntPtr         serial;
@@ -498,9 +498,9 @@ public class X11NotificationArea : Plug
 		internal IntPtr         window;
 		internal IntPtr         message_type;
 		internal int            format;
-    
+
 		[StructLayout(LayoutKind.Sequential)]
-		internal struct DataUnion 
+		internal struct DataUnion
 		{
 			internal IntPtr ptr1;
 			internal IntPtr ptr2;
@@ -508,7 +508,7 @@ public class X11NotificationArea : Plug
 			internal IntPtr ptr4;
 			internal IntPtr ptr5;
 		}
-    
+
 		internal DataUnion      data;
 	}
 }

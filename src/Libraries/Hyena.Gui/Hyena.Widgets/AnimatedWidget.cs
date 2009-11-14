@@ -42,11 +42,11 @@ namespace Hyena.Widgets
         IntendingToGo,
         Going
     }
-    
+
     internal class AnimatedWidget : Container
     {
         public event EventHandler WidgetDestroyed;
-        
+
         public Widget Widget;
         public Easing Easing;
         public Blocking Blocking;
@@ -58,12 +58,12 @@ namespace Hyena.Widgets
         public int StartPadding;
         public int EndPadding;
         public LinkedListNode <AnimatedWidget> Node;
-        
+
         private readonly bool horizontal;
         private double percent;
         private Rectangle widget_alloc;
         private Pixmap canvas;
-        
+
         public AnimatedWidget (Widget widget, uint duration, Easing easing, Blocking blocking, bool horizontal)
         {
             this.horizontal = horizontal;
@@ -77,11 +77,11 @@ namespace Hyena.Widgets
             Widget.Destroyed += OnWidgetDestroyed;
             ShowAll ();
         }
-        
+
         protected AnimatedWidget (IntPtr raw) : base (raw)
         {
         }
-        
+
         public double Percent {
             get { return percent; }
             set {
@@ -89,24 +89,24 @@ namespace Hyena.Widgets
                 QueueResizeNoRedraw ();
             }
         }
-        
+
         private void OnWidgetDestroyed (object sender, EventArgs args)
         {
             if (!IsRealized) {
                 return;
             }
-            
+
             canvas = new Pixmap (GdkWindow, widget_alloc.Width, widget_alloc.Height);
             canvas.DrawDrawable (Style.BackgroundGC (State), GdkWindow,
                 widget_alloc.X, widget_alloc.Y, 0, 0, widget_alloc.Width, widget_alloc.Height);
-            
+
             if (AnimationState != AnimationState.Going) {
                 WidgetDestroyed (this, args);
             }
         }
-        
+
 #region Overrides
-        
+
         protected override void OnRemoved (Widget widget)
         {
             if (widget == Widget) {
@@ -114,22 +114,22 @@ namespace Hyena.Widgets
                 Widget = null;
             }
         }
-        
+
         protected override void OnRealized ()
         {
             WidgetFlags |= WidgetFlags.Realized;
-            
+
             Gdk.WindowAttr attributes = new Gdk.WindowAttr ();
             attributes.WindowType = Gdk.WindowType.Child;
             attributes.Wclass = Gdk.WindowClass.InputOutput;
             attributes.EventMask = (int)Gdk.EventMask.ExposureMask;
-                
+
             GdkWindow = new Gdk.Window (Parent.GdkWindow, attributes, 0);
             GdkWindow.UserData = Handle;
             GdkWindow.Background = Style.Background (State);
             Style.Attach (GdkWindow);
         }
-        
+
         protected override void OnSizeRequested (ref Requisition requisition)
         {
             if (Widget != null) {
@@ -137,7 +137,7 @@ namespace Hyena.Widgets
                 widget_alloc.Width = req.Width;
                 widget_alloc.Height = req.Height;
             }
-            
+
             if (horizontal) {
                 Width = Choreographer.PixelCompose (percent, widget_alloc.Width + StartPadding + EndPadding, Easing);
                 Height = widget_alloc.Height;
@@ -145,11 +145,11 @@ namespace Hyena.Widgets
                 Width = widget_alloc.Width;
                 Height = Choreographer.PixelCompose (percent, widget_alloc.Height + StartPadding + EndPadding, Easing);
             }
-            
+
             requisition.Width = Width;
             requisition.Height = Height;
         }
-        
+
         protected override void OnSizeAllocated (Rectangle allocation)
         {
             base.OnSizeAllocated (allocation);
@@ -173,7 +173,7 @@ namespace Hyena.Widgets
                 }
             }
         }
-        
+
         protected override bool OnExposeEvent (EventExpose evnt)
         {
             if (canvas != null) {
@@ -191,8 +191,8 @@ namespace Hyena.Widgets
                 callback (Widget);
             }
         }
-        
+
 #endregion
-        
+
     }
 }

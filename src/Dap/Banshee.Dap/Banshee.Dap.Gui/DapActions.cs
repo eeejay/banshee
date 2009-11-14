@@ -52,7 +52,7 @@ namespace Banshee.Dap.Gui
             );
 
             AddUiFromFile ("GlobalUI.xml");
-            
+
             this["SyncDapAction"].IconName = Stock.Refresh;
             ServiceManager.SourceManager.ActiveSourceChanged += OnActiveSourceChanged;
             Actions.SourceActions.Updated += delegate { UpdateActions (); };

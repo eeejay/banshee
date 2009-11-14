@@ -43,7 +43,7 @@ namespace Banshee.IO
     	{
     	    return Provider.File.Exists (uri);
     	}
-        
+
     	public static void Move (SafeUri from, SafeUri to)
     	{
     	    Provider.File.Move (from, to);

@@ -32,7 +32,7 @@ using Mono.Unix;
 using Banshee.PlatformServices;
 
 namespace Banshee.GnomeBackend
-{    
+{
     [Interface("org.gnome.ScreenSaver")]
     internal interface IGnomeScreensaver
     {
@@ -44,7 +44,7 @@ namespace Banshee.GnomeBackend
     {
         const string DBUS_INTERFACE = "org.gnome.ScreenSaver";
         const string DBUS_PATH = "/org/gnome/ScreenSaver";
-        
+
         IGnomeScreensaver manager;
         uint? cookie;
 
@@ -61,9 +61,9 @@ namespace Banshee.GnomeBackend
                     if (!Bus.Session.NameHasOwner (DBUS_INTERFACE)) {
                         return null;
                     }
-                    
+
                     manager = Bus.Session.GetObject<IGnomeScreensaver> (DBUS_INTERFACE, new ObjectPath (DBUS_PATH));
-                    
+
                     if (manager == null) {
                         Hyena.Log.ErrorFormat ("The {0} object could not be located on the DBus interface {1}",
                             DBUS_PATH, DBUS_INTERFACE);
@@ -72,7 +72,7 @@ namespace Banshee.GnomeBackend
                 return manager;
             }
         }
-        
+
         public void Inhibit ()
         {
             if (!cookie.HasValue && Manager != null) {

@@ -29,9 +29,9 @@
 using System;
 using Mono.Unix;
 
-using Gtk; 
- 
-using Hyena.Data; 
+using Gtk;
+
+using Hyena.Data;
 using Hyena.Data.Gui;
 
 using Banshee.Base;
@@ -51,17 +51,17 @@ namespace Banshee.InternetRadio
     {
         private TrackListView track_view;
         private QueryFilterView<string> genre_view;
-        
+
         public InternetRadioSourceContents () : base ("iradio")
         {
         }
-        
+
         protected override void InitializeViews ()
         {
             SetupMainView (track_view = new TrackListView ());
-            SetupFilterView (genre_view = new QueryFilterView<string> (Catalog.GetString ("Not Set")));    
+            SetupFilterView (genre_view = new QueryFilterView<string> (Catalog.GetString ("Not Set")));
         }
-        
+
         protected override void ClearFilterSelections ()
         {
             if (genre_view.Model != null) {
@@ -72,7 +72,7 @@ namespace Banshee.InternetRadio
         protected override bool ActiveSourceCanHasBrowser {
             get { return true; }
         }
-        
+
         protected override string ForcePosition {
             get { return "left"; }
         }
@@ -85,18 +85,18 @@ namespace Banshee.InternetRadio
             if (track_source == null) {
                 return false;
             }
-            
+
             base.source = source;
-            
+
             SetModel (track_view, track_source.TrackModel);
-            
+
             foreach (IListModel model in track_source.CurrentFilters) {
                 IListModel<QueryFilterInfo<string>> genre_model = model as IListModel<QueryFilterInfo<string>>;
                 if (genre_model != null) {
                     SetModel (genre_view, genre_model);
                 }
             }
-            
+
             return true;
         }
 
@@ -109,12 +109,12 @@ namespace Banshee.InternetRadio
 
         #endregion
 
-        #region ITrackModelSourceContents implementation 
-        
+        #region ITrackModelSourceContents implementation
+
         public IListView<TrackInfo> TrackView {
             get { return track_view; }
         }
-        
+
         #endregion
     }
 }

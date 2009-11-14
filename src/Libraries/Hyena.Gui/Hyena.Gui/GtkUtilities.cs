@@ -1,4 +1,4 @@
-// 
+//
 // GtkUtilities.cs
 //
 // Author:
@@ -32,23 +32,23 @@ using Gtk;
 namespace Hyena.Gui
 {
     public delegate void WidgetAction<T> (T widget) where T : class;
-    
+
     public static class GtkUtilities
     {
         private static Gdk.ModifierType [] important_modifiers = new Gdk.ModifierType [] {
             Gdk.ModifierType.ControlMask,
             Gdk.ModifierType.ShiftMask
         };
-        
+
         public static bool NoImportantModifiersAreSet ()
         {
             return NoImportantModifiersAreSet (important_modifiers);
         }
-            
+
         public static bool NoImportantModifiersAreSet (params Gdk.ModifierType [] modifiers)
         {
             Gdk.ModifierType state;
-            
+
             if (Global.CurrentEvent is Gdk.EventKey) {
                 state = ((Gdk.EventKey)Global.CurrentEvent).State;
             } else if (Global.CurrentEvent is Gdk.EventButton) {
@@ -56,16 +56,16 @@ namespace Hyena.Gui
             } else {
                 return false;
             }
-            
+
             foreach (Gdk.ModifierType modifier in modifiers) {
                 if ((state & modifier) == modifier) {
                     return false;
                 }
             }
-            
+
             return true;
         }
-        
+
         public static FileFilter GetFileFilter (string name, System.Collections.Generic.IEnumerable<string> extensions)
         {
             FileFilter filter = new FileFilter ();
@@ -76,7 +76,7 @@ namespace Hyena.Gui
             }
             return filter;
         }
-        
+
         public static void SetChooserShortcuts (Gtk.FileChooserDialog chooser, params string [] shortcuts)
         {
             foreach (string shortcut in shortcuts) {
@@ -85,7 +85,7 @@ namespace Hyena.Gui
                 } catch {}
             }
         }
-        
+
         public static Gdk.Color ColorBlend (Gdk.Color a, Gdk.Color b)
         {
             // at some point, might be nice to allow any blend?
@@ -94,7 +94,7 @@ namespace Hyena.Gui
             if (blend < 0.0 || blend > 1.0) {
                 throw new ApplicationException ("blend < 0.0 || blend > 1.0");
             }
-            
+
             double blendRatio = 1.0 - blend;
 
             int aR = a.Red >> 8;
@@ -117,21 +117,21 @@ namespace Hyena.Gui
             Gdk.Colormap.System.AllocColor (ref color, true, true);
             return color;
         }
-        
-        public static void AdaptGtkRcStyle (Widget adaptee, Type adapter) 
+
+        public static void AdaptGtkRcStyle (Widget adaptee, Type adapter)
         {
             GLib.GType type = (GLib.GType)adapter;
             string path = String.Format ("*.{0}", type);
             AdaptGtkRcStyle (adaptee, type, path, path);
         }
-        
+
         public static void AdaptGtkRcStyle (Widget adaptee, GLib.GType adapter, string widgetPath, string classPath)
         {
             Style style = Gtk.Rc.GetStyleByPaths (adaptee.Settings, widgetPath, classPath, adapter);
             if (style == null) {
                 return;
             }
-            
+
             foreach (StateType state in Enum.GetValues (typeof (StateType))) {
                 adaptee.ModifyBase (state, style.Base (state));
                 adaptee.ModifyBg (state, style.Background (state));
@@ -139,19 +139,19 @@ namespace Hyena.Gui
                 adaptee.ModifyText (state, style.Text (state));
             }
         }
-        
+
         public static T StyleGetProperty<T> (Widget widget, string property, T default_value)
         {
             object result = widget.StyleGetProperty (property);
             return result != null && result.GetType () == typeof (T) ? (T)result : default_value;
         }
-        
+
         public static void ForeachWidget<T> (Container container, WidgetAction<T> action) where T : class
         {
             if (container == null) {
                 return;
             }
-            
+
             foreach (Widget child in container.Children) {
                 T widget = child as T;
                 if (widget != null) {

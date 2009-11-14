@@ -38,7 +38,7 @@ namespace Banshee.Collection
         string DisplayAlbumTitle { get; }
         string DisplayTrackTitle { get; }
         string DisplayGenre { get; }
-        
+
         int TrackNumber { get; }
         int TrackCount { get; }
         int Year { get; }

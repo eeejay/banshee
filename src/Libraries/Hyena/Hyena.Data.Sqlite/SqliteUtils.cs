@@ -49,7 +49,7 @@ namespace Hyena.Data.Sqlite
                     "The type {0} cannot be bound to a database column.", type.Name));
             }
         }
-        
+
         public static object ToDbFormat (Type type, object value)
         {
             if (type == typeof (string)) {
@@ -70,15 +70,15 @@ namespace Hyena.Data.Sqlite
             } else if (type == typeof (bool)) {
                 return ((bool)value) ? 1 : 0;
             }
-            
+
             return value;
         }
-        
+
         public static object FromDbFormat (Type type, object value)
         {
             if (Convert.IsDBNull (value))
                 value = null;
-            
+
             if (type == typeof (DateTime)) {
                 return value == null
                     ? DateTime.MinValue
@@ -101,7 +101,7 @@ namespace Hyena.Data.Sqlite
                 return Convert.ChangeType (value, type);
             }
         }
-        
+
         public static string BuildColumnSchema (string type, string name, string default_value,
             DatabaseColumnConstraints constraints)
         {
@@ -125,7 +125,7 @@ namespace Hyena.Data.Sqlite
             return builder.ToString ();
         }
     }
-        
+
     [SqliteFunction (Name = "HYENA_COLLATION_KEY", FuncType = FunctionType.Scalar, Arguments = 1)]
     internal class CollationKeyFunction : SqliteFunction
     {
@@ -134,7 +134,7 @@ namespace Hyena.Data.Sqlite
             return Hyena.StringUtil.SortKey (args[0] as string);
         }
     }
-    
+
     [SqliteFunction (Name = "HYENA_SEARCH_KEY", FuncType = FunctionType.Scalar, Arguments = 1)]
     internal class SearchKeyFunction : SqliteFunction
     {

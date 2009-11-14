@@ -40,19 +40,19 @@ namespace Banshee.Gui
     public class GtkElementsService : IService, IPropertyStoreExpose
     {
         public delegate bool PrimaryWindowCloseHandler ();
-        
+
         private PropertyStore property_store = new PropertyStore ();
         private BansheeIconFactory icon_factory = new BansheeIconFactory ();
-        
+
         private BaseClientWindow primary_window;
         private PrimaryWindowCloseHandler primary_window_close_handler;
-        
+
         public event EventHandler ThemeChanged;
-        
+
         public GtkElementsService ()
         {
         }
-        
+
         private void OnStyleSet (object o, StyleSetArgs args)
         {
             SourceInvalidateIconPixbuf (ServiceManager.SourceManager.Sources);
@@ -63,7 +63,7 @@ namespace Banshee.Gui
 
             OnThemeChanged ();
         }
-        
+
         private void OnPrimaryWindowRealized (object o, EventArgs args)
         {
             if (primary_window != null && primary_window.GdkWindow != null) {
@@ -72,7 +72,7 @@ namespace Banshee.Gui
                 property_store.Remove ("PrimaryWindow.RawHandle");
             }
         }
-        
+
         private void SourceInvalidateIconPixbuf (ICollection<Source> sources)
         {
             foreach (Source source in sources) {
@@ -80,7 +80,7 @@ namespace Banshee.Gui
                 SourceInvalidateIconPixbuf (source.Children);
             }
         }
-        
+
         protected virtual void OnThemeChanged ()
         {
             EventHandler handler = ThemeChanged;
@@ -88,7 +88,7 @@ namespace Banshee.Gui
                 handler (this, EventArgs.Empty);
             }
         }
-        
+
         public BaseClientWindow PrimaryWindow {
             get { return primary_window; }
             set {
@@ -96,12 +96,12 @@ namespace Banshee.Gui
                     primary_window.StyleSet -= OnStyleSet;
                     primary_window.Realized -= OnPrimaryWindowRealized;
                 }
-                
+
                 primary_window = value;
-                
+
                 if (primary_window != null) {
                     property_store.Set<BaseClientWindow> ("PrimaryWindow", primary_window);
-                    
+
                     primary_window.StyleSet += OnStyleSet;
                     primary_window.Realized += OnPrimaryWindowRealized;
                 } else {
@@ -110,14 +110,14 @@ namespace Banshee.Gui
                 }
             }
         }
-        
+
         private List<Window> content_windows;
         public IEnumerable<Window> ContentWindows {
             get {
                 if (PrimaryWindow != null) {
                     yield return PrimaryWindow;
                 }
-                
+
                 if (content_windows != null) {
                     foreach (var window in content_windows) {
                         yield return window;
@@ -125,16 +125,16 @@ namespace Banshee.Gui
                 }
             }
         }
-        
+
         public void RegisterContentWindow (Window window)
         {
             if (content_windows == null) {
                 content_windows = new List<Window> ();
             }
-            
+
             content_windows.Add (window);
         }
-        
+
         public void UnregisterContentWindow (Window window)
         {
             if (content_windows != null) {
@@ -144,20 +144,20 @@ namespace Banshee.Gui
                 }
             }
         }
-        
+
         public PrimaryWindowCloseHandler PrimaryWindowClose {
             get { return primary_window_close_handler; }
             set { primary_window_close_handler = value; }
         }
-        
+
         public BansheeIconFactory IconFactory {
             get { return icon_factory; }
         }
-        
+
         PropertyStore IPropertyStoreExpose.PropertyStore {
             get { return property_store; }
         }
-        
+
         string IService.ServiceName {
             get { return "GtkElementsService"; }
         }

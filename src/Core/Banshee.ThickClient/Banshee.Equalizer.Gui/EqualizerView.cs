@@ -47,48 +47,48 @@ namespace Banshee.Equalizer.Gui
         private EqualizerBandScale amplifier_scale;
         private EqualizerSetting active_eq;
         private int [] range = new int[3];
-        
+
         public event EqualizerChangedEventHandler EqualizerChanged;
         public event AmplifierChangedEventHandler AmplifierChanged;
-        
+
         public EqualizerView () : base ()
         {
             BuildWidget ();
         }
-        
+
         private void BuildWidget ()
         {
             Spacing = 10;
-        
+
             int [] br = ((IEqualizer)ServiceManager.PlayerEngine.ActiveEngine).BandRange;
             int mid = (br[0] + br[1]) / 2;
-            
+
             range[0] = br[0];
             range[1] = mid;
             range[2] = br[1];
-            
+
             amplifier_scale = new EqualizerBandScale (0, range[1] * 10, range[0] * 10, range[2] * 10, "Preamp");
             amplifier_scale.ValueChanged += OnAmplifierValueChanged;
             amplifier_scale.Show ();
-            PackStart (amplifier_scale, false, false, 0);            
-            
+            PackStart (amplifier_scale, false, false, 0);
+
             EqualizerLevelsBox eq_levels = new EqualizerLevelsBox (
                 FormatDecibelString (range[2]),
                 FormatDecibelString (range[1]),
                 FormatDecibelString (range[0])
             );
-            
+
             eq_levels.Show ();
             PackStart (eq_levels, false, false, 0);
-            
+
             band_box = new HBox ();
             band_box.Homogeneous = true;
             band_box.Show ();
             PackStart (band_box, true, true, 0);
-            
+
             BuildBands ();
         }
-        
+
         private string FormatDecibelString (int db)
         {
             if (db > 0) {
@@ -97,30 +97,30 @@ namespace Banshee.Equalizer.Gui
                 return String.Format ("{0} dB", db);
             }
         }
-        
+
         private void BuildBands ()
         {
             foreach (Widget widget in band_box.Children) {
                 band_box.Remove (widget);
             }
-            
+
             if (frequencies == null || frequencies.Length <= 0) {
                 frequencies = new uint[0];
                 band_scales = new EqualizerBandScale[0];
                 return;
             }
-            
+
             band_scales = new EqualizerBandScale[10];
-            
+
             for (uint i = 0; i < 10; i++) {
-                string label = frequencies[i] < 1000 ? 
+                string label = frequencies[i] < 1000 ?
                     String.Format ("{0} Hz", frequencies[i]) :
                     String.Format ("{0} kHz", (int)Math.Round (frequencies[i] / 1000.0));
-                
+
                 band_scales[i] = new EqualizerBandScale (i, range[1] * 10, range[0] * 10, range[2] * 10, label);
                 band_scales[i].ValueChanged += OnEqualizerValueChanged;
                 band_scales[i].Show ();
-                
+
                 band_box.PackStart (band_scales[i], true, true, 0);
             }
         }
@@ -128,11 +128,11 @@ namespace Banshee.Equalizer.Gui
         private void OnEqualizerValueChanged (object o, EventArgs args)
         {
             EqualizerBandScale scale = o as EqualizerBandScale;
-            
+
             if (active_eq != null) {
                 active_eq.SetGain (scale.Band, (double)scale.Value / 10);
             }
-            
+
             if (EqualizerChanged != null) {
                 EqualizerChanged (this, new EqualizerChangedEventArgs (scale.Band, scale.Value));
             }
@@ -144,37 +144,37 @@ namespace Banshee.Equalizer.Gui
             if (active_eq != null) {
                 active_eq.AmplifierLevel = (double) (scale.Value / 10.0);
             }
-            
+
             if (AmplifierChanged != null) {
                 AmplifierChanged (this, new AmplifierChangedEventArgs (scale.Value));
             }
-        }    
-            
+        }
+
         public uint [] Frequencies {
             get { return (uint [])frequencies.Clone (); }
-            set { 
+            set {
                 frequencies = (uint [])value.Clone ();
                 BuildBands ();
             }
         }
-        
+
         public int [] Preset {
             get {
                 int [] result = new int[band_scales.Length];
                 for (int i = 0; i < band_scales.Length; i++) {
                     result[i] = (int) band_scales[i].Value;
                 }
-                
+
                 return result;
             }
-            
+
             set {
                 for (int i = 0; i < value.Length; i++) {
-                    band_scales[i].Value = value[i];                   
+                    band_scales[i].Value = value[i];
                 }
             }
         }
-        
+
         public void SetBand(uint band, double value)
         {
             band_scales[band].Value = (int) (value * 10);
@@ -184,19 +184,19 @@ namespace Banshee.Equalizer.Gui
             get { return (double) amplifier_scale.Value / 10; }
             set { amplifier_scale.Value = (int) (value * 10); }
         }
-        
+
         public EqualizerSetting EqualizerSetting {
             get { return active_eq; }
-            set { 
-                active_eq = value; 
-                
+            set {
+                active_eq = value;
+
                 if (active_eq == null) {
                     AmplifierLevel = 0;
                     return;
                 }
-                
+
                 AmplifierLevel = active_eq.AmplifierLevel;
-                
+
                 for (int i = 0; i < active_eq.BandCount; i++) {
                     uint x = (uint) i;
                     SetBand (x, active_eq[x]);
@@ -207,7 +207,7 @@ namespace Banshee.Equalizer.Gui
 
     public delegate void EqualizerChangedEventHandler (object o, EqualizerChangedEventArgs args);
     public delegate void AmplifierChangedEventHandler (object o, AmplifierChangedEventArgs args);
-    
+
     public sealed class EqualizerChangedEventArgs : EventArgs
     {
         private uint band;

@@ -48,52 +48,52 @@ namespace Banshee.Collection
         public FilterListModel (DatabaseTrackListModel trackModel) : base ()
         {
             browsing_model = trackModel;
-            
+
             selection = new SelectAllSelection ();
             selection.SelectAll ();
-            
+
             Selection.Changed += HandleSelectionChanged;
         }
-        
+
         public FilterListModel (IDBusExportable parent) : base (parent)
         {
             selection = new SelectAllSelection ();
             selection.SelectAll ();
         }
-        
+
         public override void Reload ()
         {
             Reload (false);
         }
-        
+
         public abstract void Reload (bool notify);
-        
+
         private void HandleSelectionChanged (object sender, EventArgs args)
         {
             Banshee.Base.ThreadAssist.SpawnFromMain (ReloadBrowsingModel);
-        } 
+        }
 
         private void ReloadBrowsingModel ()
         {
             browsing_model.Reload (this);
         }
-        
+
 #region IFilterModel Implementation
 
         public abstract string GetSqlFilter ();
-        
+
         private string filter_name;
         public string FilterName {
             get { return filter_name; }
             protected set { filter_name = value; }
         }
-        
+
         private string filter_label;
         public string FilterLabel {
             get { return filter_label; }
             protected set { filter_label = value; }
         }
-        
+
         public virtual void InvalidateCache (bool notify)
         {
         }

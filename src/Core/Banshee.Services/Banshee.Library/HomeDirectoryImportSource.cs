@@ -43,21 +43,21 @@ namespace Banshee.Library
                 Environment.GetFolderPath (Environment.SpecialFolder.Personal)
             );
         }
-        
+
         public string Name {
             get { return Catalog.GetString ("Home Folder"); }
         }
 
         public string ImportLabel { get { return null; } }
-        
+
         public string [] IconNames {
             get { return new string [] { "user-home", "gtk-home" }; }
         }
-        
+
         public bool CanImport {
             get { return true; }
         }
-        
+
         public int SortOrder {
             get { return 10; }
         }

@@ -54,23 +54,23 @@ namespace Banshee.Gui
             "RemoveTracksAction", "RemoveTracksFromLibraryAction", "DeleteTracksFromDriveAction",
             "RateTracksAction", "SelectNoneAction"
         };
-        
+
         public event EventHandler SelectionChanged;
 
         public TrackActions () : base ("Track")
         {
             Add (new ActionEntry [] {
-                new ActionEntry("TrackContextMenuAction", null, 
+                new ActionEntry("TrackContextMenuAction", null,
                     String.Empty, null, null, OnTrackContextMenu),
 
                 new ActionEntry("SelectAllAction", null,
                     Catalog.GetString("Select _All"), "<control>A",
                     Catalog.GetString("Select all tracks"), OnSelectAll),
-                    
+
                 new ActionEntry("SelectNoneAction", null,
                     Catalog.GetString("Select _None"), "<control><shift>A",
                     Catalog.GetString("Unselect all tracks"), OnSelectNone),
-                    
+
                 new ActionEntry ("TrackEditorAction", Stock.Edit,
                     Catalog.GetString ("_Edit Track Information"), "E",
                     Catalog.GetString ("Edit information on selected tracks"), OnTrackEditor),
@@ -134,13 +134,13 @@ namespace Banshee.Gui
                 current_source.TrackModel.Selection.Changed -= HandleSelectionChanged;
                 current_source = null;
             }
-            
+
             ITrackModelSource new_source = ActiveSource as ITrackModelSource;
             if (new_source != null) {
                 new_source.TrackModel.Selection.Changed += HandleSelectionChanged;
                 current_source = new_source;
             }
-            
+
             Banshee.Base.ThreadAssist.ProxyToMain (UpdateActions);
         }
 
@@ -166,7 +166,7 @@ namespace Banshee.Gui
         {
             ResetRating ();
         }
-        
+
         private void OnSelectionChanged ()
         {
             EventHandler handler = SelectionChanged;
@@ -203,7 +203,7 @@ namespace Banshee.Gui
             Source source = ServiceManager.SourceManager.ActiveSource;
             bool in_database = source is DatabaseSource;
             PrimarySource primary_source = (source as PrimarySource) ?? (source.Parent as PrimarySource);
-            
+
             Hyena.Collections.Selection selection = (source is ITrackModelSource) ? (source as ITrackModelSource).TrackModel.Selection : null;
 
             if (selection != null) {
@@ -228,7 +228,7 @@ namespace Banshee.Gui
                     UpdateAction ("RemoveTracksAction", is_track_source && track_source.CanRemoveTracks, has_selection, source);
                     UpdateAction ("DeleteTracksFromDriveAction", is_track_source && track_source.CanDeleteTracks, has_selection, source);
                     UpdateAction ("RemoveTracksFromLibraryAction", source.Parent is LibrarySource, has_selection, null);
-                    
+
                     UpdateAction ("TrackPropertiesAction", source.HasViewableTrackProperties, has_selection, source);
                     UpdateAction ("TrackEditorAction", source.HasEditableTrackProperties, has_selection, source);
                     UpdateAction ("RateTracksAction", in_database, has_selection, null);
@@ -249,7 +249,7 @@ namespace Banshee.Gui
         {
             if (current_source != null) {
                 int rating = 0;
-    
+
                 // If there is only one track, get the preset rating
                 if (current_source.TrackModel.Selection.Count == 1) {
                     foreach (TrackInfo track in current_source.TrackModel.SelectedItems) {
@@ -261,7 +261,7 @@ namespace Banshee.Gui
         }
 
 #endregion
-            
+
 #region Action Handlers
 
         private void OnSelectAll (object o, EventArgs args)
@@ -285,15 +285,15 @@ namespace Banshee.Gui
         private bool RunSourceOverrideHandler (string sourceOverrideHandler)
         {
             Source source = current_source as Source;
-            InvokeHandler handler = source != null 
-                ? source.GetInheritedProperty<InvokeHandler> (sourceOverrideHandler) 
+            InvokeHandler handler = source != null
+                ? source.GetInheritedProperty<InvokeHandler> (sourceOverrideHandler)
                 : null;
-            
+
             if (handler != null) {
                 handler ();
                 return true;
             }
-            
+
             return false;
         }
 
@@ -303,7 +303,7 @@ namespace Banshee.Gui
                 Banshee.Gui.TrackEditor.TrackEditorDialog.RunView (current_source.TrackModel);
             }
         }
-        
+
         private void OnTrackEditor (object o, EventArgs args)
         {
             if (current_source != null && !RunSourceOverrideHandler ("TrackEditorActionHandler")) {
@@ -328,7 +328,7 @@ namespace Banshee.Gui
 
                 submenu.Append (this ["AddToNewPlaylistAction"].CreateMenuItem ());
                 bool separator_added = false;
-                
+
                 foreach (Source child in ActivePrimarySource.Children) {
                     PlaylistSource playlist = child as PlaylistSource;
                     if (playlist != null) {
@@ -336,7 +336,7 @@ namespace Banshee.Gui
                             submenu.Append (new SeparatorMenuItem ());
                             separator_added = true;
                         }
-                        
+
                         PlaylistMenuItem item = new PlaylistMenuItem (playlist);
                         item.Image = new Gtk.Image ("playlist-source", IconSize.Menu);
                         item.Activated += OnAddToExistingPlaylist;
@@ -344,7 +344,7 @@ namespace Banshee.Gui
                         submenu.Append (item);
                     }
                 }
-                
+
                 submenu.ShowAll ();
             }
         }
@@ -445,12 +445,12 @@ namespace Banshee.Gui
             if (!source.ConfirmRemoveTracks) {
                 return true;
             }
-            
+
             bool ret = false;
             string header = null;
             string message = null;
             string button_label = null;
-            
+
             if (delete) {
                 header = String.Format (
                     Catalog.GetPluralString (
@@ -470,7 +470,7 @@ namespace Banshee.Gui
                 );
                 button_label = "gtk-remove";
             }
-                
+
             HigMessageDialog md = new HigMessageDialog (
                 ServiceManager.Get<GtkElementsService> ("GtkElementsService").PrimaryWindow,
                 DialogFlags.DestroyWithParent, delete ? MessageType.Warning : MessageType.Question,
@@ -479,7 +479,7 @@ namespace Banshee.Gui
             // Delete from Disk defaults to Cancel and the others to OK/Confirm.
             md.AddButton ("gtk-cancel", ResponseType.No, delete);
             md.AddButton (button_label, ResponseType.Yes, !delete);
-            
+
             try {
                 if (md.Run () == (int) ResponseType.Yes) {
                     ret = true;

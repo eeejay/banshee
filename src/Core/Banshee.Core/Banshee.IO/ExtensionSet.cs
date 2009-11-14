@@ -46,13 +46,13 @@ namespace Banshee.IO
             if (String.IsNullOrEmpty (path)) {
                 return false;
             }
-            
+
             int index = path.LastIndexOf ('.');
             if (index < 0 || index == path.Length || index == path.Length - 1) {
                 return false;
             }
-            
-            return Array.BinarySearch<string> (extensions, 
+
+            return Array.BinarySearch<string> (extensions,
                 path.Substring (index + 1).ToLower ()) >= 0;
         }
 

@@ -37,7 +37,7 @@ namespace Hyena.Data.Gui
     public class ColumnHeaderCellText : ColumnCellText, IHeaderCell
     {
         public delegate Column DataHandler ();
-        
+
         private DataHandler data_handler;
         private bool has_sort;
 
@@ -56,7 +56,7 @@ namespace Hyena.Data.Gui
             if (data_handler == null) {
                 return;
             }
-            
+
             if (!has_sort) {
                 base.Render (context, state, cellWidth, cellHeight);
                 return;
@@ -78,17 +78,17 @@ namespace Hyena.Data.Gui
                 context.Theme.DrawArrow (context.Context, arrow_alloc, sort_type);
             }
         }
-        
+
         protected override string GetText (object obj)
         {
             return data_handler ().Title;
         }
-        
+
         public bool HasSort {
             get { return has_sort; }
             set { has_sort = value; }
         }
-        
+
         public static int GetArrowWidth (int headerHeight)
         {
             return (int)(headerHeight / 3.0) + Spacing;

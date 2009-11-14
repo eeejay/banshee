@@ -43,12 +43,12 @@ namespace Banshee.Database
                 ForceUpdate (locale);
             }
         }
-        
+
         public static void ForceUpdate ()
         {
             ForceUpdate (CultureInfo.CurrentCulture.Name);
         }
-        
+
         protected static void ForceUpdate (string new_locale)
         {
             ServiceManager.DbConnection.Execute (@"
@@ -75,7 +75,7 @@ namespace Banshee.Database
 
             DatabaseConfigurationClient.Client.Set<string> ("SortKeyLocale", new_locale);
         }
-        
+
         protected static string PreviousLocale {
             get {
                 return DatabaseConfigurationClient.Client.Get<string> ("SortKeyLocale", "");

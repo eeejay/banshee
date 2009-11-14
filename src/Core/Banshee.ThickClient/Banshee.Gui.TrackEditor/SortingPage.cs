@@ -33,15 +33,15 @@ using Banshee.Collection;
 namespace Banshee.Gui.TrackEditor
 {
     public class SortingPage : FieldPage, ITrackEditorPage
-    {        
+    {
         public int Order {
             get { return 30; }
         }
-                                    
+
         public string Title {
             get { return Catalog.GetString ("Sorting"); }
         }
-        
+
         protected override void AddFields ()
         {
             AddField (this, new TextEntry (),
@@ -51,21 +51,21 @@ namespace Banshee.Gui.TrackEditor
                 delegate (EditorTrackInfo track, Widget widget) {  track.TrackTitleSort = ((TextEntry)widget).Text; },
                 FieldOptions.NoSync
             );
-            
+
             AddField (this, new TextEntry (),
                 Catalog.GetString ("Set all sort track artists to this value"),
                 delegate { return Catalog.GetString ("Sort Track Artist:"); },
                 delegate (EditorTrackInfo track, Widget widget) { ((TextEntry)widget).Text = track.ArtistNameSort; },
                 delegate (EditorTrackInfo track, Widget widget) {  track.ArtistNameSort = ((TextEntry)widget).Text; }
             );
-            
+
             AddField (this, new TextEntry (),
                 Catalog.GetString ("Set all sort album artists to this value"),
                 delegate { return Catalog.GetString ("Sort Album Artist:"); },
                 delegate (EditorTrackInfo track, Widget widget) { ((TextEntry)widget).Text = track.AlbumArtistSort; },
                 delegate (EditorTrackInfo track, Widget widget) {  track.AlbumArtistSort = ((TextEntry)widget).Text; }
             );
-            
+
             AddField (this, new TextEntry (),
                 Catalog.GetString ("Set all sort album titles to this value"),
                 delegate { return Catalog.GetString ("Sort Album Title:"); },

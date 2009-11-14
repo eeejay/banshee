@@ -38,78 +38,78 @@ namespace Hyena.Gui.Dialogs
         private Label path_label;
         private TreeView version_tree;
         private TreeStore version_store;
-        
+
         public VersionInformationDialog() : base()
         {
             AccelGroup accel_group = new AccelGroup();
-            AddAccelGroup(accel_group);       
+            AddAccelGroup(accel_group);
             Modal = true;
-            
+
             Button button = new Button("gtk-close");
             button.CanDefault = true;
             button.UseStock = true;
             button.Show();
             DefaultResponse = ResponseType.Close;
-            button.AddAccelerator("activate", accel_group, (uint)Gdk.Key.Escape, 
+            button.AddAccelerator("activate", accel_group, (uint)Gdk.Key.Escape,
                 0, Gtk.AccelFlags.Visible);
-        
+
             AddActionWidget(button, ResponseType.Close);
-            
+
             Title = Catalog.GetString("Assembly Version Information");
             BorderWidth = 10;
-            
+
             version_tree = new TreeView();
-            
+
             version_tree.RulesHint = true;
             version_tree.AppendColumn(Catalog.GetString("Assembly Name"),
                 new CellRendererText(), "text", 0);
             version_tree.AppendColumn(Catalog.GetString("Version"),
                 new CellRendererText(), "text", 1);
-                                
+
             version_tree.Model = FillStore();
             version_tree.CursorChanged += OnCursorChanged;
-         
+
             ScrolledWindow scroll = new ScrolledWindow();
             scroll.Add(version_tree);
             scroll.ShadowType = ShadowType.In;
             scroll.SetSizeRequest(420, 200);
-            
+
             VBox.PackStart(scroll, true, true, 0);
             VBox.Spacing = 5;
-            
+
             path_label = new Label();
             path_label.Ellipsize = Pango.EllipsizeMode.End;
             path_label.Hide();
             path_label.Xalign = 0.0f;
             path_label.Yalign = 1.0f;
             VBox.PackStart(path_label, false, true, 0);
-            
+
             scroll.ShowAll();
         }
-        
+
         private void OnCursorChanged(object o, EventArgs args)
         {
             TreeIter iter;
-            
+
             if(!version_tree.Selection.GetSelected(out iter)) {
                 path_label.Hide();
                 return;
             }
-            
+
             object path = version_store.GetValue(iter, 2);
-            
+
             if(path == null) {
                 path_label.Hide();
                 return;
             }
-            
+
             path_label.Text = path as string;
             path_label.Show();
         }
-        
+
         private TreeStore FillStore()
         {
-            version_store = new TreeStore(typeof(string), 
+            version_store = new TreeStore(typeof(string),
                 typeof(string), typeof(string));
 
             foreach(Assembly asm in AppDomain.CurrentDomain.GetAssemblies()) {

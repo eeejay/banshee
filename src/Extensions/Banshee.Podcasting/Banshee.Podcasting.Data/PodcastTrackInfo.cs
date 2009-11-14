@@ -1,28 +1,28 @@
-/*************************************************************************** 
+/***************************************************************************
  *  PodcastItem.cs
  *
  *  Copyright (C) 2008 Michael C. Urbanski
  *  Written by Mike Urbanski <michael.c.urbanski@gmail.com>
  ****************************************************************************/
 
-/*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
+/*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW:
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
- *  copy of this software and associated documentation files (the "Software"),  
- *  to deal in the Software without restriction, including without limitation  
- *  the rights to use, copy, modify, merge, publish, distribute, sublicense,  
- *  and/or sell copies of the Software, and to permit persons to whom the  
+ *  copy of this software and associated documentation files (the "Software"),
+ *  to deal in the Software without restriction, including without limitation
+ *  the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ *  and/or sell copies of the Software, and to permit persons to whom the
  *  Software is furnished to do so, subject to the following conditions:
  *
- *  The above copyright notice and this permission notice shall be included in 
+ *  The above copyright notice and this permission notice shall be included in
  *  all copies or substantial portions of the Software.
  *
- *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
- *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
- *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
- *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
- *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
- *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  *  DEALINGS IN THE SOFTWARE.
  */
 
@@ -43,13 +43,13 @@ using Banshee.Collection.Database;
 
 using Migo.Syndication;
 
-namespace Banshee.Podcasting.Data 
+namespace Banshee.Podcasting.Data
 {
     public enum PodcastItemActivity : int {
         Downloading = 0,
-        DownloadPending = 1,        
+        DownloadPending = 1,
         DownloadFailed = 2,
-        DownloadPaused = 3,        
+        DownloadPaused = 3,
         //NewPodcastItem = 4,
         //Video = 5,
         Downloaded = 6,
@@ -80,7 +80,7 @@ namespace Banshee.Podcasting.Data
                 }
             }
         }
-        
+
         private DatabaseTrackInfo track;
 
 #region Properties
@@ -92,7 +92,7 @@ namespace Banshee.Podcasting.Data
         public Feed Feed {
             get { return Item.Feed; }
         }
-        
+
         private FeedItem item;
         public FeedItem Item {
             get {
@@ -103,7 +103,7 @@ namespace Banshee.Podcasting.Data
             }
             set { item = value; track.ExternalId = value.DbId; }
         }
-        
+
         public DateTime PublishedDate {
             get { return Item.PubDate; }
         }
@@ -111,15 +111,15 @@ namespace Banshee.Podcasting.Data
         public string Description {
             get { return Item.StrippedDescription; }
         }
-        
+
         public bool IsNew {
             get { return !Item.IsRead; }
         }
-        
+
         public bool IsDownloaded {
             get { return !String.IsNullOrEmpty (Enclosure.LocalPath); }
         }
-        
+
         public DateTime ReleaseDate {
             get { return Item.PubDate; }
         }
@@ -133,21 +133,21 @@ namespace Banshee.Podcasting.Data
                 switch (Item.Enclosure.DownloadStatus) {
                 case FeedDownloadStatus.Downloaded:
                     return PodcastItemActivity.Downloaded;
-               
+
                 case FeedDownloadStatus.DownloadFailed:
                     return PodcastItemActivity.Downloaded;
-                    
+
                 case FeedDownloadStatus.Downloading:
                     return PodcastItemActivity.Downloading;
-                    
+
                 case FeedDownloadStatus.Pending:
                     return PodcastItemActivity.DownloadPending;
-                    
+
                 case FeedDownloadStatus.Paused:
                     return PodcastItemActivity.DownloadPaused;
 
                 default:
-                    return PodcastItemActivity.None;   
+                    return PodcastItemActivity.None;
                 }
             }
         }
@@ -155,12 +155,12 @@ namespace Banshee.Podcasting.Data
 #endregion
 
 #region Constructors
-    
+
         public PodcastTrackInfo (DatabaseTrackInfo track) : base ()
         {
             this.track = track;
         }
-        
+
         public PodcastTrackInfo (DatabaseTrackInfo track, FeedItem feed_item) : this (track)
         {
             Item = feed_item;
@@ -182,9 +182,9 @@ namespace Banshee.Podcasting.Data
                     pi.Item.IsRead = true;
                     pi.Item.Save ();
                 }
-            }   
+            }
         }
-        
+
         public void SyncWithFeedItem ()
         {
             //Console.WriteLine ("Syncing item, enclosure == null? {0}", Item.Enclosure == null);
@@ -200,7 +200,7 @@ namespace Banshee.Podcasting.Data
             track.FileSize = Item.Enclosure.FileSize;
             track.LicenseUri = Item.LicenseUri;
             track.Uri = new Banshee.Base.SafeUri (Item.Enclosure.LocalPath ?? Item.Enclosure.Url);
-            
+
             if (!String.IsNullOrEmpty (Item.Enclosure.LocalPath)) {
                 try {
                     TagLib.File file = Banshee.Streaming.StreamTagger.ProcessUri (track.Uri);

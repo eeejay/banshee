@@ -47,13 +47,13 @@ namespace Muinshee
         {
             Startup<Muinshee.Client> (args);
         }
-        
+
         protected override void OnRegisterServices ()
         {
             // Register the main interface
             ServiceManager.RegisterService<Muinshee.PlayerInterface> ();
         }
-        
+
         public override string ClientId {
             get { return "muinshee"; }
         }

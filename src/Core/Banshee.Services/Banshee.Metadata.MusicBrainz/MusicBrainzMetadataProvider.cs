@@ -40,7 +40,7 @@ namespace Banshee.Metadata.MusicBrainz
         public MusicBrainzMetadataProvider() : base()
         {
         }
-        
+
         public override IMetadataLookupJob CreateJob(IBasicTrackInfo track)
         {
             return new MusicBrainzQueryJob(track);

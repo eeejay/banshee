@@ -39,13 +39,13 @@ namespace Hyena.Collections
             get { return key; }
             set { key = value; }
         }
-    
+
         private TValue value;
         public TValue Value {
             get { return this.value; }
             set { this.value = value; }
         }
-        
+
         internal DateTime LastUsed;
         internal int UsedCount;
     }
@@ -54,17 +54,17 @@ namespace Hyena.Collections
     {
         private Dictionary<TKey, CacheEntry<TKey, TValue>> cache;
         private int max_count;
-        
+
         public LruCache () : this (1024)
         {
         }
-        
+
         public LruCache (int maxCount)
         {
             max_count = maxCount;
             cache = new Dictionary<TKey, CacheEntry<TKey, TValue>> ();
         }
-        
+
         public void Add (TKey key, TValue value)
         {
             lock (cache) {
@@ -74,12 +74,12 @@ namespace Hyena.Collections
                     cache[key] = entry;
                     return;
                 }
-                
+
                 entry.Key = key;
                 entry.Value = value;
                 Ref (ref entry);
                 cache.Add (key, entry);
-                
+
                 if (Count >= max_count) {
                     TKey expire = FindOldestEntry ();
                     ExpireItem (cache[expire].Value);
@@ -87,14 +87,14 @@ namespace Hyena.Collections
                 }
             }
         }
-        
+
         public bool Contains (TKey key)
         {
             lock (cache) {
                 return cache.ContainsKey (key);
             }
         }
-        
+
         public bool TryGetValue (TKey key, out TValue value)
         {
             lock (cache) {
@@ -105,23 +105,23 @@ namespace Hyena.Collections
                     cache[key] = entry;
                     return true;
                 }
-                
+
                 value = default (TValue);
                 return false;
             }
         }
-        
+
         private void Ref (ref CacheEntry<TKey, TValue> entry)
         {
             entry.LastUsed = DateTime.Now;
             entry.UsedCount++;
         }
-        
+
         IEnumerator IEnumerable.GetEnumerator ()
         {
             return GetEnumerator ();
         }
-        
+
         public IEnumerator<CacheEntry<TKey, TValue>> GetEnumerator ()
         {
             lock (cache) {
@@ -130,12 +130,12 @@ namespace Hyena.Collections
                 }
             }
         }
-        
+
         // Ok, this blows. I have no time to implement anything clever or proper here.
         // Using a hashtable generally sucks for this, but it's not bad for a 15 minute
         // hack. max_count will be sufficiently small in our case that this can't be
         // felt anyway. Meh.
-        
+
         private TKey FindOldestEntry ()
         {
             lock (cache) {
@@ -150,16 +150,16 @@ namespace Hyena.Collections
                 return oldest_key;
             }
         }
-        
+
         protected virtual void ExpireItem (TValue item)
         {
         }
-        
+
         public int MaxCount {
             get { lock (cache) { return max_count; } }
             set { lock (cache) { max_count = value; } }
         }
-        
+
         public int Count {
             get { lock (cache) { return cache.Count; } }
         }

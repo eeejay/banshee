@@ -43,21 +43,21 @@ namespace Banshee.Collection.Database
         private QueryField field;
         private string select_all_fmt;
 
-        public DatabaseQueryFilterModel (Banshee.Sources.DatabaseSource source, DatabaseTrackListModel trackModel, 
+        public DatabaseQueryFilterModel (Banshee.Sources.DatabaseSource source, DatabaseTrackListModel trackModel,
             HyenaSqliteConnection connection, string select_all_fmt, string uuid, QueryField field, string filter_column)
             : base (field.Name, field.Label, source, trackModel, connection, QueryFilterInfo<T>.CreateProvider (filter_column, field), new QueryFilterInfo<T> (), String.Format ("{0}-{1}", uuid, field.Name))
         {
             this.field = field;
             this.select_all_fmt = select_all_fmt;
-            
+
             ReloadFragmentFormat = @"
                 FROM CoreTracks, CoreCache{0}
                     WHERE CoreCache.ModelID = {1} AND CoreCache.ItemID = {2} {3}
                     ORDER BY Value";
         }
-        
+
         public override bool CachesValues { get { return true; } }
-        
+
         public override string GetSqlFilter ()
         {
             if (Selection.AllSelected)
@@ -87,7 +87,7 @@ namespace Banshee.Collection.Database
                         //sql = field.ToSql (NullQueryValue.IsNullOrEmpty, NullQueryValue.Instance, true);
                         sql = field.ToSql (NullQueryValue.IsNullOrEmpty, NullQueryValue.Instance);
                     }
-                    
+
                     if (sql != null) {
                         if (first) {
                             first = false;
@@ -101,25 +101,25 @@ namespace Banshee.Collection.Database
             sb.Append (")");
             return first ? null : sb.ToString ();
         }
-        
+
         protected override string ItemToFilterValue (object o)
         {
             throw new NotImplementedException ();
         }
-        
+
         public override string FilterColumn {
             get { return String.Empty; }
         }
-        
+
         public override void UpdateSelectAllItem (long count)
         {
             select_all_item.Title = String.Format (select_all_fmt, count);
         }
     }
-    
+
     /*public class DatabaseNumericQueryFilterModel<T> : DatabaseQueryFilterModel<T>
     {
-        public DatabaseNumericQueryFilterModel (Banshee.Sources.DatabaseSource source, DatabaseTrackListModel trackModel, 
+        public DatabaseNumericQueryFilterModel (Banshee.Sources.DatabaseSource source, DatabaseTrackListModel trackModel,
             BansheeDbConnection connection, SqliteModelProvider<T> provider, U selectAllItem, string uuid, QueryField field)
             : base (source, trackModel
     }*/

@@ -41,14 +41,14 @@ namespace Banshee.Streaming
         // we want to make sure are recognized as videos
         private static readonly ExtensionSet VideoExtensions = new ExtensionSet (
             "avi", "divx", "dv", "f4p", "f4v", "flv", "m4v", "mkv", "mov", "ogv", "qt", "ts");
-        
+
         public static TagLib.File ProcessUri (SafeUri uri)
         {
             try {
-                TagLib.File file = Banshee.IO.DemuxVfs.OpenFile (uri.IsLocalPath ? uri.LocalPath : uri.AbsoluteUri, 
+                TagLib.File file = Banshee.IO.DemuxVfs.OpenFile (uri.IsLocalPath ? uri.LocalPath : uri.AbsoluteUri,
                     null, TagLib.ReadStyle.Average);
-    
-                if ((file.Properties.MediaTypes & TagLib.MediaTypes.Audio) == 0 && 
+
+                if ((file.Properties.MediaTypes & TagLib.MediaTypes.Audio) == 0 &&
                     (file.Properties.MediaTypes & TagLib.MediaTypes.Video) == 0) {
                     throw new TagLib.UnsupportedFormatException ("File does not contain video or audio");
                 }
@@ -63,10 +63,10 @@ namespace Banshee.Streaming
         {
             return Choose (priority, fallback, false);
         }
-    
+
         private static string Choose (string priority, string fallback, bool flip)
         {
-            return flip 
+            return flip
                 ? IsNullOrEmpty (fallback) ? priority : fallback
                 : IsNullOrEmpty (priority) ? fallback : priority;
         }
@@ -77,31 +77,31 @@ namespace Banshee.Streaming
         }
 
         #pragma warning disable 0169
-        
+
         private static int Choose (int priority, int fallback)
         {
             return Choose (priority, fallback, false);
         }
-        
+
         #pragma warning restore 0169
-        
+
         private static int Choose (int priority, int fallback, bool flip)
         {
-            return flip 
+            return flip
                 ? (fallback <= 0 ? priority : fallback)
                 : (priority <= 0 ? fallback : priority);
         }
-        
+
         private static void FindTrackMediaAttributes (TrackInfo track, TagLib.File file)
         {
             if ((file.Properties.MediaTypes & TagLib.MediaTypes.Audio) != 0) {
                 track.MediaAttributes |= TrackMediaAttributes.AudioStream;
             }
-            
+
             if ((file.Properties.MediaTypes & TagLib.MediaTypes.Video) != 0) {
                 track.MediaAttributes |= TrackMediaAttributes.VideoStream;
             }
-            
+
             if (file.Tag.FirstGenre == "Podcast" || file.Tag.Album == "Podcast") {
                 track.MediaAttributes |= TrackMediaAttributes.Podcast;
             }
@@ -126,7 +126,7 @@ namespace Banshee.Streaming
                 track.TrackTitle = uri.AbsoluteUri;
             }
         }
-        
+
         public static void TrackInfoMerge (TrackInfo track, TagLib.File file)
         {
             TrackInfoMerge (track, file, false);
@@ -144,9 +144,9 @@ namespace Banshee.Streaming
                 track.MimeType = file.MimeType;
                 track.Duration = file.Properties.Duration;
                 track.BitRate  = file.Properties.AudioBitrate;
-                
+
                 FindTrackMediaAttributes (track, file);
-    
+
                 track.ArtistName = Choose (file.Tag.JoinedPerformers, track.ArtistName, preferTrackInfo);
                 track.ArtistNameSort = Choose (file.Tag.JoinedPerformersSort, track.ArtistNameSort, preferTrackInfo);
                 track.AlbumTitle = Choose (file.Tag.Album, track.AlbumTitle, preferTrackInfo);
@@ -154,7 +154,7 @@ namespace Banshee.Streaming
                 track.AlbumArtist = Choose (file.Tag.FirstAlbumArtist, track.AlbumArtist, preferTrackInfo);
                 track.AlbumArtistSort = Choose (file.Tag.FirstAlbumArtistSort, track.AlbumArtistSort, preferTrackInfo);
                 track.IsCompilation = IsCompilation (file);
-                
+
                 track.TrackTitle = Choose (file.Tag.Title, track.TrackTitle, preferTrackInfo);
                 track.TrackTitleSort = Choose (file.Tag.TitleSort, track.TrackTitleSort, preferTrackInfo);
                 track.Genre = Choose (file.Tag.FirstGenre, track.Genre, preferTrackInfo);
@@ -163,7 +163,7 @@ namespace Banshee.Streaming
                 track.Grouping = Choose (file.Tag.Grouping, track.Grouping, preferTrackInfo);
                 track.Copyright = Choose (file.Tag.Copyright, track.Copyright, preferTrackInfo);
                 track.Comment = Choose (file.Tag.Comment, track.Comment, preferTrackInfo);
-    
+
                 track.TrackNumber = Choose ((int)file.Tag.Track, track.TrackNumber, preferTrackInfo);
                 track.TrackCount = Choose ((int)file.Tag.TrackCount, track.TrackCount, preferTrackInfo);
                 track.DiscNumber = Choose ((int)file.Tag.Disc, track.DiscNumber, preferTrackInfo);
@@ -189,12 +189,12 @@ namespace Banshee.Streaming
                     }
                 } catch {}
             }
-            
+
             // TODO look for track number in the file name if not set?
             // TODO could also pull artist/album from folders _iff_ files two levels deep in the MusicLibrary folder
             // TODO these ideas could also be done in an extension that collects such hacks
         }
-            
+
         private static bool IsCompilation (TagLib.File file)
         {
             try {
@@ -208,7 +208,7 @@ namespace Banshee.Streaming
                 if (apple_tag != null && apple_tag.IsCompilation)
                     return true;
             } catch {}
-            
+
             // FIXME the FirstAlbumArtist != FirstPerformer check might return true for half the
             // tracks on a compilation album, but false for some
             // TODO checked for 'Soundtrack' (and translated) in the title?
@@ -247,13 +247,13 @@ namespace Banshee.Streaming
                 Hyena.Log.DebugFormat ("Avoiding 100% cpu bug with taglib# by not writing metadata to video file {0}", track);
                 return false;
             }
-        
+
             // Note: this should be kept in sync with the metadata read in StreamTagger.cs
             TagLib.File file = ProcessUri (track.Uri);
             if (file == null) {
                 return false;
             }
-            
+
             file.Tag.Performers = new string [] { track.ArtistName };
             file.Tag.PerformersSort = new string [] { track.ArtistNameSort };
             file.Tag.Album = track.AlbumTitle;
@@ -277,7 +277,7 @@ namespace Banshee.Streaming
             file.Tag.DiscCount = (uint)track.DiscCount;
             file.Tag.Year = (uint)track.Year;
             file.Tag.BeatsPerMinute = (uint)track.Bpm;
-            
+
             SaveIsCompilation (file, track.IsCompilation);
             file.Save ();
 
@@ -286,7 +286,7 @@ namespace Banshee.Streaming
             track.LastSyncedStamp = DateTime.Now;
             return true;
         }
-    
+
         public static void TrackInfoMerge (TrackInfo track, StreamTag tag)
         {
             try {
@@ -303,7 +303,7 @@ namespace Banshee.Streaming
                         string title = Choose ((string)tag.Value, track.TrackTitle);
 
                         // Try our best to figure out common patterns in poor radio metadata.
-                        // Often only one tag is sent on track changes inside the stream, 
+                        // Often only one tag is sent on track changes inside the stream,
                         // which is title, and usually contains artist and track title, separated
                         // with a " - " string.
                         if (track.IsLive && title.Contains (" - ")) {
@@ -375,7 +375,7 @@ namespace Banshee.Streaming
                     case CommonTags.MoreInfoUri:
                         track.MoreInfoUri = (SafeUri)tag.Value;
                         break;
-                    /* No year tag in GST it seems 
+                    /* No year tag in GST it seems
                     case CommonTags.Year:
                         track.Year = (uint)tag.Value;
                         break;*/

@@ -39,7 +39,7 @@ using Banshee.MediaEngine;
 
 namespace Banshee.PlaybackController
 {
-    public class PlaybackControllerService : IRequiredService, ICanonicalPlaybackController, 
+    public class PlaybackControllerService : IRequiredService, ICanonicalPlaybackController,
         IPlaybackController, IPlaybackControllerService
     {
         private enum Direction
@@ -47,10 +47,10 @@ namespace Banshee.PlaybackController
             Next,
             Previous
         }
-    
+
         private IStackProvider<TrackInfo> previous_stack;
         private IStackProvider<TrackInfo> next_stack;
-    
+
         private TrackInfo current_track;
         private TrackInfo prior_track;
         private TrackInfo changing_to_track;
@@ -60,21 +60,21 @@ namespace Banshee.PlaybackController
         private int consecutive_errors;
         private uint error_transition_id;
         private DateTime source_auto_set_at = DateTime.MinValue;
-    
+
         private PlaybackShuffleMode shuffle_mode;
         private PlaybackRepeatMode repeat_mode;
         private bool stop_when_finished = false;
-        
+
         private PlayerEngineService player_engine;
         private ITrackModelSource source;
         private ITrackModelSource next_source;
-        
+
         private event PlaybackControllerStoppedHandler dbus_stopped;
         event PlaybackControllerStoppedHandler IPlaybackControllerService.Stopped {
             add { dbus_stopped += value; }
             remove { dbus_stopped -= value; }
         }
-        
+
         public event EventHandler Stopped;
         public event EventHandler SourceChanged;
         public event EventHandler NextSourceChanged;
@@ -82,18 +82,18 @@ namespace Banshee.PlaybackController
         public event EventHandler Transition;
         public event EventHandler<ShuffleModeChangedEventArgs> ShuffleModeChanged;
         public event EventHandler<RepeatModeChangedEventArgs> RepeatModeChanged;
-        
+
         public PlaybackControllerService ()
         {
             InstantiateStacks ();
-            
+
             player_engine = ServiceManager.PlayerEngine;
             player_engine.PlayWhenIdleRequest += OnPlayerEnginePlayWhenIdleRequest;
-            player_engine.ConnectEvent (OnPlayerEvent, 
-                PlayerEvent.EndOfStream | 
+            player_engine.ConnectEvent (OnPlayerEvent,
+                PlayerEvent.EndOfStream |
                 PlayerEvent.StartOfStream |
                 PlayerEvent.StateChange |
-                PlayerEvent.Error, 
+                PlayerEvent.Error,
                 true);
 
             ServiceManager.SourceManager.ActiveSourceChanged += delegate {
@@ -104,13 +104,13 @@ namespace Banshee.PlaybackController
                 }
             };
         }
-        
+
         protected virtual void InstantiateStacks ()
         {
             previous_stack = new PlaybackControllerDatabaseStack ();
             next_stack = new PlaybackControllerDatabaseStack ();
         }
-        
+
         private void OnPlayerEnginePlayWhenIdleRequest (object o, EventArgs args)
         {
             ITrackModelSource next_source = NextSource;
@@ -123,7 +123,7 @@ namespace Banshee.PlaybackController
                 Next ();
             }
         }
-        
+
         private void OnPlayerEvent (PlayerEventArgs args)
         {
             switch (args.Event) {
@@ -140,7 +140,7 @@ namespace Banshee.PlaybackController
                         OnStopped ();
                         break;
                     }
-                    
+
                     CancelErrorTransition ();
                     // TODO why is this so long? any reason not to be instantaneous?
                     Application.RunTimeout (250, EosTransition);
@@ -149,14 +149,14 @@ namespace Banshee.PlaybackController
                     if (((PlayerEventStateChangeArgs)args).Current != PlayerState.Loading) {
                         break;
                     }
-                       
+
                     TrackInfo track = player_engine.CurrentTrack;
                     if (changing_to_track != track && track != null) {
                         CurrentTrack = track;
                     }
-                    
+
                     changing_to_track = null;
-                    
+
                     if (!raise_started_after_transition) {
                         transition_track_started = false;
                         OnTrackStarted ();
@@ -164,9 +164,9 @@ namespace Banshee.PlaybackController
                         transition_track_started = true;
                     }
                     break;
-            }       
+            }
         }
-        
+
         private void CancelErrorTransition ()
         {
             if (error_transition_id > 0) {
@@ -174,7 +174,7 @@ namespace Banshee.PlaybackController
                 error_transition_id = 0;
             }
         }
-        
+
         private bool EosTransition ()
         {
             if (!StopWhenFinished) {
@@ -187,47 +187,47 @@ namespace Banshee.PlaybackController
             } else {
                 OnStopped ();
             }
-            
+
             StopWhenFinished = false;
             return false;
         }
-        
+
         public void First ()
         {
             CancelErrorTransition ();
-            
+
             Source = NextSource;
-            
+
             // This and OnTransition() below commented out b/c of BGO #524556
             //raise_started_after_transition = true;
-            
+
             if (Source is IBasicPlaybackController && ((IBasicPlaybackController)Source).First ()) {
             } else {
                 ((IBasicPlaybackController)this).First ();
             }
-            
+
             //OnTransition ();
         }
-        
+
         public void Next ()
         {
             Next (RepeatMode == PlaybackRepeatMode.RepeatAll);
         }
-        
+
         public void Next (bool restart)
         {
             CancelErrorTransition ();
-            
+
             Source = NextSource;
             raise_started_after_transition = true;
 
             player_engine.IncrementLastPlayed ();
-            
+
             if (Source is IBasicPlaybackController && ((IBasicPlaybackController)Source).Next (restart)) {
             } else {
                 ((IBasicPlaybackController)this).Next (restart);
             }
-            
+
             OnTransition ();
         }
 
@@ -235,24 +235,24 @@ namespace Banshee.PlaybackController
         {
             Previous (RepeatMode == PlaybackRepeatMode.RepeatAll);
         }
-        
+
         public void Previous (bool restart)
         {
             CancelErrorTransition ();
-            
+
             Source = NextSource;
             raise_started_after_transition = true;
 
             player_engine.IncrementLastPlayed ();
-            
+
             if (Source is IBasicPlaybackController && ((IBasicPlaybackController)Source).Previous (restart)) {
             } else {
                 ((IBasicPlaybackController)this).Previous (restart);
             }
-            
+
             OnTransition ();
         }
-        
+
         bool IBasicPlaybackController.First ()
         {
             if (Source.Count > 0) {
@@ -260,7 +260,7 @@ namespace Banshee.PlaybackController
             }
             return true;
         }
-        
+
         bool IBasicPlaybackController.Next (bool restart)
         {
             TrackInfo tmp_track = CurrentTrack;
@@ -279,14 +279,14 @@ namespace Banshee.PlaybackController
                 } else {
                     return true;
                 }
-                
+
                 CurrentTrack = next_track;
             }
-            
+
             QueuePlayTrack ();
             return true;
         }
-        
+
         bool IBasicPlaybackController.Previous (bool restart)
         {
             if (CurrentTrack != null && previous_stack.Count > 0) {
@@ -303,11 +303,11 @@ namespace Banshee.PlaybackController
                     return true;
                 }
             }
-            
+
             QueuePlayTrack ();
             return true;
         }
-        
+
         private TrackInfo QueryTrack (Direction direction, bool restart)
         {
             Log.DebugFormat ("Querying model for track to play in {0}:{1} mode", ShuffleMode, direction);
@@ -315,7 +315,7 @@ namespace Banshee.PlaybackController
                 ? QueryTrackLinear (direction, restart)
                 : QueryTrackRandom (ShuffleMode, restart);
         }
-        
+
         private TrackInfo QueryTrackLinear (Direction direction, bool restart)
         {
             if (Source.TrackModel.Count == 0)
@@ -341,7 +341,7 @@ namespace Banshee.PlaybackController
                 }
             }
         }
-        
+
         private TrackInfo QueryTrackRandom (PlaybackShuffleMode mode, bool restart)
         {
             var track_shuffler = Source.TrackModel as Banshee.Collection.Database.DatabaseTrackListModel;
@@ -352,7 +352,7 @@ namespace Banshee.PlaybackController
             last_was_skipped = true;
             return track;
         }
-        
+
         private void QueuePlayTrack ()
         {
             changing_to_track = CurrentTrack;
@@ -367,28 +367,28 @@ namespace Banshee.PlaybackController
             if (handler != null) {
                 handler (this, EventArgs.Empty);
             }
-            
+
             PlaybackControllerStoppedHandler dbus_handler = dbus_stopped;
             if (dbus_handler != null) {
                 dbus_handler ();
             }
         }
-        
+
         protected virtual void OnTransition ()
         {
             EventHandler handler = Transition;
             if (handler != null) {
                 handler (this, EventArgs.Empty);
             }
-            
+
             if (raise_started_after_transition && transition_track_started) {
                 OnTrackStarted ();
             }
-            
+
             raise_started_after_transition = false;
             transition_track_started = false;
         }
-        
+
         protected virtual void OnSourceChanged ()
         {
             EventHandler handler = SourceChanged;
@@ -396,7 +396,7 @@ namespace Banshee.PlaybackController
                 handler (this, EventArgs.Empty);
             }
         }
-        
+
         protected void OnNextSourceChanged ()
         {
             EventHandler handler = NextSourceChanged;
@@ -404,7 +404,7 @@ namespace Banshee.PlaybackController
                 handler (this, EventArgs.Empty);
             }
         }
-        
+
         protected virtual void OnTrackStarted ()
         {
             EventHandler handler = TrackStarted;
@@ -412,7 +412,7 @@ namespace Banshee.PlaybackController
                 handler (this, EventArgs.Empty);
             }
         }
-        
+
         public TrackInfo CurrentTrack {
             get { return current_track; }
             protected set { current_track = value; }
@@ -422,16 +422,16 @@ namespace Banshee.PlaybackController
             get { return prior_track ?? CurrentTrack; }
             set { prior_track = value; }
         }
-        
+
         protected DateTime source_set_at = DateTime.MinValue;
         public ITrackModelSource Source {
-            get { 
+            get {
                 if (source == null && ServiceManager.SourceManager.DefaultSource is ITrackModelSource) {
                     return (ITrackModelSource)ServiceManager.SourceManager.DefaultSource;
                 }
                 return source;
             }
-            
+
             set {
                 if (source != value) {
                     NextSource = value;
@@ -441,21 +441,21 @@ namespace Banshee.PlaybackController
                 }
             }
         }
-        
+
         public ITrackModelSource NextSource {
             get { return next_source ?? Source; }
             set {
                 if (next_source != value) {
                     next_source = value;
                     OnNextSourceChanged ();
-                    
+
                     if (!player_engine.IsPlaying ()) {
                         Source = next_source;
                     }
                 }
             }
         }
-        
+
         public PlaybackShuffleMode ShuffleMode {
             get { return shuffle_mode; }
             set {
@@ -466,7 +466,7 @@ namespace Banshee.PlaybackController
                 }
             }
         }
-        
+
         public PlaybackRepeatMode RepeatMode {
             get { return repeat_mode; }
             set {
@@ -477,16 +477,16 @@ namespace Banshee.PlaybackController
                 }
             }
         }
-        
+
         public bool StopWhenFinished {
             get { return stop_when_finished; }
             set { stop_when_finished = value; }
         }
-        
+
         string IService.ServiceName {
             get { return "PlaybackController"; }
         }
-        
+
         IDBusExportable IDBusExportable.Parent {
             get { return null; }
         }

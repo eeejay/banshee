@@ -66,7 +66,7 @@ namespace Hyena.Gui
             text += ((EditableInsertAction)action).text;
         }
 
-        public bool CanMerge (IUndoAction action) 
+        public bool CanMerge (IUndoAction action)
         {
             EditableInsertAction insert = action as EditableInsertAction;
             if (insert == null || String.IsNullOrEmpty (text)) {
@@ -78,7 +78,7 @@ namespace Hyena.Gui
                insert.index != index + text.Length ||          // Must meet eachother
                text[0] == '\n' ||                              // Don't group more than one line (inclusive)
                insert.text[0] == ' ' || insert.text[0] == '\t' // Don't group more than one word (exclusive)
-            ); 
+            );
         }
 
         public override string ToString ()

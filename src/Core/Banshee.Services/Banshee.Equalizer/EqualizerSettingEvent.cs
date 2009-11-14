@@ -31,16 +31,16 @@ using System;
 namespace Banshee.Equalizer
 {
     public delegate void EqualizerSettingEventHandler (object o, EqualizerSettingEventArgs args);
-    
+
     public class EqualizerSettingEventArgs : EventArgs
     {
         private EqualizerSetting eq;
-        
+
         public EqualizerSettingEventArgs (EqualizerSetting eq)
         {
             this.eq = eq;
         }
-        
+
         public EqualizerSetting EqualizerSetting {
             get { return eq; }
         }

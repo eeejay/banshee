@@ -42,7 +42,7 @@ namespace Banshee.Preferences
             add { install_widget_adapters += value; }
             remove { install_widget_adapters -= value; }
         }
-    
+
         public PreferenceService ()
         {
             // Pages (tabs)
@@ -52,17 +52,17 @@ namespace Banshee.Preferences
 
             // General policies
             Section policies = general.Add (new Section ("policies", Catalog.GetString ("File Policies"), 0));
-            
-            policies.Add (new SchemaPreference<bool> (LibrarySchema.CopyOnImport, 
+
+            policies.Add (new SchemaPreference<bool> (LibrarySchema.CopyOnImport,
                 Catalog.GetString ("Co_py files to media folders when importing")));
-            
+
             policies.Add (Banshee.Metadata.SaveTrackMetadataService.WriteEnabled);
             policies.Add (Banshee.Metadata.SaveTrackMetadataService.RenameEnabled);
 
             // Misc section
             general.Add (new Section ("misc", Catalog.GetString ("Miscellaneous"), 20));
         }
-        
+
         public void RequestWidgetAdapters ()
         {
             EventHandler handler = install_widget_adapters;
@@ -70,7 +70,7 @@ namespace Banshee.Preferences
                 handler (this, EventArgs.Empty);
             }
         }
-        
+
         string IService.ServiceName {
             get { return "PreferenceService"; }
         }

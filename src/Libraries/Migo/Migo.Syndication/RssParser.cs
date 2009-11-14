@@ -41,7 +41,7 @@ namespace Migo.Syndication
     {
         private XmlDocument doc;
         private XmlNamespaceManager mgr;
-        
+
         public RssParser (string url, string xml)
         {
             xml = xml.TrimStart ();
@@ -71,23 +71,23 @@ namespace Migo.Syndication
 
                 if (!loaded) {
                     Hyena.Log.Exception (e);
-                    throw new FormatException ("Invalid XML document.");                                  
+                    throw new FormatException ("Invalid XML document.");
                 }
             }
             CheckRss ();
         }
-        
+
         public RssParser (string url, XmlDocument doc)
         {
             this.doc = doc;
             CheckRss ();
         }
-    
+
         public Feed CreateFeed ()
         {
             return UpdateFeed (new Feed ());
         }
-        
+
         public Feed UpdateFeed (Feed feed)
         {
             try {
@@ -100,19 +100,19 @@ namespace Migo.Syndication
                 }
                 feed.Language         = GetXmlNodeText (doc, "/rss/channel/language");
                 feed.LastBuildDate    = GetRfc822DateTime (doc, "/rss/channel/lastBuildDate");
-                feed.Link             = GetXmlNodeText (doc, "/rss/channel/link"); 
+                feed.Link             = GetXmlNodeText (doc, "/rss/channel/link");
                 feed.PubDate          = GetRfc822DateTime (doc, "/rss/channel/pubDate");
                 feed.Keywords         = GetXmlNodeText (doc, "/rss/channel/itunes:keywords");
                 feed.Category         = GetXmlNodeText (doc, "/rss/channel/itunes:category/@text");
-                
+
                 return feed;
             } catch (Exception e) {
                  Hyena.Log.Exception ("Caught error parsing RSS channel", e);
             }
-             
+
             return null;
         }
-        
+
         public IEnumerable<FeedItem> GetFeedItems (Feed feed)
         {
             XmlNodeList nodes = null;
@@ -121,11 +121,11 @@ namespace Migo.Syndication
             } catch (Exception e) {
                 Hyena.Log.Exception ("Unable to get any RSS items", e);
             }
-            
+
             if (nodes != null) {
                 foreach (XmlNode node in nodes) {
                     FeedItem item = null;
-                    
+
                     try {
                         item = ParseItem (node);
                         if (item != null) {
@@ -134,14 +134,14 @@ namespace Migo.Syndication
                     } catch (Exception e) {
                         Hyena.Log.Exception (e);
                     }
-                    
+
                     if (item != null) {
                         yield return item;
                     }
                 }
             }
         }
-        
+
         private FeedItem ParseItem (XmlNode node)
         {
             try {
@@ -149,11 +149,11 @@ namespace Migo.Syndication
                 item.Description = StringUtil.RemoveNewlines (GetXmlNodeText (node, "description"));
                 item.UpdateStrippedDescription ();
                 item.Title = StringUtil.RemoveNewlines (GetXmlNodeText (node, "title"));
-            
+
                 if (String.IsNullOrEmpty (item.Description) && String.IsNullOrEmpty (item.Title)) {
                     throw new FormatException ("node:  Either 'title' or 'description' node must exist.");
                 }
-                
+
                 item.Author            = GetXmlNodeText (node, "author");
                 item.Comments          = GetXmlNodeText (node, "comments");
                 // Removed, since we form our own Guid, since feeds don't seem to be consistent
@@ -166,15 +166,15 @@ namespace Migo.Syndication
 
                 // TODO prefer <media:content> nodes over <enclosure>?
                 item.Enclosure = ParseEnclosure (node) ?? ParseMediaContent (node);
-                
+
                 return item;
              } catch (Exception e) {
                  Hyena.Log.Exception ("Caught error parsing RSS item", e);
              }
-             
+
              return null;
         }
-        
+
         private FeedEnclosure ParseEnclosure (XmlNode node)
         {
             try {
@@ -183,7 +183,7 @@ namespace Migo.Syndication
                 enclosure.Url = GetXmlNodeText (node, "enclosure/@url");
                 if (enclosure.Url == null)
                     return null;
-                
+
                 enclosure.FileSize = Math.Max (0, GetInt64 (node, "enclosure/@length"));
                 enclosure.MimeType = GetXmlNodeText (node, "enclosure/@type");
                 enclosure.Duration = GetITunesDuration (node);
@@ -192,17 +192,17 @@ namespace Migo.Syndication
              } catch (Exception e) {
                  Hyena.Log.Exception ("Caught error parsing RSS enclosure", e);
              }
-             
+
              return null;
         }
-        
+
         // Parse one Media RSS media:content node
         // http://search.yahoo.com/mrss/
         private FeedEnclosure ParseMediaContent (XmlNode item_node)
         {
             try {
                 XmlNode node = null;
-                
+
                 // Get the highest bitrate "full" content item
                 // TODO allow a user-preference for a feed to decide what quality to get, if there
                 // are options?
@@ -211,61 +211,61 @@ namespace Migo.Syndication
                     string expr = GetXmlNodeText (test_node, "@expression");
                     if (!(String.IsNullOrEmpty (expr) || expr == "full"))
                         continue;
-                    
+
                     int bitrate = GetInt32 (test_node, "@bitrate");
                     if (node == null || bitrate > max_bitrate) {
                         node = test_node;
                         max_bitrate = bitrate;
                     }
                 }
-                
+
                 if (node == null)
                     return null;
-                    
+
                 FeedEnclosure enclosure = new FeedEnclosure ();
                 enclosure.Url = GetXmlNodeText (node, "@url");
                 if (enclosure.Url == null)
                     return null;
-                
+
                 enclosure.FileSize = Math.Max (0, GetInt64 (node, "@fileSize"));
                 enclosure.MimeType = GetXmlNodeText (node, "@type");
                 enclosure.Duration = TimeSpan.FromSeconds (GetInt64 (node, "@duration"));
                 enclosure.Keywords = GetXmlNodeText (item_node, "itunes:keywords");
-                
+
                 // TODO get the thumbnail URL
-                
+
                 return enclosure;
              } catch (Exception e) {
                  Hyena.Log.Exception ("Caught error parsing RSS media:content", e);
              }
-             
+
              return null;
         }
-        
+
         private void CheckRss ()
-        {            
+        {
             if (doc.SelectSingleNode ("/rss") == null) {
                 throw new FormatException ("Invalid RSS document.");
             }
-            
+
             if (GetXmlNodeText (doc, "/rss/channel/title") == String.Empty) {
                 throw new FormatException (
                     "node: 'title', 'description', and 'link' nodes must exist."
-                );                
+                );
             }
-            
+
             mgr = new XmlNamespaceManager (doc.NameTable);
             mgr.AddNamespace ("itunes", "http://www.itunes.com/dtds/podcast-1.0.dtd");
             mgr.AddNamespace ("creativeCommons", "http://backend.userland.com/creativeCommonsRssModule");
             mgr.AddNamespace ("media", "http://search.yahoo.com/mrss/");
             mgr.AddNamespace ("dcterms", "http://purl.org/dc/terms/");
         }
-        
+
         public TimeSpan GetITunesDuration (XmlNode node)
         {
             return GetITunesDuration (GetXmlNodeText (node, "itunes:duration"));
         }
-        
+
         public static TimeSpan GetITunesDuration (string duration)
         {
             if (String.IsNullOrEmpty (duration)) {
@@ -274,27 +274,27 @@ namespace Migo.Syndication
 
             int hours = 0, minutes = 0, seconds = 0;
             string [] parts = duration.Split (':');
-            
+
             if (parts.Length > 0)
                 seconds = Int32.Parse (parts[parts.Length - 1]);
-                
+
             if (parts.Length > 1)
                 minutes = Int32.Parse (parts[parts.Length - 2]);
-                
+
             if (parts.Length > 2)
                 hours = Int32.Parse (parts[parts.Length - 3]);
-            
+
             return TimeSpan.FromSeconds (hours * 3600 + minutes * 60 + seconds);
         }
 
 #region Xml Convienience Methods
-    
+
         public string GetXmlNodeText (XmlNode node, string tag)
         {
             XmlNode n = node.SelectSingleNode (tag, mgr);
             return (n == null) ? null : n.InnerText.Trim ();
         }
-        
+
         public DateTime GetRfc822DateTime (XmlNode node, string tag)
         {
             DateTime ret = DateTime.MinValue;
@@ -309,10 +309,10 @@ namespace Migo.Syndication
                     return ret;
                 }
             }
-                    
-            return ret;              
+
+            return ret;
         }
-        
+
         public long GetInt64 (XmlNode node, string tag)
         {
             long ret = 0;
@@ -321,8 +321,8 @@ namespace Migo.Syndication
             if (!String.IsNullOrEmpty (result)) {
                 Int64.TryParse (result, out ret);
             }
-                    
-            return ret;              
+
+            return ret;
         }
 
         public int GetInt32 (XmlNode node, string tag)
@@ -333,8 +333,8 @@ namespace Migo.Syndication
             if (!String.IsNullOrEmpty (result)) {
                 Int32.TryParse (result, out ret);
             }
-                    
-            return ret;              
+
+            return ret;
         }
 
 #endregion

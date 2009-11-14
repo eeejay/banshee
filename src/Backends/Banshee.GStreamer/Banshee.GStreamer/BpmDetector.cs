@@ -1,4 +1,4 @@
-// 
+//
 // BpmDetector.cs
 //
 // Author:
@@ -54,14 +54,14 @@ namespace Banshee.GStreamer
         private BpmDetectorProgressHandler progress_cb;
         private BpmDetectorFinishedHandler finished_cb;
         //private BpmDetectorErrorHandler error_cb;
-        
+
         public event BpmEventHandler FileFinished;
-        
+
         public BpmDetector ()
         {
-            try {   
+            try {
                 handle = new HandleRef (this, bbd_new ());
-                
+
                 progress_cb = new BpmDetectorProgressHandler (OnNativeProgress);
                 bbd_set_progress_callback (handle, progress_cb);
 
@@ -71,15 +71,15 @@ namespace Banshee.GStreamer
                 throw new ApplicationException (Catalog.GetString ("Could not create BPM detection driver."), e);
             }
         }
-        
+
         public void Dispose ()
         {
             Reset ();
-            
+
             bbd_destroy (handle);
             handle = new HandleRef (this, IntPtr.Zero);
         }
-        
+
         public void Cancel ()
         {
             Dispose ();
@@ -88,18 +88,18 @@ namespace Banshee.GStreamer
         public bool IsDetecting {
             get { return bbd_get_is_detecting (handle); }
         }
-        
+
         private void Reset ()
         {
             current_uri = null;
             bpm_histogram.Clear ();
         }
-        
+
         public void ProcessFile (SafeUri uri)
         {
             Reset ();
             current_uri = uri;
-            
+
             string path = uri.LocalPath;
             IntPtr path_ptr = GLib.Marshaller.StringToPtrGStrdup (path);
             try {
@@ -111,7 +111,7 @@ namespace Banshee.GStreamer
                 GLib.Marshaller.Free (path_ptr);
             }
         }
-        
+
         private void OnFileFinished (SafeUri uri, int bpm)
         {
             BpmEventHandler handler = FileFinished;
@@ -119,7 +119,7 @@ namespace Banshee.GStreamer
                 handler (this, new BpmEventArgs (uri, bpm));
             }
         }
-        
+
         private void OnNativeProgress (double bpm)
         {
             int rounded = (int) Math.Round (bpm);
@@ -129,7 +129,7 @@ namespace Banshee.GStreamer
                 bpm_histogram[rounded]++;
             }
         }
-        
+
         private void OnNativeFinished ()
         {
             SafeUri uri = current_uri;
@@ -146,28 +146,28 @@ namespace Banshee.GStreamer
             Reset ();
             OnFileFinished (uri, best_bpm);
         }
-        
+
         /*private void OnNativeError (IntPtr error, IntPtr debug)
         {
             string error_message = GLib.Marshaller.Utf8PtrToString (error);
-            
+
             if (debug != IntPtr.Zero) {
                 string debug_string = GLib.Marshaller.Utf8PtrToString (debug);
                 if (!String.IsNullOrEmpty (debug_string)) {
                     error_message = String.Format ("{0}: {1}", error_message, debug_string);
                 }
             }
-            
+
             Log.Debug (error_message);
             SafeUri uri = current_uri;
             Reset ();
             OnFileFinished (uri, 0);
         }*/
-        
+
         private delegate void BpmDetectorProgressHandler (double bpm);
         private delegate void BpmDetectorFinishedHandler ();
         //private delegate void BpmDetectorErrorHandler (IntPtr error, IntPtr debug);
-        
+
         [DllImport ("libbanshee.dll")]
         private static extern IntPtr bbd_new ();
 
@@ -176,16 +176,16 @@ namespace Banshee.GStreamer
 
         [DllImport ("libbanshee.dll")]
         private static extern bool bbd_get_is_detecting (HandleRef handle);
-        
+
         [DllImport ("libbanshee.dll")]
         private static extern void bbd_process_file (HandleRef handle, IntPtr path);
-        
+
         [DllImport ("libbanshee.dll")]
         private static extern void bbd_set_progress_callback (HandleRef handle, BpmDetectorProgressHandler callback);
-        
+
         [DllImport ("libbanshee.dll")]
         private static extern void bbd_set_finished_callback (HandleRef handle, BpmDetectorFinishedHandler callback);
-        
+
         //[DllImport ("libbanshee.dll")]
         //private static extern void bbd_set_error_callback (HandleRef handle, BpmDetectorErrorHandler callback);
     }

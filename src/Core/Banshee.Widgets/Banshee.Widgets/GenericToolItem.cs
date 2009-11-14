@@ -34,13 +34,13 @@ namespace Banshee.Widgets
     public class GenericToolItem<T> : ToolItem where T : Widget
     {
         private T widget;
-        
+
         public GenericToolItem (T widget)
         {
             this.widget = widget;
             Add (widget);
         }
-        
+
         public T Widget {
             get { return widget; }
         }

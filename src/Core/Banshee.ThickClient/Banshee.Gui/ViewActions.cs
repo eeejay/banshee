@@ -41,12 +41,12 @@ namespace Banshee.Gui
     {
         public delegate void FullscreenHandler (bool fullscreen);
         private FullscreenHandler fullscreen_handler;
-        
+
         public FullscreenHandler Fullscreen {
             get { return fullscreen_handler; }
-            set { 
-                fullscreen_handler = value; 
-                
+            set {
+                fullscreen_handler = value;
+
                 GtkElementsService service = ServiceManager.Get<GtkElementsService> ();
                 Gtk.ToggleAction action = this["FullScreenAction"] as Gtk.ToggleAction;
                 if (service != null && action != null && value == null) {
@@ -54,13 +54,13 @@ namespace Banshee.Gui
                 }
             }
         }
-    
+
         public ViewActions () : base ("View")
         {
             Add (new ActionEntry [] {
                 new ActionEntry ("ViewMenuAction", null,
                     Catalog.GetString ("_View"), null, null, null),
-                    
+
                 new ActionEntry ("ShowEqualizerAction", null,
                    Catalog.GetString ("_Equalizer"), "<control>E",
                    Catalog.GetString ("View the graphical equalizer"), OnShowEqualizer)
@@ -86,18 +86,18 @@ namespace Banshee.Gui
                     Catalog.GetString ("Show Cover _Art"), null,
                     Catalog.GetString ("Toggle display of album cover art"), null, false),
             });*/
-            
+
             ServiceManager.PlayerEngine.ConnectEvent (OnPlayerEvent, PlayerEvent.StateChange);
             OnFullScreen (null, EventArgs.Empty);
         }
-        
+
         private void OnPlayerEvent (PlayerEventArgs args)
         {
             if (((PlayerEventStateChangeArgs)args).Current == PlayerState.Ready) {
                 Actions["View.ShowEqualizerAction"].Sensitive = ServiceManager.PlayerEngine.SupportsEqualizer;
             }
         }
-                
+
         private void OnShowEqualizer (object o, EventArgs args)
         {
             if (EqualizerWindow.Instance == null) {
@@ -114,19 +114,19 @@ namespace Banshee.Gui
             if (action == null) {
                 return;
             }
-            
+
             if (Fullscreen != null) {
                 Fullscreen (action.Active);
                 return;
             }
-            
+
             GtkElementsService service = ServiceManager.Get<GtkElementsService> ();
             if (service == null || action == null) {
                 return;
             }
-            
+
             Gtk.Window window = service.PrimaryWindow;
-            
+
             if (window == null) {
                 return;
             } else if (action.Active) {

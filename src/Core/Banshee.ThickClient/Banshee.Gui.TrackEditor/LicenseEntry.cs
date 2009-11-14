@@ -41,7 +41,7 @@ namespace Banshee.Gui.TrackEditor
     {
         private ListStore license_model;
         private EditorEditableUndoAdapter<Entry> undo_adapter = new EditorEditableUndoAdapter<Entry> ();
-        
+
         public LicenseEntry ()
         {
             license_model = new ListStore (typeof (string));
@@ -64,17 +64,17 @@ namespace Banshee.Gui.TrackEditor
                 }
             }
         }
-        
+
         public void DisconnectUndo ()
         {
             undo_adapter.DisconnectUndo ();
         }
-        
+
         public void ConnectUndo (EditorTrackInfo track)
         {
             undo_adapter.ConnectUndo (Entry, track);
         }
-        
+
         public string Value {
             get { return Entry.Text; }
             set { Entry.Text = value ?? String.Empty; }

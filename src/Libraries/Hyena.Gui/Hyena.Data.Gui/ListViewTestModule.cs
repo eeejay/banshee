@@ -43,26 +43,26 @@ namespace Hyena.Data.Gui
     {
         private View view;
         private Model model;
-        
+
         public ListViewTestModule () : base ("ListView")
         {
             WindowPosition = WindowPosition.Center;
             SetDefaultSize (800, 600);
-            
+
             ScrolledWindow scroll = new ScrolledWindow ();
             scroll.HscrollbarPolicy = PolicyType.Automatic;
             scroll.VscrollbarPolicy = PolicyType.Automatic;
-            
+
             view = new View ();
             model = new Model ();
-            
+
             scroll.Add (view);
             Add (scroll);
             ShowAll ();
-            
+
             view.SetModel (model);
         }
-        
+
         private class View : ListView<ModelItem>
         {
             public View ()
@@ -79,15 +79,15 @@ namespace Hyena.Data.Gui
                 );
             }
         }
-        
+
         private class Model : IListModel<ModelItem>
         {
             private List<ModelItem> store = new List<ModelItem> ();
             private Selection selection = new Selection ();
-            
+
             public event EventHandler Cleared;
             public event EventHandler Reloaded;
-            
+
             public Model ()
             {
                 Random random = new Random (0);
@@ -95,15 +95,15 @@ namespace Hyena.Data.Gui
                     store.Add (new ModelItem (i, random));
                 }
             }
-            
+
             public void Clear ()
             {
             }
-            
+
             public void Reload ()
             {
             }
-            
+
             public int Count {
                 get { return store.Count; }
             }
@@ -111,17 +111,17 @@ namespace Hyena.Data.Gui
             public bool CanReorder {
                 get { return false; }
             }
-            
+
             public ModelItem this[int index] {
                 get { return store[index]; }
             }
-            
+
             public Selection Selection {
                 get { return selection; }
             }
         }
-        
-        private class ModelItem 
+
+        private class ModelItem
         {
             public ModelItem (int i, Random rand)
             {
@@ -133,7 +133,7 @@ namespace Hyena.Data.Gui
                 f = rand.Next (0, 1) == 1;
                 g = rand.Next (0, 5);
             }
-        
+
             string a; public string A { get { return a; } }
             int b;    public int    B { get { return b; } }
             double c; public double C { get { return c; } }
@@ -142,16 +142,16 @@ namespace Hyena.Data.Gui
             bool f; public bool F { get { return f; } set { f = value; } }
             int g; public int G { get { return g; } set { g = value; } }
         }
-        
+
         private class ColumnCellDoodle : ColumnCell, IInteractiveCell
         {
             private Random random = new Random ();
             private bool red = false;
-            
+
             public ColumnCellDoodle (string property, bool expand) : base (property, expand)
             {
             }
-            
+
             public override void Render (CellContext context, StateType state, double cellWidth, double cellHeight)
             {
                 red = !red;
@@ -159,7 +159,7 @@ namespace Hyena.Data.Gui
                 cr.Rectangle (0, 0, cellWidth, cellHeight);
                 cr.Color = CairoExtensions.RgbaToColor (red ? 0xff000099 : 0x00000099);
                 cr.Fill ();
-                
+
                 List<Gdk.Point> points = Points;
                 for (int i = 0, n = points.Count; i < n; i++) {
                     if (i == 0) {
@@ -168,42 +168,42 @@ namespace Hyena.Data.Gui
                         cr.LineTo (points[i].X, points[i].Y);
                     }
                 }
-                
+
                 cr.Color = CairoExtensions.RgbToColor ((uint)random.Next (0xffffff));
                 cr.LineWidth = 1;
                 cr.Stroke ();
             }
-            
+
             private object last_pressed_bound;
-            
+
             public bool ButtonEvent (int x, int y, bool pressed, Gdk.EventButton evnt)
             {
                 if (!pressed) {
                     last_pressed_bound = null;
                     return false;
                 }
-                
+
                 last_pressed_bound = BoundObject;
                 Points.Add (new Gdk.Point (x, y));
                 return true;
             }
-            
+
             public bool MotionEvent (int x, int y, Gdk.EventMotion evnt)
             {
                 if (last_pressed_bound == BoundObject) {
                     Points.Add (new Gdk.Point (x, y));
                     return true;
                 }
-                
+
                 return false;
             }
-            
+
             public bool PointerLeaveEvent ()
             {
                 last_pressed_bound = null;
                 return true;
             }
-            
+
             private List<Gdk.Point> Points {
                 get { return (List<Gdk.Point>)BoundObject; }
             }

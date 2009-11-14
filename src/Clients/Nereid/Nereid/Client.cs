@@ -53,7 +53,7 @@ namespace Nereid
         {
             Startup<Nereid.Client> (args);
         }
-        
+
         protected override void OnRegisterServices ()
         {
             ServiceManager.RegisterService<Nereid.PlayerInterface> ();

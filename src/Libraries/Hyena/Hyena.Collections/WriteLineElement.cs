@@ -36,7 +36,7 @@ namespace Hyena.Collections
         {
             Threaded = false;
         }
-        
+
         protected override T ProcessItem (T item)
         {
             Console.WriteLine (item);

@@ -49,8 +49,8 @@ namespace Banshee.Collection.Gui
         public DefaultColumnController () : this (true)
         {
         }
-        
-        public DefaultColumnController (bool loadDefault) : base (String.Format ("{0}.{1}", 
+
+        public DefaultColumnController (bool loadDefault) : base (String.Format ("{0}.{1}",
             Application.ActiveClient.ClientId, "track_view_columns"))
         {
             CreateDefaultColumns ();
@@ -61,7 +61,7 @@ namespace Banshee.Collection.Gui
                 Load ();
             }
         }
-        
+
         public void AddDefaultColumns ()
         {
             AddRange (
@@ -104,7 +104,7 @@ namespace Banshee.Collection.Gui
             // Visible-by-default column
             track_column        = Create (BansheeQuery.TrackNumberField, 0.10, true, new ColumnCellTrackNumber (null, true));
             track_column.Title = String.Empty; // don't show any text in the header for this column, so it can be smaller
-            
+
             title_column        = CreateText (BansheeQuery.TitleField, 0.25, true);
             artist_column       = CreateText (BansheeQuery.ArtistField, 0.225, true);
             album_column        = CreateText (BansheeQuery.AlbumField, 0.225, true);
@@ -123,7 +123,7 @@ namespace Banshee.Collection.Gui
             track_combined_column.Id = "track_and_count";
             track_combined_column.Title = Catalog.GetString ("Track #");
             track_combined_column.LongTitle = Catalog.GetString ("Track & Count");
-            
+
             disc_combined_column = Create (BansheeQuery.DiscNumberField, 0.10, false, new ColumnCellDiscAndCount (null, true));
             disc_combined_column.Property = null;
             disc_combined_column.Title = Catalog.GetString ("Disc #");
@@ -132,7 +132,7 @@ namespace Banshee.Collection.Gui
             ColumnCellPositiveInt br_cell = new ColumnCellPositiveInt (null, true, 3, 3);
             br_cell.TextFormat  = Catalog.GetString ("{0} kbps");
             bitrate_column      = Create (BansheeQuery.BitRateField, 0.10, false, br_cell);
-            
+
             rating_column       = Create (BansheeQuery.RatingField, 0.15, false, new ColumnCellRating (null, true));
             score_column        = Create (BansheeQuery.ScoreField, 0.15, false, new ColumnCellPositiveInt (null, true, 2, 5));
             composer_column     = CreateText (BansheeQuery.ComposerField, 0.25);
@@ -146,7 +146,7 @@ namespace Banshee.Collection.Gui
             ColumnCellText uri_cell = new ColumnCellLocation (BansheeQuery.UriField.PropertyName, true);
             uri_cell.EllipsizeMode = Pango.EllipsizeMode.Start;
             uri_column          = Create (BansheeQuery.UriField, 0.15, false, uri_cell);
-            
+
             mime_type_column    = CreateText (BansheeQuery.MimeTypeField, 0.15);
             license_uri_column  = Create (BansheeQuery.LicenseUriField, 0.15, false, new ColumnCellCreativeCommons (null, true));
 
@@ -178,19 +178,19 @@ namespace Banshee.Collection.Gui
 
             return col;
         }
-        
+
 #region Column Properties
 
         private Column indicator_column;
         public Column IndicatorColumn {
             get { return indicator_column; }
         }
-        
+
         private SortableColumn track_column;
         public SortableColumn TrackColumn {
             get { return track_column; }
         }
-        
+
         private SortableColumn title_column;
         public SortableColumn TitleColumn {
             get { return title_column; }
@@ -200,22 +200,22 @@ namespace Banshee.Collection.Gui
         public SortableColumn ArtistColumn {
             get { return artist_column; }
         }
-        
+
         private SortableColumn album_column;
         public SortableColumn AlbumColumn {
             get { return album_column; }
         }
-        
+
         private SortableColumn duration_column;
         public SortableColumn DurationColumn {
             get { return duration_column; }
         }
-        
+
         private SortableColumn genre_column;
         public SortableColumn GenreColumn {
             get { return genre_column; }
         }
-        
+
         private SortableColumn year_column;
         public SortableColumn YearColumn {
             get { return year_column; }
@@ -225,37 +225,37 @@ namespace Banshee.Collection.Gui
         public SortableColumn FileSizeColumn {
             get { return file_size_column; }
         }
-        
+
         private SortableColumn composer_column;
         public SortableColumn ComposerColumn {
             get { return composer_column; }
         }
-        
+
         private SortableColumn comment_column;
         public SortableColumn CommentColumn {
             get { return comment_column; }
         }
-        
+
         private SortableColumn play_count_column;
         public SortableColumn PlayCountColumn {
             get { return play_count_column; }
         }
-        
+
         private SortableColumn skip_count_column;
         public SortableColumn SkipCountColumn {
             get { return skip_count_column; }
         }
-        
+
         private SortableColumn disc_combined_column;
         public SortableColumn DiscNumberAndCountColumn {
             get { return disc_combined_column; }
         }
-        
+
         private SortableColumn rating_column;
         public SortableColumn RatingColumn {
             get { return rating_column; }
         }
-        
+
         private SortableColumn score_column;
         public SortableColumn ScoreColumn {
             get { return score_column; }
@@ -265,17 +265,17 @@ namespace Banshee.Collection.Gui
         public SortableColumn LastPlayedColumn {
             get { return last_played_column; }
         }
-        
+
         private SortableColumn last_skipped_column;
         public SortableColumn LastSkippedColumn {
             get { return last_skipped_column; }
         }
-        
+
         private SortableColumn date_added_column;
         public SortableColumn DateAddedColumn {
             get { return date_added_column; }
         }
-        
+
         private SortableColumn uri_column;
         public SortableColumn UriColumn {
             get { return uri_column; }
@@ -285,17 +285,17 @@ namespace Banshee.Collection.Gui
         public SortableColumn AlbumArtistColumn {
             get { return album_artist_column; }
         }
-        
+
         private SortableColumn track_combined_column;
         public SortableColumn TrackNumberAndCountColumn {
             get { return track_combined_column; }
         }
-        
+
         private SortableColumn bpm_column;
         public SortableColumn BpmColumn {
             get { return bpm_column; }
         }
-        
+
         private SortableColumn bitrate_column;
         public SortableColumn BitRateColumn {
             get { return bitrate_column; }
@@ -310,7 +310,7 @@ namespace Banshee.Collection.Gui
         public SortableColumn GroupingColumn {
             get { return grouping_column; }
         }
-        
+
         private SortableColumn mime_type_column;
         public SortableColumn MimeTypeColumn {
             get { return mime_type_column; }

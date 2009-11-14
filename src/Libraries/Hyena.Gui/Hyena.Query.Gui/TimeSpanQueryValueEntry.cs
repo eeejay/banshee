@@ -72,7 +72,7 @@ namespace Hyena.Query.Gui
 
         public override QueryValue QueryValue {
             get { return query_value; }
-            set { 
+            set {
                 spin_button.ValueChanged -= HandleValueChanged;
                 combo.Changed -= HandleValueChanged;
 

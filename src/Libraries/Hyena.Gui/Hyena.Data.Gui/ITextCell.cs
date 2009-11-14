@@ -30,7 +30,7 @@
 using System;
 
 namespace Hyena.Data.Gui
-{   
+{
     public interface ITextCell
     {
         Pango.Weight FontWeight { get; set; }

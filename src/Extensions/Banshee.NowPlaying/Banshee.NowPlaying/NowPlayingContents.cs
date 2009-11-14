@@ -37,66 +37,66 @@ namespace Banshee.NowPlaying
     {
         private Widget video_display;
         private bool video_display_initial_shown = false;
-        
+
         private TrackInfoDisplay track_info_display;
-    
+
         public NowPlayingContents () : base (1, 1, false)
         {
             NoShowAll = true;
-        
+
             video_display = new XOverlayVideoDisplay ();
 
             IVideoDisplay ivideo_display = video_display as IVideoDisplay;
             if (ivideo_display != null) {
                 ivideo_display.IdleStateChanged += OnVideoDisplayIdleStateChanged;
             }
-            
-            Attach (video_display, 0, 1, 0, 1, 
-                AttachOptions.Expand | AttachOptions.Fill, 
+
+            Attach (video_display, 0, 1, 0, 1,
+                AttachOptions.Expand | AttachOptions.Fill,
                 AttachOptions.Expand | AttachOptions.Fill, 0, 0);
-                
+
             track_info_display = new NowPlayingTrackInfoDisplay ();
-            Attach (track_info_display, 0, 1, 0, 1, 
-                AttachOptions.Expand | AttachOptions.Fill, 
+            Attach (track_info_display, 0, 1, 0, 1,
+                AttachOptions.Expand | AttachOptions.Fill,
                 AttachOptions.Expand | AttachOptions.Fill, 0, 0);
         }
-        
+
         public override void Dispose ()
         {
             IVideoDisplay ivideo_display = video_display as IVideoDisplay;
             if (ivideo_display != null) {
                 ivideo_display.IdleStateChanged -= OnVideoDisplayIdleStateChanged;
             }
-            
+
             if (video_display != null) {
                 video_display = null;
             }
-            
+
             base.Dispose ();
         }
-        
+
         protected override void OnShown ()
         {
             base.OnShown ();
-            
+
             // Ugly hack to ensure the video window is mapped/realized
             if (!video_display_initial_shown) {
                 video_display_initial_shown = true;
-                
+
                 if (video_display != null) {
                     video_display.Show ();
                 }
-                
-                GLib.Idle.Add (delegate { 
-                    CheckIdle (); 
+
+                GLib.Idle.Add (delegate {
+                    CheckIdle ();
                     return false;
                 });
                 return;
             }
-            
+
             CheckIdle ();
         }
-        
+
         protected override void OnHidden ()
         {
             base.OnHidden ();

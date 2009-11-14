@@ -39,12 +39,12 @@ namespace Hyena.Data.Sqlite
         private readonly List<DatabaseColumn> columns = new List<DatabaseColumn> ();
         private readonly List<DatabaseColumn> select_columns = new List<DatabaseColumn> ();
         private readonly List<VirtualDatabaseColumn> virtual_columns = new List<VirtualDatabaseColumn> ();
-        
+
         private DatabaseColumn key;
         private int key_select_column_index;
         private HyenaSqliteConnection connection;
         private bool check_table = true;
-        
+
         private HyenaSqliteCommand create_command;
         private HyenaSqliteCommand insert_command;
         private HyenaSqliteCommand update_command;
@@ -52,13 +52,13 @@ namespace Hyena.Data.Sqlite
         private HyenaSqliteCommand select_command;
         private HyenaSqliteCommand select_range_command;
         private HyenaSqliteCommand select_single_command;
-        
+
         private string table_name;
         private string primary_key;
         private string select;
         private string from;
         private string where;
-        
+
         private const string HYENA_DATABASE_NAME = "hyena_database_master";
 
         public virtual string TableName { get { return table_name; } }
@@ -79,11 +79,11 @@ namespace Hyena.Data.Sqlite
         {
             return new T ();
         }
-        
+
         protected virtual string HyenaTableName {
             get { return "HyenaModelVersions"; }
         }
-        
+
         public HyenaSqliteConnection Connection {
             get { return connection; }
         }
@@ -96,7 +96,7 @@ namespace Hyena.Data.Sqlite
         public SqliteModelProvider (HyenaSqliteConnection connection, string table_name) : this (connection, table_name, true)
         {
         }
-        
+
         public SqliteModelProvider (HyenaSqliteConnection connection, string table_name, bool checkTable) : this (connection)
         {
             this.table_name = table_name;
@@ -129,15 +129,15 @@ namespace Hyena.Data.Sqlite
             if (key == null) {
                 throw new Exception (String.Format ("The {0} table does not have a primary key", TableName));
             }
-            
+
             key_select_column_index = select_columns.IndexOf (key);
-            
+
             if (check_table) {
                 CheckVersion ();
                 CheckTable ();
             }
         }
-        
+
         protected virtual void CheckVersion ()
         {
             if (connection.TableExists (HyenaTableName)) {
@@ -166,33 +166,33 @@ namespace Hyena.Data.Sqlite
                         version INTEGER)",
                     HyenaTableName)
                 );
-                
+
                 InsertVersion (HYENA_DATABASE_NAME, DatabaseVersion);
                 InsertVersion (TableName, ModelVersion);
             }
         }
-        
+
         private string SelectVersionSql (string name)
         {
             return String.Format (
                 "SELECT version FROM {0} WHERE name='{1}'",
                 HyenaTableName, name);
         }
-        
+
         private void UpdateVersion (string name, int version)
         {
             connection.Execute (String.Format (
                 "UPDATE {0} SET version={1} WHERE name='{2}'",
                 HyenaTableName, version, name));
         }
-        
+
         private void InsertVersion (string name, int version)
         {
             connection.Execute (String.Format (
                 "INSERT INTO {0} (name, version) VALUES ('{1}', {2})",
                 HyenaTableName, name, version));
         }
-        
+
         protected void CheckTable ()
         {
             //Console.WriteLine ("In {0} checking for table {1}", this, TableName);
@@ -213,7 +213,7 @@ namespace Hyena.Data.Sqlite
                 CreateTable ();
             }
         }
-        
+
         private void AddColumn (MemberInfo member, Attribute attribute)
         {
             DatabaseColumnAttribute column = attribute as DatabaseColumnAttribute;
@@ -221,7 +221,7 @@ namespace Hyena.Data.Sqlite
                 DatabaseColumn c = member is FieldInfo
                     ? new DatabaseColumn ((FieldInfo)member, column)
                     : new DatabaseColumn ((PropertyInfo)member, column);
-                    
+
                 AddColumn (c, column.Select);
             }
             VirtualDatabaseColumnAttribute virtual_column = attribute as VirtualDatabaseColumnAttribute;
@@ -233,7 +233,7 @@ namespace Hyena.Data.Sqlite
                 }
             }
         }
-        
+
         protected void AddColumn (DatabaseColumn c, bool select)
         {
             foreach (DatabaseColumn col in columns) {
@@ -250,13 +250,13 @@ namespace Hyena.Data.Sqlite
                     );
                 }
             }
-            
+
             columns.Add (c);
 
             if (select) {
                 select_columns.Add (c);
             }
-            
+
             if ((c.Constraints & DatabaseColumnConstraints.PrimaryKey) > 0) {
                 if (key != null) {
                     throw new Exception (String.Format (
@@ -266,7 +266,7 @@ namespace Hyena.Data.Sqlite
                 key = c;
             }
         }
-        
+
         protected virtual void CreateTable ()
         {
             connection.Execute (CreateCommand);
@@ -279,7 +279,7 @@ namespace Hyena.Data.Sqlite
                 }
             }
         }
-        
+
         protected void CreateIndex (string name, string columns)
         {
             Connection.Execute (String.Format (
@@ -287,7 +287,7 @@ namespace Hyena.Data.Sqlite
                 name, TableName, columns
             ));
         }
-        
+
         public virtual void Save (T target)
         {
             try {
@@ -297,12 +297,12 @@ namespace Hyena.Data.Sqlite
                     key.SetValue (target, Insert (target));
                 }
             } catch (Exception e) {
-                Hyena.Log.Exception (e); 
+                Hyena.Log.Exception (e);
                 Hyena.Log.DebugFormat ("type of key value: {0}", key.GetRawValue (target).GetType ());
                 throw;
             }
         }
-        
+
         protected virtual object [] GetInsertParams (T target)
         {
             // TODO create an instance variable object array and reuse it? beware threading issues
@@ -316,7 +316,7 @@ namespace Hyena.Data.Sqlite
             }
             return values;
         }
-        
+
         protected int Insert (T target)
         {
             return connection.Execute (InsertCommand, GetInsertParams (target));
@@ -336,30 +336,30 @@ namespace Hyena.Data.Sqlite
             values[j] = key.GetValue (target);
             return values;
         }
-        
+
         protected void Update (T target)
         {
             connection.Execute (UpdateCommand, GetUpdateParams (target));
         }
-        
+
         public virtual T Load (IDataReader reader)
         {
             T item = MakeNewObject ();
             Load (reader, item);
             return item;
         }
-        
+
         public void Load (IDataReader reader, T target)
         {
             int i = 0;
-            
+
             AbstractDatabaseColumn bad_column = null;
             try {
                 foreach (DatabaseColumn column in select_columns) {
                     bad_column = column;
                     column.SetValue (target, reader, i++);
                 }
-                
+
                 foreach (VirtualDatabaseColumn column in virtual_columns) {
                     bad_column = column;
                     column.SetValue (target, reader, i++);
@@ -371,7 +371,7 @@ namespace Hyena.Data.Sqlite
                 );
             }
         }
-        
+
         public IEnumerable<T> FetchAll ()
         {
             using (IDataReader reader = connection.Query (SelectCommand)) {
@@ -388,7 +388,7 @@ namespace Hyena.Data.Sqlite
             }
             return default(T);
         }
-        
+
         public IEnumerable<T> FetchAllMatching (string condition, params object [] vals)
         {
             HyenaSqliteCommand fetch_matching_command = CreateFetchCommand (condition);
@@ -403,7 +403,7 @@ namespace Hyena.Data.Sqlite
         {
             return new HyenaSqliteCommand (String.Format ("{0} AND {1}", SelectCommand.Text, condition));
         }
-        
+
         public IEnumerable<T> FetchRange (int offset, int limit)
         {
             using (IDataReader reader = connection.Query (SelectRangeCommand, offset, limit)) {
@@ -412,12 +412,12 @@ namespace Hyena.Data.Sqlite
                 }
             }
         }
-        
+
         public T FetchSingle (int id)
         {
             return FetchSingle ((long) id);
         }
-        
+
         public virtual T FetchSingle (long id)
         {
             using (IDataReader reader = connection.Query (SelectSingleCommand, id)) {
@@ -427,28 +427,28 @@ namespace Hyena.Data.Sqlite
             }
             return default(T);
         }
-        
+
         protected long PrimaryKeyFor (T item)
         {
             return Convert.ToInt64 (key.GetValue (item));
         }
-        
+
         protected long PrimaryKeyFor (IDataReader reader)
         {
             return Convert.ToInt64 (reader[key_select_column_index]);
         }
-        
+
         public virtual void Delete (long id)
         {
             if (id > 0)
                 connection.Execute (DeleteCommand, id);
         }
-        
+
         public void Delete (T item)
         {
             Delete (PrimaryKeyFor (item));
         }
-        
+
         public virtual void Delete (IEnumerable<T> items)
         {
             List<long> ids = new List<long> ();
@@ -458,7 +458,7 @@ namespace Hyena.Data.Sqlite
                 if (id > 0)
                     ids.Add (id);
             }
-            
+
             if (ids.Count > 0)
                 connection.Execute (DeleteCommand, ids.ToArray ());
         }
@@ -492,7 +492,7 @@ namespace Hyena.Data.Sqlite
                 column.SetValue (copy, column.GetRawValue (original));
             }
         }
-        
+
         protected virtual HyenaSqliteCommand CreateCommand {
             get {
                 if (create_command == null) {
@@ -515,7 +515,7 @@ namespace Hyena.Data.Sqlite
                 return create_command;
             }
         }
-        
+
         protected virtual HyenaSqliteCommand InsertCommand {
             get {
                 // FIXME can this string building be done more nicely?
@@ -544,7 +544,7 @@ namespace Hyena.Data.Sqlite
                 return insert_command;
             }
         }
-        
+
         protected virtual HyenaSqliteCommand UpdateCommand {
             get {
                 if (update_command == null) {
@@ -572,7 +572,7 @@ namespace Hyena.Data.Sqlite
                 return update_command;
             }
         }
-        
+
         protected virtual HyenaSqliteCommand SelectCommand {
             get {
                 if (select_command == null) {
@@ -586,7 +586,7 @@ namespace Hyena.Data.Sqlite
                 return select_command;
             }
         }
-        
+
         protected virtual HyenaSqliteCommand SelectRangeCommand {
             get {
                 if (select_range_command == null) {
@@ -602,7 +602,7 @@ namespace Hyena.Data.Sqlite
                 return select_range_command;
             }
         }
-        
+
         protected virtual HyenaSqliteCommand SelectSingleCommand {
             get {
                 if (select_single_command == null) {
@@ -618,7 +618,7 @@ namespace Hyena.Data.Sqlite
                 return select_single_command;
             }
         }
-        
+
         protected virtual HyenaSqliteCommand DeleteCommand {
             get {
                 if (delete_command == null) {
@@ -629,7 +629,7 @@ namespace Hyena.Data.Sqlite
                 return delete_command;
             }
         }
-        
+
         public virtual string Select {
             get {
                 if (select == null) {
@@ -638,7 +638,7 @@ namespace Hyena.Data.Sqlite
                 return select;
             }
         }
-        
+
         public virtual string From {
             get {
                 if (from == null) {
@@ -647,7 +647,7 @@ namespace Hyena.Data.Sqlite
                 return from;
             }
         }
-        
+
         public virtual string Where {
             get {
                 if (where == null) {
@@ -656,7 +656,7 @@ namespace Hyena.Data.Sqlite
                 return where;
             }
         }
-        
+
         public string PrimaryKey {
             get {
                 if (primary_key == null) {
@@ -666,7 +666,7 @@ namespace Hyena.Data.Sqlite
             }
             protected set { primary_key = value; }
         }
-        
+
         private void BuildQuerySql ()
         {
             StringBuilder select_builder = new StringBuilder ();
@@ -681,7 +681,7 @@ namespace Hyena.Data.Sqlite
                 select_builder.Append ('.');
                 select_builder.Append (column.Name);
             }
-            
+
             StringBuilder where_builder = new StringBuilder ();
             Dictionary<string, string> tables = new Dictionary<string,string> (virtual_columns.Count + 1);
             bool first_virtual = true;
@@ -702,7 +702,7 @@ namespace Hyena.Data.Sqlite
                 } else if (table_not_joined) {
                     where_builder.Append (" AND ");
                 }
-                
+
                 if (table_not_joined) {
                     where_builder.Append (column.TargetTable);
                     where_builder.Append ('.');
@@ -711,11 +711,11 @@ namespace Hyena.Data.Sqlite
                     where_builder.Append (TableName);
                     where_builder.Append ('.');
                     where_builder.Append (column.LocalKey);
-                
+
                     tables.Add (column.TargetTable, null);
                 }
             }
-            
+
             StringBuilder from_builder = new StringBuilder ();
             from_builder.Append (TableName);
             foreach (KeyValuePair<string, string> pair in tables) {
@@ -727,27 +727,27 @@ namespace Hyena.Data.Sqlite
             from = from_builder.ToString ();
             where = where_builder.ToString ();
         }
-        
+
         public U GetProperty <U> (T item, DbColumn column)
         {
             CheckProperty (typeof (U), column);
-            
+
             return connection.Query<U> (String.Format (
                 "SELECT {0} FROM {1} WHERE {2}={3}",
                 column.Name, TableName, key.Name, key.GetValue (item)));
         }
-        
+
         public void SetProperty <U> (T item, U value, DbColumn column)
         {
             CheckProperty (typeof (U), column);
-            
+
             connection.Execute (String.Format (
                 "UPDATE {0} SET {1}='{2}' WHERE {3}={4}",
                 TableName, column.Name,
                 SqliteUtils.ToDbFormat (typeof (U), value),
                 key.Name, key.GetValue (item)));
         }
-        
+
         public void ClearProperty <U> (DbColumn column)
         {
             if (!connection.ColumnExists (TableName, column.Name)) {
@@ -760,7 +760,7 @@ namespace Hyena.Data.Sqlite
                     TableName, column.Name, column.DefaultValue));
             }
         }
-        
+
         private void CheckProperty (Type type, DbColumn column)
         {
             if (!connection.ColumnExists (TableName, column.Name)) {
@@ -769,7 +769,7 @@ namespace Hyena.Data.Sqlite
                     column.Name, column.DefaultValue, column.Constraints));
             }
         }
-                                              
+
         private void AddColumnToTable (string column_schema)
         {
             connection.Execute (String.Format (

@@ -65,7 +65,7 @@ namespace Banshee.Sources
         public DatabaseSource (string generic_name, string name, string id, int order) : this (generic_name, name, id, order, null)
         {
         }
-        
+
         public DatabaseSource (string generic_name, string name, string id, int order, Source parent) : base (generic_name, name, order, id)
         {
             if (parent != null) {
@@ -118,7 +118,7 @@ namespace Banshee.Sources
         private void DatabaseSourceInitialize ()
         {
             InitializeTrackModel ();
-            
+
             current_filters_schema = CreateSchema<string[]> ("current_filters");
 
             DatabaseSource filter_src = Parent as DatabaseSource ?? this;
@@ -255,7 +255,7 @@ namespace Banshee.Sources
         public virtual bool CanDeleteTracks {
             get { return true; }
         }
-        
+
         public virtual bool ConfirmRemoveTracks {
             get { return true; }
         }
@@ -275,8 +275,8 @@ namespace Banshee.Sources
         public TrackListModel TrackModel {
             get { return DatabaseTrackModel; }
         }
-        
-        public virtual bool ShowBrowser { 
+
+        public virtual bool ShowBrowser {
             get { return true; }
         }
 
@@ -299,31 +299,31 @@ namespace Banshee.Sources
         {
             return base.AcceptsUserInputFromSource (source) && CanAddTracks;
         }
-                
+
         public override bool HasViewableTrackProperties {
             get { return true; }
         }
-        
+
         public override bool HasEditableTrackProperties {
             get { return true; }
         }
 
 #endregion
-        
+
 #region Filters (aka Browsers)
-        
+
         private IList<IFilterListModel> available_filters;
         public IList<IFilterListModel> AvailableFilters {
             get { return available_filters ?? (available_filters = new List<IFilterListModel> ()); }
             protected set { available_filters = value; }
         }
-        
+
         private IList<IFilterListModel> default_filters;
         public IList<IFilterListModel> DefaultFilters {
             get { return default_filters ?? (default_filters = new List<IFilterListModel> ()); }
             protected set { default_filters = value; }
         }
-        
+
         private IList<IFilterListModel> current_filters;
         public IList<IFilterListModel> CurrentFilters {
             get {
@@ -349,7 +349,7 @@ namespace Banshee.Sources
             }
             protected set { current_filters = value; }
         }
-        
+
         public void ReplaceFilter (IFilterListModel old_filter, IFilterListModel new_filter)
         {
             int i = current_filters.IndexOf (old_filter);
@@ -358,7 +358,7 @@ namespace Banshee.Sources
                 SaveCurrentFilters ();
             }
         }
-        
+
         public void AppendFilter (IFilterListModel filter)
         {
             if (current_filters.IndexOf (filter) == -1) {
@@ -366,14 +366,14 @@ namespace Banshee.Sources
                 SaveCurrentFilters ();
             }
         }
-        
+
         public void RemoveFilter (IFilterListModel filter)
         {
             if (current_filters.Remove (filter)) {
                 SaveCurrentFilters ();
             }
         }
-        
+
         private void SaveCurrentFilters ()
         {
             Reload ();
@@ -387,13 +387,13 @@ namespace Banshee.Sources
                 }
                 current_filters_schema.Set (filters);
             }
-            
+
             EventHandler handler = FiltersChanged;
             if (handler != null) {
                 handler (this, EventArgs.Empty);
             }
         }
-        
+
         private SchemaEntry<string[]> current_filters_schema;
 
 #endregion
@@ -418,7 +418,7 @@ namespace Banshee.Sources
         public virtual bool HasDependencies {
             get { return false; }
         }
-        
+
         public void RemoveTrack (int index)
         {
             if (index != -1) {
@@ -524,9 +524,9 @@ namespace Banshee.Sources
                 AddSelectedTracks (source);
             }
         }
-        
+
 #endregion
-        
+
 #region Protected Methods
 
         protected virtual void OnTracksAdded ()
@@ -590,7 +590,7 @@ namespace Banshee.Sources
                     if (track_model.CachesJoinTableEntries) {
                         rate_track_range_command = new HyenaSqliteCommand (String.Format (@"
                             UPDATE CoreTracks SET Rating = ?, DateUpdatedStamp = ? WHERE
-                                TrackID IN (SELECT TrackID FROM {0} WHERE 
+                                TrackID IN (SELECT TrackID FROM {0} WHERE
                                     {1} IN (SELECT ItemID FROM CoreCache WHERE ModelID = {2} LIMIT ?, ?))",
                             track_model.JoinTable, track_model.JoinPrimaryKey, track_model.CacheId
                         ));
@@ -612,7 +612,7 @@ namespace Banshee.Sources
             if (!ever_reloaded)
                 Reload ();
         }
-        
+
         public override void Deactivate ()
         {
             DatabaseTrackModel.InvalidateCache (false);
@@ -635,7 +635,7 @@ namespace Banshee.Sources
         {
             Log.ErrorFormat ("AddTrackRange not implemented by {0}", this);
         }
-        
+
         protected virtual void AddTrack (DatabaseTrackInfo track)
         {
             Log.ErrorFormat ("AddTrack not implemented by {0}", this);

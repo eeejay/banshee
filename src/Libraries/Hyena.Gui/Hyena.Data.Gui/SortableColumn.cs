@@ -38,24 +38,24 @@ namespace Hyena.Data.Gui
         private string sort_key;
         private SortType sort_type = SortType.Ascending;
         private Hyena.Query.QueryField field;
-        
-        public SortableColumn(string title, ColumnCell cell, double width, string sort_key, bool visible) : 
+
+        public SortableColumn(string title, ColumnCell cell, double width, string sort_key, bool visible) :
             base(title, cell, width, visible)
         {
             this.sort_key = sort_key;
         }
-        
+
         public SortableColumn(ColumnCell header_cell, string title, ColumnCell cell, double width, string sort_key, bool visible) :
             base(header_cell, title, cell, width, visible)
         {
             this.sort_key = sort_key;
         }
-        
+
         public string SortKey {
             get { return sort_key; }
             set { sort_key = value; }
         }
-        
+
         public SortType SortType {
             get { return sort_type; }
             set { sort_type = value; }

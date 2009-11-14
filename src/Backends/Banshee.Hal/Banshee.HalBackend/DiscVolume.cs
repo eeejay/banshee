@@ -38,31 +38,31 @@ namespace Banshee.HalBackend
         {
             return device.QueryCapability ("volume.disc") ? new DiscVolume (parent, manager, device) : null;
         }
-        
+
         private DiscVolume (BlockDevice parent, Hal.Manager manager, Hal.Device device) : base (parent, manager, device)
         {
         }
-        
+
         public bool HasAudio {
             get { return HalDevice.GetPropertyBoolean ("volume.disc.has_audio"); }
         }
-        
+
         public bool HasData {
             get { return HalDevice.GetPropertyBoolean ("volume.disc.has_data"); }
         }
-        
+
         public bool IsBlank {
             get { return HalDevice.GetPropertyBoolean ("volume.disc.is_blank"); }
         }
-        
+
         public bool IsRewritable {
             get { return HalDevice.GetPropertyBoolean ("volume.disc.is_rewritable"); }
         }
-        
+
         public ulong MediaCapacity {
             get { return HalDevice.GetPropertyUInt64 ("volume.disc.capacity"); }
         }
-        
+
         public override string ToString ()
         {
             return String.Format ("Optical Disc, Audio = {0}, Data = {1}, Blank = {2}, Rewritable = {3}, Media Capacity = {4}",

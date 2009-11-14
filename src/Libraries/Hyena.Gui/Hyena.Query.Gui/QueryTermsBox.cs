@@ -48,7 +48,7 @@ namespace Hyena.Query.Gui
         public QueryTermBox FirstRow {
             get { return terms.Count > 0 ? terms[0] : null; }
         }
-        
+
         public QueryTermsBox (QueryFieldSet fieldSet) : base (1, 4, false)
         {
             // Sort the fields alphabetically by their label
@@ -117,13 +117,13 @@ namespace Hyena.Query.Gui
 
             return row;
         }
-        
+
         protected void OnRowAddRequest (object o, EventArgs args)
         {
             CreateRow (true);
             UpdateCanDelete ();
         }
-        
+
         protected void OnRowRemoveRequest (object o, EventArgs args)
         {
             RemoveRow (terms.IndexOf (o as QueryTermBox));
@@ -162,7 +162,7 @@ namespace Hyena.Query.Gui
             terms.Remove (row);
             UpdateCanDelete ();
         }
-        
+
         protected void UpdateCanDelete ()
         {
             if (FirstRow != null) {

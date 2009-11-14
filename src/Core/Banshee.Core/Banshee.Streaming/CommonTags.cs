@@ -30,7 +30,7 @@ using System;
 
 namespace Banshee.Streaming
 {
-    public sealed class CommonTags 
+    public sealed class CommonTags
     {
         public const string Title             = "title";
         public const string TitleSortName     = "title-sortname";
@@ -74,13 +74,13 @@ namespace Banshee.Streaming
         public const string AlbumGain         = "replaygain-album-gain";
         public const string AlbumPeak         = "replaygain-album-peak";
         public const string StreamType        = "stream-type";
-        public const string AlbumCoverId      = "album-cover-id"; 
+        public const string AlbumCoverId      = "album-cover-id";
         public const string MoreInfoUri       = "more-info-uri";
         public const string MusicBrainzTrackId = "musicbrainz-trackid";
         public const string MusicBrainzArtistId = "musicbrainz-artistid";
         public const string MusicBrainzAlbumId = "musicbrainz-albumid";
         public const string MusicBrainzDiscId = "musicbrainz-discid";
-        
+
         // Deprecated by MB, replaced by ArtistSortName. Kept for compatibility only.
         public const string MusicBrainzSortName = "musicbrainz-sortname";
     }

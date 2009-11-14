@@ -57,10 +57,10 @@ namespace Banshee.Bpm
         private ManualResetEvent result_ready_event = new ManualResetEvent (false);
         private SafeUri result_uri;
         private int result_bpm;
-        
+
         private static HyenaSqliteCommand update_query = new HyenaSqliteCommand (
             "UPDATE CoreTracks SET BPM = ?, DateUpdatedStamp = ? WHERE TrackID = ?");
-        
+
         public BpmDetectJob () : base (Catalog.GetString ("Detecting BPM"))
         {
             IconNames = new string [] {"audio-x-generic"};
@@ -84,7 +84,7 @@ namespace Banshee.Bpm
 
             Register ();
         }
-        
+
         protected override void Init ()
         {
             detector = GetDetector ();

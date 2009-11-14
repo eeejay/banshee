@@ -40,37 +40,37 @@ namespace Banshee.MediaProfiles.Gui
         private ProfileConfigureButton button;
         private DescriptionLabel description;
         private string configuration_id;
-        
-        public ProfileComboBoxConfigurable(MediaProfileManager manager, string configurationId) 
+
+        public ProfileComboBoxConfigurable(MediaProfileManager manager, string configurationId)
             : this(manager, configurationId, null)
         {
         }
-        
-        public ProfileComboBoxConfigurable(MediaProfileManager manager, string configurationId, Box parent) 
+
+        public ProfileComboBoxConfigurable(MediaProfileManager manager, string configurationId, Box parent)
         {
             HBox editor = new HBox();
-            
+
             configuration_id = configurationId;
             combo = new ProfileComboBox(manager);
             combo.Show();
-            
+
             button = new ProfileConfigureButton(configurationId);
             button.ComboBox = combo;
             button.Show();
-            
+
             editor.Spacing = 5;
             editor.PackStart(combo, true, true, 0);
             editor.PackStart(button, false, false, 0);
             editor.Show();
-            
+
             ProfileConfiguration config = manager.GetActiveProfileConfiguration (configurationId);
-            
+
             if (config != null) {
                 Combo.SetActiveProfile(config.Profile);
             }
-            
+
             description = new DescriptionLabel (delegate { return Combo.ActiveProfile.Description; });
-            
+
             Combo.Changed += delegate {
                 if(Combo.ActiveProfile != null) {
                     Hyena.Log.DebugFormat ("Setting active encoding profile: {0} (saved to {1})",
@@ -79,7 +79,7 @@ namespace Banshee.MediaProfiles.Gui
                     description.Update ();
                 }
             };
-            
+
             Combo.StateChanged += delegate {
                 if (Combo.State == StateType.Insensitive) {
                     ((Container)parent ?? this).Remove (description);
@@ -87,16 +87,16 @@ namespace Banshee.MediaProfiles.Gui
                     description.PackInto (parent ?? this, parent != null);
                 }
             };
-            
+
             Spacing = 5;
             PackStart (editor, true, true, 0);
             description.PackInto (parent ?? this, parent != null);
         }
-        
+
         public ProfileComboBox Combo {
             get { return combo; }
         }
-        
+
         public string ConfigurationID {
             get { return configuration_id; }
         }

@@ -1,4 +1,4 @@
-// 
+//
 // TaskStatusIcon.cs
 //
 // Author:
@@ -46,7 +46,7 @@ namespace Banshee.Gui.Widgets
     public class TaskStatusIcon : AnimatedImage
     {
         private List<Job> jobs = new List<Job> ();
-        
+
         public bool ShowOnlyBackgroundTasks { get; set; }
         public bool IntermittentVisibility { get; set; }
         public uint IntermittentVisibleTime { get; set; }
@@ -86,7 +86,7 @@ namespace Banshee.Gui.Widgets
             lock (jobs) {
                 if (jobs.Count > 0) {
                     var sb = new StringBuilder ();
-                    
+
                     sb.Append ("<b>");
                     sb.Append (GLib.Markup.EscapeText (Catalog.GetPluralString (
                         "Active Task Running", "Active Tasks Running", jobs.Count)));
@@ -114,7 +114,7 @@ namespace Banshee.Gui.Widgets
                 if (!first && task_active == value) {
                     return;
                 }
-                
+
                 first = false;
                 task_active = value;
 
@@ -145,7 +145,7 @@ namespace Banshee.Gui.Widgets
                     turn_off_id = Banshee.ServiceStack.Application.RunTimeout (IntermittentHiddenTime, TurnOff);
                 }
             }
-            
+
             turn_on_id = 0;
             return false;
         }
@@ -169,24 +169,24 @@ namespace Banshee.Gui.Widgets
         }
 
         private void AddJob (Job job)
-        {                
-            lock (jobs) {    
+        {
+            lock (jobs) {
                 if (job == null || (ShowOnlyBackgroundTasks && !job.IsBackground) || job.IsFinished) {
                     return;
                 }
-                
+
                 jobs.Add (job);
                 job.Updated += OnJobUpdated;
             }
 
             ThreadAssist.ProxyToMain (Update);
         }
-        
+
         private void OnJobAdded (Job job)
         {
             AddJob (job);
         }
-        
+
         private void RemoveJob (Job job)
         {
             lock (jobs) {
@@ -198,7 +198,7 @@ namespace Banshee.Gui.Widgets
 
             ThreadAssist.ProxyToMain (Update);
         }
-        
+
         private void OnJobRemoved (Job job)
         {
             RemoveJob (job);

@@ -1,4 +1,4 @@
-// 
+//
 // ImportSourceManager.cs
 //
 // Author:
@@ -42,7 +42,7 @@ namespace Banshee.Library
         public ImportSourceManager ()
         {
         }
-        
+
         public IEnumerator<IImportSource> GetEnumerator ()
         {
             List<IImportSource> import_sources = new List<IImportSource> ();
@@ -53,15 +53,15 @@ namespace Banshee.Library
                     import_sources.Add (source);
                 }
             }
-            
+
             return import_sources.GetEnumerator ();
         }
-        
+
         IEnumerator IEnumerable.GetEnumerator ()
         {
             return GetEnumerator ();
         }
-        
+
         string IService.ServiceName {
             get { return "ImportSourceManager"; }
         }

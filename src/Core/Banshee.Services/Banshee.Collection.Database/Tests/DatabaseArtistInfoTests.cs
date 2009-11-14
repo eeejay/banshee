@@ -46,14 +46,14 @@ namespace Banshee.Collection.Database.Tests
             info.NameSort = name_sort;
             Assert.AreEqual (expected, info.NameSortKey);
         }
-        
+
         protected void AssertNameLowered (string name, string expected)
         {
             DatabaseArtistInfo info = new DatabaseArtistInfo ();
             info.Name = name;
             Assert.AreEqual (expected, info.NameLowered);
         }
-        
+
         [Test]
         public void TestWithoutNameSortKey ()
         {
@@ -63,14 +63,14 @@ namespace Banshee.Collection.Database.Tests
 
             AssertNameSort ("a", "", new byte[] {14, 2, 1, 1, 1, 1, 0});
         }
-        
+
         [Test]
         public void TestNameSortKey ()
         {
             AssertNameSort ("Title", "a", new byte[] {14, 2, 1, 1, 1, 1, 0});
             AssertNameSort ("Title", "A", new byte[] {14, 2, 1, 1, 1, 1, 0});
         }
-        
+
         [Test]
         public void TestNameLowered ()
         {

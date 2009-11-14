@@ -44,11 +44,11 @@ namespace Banshee.Collection.Database
             this.path = path;
             this.error = error;
         }
-                
+
         public string Path {
             get { return path; }
         }
-        
+
         public DatabaseTrackInfo Track {
             get { return track; }
         }

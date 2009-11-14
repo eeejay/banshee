@@ -49,24 +49,24 @@ namespace Banshee.Moblin
         private SourceManager source_manager;
         private PlayerEngineService player;
         private Banshee.Sources.Source now_playing;
-        
+
         public MoblinService ()
         {
         }
-        
+
         void IExtensionService.Initialize ()
         {
             elements_service = ServiceManager.Get<GtkElementsService> ();
             interface_action_service = ServiceManager.Get<InterfaceActionService> ();
             source_manager = ServiceManager.SourceManager;
             player = ServiceManager.PlayerEngine;
-        
+
             if (!ServiceStartup ()) {
                 ServiceManager.ServiceStarted += OnServiceStarted;
             }
         }
-        
-        private void OnServiceStarted (ServiceStartedArgs args) 
+
+        private void OnServiceStarted (ServiceStartedArgs args)
         {
             if (args.Service is Banshee.Gui.InterfaceActionService) {
                 interface_action_service = (InterfaceActionService)args.Service;
@@ -77,44 +77,44 @@ namespace Banshee.Moblin
             } else if (args.Service is PlayerEngineService) {
                 player = ServiceManager.PlayerEngine;
             }
-                    
+
             ServiceStartup ();
         }
-        
+
         private bool ServiceStartup ()
         {
             if (elements_service == null || interface_action_service == null || source_manager == null || player == null) {
                 return false;
             }
-            
+
             Initialize ();
-            
+
             ServiceManager.ServiceStarted -= OnServiceStarted;
-            
+
             return true;
         }
-        
+
         private void Initialize ()
         {
             ReflectionHackeryUpTheNereid ();
-            
+
             if (MoblinPanel.Instance == null) {
                 return;
             }
-            
+
             var container = MoblinPanel.Instance.ParentContainer;
             foreach (var child in container.Children) {
                 container.Remove (child);
             }
             container.Add (new MediaPanelContents ());
             container.ShowAll ();
-            
+
             if (MoblinPanel.Instance.ToolbarPanel != null) {
                 container.SetSizeRequest (
                     (int)MoblinPanel.Instance.ToolbarPanelWidth,
                     (int)MoblinPanel.Instance.ToolbarPanelHeight);
             }
-            
+
             // Since the Panel is running, we don't actually ever want to quit!
             Banshee.ServiceStack.Application.ShutdownRequested += () => {
                 elements_service.PrimaryWindow.Hide ();
@@ -124,12 +124,12 @@ namespace Banshee.Moblin
             FindNowPlaying ();
             ServiceManager.PlayerEngine.ConnectEvent (OnPlayerStateChanged, PlayerEvent.StateChange | PlayerEvent.StartOfStream);
         }
-        
+
         private void ReflectionHackeryUpTheNereid ()
         {
             // This is a horribly abusive method, but hey, this kind
             // of stuff is what Firefox extensions are made of!
-            
+
             // First grab the type and instance of the primary window
             // and make sure we're only hacking the Nereid UI
             var pwin = elements_service.PrimaryWindow;
@@ -137,22 +137,22 @@ namespace Banshee.Moblin
             if (pwin_type.FullName != "Nereid.PlayerInterface") {
                 return;
             }
-            
+
             // regular metacity does not seem to like this at all, crashing
-            // and complaining "Window manager warning: Buggy client sent a 
+            // and complaining "Window manager warning: Buggy client sent a
             // _NET_ACTIVE_WINDOW message with a timestamp of 0 for 0x2e00020"
             if (MoblinPanel.Instance != null) {
                 pwin.Decorated = false;
                 pwin.Maximize ();
             }
-            
+
             // Now we want to make the Toolbar work in the Moblin GTK theme
             var pwin_toolbar = (Toolbar)pwin_type.GetProperty ("HeaderToolbar").GetValue (pwin, null);
             var pwin_toolbar_align = (Alignment)pwin_toolbar.Parent;
             pwin_toolbar_align.TopPadding = 0;
             pwin_toolbar_align.BottomPadding = 6;
             pwin_type.GetMethod ("DisableHeaderToolbarExposeEvent").Invoke (pwin, null);
-                        
+
             // Remove the volume button since Moblin enforces the global volume
             foreach (var child in pwin_toolbar.Children) {
                 if (child.GetType ().FullName.StartsWith ("Banshee.Widgets.GenericToolItem")) {
@@ -163,7 +163,7 @@ namespace Banshee.Moblin
                     }
                 }
             }
-            
+
             // Incredibly ugly hack to pack in a close button in a separate
             // toolbar so that it may be aligned at the top right of the
             // window (appears to float in the menubar)
@@ -173,18 +173,18 @@ namespace Banshee.Moblin
             close_button.Image.Xpad = 1;
             close_button.Image.Ypad = 1;
             close_button.Clicked += (o, e) => Banshee.ServiceStack.Application.Shutdown ();
-            
+
             var close_toolbar = new Toolbar () {
                 ShowArrow = false,
                 ToolbarStyle = ToolbarStyle.Icons
             };
-            
+
             close_toolbar.Add (close_button);
             close_toolbar.ShowAll ();
 
-            pwin_header_table.Attach (close_toolbar, 1, 2, 0, 1, 
+            pwin_header_table.Attach (close_toolbar, 1, 2, 0, 1,
                 AttachOptions.Shrink, AttachOptions.Fill | AttachOptions.Expand, 0, 0);
-            
+
             // Set the internal engine volume to 100%
             // FIXME: We should have something like PlayerEngine.InternalVolumeEnabled = false
             ServiceManager.PlayerEngine.Volume = 100;
@@ -220,7 +220,7 @@ namespace Banshee.Moblin
                 }
             };
         }
-        
+
         public void PresentPrimaryInterface ()
         {
             elements_service.PrimaryWindow.Maximize ();
@@ -229,13 +229,13 @@ namespace Banshee.Moblin
                 MoblinPanel.Instance.ToolbarPanel.RequestHide ();
             }
         }
-        
+
         public void Dispose ()
         {
             if (MoblinPanel.Instance != null) {
                 MoblinPanel.Instance.Dispose ();
             }
-            
+
             interface_action_service = null;
             elements_service = null;
         }

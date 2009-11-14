@@ -386,7 +386,7 @@ namespace Banshee.SmartPlaylist
                 Catalog.GetString ("is not"),
                 QueryOperator.NotInSmartPlaylist
             );
-        
+
             // caution: the equal/not-equal operators for text fields (TextIs and TextNotIs) have to be defined
             // before the ones for non-text fields. Otherwise MatchesCondition will not return the right column names.
             // (because the regular expression for non-string fields machtes also for string fields)

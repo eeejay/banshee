@@ -39,7 +39,7 @@ namespace Hyena.SExpEngine
         private TreeNode parent;
         private int column;
         private int line;
-        
+
         public TreeNode()
         {
         }
@@ -49,14 +49,14 @@ namespace Hyena.SExpEngine
             this.parent = parent;
             parent.AddChild(this);
         }
-        
+
         internal void CopyFunctionsFrom(TreeNode node)
         {
             foreach(KeyValuePair<string, FunctionNode> function in node.Functions) {
                 RegisterFunction(function.Key, function.Value);
             }
         }
-        
+
         internal void RegisterFunction(string name, object value)
         {
             if(functions.ContainsKey(name)) {
@@ -65,7 +65,7 @@ namespace Hyena.SExpEngine
                 functions.Add(name, new FunctionNode(name, value));
             }
         }
-        
+
         internal void RegisterFunction(string name, FunctionNode function)
         {
             if(functions.ContainsKey(name)) {
@@ -74,26 +74,26 @@ namespace Hyena.SExpEngine
                 functions.Add(name, function);
             }
         }
-        
+
         public TreeNode Flatten()
         {
             TreeNode result_node = new TreeNode();
             Flatten(result_node, this);
-            
-            return result_node.ChildCount == 1 ? result_node.Children[0] : result_node; 
+
+            return result_node.ChildCount == 1 ? result_node.Children[0] : result_node;
         }
-        
+
         private void Flatten(TreeNode result_node, TreeNode node)
         {
             if(node == null) {
                 return;
             }
-            
+
             if(!node.HasChildren && !(node is VoidLiteral)) {
                 result_node.AddChild(node);
                 return;
             }
-            
+
             foreach(TreeNode child_node in node.Children) {
                 Flatten(result_node, child_node);
             }
@@ -103,7 +103,7 @@ namespace Hyena.SExpEngine
         {
             child.Parent = this;
             children.Add(child);
-        } 
+        }
 
         public TreeNode Parent {
             get { return parent; }
@@ -113,16 +113,16 @@ namespace Hyena.SExpEngine
         public int ChildCount {
             get { return children.Count; }
         }
-        
+
         public bool HasChildren {
             get { return ChildCount > 0; }
         }
-        
+
         public int Line {
             get { return line; }
             set { line = value; }
         }
-        
+
         public int Column {
             get { return column; }
             set { column = value; }
@@ -135,28 +135,28 @@ namespace Hyena.SExpEngine
         public IDictionary<string, FunctionNode> Functions {
             get { return functions; }
         }
-        
+
         public int FunctionCount {
             get { return functions.Count; }
         }
-        
+
         public bool Empty {
             get { return ChildCount == 0 && !(this is LiteralNodeBase) && !(this is FunctionNode); }
         }
-        
+
         public void Dump()
         {
             DumpTree(this);
         }
-               
+
         public TreeNode FindRootNode()
         {
             TreeNode shift_node = this;
-            
+
             while(shift_node.Parent != null) {
                 shift_node = shift_node.Parent;
             }
-            
+
             return shift_node;
         }
 

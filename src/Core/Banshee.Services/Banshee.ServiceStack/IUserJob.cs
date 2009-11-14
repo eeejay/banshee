@@ -1,4 +1,4 @@
-// 
+//
 // IUserJob.cs
 //
 // Author:
@@ -31,23 +31,23 @@ using System;
 using Hyena.Data;
 
 namespace Banshee.ServiceStack
-{   
+{
     public interface IUserJob
     {
         event EventHandler Finished;
         event EventHandler Updated;
-        
+
         void Cancel ();
-        
+
         string Title { get; }
         string Status { get; }
         double Progress { get; }
         string [] IconNames { get; }
         bool IsBackground { get; }
-        
-        string CancelMessage { get; }        
+
+        string CancelMessage { get; }
         bool CanCancel { get; }
-        
+
         bool IsFinished { get; }
         bool IsCancelRequested { get; }
         bool DelayShow { get; }

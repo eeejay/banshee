@@ -49,7 +49,7 @@ namespace Banshee.Podcasting.Gui
         public ColumnCellDownloadStatus () : base (null, true)
         {
         }
-    
+
         protected override string GetText (object obj)
         {
             DownloadedStatusFilter val = (DownloadedStatusFilter) obj;

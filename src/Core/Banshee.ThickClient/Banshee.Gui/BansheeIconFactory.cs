@@ -40,27 +40,27 @@ namespace Banshee.Gui
         public IconTheme Theme {
             get { return theme; }
         }
-    
+
         public BansheeIconFactory ()
         {
             theme = IconTheme.Default;
-        
+
             string icon_theme_path = Banshee.Base.Paths.GetInstalledDataDirectory ("icons");
             if (Directory.Exists (icon_theme_path)) {
                 Hyena.Log.DebugFormat ("Adding icon theme search path: {0}", icon_theme_path);
                 Theme.AppendSearchPath (icon_theme_path);
             }
-               
+
             AddDefault ();
         }
-        
+
         public void Add (string name)
         {
             IconSet icon_set = new IconSet ();
             IconSource source = new IconSource ();
             source.IconName = name;
             icon_set.AddSource (source);
-            
+
             Add (name, icon_set);
         }
     }

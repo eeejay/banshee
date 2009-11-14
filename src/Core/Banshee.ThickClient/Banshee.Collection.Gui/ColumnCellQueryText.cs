@@ -39,7 +39,7 @@ namespace Banshee.Collection.Gui
         {
             this.blank = blank;
         }
-        
+
         protected override string GetText (object obj)
         {
             string text = base.GetText (obj);

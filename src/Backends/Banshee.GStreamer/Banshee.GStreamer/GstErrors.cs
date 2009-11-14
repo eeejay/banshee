@@ -1,4 +1,4 @@
-// 
+//
 // GstErrors.cs
 //
 // Author:
@@ -30,7 +30,7 @@ using System;
 
 namespace Banshee.GStreamer
 {
-    internal enum GstCoreError 
+    internal enum GstCoreError
     {
         Failed = 1,
         TooLazy,
@@ -47,8 +47,8 @@ namespace Banshee.GStreamer
         Clock,
         NumErrors
     }
-    
-    internal enum GstLibraryError 
+
+    internal enum GstLibraryError
     {
         Failed = 1,
         Init,
@@ -57,8 +57,8 @@ namespace Banshee.GStreamer
         Encode,
         NumErrors
     }
-    
-    internal enum GstResourceError 
+
+    internal enum GstResourceError
     {
         Failed = 1,
         TooLazy,
@@ -76,8 +76,8 @@ namespace Banshee.GStreamer
         NoSpaceLeft,
         NumErrors
     }
-    
-    internal enum GstStreamError 
+
+    internal enum GstStreamError
     {
         Failed = 1,
         TooLazy,

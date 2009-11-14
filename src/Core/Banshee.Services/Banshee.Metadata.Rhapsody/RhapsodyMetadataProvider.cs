@@ -40,7 +40,7 @@ namespace Banshee.Metadata.Rhapsody
         public RhapsodyMetadataProvider() : base()
         {
         }
-        
+
         public override IMetadataLookupJob CreateJob(IBasicTrackInfo track)
         {
             return new RhapsodyQueryJob(track);

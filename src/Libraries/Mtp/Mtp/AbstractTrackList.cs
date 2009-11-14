@@ -59,7 +59,7 @@ namespace Mtp
         {
             RemoveTrack ((int)track.FileId);
         }
-        
+
         public void RemoveTrack (int track_id)
         {
             track_ids.Remove (track_id);

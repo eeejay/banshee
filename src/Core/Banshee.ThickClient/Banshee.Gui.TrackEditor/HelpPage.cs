@@ -36,47 +36,47 @@ namespace Banshee.Gui.TrackEditor
     {
         private Box tab_widget;
         private TrackEditorDialog dialog;
-               
+
         public HelpPage () : base (0.5f, 0.5f, 0.0f, 0.0f)
         {
             Image help = new Image ();
             help.Pixbuf = Gdk.Pixbuf.LoadFromResource ("jcastro.png");
             help.Show ();
             Add (help);
-            
+
             tab_widget = new HBox ();
             tab_widget.Spacing = 2;
             tab_widget.PackStart (new Image (Stock.Help, IconSize.Menu), false, false, 0);
             tab_widget.PackStart (new Label (Title), true, true, 0);
             tab_widget.ShowAll ();
         }
-        
+
         public void Initialize (TrackEditorDialog dialog)
         {
             this.dialog = dialog;
         }
-        
+
         public void LoadTrack (EditorTrackInfo track)
         {
             dialog.Notebook.SetTabLabelPacking (this, false, false, PackType.End);
         }
-        
+
         public int Order {
             get { return 10000; }
         }
-        
+
         public string Title {
             get { return Catalog.GetString ("Help"); }
         }
-        
+
         public Widget TabWidget {
             get { return tab_widget; }
         }
-        
-        public PageType PageType { 
+
+        public PageType PageType {
             get { return PageType.Edit; }
         }
-        
+
         public Gtk.Widget Widget {
             get { return this; }
         }

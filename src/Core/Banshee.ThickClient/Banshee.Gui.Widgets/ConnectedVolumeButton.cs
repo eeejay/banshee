@@ -36,34 +36,34 @@ namespace Banshee.Gui.Widgets
     public class ConnectedVolumeButton : Bacon.VolumeButton
     {
         private bool emit_lock = false;
-        
+
         public ConnectedVolumeButton () : base ()
         {
             Volume = PlayerEngineService.VolumeSchema.Get ();
             ServiceManager.PlayerEngine.ConnectEvent (OnPlayerEvent, PlayerEvent.Volume);
         }
-        
+
         public ConnectedVolumeButton (bool classic) : this ()
         {
             Classic = classic;
         }
-        
+
         private void OnPlayerEvent (PlayerEventArgs args)
         {
             emit_lock = true;
             Volume = ServiceManager.PlayerEngine.Volume;
             emit_lock = false;
         }
-        
+
         protected override void OnVolumeChanged ()
         {
             if (emit_lock) {
                 return;
             }
-            
+
             ServiceManager.PlayerEngine.Volume = (ushort)Volume;
             PlayerEngineService.VolumeSchema.Set(Volume);
-            
+
             base.OnVolumeChanged ();
         }
     }

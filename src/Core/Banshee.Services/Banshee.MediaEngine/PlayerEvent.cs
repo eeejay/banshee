@@ -1,4 +1,4 @@
-// 
+//
 // PlayerEvent.cs
 //
 // Author:
@@ -33,68 +33,68 @@ namespace Banshee.MediaEngine
     public delegate void DBusPlayerStateHandler (string state);
     public delegate void DBusPlayerEventHandler (string evnt, string message, double bufferingPercent);
     public delegate void PlayerEventHandler (PlayerEventArgs args);
-    
+
     public class PlayerEventArgs : EventArgs
     {
         private PlayerEvent @event;
         public PlayerEvent Event {
             get { return @event; }
         }
-        
+
         public PlayerEventArgs (PlayerEvent @event)
         {
             this.@event = @event;
         }
     }
-    
+
     public class PlayerEventStateChangeArgs : PlayerEventArgs
     {
         private PlayerState previous;
         public PlayerState Previous {
             get { return previous; }
         }
-        
+
         private PlayerState current;
         public PlayerState Current {
             get { return current; }
         }
-        
+
         public PlayerEventStateChangeArgs (PlayerState previous, PlayerState current) : base (PlayerEvent.StateChange)
         {
             this.previous = previous;
             this.current = current;
         }
     }
-    
+
     public class PlayerEventErrorArgs : PlayerEventArgs
     {
         private string message;
         public string Message {
             get { return message; }
         }
-        
+
         public PlayerEventErrorArgs (string message) : base (PlayerEvent.Error)
         {
             this.message = message;
         }
     }
-    
+
     public sealed class PlayerEventBufferingArgs : PlayerEventArgs
     {
         private double progress;
         public double Progress {
             get { return progress; }
         }
-        
+
         public PlayerEventBufferingArgs (double progress) : base (PlayerEvent.Buffering)
         {
             this.progress = progress;
         }
     }
-    
-    // WARNING: If you add events to the list below, you MUST update the 
+
+    // WARNING: If you add events to the list below, you MUST update the
     // "all" mask in PlayerEngineService.cs to reflect your addition!
-    
+
     [Flags]
     public enum PlayerEvent
     {
@@ -110,8 +110,8 @@ namespace Banshee.MediaEngine
         Metadata = 256,
         TrackInfoUpdated = 512
     }
-    
-    public enum PlayerState 
+
+    public enum PlayerState
     {
         NotReady,
         Ready,

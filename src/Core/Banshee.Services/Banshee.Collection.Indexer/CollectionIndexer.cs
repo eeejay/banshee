@@ -46,62 +46,62 @@ namespace Banshee.Collection.Indexer
     public class CollectionIndexer : ICollectionIndexer, IService, IDBusExportable, IDisposable
     {
         private static int instance_count = 0;
-        
+
         private CollectionIndexerService service;
         private List<CachedList<DatabaseTrackInfo>> model_caches = new List<CachedList<DatabaseTrackInfo>> ();
         private string [] export_fields;
-        
+
         private event ActionHandler indexing_finished;
         event ActionHandler ICollectionIndexer.IndexingFinished {
             add { indexing_finished += value; }
             remove { indexing_finished -= value; }
         }
-        
+
         private event SaveToXmlFinishedHandler save_to_xml_finished;
         event SaveToXmlFinishedHandler ICollectionIndexer.SaveToXmlFinished {
             add { save_to_xml_finished += value; }
             remove { save_to_xml_finished -= value; }
         }
-        
+
         public event EventHandler IndexingFinished;
-        
+
         internal CollectionIndexer (CollectionIndexerService service)
         {
             this.service = service;
         }
-        
+
         public void Dispose ()
         {
             lock (this) {
                 DisposeModels ();
-            
+
                 if (service != null) {
                     service.DisposeIndexer (this);
                 }
             }
         }
-        
+
         private void DisposeModels ()
         {
             foreach (CachedList<DatabaseTrackInfo> model in model_caches) {
                 model.Dispose ();
             }
-            
+
             model_caches.Clear ();
         }
-        
+
         public void SetExportFields (string [] fields)
         {
             lock (this) {
                 export_fields = fields;
             }
         }
-        
+
         public void Index ()
         {
             lock (this) {
                 DisposeModels ();
-                
+
                 foreach (Source source in ServiceManager.SourceManager.Sources) {
                     LibrarySource library = source as LibrarySource;
                     if (library != null && library.Indexable) {
@@ -110,44 +110,44 @@ namespace Banshee.Collection.Indexer
                     }
                 }
             }
-            
+
             OnIndexingFinished ();
         }
-        
+
         void ICollectionIndexer.Index ()
         {
             ThreadPool.QueueUserWorkItem (delegate { Index (); });
         }
-        
+
         public void SaveToXml (string path)
         {
             lock (this) {
                 uint timer_id = Hyena.Log.DebugTimerStart ();
                 bool success = false;
-                
+
                 try {
                     XmlTextWriter writer = new XmlTextWriter (path, System.Text.Encoding.UTF8);
                     writer.Formatting = Formatting.Indented;
                     writer.Indentation = 2;
                     writer.IndentChar = ' ';
-                    
+
                     writer.WriteStartDocument (true);
-                    
+
                     writer.WriteStartElement ("banshee-collection");
                     writer.WriteStartAttribute ("version");
                     writer.WriteString (TrackInfo.ExportVersion);
                     writer.WriteEndAttribute ();
-                   
-                    for (int i = 0; i < model_caches.Count; i++) { 
+
+                    for (int i = 0; i < model_caches.Count; i++) {
                         CachedList<DatabaseTrackInfo> model = model_caches[i];
                         if (model.Count <= 0) {
                             continue;
                         }
-                        
+
                         writer.WriteStartElement ("model");
                         for (int j = 0; j < model.Count; j++) {
                             writer.WriteStartElement ("item");
-                            
+
                             foreach (KeyValuePair<string, object> item in model[j].GenerateExportable (export_fields)) {
                                 string type = "string";
                                 if      (item.Value is Boolean) type = "bool";
@@ -162,7 +162,7 @@ namespace Banshee.Collection.Indexer
                                 else if (item.Value is Char)    type = "char";
                                 else if (item.Value is Double)  type = "double";
                                 else if (item.Value is Single)  type = "float";
-                                
+
                                 writer.WriteStartElement (item.Key);
                                 writer.WriteStartAttribute ("type");
                                 writer.WriteString (type);
@@ -170,89 +170,89 @@ namespace Banshee.Collection.Indexer
                                 writer.WriteString (item.Value.ToString ());
                                 writer.WriteEndElement ();
                             }
-                            
+
                             writer.WriteEndElement ();
                         }
-                        
+
                         writer.WriteEndElement ();
                     }
-                    
+
                     writer.WriteEndElement ();
                     writer.WriteEndDocument ();
                     writer.Close ();
-                    
+
                     success = true;
                 } catch (Exception e) {
                     Log.Exception (e);
                 }
-                
+
                 Hyena.Log.DebugTimerPrint (timer_id, "CollectionIndexer.SaveToXml: {0}");
-                
+
                 SaveToXmlFinishedHandler handler = save_to_xml_finished;
                 if (handler != null) {
                     handler (success, path);
                 }
             }
         }
-        
+
         void ICollectionIndexer.SaveToXml (string path)
-        {   
+        {
             ThreadPool.QueueUserWorkItem (delegate { SaveToXml (path); });
         }
-        
+
         public IDictionary<string, object> GetResult (int modelIndex, int itemIndex)
         {
             lock (this) {
                 if (modelIndex < 0 || modelIndex >= model_caches.Count) {
                     throw new IndexOutOfRangeException ("modelIndex");
                 }
-                
+
                 CachedList<DatabaseTrackInfo> model = model_caches[modelIndex];
-                
+
                 if (itemIndex < 0 || itemIndex >= model.Count) {
                     throw new IndexOutOfRangeException ("itemIndex");
                 }
-                
+
                 return model[itemIndex].GenerateExportable (export_fields);
             }
         }
-        
+
         public int GetModelCounts ()
         {
             lock (this) {
                 return model_caches.Count;
             }
         }
-        
+
         public int GetModelResultsCount (int modelIndex)
         {
             lock (this) {
                 if (modelIndex < 0 || modelIndex >= model_caches.Count) {
                     return -1;
                 }
-                
+
                 return model_caches[modelIndex].Count;
             }
         }
-        
+
         protected virtual void OnIndexingFinished ()
         {
             EventHandler handler = IndexingFinished;
             if (handler != null) {
                 handler (this, EventArgs.Empty);
             }
-        
+
             ActionHandler dbus_handler = indexing_finished;
             if (dbus_handler != null) {
                 dbus_handler ();
             }
         }
-        
+
         private string service_name = String.Format ("CollectionIndexer_{0}", instance_count++);
         string IService.ServiceName {
             get { return service_name; }
         }
-        
+
         IDBusExportable IDBusExportable.Parent {
             get { return service; }
         }

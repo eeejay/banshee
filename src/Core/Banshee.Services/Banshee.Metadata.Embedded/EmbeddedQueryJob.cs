@@ -42,22 +42,22 @@ namespace Banshee.Metadata.Embedded
     public class EmbeddedQueryJob : MetadataServiceJob
     {
         private TrackInfo track;
-        
+
         public EmbeddedQueryJob(IBasicTrackInfo track)
         {
             Track = track;
             this.track = track as TrackInfo;
         }
-        
+
         public override void Run()
         {
             if(track == null || CoverArtSpec.CoverExists (track.ArtworkId)) {
                 return;
             }
-          
+
             Fetch();
         }
-        
+
         protected void Fetch()
         {
             if (track.Uri == null || !track.Uri.IsFile || !Banshee.IO.File.Exists (track.Uri))
@@ -68,49 +68,49 @@ namespace Banshee.Metadata.Embedded
             if(artist_album_id == null) {
                 return;
             }
-            
+
             IPicture [] pictures = GetEmbeddedPictures(track.Uri);
-                    
+
             if(pictures != null && pictures.Length > 0) {
                 int preferred_index = GetPictureIndexToUse(pictures);
                 IPicture picture = pictures[preferred_index];
                 string path = CoverArtSpec.GetPath(artist_album_id);
-                
-                if(SavePicture(picture, path)) {    
+
+                if(SavePicture(picture, path)) {
                     StreamTag tag = new StreamTag();
                     tag.Name = CommonTags.AlbumCoverId;
-                    tag.Value = artist_album_id;   
-                    
+                    tag.Value = artist_album_id;
+
                     AddTag(tag);
-                } 
+                }
             }
         }
 
         protected IPicture [] GetEmbeddedPictures(SafeUri uri)
         {
-            TagLib.File file = StreamTagger.ProcessUri(uri);            
-            return file == null ? null : file.Tag.Pictures;            
+            TagLib.File file = StreamTagger.ProcessUri(uri);
+            return file == null ? null : file.Tag.Pictures;
         }
-        
+
         protected int GetPictureIndexToUse(IPicture [] pictures)
         {
             int preferred_index = -1;
-            
-            // Use the front cover.  If we don't find it, use the first image. 
+
+            // Use the front cover.  If we don't find it, use the first image.
             for(int i = 0; i < pictures.Length; i++) {
                 if(preferred_index == -1) {
                     preferred_index = i;
                 }
-                
+
                 if(pictures[i].Type == PictureType.FrontCover) {
                     preferred_index = i;
                     break;
                 }
             }
-            
+
             return preferred_index;
         }
-        
+
         protected bool SavePicture (IPicture picture, string image_path)
         {
             if (picture == null || picture.Data == null || picture.Data.Count == 0) {

@@ -38,7 +38,7 @@ namespace Banshee.Collection.Gui
         public ColumnCellLocation (string property, bool expand) : base (property, expand)
         {
         }
-        
+
         protected override string GetText (object obj)
         {
             SafeUri uri = obj as SafeUri;

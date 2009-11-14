@@ -45,14 +45,14 @@ namespace Banshee.Library
         private bool importing;
         private UserJob user_job;
         private readonly object user_job_mutex = new object ();
-        
+
         private void CreateUserJob ()
         {
             lock (user_job_mutex) {
                 if(user_job != null) {
                     return;
                 }
-                
+
                 user_job = new UserJob (UserJobTitle, UserJobTitle, Catalog.GetString ("Importing Songs"));
                 user_job.SetResources (Resource.Cpu, Resource.Disk, Resource.Database);
                 user_job.PriorityHints = PriorityHints.SpeedSensitive | PriorityHints.DataLossIfStopped;
@@ -62,19 +62,19 @@ namespace Banshee.Library
                 user_job.Register ();
             }
         }
-        
+
         private void DestroyUserJob ()
         {
             lock(user_job_mutex) {
                 if(user_job == null) {
                     return;
                 }
-                
+
                 user_job.Finish ();
                 user_job = null;
             }
         }
-        
+
         protected void UpdateUserJob (int processed, int count, string artist, string title)
         {
             user_job.Title = String.Format(
@@ -83,7 +83,7 @@ namespace Banshee.Library
             user_job.Status = String.Format("{0} - {1}", artist, title);
             user_job.Progress = processed / (double)count;
         }
-        
+
         protected void LogError (string path, Exception e)
         {
             LogError (path, e.Message);
@@ -94,18 +94,18 @@ namespace Banshee.Library
             Banshee.Base.ThreadAssist.ProxyToMain (delegate {
                 ErrorSource error_source = ServiceManager.SourceManager.MusicLibrary.ErrorSource;
                 error_source.AddMessage (path, msg);
-    
+
                 Log.Error (path, msg, false);
             });
         }
-        
+
         protected bool CheckForCanceled ()
         {
             lock(user_job_mutex) {
                 return user_job != null && user_job.IsCancelRequested;
             }
         }
-        
+
         private string user_job_title;
         protected virtual string UserJobTitle {
             get {
@@ -115,24 +115,24 @@ namespace Banshee.Library
                 return user_job_title;
             }
         }
-        
+
         private string cancel_message = Catalog.GetString ("The import process is currently running. Would you like to stop it?");
         protected virtual string CancelMessage {
             get { return cancel_message; }
         }
-    
+
         protected virtual bool CanCancel {
             get { return true; }
         }
-        
+
 #region IImportSource
-        
+
         public abstract string Name { get; }
 
         public virtual string ImportLabel { get { return null; } }
 
         public abstract string[] IconNames { get; }
-        
+
         public abstract int SortOrder { get; }
 
         public virtual bool CanImport {
@@ -144,15 +144,15 @@ namespace Banshee.Library
             if (importing || !ConfirmImport ()) {
                 return;
             }
-            
+
             importing = true;
             CreateUserJob ();
             ThreadPool.QueueUserWorkItem (ImportCore);
             importing = false;
         }
-        
+
 #endregion
-        
+
         private void ImportCore (object o)
         {
             ImportCore ();
@@ -165,6 +165,6 @@ namespace Banshee.Library
         }
 
         protected abstract void ImportCore ();
-        
+
     }
 }

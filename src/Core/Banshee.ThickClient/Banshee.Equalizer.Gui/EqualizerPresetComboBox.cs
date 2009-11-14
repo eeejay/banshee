@@ -36,40 +36,40 @@ namespace Banshee.Equalizer.Gui
         private EqualizerManager manager;
         private ListStore store;
         private EqualizerSetting active_eq;
-        
+
         public EqualizerPresetComboBox () : this (EqualizerManager.Instance)
         {
         }
-        
+
         public EqualizerPresetComboBox (EqualizerManager manager) : base ()
         {
             if (manager == null) {
                 throw new ArgumentNullException ("provide an EqualizerManager or use default constructor");
             }
-            
+
             this.manager = manager;
             BuildWidget ();
         }
-        
+
         private void BuildWidget ()
         {
             store = new ListStore (typeof (string), typeof (EqualizerSetting));
             Model = store;
             TextColumn = 0;
-            
+
             foreach (EqualizerSetting eq in manager) {
                 AddEqualizerSetting(eq);
             }
-            
+
             manager.EqualizerAdded += delegate (object o, EqualizerSettingEventArgs args) {
                 AddEqualizerSetting (args.EqualizerSetting);
             };
-            
+
             manager.EqualizerRemoved += delegate (object o, EqualizerSettingEventArgs args) {
                 RemoveEqualizerSetting (args.EqualizerSetting);
             };
         }
-        
+
         protected override void OnChanged ()
         {
             EqualizerSetting eq = ActiveEqualizer;
@@ -81,24 +81,24 @@ namespace Banshee.Equalizer.Gui
             } else if (eq == null) {
                 eq = active_eq;
             }
-            
+
             if (Entry == null) {
                 return;
             }
 
             eq.Name = Entry.Text;
-            
+
             TreeIter iter;
             if (GetIterForEqualizerSetting (eq, out iter)) {
                 store.SetValue (iter, 0, eq.Name);
             }
-            
+
             if (eq != ActiveEqualizer) {
                 ActiveEqualizer = eq;
                 base.OnChanged ();
             }
         }
-        
+
         public bool ActivatePreferredEqualizer (string name)
         {
             if (name == null || name == "") {
@@ -110,35 +110,35 @@ namespace Banshee.Equalizer.Gui
                         return true;
                     }
                 }
-                
+
                 return false;
             }
         }
-        
+
         public bool ActivateFirstEqualizer ()
         {
             TreeIter iter;
-        
+
             if (store.IterNthChild (out iter, 0)) {
                 ActiveEqualizer = GetEqualizerSettingForIter (iter);
                 return true;
             }
-            
+
             return false;
         }
-        
+
         private void AddEqualizerSetting (EqualizerSetting eq)
         {
             store.AppendValues (eq.Name, eq);
         }
-        
+
         private void RemoveEqualizerSetting (EqualizerSetting eq)
         {
             TreeIter iter;
             if (GetIterForEqualizerSetting (eq, out iter)) {
                 store.Remove (ref iter);
             }
-            
+
             if (!ActivateFirstEqualizer ()) {
                 active_eq = null;
                 if (Entry != null) {
@@ -146,12 +146,12 @@ namespace Banshee.Equalizer.Gui
                 }
             }
         }
-        
+
         private EqualizerSetting GetEqualizerSettingForIter (TreeIter iter)
         {
             return store.GetValue (iter, 1) as EqualizerSetting;
         }
-        
+
         private bool GetIterForEqualizerSetting (EqualizerSetting eq, out TreeIter iter)
         {
             for (int i = 0, n = store.IterNChildren (); i < n; i++) {
@@ -159,20 +159,20 @@ namespace Banshee.Equalizer.Gui
                     return true;
                 }
             }
-            
+
             iter = TreeIter.Zero;
             return false;
         }
-        
+
         public EqualizerSetting ActiveEqualizer {
             get {
                 TreeIter iter;
                 return GetActiveIter (out iter) ? GetEqualizerSettingForIter (iter) : null;
             }
-            
+
             set {
                 active_eq = value;
-                
+
                 TreeIter iter;
                 if (GetIterForEqualizerSetting (value, out iter)) {
                     SetActiveIter (iter);

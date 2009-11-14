@@ -36,16 +36,16 @@ namespace Hyena.Gui
     public class PixbufImageSurface : ImageSurface, IDisposable
     {
         private delegate void cairo_destroy_func_t (IntPtr userdata);
-    
+
         private static bool is_le = BitConverter.IsLittleEndian;
         private static int user_data_key = 0;
         private static cairo_destroy_func_t destroy_func;
-               
+
         private static void DestroyPixelData (IntPtr data)
         {
             Marshal.FreeHGlobal (data);
         }
-        
+
         static PixbufImageSurface ()
         {
             destroy_func = new cairo_destroy_func_t (DestroyPixelData);
@@ -87,46 +87,46 @@ namespace Hyena.Gui
                 return target;
             }
         }
-        
+
         private IntPtr data;
-        
+
         public PixbufImageSurface (Gdk.Pixbuf pixbuf) : this (pixbuf, false)
         {
         }
-        
-        public PixbufImageSurface (Gdk.Pixbuf pixbuf, bool disposePixbuf) : this (disposePixbuf ? pixbuf : null, 
+
+        public PixbufImageSurface (Gdk.Pixbuf pixbuf, bool disposePixbuf) : this (disposePixbuf ? pixbuf : null,
             pixbuf.Width, pixbuf.Height, pixbuf.NChannels, pixbuf.Rowstride, pixbuf.Pixels)
         {
         }
-        
+
         // This ctor is to avoid multiple queries against the GdkPixbuf for width/height
-        private PixbufImageSurface (Gdk.Pixbuf pixbuf, int width, int height, int channels, int rowstride, IntPtr pixels) 
+        private PixbufImageSurface (Gdk.Pixbuf pixbuf, int width, int height, int channels, int rowstride, IntPtr pixels)
             : this (pixbuf, Marshal.AllocHGlobal (width * height * 4), width, height, channels, rowstride, pixels)
         {
         }
-        
-        private PixbufImageSurface (Gdk.Pixbuf pixbuf, IntPtr data, int width, int height, int channels, int rowstride, IntPtr pixels) 
+
+        private PixbufImageSurface (Gdk.Pixbuf pixbuf, IntPtr data, int width, int height, int channels, int rowstride, IntPtr pixels)
             : base (data, channels == 3 ? Format.Rgb24 : Format.Argb32, width, height, width * 4)
         {
             this.data = data;
-            
+
             CreateSurface (width, height, channels, rowstride, pixels);
             SetDestroyFunc ();
-            
+
             if (pixbuf != null && pixbuf.Handle != IntPtr.Zero) {
                 pixbuf.Dispose ();
             }
         }
-        
+
         private unsafe void CreateSurface (int width, int height, int channels, int gdk_rowstride, IntPtr pixels)
         {
             byte *gdk_pixels = (byte *)pixels;
             byte *cairo_pixels = (byte *)data;
-            
+
             for (int i = height; i > 0; i--) {
                 byte *p = gdk_pixels;
                 byte *q = cairo_pixels;
-                
+
                 if (channels == 3) {
                     byte *end = p + 3 * width;
                     while (p < end) {
@@ -139,7 +139,7 @@ namespace Hyena.Gui
                             q[2] = p[1];
                             q[3] = p[2];
                         }
-                    
+
                         p += 3;
                         q += 4;
                     }
@@ -157,27 +157,27 @@ namespace Hyena.Gui
                             q[2] = Mult (p[1], p[3]);
                             q[3] = Mult (p[2], p[3]);
                         }
-                        
+
                         p += 4;
                         q += 4;
                     }
                 }
-                
+
                 gdk_pixels += gdk_rowstride;
                 cairo_pixels += 4 * width;
             }
         }
-        
+
         private static byte Mult (byte c, byte a)
         {
-            int t = c * a + 0x7f; 
+            int t = c * a + 0x7f;
             return (byte)(((t >> 8) + t) >> 8);
         }
-        
+
         [DllImport ("libcairo-2.dll")]
-        private static extern Cairo.Status cairo_surface_set_user_data (IntPtr surface, 
+        private static extern Cairo.Status cairo_surface_set_user_data (IntPtr surface,
             ref int key, IntPtr userdata, cairo_destroy_func_t destroy);
-            
+
         private void SetDestroyFunc ()
         {
             try {

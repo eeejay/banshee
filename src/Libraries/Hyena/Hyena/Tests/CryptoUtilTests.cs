@@ -44,7 +44,7 @@ namespace Hyena.Tests
             Assert.AreEqual ("", CryptoUtil.Md5Encode (null));
             Assert.AreEqual ("", CryptoUtil.Md5Encode (""));
         }
-    
+
         [Test]
         public void IsMd5Encoded ()
         {

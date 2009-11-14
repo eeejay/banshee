@@ -39,15 +39,15 @@ namespace Hyena.Gui
         private static MethodInfo host_set_tip_method;
         private static PropertyInfo tooltip_text_property;
         private static bool reflected;
-    
+
         public static object CreateHost ()
         {
             if (tooltip_text_property != null) {
                 return null;
-            } 
-            
+            }
+
             Type type = reflected ? null : typeof (Widget);
-            
+
             if (type != null) {
                 tooltip_text_property = type.GetProperty ("TooltipText", BindingFlags.Instance | BindingFlags.Public);
                 if (tooltip_text_property != null) {
@@ -55,24 +55,24 @@ namespace Hyena.Gui
                     return null;
                 }
             }
-            
+
             if (host_set_tip_method == null && !reflected) {
                 reflected = true;
                 host_type = Type.GetType (String.Format ("Gtk.Tooltips, {0}", type.Assembly.FullName));
                 if (type == null) {
                     return null;
                 }
-                
-                host_set_tip_method = host_type.GetMethod ("SetTip", BindingFlags.Instance | 
+
+                host_set_tip_method = host_type.GetMethod ("SetTip", BindingFlags.Instance |
                     BindingFlags.Public | BindingFlags.InvokeMethod);
                 if (host_set_tip_method == null) {
                     return null;
                 }
             }
-            
+
             return host_set_tip_method != null ? Activator.CreateInstance (host_type) : null;
         }
-        
+
         public static void Set (object host, Widget widget, string textTip)
         {
             if (tooltip_text_property != null) {

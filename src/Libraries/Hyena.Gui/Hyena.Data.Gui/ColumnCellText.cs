@@ -41,7 +41,7 @@ namespace Hyena.Data.Gui
         internal const int Spacing = 4;
 
         public delegate string DataHandler ();
-    
+
         private Pango.Weight font_weight = Pango.Weight.Normal;
         private Pango.EllipsizeMode ellipsize_mode = Pango.EllipsizeMode.End;
         private Pango.Alignment alignment = Pango.Alignment.Left;
@@ -51,7 +51,7 @@ namespace Hyena.Data.Gui
         protected string MinString, MaxString;
         private string last_text = null;
         private bool use_markup;
-        
+
         public ColumnCellText (string property, bool expand) : base (property, expand)
         {
         }
@@ -70,7 +70,7 @@ namespace Hyena.Data.Gui
         {
             SetMinMaxStrings (min_max, min_max);
         }
-        
+
         public void SetMinMaxStrings (object min, object max)
         {
             // Set the min/max strings from the min/max objects
@@ -78,14 +78,14 @@ namespace Hyena.Data.Gui
             MaxString = GetText (max);
             RestrictSize = true;
         }
-    
+
         public override void Render (CellContext context, StateType state, double cellWidth, double cellHeight)
         {
             UpdateText (context, cellWidth);
             if (String.IsNullOrEmpty (last_text)) {
                 return;
             }
-            
+
             context.Context.Rectangle (0, 0, cellWidth, cellHeight);
             context.Context.Clip ();
             context.Context.MoveTo (Spacing, ((int)cellHeight - text_height) / 2);
@@ -135,7 +135,7 @@ namespace Hyena.Data.Gui
             UpdateText (cellContext, columnWidth);
             return IsEllipsized ? GLib.Markup.EscapeText (Text) : null;
         }
-        
+
         protected virtual string GetText (object obj)
         {
             return obj == null ? String.Empty : obj.ToString ();
@@ -157,11 +157,11 @@ namespace Hyena.Data.Gui
         public string Text {
             get { return last_text; }
         }
-        
+
         protected int TextWidth {
             get { return text_width; }
         }
-        
+
         protected int TextHeight {
             get { return text_height; }
         }
@@ -170,22 +170,22 @@ namespace Hyena.Data.Gui
             get { return text_format; }
             set { text_format = value; }
         }
-        
+
         public Pango.Alignment Alignment {
             get { return alignment; }
             set { alignment = value; }
         }
-        
+
         public virtual Pango.Weight FontWeight {
             get { return font_weight; }
             set { font_weight = value; }
         }
-        
+
         public virtual Pango.EllipsizeMode EllipsizeMode {
             get { return ellipsize_mode; }
             set { ellipsize_mode = value; }
         }
-        
+
         internal static int ComputeRowHeight (Widget widget)
         {
             int w_width, row_height;
@@ -196,13 +196,13 @@ namespace Hyena.Data.Gui
             return row_height + 8;
         }
 
-        #region ISizeRequestCell implementation 
-        
+        #region ISizeRequestCell implementation
+
         public void GetWidthRange (Pango.Layout layout, out int min, out int max)
         {
             int height;
             min = max = -1;
-            
+
             if (!String.IsNullOrEmpty (MinString)) {
                 UpdateLayout (layout, MinString);
                 layout.GetPixelSize (out min, out height);
@@ -217,7 +217,7 @@ namespace Hyena.Data.Gui
                 //Console.WriteLine ("for {0} got max {1} for {2}", this, max, MaxString);
             }
         }
-        
+
         private bool restrict_size = false;
         public bool RestrictSize {
             get { return restrict_size; }
@@ -228,7 +228,7 @@ namespace Hyena.Data.Gui
             get { return use_markup; }
             set { use_markup = value; }
         }
-        
+
         #endregion
     }
 }

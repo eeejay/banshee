@@ -39,16 +39,16 @@ namespace Banshee.Configuration
         bool IsDefault { get; }
         void MakeDefault ();
     }
-    
+
     public static class DefaultApplicationHelper
     {
         public static SchemaEntry<bool> MakeDefaultSchema = new SchemaEntry<bool> ("core", "make_default", true,
             "Whether to ensure Banshee is the default media player every time it starts", null);
-        
-        public static SchemaEntry<bool> RememberChoiceSchema = new SchemaEntry<bool> ("core", "remember_make_default", false, 
+
+        public static SchemaEntry<bool> RememberChoiceSchema = new SchemaEntry<bool> ("core", "remember_make_default", false,
             "Whether to remember whether to ensure Banshee is the default media player every time it starts", null);
 
-        public static SchemaEntry<bool> EverAskedSchema = new SchemaEntry<bool> ("core", "ever_asked_make_default", false, 
+        public static SchemaEntry<bool> EverAskedSchema = new SchemaEntry<bool> ("core", "ever_asked_make_default", false,
             "Whether the user has ever responded to whether they'd like to make Banshee the default player", null);
 
         private static IDefaultHelper helper;
@@ -61,7 +61,7 @@ namespace Banshee.Configuration
                             Log.DebugFormat ("Loaded Default Application Helper: {0}", helper.GetType ().FullName);
                             break;
                         } catch (Exception e) {
-                            Log.Exception ("Default Application Helper backend failed to load", e);    
+                            Log.Exception ("Default Application Helper backend failed to load", e);
                         }
                     }
                 }

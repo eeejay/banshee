@@ -40,7 +40,7 @@ namespace Banshee.Metadata.FileSystem
         public FileSystemMetadataProvider() : base()
         {
         }
-        
+
         public override IMetadataLookupJob CreateJob (IBasicTrackInfo track)
         {
             return new FileSystemQueryJob (track);

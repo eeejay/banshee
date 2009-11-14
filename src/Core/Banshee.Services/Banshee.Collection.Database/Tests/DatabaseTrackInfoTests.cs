@@ -46,14 +46,14 @@ namespace Banshee.Collection.Database.Tests
             info.TrackTitleSort = title_sort;
             Assert.AreEqual (expected, info.TrackTitleSortKey);
         }
-        
+
         protected void AssertTitleLowered (string title, string expected)
         {
             DatabaseTrackInfo info = new DatabaseTrackInfo ();
             info.TrackTitle = title;
             Assert.AreEqual (expected, info.TitleLowered);
         }
-        
+
         [Test]
         public void TestWithoutTitleSortKey ()
         {
@@ -63,14 +63,14 @@ namespace Banshee.Collection.Database.Tests
 
             AssertTitleSort ("a", "", new byte[] {14, 2, 1, 1, 1, 1, 0});
         }
-        
+
         [Test]
         public void TestTitleSortKey ()
         {
             AssertTitleSort ("Title", "a", new byte[] {14, 2, 1, 1, 1, 1, 0});
             AssertTitleSort ("Title", "A", new byte[] {14, 2, 1, 1, 1, 1, 0});
         }
-        
+
         [Test]
         public void TestTitleLowered ()
         {

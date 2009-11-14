@@ -19,17 +19,17 @@ namespace Banshee.Bookmarks
     public class BookmarksService : IExtensionService, IDisposable
     {
         private BookmarkUI ui;
-        
+
         public BookmarksService ()
         {
         }
-        
+
         void IExtensionService.Initialize ()
         {
             Bookmark.Initialize();
             ui = BookmarkUI.Instance;
         }
-        
+
         public void Dispose ()
         {
             if (ui != null)
@@ -55,11 +55,11 @@ namespace Banshee.Bookmarks
         private Dictionary<Bookmark, MenuItem> select_items = new Dictionary<Bookmark, MenuItem>();
         private Dictionary<Bookmark, MenuItem> remove_items = new Dictionary<Bookmark, MenuItem>();
         private Dictionary<MenuItem, Bookmark> bookmark_map = new Dictionary<MenuItem, Bookmark>();
-        
+
         private InterfaceActionService action_service;
         private ActionGroup actions;
         private uint ui_manager_id;
-        
+
         private static BookmarkUI instance = null;
         public static BookmarkUI Instance {
             get {
@@ -76,7 +76,7 @@ namespace Banshee.Bookmarks
         private BookmarkUI()
         {
             action_service = ServiceManager.Get<InterfaceActionService> ("InterfaceActionService");
-            
+
             actions = new ActionGroup("Bookmarks");
 
             actions.Add(new ActionEntry [] {
@@ -135,7 +135,7 @@ namespace Banshee.Bookmarks
 
             bookmark_item.ShowAll();
         }
-        
+
         public void AddBookmark(Bookmark bookmark)
         {
             if (select_items.ContainsKey(bookmark))
@@ -269,12 +269,12 @@ namespace Banshee.Bookmarks
                 Remove();
             }
         }
-        
+
         private void HandleStateChanged (PlayerEventArgs args)
         {
             if (((PlayerEventStateChangeArgs)args).Current == PlayerState.Playing) {
                 ServiceManager.PlayerEngine.DisconnectEvent (HandleStateChanged);
-                
+
                 if (!ServiceManager.PlayerEngine.CurrentTrack.IsLive) {
                     // Sleep in 5ms increments for at most 250ms waiting for CanSeek to be true
                     int count = 0;
@@ -283,7 +283,7 @@ namespace Banshee.Bookmarks
                         count++;
                     }
                 }
-                
+
                 if (ServiceManager.PlayerEngine.CanSeek) {
                     ServiceManager.PlayerEngine.Position = position;
                 }

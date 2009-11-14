@@ -36,35 +36,35 @@ using Banshee.Base;
 namespace Banshee.IO.Unix
 {
     public class DemuxVfs : IDemuxVfs
-    {   
+    {
         private UnixFileInfo file_info;
-        
+
         public DemuxVfs (string path)
         {
             file_info = new UnixFileInfo (path);
         }
-        
+
         public void CloseStream (Stream stream)
         {
             stream.Close ();
         }
-        
-        public string Name { 
+
+        public string Name {
             get { return file_info.FullName; }
         }
-        
+
         public Stream ReadStream {
             get { return file_info.Open (FileMode.Open, FileAccess.Read); }
         }
-        
+
         public Stream WriteStream {
             get { return file_info.Open (FileMode.Open, FileAccess.ReadWrite); }
         }
-   
+
         public bool IsReadable {
             get { return file_info.CanAccess (AccessModes.R_OK); }
         }
-   
+
         public bool IsWritable {
             get { return file_info.CanAccess (AccessModes.W_OK); }
         }

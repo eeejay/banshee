@@ -38,7 +38,7 @@ namespace Hyena.SExpEngine
             if(args.Length != 2) {
                 throw new ArgumentException("must have two arguments");
             }
-            
+
             return Compare(Evaluator, args[0], args[1]);
         }
 
@@ -46,13 +46,13 @@ namespace Hyena.SExpEngine
         {
             TreeNode arg_a = evaluator.Evaluate(a);
             TreeNode arg_b = evaluator.Evaluate(b);
-            
+
             if(arg_a.GetType() != arg_b.GetType()) {
                 throw new ArgumentException("arguments must be of the same type to compare");
             }
-            
+
             int result = 0;
-            
+
             if(arg_a is IntLiteral) {
                 result = (arg_a as IntLiteral).Value.CompareTo(
                     (arg_b as IntLiteral).Value);
@@ -68,38 +68,38 @@ namespace Hyena.SExpEngine
             } else {
                 throw new ArgumentException("invalid type for comparison");
             }
-            
+
             return new IntLiteral(result);
         }
-        
+
         [Function("less-than", "<")]
         public virtual TreeNode OnCompareLessThan(TreeNode [] args)
         {
             IntLiteral result = (IntLiteral)OnCompareTo(args);
             return new BooleanLiteral(result.Value < 0);
         }
-        
+
         [Function("greater-than", ">")]
         public virtual TreeNode OnCompareGreaterThan(TreeNode [] args)
         {
             IntLiteral result = (IntLiteral)OnCompareTo(args);
             return new BooleanLiteral(result.Value > 0);
         }
-        
+
         [Function("equal", "=")]
         public virtual TreeNode OnCompareEqual(TreeNode [] args)
         {
             IntLiteral result = (IntLiteral)OnCompareTo(args);
             return new BooleanLiteral(result.Value == 0);
         }
-        
+
         [Function("not-equal", "!=")]
         public virtual TreeNode OnCompareNotEqual(TreeNode [] args)
         {
             BooleanLiteral result = (BooleanLiteral)OnCompareEqual(args);
             return new BooleanLiteral(!result.Value);
         }
-        
+
         [Function("less-than-or-equal", "<=")]
         public virtual TreeNode OnCompareLessThanOrEqual(TreeNode [] args)
         {
@@ -107,7 +107,7 @@ namespace Hyena.SExpEngine
             BooleanLiteral b = (BooleanLiteral)OnCompareEqual(args);
             return new BooleanLiteral(a.Value || b.Value);
         }
-        
+
         [Function("greater-than-or-equal", ">=")]
         public virtual TreeNode OnCompareGreaterThanOrEqual(TreeNode [] args)
         {

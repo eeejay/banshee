@@ -18,10 +18,10 @@
 // distribute, sublicense, and/or sell copies of the Software, and to
 // permit persons to whom the Software is furnished to do so, subject to
 // the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be
 // included in all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 // MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -34,7 +34,7 @@
 /********************************************************
  * ADO.NET 2.0 Data Provider for SQLite Version 3.X
  * Written by Robert Simpson (robert@blackcastlesoft.com)
- * 
+ *
  * Released to the public domain, use at your own risk!
  ********************************************************/
 #if NET_2_0
@@ -109,7 +109,7 @@ namespace Mono.Data.Sqlite
     /// Initializes the command with the given command text
     /// </summary>
     /// <param name="commandText">The SQL command text</param>
-    public SqliteCommand(string commandText) 
+    public SqliteCommand(string commandText)
       : this(commandText, null, null)
     {
     }
@@ -129,7 +129,7 @@ namespace Mono.Data.Sqlite
     /// Initializes the command and associates it with the specified connection.
     /// </summary>
     /// <param name="connection">The connection to associate with the command</param>
-    public SqliteCommand(SqliteConnection connection) 
+    public SqliteCommand(SqliteConnection connection)
       : this(null, connection, null)
     {
     }
@@ -234,7 +234,7 @@ namespace Mono.Data.Sqlite
 
           _parameterCollection.MapParameters(stmt);
           stmt.BindParameters();
-        }        
+        }
         return stmt;
       }
       catch (Exception)

@@ -33,10 +33,10 @@ using Banshee.Collection;
 namespace Banshee.Gui.TrackEditor
 {
     public interface ITrackEditorPage
-    {       
+    {
         void Initialize (TrackEditorDialog dialog);
         void LoadTrack (EditorTrackInfo track);
-        
+
         int Order { get; }
         string Title { get; }
         PageType PageType { get; }

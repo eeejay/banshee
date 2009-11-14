@@ -46,20 +46,20 @@ namespace Banshee.Collection.Gui
     public class TrackListView : BaseTrackListView
     {
         private ColumnController default_column_controller;
-        
+
         public TrackListView () : base ()
         {
             default_column_controller = new DefaultColumnController ();
         }
-        
+
         public override void SetModel (IListModel<TrackInfo> value, double vpos)
         {
             //Console.WriteLine ("TrackListView.SetModel for {0} with vpos {1}", value, vpos);
-            
+
             if (value != null) {
                 Source source = ServiceManager.SourceManager.ActiveSource;
                 ColumnController controller = null;
-                
+
                 // Get the controller from this source, or its parent(s) if it doesn't have one
                 while (source != null && controller == null) {
                     controller = source.Properties.Get<ColumnController> ("TrackView.ColumnController");
@@ -73,18 +73,18 @@ namespace Banshee.Collection.Gui
                     }
                     source = source.Parent;
                 }
-                
+
                 controller = controller ?? default_column_controller;
-                
+
                 PersistentColumnController persistent_controller = controller as PersistentColumnController;
                 if (persistent_controller != null) {
                     //Hyena.Log.InformationFormat ("Setting controller source to {0}", ServiceManager.SourceManager.ActiveSource.Name);
                     persistent_controller.Source = ServiceManager.SourceManager.ActiveSource;
                 }
-                
+
                 ColumnController = controller;
             }
-            
+
             base.SetModel (value, vpos);
         }
     }

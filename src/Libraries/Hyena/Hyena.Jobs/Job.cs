@@ -193,8 +193,8 @@ namespace Hyena.Jobs
             get { return icon_names; }
             set {
                 if (value != null) {
-                    icon_names = value; 
-                    OnUpdated (); 
+                    icon_names = value;
+                    OnUpdated ();
                 }
             }
         }

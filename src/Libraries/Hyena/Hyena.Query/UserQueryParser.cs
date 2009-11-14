@@ -62,7 +62,7 @@ namespace Hyena.Query
             field_set = fieldSet;
             root = current_parent = new QueryListNode (Keyword.And);
             bool last_was_term = false;
-            
+
             while (true) {
                 QueryToken token = Scan ();
 
@@ -72,7 +72,7 @@ namespace Hyena.Query
 
                 token.Column = token_start_column;
                 token.Line = token_start_line;
-                
+
                 // If we have two terms in a row, put an AND between them
                 if (last_was_term && token.ID == TokenID.Term)
                     ParseToken (new QueryToken (TokenID.And));
@@ -84,19 +84,19 @@ namespace Hyena.Query
 
             return root.Trim ();
         }
-        
+
         private void DepthPush ()
         {
             current_parent = new QueryListNode (Keyword.And, current_parent);
         }
-        
+
         private void DepthPop ()
         {
             // Avoid trying to pop more than is possible
             if (current_parent.Parent != null)
                 current_parent = current_parent.Parent;
         }
-        
+
         private void NodePush (QueryNode node)
         {
             if (current_parent == null && node is QueryListNode) {
@@ -115,7 +115,7 @@ namespace Hyena.Query
                 current_parent = list;
             }
         }
-        
+
         private void ParseToken (QueryToken token)
         {
             switch (token.ID) {
@@ -169,7 +169,7 @@ namespace Hyena.Query
                 else
                     eos_consumed = true;
             }
-            
+
             for (; ; ReadChar ()) {
                 if (Char.IsWhiteSpace (peek) && peek != '\n') {
                     continue;
@@ -201,10 +201,10 @@ namespace Hyena.Query
 
                 if (reader.EndOfStream)
                     eos_consumed = true;
-                
+
                 switch (token) {
-                    case "or": 
-                    case "OR": 
+                    case "or":
+                    case "OR":
                         return new QueryToken (TokenID.Or);
                     case "NOT":
                         return new QueryToken (TokenID.Not);
@@ -248,7 +248,7 @@ namespace Hyena.Query
                     break;
                 }
             }
-            
+
             return buffer.ToString ();
         }
 
@@ -266,7 +266,7 @@ namespace Hyena.Query
             if (peek == Char.MinValue) {
                 return;
             }
-            
+
             peek = (char)reader.Read ();
             current_column++;
         }

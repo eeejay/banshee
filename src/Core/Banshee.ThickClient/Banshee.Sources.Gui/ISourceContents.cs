@@ -1,4 +1,4 @@
-// 
+//
 // ISourceContents.cs
 //
 // Author:

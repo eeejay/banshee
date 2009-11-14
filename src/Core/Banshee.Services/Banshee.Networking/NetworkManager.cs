@@ -42,12 +42,12 @@ namespace Banshee.Networking
             event StateChangeHandler StateChange;
             State state ();
         }
-    
+
         private const string BusName = "org.freedesktop.NetworkManager";
         private const string ObjectPath = "/org/freedesktop/NetworkManager";
 
         private INetworkManager manager;
-        
+
         public event StateChangeHandler StateChange;
 
         public NetworkManager()
@@ -59,7 +59,7 @@ namespace Banshee.Networking
             manager = Bus.System.GetObject<INetworkManager>(BusName, new ObjectPath(ObjectPath));
             manager.StateChange += OnStateChange;
         }
-        
+
         private void OnStateChange(State state)
         {
             StateChangeHandler handler = StateChange;

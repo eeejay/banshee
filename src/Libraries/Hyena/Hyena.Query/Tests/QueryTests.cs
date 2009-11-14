@@ -77,12 +77,12 @@ namespace Hyena.Query.Tests
         public void QueryValueSql ()
         {
             QueryValue qv;
-            
+
             qv = new DateQueryValue (); qv.ParseUserQuery ("2007-03-9");
             Assert.AreEqual (new DateTime (2007, 3, 9), qv.Value);
             Assert.AreEqual ("2007-03-09", qv.ToUserQuery ());
             Assert.AreEqual ("1173420000", qv.ToSql ());
-    
+
             qv = new StringQueryValue (); qv.ParseUserQuery ("foo 'bar'");
             Assert.AreEqual ("foo 'bar'", qv.Value);
             Assert.AreEqual ("foo 'bar'", qv.ToUserQuery ());
@@ -92,34 +92,34 @@ namespace Hyena.Query.Tests
             Assert.AreEqual ("Foo Baño", qv.Value);
             Assert.AreEqual ("Foo Baño", qv.ToUserQuery ());
             Assert.AreEqual ("foo bano", qv.ToSql ());
-    
+
             qv = new ExactStringQueryValue (); qv.ParseUserQuery ("foo 'bar'");
             Assert.AreEqual ("foo 'bar'", qv.Value);
             Assert.AreEqual ("foo 'bar'", qv.ToUserQuery ());
             Assert.AreEqual ("foo ''bar''", qv.ToSql ());
-    
+
             qv = new IntegerQueryValue (); qv.ParseUserQuery ("22");
             Assert.AreEqual (22, qv.Value);
             Assert.AreEqual ("22", qv.ToUserQuery ());
             Assert.AreEqual ("22", qv.ToSql ());
-    
+
             qv = new FileSizeQueryValue (); qv.ParseUserQuery ("2048 KB");
             Assert.AreEqual (2097152, qv.Value);
             Assert.AreEqual ("2.048 KB", qv.ToUserQuery ());
             Assert.AreEqual ("2097152", qv.ToSql ());
-    
+
             // TODO this will break once an it_IT translation for "days ago" etc is committed
             qv = new RelativeTimeSpanQueryValue (); qv.ParseUserQuery ("2 days ago");
             Assert.AreEqual (-172800, qv.Value);
             Assert.AreEqual ("2 days ago", qv.ToUserQuery ());
-    
+
             // TODO this will break once an it_IT translation for "minutes" etc is committed
             qv = new TimeSpanQueryValue (); qv.ParseUserQuery ("4 minutes");
             Assert.AreEqual (240, qv.Value);
             Assert.AreEqual ("4 minutes", qv.ToUserQuery ());
             Assert.AreEqual ("240000", qv.ToSql ());
         }
-    
+
         [Test]
         public void QueryParsing ()
         {
@@ -144,16 +144,16 @@ namespace Hyena.Query.Tests
                 "by:on", // bgo#601065
                 "on:by",
             };
-    
+
             AssertForEach<string> (tests, UserQueryParsesAndGenerates);
         }
-    
+
         [Test]
         public void CustomFormatParenthesisBugFixed ()
         {
             QueryValue val = new StringQueryValue ();
             val.ParseUserQuery ("mp3");
-    
+
             Assert.AreEqual (
                 "(CoreTracks.MimeType LIKE '%mp3%' ESCAPE '\\' OR CoreTracks.Uri LIKE '%mp3%' ESCAPE '\\')",
                 MimeTypeField.ToSql (StringQueryValue.Contains, val)
@@ -231,15 +231,15 @@ namespace Hyena.Query.Tests
             Assert.IsNotNull (query_tree, "Query should parse");
             Assert.AreEqual ("by==\"foo (disc 2)\"", query_tree.ToUserQuery ());
         }
-    
+
         private static void UserQueryParsesAndGenerates (string query)
         {
             QueryNode node = UserQueryParser.Parse (query, FieldSet);
             if (query == null || query.Trim () == String.Empty) {
-                Assert.AreEqual (node, null); 
+                Assert.AreEqual (node, null);
                 return;
             }
-    
+
             Assert.AreEqual (query, node.ToUserQuery ());
         }
     }

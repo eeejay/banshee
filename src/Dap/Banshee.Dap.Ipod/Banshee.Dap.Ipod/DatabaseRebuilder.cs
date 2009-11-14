@@ -49,7 +49,7 @@ namespace Banshee.Dap.Ipod
             public string Path;
             public TagLib.File File;
         }
-        
+
         private class FileContainerComparer : IComparer<FileContainer>
         {
             public int Compare (FileContainer a, FileContainer b)
@@ -58,25 +58,25 @@ namespace Banshee.Dap.Ipod
                 if (artist != 0) {
                     return artist;
                 }
-                
+
                 int album = String.Compare (a.File.Tag.Album, b.File.Tag.Album);
                 if (album != 0) {
                     return album;
                 }
-                
+
                 int at = (int)a.File.Tag.Track;
                 int bt = (int)b.File.Tag.Track;
-                
+
                 if (at == bt) {
                     return 0;
                 } else if (at < bt) {
                     return -1;
                 }
-                
+
                 return 1;
             }
         }
-    
+
         private IpodSource source;
         private UserJob user_job;
         private Queue<FileInfo> song_queue = new Queue<FileInfo>();
@@ -88,7 +88,7 @@ namespace Banshee.Dap.Ipod
         public DatabaseRebuilder (IpodSource source)
         {
             this.source = source;
-            
+
             user_job = new UserJob (Catalog.GetString ("Rebuilding Database"));
             user_job.PriorityHints = PriorityHints.SpeedSensitive | PriorityHints.DataLossIfStopped;
             user_job.SetResources (Resource.Disk, Resource.Cpu);
@@ -97,78 +97,78 @@ namespace Banshee.Dap.Ipod
             user_job.IconNames = source._GetIconNames ();
             user_job.CanCancel = true;
             user_job.Register ();
-            
+
             ThreadPool.QueueUserWorkItem (RebuildDatabase);
         }
-        
+
         private void RebuildDatabase (object state)
         {
             string music_path = Paths.Combine (source.IpodDevice.ControlPath, "Music");
-            
+
             Directory.CreateDirectory (source.IpodDevice.ControlPath);
             Directory.CreateDirectory (music_path);
-        
+
             DirectoryInfo music_dir = new DirectoryInfo (music_path);
-                
+
             foreach (DirectoryInfo directory in music_dir.GetDirectories ()) {
                 ScanMusicDirectory (directory);
             }
-            
+
             ProcessTrackQueue ();
         }
-        
+
         private void ScanMusicDirectory (DirectoryInfo directory)
         {
             foreach (FileInfo file in directory.GetFiles ()) {
                 song_queue.Enqueue (file);
             }
         }
-        
+
         private void ProcessTrackQueue ()
         {
             discovery_count = song_queue.Count;
-            
+
             user_job.Status = Catalog.GetString ("Processing Tracks...");
-            
+
             while (song_queue.Count > 0) {
                 user_job.Progress = (double)(discovery_count - song_queue.Count) / (double)discovery_count;
-                
+
                 try {
                     ProcessTrack (song_queue.Dequeue ());
                 } catch {
                 }
-                
+
                 if (user_job.IsCancelRequested) {
                     break;
                 }
             }
-            
+
             user_job.Progress = 0.0;
             user_job.Status = Catalog.GetString ("Ordering Tracks...");
-            
+
             files.Sort (new FileContainerComparer ());
-            
+
             foreach (FileContainer container in files) {
                 try {
                     ProcessTrack (container);
                 } catch {
                 }
-                
+
                 if (user_job.IsCancelRequested) {
                     break;
                 }
             }
-            
+
             if (!user_job.IsCancelRequested) {
                 SaveDatabase ();
             }
-            
+
             user_job.Finish ();
             user_job = null;
-            
+
             OnFinished ();
         }
-        
+
         private void ProcessTrack (FileInfo file)
         {
             TagLib.File af = Banshee.IO.DemuxVfs.OpenFile (file.FullName);
@@ -177,7 +177,7 @@ namespace Banshee.Dap.Ipod
             container.Path = file.FullName;
             files.Add (container);
         }
-        
+
         private void ProcessTrack (FileContainer container)
         {
             TagLib.File af = container.File;
@@ -198,26 +198,26 @@ namespace Banshee.Dap.Ipod
             if ((af.Properties.MediaTypes & TagLib.MediaTypes.Video) != 0) {
                 song.Type = MediaType.Video;
             }
-            
+
             ResolveCoverArt (song);
         }
-        
+
         private void ResolveCoverArt (Track track)
         {
             string aaid = CoverArtSpec.CreateArtistAlbumId (track.Artist, track.Album);
             string path = CoverArtSpec.GetPath (aaid);
-            
+
             if (File.Exists (path)) {
                 IpodTrackInfo.SetIpodCoverArt (source.IpodDevice, track, path);
             }
         }
-        
+
         private void SaveDatabase ()
         {
             user_job.CanCancel = false;
             user_job.Status = Catalog.GetString ("Saving new database...");
             user_job.Progress = 0.0;
-            
+
             try {
                 source.IpodDevice.Name = source.Name;
                 source.IpodDevice.TrackDatabase.Save ();
@@ -230,7 +230,7 @@ namespace Banshee.Dap.Ipod
                 Log.Error (Catalog.GetString ("Error rebuilding iPod database"), e.Message);
             }
         }
-        
+
         protected virtual void OnFinished ()
         {
             ThreadAssist.ProxyToMain (delegate {

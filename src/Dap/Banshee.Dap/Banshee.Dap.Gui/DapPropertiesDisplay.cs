@@ -44,12 +44,12 @@ using Hyena.Gui.Theming;
 
 namespace Banshee.Dap.Gui
 {
-    
+
     public class DapPropertiesDisplay : Alignment, ISourceContents
     {
         private DapSource source;
         private Theme theme;
-        
+
         private Gdk.Pixbuf large_icon;
         public Gdk.Pixbuf LargeIcon {
             get {
@@ -64,23 +64,23 @@ namespace Banshee.Dap.Gui
         protected DapPropertiesDisplay (IntPtr ptr) : base (ptr)
         {
         }
-        
+
         public DapPropertiesDisplay (DapSource source) : base (0.5f, 0.35f, 0.0f, 0.0f)
         {
             AppPaintable = true;
             this.source = source;
         }
-        
+
         protected override void OnRealized ()
         {
             base.OnRealized ();
             theme = new GtkTheme (this);
         }
-        
+
         protected override bool OnExposeEvent (Gdk.EventExpose evnt)
         {
             Cairo.Context cr = Gdk.CairoHelper.Create (evnt.Window);
-                
+
             try {
                 DrawFrame (cr, evnt.Area);
                 return base.OnExposeEvent (evnt);
@@ -88,36 +88,36 @@ namespace Banshee.Dap.Gui
                 ((IDisposable)cr).Dispose ();
             }
         }
-        
+
         private void DrawFrame (Cairo.Context cr, Gdk.Rectangle clip)
         {
-            Gdk.Rectangle rect = new Gdk.Rectangle (Allocation.X, Allocation.Y, 
+            Gdk.Rectangle rect = new Gdk.Rectangle (Allocation.X, Allocation.Y,
                 Allocation.Width, Allocation.Height);
             theme.Context.ShowStroke = true;
             theme.DrawFrameBackground (cr, rect, true);
             theme.DrawFrameBorder (cr, rect);
         }
-        
+
         protected override void OnSizeAllocated (Gdk.Rectangle allocation)
         {
             base.OnSizeAllocated (allocation);
             QueueDraw ();
         }
-        
+
         /*private void BuildPropertyTable ()
         {
             MessagePane pane = new MessagePane ();
-            pane.HeaderIcon = 
+            pane.HeaderIcon =
             pane.HeaderMarkup = String.Format ("<big><b>{0}</b></big>", GLib.Markup.EscapeText (source.Name));
-            
+
             Button properties_button = new Button (String.Format (Catalog.GetString ("{0} Properties"), source.GenericName));
             pane.Append (properties_button);
-            
+
             Add (pane);
         }*/
-        
+
 #region ISourceContents
-        
+
         public bool SetSource (ISource src)
         {
             this.source = source as DapSource;
@@ -136,7 +136,7 @@ namespace Banshee.Dap.Gui
         public Widget Widget {
             get { return this; }
         }
-        
+
 #endregion
 
     }

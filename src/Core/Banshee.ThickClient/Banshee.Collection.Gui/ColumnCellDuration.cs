@@ -1,4 +1,4 @@
-// 
+//
 // ColumnCellDuration.cs
 //
 // Author:
@@ -39,22 +39,22 @@ namespace Banshee.Collection.Gui
             Alignment = Pango.Alignment.Right;
             SetMinMaxStrings (TimeSpan.FromHours (5.73), TimeSpan.FromDays (7.34));
         }
-        
+
         protected override string GetText (object obj)
         {
             if (!(obj is TimeSpan)) {
                 return base.GetText (obj);
             }
-            
+
             // Fancy rounding commented out since it's not consistent with what is
             // done in libbanshee.  See http://bugzilla.gnome.org/show_bug.cgi?id=520648
             //int seconds = (int)Math.Round(((TimeSpan)obj).TotalSeconds);
             int seconds = (int) ((TimeSpan)obj).TotalSeconds;
-            
+
             if (seconds == 0) {
                 return String.Empty;
             }
-                
+
             return Banshee.Sources.DurationStatusFormatters.ConfusingPreciseFormatter (TimeSpan.FromSeconds (seconds));
         }
     }

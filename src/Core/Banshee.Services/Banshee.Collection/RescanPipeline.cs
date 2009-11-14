@@ -50,7 +50,7 @@ namespace Banshee.Collection
     // 4. Remove tracks that aren't on disk and weren't found to have moved
     //
     // Approach:
-    // 1. For each file in the source's directory, find orphaned db track if any, or add if new 
+    // 1. For each file in the source's directory, find orphaned db track if any, or add if new
     //    and update if modified; update the LastScannedAt stamp
     // 2. Remove all db tracks from the database that weren't scanned (LastScannedAt < scan_started)
     public class RescanPipeline : QueuePipeline<string>
@@ -68,7 +68,7 @@ namespace Banshee.Collection
             AddElement (new Banshee.IO.DirectoryScannerPipelineElement ());
             AddElement (track_sync = new TrackSyncPipelineElement (psource, scan_started));
             Finished += OnFinished;
-            
+
             BuildJob ();
             Enqueue (psource.BaseDirectory);
         }
@@ -159,14 +159,14 @@ namespace Banshee.Collection
             //Hyena.Log.DebugFormat ("Rescanning item {0}", file_path);
             try {
                 SafeUri uri = new SafeUri (file_path);
-                
+
                 IDataReader reader = ServiceManager.DbConnection.Query (fetch_command, psource.DbId, uri.AbsoluteUri);
                 if (reader.Read () ) {
                     //Hyena.Log.DebugFormat ("Found it in the db!");
                     DatabaseTrackInfo track = DatabaseTrackInfo.Provider.Load (reader);
-                    
+
                     MergeIfModified (track);
-    
+
                     // Either way, update the LastSyncStamp
                     track.LastSyncedStamp = DateTime.Now;
                     track.Save (false);
@@ -175,7 +175,7 @@ namespace Banshee.Collection
                     // This URI is not in the database - try to find it based on MetadataHash in case it was simply moved
                     DatabaseTrackInfo track = new DatabaseTrackInfo ();
                     Banshee.Streaming.StreamTagger.TrackInfoMerge (track, uri);
-    
+
                     IDataReader similar_reader = ServiceManager.DbConnection.Query (fetch_similar_command, psource.DbId, scan_started, track.MetadataHash);
                     DatabaseTrackInfo similar_track = null;
                     while (similar_reader.Read ()) {
@@ -191,7 +191,7 @@ namespace Banshee.Collection
                         }
                         similar_track = null;
                     }
-    
+
                     // If we still couldn't find it, try to import it
                     if (similar_track == null) {
                         //Hyena.Log.DebugFormat ("Couldn't find it, so queueing to import it");

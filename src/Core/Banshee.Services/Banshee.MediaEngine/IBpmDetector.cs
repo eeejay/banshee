@@ -35,7 +35,7 @@ using Banshee.Collection;
 namespace Banshee.MediaEngine
 {
     public delegate void BpmEventHandler (object o, BpmEventArgs args);
-    
+
     public class BpmEventArgs : EventArgs
     {
         public SafeUri Uri { get; private set; }

@@ -38,7 +38,7 @@ namespace Banshee.OsxBackend
     {
         public event DeviceAddedHandler DeviceAdded;
         public event DeviceRemovedHandler DeviceRemoved;
- 
+
         public void Dispose ()
         {
         }
@@ -47,22 +47,22 @@ namespace Banshee.OsxBackend
         {
             yield break;
         }
-        
+
         private IEnumerable<T> GetAllBlockDevices<T> () where T : IBlockDevice
         {
             yield break;
         }
-        
+
         public IEnumerable<IBlockDevice> GetAllBlockDevices ()
         {
             return GetAllBlockDevices<IBlockDevice> ();
         }
-        
+
         public IEnumerable<ICdromDevice> GetAllCdromDevices ()
         {
             return GetAllBlockDevices<ICdromDevice> ();
         }
-        
+
         public IEnumerable<IDiskDevice> GetAllDiskDevices ()
         {
             return GetAllBlockDevices<IDiskDevice> ();

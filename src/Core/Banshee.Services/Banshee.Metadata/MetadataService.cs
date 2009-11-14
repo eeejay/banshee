@@ -39,18 +39,18 @@ namespace Banshee.Metadata
     public class MetadataService : BaseMetadataProvider
     {
         private static MetadataService instance;
-        
+
         public static MetadataService Instance {
             get {
                 if (instance == null) {
                     instance = new MetadataService ();
                 }
-                
+
                 return instance;
             }
         }
-        
-        private Dictionary<IBasicTrackInfo, IMetadataLookupJob> queries 
+
+        private Dictionary<IBasicTrackInfo, IMetadataLookupJob> queries
             = new Dictionary<IBasicTrackInfo, IMetadataLookupJob> ();
         private List<IMetadataProvider> providers = new List<IMetadataProvider> ();
 
@@ -61,7 +61,7 @@ namespace Banshee.Metadata
             AddProvider (new Banshee.Metadata.Rhapsody.RhapsodyMetadataProvider ());
             AddProvider (new Banshee.Metadata.MusicBrainz.MusicBrainzMetadataProvider ());
             AddProvider (new Banshee.Metadata.LastFM.LastFMMetadataProvider ());
-            
+
             Scheduler.JobFinished += OnSchedulerJobFinished;
             Scheduler.JobUnscheduled += OnSchedulerJobUnscheduled;
         }
@@ -70,25 +70,25 @@ namespace Banshee.Metadata
         {
             return new MetadataServiceJob (this, track);
         }
-        
+
         public override void Lookup (IBasicTrackInfo track)
         {
             Lookup (track, JobPriority.Highest);
         }
-        
+
         public void Lookup (IBasicTrackInfo track, JobPriority priority)
         {
             if (track == null || queries == null || track.ArtworkId == null) {
                 return;
             }
-            
+
             lock (((ICollection)queries).SyncRoot) {
                 if (!queries.ContainsKey (track)) {
                     IMetadataLookupJob job = CreateJob (track);
                     if (job == null) {
                         return;
                     }
-                    
+
                     queries.Add (track, job);
                     Scheduler.Schedule (job, priority);
                 }
@@ -117,42 +117,42 @@ namespace Banshee.Metadata
                 providers.Remove (provider);
             }
         }
-        
+
         private bool RemoveJob (IMetadataLookupJob job)
         {
             if (job == null || job.Track == null) {
                 return false;
             }
-            
+
             lock (((ICollection)queries).SyncRoot) {
                 if (queries.ContainsKey (job.Track)) {
                     queries.Remove (job.Track);
                     return true;
                 }
-                
+
                 return false;
             }
         }
-        
+
         private void OnSchedulerJobFinished (IJob job)
         {
             if (!(job is IMetadataLookupJob)) {
                 return;
             }
-            
+
             IMetadataLookupJob lookup_job = (IMetadataLookupJob)job;
             if (RemoveJob (lookup_job)) {
-                Banshee.Base.ThreadAssist.ProxyToMain (delegate { 
-                    OnHaveResult (lookup_job.Track, lookup_job.ResultTags); 
+                Banshee.Base.ThreadAssist.ProxyToMain (delegate {
+                    OnHaveResult (lookup_job.Track, lookup_job.ResultTags);
                 });
             }
         }
-        
+
         private void OnSchedulerJobUnscheduled (IJob job)
         {
             RemoveJob (job as IMetadataLookupJob);
         }
-        
+
         public ReadOnlyCollection<IMetadataProvider> Providers {
             get {
                 lock (providers) {

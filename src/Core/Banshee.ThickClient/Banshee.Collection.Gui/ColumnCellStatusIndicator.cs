@@ -109,28 +109,28 @@ namespace Banshee.Collection.Gui
         protected string [] StatusNames {
             get { return status_names; }
         }
-        
+
         private int pixbuf_size = 16;
         protected virtual int PixbufSize {
             get { return pixbuf_size; }
             set { pixbuf_size = value; }
         }
-        
+
         private int pixbuf_spacing = 4;
         protected virtual int PixbufSpacing {
             get { return pixbuf_spacing; }
             set { pixbuf_spacing = value; }
         }
-        
+
         private Gdk.Pixbuf [] pixbufs;
         protected Gdk.Pixbuf [] Pixbufs {
             get { return pixbufs; }
         }
-        
+
         public ColumnCellStatusIndicator (string property) : this (property, true)
         {
         }
-        
+
         public ColumnCellStatusIndicator (string property, bool expand) : base (property, expand)
         {
             LoadPixbufs ();
@@ -166,7 +166,7 @@ namespace Banshee.Collection.Gui
         protected virtual int PixbufCount {
             get { return 4; }
         }
-        
+
         protected virtual int GetIconIndex (TrackInfo track)
         {
             int icon_index = -1;
@@ -185,7 +185,7 @@ namespace Banshee.Collection.Gui
 
             return icon_index;
         }
-        
+
         protected virtual void LoadPixbufs ()
         {
             if (pixbufs != null && pixbufs.Length > 0) {
@@ -196,7 +196,7 @@ namespace Banshee.Collection.Gui
                     }
                 }
             }
-            
+
             if (pixbufs == null) {
                 pixbufs = new Gdk.Pixbuf[PixbufCount];
             }
@@ -217,7 +217,7 @@ namespace Banshee.Collection.Gui
             status_names[(int)Icon.Error]     = Catalog.GetString ("Error");
             status_names[(int)Icon.Protected] = Catalog.GetString ("Protected");
         }
-        
+
         public override void NotifyThemeChange ()
         {
             LoadPixbufs ();
@@ -229,27 +229,27 @@ namespace Banshee.Collection.Gui
             if (track == null) {
                 return;
             }
-            
+
             int icon_index = GetIconIndex (track);
-            
+
             if (icon_index < 0 || pixbufs == null || pixbufs[icon_index] == null) {
                 return;
             }
-            
+
             context.Context.Translate (0, 0.5);
-            
+
             Gdk.Pixbuf render_pixbuf = pixbufs[icon_index];
-            
-            Cairo.Rectangle pixbuf_area = new Cairo.Rectangle ((cellWidth - render_pixbuf.Width) / 2, 
+
+            Cairo.Rectangle pixbuf_area = new Cairo.Rectangle ((cellWidth - render_pixbuf.Width) / 2,
                 (cellHeight - render_pixbuf.Height) / 2, render_pixbuf.Width, render_pixbuf.Height);
-            
+
             if (!context.Opaque) {
                 context.Context.Save ();
             }
-            
+
             Gdk.CairoHelper.SetSourcePixbuf (context.Context, render_pixbuf, pixbuf_area.X, pixbuf_area.Y);
             context.Context.Rectangle (pixbuf_area);
-            
+
             if (!context.Opaque) {
                 context.Context.Clip ();
                 context.Context.PaintWithAlpha (0.5);

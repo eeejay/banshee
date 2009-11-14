@@ -44,7 +44,7 @@ namespace Banshee.Preferences
         public Section ()
         {
         }
-        
+
         public Section (string id, string name, int order)
         {
             Id = id;

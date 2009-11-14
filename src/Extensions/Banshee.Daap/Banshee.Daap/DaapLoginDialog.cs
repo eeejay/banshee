@@ -1,4 +1,4 @@
-// 
+//
 // DaapLoginDialog.cs
 //
 // Author:
@@ -42,7 +42,7 @@ namespace Banshee.Daap
         private Entry username_entry;
         private Entry password_entry;
         private Gtk.AccelGroup accel_group;
-        
+
         public DaapLoginDialog(string shareName, bool showUsername) :  base(
             Catalog.GetString("Login to Music Share"),
             null,
@@ -57,7 +57,7 @@ namespace Banshee.Daap
             AddAccelGroup(accel_group);
             BuildWindow();
         }
-        
+
         private void BuildWindow()
         {
             BorderWidth = 5;
@@ -67,66 +67,66 @@ namespace Banshee.Daap
             HBox box = new HBox();
             box.BorderWidth = 5;
             box.Spacing = 15;
-            
+
             Image image = new Image(Stock.Network, IconSize.Dialog);
             image.Yalign = 0.2f;
             box.PackStart(image, false, false, 0);
-            
+
             VBox content_box = new VBox();
             content_box.Spacing = 12;
-            
+
             Label header = new Label();
             header.Markup = "<big><b>" + GLib.Markup.EscapeText(Catalog.GetString(
                 "Authentication Required")) + "</b></big>";
             header.Justify = Justification.Left;
             header.SetAlignment(0.0f, 0.5f);
-            
+
             Label message = new Label(Catalog.GetString(String.Format(
                 "Please provide login information to access {0}.", share_name)));
             message.Wrap = true;
             message.Justify = Justification.Left;
             message.SetAlignment(0.0f, 0.5f);
-            
+
             content_box.PackStart(header, false, false, 0);
             content_box.PackStart(message, false, false, 0);
-            
+
             username_entry = new Entry();
             password_entry = new Entry();
             password_entry.Visibility = false;
-            
+
             uint yoff = show_username ? (uint)0 : (uint)1;
-            
+
             Table table = new Table(2, 2, false);
             table.RowSpacing = 5;
             table.ColumnSpacing = 10;
-            
+
             if(show_username) {
                 table.Attach(new Label(Catalog.GetString("Username:")), 0, 1, 0, 1,
                     AttachOptions.Shrink, AttachOptions.Shrink, 0, 0);
-                
+
                 table.Attach(username_entry, 1, 2, 0, 1,
                     AttachOptions.Expand | AttachOptions.Fill,
                     AttachOptions.Shrink, 0, 0);
             }
-            
+
             table.Attach(new Label(Catalog.GetString("Password:")), 0, 1, 1 - yoff, 2 - yoff,
                 AttachOptions.Shrink, AttachOptions.Shrink, 0, 0);
-            
+
             table.Attach(password_entry, 1, 2, 1 - yoff, 2 - yoff,
                 AttachOptions.Expand | AttachOptions.Fill,
                 AttachOptions.Shrink, 0, 0);
-            
+
             content_box.PackStart(table, false, false, 0);
-            
+
             box.PackStart(content_box, true, true, 0);
 
             /* Translators: this is a verb used as a button label, not a noun */
             AddButton(Catalog.GetString("Login"), ResponseType.Ok, true);
-            
+
             box.ShowAll();
             VBox.Add(box);
         }
-        
+
         private void AddButton(string stock_id, Gtk.ResponseType response, bool is_default)
         {
             Gtk.Button button = new Gtk.Button(stock_id);
@@ -140,13 +140,13 @@ namespace Banshee.Daap
                 button.AddAccelerator("activate", accel_group, (uint)Gdk.Key.Return, 0, Gtk.AccelFlags.Visible);
             }
         }
-        
+
         public string Username {
             get {
                 return username_entry.Text == String.Empty ? null : username_entry.Text;
             }
         }
-        
+
         public string Password {
             get {
                 return password_entry.Text;

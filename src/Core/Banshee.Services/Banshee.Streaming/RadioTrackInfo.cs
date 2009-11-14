@@ -40,12 +40,12 @@ using Banshee.ServiceStack;
 using Banshee.MediaEngine;
 using Banshee.PlaybackController;
 using Banshee.Playlists.Formats;
- 
+
 namespace Banshee.Streaming
-{   
+{
     public class RadioTrackInfo : TrackInfo
     {
-    
+
 #region Static Helper Methods
 
         public static RadioTrackInfo OpenPlay (string uri)
@@ -57,7 +57,7 @@ namespace Banshee.Streaming
                 return null;
             }
         }
-        
+
         public static RadioTrackInfo OpenPlay (SafeUri uri)
         {
             RadioTrackInfo track = Open (uri);
@@ -66,12 +66,12 @@ namespace Banshee.Streaming
             }
             return track;
         }
-    
+
         public static RadioTrackInfo Open (string uri)
         {
             return Open (new SafeUri (uri));
         }
-    
+
         public static RadioTrackInfo Open (SafeUri uri)
         {
             try {
@@ -79,23 +79,23 @@ namespace Banshee.Streaming
                 radio_track.ParsingPlaylistEvent += delegate {
                     ThreadAssist.ProxyToMain (delegate {
                         if (radio_track.PlaybackError != StreamPlaybackError.None) {
-                            Log.Error (Catalog.GetString ("Error opening stream"), 
+                            Log.Error (Catalog.GetString ("Error opening stream"),
                                 Catalog.GetString ("Could not open stream or playlist"), true);
                             radio_track = null;
                         }
                     });
                 };
-                
+
                 return radio_track;
             } catch {
-                Log.Error (Catalog.GetString ("Error opening stream"), 
+                Log.Error (Catalog.GetString ("Error opening stream"),
                     Catalog.GetString("Problem parsing playlist"), true);
                 return null;
             }
         }
 
 #endregion
-        
+
         private Track track;
         private SafeUri single_location;
         private List<SafeUri> stream_uris = new List<SafeUri>();
@@ -103,33 +103,33 @@ namespace Banshee.Streaming
         private bool loaded = false;
         private bool parsing_playlist = false;
         private bool trying_to_play;
-        
+
         private TrackInfo parent_track;
         public TrackInfo ParentTrack {
             get { return parent_track; }
             set { parent_track = value; }
         }
-        
+
         public event EventHandler ParsingPlaylistEvent;
-        
+
         protected RadioTrackInfo()
         {
             IsLive = true;
         }
-        
+
         public RadioTrackInfo(Track track) : this()
         {
             TrackTitle = track.Title;
             ArtistName = track.Creator;
-            
+
             this.track = track;
         }
-        
+
         public RadioTrackInfo(SafeUri uri) : this()
         {
             this.single_location = uri;
         }
-        
+
         public RadioTrackInfo (TrackInfo parentTrack) : this (parentTrack.Uri)
         {
             ArtistName = parentTrack.ArtistName;
@@ -205,10 +205,10 @@ namespace Banshee.Streaming
                 TrackTitle = track.Title;
                 ArtistName = track.Creator;
             }
-            
+
             AlbumTitle = null;
             Duration = TimeSpan.Zero;
-            
+
             lock(stream_uris) {
                 if(stream_uris.Count > 0) {
                     Uri = stream_uris[stream_index];
@@ -228,7 +228,7 @@ namespace Banshee.Streaming
 
             trying_to_play = false;
         }
-        
+
         public bool PlayNextStream()
         {
             if(stream_index < stream_uris.Count - 1) {
@@ -261,7 +261,7 @@ namespace Banshee.Streaming
                 } else {
                     LoadStreamUri(single_location.AbsoluteUri);
                 }
-                
+
                 loaded = true;
             }
 
@@ -283,7 +283,7 @@ namespace Banshee.Streaming
             }
             return false;
         }
-        
+
         private void LoadStreamUri(string uri)
         {
             try {
@@ -311,19 +311,19 @@ namespace Banshee.Streaming
                 SavePlaybackError (StreamPlaybackError.Unknown);
             }
         }
-        
+
         private void OnParsingPlaylistStarted()
         {
             parsing_playlist = true;
             OnParsingPlaylistEvent();
         }
-        
+
         private void OnParsingPlaylistFinished()
         {
             parsing_playlist = false;
             OnParsingPlaylistEvent();
         }
-        
+
         private void OnParsingPlaylistEvent()
         {
             EventHandler handler = ParsingPlaylistEvent;
@@ -335,7 +335,7 @@ namespace Banshee.Streaming
         public Track XspfTrack {
             get { return track; }
         }
-        
+
         public bool ParsingPlaylist {
             get { return parsing_playlist; }
         }

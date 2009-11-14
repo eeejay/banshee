@@ -43,9 +43,9 @@ namespace Banshee.Dap.MassStorage
                 "/Banshee/Dap/MassStorage/Device")) {
                 short vendor_id = (short)u.VendorId;
                 short product_id = (short)u.ProductId;
-                
+
                 if (node.Matches (vendor_id, product_id)) {
-                    CustomMassStorageDevice device = (CustomMassStorageDevice)node.CreateInstance (); 
+                    CustomMassStorageDevice device = (CustomMassStorageDevice)node.CreateInstance ();
                     device.VendorProductInfo = new VendorProductInfo (
                         node.VendorName, node.ProductName,
                         vendor_id, product_id);
@@ -64,7 +64,7 @@ namespace Banshee.Dap.MassStorage
                     };
                 }
             }
-            
+
             return new MassStorageDevice (source);
         }
     }

@@ -36,7 +36,7 @@ namespace Banshee.PlatformServices
     {
         private IScreensaverManager manager;
         bool inhibited = false;
-        
+
         public ScreensaverManager ()
         {
             foreach (TypeExtensionNode node in AddinManager.GetExtensionNodes ("/Banshee/PlatformServices/ScreensaverManager")) {
@@ -45,16 +45,16 @@ namespace Banshee.PlatformServices
                     Log.DebugFormat ("Loaded IScreensaverManager: {0}", manager.GetType ().FullName);
                     break;
                 } catch (Exception e) {
-                    Log.Exception ("IScreensaverManager extension failed to load", e);    
+                    Log.Exception ("IScreensaverManager extension failed to load", e);
                 }
             }
         }
-        
+
         public void Dispose ()
         {
             UnInhibit ();
         }
-        
+
         public void Inhibit ()
         {
             if (manager != null && !inhibited) {
@@ -63,7 +63,7 @@ namespace Banshee.PlatformServices
                 inhibited = true;
             }
         }
-        
+
         public void UnInhibit ()
         {
             if (manager != null && inhibited) {

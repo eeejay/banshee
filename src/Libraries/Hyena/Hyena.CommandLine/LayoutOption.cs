@@ -1,4 +1,4 @@
-// 
+//
 // LayoutOption.cs
 //
 // Author:
@@ -27,22 +27,22 @@
 //
 
 namespace Hyena.CommandLine
-{   
+{
     public class LayoutOption
     {
         private string name;
         private string description;
-        
+
         public LayoutOption (string name, string description)
         {
             this.name = name;
-            this.description = description;        
+            this.description = description;
         }
-        
+
         public string Name {
             get { return name; }
         }
-        
+
         public string Description {
             get { return description; }
         }

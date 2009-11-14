@@ -33,12 +33,12 @@ namespace Hyena.Gui
     internal class TestModuleAttribute : Attribute
     {
         private string name;
-        public string Name {    
+        public string Name {
             get { return name; }
             set { name = value; }
         }
-        
-        public TestModuleAttribute (string name) 
+
+        public TestModuleAttribute (string name)
         {
             this.name = name;
         }

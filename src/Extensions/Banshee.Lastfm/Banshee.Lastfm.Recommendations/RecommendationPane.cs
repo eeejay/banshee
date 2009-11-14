@@ -71,9 +71,9 @@ namespace Banshee.Lastfm.Recommendations
         private TitledList artist_box;
         private TitledList album_box;
         private TitledList track_box;
-        
+
         private Gtk.ScrolledWindow similar_artists_view_sw;
-        
+
         private TileView similar_artists_view;
         private VBox album_list;
         private VBox track_list;
@@ -91,7 +91,7 @@ namespace Banshee.Lastfm.Recommendations
             Catalog.GetString ("Unknown Artist"),
             Catalog.GetString ("Various Artists")
         };
-        
+
         private bool ready = false;
         private bool refreshing = false;
         private bool show_when_ready = true;
@@ -100,7 +100,7 @@ namespace Banshee.Lastfm.Recommendations
             set {
                 show_when_ready = value;
                 ShowIfReady ();
-                
+
                 if (!show_when_ready) {
                     CancelTasks ();
                 } else if (!ready && !refreshing) {
@@ -108,7 +108,7 @@ namespace Banshee.Lastfm.Recommendations
                 }
             }
         }
-        
+
         private void ShowIfReady ()
         {
             if (ShowWhenReady && ready) {
@@ -123,7 +123,7 @@ namespace Banshee.Lastfm.Recommendations
                 if (artist == value) {
                     return;
                 }
-                
+
                 ready = false;
                 artist = value;
 
@@ -133,35 +133,35 @@ namespace Banshee.Lastfm.Recommendations
                         break;
                     }
                 }
-                
+
                 if (!String.IsNullOrEmpty (artist)) {
                     RefreshRecommendations ();
                 }
             }
         }
-        
+
         private void RefreshRecommendations ()
         {
             CancelTasks ();
-            
+
             if (show_when_ready && !String.IsNullOrEmpty (Artist)) {
                 refreshing = true;
                 context_page.SetState (Banshee.ContextPane.ContextState.Loading);
                 Banshee.Kernel.Scheduler.Schedule (new RefreshRecommendationsJob (this, Artist));
             }
         }
-        
+
         private void CancelTasks ()
         {
             Banshee.Kernel.Scheduler.Unschedule (typeof (RefreshRecommendationsJob));
             refreshing = false;
         }
-        
+
         public void HideWithTimeout ()
         {
             GLib.Timeout.Add (200, OnHideTimeout);
         }
-        
+
         private bool OnHideTimeout ()
         {
             if (!ShowWhenReady || !ready) {
@@ -196,7 +196,7 @@ namespace Banshee.Lastfm.Recommendations
             track_box.TitleWidthChars = 25;
             track_list = new VBox ();
             track_box.PackStart (track_list, true, true, 0);
-            
+
             no_artists_pane = new MessagePane ();
             no_artists_pane.NoShowAll = true;
             no_artists_pane.Visible = false;
@@ -218,72 +218,72 @@ namespace Banshee.Lastfm.Recommendations
             main_box.PackStart (album_box, false, false, 5);
             main_box.PackStart (new VSeparator (), false, false, 0);
             main_box.PackStart (track_box, false, false, 5);
-            
+
             no_artists_pane.Hide ();
         }
-        
+
         private void OnSideSizeAllocated (object o, SizeAllocatedArgs args)
         {
             SetSizeRequest (-1, args.Allocation.Height + (Allocation.Height - args.Allocation.Height));
         }
-        
+
         protected override void OnStyleSet (Style previous_style)
         {
             base.OnStyleSet (previous_style);
             similar_artists_view.ModifyBg (StateType.Normal, Style.Base (StateType.Normal));
         }
-        
+
         private class RefreshRecommendationsJob : Banshee.Kernel.Job
         {
             private RecommendationPane pane;
             private string artist;
-            
+
             public RefreshRecommendationsJob (RecommendationPane pane, string artist)
             {
                 this.pane = pane;
                 this.artist = artist;
             }
-            
+
             protected override void RunJob ()
             {
                 pane.UpdateForArtist (artist);
             }
         }
-            
+
         private void UpdateForArtist (string artist)
         {
             try {
                 LastfmArtistData artist_data = new LastfmArtistData (artist);
-                
+
                 // Make sure all the album art is downloaded
                 foreach (SimilarArtist similar in artist_data.SimilarArtists) {
                     DataCore.DownloadContent (similar.SmallImageUrl);
                 }
-                
+
                 UpdateForArtist (artist, artist_data.SimilarArtists, artist_data.TopAlbums, artist_data.TopTracks);
             } catch (Exception e) {
                 Log.Exception (e);
             }
         }
-        
-        private void UpdateForArtist (string artist_name, LastfmData<SimilarArtist> similar_artists, 
+
+        private void UpdateForArtist (string artist_name, LastfmData<SimilarArtist> similar_artists,
             LastfmData<ArtistTopAlbum> top_albums, LastfmData<ArtistTopTrack> top_tracks)
         {
             Banshee.Base.ThreadAssist.ProxyToMain (delegate {
                 album_box.Title = String.Format (album_title_format, artist);
                 track_box.Title = String.Format (track_title_format, artist);
-                
+
                 similar_artists_view.ClearWidgets ();
                 ClearBox (album_list);
                 ClearBox (track_list);
-                
-                // Similar Artists                
+
+                // Similar Artists
                 for (int i = 0; i < Math.Min (20, similar_artists.Count); i++) {
                     SimilarArtistTile tile = new SimilarArtistTile (similar_artists[i]);
                     tile.ShowAll ();
                     similar_artists_view.AddWidget (tile);
                 }
-                
+
                 if (similar_artists.Count > 0) {
                     no_artists_pane.Hide ();
                     similar_artists_view_sw.ShowAll ();
@@ -291,39 +291,39 @@ namespace Banshee.Lastfm.Recommendations
                     similar_artists_view_sw.Hide ();
                     no_artists_pane.ShowAll ();
                 }
-                
+
                 for (int i = 0; i < Math.Min (5, top_albums.Count); i++) {
                     ArtistTopAlbum album = top_albums[i];
                     Button album_button = new Button ();
                     album_button.Relief = ReliefStyle.None;
-        
+
                     Label label = new Label ();
                     label.ModifyFg (StateType.Normal, Style.Text (StateType.Normal));
                     label.Ellipsize = Pango.EllipsizeMode.End;
                     label.Xalign = 0;
                     label.Markup = String.Format ("{0}. {1}", i+1, GLib.Markup.EscapeText (album.Name));
                     album_button.Add (label);
-        
+
                     album_button.Clicked += delegate {
                         Banshee.Web.Browser.Open (album.Url);
                     };
                     album_list.PackStart (album_button, false, true, 0);
                 }
                 album_box.ShowAll ();
-                
+
                 for (int i = 0; i < Math.Min (5, top_tracks.Count); i++) {
                     ArtistTopTrack track = top_tracks[i];
                     Button track_button = new Button ();
                     track_button.Relief = ReliefStyle.None;
-        
+
                     HBox box = new HBox ();
-        
+
                     Label label = new Label ();
                     label.ModifyFg (StateType.Normal, Style.Text (StateType.Normal));
                     label.Ellipsize = Pango.EllipsizeMode.End;
                     label.Xalign = 0;
                     label.Markup = String.Format ("{0}. {1}", i+1, GLib.Markup.EscapeText (track.Name));
-        
+
                     /*if(node.SelectSingleNode("track_id") != null) {
                         box.PackEnd(new Image(now_playing_arrow), false, false, 0);
                         track_button.Clicked += delegate {
@@ -335,19 +335,19 @@ namespace Banshee.Lastfm.Recommendations
                             Banshee.Web.Browser.Open (track.Url);
                         };
                     //}
-        
+
                     box.PackStart (label, true, true, 0);
                     track_button.Add (box);
                     track_list.PackStart (track_button, false, true, 0);
                 }
                 track_box.ShowAll ();
-                
+
                 ready = true;
                 refreshing = false;
                 context_page.SetState (Banshee.ContextPane.ContextState.Loaded);
             });
         }
-        
+
         private static void ClearBox (Box box)
         {
             while (box.Children.Length > 0) {

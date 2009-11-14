@@ -45,29 +45,29 @@ namespace Banshee.Base
         {
             return CoverExists (CreateArtistAlbumId (artist, album));
         }
-    
+
         public static bool CoverExists (string aaid)
         {
             return CoverExistsForSize (aaid, 0);
         }
-        
+
         public static bool CoverExistsForSize (string aaid, int size)
         {
             return aaid == null ? false : File.Exists (GetPathForSize (aaid, size));
         }
-        
+
         public static string GetPath (string aaid)
         {
             return GetPathForSize (aaid, 0);
         }
-    
+
         public static string GetPathForSize (string aaid, int size)
         {
             return size == 0
                 ? Path.Combine (RootPath, String.Format ("{0}.jpg", aaid))
-                : Path.Combine (RootPath, Path.Combine (size.ToString (), String.Format ("{0}.jpg", aaid))); 
+                : Path.Combine (RootPath, Path.Combine (size.ToString (), String.Format ("{0}.jpg", aaid)));
         }
-    
+
         public static string CreateArtistAlbumId (string artist, string album)
         {
             return CreateArtistAlbumId (artist, album, false);
@@ -83,8 +83,8 @@ namespace Banshee.Base
             string sm_album = EscapePart (album);
 
             return String.IsNullOrEmpty (sm_artist) || String.IsNullOrEmpty (sm_album)
-                ? null 
-                : String.Format ("{0}{1}{2}", sm_artist, asUriPart ? "/" : "-", sm_album); 
+                ? null
+                : String.Format ("{0}{1}{2}", sm_artist, asUriPart ? "/" : "-", sm_album);
         }
 
         private static Regex filter_regex = new Regex (@"[^A-Za-z0-9]*", RegexOptions.Compiled);
@@ -93,22 +93,22 @@ namespace Banshee.Base
             if (String.IsNullOrEmpty (part)) {
                 return null;
             }
-            
+
             int lp_index = part.LastIndexOf ('(');
             if (lp_index > 0) {
                 part = part.Substring (0, lp_index);
             }
-            
+
             return filter_regex.Replace (part, "").ToLower ();
         }
-        
+
         private static string root_path = Path.Combine (XdgBaseDirectorySpec.GetUserDirectory (
             "XDG_CACHE_HOME", ".cache"),  "album-art");
-            
+
         static CoverArtSpec () {
             Hyena.Log.DebugFormat ("Album artwork path set to {0}", root_path);
         }
-            
+
         public static string RootPath {
             get { return root_path; }
         }

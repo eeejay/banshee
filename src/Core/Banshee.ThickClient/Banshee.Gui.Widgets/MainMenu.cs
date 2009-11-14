@@ -39,15 +39,15 @@ namespace Banshee.Gui.Widgets
         public MainMenu ()
         {
             InterfaceActionService interface_service = ServiceManager.Get<InterfaceActionService> ();
-            
+
             MenuShell menu = (MenuShell)interface_service.UIManager.GetWidget ("/MainMenu");
-            
+
             ((PlaybackRepeatActions)interface_service.FindActionGroup ("PlaybackRepeat")).AttachSubmenu (
                 "/MainMenu/PlaybackMenu/RepeatMenu");
-                
+
             ((PlaybackShuffleActions)interface_service.FindActionGroup ("PlaybackShuffle")).AttachSubmenu (
                 "/MainMenu/PlaybackMenu/ShuffleMenu");
-            
+
             menu.Show ();
             PackStart (menu, true, true, 0);
         }

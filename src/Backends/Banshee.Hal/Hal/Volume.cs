@@ -41,7 +41,7 @@ namespace Hal
         void Unmount(string [] args);
         void Eject(string [] args);
     }
-    
+
     public class Volume : Device
     {
         public Volume(string udi) : base(udi)
@@ -52,27 +52,27 @@ namespace Hal
         {
             Mount(new string [] { String.Empty });
         }
-        
+
         public void Mount(params string [] args)
         {
             CastDevice<IVolume>().Mount(args);
         }
-        
+
         public void Unmount()
         {
             Unmount(new string [] { String.Empty });
         }
-        
+
         public void Unmount(params string [] args)
         {
             CastDevice<IVolume>().Unmount(args);
         }
-        
+
         public void Eject()
         {
             Eject(new string [] { String.Empty });
         }
-        
+
         public void Eject(params string [] args)
         {
             CastDevice<IVolume>().Eject(args);

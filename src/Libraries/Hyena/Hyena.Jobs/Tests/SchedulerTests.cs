@@ -35,7 +35,7 @@ using System.Threading;
 using NUnit.Framework;
 
 using Hyena;
-    
+
 namespace Hyena.Jobs
 {
     [TestFixture]

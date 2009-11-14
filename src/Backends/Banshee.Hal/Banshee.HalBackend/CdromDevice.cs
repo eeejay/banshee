@@ -41,28 +41,28 @@ namespace Banshee.HalBackend
             if (device["storage.drive_type"] == "cdrom") {
                 return new CdromDevice (manager, device);
             }
-            
+
             return null;
         }
-        
+
         private CdromDevice (Hal.Manager manager, Hal.Device device) : base (manager, device)
         {
         }
-        
+
         [DllImport ("libc")]
-        private static extern int ioctl (int device, IoctlOperation request, bool lockdoor); 
+        private static extern int ioctl (int device, IoctlOperation request, bool lockdoor);
 
         private enum IoctlOperation {
             LockDoor = 0x5329
         }
-        
+
         private bool is_door_locked = false;
-        
+
         private bool LockDeviceNode (string device, bool lockdoor)
         {
             try {
                 using (UnixStream stream = (new UnixFileInfo (device)).Open (
-                    Mono.Unix.Native.OpenFlags.O_RDONLY | 
+                    Mono.Unix.Native.OpenFlags.O_RDONLY |
                     Mono.Unix.Native.OpenFlags.O_NONBLOCK)) {
                     bool success = ioctl (stream.Handle, IoctlOperation.LockDoor, lockdoor) == 0;
                     is_door_locked = success && lockdoor;
@@ -72,21 +72,21 @@ namespace Banshee.HalBackend
                 return false;
             }
         }
-        
+
         public bool LockDoor ()
         {
             lock (this) {
                 return LockDeviceNode (DeviceNode, true);
             }
         }
-        
+
         public bool UnlockDoor ()
         {
             lock (this) {
                 return LockDeviceNode (DeviceNode, false);
             }
         }
-        
+
         // FIXME: This is incredibly lame, there must be a way to query the
         // device itself rather than hackisly attempting to keep track of it
         public bool IsDoorLocked {

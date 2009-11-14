@@ -36,20 +36,20 @@ namespace Banshee.MediaEngine
     public delegate void AudioCdRipperProgressHandler (object o, AudioCdRipperProgressArgs args);
     public delegate void AudioCdRipperTrackFinishedHandler (object o, AudioCdRipperTrackFinishedArgs args);
     public delegate void AudioCdRipperErrorHandler (object o, AudioCdRipperErrorArgs args);
- 
+
     public interface IAudioCdRipper
     {
         event AudioCdRipperProgressHandler Progress;
         event AudioCdRipperTrackFinishedHandler TrackFinished;
         event AudioCdRipperErrorHandler Error;
-        
+
         void Begin (string device, bool enableErrorCorrection);
         void Finish ();
         void Cancel ();
-        
+
         void RipTrack (int trackIndex, TrackInfo track, SafeUri outputUri, out bool taggingSupported);
     }
-                             
+
     public sealed class AudioCdRipperProgressArgs : EventArgs
     {
         public AudioCdRipperProgressArgs (TrackInfo track, TimeSpan encodedTime, TimeSpan totalTime)
@@ -58,7 +58,7 @@ namespace Banshee.MediaEngine
             this.encoded_time = encodedTime;
             this.total_time = totalTime;
         }
-        
+
         private TimeSpan encoded_time;
         public TimeSpan EncodedTime {
             get { return encoded_time; }
@@ -87,13 +87,13 @@ namespace Banshee.MediaEngine
         public TrackInfo Track {
             get { return track; }
         }
-        
+
         private SafeUri uri;
         public SafeUri Uri {
             get { return uri; }
         }
     }
-    
+
     public sealed class AudioCdRipperErrorArgs : EventArgs
     {
         public AudioCdRipperErrorArgs (TrackInfo track, string message)
@@ -101,12 +101,12 @@ namespace Banshee.MediaEngine
             this.track = track;
             this.message = message;
         }
-        
+
         private TrackInfo track;
         public TrackInfo Track {
             get { return track; }
         }
-        
+
         private string message;
         public string Message {
             get { return message; }

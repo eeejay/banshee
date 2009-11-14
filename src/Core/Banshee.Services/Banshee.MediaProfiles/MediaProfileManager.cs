@@ -25,7 +25,7 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
- 
+
 using System;
 using System.IO;
 using System.Text;
@@ -41,16 +41,16 @@ namespace Banshee.MediaProfiles
     {
         private bool profile_available = true;
         private Profile profile;
-        
+
         public TestProfileArgs(Profile profile)
         {
             this.profile = profile;
         }
-        
+
         public Profile Profile {
             get { return profile; }
         }
-        
+
         public bool ProfileAvailable {
             get { return profile_available; }
             set { profile_available = value; }
@@ -64,7 +64,7 @@ namespace Banshee.MediaProfiles
         internal static System.Globalization.CultureInfo CultureInfo {
             get { return System.Globalization.CultureInfo.InvariantCulture; }
         }
-    
+
         private XmlDocument document;
         private List<Profile> profiles;
         private Dictionary<string, PipelineVariable> preset_variables;
@@ -96,7 +96,7 @@ namespace Banshee.MediaProfiles
                 if(File.Exists(base_file)) {
                     LoadFromFile(base_file);
                 }
-                
+
                 foreach(string file in Directory.GetFiles(path, "*.xml")) {
                     if(Path.GetFileName(file) != "base.xml") {
                         LoadFromFile(file);
@@ -111,7 +111,7 @@ namespace Banshee.MediaProfiles
                 handler (this, EventArgs.Empty);
             }
         }
-        
+
         private void LoadFromFile(string path)
         {
             document = new XmlDocument();
@@ -122,7 +122,7 @@ namespace Banshee.MediaProfiles
             } catch(Exception e) {
                 Console.WriteLine("Could not load profile: {0}\n{1}", path, e);
             }
-            
+
             document = null;
         }
 
@@ -137,7 +137,7 @@ namespace Banshee.MediaProfiles
             if(node == null) {
                 return;
             }
-            
+
             foreach(XmlNode variable_node in node.SelectNodes("variable")) {
                 try {
                     PipelineVariable variable = new PipelineVariable(variable_node);
@@ -189,14 +189,14 @@ namespace Banshee.MediaProfiles
             Initialize ();
             return preset_variables[id];
         }
-        
+
         protected virtual bool OnTestProfile(Profile profile)
         {
             TestProfileHandler handler = TestProfile;
             if(handler == null) {
                 return true;
             }
-            
+
             TestProfileArgs args = new TestProfileArgs(profile);
             handler(this, args);
             return args.ProfileAvailable;
@@ -210,20 +210,20 @@ namespace Banshee.MediaProfiles
                 if(profile.Available == null) {
                     profile.Available = OnTestProfile(profile);
                 }
-                
+
                 if(profile.Available == true) {
                     yield return profile;
                 }
             }
         }
-        
+
         public ProfileConfiguration GetActiveProfileConfiguration (string id)
         {
             Initialize ();
 
             return ProfileConfiguration.LoadActive (this, id);
         }
-        
+
         public ProfileConfiguration GetActiveProfileConfiguration(string id, string [] mimetypes)
         {
             Initialize ();
@@ -239,7 +239,7 @@ namespace Banshee.MediaProfiles
                     }
                 }
             }
-            
+
             foreach(string mimetype in mimetypes) {
                 Profile profile = GetProfileForMimeType(mimetype);
                 if(profile != null) {
@@ -247,10 +247,10 @@ namespace Banshee.MediaProfiles
                     return profile.Configuration;
                 }
             }
-            
+
             return null;
         }
-        
+
         public void TestAll()
         {
             Initialize ();
@@ -259,7 +259,7 @@ namespace Banshee.MediaProfiles
                 profile.Available = OnTestProfile(profile);
             }
         }
-        
+
         public Profile GetProfileForMimeType(string mimetype)
         {
             Initialize ();
@@ -269,7 +269,7 @@ namespace Banshee.MediaProfiles
                     return profile;
                 }
             }
-            
+
             return null;
         }
 
@@ -280,7 +280,7 @@ namespace Banshee.MediaProfiles
 
             if (extension[0] == '.')
                 extension = extension.Substring (1, extension.Length - 1);
-            
+
             Initialize ();
 
             foreach (Profile profile in this) {
@@ -311,11 +311,11 @@ namespace Banshee.MediaProfiles
             Initialize ();
             return profiles.GetEnumerator();
         }
-        
+
         public int ProfileCount {
             get { Initialize (); return profiles.Count; }
         }
-        
+
         public int AvailableProfileCount {
             get {
                 Initialize ();
@@ -333,24 +333,24 @@ namespace Banshee.MediaProfiles
         string Banshee.ServiceStack.IService.ServiceName {
             get { return "MediaProfileManager"; }
         }
-        
+
         public override string ToString()
         {
             Initialize ();
             StringBuilder builder = new StringBuilder();
-            
+
             builder.Append("Preset Pipeline Variables:\n\n");
             foreach(PipelineVariable variable in preset_variables.Values) {
                 builder.Append(variable);
                 builder.Append("\n");
             }
-            
+
             builder.Append("Profiles:\n\n");
             foreach(Profile profile in profiles) {
                 builder.Append(profile);
                 builder.Append("\n\n");
             }
-            
+
             return builder.ToString().Trim();
         }
     }

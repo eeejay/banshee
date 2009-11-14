@@ -40,13 +40,13 @@ namespace Banshee.Web
     public class Browser
     {
         public delegate bool OpenUrlHandler (string uri);
-        
+
         private static OpenUrlHandler open_handler = null;
         public static OpenUrlHandler OpenHandler {
             get { return open_handler; }
             set { open_handler = value; }
         }
-    
+
         public static bool Open (string url)
         {
             try {
@@ -59,13 +59,13 @@ namespace Banshee.Web
                 }
             } catch(Exception e) {
                 Log.Warning (Catalog.GetString ("Could not launch URL"),
-                    String.Format (Catalog.GetString ("{0} could not be opened: {1}\n\n " + 
+                    String.Format (Catalog.GetString ("{0} could not be opened: {1}\n\n " +
                         "Check your 'Preferred Applications' settings."), url, e.Message), true);
                 return false;
             }
         }
 
-        public static readonly string UserAgent = String.Format ("Banshee {0} (http://banshee-project.org/)", 
+        public static readonly string UserAgent = String.Format ("Banshee {0} (http://banshee-project.org/)",
             Application.Version);
     }
 }

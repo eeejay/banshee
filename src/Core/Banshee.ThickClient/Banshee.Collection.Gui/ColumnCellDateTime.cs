@@ -1,4 +1,4 @@
-// 
+//
 // ColumnCellDateTime.cs
 //
 // Author:
@@ -32,7 +32,7 @@ using Hyena.Data.Gui;
 
 namespace Banshee.Collection.Gui
 {
-    public enum DateTimeFormat 
+    public enum DateTimeFormat
     {
         Long,
         ShortDate,
@@ -40,19 +40,19 @@ namespace Banshee.Collection.Gui
         ShortTime,
         LongTime
     }
-        
+
     public class ColumnCellDateTime : ColumnCellText
     {
         public ColumnCellDateTime (string property, bool expand) : base (property, expand)
         {
         }
-        
+
         private DateTimeFormat format = DateTimeFormat.Long;
         public DateTimeFormat Format {
             get { return format; }
             set { format = value; }
         }
-        
+
         protected override string GetText (object obj)
         {
             if (obj == null) {
@@ -60,7 +60,7 @@ namespace Banshee.Collection.Gui
             }
 
             DateTime dt = (DateTime) obj;
-            
+
             if (dt == DateTime.MinValue) {
                 return String.Empty;
             }
@@ -72,7 +72,7 @@ namespace Banshee.Collection.Gui
             case DateTimeFormat.ShortTime:    return dt.ToShortTimeString ();
             case DateTimeFormat.LongTime:     return dt.ToLongTimeString ();
             }
-            
+
             return String.Empty;
         }
     }

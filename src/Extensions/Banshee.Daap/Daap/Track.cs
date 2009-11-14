@@ -1,17 +1,17 @@
 /*
  * daap-sharp
  * Copyright (C) 2005  James Willcox <snorp@snorp.net>
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
@@ -41,7 +41,7 @@ namespace Daap {
         private short bitrate;
 
         public event EventHandler Updated;
-        
+
         public string Artist {
             get { return artist; }
             set {
@@ -49,7 +49,7 @@ namespace Daap {
                 EmitUpdated ();
             }
         }
-        
+
         public string Album {
             get { return album; }
             set {
@@ -57,7 +57,7 @@ namespace Daap {
                 EmitUpdated ();
             }
         }
-        
+
         public string Title {
             get { return title; }
             set {
@@ -65,7 +65,7 @@ namespace Daap {
                 EmitUpdated ();
             }
         }
-        
+
         public int Year {
             get { return year; }
             set {
@@ -73,7 +73,7 @@ namespace Daap {
                 EmitUpdated ();
             }
         }
-        
+
         public string Format {
             get { return format; }
             set {
@@ -81,7 +81,7 @@ namespace Daap {
                 EmitUpdated ();
             }
         }
-        
+
         public TimeSpan Duration {
             get { return duration; }
             set {
@@ -89,11 +89,11 @@ namespace Daap {
                 EmitUpdated ();
             }
         }
-        
+
         public int Id {
             get { return id; }
         }
-        
+
         public int Size {
             get { return size; }
             set {
@@ -101,7 +101,7 @@ namespace Daap {
                 EmitUpdated ();
             }
         }
-        
+
         public string Genre {
             get { return genre; }
             set {
@@ -109,7 +109,7 @@ namespace Daap {
                 EmitUpdated ();
             }
         }
-        
+
         public int TrackNumber {
             get { return trackNumber; }
             set {
@@ -117,7 +117,7 @@ namespace Daap {
                 EmitUpdated ();
             }
         }
-        
+
         public int TrackCount {
             get { return trackCount; }
             set {
@@ -125,7 +125,7 @@ namespace Daap {
                 EmitUpdated ();
             }
         }
-        
+
         public string FileName {
             get { return fileName; }
             set {
@@ -133,7 +133,7 @@ namespace Daap {
                 EmitUpdated ();
             }
         }
-        
+
         public DateTime DateAdded {
             get { return dateAdded; }
             set {
@@ -141,7 +141,7 @@ namespace Daap {
                 EmitUpdated ();
             }
         }
-        
+
         public DateTime DateModified {
             get { return dateModified; }
             set {
@@ -187,10 +187,10 @@ namespace Daap {
         internal ContentNode ToNode (string[] fields) {
 
             ArrayList nodes = new ArrayList ();
-            
+
             foreach (string field in fields) {
                 object val = null;
-                
+
                 switch (field) {
                 case "dmap.itemid":
                     val = id;
@@ -294,7 +294,7 @@ namespace Daap {
                 default:
                     break;
                 }
-                
+
                 if (val != null) {
                     // iTunes wants this to go first, sigh
                     if (field == "dmap.itemkind")
@@ -303,13 +303,13 @@ namespace Daap {
                         nodes.Add (new ContentNode (field, val));
                 }
             }
-            
+
             return new ContentNode ("dmap.listingitem", nodes);
         }
 
         internal static Track FromNode (ContentNode node) {
             Track track = new Track ();
-            
+
             foreach (ContentNode field in (ContentNode[]) node.Value) {
                 switch (field.Name) {
                 case "dmap.itemid":
@@ -371,7 +371,7 @@ namespace Daap {
         internal static void FromPlaylistNode (Database db, ContentNode node, out Track track, out int containerId) {
             track = null;
             containerId = 0;
-            
+
             foreach (ContentNode field in (ContentNode[]) node.Value) {
                 switch (field.Name) {
                 case "dmap.itemid":

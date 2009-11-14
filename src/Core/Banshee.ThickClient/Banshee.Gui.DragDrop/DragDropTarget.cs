@@ -35,14 +35,14 @@ namespace Banshee.Gui.DragDrop
         Source,
         UriList
     };
-        
+
     public static class DragDropTarget
     {
-        public static readonly TargetEntry Source = 
-            new TargetEntry ("application/x-banshee-source", TargetFlags.App, 
+        public static readonly TargetEntry Source =
+            new TargetEntry ("application/x-banshee-source", TargetFlags.App,
                 (uint)DragDropTargetType.Source);
 
-        public static readonly TargetEntry UriList = 
+        public static readonly TargetEntry UriList =
             new TargetEntry ("text/uri-list", 0, (uint)DragDropTargetType.UriList);
     }
 }

@@ -42,29 +42,29 @@ namespace Banshee.ServiceStack
         private const string BusPrefix = "org.bansheeproject";
         public const string DefaultServiceName = "Banshee";
         public const string DefaultBusName=  "org.bansheeproject.Banshee";
-    
+
         static DBusConnection ()
         {
             enabled = !ApplicationContext.CommandLine.Contains ("disable-dbus");
         }
-                    
-        private static List<string> active_connections = new List<string> (); 
-    
+
+        private static List<string> active_connections = new List<string> ();
+
         public static string MakeBusName (string serviceName)
         {
             return String.Format ("{0}.{1}", BusPrefix, serviceName);
         }
-    
+
         private static bool enabled;
         public static bool Enabled {
             get { return enabled; }
         }
-        
+
         private static bool connect_tried;
         public static bool ConnectTried {
             get { return connect_tried; }
         }
-        
+
         public static bool ApplicationInstanceAlreadyRunning {
             get {
                 try {
@@ -74,34 +74,34 @@ namespace Banshee.ServiceStack
                 }
             }
         }
-        
+
         public static bool ServiceIsConnected (string service)
         {
-            return active_connections.Contains (service);   
+            return active_connections.Contains (service);
         }
-        
+
         public static void Disconnect (string serviceName)
         {
             if (active_connections.Contains (serviceName)) {
                 active_connections.Remove (serviceName);
             }
-            
+
             Bus.Session.ReleaseName (MakeBusName (serviceName));
         }
-        
+
         public static bool Connect ()
         {
             return Connect (DefaultServiceName);
         }
-        
+
         public static bool Connect (string serviceName)
         {
             connect_tried = true;
-            
+
             if (!enabled) {
                 return false;
             }
-            
+
             try {
                 if (Connect (serviceName, true) == RequestNameReply.PrimaryOwner) {
                     active_connections.Add (serviceName);
@@ -111,10 +111,10 @@ namespace Banshee.ServiceStack
                 Log.Warning ("DBus support could not be started. Disabling for this session.");
                 enabled = false;
             }
-            
+
             return false;
         }
-        
+
         public static bool NameHasOwner (string serviceName)
         {
             try {
@@ -123,34 +123,34 @@ namespace Banshee.ServiceStack
                 return false;
             }
         }
-        
+
         private static RequestNameReply Connect (string serviceName, bool init)
         {
             connect_tried = true;
-            
+
             if (init) {
                 BusG.Init ();
             }
-            
+
             string bus_name = MakeBusName (serviceName);
             RequestNameReply name_reply = Bus.Session.RequestName (bus_name);
             Log.DebugFormat ("Bus.Session.RequestName ('{0}') replied with {1}", bus_name, name_reply);
             return name_reply;
         }
-        
+
         private static GLib.MainLoop mainloop;
-        
+
         public static void RunMainLoop ()
         {
             if (mainloop == null) {
                 mainloop = new GLib.MainLoop ();
             }
-            
+
             if (!mainloop.IsRunning) {
                 mainloop.Run ();
             }
         }
-        
+
         public static void QuitMainLoop ()
         {
             if (mainloop != null && mainloop.IsRunning) {

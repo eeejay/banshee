@@ -235,7 +235,7 @@ namespace Banshee.InternetArchive
                     Remove (row);
                 }
             }
-            
+
             private void Reparent (Widget widget, HBox box, int index)
             {
                 if (widget.Parent == box) {

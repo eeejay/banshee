@@ -45,13 +45,13 @@ namespace Hyena.Data.Sqlite
             StackTrace = stackTrace;
             Ms = ms;
         }
-        
+
         public string Sql;
         public string SqlWithValues;
         public string StackTrace;
         public long Ms;
     }
-    
+
     public class HyenaSqliteCommand
     {
         private object result = null;
@@ -73,7 +73,7 @@ namespace Hyena.Data.Sqlite
             get { return log_all; }
             set { log_all = value; }
         }
-        
+
         public delegate void CommandExecutedHandler (object o, CommandExecutedArgs args);
         public static event CommandExecutedHandler CommandExecuted;
 
@@ -160,7 +160,7 @@ namespace Hyena.Data.Sqlite
             }
 
             object ret = result;
-            
+
             // Reset to false in case run again
             finished = false;
 
@@ -170,7 +170,7 @@ namespace Hyena.Data.Sqlite
             if (execution_exception != null) {
                 throw execution_exception;
             }
-            
+
             return ret;
         }
 

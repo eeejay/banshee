@@ -54,21 +54,21 @@ namespace Hyena.Query.Gui
             this.limits = limits;
 
             Spacing = 5;
-            
+
             enabled_checkbox = new CheckButton (Catalog.GetString ("_Limit to"));
             enabled_checkbox.Toggled += OnEnabledToggled;
-            
+
             count_spin = new SpinButton (0, Double.MaxValue, 1);
             count_spin.Numeric = true;
             count_spin.Digits = 0;
             count_spin.Value = 25;
             count_spin.SetSizeRequest (60, -1);
-            
+
             limit_combo = ComboBox.NewText ();
             foreach (QueryLimit limit in limits) {
                 limit_combo.AppendText (limit.Label);
             }
-                
+
             order_combo = ComboBox.NewText ();
             order_combo.RowSeparatorFunc = IsRowSeparator;
             foreach (QueryOrder order in orders) {
@@ -84,7 +84,7 @@ namespace Hyena.Query.Gui
             PackStart (limit_combo, false, false, 0);
             PackStart (new Label (Catalog.GetString ("selected by")), false, false, 0);
             PackStart (order_combo, false, false, 0);
-                
+
             enabled_checkbox.Active = false;
             limit_combo.Active = 0;
             order_combo.Active = 0;

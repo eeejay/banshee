@@ -35,27 +35,27 @@ namespace Banshee.Gui.TrackEditor
     public class RangeEntry : HBox, IEditorField
     {
         public delegate void RangeOrderClosure (RangeEntry entry);
-        
+
         public event EventHandler Changed;
-    
+
         private SpinButton from_entry;
         public SpinButton From {
             get { return from_entry; }
         }
-        
+
         private SpinButton to_entry;
         public SpinButton To {
             get { return to_entry; }
         }
-    
+
         public RangeEntry (string rangeLabel) : this (rangeLabel, null, null)
         {
         }
-    
+
         public RangeEntry (string rangeLabel, RangeOrderClosure orderClosure, string orderTooltip)
         {
             AutoOrderButton auto_order_button;
-        
+
             PackStart (from_entry = new SpinButton (0, 999, 1), true, true, 0);
             PackStart (new Label (rangeLabel), false, false, 6);
             PackStart (to_entry = new SpinButton (0, 999, 1), true, true, 0);
@@ -66,23 +66,23 @@ namespace Banshee.Gui.TrackEditor
                     TooltipSetter.Set (TooltipSetter.CreateHost (), auto_order_button, orderTooltip);
                 }
             }
-            
+
             ShowAll ();
-            
+
             from_entry.WidthChars = 2;
             to_entry.WidthChars = 2;
-            
+
             from_entry.ValueChanged += OnChanged;
             to_entry.ValueChanged += OnChanged;
         }
-        
+
         protected override bool OnMnemonicActivated (bool group_cycling) {
             return from_entry.MnemonicActivate(group_cycling);
         }
 
         private class AutoOrderButton : Button
         {
-            public AutoOrderButton () 
+            public AutoOrderButton ()
             {
                 Image image = new Image (Gtk.Stock.SortAscending, IconSize.Menu);
                 Add (image);
@@ -90,7 +90,7 @@ namespace Banshee.Gui.TrackEditor
                 image.Show ();
             }
         }
-        
+
         private void OnChanged (object o, EventArgs args)
         {
             EventHandler handler = Changed;

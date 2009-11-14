@@ -36,13 +36,13 @@ namespace Banshee.IO
     public interface IDirectory
     {
         bool Exists (string directory);
-        
+
         void Create (string directory);
         void Move (SafeUri from, SafeUri to);
-        
+
         void Delete (string directory);
         void Delete (string directory, bool recursive);
-        
+
         // FIXME: These probably need to normalize to SafeUri
         IEnumerable<string> GetFiles (string directory);
         IEnumerable<string> GetDirectories (string directory);

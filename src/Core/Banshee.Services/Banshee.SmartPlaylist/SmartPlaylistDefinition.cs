@@ -29,7 +29,7 @@
 using System;
 
 using Hyena.Query;
- 
+
 using Banshee.Query;
 using Banshee.Sources;
 
@@ -55,7 +55,7 @@ namespace Banshee.SmartPlaylist
         {
         }
 
-        public SmartPlaylistDefinition (string name, string description, string condition, 
+        public SmartPlaylistDefinition (string name, string description, string condition,
             int limit_number, QueryLimit limit, QueryOrder order)
         {
             Name = name;

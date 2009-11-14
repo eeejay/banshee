@@ -67,11 +67,11 @@ namespace Banshee.Library
         public override bool ShowBrowser {
             get { return false; }
         }
-        
+
         protected override bool HasArtistAlbum {
             get { return false; }
         }
-        
+
         public override string DefaultBaseDirectory {
             get { return Banshee.Base.Paths.GetXdgDirectoryUnderHome ("XDG_VIDEOS_DIR", "Videos"); }
         }

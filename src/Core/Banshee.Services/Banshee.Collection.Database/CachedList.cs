@@ -54,7 +54,7 @@ namespace Banshee.Collection.Database
         }
 
         private BansheeModelCache<T> cache;
-        
+
         public static CachedList<DatabaseTrackInfo> CreateFromSourceModel (DatabaseTrackListModel model)
         {
             CachedList<DatabaseTrackInfo> list = new CachedList<DatabaseTrackInfo> (DatabaseTrackInfo.Provider);
@@ -63,16 +63,16 @@ namespace Banshee.Collection.Database
                 INSERT INTO CoreCache (ModelID, ItemID)
                     SELECT ?, CoreTracks.TrackID {0}", model.UnfilteredQuery
             ));
-            
+
             lock (model) {
                 ServiceManager.DbConnection.Execute (model_cache_command, list.CacheId);
             }
 
             list.cache.UpdateAggregates ();
 
-            return list;  
+            return list;
         }
-        
+
         public static CachedList<DatabaseTrackInfo> CreateFromModel (DatabaseTrackListModel model)
         {
             Selection selection = new Selection ();
@@ -80,7 +80,7 @@ namespace Banshee.Collection.Database
             selection.SelectAll ();
             return CreateFromModelAndSelection (model, selection);
         }
-        
+
         public static CachedList<DatabaseTrackInfo> CreateFromModelSelection (DatabaseTrackListModel model)
         {
             return CreateFromModelAndSelection (model, model.Selection);
@@ -116,7 +116,7 @@ namespace Banshee.Collection.Database
         {
             ServiceManager.DbConnection.Execute ("DELETE FROM CoreCache WHERE ModelId = ?", CacheId);
         }
-        
+
         public void Remove (IEnumerable<T> items)
         {
             lock (cache) {
@@ -126,19 +126,19 @@ namespace Banshee.Collection.Database
                     if (!first) {
                         builder.Append (',');
                     }
-                    
+
                     builder.Append (item.CacheEntryId);
                     first = false;
                 }
-                
+
                 ServiceManager.DbConnection.Execute (String.Format (
-                    "DELETE FROM CoreCache WHERE ModelId = {0} AND ItemId IN ({1})", 
+                    "DELETE FROM CoreCache WHERE ModelId = {0} AND ItemId IN ({1})",
                     CacheId, builder));
-                    
+
                 cache.UpdateAggregates ();
             }
         }
-        
+
         public T this[int index] {
             get { return cache.GetValue (index); }
         }
@@ -157,7 +157,7 @@ namespace Banshee.Collection.Database
                 yield return cache.GetValue (i);
             }
         }
-        
+
         IEnumerator IEnumerable.GetEnumerator ()
         {
             return GetEnumerator ();

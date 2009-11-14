@@ -47,7 +47,7 @@ namespace Hyena.Collections.Tests
                 return null;
             }
         }
-    
+
         [Test]
         public void BuildPipeline ()
         {
@@ -57,21 +57,21 @@ namespace Hyena.Collections.Tests
             BuildPipeline (10);
             BuildPipeline (1000);
         }
-        
+
         private void BuildPipeline (int count)
         {
             List<FakeElement> elements = new List<FakeElement> ();
             for (int i = 0; i < count; i++) {
                 elements.Add (new FakeElement ());
             }
-        
+
             QueuePipeline<object> qp = new QueuePipeline<object> ();
             foreach (FakeElement s in elements) {
                 qp.AddElement (s);
             }
-            
+
             Assert.AreEqual (elements[0], qp.FirstElement);
-            
+
             int index = 0;
             FakeElement element = (FakeElement)qp.FirstElement;
             while (element != null) {

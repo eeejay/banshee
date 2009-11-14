@@ -43,26 +43,26 @@ namespace Lastfm.Data
         public string Artist {
             get { return artist; }
         }
-        
+
         protected string album;
         public string Album {
             get { return album; }
         }
 
-        public LastfmAlbumData (string artist, string album) 
+        public LastfmAlbumData (string artist, string album)
         {
             this.artist = artist;
             this.album = album;
-            
+
             //Return Exception if the album is not found on Lastfm.
             try {
                 if (AlbumData != null) {
                     return;
                 }
-                } catch { throw; } 
+                } catch { throw; }
         }
 
-        
+
         protected LastfmData<T> Get<T> (string fragment) where T : DataEntry
         {
             return Get<T> (fragment, null);
@@ -72,7 +72,7 @@ namespace Lastfm.Data
         {
             //using cacheKey because the public methods all use the same fragment but with a different xpath.
             string cacheKey = fragment + xpath;
-                    
+
             if (cache.ContainsKey (cacheKey)) {
                 return (LastfmData<T>) cache [cacheKey];
             }
@@ -81,26 +81,26 @@ namespace Lastfm.Data
             cache [cacheKey] = obj;
             return obj;
         }
-        
-        
+
+
 #region Public Properties
 //      All these methods use the same fragment, but with a different xpath. This because the info.xml contains lots of different stuff.
 //      Couldn't figure out how to process it otherwise.
-        
+
         public AlbumData AlbumData {
             // We don't need the array, since there is only 1 set of albumdata for any album. Therefore "[0]".
             get { return (Get<AlbumData> ("info.xml", "/album"))[0]; }
         }
-        
+
         public LastfmData<AlbumTrack> AlbumTracks {
             get { return Get<AlbumTrack> ("info.xml", "/album/tracks/track"); }
         }
-        
+
         public AlbumCoverUrls AlbumCoverUrls {
             // We don't need the array, since there is only 1 set of covers for any album. Therefore "[0]".
             get { return (Get<AlbumCoverUrls> ("info.xml", "/album/coverart"))[0]; }
         }
-        
+
 #endregion
 
     }

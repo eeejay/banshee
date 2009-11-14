@@ -41,13 +41,13 @@ namespace Banshee.Collection
             selection = new SelectAllSelection ();
             selection.SelectAll ();
         }
-        
+
         public AlbumListModel(IDBusExportable parent) : base(parent)
         {
             selection = new SelectAllSelection ();
             selection.SelectAll ();
         }
-        
+
         public override void Clear ()
         {
         }

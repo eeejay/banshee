@@ -31,15 +31,15 @@ using System;
 using Banshee.Hardware;
 
 namespace Banshee.Dap.MassStorage
-{   
+{
     public class CustomMassStorageDevice : MassStorageDevice
-    {       
+    {
         private VendorProductInfo vendor_product_info;
         public VendorProductInfo VendorProductInfo {
             get { return vendor_product_info; }
             set { vendor_product_info = value; }
         }
-        
+
         public override string Name {
             get { return vendor_product_info.ProductName; }
         }

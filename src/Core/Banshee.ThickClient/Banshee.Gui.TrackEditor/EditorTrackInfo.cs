@@ -42,17 +42,17 @@ namespace Banshee.Gui.TrackEditor
     {
         private TagLib.File taglib_file;
         private bool taglib_file_exists = true;
-        
+
         public EditorTrackInfo (TrackInfo sourceTrack)
         {
             source_track = sourceTrack;
             TrackInfo.ExportableMerge (source_track, this);
         }
-        
+
         public void GenerateDiff ()
         {
             diff_count = 0;
-            
+
             foreach (KeyValuePair<string, PropertyInfo> iter in GetExportableProperties (typeof (TrackInfo))) {
                 try {
                     PropertyInfo property = iter.Value;
@@ -70,29 +70,29 @@ namespace Banshee.Gui.TrackEditor
                 }
             }
         }
-        
+
         private int diff_count;
         public int DiffCount {
             get { return diff_count; }
         }
-        
+
         private int editor_index;
         public int EditorIndex {
             get { return editor_index; }
             set { editor_index = value; }
         }
-        
+
         private int editor_count;
         public int EditorCount {
             get { return editor_count; }
             set { editor_count = value; }
         }
-        
+
         private TrackInfo source_track;
         public TrackInfo SourceTrack {
             get { return source_track; }
         }
-        
+
         public TagLib.File TaglibFile {
             get {
                 if (taglib_file != null) {
@@ -100,7 +100,7 @@ namespace Banshee.Gui.TrackEditor
                 } else if (!taglib_file_exists) {
                     return null;
                 }
-                    
+
                 try {
                     taglib_file = StreamTagger.ProcessUri (Uri);
                     if (taglib_file != null) {
@@ -111,7 +111,7 @@ namespace Banshee.Gui.TrackEditor
                         Hyena.Log.Exception ("Cannot load TagLib file", e);
                     }
                 }
-                
+
                 taglib_file_exists = false;
                 return null;
             }

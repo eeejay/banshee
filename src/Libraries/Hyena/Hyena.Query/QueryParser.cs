@@ -36,7 +36,7 @@ namespace Hyena.Query
     public abstract class QueryParser
     {
         protected StreamReader reader;
-        
+
         public QueryParser()
         {
             Reset ();
@@ -57,7 +57,7 @@ namespace Hyena.Query
 
         public abstract QueryNode BuildTree (QueryFieldSet fieldSet);
         public abstract void Reset ();
-        
+
         public StreamReader InputReader {
             get { return reader; }
             set { reader = value; }

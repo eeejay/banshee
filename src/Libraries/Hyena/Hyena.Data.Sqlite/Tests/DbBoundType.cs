@@ -40,7 +40,7 @@ namespace Hyena.Data.Sqlite.Tests
         Two,
         Three
     }
-    
+
     internal enum LongEnum : long
     {
         Cero,
@@ -48,14 +48,14 @@ namespace Hyena.Data.Sqlite.Tests
         Dos,
         Tres
     }
-    
+
     internal class ModelProvider : SqliteModelProvider<DbBoundType>
     {
         public ModelProvider (HyenaSqliteConnection connection) : base (connection)
         {
             Init ();
         }
-        
+
         public override string TableName {
             get { return "TestTable"; }
         }
@@ -65,7 +65,7 @@ namespace Hyena.Data.Sqlite.Tests
         protected override int DatabaseVersion {
             get { return 1; }
         }
-        
+
         protected override void MigrateTable (int old_version)
         {
         }
@@ -77,12 +77,12 @@ namespace Hyena.Data.Sqlite.Tests
             return new DbBoundType ();
         }
     }
-    
+
     internal class DbBoundType
     {
         [DatabaseColumn ("PrimaryKey", Constraints = DatabaseColumnConstraints.PrimaryKey)]
         public int PrimaryKey;
-        
+
         [DatabaseColumn ("PublicIntField")]
         public int PublicIntField;
         [DatabaseColumn ("PublicLongField")]
@@ -97,7 +97,7 @@ namespace Hyena.Data.Sqlite.Tests
         public IntEnum PublicIntEnumField;
         [DatabaseColumn ("PublicLongEnumField")]
         public LongEnum PublicLongEnumField;
-        
+
         private int public_int_property_field;
         [DatabaseColumn ("PublicIntProperty")]
         public int PublicIntProperty {
@@ -140,7 +140,7 @@ namespace Hyena.Data.Sqlite.Tests
             get { return public_long_enum_property_field; }
             set { public_long_enum_property_field = value; }
         }
-        
+
         [DatabaseColumn ("PrivateIntField")]
         private int private_int_field;
         [DatabaseColumn ("PrivateLongField")]
@@ -155,7 +155,7 @@ namespace Hyena.Data.Sqlite.Tests
         private IntEnum private_int_enum_field;
         [DatabaseColumn ("PrivateLongEnumField")]
         private LongEnum private_long_enum_field;
-        
+
         public int GetPrivateIntField ()
         {
             return private_int_field;
@@ -212,7 +212,7 @@ namespace Hyena.Data.Sqlite.Tests
         {
             private_long_enum_field = value;
         }
-        
+
         private int private_int_property_field;
         [DatabaseColumn ("PrivateIntProperty")]
         private int private_int_property {
@@ -255,7 +255,7 @@ namespace Hyena.Data.Sqlite.Tests
             get { return private_long_enum_property_field; }
             set { private_long_enum_property_field = value; }
         }
-        
+
         public int GetPrivateIntProperty ()
         {
             return private_int_property;

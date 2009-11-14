@@ -44,7 +44,7 @@ namespace Banshee.Dap.Gui
     {
         private Label title;
         private DapSource dap;
-        
+
         // Ugh, this is to avoid the GLib.MissingIntPtrCtorException seen by some; BGO #552169
         protected DapContent (IntPtr ptr) : base (ptr)
         {
@@ -62,25 +62,25 @@ namespace Banshee.Dap.Gui
         {
             HBox split_box = new HBox ();
             VBox content_box = new VBox ();
-            
+
             content_box.BorderWidth = 5;
-            
+
             title = new Label ();
             SetTitleText (dap.Name);
             title.Xalign = 0.0f;
-            
+
             Banshee.Preferences.Gui.NotebookPage properties = new Banshee.Preferences.Gui.NotebookPage (dap.Preferences);
             properties.BorderWidth = 0;
-            
+
             content_box.PackStart (title, false, false, 0);
             content_box.PackStart (properties, false, false, 0);
-            
+
             Image image = new Image (LargeIcon);
             image.Yalign = 0.0f;
-            
+
             split_box.PackStart (image, false, true, 0);
             split_box.PackEnd (content_box, true, true, 0);
-            
+
             Add (split_box);
             ShowAll ();
         }

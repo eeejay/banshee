@@ -28,15 +28,15 @@ namespace MusicBrainz
 {
     public sealed class Label : MusicBrainzEntity
     {
-        
+
         #region Private
-        
+
         const string EXTENSION = "label";
         string country;
         LabelType? type;
-        
+
         #endregion
-        
+
         #region Constructors
 
         Label (string id) : base (id, null)
@@ -46,11 +46,11 @@ namespace MusicBrainz
         internal Label (XmlReader reader) : base (reader, false)
         {
         }
-        
+
         #endregion
-        
+
         #region Protected
-        
+
         internal override string UrlExtension {
             get { return EXTENSION; }
         }
@@ -74,11 +74,11 @@ namespace MusicBrainz
                 country = reader.ReadString ();
             } else base.ProcessXmlCore (reader);
         }
-        
+
         #endregion
 
         #region Public
-        
+
         public string GetCountry ()
         {
             return GetPropertyOrNull (ref country);
@@ -88,9 +88,9 @@ namespace MusicBrainz
         {
             return GetPropertyOrDefault (ref type, LabelType.None);
         }
-        
+
         #endregion
-        
+
         #region Static
 
         public static Label Get (string id)
@@ -115,13 +115,13 @@ namespace MusicBrainz
         {
             return label.ToString ();
         }
-        
+
         #endregion
 
     }
-    
+
     #region Ancillary Types
-    
+
     public enum LabelType
     {
         None,
@@ -131,7 +131,7 @@ namespace MusicBrainz
         BootlegProduction,
         ReissueProduction
     }
-    
+
     #endregion
-    
+
 }

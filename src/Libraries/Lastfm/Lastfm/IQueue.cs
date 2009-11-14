@@ -33,16 +33,16 @@ namespace Lastfm
     public interface IQueue
     {
         event EventHandler TrackAdded;
-        
+
         int Count {
             get;
         }
-        
+
         void Save ();
         void Load ();
-        
+
         string GetTransmitInfo (out int numtracks);
-        
+
         void Add (object track, DateTime started);
         void RemoveRange (int first, int count);
     }

@@ -37,7 +37,7 @@ namespace Hyena.Gui
      * but set the enum value to be at the end of the color_regions table
      * in contrast.c to maintain binary compatibility
      */
-    
+
     public enum ContrastPaletteColor
     {
         Aqua        =  0,
@@ -65,12 +65,12 @@ namespace Hyena.Gui
         Yellow      = 22,
         Last        = 23
     };
-    
+
     public static class Contrast
     {
-    
+
         /* Data for color palette optimization.
-         * 
+         *
          * These numbers are completely arbitrary decisions, uninformed by the experts
          * at crayola.  These colors are defined as boxes within the CIE L*a*b* color
          * space -- while they're not fully inclusive, they are "safe" in that anywhere
@@ -115,7 +115,7 @@ namespace Hyena.Gui
             const float a     = 0.055f;
             const float gamma = 2.4f;
 
-            
+
             if (K > 0.04045f)
                 return (float) Math.Pow((K + a) / (1 + a), gamma);
             else
@@ -133,23 +133,23 @@ namespace Hyena.Gui
         private static void rgb_to_lab(ushort R, ushort G, ushort B, out float L, out float a, out float b)
         {
             float x, y, z, gr, gg, gb, fy;
-            
+
             /* This is the reference white point.  Since we're treating "RGB" as
              * sRGB, this is the D65 point.
              */
-            
+
             const float Xn = 0.93819f;
             const float Yn = 0.98705f;
             const float Zn = 1.07475f;
-            
+
             gr = srgb_to_xyz_g(R / 65535.0f);
             gg = srgb_to_xyz_g(G / 65535.0f);
             gb = srgb_to_xyz_g(B / 65535.0f);
-            
+
             x = 0.412424f * gr + 0.357579f * gg + 0.180464f * gb;
             y = 0.212656f * gr + 0.715158f * gg + 0.072186f * gb;
             z = 0.019332f * gr + 0.119193f * gg + 0.950444f * gb;
-            
+
             fy = xyz_to_lab_f(y / Yn);
 
             L = 116.0f * fy - 16.0f;
@@ -162,7 +162,7 @@ namespace Hyena.Gui
             const float a     = 0.055f;
             const float gamma = 2.4f;
 
-            
+
             if (K > 0.00304f)
                 return (1.0f + a) * ((float) Math.Pow(K, (1.0f / gamma))) - a;
             else
@@ -170,19 +170,19 @@ namespace Hyena.Gui
         }
 
         private static void lab_to_rgb(float L, float a, float b, out ushort R, out ushort G, out ushort B)
-        {        
+        {
             float x, y, z, fy, fx, fz, delta, delta2, rs, gs, bs;
 
             const float Xn = 0.93819f;
             const float Yn = 0.98705f;
             const float Zn = 1.07475f;
-            
+
             fy = (L + 16.0f) / 116.0f;
             fx = fy + a / 500.0f;
             fz = fy - b / 200.0f;
             delta = 6.0f / 29.0f;
             delta2 = (float) Math.Pow(delta, 2.0f);
-            
+
             if (fx > delta)
                 x = Xn * ((float) Math.Pow(fx, 3.0f));
             else
@@ -193,13 +193,13 @@ namespace Hyena.Gui
             else
                 y = (fy - 16.0f/116.0f) * 3.0f * delta2 * Yn;
 
-            
+
             if (fz > delta)
                 z = Zn * ((float) Math.Pow(fz, 3.0f));
             else
                 z = (fz - 16.0f/116.0f) * 3.0f * delta2 * Zn;
 
-            
+
             rs =  3.2410f * x - 1.5374f * y - 0.4986f * z;
             gs = -0.9692f * x + 1.8760f * y + 0.0416f * z;
             bs =  0.0556f * x - 0.2040f * y + 1.0570f * z;
@@ -212,7 +212,7 @@ namespace Hyena.Gui
                 R = 65535;
             else
                 R = (ushort) tmp;
-            
+
             tmp = (float) Math.Floor(xyz_to_srgb_C(gs) * 65535.0f + 0.5f);
             if (tmp < 0.0f)
                 G = 0;
@@ -244,7 +244,7 @@ namespace Hyena.Gui
         /* Creates a specific color value for a foreground color, optimizing for
          * maximum readability against the background.
          */
-        
+
         public static Color RenderForegroundColor(Color background, ContrastPaletteColor color)
         {
             float L, a, b;
@@ -253,18 +253,18 @@ namespace Hyena.Gui
             float[,] points = new float[8,3];
             float ld, cd;
             int i;
-            
-            rgb_to_lab((ushort)(background.R * 255), (ushort)(background.G * 255), 
+
+            rgb_to_lab((ushort)(background.R * 255), (ushort)(background.G * 255),
                 (ushort)(background.B * 255), out L, out a, out b);
-            
+
             points[0,0] = color_regions[(int)color,0];
             points[0,1] = color_regions[(int)color,2];
             points[0,2] = color_regions[(int)color,4];
-            
+
             points[1,0] = color_regions[(int)color,0];
             points[1,1] = color_regions[(int)color,2];
             points[1,2] = color_regions[(int)color,5];
-            
+
             points[2,0] = color_regions[(int)color,0];
             points[2,1] = color_regions[(int)color,3];
             points[2,2] = color_regions[(int)color,4];
@@ -284,17 +284,17 @@ namespace Hyena.Gui
             points[6,0] = color_regions[(int)color,1];
             points[6,1] = color_regions[(int)color,3];
             points[6,2] = color_regions[(int)color,4];
-            
+
             points[7,0] = color_regions[(int)color,1];
             points[7,1] = color_regions[(int)color,3];
             points[7,2] = color_regions[(int)color,5];
-            
+
             max_dist = 0;
             max_color = 0;
-            
+
             for (i = 0; i < 8; i++) {
                 float dist = lab_distance(L, a, b, points[i,0], points[i,1], points[i,2]);
-                
+
                 if (dist > max_dist) {
                     max_dist = dist;
                     max_color = i;
@@ -306,13 +306,13 @@ namespace Hyena.Gui
              * is specified in, but it keeps things readable when the background and
              * foreground are really close.
              */
-            
+
             ld = Math.Abs(L - points[max_color,0]);
             cd = (float) Math.Sqrt (Math.Pow (Math.Abs (a - points[max_color,1]), 2.0f) + Math.Pow (Math.Abs (b - points[max_color,2]), 2.0f));
-            
+
             if ((ld < 10.0f) && (cd < 60.0f)) {
                 float dL, da, db;
-                
+
                 dL = points[max_color,0] - L;
                 da = points[max_color,1] - a;
                 db = points[max_color,2] - b;
@@ -322,9 +322,9 @@ namespace Hyena.Gui
             }
 
             ushort red, green, blue;
-            
+
             lab_to_rgb(points[max_color,0], points[max_color,1], points[max_color,2], out red, out green, out blue);
-            
+
             return new Color (red / 255.0, green / 255.0, blue / 255.0);
         }
     }

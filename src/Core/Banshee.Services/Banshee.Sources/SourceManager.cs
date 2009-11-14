@@ -38,27 +38,27 @@ namespace Banshee.Sources
 {
     public delegate void SourceEventHandler(SourceEventArgs args);
     public delegate void SourceAddedHandler(SourceAddedArgs args);
-    
+
     public class SourceEventArgs : EventArgs
     {
         public Source Source;
     }
-    
+
     public class SourceAddedArgs : SourceEventArgs
     {
         public int Position;
     }
-    
+
     public class SourceManager : /*ISourceManager,*/ IInitializeService, IRequiredService, IDBusExportable, IDisposable
     {
         private List<Source> sources = new List<Source>();
         private Dictionary<string, Source> extension_sources = new Dictionary<string, Source> ();
-        
+
         private Source active_source;
         private Source default_source;
         private MusicLibrarySource music_library;
         private VideoLibrarySource video_library;
-        
+
         public event SourceEventHandler SourceUpdated;
         public event SourceAddedHandler SourceAdded;
         public event SourceEventHandler SourceRemoved;
@@ -78,7 +78,7 @@ namespace Banshee.Sources
                 AddinManager.AddExtensionNodeHandler ("/Banshee/SourceManager/Source", OnExtensionChanged);
             }
         }
-        
+
         public void Dispose ()
         {
             lock (this) {
@@ -100,17 +100,17 @@ namespace Banshee.Sources
                 while (sources.Count > 0) {
                     RemoveSource (sources[0], false);
                 }
-                
+
                 sources.Clear ();
                 extension_sources.Clear ();
             }
         }
-        
-        private void OnExtensionChanged (object o, ExtensionNodeEventArgs args) 
+
+        private void OnExtensionChanged (object o, ExtensionNodeEventArgs args)
         {
             lock (this) {
                 TypeExtensionNode node = (TypeExtensionNode)args.ExtensionNode;
-                
+
                 if (args.Change == ExtensionChange.Add && !extension_sources.ContainsKey (node.Id)) {
                     Source source = (Source)node.CreateInstance ();
                     extension_sources.Add (node.Id, source);
@@ -133,17 +133,17 @@ namespace Banshee.Sources
         {
             AddSource(source, false);
         }
-        
+
         public void AddSource(Source source, bool isDefault)
         {
             Banshee.Base.ThreadAssist.AssertInMainThread ();
             if(source == null || ContainsSource (source)) {
                 return;
             }
-            
+
             int position = FindSourceInsertPosition(source);
             sources.Insert(position, source);
-            
+
             if(isDefault) {
                 default_source = source;
             }
@@ -151,7 +151,7 @@ namespace Banshee.Sources
             source.Updated += OnSourceUpdated;
             source.ChildSourceAdded += OnChildSourceAdded;
             source.ChildSourceRemoved += OnChildSourceRemoved;
-            
+
             SourceAddedHandler handler = SourceAdded;
             if(handler != null) {
                 SourceAddedArgs args = new SourceAddedArgs();
@@ -165,22 +165,22 @@ namespace Banshee.Sources
             } else if (source is VideoLibrarySource) {
                 video_library = source as VideoLibrarySource;
             }
-            
+
             IDBusExportable exportable = source as IDBusExportable;
             if (exportable != null) {
                 ServiceManager.DBusServiceManager.RegisterObject (exportable);
             }
-            
+
             List<Source> children = new List<Source> (source.Children);
             foreach(Source child_source in children) {
                 AddSource (child_source, false);
             }
-                
+
             if(isDefault && ActiveSource == null) {
                 SetActiveSource(source);
             }
         }
-        
+
         public void RemoveSource (Source source)
         {
             RemoveSource (source, false);
@@ -195,7 +195,7 @@ namespace Banshee.Sources
             if(source == default_source) {
                 default_source = null;
             }
-            
+
             source.Updated -= OnSourceUpdated;
             source.ChildSourceAdded -= OnChildSourceAdded;
             source.ChildSourceRemoved -= OnChildSourceRemoved;
@@ -205,7 +205,7 @@ namespace Banshee.Sources
             foreach(Source child_source in source.Children) {
                 RemoveSource (child_source, recursivelyDispose);
             }
-            
+
             IDBusExportable exportable = source as IDBusExportable;
             if (exportable != null) {
                 ServiceManager.DBusServiceManager.UnregisterObject (exportable);
@@ -231,27 +231,27 @@ namespace Banshee.Sources
                 }
             });
         }
-        
+
         public void RemoveSource(Type type)
         {
             Queue<Source> remove_queue = new Queue<Source>();
-            
+
             foreach(Source source in Sources) {
                 if(source.GetType() == type) {
                     remove_queue.Enqueue(source);
                 }
             }
-            
+
             while(remove_queue.Count > 0) {
                 RemoveSource(remove_queue.Dequeue());
             }
         }
-        
+
         public bool ContainsSource(Source source)
         {
             return sources.Contains(source);
         }
-        
+
         private void OnSourceUpdated(object o, EventArgs args)
         {
             Banshee.Base.ThreadAssist.ProxyToMain (delegate {
@@ -268,29 +268,29 @@ namespace Banshee.Sources
         {
             AddSource (args.Source);
         }
-        
+
         private void OnChildSourceRemoved(SourceEventArgs args)
         {
             RemoveSource (args.Source);
         }
-        
+
         private int FindSourceInsertPosition(Source source)
         {
             for(int i = sources.Count - 1; i >= 0; i--) {
                 if((sources[i] as Source).Order == source.Order) {
                     return i;
-                } 
+                }
             }
-        
+
             for(int i = 0; i < sources.Count; i++) {
                 if((sources[i] as Source).Order >= source.Order) {
                     return i;
                 }
             }
-            
-            return sources.Count;    
+
+            return sources.Count;
         }
-        
+
         public Source DefaultSource {
             get { return default_source; }
             set { default_source = value; }
@@ -307,46 +307,46 @@ namespace Banshee.Sources
         public Source ActiveSource {
             get { return active_source; }
         }
-        
+
         /*ISource ISourceManager.DefaultSource {
             get { return DefaultSource; }
         }
-        
+
         ISource ISourceManager.ActiveSource {
             get { return ActiveSource; }
             set { value.Activate (); }
         }*/
-        
+
         public void SetActiveSource(Source source)
         {
             SetActiveSource(source, true);
         }
-        
+
         public void SetActiveSource(Source source, bool notify)
         {
             Banshee.Base.ThreadAssist.AssertInMainThread ();
             if(source == null || !source.CanActivate || active_source == source) {
                 return;
             }
-            
+
             if(active_source != null) {
                 active_source.Deactivate();
             }
-            
+
             active_source = source;
-            
+
             if(!notify) {
                 source.Activate();
                 return;
             }
-            
+
             SourceEventHandler handler = ActiveSourceChanged;
             if(handler != null) {
                 SourceEventArgs args = new SourceEventArgs();
                 args.Source = active_source;
                 handler(args);
             }
-            
+
             source.Activate();
         }
 
@@ -359,19 +359,19 @@ namespace Banshee.Sources
                 }
             }
         }
-     
+
         public ICollection<Source> Sources {
             get { return sources; }
         }
-        
+
         /*string [] ISourceManager.Sources {
             get { return DBusServiceManager.MakeObjectPathArray<Source>(sources); }
         }*/
-        
+
         IDBusExportable IDBusExportable.Parent {
             get { return null; }
         }
-        
+
         string Banshee.ServiceStack.IService.ServiceName {
             get { return "SourceManager"; }
         }

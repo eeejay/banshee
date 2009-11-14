@@ -25,7 +25,7 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
- 
+
 using System;
 using System.Collections.Generic;
 using System.Xml;
@@ -35,11 +35,11 @@ namespace Banshee.Base
     public static class ProductInformation
     {
         private static SortedList<string, ProductAuthor> authors = new SortedList<string, ProductAuthor>  ();
-        private static SortedList<string, ProductTranslation> translations 
+        private static SortedList<string, ProductTranslation> translations
             = new SortedList<string, ProductTranslation> ();
         private static string [] artists;
         private static string [] contributors;
-        
+
         static ProductInformation ()
         {
         //    try {
@@ -48,22 +48,22 @@ namespace Banshee.Base
        //     } catch {
      //       }
         }
-        
+
         private static void LoadContributors ()
         {
             List<string> artists_list = new List<string> ();
             List<string> contributors_list = new List<string> ();
-        
+
             XmlDocument doc = new XmlDocument ();
             doc.LoadXml (AssemblyResource.GetFileContents ("contributors.xml"));
-        
+
             foreach (XmlNode node in doc.DocumentElement.ChildNodes) {
                 if (node.FirstChild == null || node.FirstChild.Value == null) {
                     continue;
                 }
 
                 string name = node.FirstChild.Value.Trim ();
-                
+
                 switch (node.Name) {
                     case "author":
                         authors.Add (name, new ProductAuthor (name, node.Attributes["role"].Value));
@@ -78,122 +78,122 @@ namespace Banshee.Base
                         break;
                 }
             }
-            
+
             artists = artists_list.ToArray ();
             contributors = contributors_list.ToArray ();
-            
+
             Array.Sort (artists);
             Array.Sort (contributors);
         }
-        
+
         private static void LoadTranslators ()
         {
             XmlDocument doc = new XmlDocument ();
             doc.LoadXml (AssemblyResource.GetFileContents ("translators.xml"));
-        
+
             foreach (XmlNode node in doc.DocumentElement.ChildNodes) {
                 if (node.Name != "language") {
                     continue;
                 }
-                
+
                 try {
                     string language_code = node.Attributes["code"].Value.Trim ();
                     string language_name = node.Attributes["name"].Value.Trim ();
-                    
+
                     ProductTranslation translation = new ProductTranslation (language_code, language_name);
-                    
+
                     foreach (XmlNode person in node.ChildNodes) {
                         if (person.Name != "person") {
                             continue;
                         }
-                        
+
                         translation.AddTranslator (person.FirstChild.Value.Trim ());
                     }
-                    
+
                     translations.Add (language_name, translation);
                 } catch {
                 }
             }
         }
-        
+
         public static IEnumerable<ProductTranslation> Translations {
             get { return translations.Values; }
         }
-        
+
         public static IEnumerable<ProductAuthor> Authors {
             get { return authors.Values; }
         }
-        
+
         public static string [] Contributors {
             get { return contributors; }
         }
-        
+
         public static string [] Artists {
             get { return artists; }
         }
-        
+
         public static string License {
             get { return AssemblyResource.GetFileContents ("COPYING"); }
         }
     }
-    
+
     public class ProductTranslation
     {
         private string language_code;
         private string language_name;
         private SortedList<string, string> translators = new SortedList<string, string> ();
-        
+
         private ProductTranslation ()
         {
         }
-        
+
         internal ProductTranslation (string languageCode, string languageName)
         {
             language_code = languageCode;
             language_name = languageName;
         }
-        
+
         internal void AddTranslator (string translator)
         {
             translators.Add (translator, translator);
         }
-        
+
         public string LanguageCode {
             get { return language_code; }
         }
-        
+
         public string LanguageName {
             get { return language_name; }
         }
-        
+
         public IEnumerable<string> Translators {
             get { return translators.Values; }
         }
     }
-    
+
     public class ProductAuthor
     {
         private string name;
         private string role;
-        
+
         private ProductAuthor ()
         {
         }
-        
+
         internal ProductAuthor (string name, string role)
         {
             if (name == null || role == null) {
                 throw new ArgumentNullException ("name or role cannot be null");
             }
-            
+
             this.name = name;
             this.role = role;
         }
-        
+
         public string Name {
             get { return name; }
         }
-        
+
         public string Role {
             get { return role; }
         }

@@ -32,37 +32,37 @@ using System.Text.RegularExpressions;
 using Banshee.ServiceStack;
 
 namespace Banshee.Moblin
-{    
+{
     public class MoblinTrackInfoDisplay : Banshee.Gui.Widgets.ClassicTrackInfoDisplay
     {
         private Regex line_three_split;
-        
+
         public MoblinTrackInfoDisplay () : base ()
         {
         }
-        
+
         protected override string GetSecondLineText (Banshee.Collection.TrackInfo track)
         {
             if (line_three_split == null) {
                 line_three_split = new Regex (@"size=""small"">", RegexOptions.Compiled);
             }
-            
+
             var text = base.GetSecondLineText (track);
             var splits = line_three_split.Split (text);
             string new_text = String.Empty;
-            
+
             for (int i = 0; i < splits.Length; i++) {
                 if (i == 2) {
                     new_text += "\n";
                 }
-                
+
                 new_text += splits[i];
-                
+
                 if (i < 2) {
                     new_text += @"size=""small"">";
                 }
             }
-            
+
             return new_text;
         }
     }

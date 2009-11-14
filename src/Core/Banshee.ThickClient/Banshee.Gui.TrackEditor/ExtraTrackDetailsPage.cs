@@ -35,15 +35,15 @@ using Banshee.Collection;
 namespace Banshee.Gui.TrackEditor
 {
     public class ExtraTrackDetailsPage : FieldPage, ITrackEditorPage
-    {        
+    {
         public int Order {
             get { return 20; }
         }
-                                    
+
         public string Title {
             get { return Catalog.GetString ("Extra"); }
         }
-        
+
         protected override void AddFields ()
         {
             AddField (this, new TextEntry ("CoreTracks", "Composer"),
@@ -52,19 +52,19 @@ namespace Banshee.Gui.TrackEditor
                 delegate (EditorTrackInfo track, Widget widget) { ((TextEntry)widget).Text = track.Composer; },
                 delegate (EditorTrackInfo track, Widget widget) {  track.Composer = ((TextEntry)widget).Text; }
             );
-            
+
             AddField (this, new TextEntry ("CoreTracks", "Conductor"),
                 Catalog.GetString ("Set all conductors to this value"),
                 delegate { return Catalog.GetString ("Con_ductor:"); },
                 delegate (EditorTrackInfo track, Widget widget) { ((TextEntry)widget).Text = track.Conductor; },
                 delegate (EditorTrackInfo track, Widget widget) { track.Conductor = ((TextEntry)widget).Text; }
             );
-            
+
             HBox box = new HBox ();
             box.Spacing = 12;
             box.Show ();
             PackStart (box, false, false, 0);
-            
+
             AddField (box, new TextEntry ("CoreTracks", "Grouping"),
                 Catalog.GetString ("Set all groupings to this value"),
                 delegate { return Catalog.GetString ("_Grouping:"); },
@@ -76,7 +76,7 @@ namespace Banshee.Gui.TrackEditor
             bpm_entry.Digits = 0;
             bpm_entry.MaxLength = 3;
             bpm_entry.Numeric = true;
-            AddField (box, bpm_entry, 
+            AddField (box, bpm_entry,
                 Catalog.GetString ("Set all beats per minute to this value"),
                 delegate { return Catalog.GetString ("Bea_ts Per Minute:"); },
                 delegate (EditorTrackInfo track, Widget widget) { ((SpinButtonEntry)widget).Value = track.Bpm; },
@@ -88,7 +88,7 @@ namespace Banshee.Gui.TrackEditor
             copyright_box.Spacing = 12;
             copyright_box.Show ();
             PackStart (copyright_box, true, true, 0);
-            
+
             AddField (copyright_box, new TextEntry ("CoreTracks", "Copyright"),
                 Catalog.GetString ("Set all copyrights to this value"),
                 delegate { return Catalog.GetString ("Copyrig_ht:"); },
@@ -106,7 +106,7 @@ namespace Banshee.Gui.TrackEditor
             TextViewEntry comment_entry = new TextViewEntry ();
             comment_entry.HscrollbarPolicy = PolicyType.Automatic;
             comment_entry.TextView.WrapMode = WrapMode.WordChar;
-            AddField (this, comment_entry, 
+            AddField (this, comment_entry,
                 Catalog.GetString ("Set all comments to this value"),
                 delegate { return Catalog.GetString ("Co_mment:"); },
                 delegate (EditorTrackInfo track, Widget widget) { ((TextViewEntry)widget).Text = track.Comment; },

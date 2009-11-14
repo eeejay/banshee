@@ -60,7 +60,7 @@ namespace Banshee.Collection.Database
             provider.Select, provider.From,
             (String.IsNullOrEmpty (provider.Where) ? "1=1" : provider.Where)
         ));
-        
+
         private static string last_artist_name = null;
         private static DatabaseArtistInfo last_artist = null;
 
@@ -69,7 +69,7 @@ namespace Banshee.Collection.Database
             last_artist_name = null;
             last_artist = null;
         }
-        
+
         public static DatabaseArtistInfo FindOrCreate (string artistName, string artistNameSort)
         {
             DatabaseArtistInfo artist = new DatabaseArtistInfo ();
@@ -77,7 +77,7 @@ namespace Banshee.Collection.Database
             artist.NameSort = artistNameSort;
             return FindOrCreate (artist);
         }
-        
+
         private static IDataReader FindExistingArtists (string name)
         {
             HyenaSqliteConnection db = ServiceManager.DbConnection;
@@ -86,7 +86,7 @@ namespace Banshee.Collection.Database
             }
             return db.Query (default_select_command, name);
         }
-        
+
         public static DatabaseArtistInfo FindOrCreate (DatabaseArtistInfo artist)
         {
             if (artist.Name == last_artist_name && last_artist != null) {
@@ -96,7 +96,7 @@ namespace Banshee.Collection.Database
             if (String.IsNullOrEmpty (artist.Name) || artist.Name.Trim () == String.Empty) {
                 artist.Name = null;
             }
-            
+
             using (IDataReader reader = FindExistingArtists (artist.Name)) {
                 if (reader.Read ()) {
                     last_artist = provider.Load (reader);
@@ -109,7 +109,7 @@ namespace Banshee.Collection.Database
                     last_artist = artist;
                 }
             }
-            
+
             last_artist_name = artist.Name;
             return last_artist;
         }
@@ -126,7 +126,7 @@ namespace Banshee.Collection.Database
             }
             return artist;
         }
-        
+
         public DatabaseArtistInfo () : base (null, null)
         {
         }
@@ -163,13 +163,13 @@ namespace Banshee.Collection.Database
         internal byte[] NameSortKey {
             get { return Hyena.StringUtil.SortKey (NameSort ?? DisplayName); }
         }
-        
+
         [DatabaseColumn("MusicBrainzID")]
         public override string MusicBrainzId {
             get { return base.MusicBrainzId; }
             set { base.MusicBrainzId = value; }
         }
-        
+
         public override string ToString ()
         {
             return String.Format ("DatabaseArtistInfo<DbId: {0}, Name: {1}>", DbId, Name);

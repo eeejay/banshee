@@ -84,17 +84,17 @@ namespace Hyena.Query.Gui
         {
             field_chooser = ComboBox.NewText ();
             field_chooser.Changed += HandleFieldChanged;
-            
+
             op_chooser = ComboBox.NewText ();
             op_chooser.RowSeparatorFunc = IsRowSeparator;
             op_chooser.Changed += HandleOperatorChanged;
-            
+
             value_box = new HBox ();
 
             remove_button = new Button (new Image ("gtk-remove", IconSize.Button));
             remove_button.Relief = ReliefStyle.None;
             remove_button.Clicked += OnButtonRemoveClicked;
-            
+
             add_button = new Button (new Image ("gtk-add", IconSize.Button));
             add_button.Relief = ReliefStyle.None;
             add_button.Clicked += OnButtonAddClicked;
@@ -123,7 +123,7 @@ namespace Hyena.Query.Gui
             value_box.ShowAll ();
             button_box.ShowAll ();
         }
-        
+
         private bool first = true;
         private void SetValueEntry (QueryValueEntry entry)
         {
@@ -187,7 +187,7 @@ namespace Hyena.Query.Gui
             op_chooser.Changed += HandleOperatorChanged;
             op_chooser.Active = 0;
         }
-        
+
         private void HandleOperatorChanged (object o, EventArgs args)
         {
             if (op_chooser.Active < 0 || op_chooser.Active >= operators.Count) {
@@ -201,26 +201,26 @@ namespace Hyena.Query.Gui
 
             //value_entry = new QueryValueEntry <field.ValueType> ();
         }
-        
+
         private void OnButtonAddClicked (object o, EventArgs args)
         {
             EventHandler handler = AddRequest;
             if (handler != null)
                 handler (this, new EventArgs ());
         }
-        
+
         private void OnButtonRemoveClicked (object o, EventArgs args)
         {
             EventHandler handler = RemoveRequest;
             if (handler != null)
                 handler (this, new EventArgs ());
         }
-        
+
         public bool CanDelete {
             get { return remove_button.Sensitive; }
             set { remove_button.Sensitive = value; }
         }
-        
+
         public QueryTermNode QueryNode {
             get {
                 QueryTermNode node = new QueryTermNode ();

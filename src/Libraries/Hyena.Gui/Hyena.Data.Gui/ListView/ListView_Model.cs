@@ -54,7 +54,7 @@ namespace Hyena.Data.Gui
                 model.Cleared -= OnModelClearedHandler;
                 model.Reloaded -= OnModelReloadedHandler;
             }
-            
+
             model = value;
 
             if (model != null) {
@@ -75,7 +75,7 @@ namespace Hyena.Data.Gui
                     IsReorderable = sortable.SortColumn == null || sortable.SortColumn.SortType == SortType.None;
                 }
             }
-            
+
             RefreshViewForModel (vpos);
 
             var handler = ModelChanged;
@@ -101,11 +101,11 @@ namespace Hyena.Data.Gui
             } else if (vadjustment != null) {
                 ScrollTo (vadjustment.Value);
             }
-            
+
             if (Model != null && Selection != null) {
                 Selection.MaxIndex = Model.Count - 1;
             }
-            
+
             if (Parent is ScrolledWindow) {
                 Parent.QueueDraw ();
             }
@@ -115,7 +115,7 @@ namespace Hyena.Data.Gui
         {
             OnModelCleared ();
         }
-        
+
         private void OnModelReloadedHandler (object o, EventArgs args)
         {
             OnModelReloaded ();
@@ -130,12 +130,12 @@ namespace Hyena.Data.Gui
         {
             RefreshViewForModel (null);
         }
-        
+
         protected virtual void OnModelReloaded ()
         {
             RefreshViewForModel (null);
         }
-        
+
         private IListModel<T> model;
         public virtual IListModel<T> Model {
             get { return model; }
@@ -177,32 +177,32 @@ namespace Hyena.Data.Gui
 
             return (bool)row_opaque_property_info.GetValue (item, null);
         }
-        
+
         private string row_bold_property_name = "IsBold";
         private PropertyInfo row_bold_property_info;
         bool row_bold_property_invalid = false;
-        
+
         public string RowBoldPropertyName {
             get { return row_bold_property_name; }
-            set { 
+            set {
                 if (value == row_bold_property_name) {
                     return;
                 }
-                
+
                 row_bold_property_name = value;
                 row_bold_property_info = null;
                 row_bold_property_invalid = false;
-                
+
                 InvalidateList ();
             }
         }
-        
+
         private bool IsRowBold (object item)
         {
             if (item == null || row_bold_property_invalid) {
                 return false;
             }
-         
+
             if (row_bold_property_info == null || row_bold_property_info.ReflectedType != item.GetType ()) {
                 row_bold_property_info = item.GetType ().GetProperty (row_bold_property_name);
                 if (row_bold_property_info == null || row_bold_property_info.PropertyType != typeof (bool)) {
@@ -211,7 +211,7 @@ namespace Hyena.Data.Gui
                     return false;
                 }
             }
-            
+
             return (bool)row_bold_property_info.GetValue (item, null);
         }
     }

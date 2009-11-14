@@ -64,12 +64,12 @@ namespace Lastfm.Data
                 SetupCache();
             }
         }
-        
+
         public static string DownloadContent (string data_url)
         {
             return DownloadContent (data_url, CacheDuration.Infinite);
         }
-        
+
         public static string DownloadContent (string data_url, CacheDuration cache_duration)
         {
             return DownloadContent (data_url, GetCachedPathFromUrl (data_url), cache_duration);
@@ -95,20 +95,20 @@ namespace Lastfm.Data
             HttpWebRequest request = (HttpWebRequest) WebRequest.Create (data_url);
             request.UserAgent = DataCore.UserAgent;
             request.KeepAlive = false;
-            
+
             using (HttpWebResponse response = (HttpWebResponse) request.GetResponse ()) {
                 using (Stream stream = GetResponseStream (response)) {
                     using (FileStream file_stream = File.Open (cache_file, FileMode.Create)) {
                         using (BufferedStream buffered_stream = new BufferedStream (file_stream)) {
                             byte [] buffer = new byte[8192];
                             int read;
-                            
+
                             while (true) {
                                 read = stream.Read (buffer, 0, buffer.Length);
                                 if (read <= 0) {
                                     break;
                                 }
-                                
+
                                 buffered_stream.Write (buffer, 0, read);
                             }
                         }
@@ -118,7 +118,7 @@ namespace Lastfm.Data
             return cache_file;
         }
 
-        
+
         public static string GetCachedPathFromUrl (string url)
         {
             if (url == null) {
@@ -132,8 +132,8 @@ namespace Lastfm.Data
                 return String.Empty;
             }
         }
-        
-        private static Stream GetResponseStream (HttpWebResponse response) 
+
+        private static Stream GetResponseStream (HttpWebResponse response)
         {
             return response.ContentEncoding == "gzip"
                 ? new GZipInputStream (response.GetResponseStream ())
@@ -159,28 +159,28 @@ namespace Lastfm.Data
         private static void SetupCache()
         {
             bool clean = false;
-            
+
             if(!Directory.Exists(CachePath)) {
                 clean = true;
                 Directory.CreateDirectory(CachePath);
             }
-            
+
             // Create our cache subdirectories.
             for(int i = 0; i < 256; ++i) {
                 string subdir = i.ToString("x");
                 if(i < 16) {
                     subdir = "0" + subdir;
                 }
-                
+
                 subdir = System.IO.Path.Combine(CachePath, subdir);
-                
+
                 if(!Directory.Exists(subdir)) {
                     Directory.CreateDirectory(subdir);
                 }
             }
-            
+
             //RecommendationPlugin.CacheVersion.Set (CACHE_VERSION);
-            
+
             if(clean) {
                 Log.Debug("Recommendation Plugin", "Created a new cache layout");
             }
@@ -189,11 +189,11 @@ namespace Lastfm.Data
         private static void CheckForCacheWipe()
         {
             //bool wipe = false;
-            
+
             if(!Directory.Exists(CachePath)) {
                 return;
             }
-            
+
             /*if (RecommendationPlugin.CacheVersion.Get() < CACHE_VERSION) {
                 Directory.Delete(CachePath, true);
                 Log.Debug("Recommendation Plugin", "Destroyed outdated cache");

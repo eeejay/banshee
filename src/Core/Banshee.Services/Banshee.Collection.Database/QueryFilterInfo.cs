@@ -46,10 +46,10 @@ namespace Banshee.Collection.Database
                 "TrackID", typeof(QueryFilterInfo<T>).GetMember ("DbId")[0] as PropertyInfo,
                 filter_column, typeof(QueryFilterInfo<T>).GetMember ("Value")[0] as PropertyInfo
             );
-                
+
             return provider;
         }
-        
+
         private long dbid;
         public long DbId {
             get { return dbid; }
@@ -61,15 +61,15 @@ namespace Banshee.Collection.Database
             get { return obj; }
             set { obj = value; }
         }
-        
+
         private string title;
         public string Title {
             get { return title ?? ToString (); }
             set { title = value; }
         }
-        
+
         public object ValueObject { get { return Value; } }
-        
+
         public override string ToString ()
         {
             return Value == null ? String.Empty : Value.ToString ();

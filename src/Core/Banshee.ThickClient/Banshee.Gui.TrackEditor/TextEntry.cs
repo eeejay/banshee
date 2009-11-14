@@ -46,7 +46,7 @@ namespace Banshee.Gui.TrackEditor
             if (completionTable == null || completionColumn == null) {
                 return;
             }
-        
+
             ListStore completion_model = new ListStore (typeof (string));
             foreach (string val in ServiceManager.DbConnection.QueryEnumerable<string> (String.Format (
                 "SELECT DISTINCT {1} FROM {0} ORDER BY {1}", completionTable, completionColumn))) {
@@ -63,17 +63,17 @@ namespace Banshee.Gui.TrackEditor
             //Completion.InlineSelection = true; // requires 2.12
             Completion.PopupSingleMatch = false;
         }
-        
+
         public void DisconnectUndo ()
         {
             undo_adapter.DisconnectUndo ();
         }
-        
+
         public void ConnectUndo (EditorTrackInfo track)
         {
             undo_adapter.ConnectUndo (this, track);
         }
-        
+
         public new string Text {
             get { return base.Text; }
             set { base.Text = value ?? String.Empty; }

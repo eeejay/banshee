@@ -6,24 +6,24 @@
  *  Written by Aaron Bockover <aaron@abock.org>
  ****************************************************************************/
 
-/*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
+/*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW:
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
- *  copy of this software and associated documentation files (the "Software"),  
- *  to deal in the Software without restriction, including without limitation  
- *  the rights to use, copy, modify, merge, publish, distribute, sublicense,  
- *  and/or sell copies of the Software, and to permit persons to whom the  
+ *  copy of this software and associated documentation files (the "Software"),
+ *  to deal in the Software without restriction, including without limitation
+ *  the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ *  and/or sell copies of the Software, and to permit persons to whom the
  *  Software is furnished to do so, subject to the following conditions:
  *
- *  The above copyright notice and this permission notice shall be included in 
+ *  The above copyright notice and this permission notice shall be included in
  *  all copies or substantial portions of the Software.
  *
- *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
- *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
- *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
- *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
- *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
- *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  *  DEALINGS IN THE SOFTWARE.
  */
 
@@ -34,10 +34,10 @@ using System.Collections.Generic;
 
 namespace Banshee.Base
 {
-    public class UriList : List<SafeUri> 
+    public class UriList : List<SafeUri>
     {
         public UriList (string [] uris)
-        {    
+        {
             // FIXME this is so lame do real chacking at some point
             foreach (string str in uris) {
                 SafeUri uri;
@@ -47,23 +47,23 @@ namespace Banshee.Base
                 } else {
                     uri = new SafeUri (str);
                 }
-                
+
                 Add (uri);
             }
         }
 
-        public UriList (string data) 
+        public UriList (string data)
         {
             LoadFromString (data);
         }
-        
-        /*public UriList (Gtk.SelectionData selection) 
+
+        /*public UriList (Gtk.SelectionData selection)
         {
             // FIXME this should check the atom etc.
             LoadFromString (System.Text.Encoding.UTF8.GetString (selection.Data));
         }*/
 
-        private void LoadFromString (string data) 
+        private void LoadFromString (string data)
         {
             string [] items = data.Split ('\n');
 
@@ -71,7 +71,7 @@ namespace Banshee.Base
                 if (item.StartsWith ("#")) {
                     continue;
                 }
-                
+
                 SafeUri uri;
                 string s = item;
 
@@ -84,7 +84,7 @@ namespace Banshee.Base
                 } catch {
                     continue;
                 }
-                
+
                 Add (uri);
             }
         }
@@ -93,8 +93,8 @@ namespace Banshee.Base
         {
             return new SafeUri (Path.GetFullPath (path));
         }
-        
-        public override string ToString () 
+
+        public override string ToString ()
         {
             StringBuilder list = new StringBuilder ();
 
@@ -102,17 +102,17 @@ namespace Banshee.Base
                 if (uri == null) {
                     break;
                 }
-                
+
                 list.Append (uri.AbsoluteUri + "\r\n");
             }
 
             return list.ToString ();
         }
-        
+
         public string [] LocalPaths {
             get {
                 int count = 0;
-                
+
                 foreach (SafeUri uri in this) {
                     if (uri.IsFile) {
                         count++;
@@ -121,13 +121,13 @@ namespace Banshee.Base
 
                 string [] paths = new string[count];
                 count = 0;
-                
+
                 foreach (SafeUri uri in this) {
                     if (uri.IsFile) {
                         paths[count++] = uri.LocalPath;
                     }
                 }
-                
+
                 return paths;
             }
         }

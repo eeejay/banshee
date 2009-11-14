@@ -40,7 +40,7 @@ namespace Banshee.Gui.TrackEditor
     {
         private ListStore genre_model;
         private EditorEditableUndoAdapter<Entry> undo_adapter = new EditorEditableUndoAdapter<Entry> ();
-        
+
         public GenreEntry ()
         {
             genre_model = new ListStore (typeof (string));
@@ -55,7 +55,7 @@ namespace Banshee.Gui.TrackEditor
             //c.InlineSelection = true; // requires 2.12
             c.PopupSingleMatch = false;
             Entry.Completion = c;
-        
+
             foreach (string genre in ServiceManager.DbConnection.QueryEnumerable<string> (
                 "SELECT DISTINCT Genre FROM CoreTracks ORDER BY Genre")) {
                 if (!String.IsNullOrEmpty (genre)) {
@@ -63,17 +63,17 @@ namespace Banshee.Gui.TrackEditor
                 }
             }
         }
-        
+
         public void DisconnectUndo ()
         {
             undo_adapter.DisconnectUndo ();
         }
-        
+
         public void ConnectUndo (EditorTrackInfo track)
         {
             undo_adapter.ConnectUndo (Entry, track);
         }
-        
+
         public string Value {
             get { return Entry.Text; }
             set { Entry.Text = value ?? String.Empty; }

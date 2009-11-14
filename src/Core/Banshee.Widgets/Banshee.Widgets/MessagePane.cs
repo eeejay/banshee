@@ -32,9 +32,9 @@ using System;
 using Mono.Unix;
 using Gtk;
 
-namespace Banshee.Widgets 
+namespace Banshee.Widgets
 {
-    public class MessagePane : Table 
+    public class MessagePane : Table
     {
         private Image headerIcon;
         private Label header;
@@ -58,7 +58,7 @@ namespace Banshee.Widgets
         public Gdk.Pixbuf HeaderIcon {
             set { headerIcon.Pixbuf = value; }
         }
-        
+
         public Gdk.Pixbuf ArrowIcon {
             set { arrow = value; }
         }
@@ -70,11 +70,11 @@ namespace Banshee.Widgets
         public string HeaderMarkup {
             set { header.Markup = value; }
         }
-        
+
         private void AttachArrow (Gdk.Pixbuf arrow)
         {
             uint row = NRows;
-            
+
             Image image = arrow == null ? new Image (this.arrow) : new Image (arrow);
             image.Yalign = 0.0f;
             image.Xalign = 1.0f;
@@ -91,7 +91,7 @@ namespace Banshee.Widgets
         {
             Append (tip, showArrow, null);
         }
-        
+
         public void Append (string tip, bool showArrow, Gdk.Pixbuf arrow)
         {
             uint row = NRows;
@@ -120,7 +120,7 @@ namespace Banshee.Widgets
             Append(widget, xoptions, yoptions, showArrow, null);
         }
 
-        public void Append (Widget widget, AttachOptions xoptions, AttachOptions yoptions, 
+        public void Append (Widget widget, AttachOptions xoptions, AttachOptions yoptions,
             bool showArrow, Gdk.Pixbuf arrow)
         {
             uint row = NRows;
@@ -132,7 +132,7 @@ namespace Banshee.Widgets
             Attach (widget, 1, 2, row, row + 1, xoptions, yoptions, 0, 0);
             widget.ModifyBg (StateType.Normal, Style.Base (StateType.Normal));
         }
-        
+
         public void Clear ()
         {
             foreach (Widget child in Children) {
@@ -140,10 +140,10 @@ namespace Banshee.Widgets
                     Remove (child);
                 }
             }
-            
+
             Resize (1, 2);
         }
-        
+
         protected override void OnSizeAllocated (Gdk.Rectangle allocation)
         {
             base.OnSizeAllocated (allocation);

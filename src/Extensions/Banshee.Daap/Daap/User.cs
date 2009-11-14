@@ -12,7 +12,7 @@ namespace Daap {
         public User User {
             get { return user; }
         }
-        
+
         public UserArgs (User user) {
             this.user = user;
         }

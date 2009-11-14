@@ -30,9 +30,9 @@ namespace MusicBrainz
 {
     public sealed class Release : MusicBrainzItem
     {
-        
+
         #region Private
-        
+
         const string EXTENSION = "release";
         ReleaseType? type;
         ReleaseStatus? status;
@@ -43,9 +43,9 @@ namespace MusicBrainz
         ReadOnlyCollection<Event> events;
         ReadOnlyCollection<Track> tracks;
         int? track_number;
-        
+
         #endregion
-        
+
         #region Constructors
 
         Release (string id) : base (id)
@@ -55,17 +55,17 @@ namespace MusicBrainz
         internal Release (XmlReader reader) : base (reader, null, false)
         {
         }
-        
+
         #endregion
-        
+
         #region Protected
-        
+
         internal override string UrlExtension {
             get { return EXTENSION; }
         }
-        
+
         static readonly string [] track_params = new string [] { "tracks", "track-level-rels", "artist" };
-        
+
         internal override void CreateIncCore (StringBuilder builder)
         {
             AppendIncParameters (builder, "release-events", "labels");
@@ -153,7 +153,7 @@ namespace MusicBrainz
                 break;
             }
         }
-        
+
         #endregion
 
         #region Public
@@ -165,7 +165,7 @@ namespace MusicBrainz
 
         [Queryable ("release")]
         public override string GetTitle ()
-        { 
+        {
             return base.GetTitle ();
         }
 
@@ -200,7 +200,7 @@ namespace MusicBrainz
 
         [QueryableMember("Count", "discids")]
         public ReadOnlyCollection<Disc> GetDiscs ()
-        { 
+        {
             return GetPropertyOrNew (ref discs);
         }
 
@@ -220,7 +220,7 @@ namespace MusicBrainz
         }
 
         #endregion
-        
+
         #region Static
 
         public static Release Get (string id)
@@ -232,7 +232,7 @@ namespace MusicBrainz
         public static Query<Release> Query (string title)
         {
             if (title == null) throw new ArgumentNullException ("title");
-            
+
             ReleaseQueryParameters parameters = new ReleaseQueryParameters ();
             parameters.Title = title;
             return Query (parameters);
@@ -242,17 +242,17 @@ namespace MusicBrainz
         {
             if (title == null) throw new ArgumentNullException ("title");
             if (artist == null) throw new ArgumentNullException ("artist");
-            
+
             ReleaseQueryParameters parameters = new ReleaseQueryParameters ();
             parameters.Title = title;
             parameters.Artist = artist;
             return Query (parameters);
         }
-        
+
         public static Query<Release> Query (Disc disc)
         {
             if (disc == null) throw new ArgumentNullException ("disc");
-            
+
             ReleaseQueryParameters parameters = new ReleaseQueryParameters ();
             parameters.DiscId = disc.Id;
             return Query (parameters);
@@ -267,7 +267,7 @@ namespace MusicBrainz
         public static Query<Release> QueryFromDevice(string device)
         {
             if (device == null) throw new ArgumentNullException ("device");
-            
+
             ReleaseQueryParameters parameters = new ReleaseQueryParameters ();
             parameters.DiscId = LocalDisc.GetFromDevice (device).Id;
             return Query (parameters);
@@ -283,13 +283,13 @@ namespace MusicBrainz
         {
             return release.ToString ();
         }
-        
+
         #endregion
 
     }
-    
+
     #region Ancillary Types
-    
+
     public enum ReleaseType
     {
         None,
@@ -389,7 +389,7 @@ namespace MusicBrainz
             }
         }
     }
-    
+
     #endregion
-    
+
 }

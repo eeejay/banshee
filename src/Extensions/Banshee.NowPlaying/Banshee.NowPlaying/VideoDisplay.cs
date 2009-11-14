@@ -34,13 +34,13 @@ using Banshee.ServiceStack;
 using Banshee.Collection;
 
 namespace Banshee.NowPlaying
-{   
+{
     public abstract class VideoDisplay : Gtk.Widget, IVideoDisplay
     {
         private bool is_idle = true;
-        
+
         public event EventHandler IdleStateChanged;
-        
+
         public bool IsIdle {
             get { return is_idle; }
         }
@@ -50,50 +50,50 @@ namespace Banshee.NowPlaying
             ServiceManager.PlayerEngine.ConnectEvent (OnPlayerEvent,
                 PlayerEvent.StartOfStream |
                 PlayerEvent.EndOfStream);
-            
+
             ToggleIdleVisibility ();
         }
 
         protected abstract Gdk.Window RenderWindow { get; }
-        
+
         protected abstract void ExposeVideo (Gdk.EventExpose evnt);
-        
+
         protected override void OnDestroyed ()
         {
             base.OnDestroyed ();
             ServiceManager.PlayerEngine.DisconnectEvent (OnPlayerEvent);
         }
-        
+
         protected override bool OnExposeEvent (Gdk.EventExpose evnt)
         {
-            RenderWindow.DrawRectangle (Style.BlackGC, true, 
+            RenderWindow.DrawRectangle (Style.BlackGC, true,
                 new Gdk.Rectangle (0, 0, Allocation.Width, Allocation.Height));
-            
+
             if (RenderWindow == null || !RenderWindow.IsVisible) {
                 return true;
             }
-            
+
             if (!is_idle && ServiceManager.PlayerEngine.VideoDisplayContextType != VideoDisplayContextType.Unsupported) {
                 ExposeVideo (evnt);
             }
-            
+
             return true;
         }
-        
+
         private void OnPlayerEvent (PlayerEventArgs args)
         {
             ToggleIdleVisibility ();
         }
-        
+
         private void ToggleIdleVisibility ()
         {
             TrackInfo track = ServiceManager.PlayerEngine.CurrentTrack;
             is_idle = track == null || (track.MediaAttributes & TrackMediaAttributes.VideoStream) == 0;
             QueueDraw ();
-            
+
             OnIdleStateChanged ();
         }
-        
+
         protected virtual void OnIdleStateChanged ()
         {
             EventHandler handler = IdleStateChanged;
@@ -101,7 +101,7 @@ namespace Banshee.NowPlaying
                 handler (this, EventArgs.Empty);
             }
         }
-        
+
         public new void QueueDraw ()
         {
             base.QueueDraw ();

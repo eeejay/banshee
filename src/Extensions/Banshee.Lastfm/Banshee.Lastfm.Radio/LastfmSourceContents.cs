@@ -57,7 +57,7 @@ namespace Banshee.Lastfm.Radio
             };
 
             viewport.Add (main_box);
-            
+
             StyleSet += delegate {
                 viewport.ModifyBg (StateType.Normal, Style.Base (StateType.Normal));
                 viewport.ModifyFg (StateType.Normal, Style.Text (StateType.Normal));
@@ -76,7 +76,7 @@ namespace Banshee.Lastfm.Radio
 
             if (lastfm.Connection.Connected) {
                 UpdateForUser (lastfm.Account.UserName);
-            } else { 
+            } else {
                 lastfm.Connection.StateChanged += HandleConnectionStateChanged;
             }
 
@@ -139,7 +139,7 @@ namespace Banshee.Lastfm.Radio
             recently_loved.SetList (user.RecentLovedTracks);
             recently_played.SetList (user.RecentTracks);
             top_artists.SetList (user.GetTopArtists (TopType.Overall));
-            
+
             ShowAll ();
         }
 
@@ -260,7 +260,7 @@ namespace Banshee.Lastfm.Radio
                 //menu.Append (new MenuItem ("Listen to Loved Station"));
                 //menu.Append (new MenuItem ("Listen to Neighbors Station"));
 
-                menu.ShowAll (); 
+                menu.ShowAll ();
                 menu.Popup (null, null, null, 0, Gtk.Global.CurrentEventTime);
                 menu.Deactivated += delegate {
                     (sender as Button).Relief = ReliefStyle.None;

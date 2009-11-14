@@ -25,7 +25,7 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
- 
+
 using System;
 
 namespace Media.Playlists.Xspf
@@ -33,20 +33,20 @@ namespace Media.Playlists.Xspf
     public struct LinkEntry
     {
         public static readonly LinkEntry Zero;
-        
+
         private Uri rel;
         private Uri value;
-        
+
         public LinkEntry(Uri rel, Uri value)
         {
             this.rel = rel;
             this.value = value;
         }
-        
+
         public Uri Rel {
             get { return rel; }
         }
-        
+
         public Uri Value {
             get { return value; }
         }

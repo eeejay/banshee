@@ -112,7 +112,7 @@ namespace Media.Playlists.Xspf.Tests
 
             Assert.AreEqual(uri, track.Info);
             Assert.AreEqual(uri, track.Image);
-            
+
             Assert.AreEqual(11, track.TrackNumber);
             Assert.AreEqual(TimeSpan.FromMilliseconds(5159), track.Duration);
 

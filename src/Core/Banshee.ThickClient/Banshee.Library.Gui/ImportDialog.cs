@@ -1,4 +1,4 @@
-// 
+//
 // ImportDialog.cs
 //
 // Author:
@@ -52,7 +52,7 @@ namespace Banshee.Library.Gui
         public ImportDialog () : this (false)
         {
         }
-        
+
         public ImportDialog (bool doNotShowAgainVisible) : base ("ImportDialog")
         {
             accel_group = new AccelGroup ();
@@ -60,24 +60,24 @@ namespace Banshee.Library.Gui
             if (ServiceManager.Contains ("GtkElementsService")) {
                 Dialog.TransientFor = ServiceManager.Get<GtkElementsService> ().PrimaryWindow;
             }
-            
+
             Dialog.WindowPosition = WindowPosition.CenterOnParent;
             Dialog.AddAccelGroup (accel_group);
             Dialog.DefaultResponse = ResponseType.Ok;
             import_button = (Glade["ImportButton"] as Button);
 
             DoNotShowAgainVisible = doNotShowAgainVisible;
-            
+
             PopulateSourceList ();
-            
+
             ServiceManager.SourceManager.SourceAdded += OnSourceAdded;
             ServiceManager.SourceManager.SourceRemoved += OnSourceRemoved;
             ServiceManager.SourceManager.SourceUpdated += OnSourceUpdated;
-            
+
             Glade["MessageLabel"].Visible = ServiceManager.SourceManager.DefaultSource.Count == 0;
-            
+
             import_button.AddAccelerator ("activate", accel_group, (uint)Gdk.Key.Return, 0, AccelFlags.Visible);
-            
+
             Dialog.StyleSet += delegate {
                 UpdateIcons ();
             };
@@ -89,57 +89,57 @@ namespace Banshee.Library.Gui
             import_button.Label = label ?? Catalog.GetString ("_Import");
             import_button.WidthRequest = Math.Max (import_button.WidthRequest, 140);
         }
-        
+
         private void PopulateSourceList ()
         {
             source_model = new ListStore (typeof (Gdk.Pixbuf), typeof (string), typeof (IImportSource));
-            
+
             source_combo_box = new ComboBox ();
             source_combo_box.Changed += delegate { UpdateImportLabel (); };
             source_combo_box.Model = source_model;
             choose_label.MnemonicWidget = source_combo_box;
-            
+
             CellRendererPixbuf pixbuf_cr = new CellRendererPixbuf ();
             CellRendererText text_cr = new CellRendererText ();
-            
+
             source_combo_box.PackStart (pixbuf_cr, false);
             source_combo_box.PackStart (text_cr, true);
             source_combo_box.SetAttributes (pixbuf_cr, "pixbuf", 0);
             source_combo_box.SetAttributes (text_cr, "text", 1);
-            
+
             TreeIter active_iter = TreeIter.Zero;
-            
+
             List<IImportSource> sources = new List<IImportSource> ();
-            
+
             // Add the standalone import sources
             foreach (IImportSource source in ServiceManager.Get<ImportSourceManager> ()) {
                 sources.Add (source);
             }
-            
+
             // Find active sources that implement IImportSource
             foreach (Source source in ServiceManager.SourceManager.Sources) {
                 if (source is IImportSource) {
                     sources.Add ((IImportSource)source);
                 }
             }
-            
+
             // Sort the sources by their SortOrder properties
             sources.Sort (import_source_comparer);
-            
+
             // And actually add them to the dialog
             foreach (IImportSource source in sources) {
                 AddSource (source);
             }
-            
-            if (!active_iter.Equals(TreeIter.Zero) || (active_iter.Equals (TreeIter.Zero) && 
+
+            if (!active_iter.Equals(TreeIter.Zero) || (active_iter.Equals (TreeIter.Zero) &&
                 source_model.GetIterFirst (out active_iter))) {
                 source_combo_box.SetActiveIter (active_iter);
-            } 
-            
+            }
+
             (Glade["ComboVBox"] as Box).PackStart (source_combo_box, false, false, 0);
             source_combo_box.ShowAll ();
         }
-        
+
         private void UpdateIcons ()
         {
             for (int i = 0, n = source_model.IterNChildren (); i < n; i++) {
@@ -150,26 +150,26 @@ namespace Banshee.Library.Gui
                     if (o != null) {
                         ((Gdk.Pixbuf)o).Dispose ();
                     }
-                    
+
                     source_model.SetValue (iter, 0, GetIcon (source));
                 }
             }
         }
-        
+
         private Gdk.Pixbuf GetIcon (IImportSource source)
         {
             return IconThemeUtils.LoadIcon (22, source.IconNames);
         }
-        
+
         private TreeIter AddSource (IImportSource source)
         {
             if (source == null) {
                 return TreeIter.Zero;
             }
-            
+
             return source_model.AppendValues (GetIcon (source), source.Name, source);
         }
-        
+
         private void OnSourceAdded (SourceAddedArgs args)
         {
             if(args.Source is IImportSource) {
@@ -178,7 +178,7 @@ namespace Banshee.Library.Gui
                 });
             }
         }
-        
+
         private void OnSourceRemoved (SourceEventArgs args)
         {
             if (args.Source is IImportSource) {
@@ -190,7 +190,7 @@ namespace Banshee.Library.Gui
                 });
             }
         }
-        
+
         private void OnSourceUpdated (SourceEventArgs args)
         {
             if (args.Source is IImportSource) {
@@ -202,11 +202,11 @@ namespace Banshee.Library.Gui
                 });
             }
         }
-        
+
         private bool FindSourceIter (out TreeIter iter, IImportSource source)
         {
             iter = TreeIter.Zero;
-            
+
             for (int i = 0, n = source_model.IterNChildren (); i < n; i++) {
                 TreeIter _iter;
                 if (source_model.IterNthChild (out _iter, i)) {
@@ -216,30 +216,30 @@ namespace Banshee.Library.Gui
                     }
                 }
             }
-            
+
             return false;
         }
-        
+
         public bool DoNotShowAgainVisible {
             get { return Glade["DoNotShowCheckBox"].Visible; }
             set { Glade["DoNotShowCheckBox"].Visible = value; }
         }
-        
+
         public bool DoNotShowAgain {
             get { return (Glade["DoNotShowCheckBox"] as CheckButton).Active; }
         }
-        
+
         public IImportSource ActiveSource {
             get {
-                TreeIter iter; 
+                TreeIter iter;
                 if (source_combo_box.GetActiveIter (out iter)) {
                     return (IImportSource)source_model.GetValue (iter, 2);
                 }
-                
+
                 return null;
             }
         }
-         
+
         private static IComparer<IImportSource> import_source_comparer = new ImportSourceComparer ();
         private class ImportSourceComparer : IComparer<IImportSource>
         {

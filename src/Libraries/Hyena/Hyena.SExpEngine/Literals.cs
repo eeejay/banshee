@@ -31,9 +31,9 @@ using System;
 namespace Hyena.SExpEngine
 {
     public class LiteralNodeBase : TreeNode
-    {    
+    {
         private Type type = null;
-        
+
         public Type EnclosedType {
             get { return type ?? GetType(); }
             set { type = value; }
@@ -43,18 +43,18 @@ namespace Hyena.SExpEngine
     public class LiteralNode<T> : LiteralNodeBase
     {
         private T value;
-        
+
         public LiteralNode(T value)
         {
             this.value = value;
             EnclosedType = typeof(T);
         }
-        
+
         public override string ToString()
         {
             return Value.ToString();
         }
-        
+
         public T Value {
             get { return value; }
         }
@@ -69,18 +69,18 @@ namespace Hyena.SExpEngine
             return "void";
         }
     }
-    
+
     public class DoubleLiteral : LiteralNode<double>
     {
         private static System.Globalization.CultureInfo culture_info = new System.Globalization.CultureInfo("en-US");
-        
+
         public DoubleLiteral(double value) : base(value)
         {
         }
-        
+
         public override string ToString()
         {
-            return (Value - (int)Value) == 0.0 
+            return (Value - (int)Value) == 0.0
                 ? String.Format("{0}.0", Value.ToString(culture_info))
                 : Value.ToString(culture_info);
         }
@@ -91,7 +91,7 @@ namespace Hyena.SExpEngine
         public BooleanLiteral(bool value) : base(value)
         {
         }
-        
+
         public override string ToString()
         {
             return Value ? "true" : "false";

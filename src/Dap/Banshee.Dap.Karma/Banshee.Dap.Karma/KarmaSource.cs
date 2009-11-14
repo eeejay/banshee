@@ -120,7 +120,7 @@ namespace Banshee.Dap.Karma
                 device.Save();
                 track_map.Remove(track.TrackId);
             }
-            
+
             return true;
         }
 

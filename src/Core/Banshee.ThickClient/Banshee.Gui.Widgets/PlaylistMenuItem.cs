@@ -37,12 +37,12 @@ namespace Banshee.Gui.Widgets
     public class PlaylistMenuItem : ImageMenuItem
     {
         private PlaylistSource playlist;
-        
+
         public PlaylistMenuItem (PlaylistSource playlist) : base (playlist.Name)
         {
             this.playlist = playlist;
         }
-        
+
         public PlaylistSource Playlist {
             get { return playlist; }
         }

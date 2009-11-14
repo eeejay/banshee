@@ -33,7 +33,7 @@ namespace Banshee.Hardware
     public struct VendorProductInfo
     {
         public static VendorProductInfo Zero;
-    
+
         public VendorProductInfo (string vendorName, string productName, int vendorProductId)
         {
             vendor_name = vendorName;
@@ -41,8 +41,8 @@ namespace Banshee.Hardware
             vendor_id = (short)(vendorProductId >> 16);
             product_id = (short)(vendorProductId & 0xffff);
         }
-    
-        public VendorProductInfo (string vendorName, string productName, 
+
+        public VendorProductInfo (string vendorName, string productName,
             short vendorId, short productId)
         {
             vendor_name = vendorName;
@@ -50,42 +50,42 @@ namespace Banshee.Hardware
             vendor_id = vendorId;
             product_id = productId;
         }
-        
+
         public override int GetHashCode()
         {
             return VendorProductId;
         }
-        
+
         public override string ToString()
         {
-            return String.Format ("{0}, {1}; Vendor ID = {2}, Product ID = {3} ({4})", 
+            return String.Format ("{0}, {1}; Vendor ID = {2}, Product ID = {3} ({4})",
                 VendorName, ProductName, VendorId, ProductId, VendorProductId);
         }
-        
+
         private string vendor_name;
         public string VendorName {
             get { return vendor_name; }
             set { vendor_name = value; }
         }
-        
+
         private string product_name;
         public string ProductName {
             get { return product_name; }
             set { product_name = value; }
         }
-    
+
         private short vendor_id;
         public short VendorId {
             get { return vendor_id; }
             set { vendor_id = value; }
         }
-        
+
         private short product_id;
         public short ProductId {
             get { return product_id; }
             set { product_id = value; }
-        }   
-        
+        }
+
         public int VendorProductId {
             get { return (int)(vendor_id << 16) | product_id; }
             set {

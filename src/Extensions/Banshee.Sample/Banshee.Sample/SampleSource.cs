@@ -40,11 +40,11 @@ namespace Banshee.Sample
         public SampleSource () : base ("sample", Catalog.GetString ("Sample"), 1000)
         {
             TypeUniqueId = "sample";
-            
+
             Properties.SetString ("Icon.Name", "face-kiss");
             Properties.Set<ISourceContents> ("Nereid.SourceContents", new SampleSourceInterface (this));
             Properties.Set<bool> ("Nereid.SourceContents.HeaderVisible", false);
-            
+
             ServiceManager.SourceManager.AddSource (this);
         }
     }

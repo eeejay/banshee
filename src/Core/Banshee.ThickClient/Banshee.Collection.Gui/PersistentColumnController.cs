@@ -42,7 +42,7 @@ namespace Banshee.Collection.Gui
         private bool loaded = false;
         private bool pending_changes;
         private uint timer_id = 0;
-        
+
         private string source_id, unique_source_id;
         private Source source;
         public Source Source {
@@ -51,14 +51,14 @@ namespace Banshee.Collection.Gui
                 if (source == value) {
                     return;
                 }
-                
+
                 if (source != null) {
                     Save ();
                 }
-                
+
                 source = value;
                 source_id = unique_source_id = null;
-                
+
                 if (source != null) {
                     // If we have a parent, use their UniqueId so all children of a parent persist the same columns
                     source_id = source.ParentConfigurationId;
@@ -67,42 +67,42 @@ namespace Banshee.Collection.Gui
                 }
             }
         }
-        
+
         public PersistentColumnController (string rootNamespace) : base ()
         {
             if (String.IsNullOrEmpty (rootNamespace)) {
                 throw new ArgumentException ("Argument must not be null or empty", "rootNamespace");
             }
-            
+
             root_namespace = rootNamespace;
         }
-        
+
         public void Load ()
         {
             lock (this) {
                 if (source == null) {
                     return;
                 }
-                
+
                 loaded = false;
-                
+
                 foreach (Column column in this) {
                     if (column.Id != null) {
-                        string @namespace = MakeNamespace (column.Id); 
+                        string @namespace = MakeNamespace (column.Id);
                         column.Visible = ConfigurationClient.Get<bool> (@namespace, "visible", column.Visible);
                         column.Width = ConfigurationClient.Get<double> (@namespace, "width", column.Width);
                     }
                 }
-                
+
                 // Create a copy so we can read the original index
                 List<Column> columns = new List<Column> (Columns);
-            
+
                 Columns.Sort (delegate (Column a, Column b) {
                     int a_order = a.Id == null ? -1 : ConfigurationClient.Get<int> (
                         MakeNamespace (a.Id), "order", columns.IndexOf (a));
                     int b_order = b.Id == null ? -1 : ConfigurationClient.Get<int> (
                         MakeNamespace (b.Id), "order", columns.IndexOf (b));
-                    
+
                     return a_order.CompareTo (b_order);
                 });
 
@@ -129,14 +129,14 @@ namespace Banshee.Collection.Gui
 
                 loaded = true;
             }
-            
+
             OnUpdated ();
         }
 
         public override ISortableColumn SortColumn {
             set { base.SortColumn = value; Save (); }
         }
-        
+
         public void Save ()
         {
             if (timer_id == 0) {
@@ -145,7 +145,7 @@ namespace Banshee.Collection.Gui
                 pending_changes = true;
             }
         }
-        
+
         private bool OnTimeout ()
         {
             if (pending_changes) {
@@ -157,14 +157,14 @@ namespace Banshee.Collection.Gui
                 return false;
             }
         }
-        
+
         private void SaveCore ()
         {
             lock (this) {
                 if (source == null) {
                     return;
                 }
-            
+
                 for (int i = 0; i < Count; i++) {
                     if (Columns[i].Id != null) {
                         Save (Columns[i], i);
@@ -178,7 +178,7 @@ namespace Banshee.Collection.Gui
                 }
             }
         }
-        
+
         private void Save (Column column, int index)
         {
             string @namespace = MakeNamespace (column.Id);
@@ -186,21 +186,21 @@ namespace Banshee.Collection.Gui
             ConfigurationClient.Set<bool> (@namespace, "visible", column.Visible);
             ConfigurationClient.Set<double> (@namespace, "width", column.Width);
         }
-        
+
         protected override void OnWidthsChanged ()
         {
             if (loaded) {
                 Save ();
             }
-            
+
             base.OnWidthsChanged ();
         }
-        
+
         private string MakeNamespace (string name)
         {
             return String.Format ("{0}.{1}.{2}", root_namespace, source_id, name);
         }
-        
+
         public override bool EnableColumnMenu {
             get { return true; }
         }

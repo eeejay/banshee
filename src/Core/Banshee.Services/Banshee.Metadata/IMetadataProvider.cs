@@ -36,33 +36,33 @@ using Banshee.Streaming;
 namespace Banshee.Metadata
 {
     public delegate void MetadataLookupResultHandler(object o, MetadataLookupResultArgs args);
-    
+
     public class MetadataLookupResultArgs : EventArgs
     {
         private IBasicTrackInfo track;
         private ReadOnlyCollection<StreamTag> tags;
-        
+
         public MetadataLookupResultArgs(IBasicTrackInfo track, ReadOnlyCollection<StreamTag> tags)
         {
             this.track = track;
             this.tags = tags;
         }
-        
+
         public IBasicTrackInfo Track {
             get { return track; }
         }
-        
+
         public ReadOnlyCollection<StreamTag> ResultTags {
             get { return tags; }
         }
     }
-    
+
     public interface IMetadataProvider
     {
         event MetadataLookupResultHandler HaveResult;
-        
+
         IMetadataLookupJob CreateJob(IBasicTrackInfo track);
-        
+
         void Lookup(IBasicTrackInfo track);
         void Cancel(IBasicTrackInfo track);
         void Cancel();

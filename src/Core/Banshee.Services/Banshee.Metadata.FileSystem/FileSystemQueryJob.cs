@@ -47,26 +47,26 @@ namespace Banshee.Metadata.FileSystem
             Track = track;
             this.track = track as TrackInfo;
         }
-        
+
         public override void Run ()
         {
             if (Track == null || CoverArtSpec.CoverExists (Track.ArtworkId)) {
                 return;
             }
-          
+
             Fetch ();
         }
-        
+
         private static string [] extensions = new string [] { ".jpg", ".jpeg", ".png", ".bmp" };
         private static string [] filenames = new string [] { "cover", "folder", "front" };
-        
+
         protected void Fetch ()
         {
             if (Track.Uri == null || !Track.Uri.IsFile ||
                     Track.ArtworkId == null || !Banshee.IO.File.Exists (Track.Uri)) {
                 return;
             }
-            
+
             string directory = System.IO.Path.GetDirectoryName (Track.Uri.AbsolutePath);
 
             // Get the largest (in terms of file size) JPEG in the directory
@@ -88,11 +88,11 @@ namespace Banshee.Metadata.FileSystem
                     }
                     return;
                 }
-                
+
                 if (found_definite_best) {
                     continue;
                 }
-                
+
                 string extension = System.IO.Path.GetExtension (file).ToLower ();
                 if (Array.IndexOf (extensions, extension) != -1) {
                     string filename = System.IO.Path.GetFileNameWithoutExtension (file).ToLower ();
@@ -108,7 +108,7 @@ namespace Banshee.Metadata.FileSystem
                     }
                 }
             }
-            
+
             if (best_file != null) {
                 try {
                     string extension = "cover";
@@ -125,7 +125,7 @@ namespace Banshee.Metadata.FileSystem
                     tag.Name = CommonTags.AlbumCoverId;
                     tag.Value = Track.ArtworkId;
                     AddTag (tag);
-                    
+
                     Log.Debug ("Got cover art from track's folder", best_file);
                 } catch (Exception e) {
                     Log.Exception (e);

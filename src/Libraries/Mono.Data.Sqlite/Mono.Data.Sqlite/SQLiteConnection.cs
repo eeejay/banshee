@@ -18,10 +18,10 @@
 // distribute, sublicense, and/or sell copies of the Software, and to
 // permit persons to whom the Software is furnished to do so, subject to
 // the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be
 // included in all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 // MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -34,7 +34,7 @@
 /********************************************************
  * ADO.NET 2.0 Data Provider for Sqlite Version 3.X
  * Written by Robert Simpson (robert@blackcastlesoft.com)
- * 
+ *
  * Released to the public domain, use at your own risk!
  ********************************************************/
 #if NET_2_0
@@ -141,7 +141,7 @@ namespace Mono.Data.Sqlite
     /// Busy command timeout value. Defaults to 30
     /// </summary>
     internal int                 _busyTimeout;
-    
+
 #if !PLATFORM_COMPACTFRAMEWORK
     /// <summary>
     /// Whether or not the connection is enlisted in a distrubuted transaction
@@ -166,7 +166,7 @@ namespace Mono.Data.Sqlite
     /// </summary>
     private byte[]               _password;
 #endif
-    
+
     internal bool                _binaryGuid;
 
     internal long                _version;
@@ -347,7 +347,7 @@ namespace Mono.Data.Sqlite
     }
 
     /// <summary>
-    /// Creates a clone of the connection.  All attached databases and user-defined functions are cloned.  If the existing connection is open, the cloned connection 
+    /// Creates a clone of the connection.  All attached databases and user-defined functions are cloned.  If the existing connection is open, the cloned connection
     /// will also be opened.
     /// </summary>
     /// <returns></returns>
@@ -421,7 +421,7 @@ namespace Mono.Data.Sqlite
     /// </summary>
     /// <param name="isolationLevel">Sqlite doesn't support varying isolation levels, so this parameter is ignored.</param>
     /// <param name="deferredLock">When TRUE, Sqlite defers obtaining a write lock until a write operation is requested.
-    /// When FALSE, a writelock is obtained immediately.  The default is TRUE, but in a multi-threaded multi-writer 
+    /// When FALSE, a writelock is obtained immediately.  The default is TRUE, but in a multi-threaded multi-writer
     /// environment, one may instead choose to lock the database immediately to avoid any possible writer deadlock.</param>
     /// <returns>Returns a SqliteTransaction object.</returns>
     public SqliteTransaction BeginTransaction(System.Data.IsolationLevel isolationLevel, bool deferredLock)
@@ -433,7 +433,7 @@ namespace Mono.Data.Sqlite
     /// Creates a new SqliteTransaction if one isn't already active on the connection.
     /// </summary>
     /// <param name="deferredLock">When TRUE, Sqlite defers obtaining a write lock until a write operation is requested.
-    /// When FALSE, a writelock is obtained immediately.  The default is TRUE, but in a multi-threaded multi-writer 
+    /// When FALSE, a writelock is obtained immediately.  The default is TRUE, but in a multi-threaded multi-writer
     /// environment, one may instead choose to lock the database immediately to avoid any possible writer deadlock.</param>
     /// <returns>Returns a SqliteTransaction object.</returns>
     public SqliteTransaction BeginTransaction(bool deferredLock)
@@ -503,7 +503,7 @@ namespace Mono.Data.Sqlite
         if (_enlistment != null)
         {
           // If the connection is enlisted in a transaction scope and the scope is still active,
-          // we cannot truly shut down this connection until the scope has completed.  Therefore make a 
+          // we cannot truly shut down this connection until the scope has completed.  Therefore make a
           // hidden connection temporarily to hold open the connection until the scope has completed.
           SqliteConnection cnn = new SqliteConnection();
           cnn._sql = _sql;
@@ -511,7 +511,7 @@ namespace Mono.Data.Sqlite
           cnn._enlistment = _enlistment;
           cnn._connectionState = _connectionState;
           cnn._version = _version;
-          
+
           cnn._enlistment._transaction._cnn = cnn;
           cnn._enlistment._disposeConnection = true;
         }
@@ -651,7 +651,7 @@ namespace Mono.Data.Sqlite
 #endif
     public override string DataSource
     {
-      get 
+      get
       {
         return _dataSource;
       }
@@ -678,13 +678,13 @@ namespace Mono.Data.Sqlite
     internal void MapMonoKeyword (string[] arPiece, List<KeyValuePair<string, string>> ls)
     {
 	    string keyword, value;
-	    
+	
 	    switch (arPiece[0].ToLower (CultureInfo.InvariantCulture)) {
 		    case "uri":
 			    keyword = "Data Source";
 			    value = MapMonoUriPath (arPiece[1]);
 			    break;
-			    
+			
 		    default:
 			    keyword = arPiece[0];
 			    value = arPiece[1];
@@ -706,7 +706,7 @@ namespace Mono.Data.Sqlite
 		    throw new InvalidOperationException ("Invalid connection string: invalid URI");
 	    }
     }
-    
+
     /// <summary>
     /// Parses the connection string into component parts
     /// </summary>
@@ -808,7 +808,7 @@ namespace Mono.Data.Sqlite
       } catch (Exception) {
 	      // ignore
       }
-      
+
       try
       {
         bool bUTF16 = (Convert.ToBoolean(FindKey(opts, "UseUTF16Encoding", "False"), CultureInfo.InvariantCulture) == true);
@@ -960,7 +960,7 @@ namespace Mono.Data.Sqlite
     {
       SetPassword(String.IsNullOrEmpty(databasePassword) ? null : System.Text.UTF8Encoding.UTF8.GetBytes(databasePassword));
     }
-    
+
     /// <summary>
     /// Sets the password for a password-protected database.  A password-protected database is
     /// unusable for any operation until the password has been set.
@@ -977,7 +977,7 @@ namespace Mono.Data.Sqlite
       _password = databasePassword;
     }
 #endif
-    
+
     /// <summary>
     /// Expand the filename of the data source, resolving the |DataDirectory| macro as appropriate.
     /// </summary>
@@ -1991,7 +1991,7 @@ namespace Mono.Data.Sqlite
   internal delegate void SqliteRollbackCallback();
 
   /// <summary>
-  /// Raised when a transaction is about to be committed.  To roll back a transaction, set the 
+  /// Raised when a transaction is about to be committed.  To roll back a transaction, set the
   /// rollbackTrans boolean value to true.
   /// </summary>
   /// <param name="sender">The connection committing the transaction</param>

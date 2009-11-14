@@ -33,18 +33,18 @@ using Gtk;
 
 namespace Hyena.Gui
 {
-    public static class CompositeUtils 
+    public static class CompositeUtils
     {
         [DllImport ("libgdk-win32-2.0-0.dll")]
         private static extern IntPtr gdk_screen_get_rgba_visual (IntPtr screen);
 
         [DllImport ("libgtk-win32-2.0-0.dll")]
-        private static extern void gtk_widget_input_shape_combine_mask (IntPtr raw, IntPtr shape_mask, 
+        private static extern void gtk_widget_input_shape_combine_mask (IntPtr raw, IntPtr shape_mask,
             int offset_x, int offset_y);
 
         [DllImport ("libgdk-win32-2.0-0.dll")]
         private static extern IntPtr gdk_screen_get_rgba_colormap (IntPtr screen);
-        
+
         public static Colormap GetRgbaColormap (Screen screen)
         {
             try {
@@ -58,10 +58,10 @@ namespace Hyena.Gui
                     return cmap;
                 }
             }
-            
+
             return null;
         }
-        
+
         public static bool SetRgbaColormap (Widget w)
         {
             Gdk.Colormap cmap = GetRgbaColormap (w.Screen);
@@ -73,7 +73,7 @@ namespace Hyena.Gui
 
             return false;
         }
-        
+
         public static Visual GetRgbaVisual (Screen screen)
         {
             try {
@@ -90,13 +90,13 @@ namespace Hyena.Gui
         }
 
         [DllImport ("libgdk-win32-2.0-0.dll")]
-        private static extern void gdk_property_change (IntPtr window, IntPtr property, IntPtr type, 
+        private static extern void gdk_property_change (IntPtr window, IntPtr property, IntPtr type,
             int format, int mode, uint [] data, int nelements);
 
         [DllImport ("libgdk-win32-2.0-0.dll")]
-        private static extern void gdk_property_change (IntPtr window, IntPtr property, IntPtr type, 
+        private static extern void gdk_property_change (IntPtr window, IntPtr property, IntPtr type,
             int format, int mode, byte [] data, int nelements);
-      
+
         public static void ChangeProperty (Gdk.Window win, Atom property, Atom type, PropMode mode, uint [] data)
         {
             gdk_property_change (win.Handle, property.Handle, type.Handle, 32, (int)mode,  data, data.Length * 4);
@@ -123,7 +123,7 @@ namespace Hyena.Gui
         [DllImport ("libgdk-win32-2.0-0.dll")]
         private static extern bool gdk_screen_is_composited (IntPtr screen);
 
-        public static bool IsComposited (Screen screen) 
+        public static bool IsComposited (Screen screen)
         {
             bool composited;
             try {
@@ -138,13 +138,13 @@ namespace Hyena.Gui
             if (!composited) {
                 composited = CompositeUtils.SupportsHint (screen, "_NET_WM_WINDOW_OPACITY");
             }
-            
+
             return composited;
         }
-        
+
         public static void SetWinOpacity (Gtk.Window win, double opacity)
         {
-            CompositeUtils.ChangeProperty (win.GdkWindow, 
+            CompositeUtils.ChangeProperty (win.GdkWindow,
                 Atom.Intern ("_NET_WM_WINDOW_OPACITY", false),
                 Atom.Intern ("CARDINAL", false),
                 PropMode.Replace,
@@ -154,7 +154,7 @@ namespace Hyena.Gui
 
         public static void InputShapeCombineMask (Widget w, Pixmap shape_mask, int offset_x, int offset_y)
         {
-            gtk_widget_input_shape_combine_mask (w.Handle, shape_mask == null ? IntPtr.Zero : shape_mask.Handle, 
+            gtk_widget_input_shape_combine_mask (w.Handle, shape_mask == null ? IntPtr.Zero : shape_mask.Handle,
                 offset_x, offset_y);
         }
     }

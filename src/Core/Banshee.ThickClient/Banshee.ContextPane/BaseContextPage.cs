@@ -67,7 +67,7 @@ namespace Banshee.ContextPane
 
         public abstract Widget Widget { get; }
         public abstract void SetTrack (TrackInfo track);
-        
+
         public virtual void Dispose () {}
     }
 }

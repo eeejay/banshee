@@ -57,12 +57,12 @@ namespace Migo.Syndication.Tests
                 "Sat, 17 May 2008 20:47:57 +0000",      DateTime.Parse ("17/05/2008 15.47.57"),
                 "Sat, 17 May 2008 19:33:42 +0000",      DateTime.Parse ("17/05/2008 14.33.42")
             );
-    
+
             AssertForEach (pairs, delegate (TransformPair<string, DateTime> pair) {
                 Assert.AreEqual (pair.To, Rfc822DateTime.Parse (pair.From));
             });
         }
-    
+
         [Test]
         public void TestParseITunesDuration ()
         {
@@ -78,7 +78,7 @@ namespace Migo.Syndication.Tests
                 "1:02:22", new TimeSpan (1, 2, 22),
                 "9:0:0",   new TimeSpan (9, 0, 0)
             );
-    
+
             AssertForEach (pairs, delegate (TransformPair<string, TimeSpan> pair) {
                 Assert.AreEqual (pair.To, RssParser.GetITunesDuration (pair.From));
             });

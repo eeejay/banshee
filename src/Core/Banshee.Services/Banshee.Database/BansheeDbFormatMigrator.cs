@@ -58,39 +58,39 @@ namespace Banshee.Database
         //       MUST be supplied to match the new version number
         protected const int CURRENT_VERSION = 36;
         protected const int CURRENT_METADATA_VERSION = 6;
-        
+
 #region Migration Driver
-        
+
         public delegate void SlowStartedHandler(string title, string message);
-        
+
         public event SlowStartedHandler SlowStarted;
         public event EventHandler SlowPulse;
         public event EventHandler SlowFinished;
 
         public event EventHandler Started;
         public event EventHandler Finished;
-                
-        protected class DatabaseVersionAttribute : Attribute 
+
+        protected class DatabaseVersionAttribute : Attribute
         {
             private int version;
-            
+
             public DatabaseVersionAttribute(int version)
             {
                 this.version = version;
             }
-            
+
             public int Version {
                 get { return version; }
             }
         }
-        
+
         private HyenaSqliteConnection connection;
-        
+
         public BansheeDbFormatMigrator (HyenaSqliteConnection connection)
         {
             this.connection = connection;
         }
-        
+
         protected virtual void OnSlowStarted(string title, string message)
         {
             SlowStartedHandler handler = SlowStarted;
@@ -98,7 +98,7 @@ namespace Banshee.Database
                 handler(title, message);
             }
         }
-        
+
         protected virtual void OnSlowPulse()
         {
             EventHandler handler = SlowPulse;
@@ -106,7 +106,7 @@ namespace Banshee.Database
                 handler(this, EventArgs.Empty);
             }
         }
-        
+
         protected virtual void OnSlowFinished()
         {
             EventHandler handler = SlowFinished;
@@ -130,11 +130,11 @@ namespace Banshee.Database
                 handler (this, EventArgs.Empty);
             }
         }
-        
+
         public void Migrate ()
         {
             try {
-                
+
                 if (DatabaseVersion < CURRENT_VERSION) {
                     Execute ("BEGIN");
                     InnerMigrate ();
@@ -142,7 +142,7 @@ namespace Banshee.Database
                 } else {
                     Log.DebugFormat ("Database version {0} is up to date", DatabaseVersion);
                 }
-                
+
                 // Trigger metadata refreshes if necessary
                 int metadata_version = connection.Query<int> ("SELECT Value FROM CoreConfiguration WHERE Key = 'MetadataVersion'");
                 if (DatabaseVersion == CURRENT_VERSION && metadata_version < CURRENT_METADATA_VERSION) {
@@ -156,13 +156,13 @@ namespace Banshee.Database
 
             OnFinished ();
         }
-        
+
         private void InnerMigrate ()
         {
             MethodInfo [] methods = GetType ().GetMethods (BindingFlags.Instance | BindingFlags.NonPublic);
             bool terminate = false;
             bool ran_migration_step = false;
-            
+
             Log.DebugFormat ("Migrating from database version {0} to {1}", DatabaseVersion, CURRENT_VERSION);
             for (int i = DatabaseVersion + 1; i <= CURRENT_VERSION; i++) {
                 foreach (MethodInfo method in methods) {
@@ -171,7 +171,7 @@ namespace Banshee.Database
                         if (attr.Version != i) {
                             continue;
                         }
-                        
+
                         if (!ran_migration_step) {
                             ran_migration_step = true;
                             OnStarted ();
@@ -180,80 +180,80 @@ namespace Banshee.Database
                         if (!(bool)method.Invoke (this, null)) {
                             terminate = true;
                         }
-                        
+
                         break;
                     }
                 }
-                
+
                 if (terminate) {
                     break;
                 }
             }
-            
+
             Execute (String.Format ("UPDATE CoreConfiguration SET Value = {0} WHERE Key = 'DatabaseVersion'", CURRENT_VERSION));
         }
-        
+
         protected bool TableExists(string tableName)
         {
             return connection.TableExists (tableName);
         }
-        
+
         protected void Execute(string query)
         {
             connection.Execute (query);
         }
-            
+
         protected int DatabaseVersion {
             get {
                 if (!TableExists("CoreConfiguration")) {
                     return 0;
                 }
-                
+
                 return connection.Query<int> ("SELECT Value FROM CoreConfiguration WHERE Key = 'DatabaseVersion'");
             }
         }
-        
+
 #endregion
-        
+
 #pragma warning disable 0169
 
 #region Version 1
-                                
+
         [DatabaseVersion (1)]
         private bool Migrate_1 ()
         {
             if (TableExists("Tracks")) {
                 InitializeFreshDatabase (true);
-                
+
                 uint timer_id = Log.DebugTimerStart ("Database Schema Migration");
 
-                OnSlowStarted (Catalog.GetString ("Upgrading your Banshee Database"), 
+                OnSlowStarted (Catalog.GetString ("Upgrading your Banshee Database"),
                     Catalog.GetString ("Please wait while your old Banshee database is migrated to the new format."));
-            
+
                 Thread thread = new Thread (MigrateFromLegacyBanshee);
                 thread.Name = "Database Migrator";
                 thread.Start ();
-            
+
                 while (thread.IsAlive) {
                     OnSlowPulse ();
                     Thread.Sleep (100);
                 }
 
                 Log.DebugTimerPrint (timer_id);
-            
+
                 OnSlowFinished ();
-                
+
                 return false;
             } else {
                 InitializeFreshDatabase (false);
                 return false;
             }
         }
-        
+
 #endregion
 
 #region Version 2
-        
+
         [DatabaseVersion (2)]
         private bool Migrate_2 ()
         {
@@ -291,7 +291,7 @@ namespace Banshee.Database
 #endregion
 
 #region Version 5
-        
+
         [DatabaseVersion (5)]
         private bool Migrate_5 ()
         {
@@ -327,7 +327,7 @@ namespace Banshee.Database
             Execute ("CREATE INDEX IF NOT EXISTS CoreAlbumsIndex       ON CoreAlbums(ArtistID, TitleLowered)");
             Execute ("CREATE INDEX IF NOT EXISTS CoreSmartPlaylistEntriesIndex ON CoreSmartPlaylistEntries(SmartPlaylistID, TrackID)");
             Execute ("CREATE INDEX IF NOT EXISTS CorePlaylistEntriesIndex ON CorePlaylistEntries(PlaylistID, TrackID)");
-            
+
             return true;
         }
 
@@ -341,7 +341,7 @@ namespace Banshee.Database
             Execute ("INSERT INTO CoreConfiguration (EntryID, Key, Value) VALUES (null, 'MetadataVersion', 0)");
             return true;
         }
-        
+
 #endregion
 
 #region Version 7
@@ -355,7 +355,7 @@ namespace Banshee.Database
             try { Execute ("DELETE FROM CoreCache; DELETE FROM CoreCacheModels"); } catch {}
             return true;
         }
-        
+
 #endregion
 
 #region Version 8
@@ -371,7 +371,7 @@ namespace Banshee.Database
             Application.ClientStarted += ReloadAllSources;
             return true;
         }
-        
+
 #endregion
 
 #region Version 9
@@ -398,18 +398,18 @@ namespace Banshee.Database
             Execute ("ALTER TABLE CoreTracks ADD COLUMN ExternalID INTEGER");
             return true;
         }
-        
+
 #endregion
 
 #region Version 11
-        
+
         [DatabaseVersion (11)]
         private bool Migrate_11 ()
         {
             Execute("CREATE INDEX CoreTracksExternalIDIndex ON CoreTracks(PrimarySourceID, ExternalID)");
             return true;
         }
-        
+
 #endregion
 
 #region Version 12
@@ -421,7 +421,7 @@ namespace Banshee.Database
             Execute ("ALTER TABLE CoreAlbums ADD COLUMN ArtistNameLowered STRING");
             return true;
         }
-        
+
 #endregion
 
 #region Version 13
@@ -433,7 +433,7 @@ namespace Banshee.Database
             Execute("CREATE INDEX CoreTracksUriIndex ON CoreTracks(PrimarySourceID, Uri)");
             return true;
         }
-        
+
 #endregion
 
 #region Version 14
@@ -444,7 +444,7 @@ namespace Banshee.Database
             InitializeOrderedTracks ();
             return true;
         }
-        
+
 #endregion
 
 #region Version 15
@@ -458,7 +458,7 @@ namespace Banshee.Database
             }
             return true;
         }
-        
+
 #endregion
 
 #region Version 16
@@ -472,9 +472,9 @@ namespace Banshee.Database
             Execute ("ANALYZE");
             return true;
         }
-        
+
 #endregion
-        
+
 #region Version 17
 
         [DatabaseVersion (17)]
@@ -484,7 +484,7 @@ namespace Banshee.Database
             Execute ("ANALYZE");
             return true;
         }
-        
+
 #endregion
 
 #region Version 18
@@ -495,9 +495,9 @@ namespace Banshee.Database
             Execute ("ALTER TABLE CoreTracks ADD COLUMN MetadataHash TEXT");
             return true;
         }
-        
+
 #endregion
-        
+
 #region Version 19
 
         [DatabaseVersion (19)]
@@ -511,7 +511,7 @@ namespace Banshee.Database
             Execute ("ALTER TABLE CoreTracks ADD COLUMN BitRate INTEGER DEFAULT 0");
             return true;
         }
-        
+
 #endregion
 
 #region Version 20
@@ -524,7 +524,7 @@ namespace Banshee.Database
             Execute ("ALTER TABLE CorePrimarySources ADD COLUMN IsTemporary INTEGER DEFAULT 0");
             return true;
         }
-        
+
 #endregion
 
 #region Version 21
@@ -539,7 +539,7 @@ namespace Banshee.Database
             }
             return true;
         }
-        
+
 #endregion
 
 #region Version 22
@@ -552,7 +552,7 @@ namespace Banshee.Database
             Execute ("UPDATE CoreTracks SET LastSyncedStamp = DateAddedStamp;");
             return true;
         }
-        
+
 #endregion
 
 #region Version 23
@@ -567,7 +567,7 @@ namespace Banshee.Database
 
             return true;
         }
-        
+
 #endregion
 
 #region Version 24
@@ -593,7 +593,7 @@ namespace Banshee.Database
             Execute ("ALTER TABLE CoreTracks ADD COLUMN TitleSortKey BLOB");
             return true;
         }
-        
+
 #endregion
 
 #region Version 26
@@ -606,7 +606,7 @@ namespace Banshee.Database
             string unknown_title = "Unknown Title";
 
             connection.Execute ("UPDATE CoreArtists SET Name = NULL, NameLowered = HYENA_SEARCH_KEY(?)" +
-                                " WHERE Name  IN ('', ?, ?) OR Name IS NULL", 
+                                " WHERE Name  IN ('', ?, ?) OR Name IS NULL",
                                 ArtistInfo.UnknownArtistName, unknown_artist, ArtistInfo.UnknownArtistName);
 
             connection.Execute ("UPDATE CoreAlbums SET ArtistName = NULL, ArtistNameLowered = HYENA_SEARCH_KEY(?)" +
@@ -623,7 +623,7 @@ namespace Banshee.Database
 
             return true;
         }
-        
+
 #endregion
 
 #region Version 27
@@ -758,7 +758,7 @@ namespace Banshee.Database
             Execute ("ANALYZE");
             return true;
         }
-        
+
 #endregion
 
 #region Version 33
@@ -830,9 +830,9 @@ namespace Banshee.Database
 #endregion
 
 #pragma warning restore 0169
-        
+
 #region Fresh database setup
-        
+
         private void InitializeFreshDatabase (bool refresh_metadata)
         {
             Execute("DROP TABLE IF EXISTS CoreConfiguration");
@@ -846,7 +846,7 @@ namespace Banshee.Database
             Execute("DROP TABLE IF EXISTS CoreRemovedTracks");
             Execute("DROP TABLE IF EXISTS CoreTracksCache");
             Execute("DROP TABLE IF EXISTS CoreCache");
-            
+
             Execute(@"
                 CREATE TABLE CoreConfiguration (
                     EntryID             INTEGER PRIMARY KEY,
@@ -858,7 +858,7 @@ namespace Banshee.Database
             if (!refresh_metadata) {
                 Execute (String.Format ("INSERT INTO CoreConfiguration (EntryID, Key, Value) VALUES (null, 'MetadataVersion', {0})", CURRENT_METADATA_VERSION));
             }
-            
+
             Execute(@"
                 CREATE TABLE CorePrimarySources (
                     PrimarySourceID     INTEGER PRIMARY KEY,
@@ -880,7 +880,7 @@ namespace Banshee.Database
                     AlbumID             INTEGER,
                     TagSetID            INTEGER,
                     ExternalID          INTEGER,
-                    
+
                     MusicBrainzID       TEXT,
 
                     Uri                 TEXT,
@@ -889,7 +889,7 @@ namespace Banshee.Database
                     BitRate             INTEGER,
                     Attributes          INTEGER DEFAULT {0},
                     LastStreamError     INTEGER DEFAULT {1},
-                    
+
                     Title               TEXT,
                     TitleLowered        TEXT,
                     TitleSort           TEXT,
@@ -928,13 +928,13 @@ namespace Banshee.Database
             Execute("CREATE INDEX CoreTracksExternalIDIndex ON CoreTracks(PrimarySourceID, ExternalID)");
             Execute("CREATE INDEX CoreTracksUriIndex ON CoreTracks(PrimarySourceID, Uri)");
             Execute("CREATE INDEX CoreTracksCoverArtIndex ON CoreTracks (PrimarySourceID, AlbumID, DateUpdatedStamp)");
-            
+
             Execute(@"
                 CREATE TABLE CoreAlbums (
                     AlbumID             INTEGER PRIMARY KEY,
                     ArtistID            INTEGER,
                     TagSetID            INTEGER,
-                    
+
                     MusicBrainzID       TEXT,
 
                     Title               TEXT,
@@ -946,12 +946,12 @@ namespace Banshee.Database
                     Duration            INTEGER,
                     Year                INTEGER,
                     IsCompilation       INTEGER DEFAULT 0,
-                    
+
                     ArtistName          TEXT,
                     ArtistNameLowered   TEXT,
                     ArtistNameSort      TEXT,
                     ArtistNameSortKey   BLOB,
-                    
+
                     Rating              INTEGER
                 )
             ");
@@ -971,7 +971,7 @@ namespace Banshee.Database
                 )
             ");
             Execute ("CREATE INDEX CoreArtistsIndex ON CoreArtists(NameSortKey)");
-            
+
             Execute(@"
                 CREATE TABLE CorePlaylists (
                     PrimarySourceID     INTEGER,
@@ -984,7 +984,7 @@ namespace Banshee.Database
                     IsTemporary         INTEGER DEFAULT 0
                 )
             ");
-            
+
             Execute(@"
                 CREATE TABLE CorePlaylistEntries (
                     EntryID             INTEGER PRIMARY KEY,
@@ -995,7 +995,7 @@ namespace Banshee.Database
                 )
             ");
             Execute("CREATE INDEX CorePlaylistEntriesIndex ON CorePlaylistEntries(PlaylistID, TrackID)");
-            
+
             Execute(@"
                 CREATE TABLE CoreSmartPlaylists (
                     PrimarySourceID     INTEGER,
@@ -1009,7 +1009,7 @@ namespace Banshee.Database
                     IsTemporary         INTEGER DEFAULT 0
                 )
             ");
-                
+
             Execute(@"
                 CREATE TABLE CoreSmartPlaylistEntries (
                     EntryID             INTEGER PRIMARY KEY,
@@ -1055,35 +1055,35 @@ namespace Banshee.Database
                 )
             ");
         }
-        
+
 #endregion
 
 #region Legacy database migration
-        
+
         private void MigrateFromLegacyBanshee()
         {
             Execute(@"
                 INSERT INTO CoreArtists
                     (ArtistID, TagSetID, MusicBrainzID, Name, NameLowered, NameSort, Rating)
                     SELECT DISTINCT null, 0, null, Artist, NULL, NULL, 0
-                        FROM Tracks 
+                        FROM Tracks
                         ORDER BY Artist
             ");
-            
+
             Execute(@"
                 INSERT INTO CoreAlbums
                     (AlbumID, ArtistID, TagSetID, MusicBrainzID, Title, TitleLowered, TitleSort, ReleaseDate,
                     Duration, Year, IsCompilation, ArtistName, ArtistNameLowered, ArtistNameSort, Rating)
                     SELECT DISTINCT null,
-                        (SELECT ArtistID 
-                            FROM CoreArtists 
+                        (SELECT ArtistID
+                            FROM CoreArtists
                             WHERE Name = Tracks.Artist
                             LIMIT 1),
                         0, null, AlbumTitle, NULL, NULL, ReleaseDate, 0, 0, 0, Artist, NULL, NULL, 0
                         FROM Tracks
                         ORDER BY AlbumTitle
             ");
-            
+
             Execute (String.Format (@"
                 INSERT INTO CoreTracks
                     (PrimarySourceID, TrackID, ArtistID, AlbumID, TagSetID, ExternalID, MusicBrainzID, Uri, MimeType,
@@ -1091,15 +1091,15 @@ namespace Banshee.Database
                     Disc, DiscCount, Duration, Year, Genre, Composer, Conductor, Grouping, Copyright, LicenseUri,
                     Comment, Rating, Score, PlayCount, SkipCount, LastPlayedStamp, LastSkippedStamp, DateAddedStamp,
                     DateUpdatedStamp, MetadataHash, BPM, LastSyncedStamp, FileModifiedStamp)
-                    SELECT 
+                    SELECT
                         1,
-                        TrackID, 
-                        (SELECT ArtistID 
-                            FROM CoreArtists 
+                        TrackID,
+                        (SELECT ArtistID
+                            FROM CoreArtists
                             WHERE Name = Artist),
-                        (SELECT a.AlbumID 
+                        (SELECT a.AlbumID
                             FROM CoreAlbums a, CoreArtists b
-                            WHERE a.Title = AlbumTitle 
+                            WHERE a.Title = AlbumTitle
                                 AND a.ArtistID = b.ArtistID
                                 AND b.Name = Artist),
                         0,
@@ -1167,7 +1167,7 @@ namespace Banshee.Database
 
             Execute ("UPDATE CoreSmartPlaylists SET PrimarySourceID = 1");
             Execute ("UPDATE CorePlaylists SET PrimarySourceID = 1");
-            
+
             InitializeOrderedTracks ();
             Migrate_15 ();
         }
@@ -1179,9 +1179,9 @@ namespace Banshee.Database
         private void InitializeOrderedTracks ()
         {
             foreach (long playlist_id in connection.QueryEnumerable<long> ("SELECT PlaylistID FROM CorePlaylists ORDER BY PlaylistID")) {
-                if (connection.Query<long> (@"SELECT COUNT(*) FROM CorePlaylistEntries 
+                if (connection.Query<long> (@"SELECT COUNT(*) FROM CorePlaylistEntries
                     WHERE PlaylistID = ? AND ViewOrder > 0", playlist_id) <= 0) {
-                
+
                     long first_id = connection.Query<long> ("SELECT COUNT(*) FROM CorePlaylistEntries WHERE PlaylistID < ?", playlist_id);
                     connection.Execute (
                         @"UPDATE CorePlaylistEntries SET ViewOrder = (ROWID - ?) WHERE PlaylistID = ?",
@@ -1210,7 +1210,7 @@ namespace Banshee.Database
                 RefreshMetadataDelayed ();
             }
         }
-        
+
         private void ReloadAllSources (Client client)
         {
             Application.ClientStarted -= ReloadAllSources;
@@ -1220,9 +1220,9 @@ namespace Banshee.Database
                 }
             }
         }
-        
+
 #endregion
-        
+
 #region Metadata Refresh Driver
 
         private void RefreshMetadataDelayed ()
@@ -1275,7 +1275,7 @@ namespace Banshee.Database
                                 Log.Warning (String.Format ("Failed to update metadata for {0}", track),
                                     e.GetType ().ToString (), false);
                             }
-                            
+
                             track.Save (false);
                             track.Artist.Save ();
                             track.Album.Save ();
@@ -1299,7 +1299,7 @@ namespace Banshee.Database
             job.Finish ();
             ServiceManager.SourceManager.MusicLibrary.NotifyTracksChanged ();
         }
-        
+
 #endregion
 
     }

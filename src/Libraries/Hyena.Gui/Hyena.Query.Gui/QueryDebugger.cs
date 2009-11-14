@@ -43,13 +43,13 @@ namespace Hyena.Query.Gui
         private TextView input;
         private TextView sql;
         private TextView xml;
-        
+
         private QueryFieldSet query_field_set;
-    
+
         public QueryDebugger () : base ("Hyena.Query Debugger")
         {
             SetDefaultSize (800, 600);
-            
+
             VBox input_box = new VBox ();
             input_box.Spacing = 8;
             ScrolledWindow sw = new ScrolledWindow ();
@@ -71,7 +71,7 @@ namespace Hyena.Query.Gui
             parse.Clicked += OnParseUserQuery;
             button_box.PackStart (parse, false, false, 0);
             input_box.PackStart (button_box, false, false, 0);
-            
+
             HBox output_box = new HBox ();
             output_box.Spacing = 8;
             sw = new ScrolledWindow ();
@@ -88,20 +88,20 @@ namespace Hyena.Query.Gui
             xml.WrapMode = WrapMode.Word;
             sw.Add (xml);
             output_box.PackStart (sw, true, true, 0);
-            
+
             VPaned pane = new VPaned ();
             pane.Add1 (input_box);
             pane.Add2 (output_box);
             pane.Position = 100;
-            
+
             Add (pane);
             pane.ShowAll ();
-            
+
             input.HasFocus = true;
-            
+
             LoadQueryFieldSet ();
         }
-        
+
         private void LoadQueryFieldSet ()
         {
             Assembly asm = Assembly.LoadFile ("Banshee.Services.dll");
@@ -109,23 +109,23 @@ namespace Hyena.Query.Gui
             FieldInfo f = t.GetField ("FieldSet", BindingFlags.Public | BindingFlags.Static);
             query_field_set = (QueryFieldSet)f.GetValue (null);
         }
-        
+
         private StreamReader StringToStream (string s)
         {
             return new StreamReader (new MemoryStream (System.Text.Encoding.UTF8.GetBytes (s)));
         }
-        
+
         private void OnParseUserQuery (object o, EventArgs args)
         {
             UserQueryParser parser = new UserQueryParser ();
             parser.InputReader = StringToStream (input.Buffer.Text);
             QueryNode node = parser.BuildTree (query_field_set);
-            
+
             sql.Buffer.Text = node.ToSql (query_field_set) ?? String.Empty;
-            
+
             XmlDocument doc = new XmlDocument ();
             doc.LoadXml (node.ToXml (query_field_set));
-            
+
             MemoryStream s = new MemoryStream ();
             XmlTextWriter w = new XmlTextWriter (s, System.Text.Encoding.UTF8);
             w.Formatting = Formatting.Indented;

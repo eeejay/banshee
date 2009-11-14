@@ -29,16 +29,16 @@ namespace MusicBrainz
     // The item-like product of an artist, such as a track or a release.
     public abstract class MusicBrainzItem : MusicBrainzObject
     {
-        
+
         #region Private
-        
+
         string title;
         Artist artist;
-        
+
         #endregion
-        
+
         #region Constructors
-        
+
         internal MusicBrainzItem (string id) : base (id, null)
         {
         }
@@ -47,9 +47,9 @@ namespace MusicBrainz
         {
             if (this.artist == null) this.artist = artist;
         }
-        
+
         #endregion
-        
+
         #region Protected Overrides
 
         internal override void CreateIncCore (StringBuilder builder)
@@ -79,11 +79,11 @@ namespace MusicBrainz
                 break;
             }
         }
-        
+
         #endregion
 
         #region Public
-        
+
         public virtual string GetTitle ()
         {
             return GetPropertyOrNull (ref title);
@@ -94,24 +94,24 @@ namespace MusicBrainz
         {
             return GetPropertyOrNull (ref artist);
         }
-        
+
         public override string ToString ()
         {
             return title;
         }
-        
+
         #endregion
-        
+
     }
-    
+
     #region Ancillary Types
-    
+
     public abstract class ItemQueryParameters
     {
         internal ItemQueryParameters ()
         {
         }
-        
+
         string title;
         public string Title {
             get { return title; }
@@ -149,7 +149,7 @@ namespace MusicBrainz
         }
 
         internal abstract void ToStringCore (StringBuilder builder);
-        
+
         public override string ToString ()
         {
             StringBuilder builder = new StringBuilder ();
@@ -181,7 +181,7 @@ namespace MusicBrainz
             return builder.ToString ();
         }
     }
-    
+
     #endregion
-    
+
 }

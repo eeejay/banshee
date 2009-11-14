@@ -46,32 +46,32 @@ namespace Banshee.Metadata.MusicBrainz
     public class MusicBrainzQueryJob : MetadataServiceJob
     {
         private static string AmazonUriFormat = "http://images.amazon.com/images/P/{0}.01._SCLZZZZZZZ_.jpg";
-    
+
         private string asin;
-        
+
         public MusicBrainzQueryJob (IBasicTrackInfo track)
         {
             Track = track;
         }
-        
+
         public MusicBrainzQueryJob (IBasicTrackInfo track, string asin) : this (track)
         {
             this.asin = asin;
         }
-        
+
         public override void Run ()
         {
             Lookup ();
         }
-        
+
         public bool Lookup ()
         {
             if (Track == null || (Track.MediaAttributes & TrackMediaAttributes.Podcast) != 0) {
                 return false;
             }
-            
+
             string artwork_id = Track.ArtworkId;
-            
+
             if (artwork_id == null) {
                 return false;
             } else if (CoverArtSpec.CoverExists (artwork_id)) {
@@ -79,15 +79,15 @@ namespace Banshee.Metadata.MusicBrainz
             } else if (!InternetConnected) {
                 return false;
             }
-            
+
             if (asin == null) {
                 asin = FindAsin ();
                 if (asin == null) {
                     return false;
                 }
             }
-            
-            if (SaveHttpStreamCover (new Uri (String.Format (AmazonUriFormat, asin)), artwork_id, 
+
+            if (SaveHttpStreamCover (new Uri (String.Format (AmazonUriFormat, asin)), artwork_id,
                 new string [] { "image/gif" })) {
                 Log.Debug ("Downloaded cover art from Amazon", artwork_id);
                 StreamTag tag = new StreamTag ();
@@ -95,17 +95,17 @@ namespace Banshee.Metadata.MusicBrainz
                 tag.Value = artwork_id;
 
                 AddTag (tag);
-                
+
                 return true;
             }
-            
+
             return false;
         }
 
-        // MusicBrainz has this new XML API, so I'm using that here 
-        // instead of using the stuff in the MusicBrainz namespace 
+        // MusicBrainz has this new XML API, so I'm using that here
+        // instead of using the stuff in the MusicBrainz namespace
         // which sucks and doesn't even appear to work anymore.
-        
+
         private string FindAsin ()
         {
             Uri uri = new Uri (String.Format ("http://musicbrainz.org/ws/1/release/?type=xml&artist={0}&title={1}",
@@ -115,12 +115,12 @@ namespace Banshee.Metadata.MusicBrainz
             if (response == null) {
                 return null;
             }
-            
+
             using (Stream stream = response.GetResponseStream ()) {
                 XmlTextReader reader = new XmlTextReader (stream);
-    
+
                 bool haveMatch = false;
-                
+
                 while (reader.Read ()) {
                     if (reader.NodeType == XmlNodeType.Element) {
                         switch (reader.LocalName) {
@@ -138,7 +138,7 @@ namespace Banshee.Metadata.MusicBrainz
                     }
                 }
             }
-            
+
             return null;
         }
     }

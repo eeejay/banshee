@@ -40,88 +40,88 @@ namespace Banshee.NotificationArea
 {
     public class X11NotificationAreaBox : X11NotificationArea, INotificationAreaBox
     {
-        private enum PanelOrientation { 
-            Horizontal, 
-            Vertical 
+        private enum PanelOrientation {
+            Horizontal,
+            Vertical
         }
-    
+
         private EventBox event_box;
         private Image icon;
-        
+
         private TrackInfoPopup popup;
         private bool can_show_popup = false;
         private bool cursor_over_trayicon = false;
         private bool hide_delay_started = false;
         private int panel_size;
-        
+
         public event EventHandler Disconnected;
         public event EventHandler Activated;
         public event PopupMenuHandler PopupMenuEvent;
-        
+
         public Widget Widget {
             get { return event_box; }
         }
-        
+
         public X11NotificationAreaBox () : base (Catalog.GetString ("Banshee"))
         {
             event_box = new EventBox ();
             Add (event_box);
             icon = new Image ();
-            
+
             // Load a 16x16-sized icon to ensure we don't end up with a 1x1 pixel.
             panel_size = 16;
             event_box.Add (icon);
-            
+
             event_box.ButtonPressEvent += OnButtonPressEvent;
             event_box.EnterNotifyEvent += OnEnterNotifyEvent;
             event_box.LeaveNotifyEvent += OnLeaveNotifyEvent;
             event_box.ScrollEvent += OnMouseScroll;
-            
+
             event_box.ShowAll ();
         }
-        
+
         public override void Dispose ()
         {
             HidePopup ();
-        
+
             event_box.ButtonPressEvent -= OnButtonPressEvent;
             event_box.EnterNotifyEvent -= OnEnterNotifyEvent;
             event_box.LeaveNotifyEvent -= OnLeaveNotifyEvent;
             event_box.ScrollEvent -= OnMouseScroll;
-        
+
             Destroy ();
         }
-        
-        public void PositionMenu (Menu menu, out int x, out int y, out bool push_in) 
+
+        public void PositionMenu (Menu menu, out int x, out int y, out bool push_in)
         {
             PositionWidget (menu, out x, out y, 0);
             push_in = true;
         }
-        
-        private bool PositionWidget (Widget widget, out int x, out int y, int yPadding) 
+
+        private bool PositionWidget (Widget widget, out int x, out int y, int yPadding)
         {
             int button_y, panel_width, panel_height;
             Gtk.Requisition requisition = widget.SizeRequest ();
-            
+
             event_box.GdkWindow.GetOrigin (out x, out button_y);
             (event_box.Toplevel as Gtk.Window).GetSize (out panel_width, out panel_height);
-            
+
             bool on_bottom = button_y + panel_height + requisition.Height >= event_box.Screen.Height;
 
             y = on_bottom
                 ? button_y - requisition.Height - yPadding
                 : button_y + panel_height + yPadding;
-                
+
             return on_bottom;
         }
-        
+
 #region Panel Icon Sizing
 
-        // This code has been shamelessly ripped off from 
+        // This code has been shamelessly ripped off from
         // Tomboy, the wonderful life organizer!
-        
+
         private void ConfigureIconSize ()
-        {   
+        {
             // For some reason, the first time we ask for the allocation,
             // it's a 1x1 pixel.  Prevent against this by returning a
             // reasonable default.  Setting the icon causes OnSizeAllocated
@@ -130,7 +130,7 @@ namespace Banshee.NotificationArea
             if (icon_size < 16) {
                 icon_size = 16;
             }
-            
+
             // Control specifically which icon is used at the smaller sizes
             // so that no scaling occurs. See bug #403500 for more info (--Boyd)
             if (icon_size <= 21) {
@@ -140,7 +140,7 @@ namespace Banshee.NotificationArea
             } else if (icon_size <= 47) {
                 icon_size = 32;
             }
-            
+
             icon.IconName = Banshee.ServiceStack.Application.IconName;
             icon.PixelSize = icon_size;
         }
@@ -149,7 +149,7 @@ namespace Banshee.NotificationArea
         {
             // Determine whether the tray is inside a horizontal or vertical
             // panel so the size of the icon can adjust correctly.
-        
+
             if (event_box.ParentWindow == null) {
                 return PanelOrientation.Horizontal;
             }
@@ -160,7 +160,7 @@ namespace Banshee.NotificationArea
             if (rect.Width < rect.Height) {
                 return PanelOrientation.Vertical;
             }
-            
+
             return PanelOrientation.Horizontal;
         }
 
@@ -168,7 +168,7 @@ namespace Banshee.NotificationArea
 
         protected override void OnSizeAllocated (Gdk.Rectangle rect)
         {
-            // Ignore the first allocation dimensions (typically 200x200) and use only 
+            // Ignore the first allocation dimensions (typically 200x200) and use only
             // the allocation's position and the default icon size for dimension (16x16).
             // A proper size request will be queued later through ConfigureIconSize ().
             // Fix for BGO #540885
@@ -177,45 +177,45 @@ namespace Banshee.NotificationArea
                 first_alloc = false;
                 return;
             }
-            
+
             base.OnSizeAllocated (rect);
-            
+
             if (GetPanelOrientation () == PanelOrientation.Horizontal) {
                 if (panel_size == Allocation.Height) {
                     return;
                 }
-                
+
                 panel_size = Allocation.Height;
             } else {
                 if (panel_size == Allocation.Width) {
                     return;
                 }
-                
+
                 panel_size = Allocation.Width;
             }
 
             ConfigureIconSize ();
         }
-        
+
 #endregion
-        
-        private void HidePopup () 
+
+        private void HidePopup ()
         {
             if (popup == null) {
                 return;
             }
-            
+
             popup.Hide ();
             popup.Dispose ();
             popup = null;
         }
-        
-        private void ShowPopup () 
+
+        private void ShowPopup ()
         {
             if (popup != null) {
                 return;
             }
-            
+
             popup = new TrackInfoPopup ();
             popup.EnterNotifyEvent += delegate {
                 hide_delay_started = false;
@@ -231,15 +231,15 @@ namespace Banshee.NotificationArea
 
             popup.Show ();
         }
-        
-        private void PositionPopup () 
+
+        private void PositionPopup ()
         {
             int x, y;
             Gtk.Requisition event_box_req = event_box.SizeRequest ();
             Gtk.Requisition popup_req = popup.SizeRequest ();
-            
+
             PositionWidget (popup, out x, out y, 5);
-            
+
             int monitor = event_box.Screen.GetMonitorAtPoint (x, y);
             var monitor_rect = event_box.Screen.GetMonitorGeometry(monitor);
 
@@ -250,16 +250,16 @@ namespace Banshee.NotificationArea
             } else if (x < monitor_rect.Left + 5) {
                 x = monitor_rect.Left + 5;
             }
-            
+
             popup.Move (x, y);
         }
-        
+
         private void OnButtonPressEvent (object o, ButtonPressEventArgs args)
         {
             if (args.Event.Type != Gdk.EventType.ButtonPress) {
                 return;
             }
-        
+
             switch (args.Event.Button) {
                 case 1:
                     if ((args.Event.State & Gdk.ModifierType.ControlMask) != 0) {
@@ -280,7 +280,7 @@ namespace Banshee.NotificationArea
                     break;
             }
         }
-        
+
         private void OnMouseScroll (object o, ScrollEventArgs args)
         {
             switch (args.Event.Direction) {
@@ -293,7 +293,7 @@ namespace Banshee.NotificationArea
                         ServiceManager.PlaybackController.Next ();
                     }
                     break;
-                    
+
                 case Gdk.ScrollDirection.Down:
                     if ((args.Event.State & Gdk.ModifierType.ControlMask) != 0) {
                         if (ServiceManager.PlayerEngine.Volume < (ushort)PlayerEngine.VolumeDelta) {
@@ -309,8 +309,8 @@ namespace Banshee.NotificationArea
                     break;
             }
         }
-        
-        private void OnEnterNotifyEvent (object o, EnterNotifyEventArgs args) 
+
+        private void OnEnterNotifyEvent (object o, EnterNotifyEventArgs args)
         {
             hide_delay_started = false;
             cursor_over_trayicon = true;
@@ -325,8 +325,8 @@ namespace Banshee.NotificationArea
                 });
             }
         }
-        
-        private void OnLeaveNotifyEvent (object o, LeaveNotifyEventArgs args) 
+
+        private void OnLeaveNotifyEvent (object o, LeaveNotifyEventArgs args)
         {
             // Give the user half a second to move the mouse cursor to the popup.
             if (!hide_delay_started) {
@@ -341,14 +341,14 @@ namespace Banshee.NotificationArea
                 });
             }
         }
-        
+
         public void OnPlayerEvent (PlayerEventArgs args)
         {
             switch (args.Event) {
                 case PlayerEvent.StartOfStream:
                     can_show_popup = true;
                     break;
-                    
+
                 case PlayerEvent.EndOfStream:
                     // only hide the popup when we don't play again after 250ms
                     GLib.Timeout.Add (250, delegate {
@@ -361,7 +361,7 @@ namespace Banshee.NotificationArea
                     break;
             }
         }
-        
+
         protected virtual void OnActivated ()
         {
             EventHandler handler = Activated;
@@ -369,7 +369,7 @@ namespace Banshee.NotificationArea
                 handler (this, EventArgs.Empty);
             }
         }
-        
+
         protected virtual void OnPopupMenuEvent ()
         {
             PopupMenuHandler handler = PopupMenuEvent;
@@ -377,16 +377,16 @@ namespace Banshee.NotificationArea
                 handler (this, new PopupMenuArgs ());
             }
         }
-        
+
         protected override bool OnDestroyEvent (Gdk.Event evnt)
         {
             bool result = base.OnDestroyEvent (evnt);
-            
+
             EventHandler handler = Disconnected;
             if (handler != null) {
                 handler (this, EventArgs.Empty);
             }
-            
+
             return result;
         }
     }

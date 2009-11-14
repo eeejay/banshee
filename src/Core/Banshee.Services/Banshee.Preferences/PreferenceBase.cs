@@ -31,15 +31,15 @@ using System;
 namespace Banshee.Preferences
 {
     public abstract class PreferenceBase : Root
-    {        
+    {
         public event Action<Root> ValueChanged;
 
         public PreferenceBase ()
         {
         }
-        
+
         public abstract object BoxedValue { get; set; }
-        
+
         private bool show_label = true;
         public virtual bool ShowLabel {
             get { return show_label; }

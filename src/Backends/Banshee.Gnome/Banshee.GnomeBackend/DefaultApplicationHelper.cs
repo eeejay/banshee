@@ -46,13 +46,13 @@ namespace Banshee.GnomeBackend
             // "net", "pnm", "uvox", // unknown
             // "rtp", "rtsp",
         };
-        
+
         private List<IDefaultSchema> schemas = new List<IDefaultSchema> ();
         private bool? is_default;
         private string banshee_cmd;
 
         #region Public API
-        
+
         public DefaultApplicationHelper ()
         {
             banshee_cmd = Banshee.ServiceStack.Application.InternalName;
@@ -70,7 +70,7 @@ namespace Banshee.GnomeBackend
 
             //Add ("/desktop/gnome/volume_manager", "autoplay_vcd", true);
             //Add ("/desktop/gnome/volume_manager", "autoplay_vcd_command", "{0} --device=%d");
-            
+
             foreach (string uri_scheme in uri_schemes) {
                 string ns = String.Format ("/desktop/gnome/url-handlers/{0}", uri_scheme);
                 Add (ns, "command", "{0} \"%s\"");
@@ -100,7 +100,7 @@ namespace Banshee.GnomeBackend
 
         public void MakeDefault ()
         {
-            Log.InformationFormat ("Setting Banshee as the default media application and handler for media urls etc in GNOME");            
+            Log.InformationFormat ("Setting Banshee as the default media application and handler for media urls etc in GNOME");
             foreach (IDefaultSchema schema in schemas) {
                 schema.MakeDefault ();
             }
@@ -130,7 +130,7 @@ namespace Banshee.GnomeBackend
         {
             private SchemaEntry<T> schema;
             private T val;
-            
+
             public SchemaMap (string ns, string key, T val)
             {
                 schema = new SchemaEntry<T> (ns, key, default (T), null, null);

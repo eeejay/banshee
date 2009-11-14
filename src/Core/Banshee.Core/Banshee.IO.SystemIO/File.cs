@@ -54,7 +54,7 @@ namespace Banshee.IO.SystemIO
         {
             System.IO.File.Copy (from.LocalPath, to.LocalPath, overwrite);
         }
-        
+
         public long GetSize (SafeUri uri)
         {
             try {
@@ -68,15 +68,15 @@ namespace Banshee.IO.SystemIO
         {
             return Hyena.DateTimeUtil.FromDateTime (new System.IO.FileInfo (uri.LocalPath).LastWriteTime);
         }
-        
+
         public System.IO.Stream OpenRead (SafeUri uri)
         {
             return System.IO.File.OpenRead (uri.LocalPath);
         }
-        
+
         public System.IO.Stream OpenWrite (SafeUri uri, bool overwrite)
         {
-            return overwrite 
+            return overwrite
                 ? System.IO.File.Open (uri.LocalPath, FileMode.Create, FileAccess.ReadWrite)
                 : System.IO.File.OpenWrite (uri.LocalPath);
         }

@@ -47,9 +47,9 @@ namespace Banshee.Collection
         private void LoadFromUri (SafeUri uri)
         {
             ParsePath (uri.LocalPath);
-   
+
             TagLib.File file = Banshee.IO.DemuxVfs.OpenFile (uri.LocalPath);
-   
+
             ArtistName = Choose (file.Tag.JoinedAlbumArtists, ArtistName);
             AlbumTitle = Choose (file.Tag.Album, AlbumTitle);
             TrackTitle = Choose (file.Tag.Title, TrackTitle);
@@ -76,7 +76,7 @@ namespace Banshee.Collection
             if (uri.IsLocalPath) {
                 filename = uri.AbsolutePath;
             }
-            
+
             match = Regex.Match (filename, @"(\d+)\.? *(.*)$");
             if (match.Success) {
                 TrackNumber = Convert.ToInt32 (match.Groups[1].ToString ());
@@ -108,32 +108,32 @@ namespace Banshee.Collection
                     AlbumTitle = filename;
                     continue;
                 }
-                
+
                 if (ArtistName == String.Empty) {
                     ArtistName = filename;
                     continue;
                 }
-                
+
                 break;
             }
-            
+
             ArtistName = ArtistName.Trim ();
             AlbumTitle = AlbumTitle.Trim ();
             TrackTitle = TrackTitle.Trim ();
-            
+
             if (ArtistName.Length == 0) {
                 ArtistName = /*"Unknown Artist"*/ null;
             }
-            
+
             if (AlbumTitle.Length == 0) {
                 AlbumTitle = /*"Unknown Album"*/ null;
             }
-            
+
             if (TrackTitle.Length == 0) {
                 TrackTitle = /*"Unknown Title"*/ null;
             }
         }
- 
+
 		private static string Choose (string priority, string fallback)
 		{
 			return String.IsNullOrEmpty (priority) ? fallback : priority;

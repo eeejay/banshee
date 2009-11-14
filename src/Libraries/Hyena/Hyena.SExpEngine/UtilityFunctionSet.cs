@@ -37,32 +37,32 @@ namespace Hyena.SExpEngine
         {
             if(args.Length != 1) {
                 throw new ArgumentException("print must have only one argument");
-            } 
-            
+            }
+
             Console.WriteLine(Evaluate(args[0]));
-            
+
             return new VoidLiteral();
         }
-        
+
         [Function("print-type")]
         public virtual TreeNode OnPrintType(TreeNode [] args)
         {
             if(args.Length != 1) {
                 throw new ArgumentException("print-type must have only one argument");
-            } 
-            
+            }
+
             Console.WriteLine(Evaluate(args[0]).GetType());
-            
+
             return new VoidLiteral();
         }
-        
+
         [Function("dump")]
         public virtual TreeNode OnDump(TreeNode [] args)
         {
             foreach(TreeNode arg in args) {
                 Evaluate(arg).Dump();
             }
-            
+
             return new VoidLiteral();
         }
     }

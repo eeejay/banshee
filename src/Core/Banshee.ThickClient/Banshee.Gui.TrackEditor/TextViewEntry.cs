@@ -34,17 +34,17 @@ using Hyena.Widgets;
 namespace Banshee.Gui.TrackEditor
 {
     public class TextViewEntry : Gtk.ScrolledWindow, IEditorField, ICanUndo
-    {    
-        private EditorEditableUndoAdapter<TextViewEditable> undo_adapter 
+    {
+        private EditorEditableUndoAdapter<TextViewEditable> undo_adapter
             = new EditorEditableUndoAdapter<TextViewEditable> ();
-        
+
         public event EventHandler Changed;
-        
+
         private TextViewEditable entry;
         public TextView TextView {
             get { return entry; }
         }
-        
+
         public string Text {
             get { return entry.Buffer.Text; }
             set { entry.Buffer.Text = value ?? String.Empty; }
@@ -55,15 +55,15 @@ namespace Banshee.Gui.TrackEditor
             VscrollbarPolicy = PolicyType.Automatic;
             HscrollbarPolicy = PolicyType.Never;
             ShadowType = ShadowType.In;
-            
+
             Add (entry = new TextViewEditable ());
             entry.AcceptsTab = false;
             entry.Show ();
             entry.Buffer.Changed += OnChanged;
-            
+
             entry.SizeRequested += OnTextViewSizeRequested;
         }
-        
+
         private void OnTextViewSizeRequested (object o, SizeRequestedArgs args)
         {
             Pango.FontMetrics metrics = PangoContext.GetMetrics (entry.Style.FontDescription, PangoContext.Language);
@@ -71,17 +71,17 @@ namespace Banshee.Gui.TrackEditor
             metrics.Dispose ();
             HeightRequest = (line_height + 2) * 2;
         }
-        
+
         public void DisconnectUndo ()
         {
             undo_adapter.DisconnectUndo ();
         }
-        
+
         public void ConnectUndo (EditorTrackInfo track)
         {
             undo_adapter.ConnectUndo (entry, track);
         }
-                
+
         protected override bool OnMnemonicActivated (bool group_cycling) {
             return entry.MnemonicActivate(group_cycling);
         }
@@ -95,4 +95,3 @@ namespace Banshee.Gui.TrackEditor
         }
     }
 }
-            

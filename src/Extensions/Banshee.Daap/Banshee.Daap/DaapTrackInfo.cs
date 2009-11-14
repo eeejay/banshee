@@ -43,10 +43,10 @@ namespace Banshee.Daap
             TrackTitle = track.Title;
             AlbumTitle = track.Album;
             ArtistName = track.Artist;
-            
+
             DateAdded = track.DateAdded;
             DateUpdated = track.DateModified;
-            
+
             Genre = track.Genre;
             FileSize = track.Size;
             TrackCount = track.TrackCount;
@@ -58,11 +58,11 @@ namespace Banshee.Daap
             ExternalId = track.Id;
 
             PrimarySource = source;
-            
+
             Uri = new SafeUri (String.Format (
                 "{0}{1}/{2}", DaapService.ProxyServer.HttpBaseAddress, source.Database.GetHashCode (), track.Id
             ));
-            
+
             //this.IsLive = false;
             //this.CanSaveToDatabase = false;
         }

@@ -76,10 +76,10 @@ namespace Booter
             if (CheckHelpVersion ()) {
                 return;
             }
-            
+
             if (DBusConnection.ApplicationInstanceAlreadyRunning) {
                 // DBus Command/Query/File Proxy Client
-                BootClient ("Halie"); 
+                BootClient ("Halie");
                 NotifyStartupComplete ();
             } else if (DBusConnection.NameHasOwner ("CollectionIndexer")) {
                 // Tell the existing indexer to start Banshee when it's done
@@ -100,19 +100,19 @@ namespace Booter
                 BootClient ("Nereid");
             }
         }
-        
+
         private static void BootClient (string clientName)
         {
             AppDomain.CurrentDomain.ExecuteAssembly (Path.Combine (Path.GetDirectoryName (
                 Assembly.GetEntryAssembly ().Location), String.Format ("{0}.exe", clientName)));
         }
-        
+
         [DllImport ("libgdk-win32-2.0-0.dll")]
         private static extern bool gdk_init_check (IntPtr argc, IntPtr argv);
-        
+
         [DllImport ("libgdk-win32-2.0-0.dll")]
         private static extern void gdk_notify_startup_complete ();
-        
+
         private static void NotifyStartupComplete ()
         {
             try {
@@ -133,15 +133,15 @@ namespace Booter
                 ShowVersion ();
                 return true;
             }
-            
+
             return false;
         }
-        
+
         private static void ShowHelp ()
         {
             Console.WriteLine ("Usage: {0} [options...] [files|URIs...]", "banshee-1");
             Console.WriteLine ();
-            
+
             Layout commands = new Layout (
                 new LayoutGroup ("help", Catalog.GetString ("Help Options"),
                     new LayoutOption ("help", Catalog.GetString ("Show this help")),
@@ -153,7 +153,7 @@ namespace Booter
                     new LayoutOption ("help-all", Catalog.GetString ("Show all option groups")),
                     new LayoutOption ("version", Catalog.GetString ("Show version information"))
                 ),
-                
+
                 new LayoutGroup ("playback", Catalog.GetString ("Playback Control Options"),
                     new LayoutOption ("next", Catalog.GetString ("Play the next track, optionally restarting if the 'restart' value is set")),
                     new LayoutOption ("previous", Catalog.GetString ("Play the previous track, optionally restarting if the 'restart value is set")),
@@ -167,7 +167,7 @@ namespace Booter
                     new LayoutOption ("set-volume=LEVEL", Catalog.GetString ("Set the playback volume (0-100)")),
                     new LayoutOption ("set-position=POS", Catalog.GetString ("Seek to a specific point (seconds, float)"))
                 ),
-                
+
                 new LayoutGroup ("query-player", Catalog.GetString ("Player Engine Query Options"),
                     new LayoutOption ("query-current-state", Catalog.GetString ("Current player state")),
                     new LayoutOption ("query-last-state", Catalog.GetString ("Last player state")),
@@ -176,7 +176,7 @@ namespace Booter
                     new LayoutOption ("query-volume", Catalog.GetString ("Player volume")),
                     new LayoutOption ("query-position", Catalog.GetString ("Player position in currently playing track"))
                 ),
-                
+
                 new LayoutGroup ("query-track", Catalog.GetString ("Playing Track Metadata Query Options"),
                     new LayoutOption ("query-uri", Catalog.GetString ("URI")),
                     new LayoutOption ("query-artist", Catalog.GetString ("Artist Name")),
@@ -191,36 +191,36 @@ namespace Booter
                     new LayoutOption ("query-score", Catalog.GetString ("Score")),
                     new LayoutOption ("query-bit-rate", Catalog.GetString ("Bit Rate"))
                 ),
-                
+
                 new LayoutGroup ("ui", Catalog.GetString ("User Interface Options"),
                     new LayoutOption ("show|--present", Catalog.GetString ("Present the user interface on the active workspace")),
                     new LayoutOption ("hide", Catalog.GetString ("Hide the user interface")),
                     new LayoutOption ("no-present", Catalog.GetString ("Do not present the user interface, regardless of any other options"))
                 ),
-                
-                new LayoutGroup ("debugging", Catalog.GetString ("Debugging and Development Options"), 
+
+                new LayoutGroup ("debugging", Catalog.GetString ("Debugging and Development Options"),
                     new LayoutOption ("debug", Catalog.GetString ("Enable general debugging features")),
                     new LayoutOption ("debug-sql", Catalog.GetString ("Enable debugging output of SQL queries")),
                     new LayoutOption ("debug-addins", Catalog.GetString ("Enable debugging output of Mono.Addins")),
                     new LayoutOption ("db=FILE", Catalog.GetString ("Specify an alternate database to use")),
                     new LayoutOption ("gconf-base-key=KEY", Catalog.GetString ("Specify an alternate key, default is /apps/banshee-1/")),
-                    new LayoutOption ("uninstalled", Catalog.GetString ("Optimize instance for running uninstalled; " + 
+                    new LayoutOption ("uninstalled", Catalog.GetString ("Optimize instance for running uninstalled; " +
                         "most notably, this will create an alternate Mono.Addins database in the working directory")),
                     new LayoutOption ("disable-dbus", Catalog.GetString ("Disable DBus support completely")),
                     new LayoutOption ("no-gtkrc", String.Format (Catalog.GetString (
-                        "Skip loading a custom gtkrc file ({0}) if it exists"), 
+                        "Skip loading a custom gtkrc file ({0}) if it exists"),
                         Path.Combine (Paths.ApplicationData, "gtkrc").Replace (
                             Environment.GetFolderPath (Environment.SpecialFolder.Personal), "~")))
                 )
             );
-            
+
             if (ApplicationContext.CommandLine.Contains ("help-all")) {
                 Console.WriteLine (commands);
                 return;
             }
-            
+
             List<string> errors = null;
-            
+
             foreach (KeyValuePair<string, string> argument in ApplicationContext.CommandLine.Arguments) {
                 switch (argument.Key) {
                     case "help": Console.WriteLine (commands.ToString ("help")); break;
@@ -236,14 +236,14 @@ namespace Booter
                         break;
                 }
             }
-            
+
             if (errors != null) {
                 Console.WriteLine (commands.LayoutLine (String.Format (Catalog.GetString (
                     "The following help arguments are invalid: {0}"),
                     Hyena.Collections.CollectionExtensions.Join (errors, "--", null, ", "))));
             }
         }
-        
+
         private static void ShowVersion ()
         {
             Console.WriteLine ("Banshee {0} ({1}) http://banshee-project.org", Application.DisplayVersion, Application.Version);

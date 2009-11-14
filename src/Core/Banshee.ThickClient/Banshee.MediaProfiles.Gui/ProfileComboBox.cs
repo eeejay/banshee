@@ -5,27 +5,27 @@
  *  Written by Aaron Bockover <aaron@abock.org>
  ****************************************************************************/
 
-/*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
+/*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW:
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
- *  copy of this software and associated documentation files (the "Software"),  
- *  to deal in the Software without restriction, including without limitation  
- *  the rights to use, copy, modify, merge, publish, distribute, sublicense,  
- *  and/or sell copies of the Software, and to permit persons to whom the  
+ *  copy of this software and associated documentation files (the "Software"),
+ *  to deal in the Software without restriction, including without limitation
+ *  the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ *  and/or sell copies of the Software, and to permit persons to whom the
  *  Software is furnished to do so, subject to the following conditions:
  *
- *  The above copyright notice and this permission notice shall be included in 
+ *  The above copyright notice and this permission notice shall be included in
  *  all copies or substantial portions of the Software.
  *
- *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
- *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
- *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
- *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
- *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
- *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  *  DEALINGS IN THE SOFTWARE.
  */
- 
+
 using System;
 using System.Collections.Generic;
 
@@ -39,17 +39,17 @@ namespace Banshee.MediaProfiles.Gui
         private MediaProfileManager manager;
         private ListStore store;
         private string [] mimetype_filter;
-        
+
         public event EventHandler Updated;
-        
+
         public ProfileComboBox(MediaProfileManager manager)
         {
             this.manager = manager;
-            
+
             BuildWidget();
             ReloadProfiles();
         }
-        
+
         private void BuildWidget()
         {
             store = new ListStore(typeof(string), typeof(Profile));
@@ -57,20 +57,20 @@ namespace Banshee.MediaProfiles.Gui
             store.RowDeleted += delegate { OnUpdated(); };
             store.RowChanged += delegate { OnUpdated(); };
             Model = store;
-            
+
             CellRendererText text_renderer = new CellRendererText();
             PackStart(text_renderer, true);
             AddAttribute(text_renderer, "text", 0);
         }
-        
+
         public void ReloadProfiles()
         {
             Profile active_profile = ActiveProfile;
             TreeIter active_iter;
             store.Clear();
-            
+
             List<Profile> mimetype_profiles = null;
-                
+
             if(mimetype_filter != null && mimetype_filter.Length > 0) {
                 mimetype_profiles = new List<Profile>();
                 foreach(string mimetype in mimetype_filter) {
@@ -80,15 +80,15 @@ namespace Banshee.MediaProfiles.Gui
                     }
                 }
             }
-            
-            if(manager.AvailableProfileCount == 0 || (mimetype_profiles != null && 
+
+            if(manager.AvailableProfileCount == 0 || (mimetype_profiles != null &&
                 mimetype_profiles.Count == 0 && mimetype_filter != null)) {
                 store.AppendValues(Catalog.GetString("No available profiles"), null);
                 Sensitive = false;
             } else {
                 Sensitive = true;
             }
-            
+
             if(mimetype_profiles != null) {
                 foreach(Profile profile in mimetype_profiles) {
                     store.AppendValues(String.Format("{0}", profile.Name), profile);
@@ -98,7 +98,7 @@ namespace Banshee.MediaProfiles.Gui
                     store.AppendValues(String.Format("{0}", profile.Name), profile);
                 }
             }
-            
+
             if(store.IterNthChild(out active_iter, 0)) {
                 SetActiveIter(active_iter);
             }
@@ -118,7 +118,7 @@ namespace Banshee.MediaProfiles.Gui
                 }
             }
         }
-        
+
         protected virtual void OnUpdated()
         {
             EventHandler handler = Updated;
@@ -126,25 +126,25 @@ namespace Banshee.MediaProfiles.Gui
                 handler(this, new EventArgs());
             }
         }
-        
+
         public string [] MimeTypeFilter {
             get { return mimetype_filter; }
-            set { 
+            set {
                 mimetype_filter = value;
                 ReloadProfiles();
             }
         }
-        
+
         public Profile ActiveProfile {
-            get { 
+            get {
                 TreeIter iter;
                 if(GetActiveIter(out iter)) {
                     return store.GetValue(iter, 1) as Profile;
                 }
-                
+
                 return null;
             }
-            
+
             set { SetActiveProfile(value); }
         }
     }

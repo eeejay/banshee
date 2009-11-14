@@ -41,32 +41,32 @@ namespace Banshee.Hardware
     {
         private short [] vendor_ids;
         private short [] product_ids;
-        
+
         private string vendor_name;
         public string VendorName {
             get { return vendor_name; }
         }
-        
+
         private string product_name;
         public string ProductName {
             get { return product_name; }
         }
-        
+
         public bool Matches (short vendorId, short productId)
         {
             return Match (vendor_ids, vendorId) && Match (product_ids, productId);
         }
-        
+
         protected override void Read (NodeElement elem)
         {
             base.Read (elem);
-            
+
             vendor_name = elem.GetAttribute ("vendor-name");
             product_name = elem.GetAttribute ("product-name");
             vendor_ids = ParseIds (elem.GetAttribute ("vendor-id"));
             product_ids = ParseIds (elem.GetAttribute ("product-id"));
-        }        
-        
+        }
+
         private static bool Match (short [] ids, short match)
         {
             for (int i = 0; i < ids.Length; i++) {
@@ -76,7 +76,7 @@ namespace Banshee.Hardware
             }
             return false;
         }
-        
+
         private static short [] ParseIds (string value)
         {
             string [] split = value.Split (',');
@@ -86,13 +86,13 @@ namespace Banshee.Hardware
             }
             return ids;
         }
-        
+
         private static short ParseId (string value)
         {
             // Parse as an integer, then typecast, to avoid overflow issues
             // with regards to the sign bit.
             int result = 0;
-            
+
             if (value.StartsWith ("0x")) {
                 Int32.TryParse (value.Substring (2), NumberStyles.HexNumber,
                     CultureInfo.InvariantCulture, out result);
@@ -100,7 +100,7 @@ namespace Banshee.Hardware
                 Int32.TryParse (value, NumberStyles.AllowLeadingWhite | NumberStyles.AllowTrailingWhite,
                     CultureInfo.InvariantCulture, out result);
             }
-            
+
             return (short)result;
         }
     }

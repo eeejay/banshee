@@ -37,25 +37,25 @@ namespace Banshee.AudioCd
     {
         private static bool duplicator_extension_queried = false;
         private static TypeExtensionNode duplicator_extension_node = null;
-        
+
         public static bool Supported {
-            get { 
+            get {
                 if (duplicator_extension_queried) {
                     return duplicator_extension_node != null;
                 }
-                
+
                 duplicator_extension_queried = true;
-                
+
                 foreach (TypeExtensionNode node in AddinManager.GetExtensionNodes (
                     "/Banshee/Platform/DiscDuplicator")) {
                     duplicator_extension_node = node;
                     break;
                 }
-                
+
                 return duplicator_extension_node != null;
             }
         }
-        
+
         public static void Duplicate (AudioCdDiscModel model)
         {
             if (Supported && model != null && model.Volume != null) {

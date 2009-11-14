@@ -35,23 +35,23 @@ using Banshee.Collection;
 namespace Banshee.Gui.TrackEditor
 {
     public class LyricsPage : FieldPage, ITrackEditorPage
-    {    
+    {
         private TextViewEntry lyrics_entry;
-            
+
         public int Order {
             get { return 30; }
         }
-                                    
+
         public string Title {
             get { return Catalog.GetString ("Lyrics"); }
         }
-        
+
         public override void LoadTrack (EditorTrackInfo track)
         {
             BorderWidth = 2;
             lyrics_entry.Text = "Not supported";
         }
-        
+
         protected override void AddFields ()
         {
             PackStart (lyrics_entry = new TextViewEntry (), true, true, 0);

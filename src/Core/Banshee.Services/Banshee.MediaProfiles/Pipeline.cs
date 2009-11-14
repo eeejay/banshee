@@ -5,27 +5,27 @@
  *  Written by Aaron Bockover <aaron@abock.org>
  ****************************************************************************/
 
-/*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
+/*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW:
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
- *  copy of this software and associated documentation files (the "Software"),  
- *  to deal in the Software without restriction, including without limitation  
- *  the rights to use, copy, modify, merge, publish, distribute, sublicense,  
- *  and/or sell copies of the Software, and to permit persons to whom the  
+ *  copy of this software and associated documentation files (the "Software"),
+ *  to deal in the Software without restriction, including without limitation
+ *  the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ *  and/or sell copies of the Software, and to permit persons to whom the
  *  Software is furnished to do so, subject to the following conditions:
  *
- *  The above copyright notice and this permission notice shall be included in 
+ *  The above copyright notice and this permission notice shall be included in
  *  all copies or substantial portions of the Software.
  *
- *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
- *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
- *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
- *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
- *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
- *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  *  DEALINGS IN THE SOFTWARE.
  */
- 
+
 using System;
 using System.Text;
 using System.Xml;
@@ -43,44 +43,44 @@ namespace Banshee.MediaProfiles
         public struct Process : IComparable<Process>
         {
             public static readonly Process Zero;
-        
+
             private string id;
             private int order;
             private string pipeline;
-            
+
             public Process(string id, int order, string pipeline)
             {
                 this.id = id;
                 this.order = order;
                 this.pipeline = pipeline;
             }
-            
+
             public int CompareTo(Process process)
             {
                 int id_cmp = id.CompareTo(process.ID);
                 return id_cmp != 0 ? id_cmp : order.CompareTo(process.Order);
             }
-            
+
             public string ID {
                 get { return id; }
             }
-            
-            public int Order { 
+
+            public int Order {
                 get { return order; }
             }
-            
+
             public string Pipeline {
                 get { return pipeline; }
             }
         }
-    
-        private static Dictionary<string, SExpFunctionHandler> sexpr_functions = 
+
+        private static Dictionary<string, SExpFunctionHandler> sexpr_functions =
             new Dictionary<string, SExpFunctionHandler>();
-            
+
         private List<PipelineVariable> variables = new List<PipelineVariable>();
         private Dictionary<string, string> processes = new Dictionary<string, string>();
         private List<Process> processes_pending = new List<Process>();
-        
+
         internal Pipeline(MediaProfileManager manager, XmlNode node)
         {
             foreach(XmlNode process_node in node.SelectNodes("process")) {
@@ -94,7 +94,7 @@ namespace Banshee.MediaProfiles
                     }
                 } catch {
                 }
-                
+
                 processes_pending.Add(new Process(process_id, order, process));
             }
 
@@ -113,27 +113,27 @@ namespace Banshee.MediaProfiles
                 }
             }
         }
-        
+
         public static void AddSExprFunction(string name, SExpFunctionHandler handler)
         {
-            if(!sexpr_functions.ContainsKey(name)) { 
+            if(!sexpr_functions.ContainsKey(name)) {
                 sexpr_functions.Add(name, handler);
             }
         }
-        
+
         public string CompileProcess(Process process)
         {
             return CompileProcess(process.Pipeline, process.ID);
         }
-        
+
         public string CompileProcess(string process, string id)
         {
             Evaluator eval = new Evaluator();
-            
+
             foreach(KeyValuePair<string, SExpFunctionHandler> function in sexpr_functions) {
                 eval.RegisterFunction(function.Value, function.Key);
             }
-            
+
             foreach(PipelineVariable variable in this) {
                 double ?numeric = variable.CurrentValueNumeric;
                 if(numeric != null) {
@@ -146,7 +146,7 @@ namespace Banshee.MediaProfiles
                     eval.RegisterVariable(variable.Id, variable.CurrentValue);
                 }
             }
-            
+
             TreeNode result = eval.EvaluateString(process);
             if(eval.Success && result is StringLiteral) {
                 return (result.Flatten() as StringLiteral).Value;
@@ -157,19 +157,19 @@ namespace Banshee.MediaProfiles
                 Console.WriteLine(eval.ErrorMessage);
                 Console.WriteLine("-----");
                 Console.WriteLine("Stack Trace:");
-            
+
                 foreach(Exception e in eval.Exceptions) {
                     Console.WriteLine(e.Message);
                 }
-                
+
                 Console.WriteLine("-----");
                 Console.WriteLine("Expression Tree:");
                 Hyena.SExpEngine.TreeNode.DumpTree(eval.ExpressionTree);
             }
-            
+
             return null;
         }
-        
+
         public void AddProcess(Process process)
         {
             AddProcess(process.ID, process.Pipeline);
@@ -188,34 +188,34 @@ namespace Banshee.MediaProfiles
         {
             processes.Remove(id);
         }
-        
+
         public string GetProcessById(string id)
         {
             if(processes.ContainsKey(id)) {
                 return CompileProcess(processes[id], id);
             }
-            
+
             throw new ApplicationException("No processes in pipeline");
         }
-        
+
         public string GetProcessByIdOrDefault(string id)
         {
             if(processes.ContainsKey(id)) {
                 return GetProcessById(id);
-            } 
-            
+            }
+
             return GetDefaultProcess();
         }
-        
+
         public string GetDefaultProcess()
         {
             foreach(KeyValuePair<string, string> process in processes) {
                 return CompileProcess(process.Value, process.Key);
             }
-            
+
             throw new ApplicationException("No processes in pipeline");
         }
-        
+
         public IList<Process> GetPendingProcessesById(string id)
         {
             List<Process> processes = new List<Process>();
@@ -233,7 +233,7 @@ namespace Banshee.MediaProfiles
             if(variables.Contains(variable)) {
                 throw new ApplicationException(String.Format("A variable with ID '{0}' already exists in this profile", variable.Id));
             }
-            
+
             variables.Add(variable);
         }
 
@@ -263,7 +263,7 @@ namespace Banshee.MediaProfiles
         public IDictionary<string, string> Processes {
             get { return processes; }
         }
-        
+
         public IList<PipelineVariable> Variables {
             get { return variables; }
         }
@@ -275,9 +275,9 @@ namespace Banshee.MediaProfiles
                 }
             }
         }
-        
+
         public string this[string variableName] {
-            set { 
+            set {
                 foreach(PipelineVariable variable in this) {
                     if(variable.Id == variableName) {
                         variable.CurrentValue = value;
@@ -290,7 +290,7 @@ namespace Banshee.MediaProfiles
         public override string ToString()
         {
             StringBuilder builder = new StringBuilder();
-                
+
             builder.Append("\tProcesses:\n");
             foreach(KeyValuePair<string, string> process in processes) {
                 builder.Append(String.Format("\t{0} = {1}\n", process.Key, process.Value));

@@ -61,56 +61,56 @@ namespace Banshee.Gui
             migrator.SlowFinished -= OnMigrationSlowFinished;
             migrator = null;
         }
-        
+
         private void IterateSlow ()
         {
             while (Gtk.Application.EventsPending ()) {
                 Gtk.Application.RunIteration ();
             }
         }
-        
+
         private void OnMigrationSlowStarted (string title, string message)
         {
             lock (this) {
                 if (slow_window != null) {
                     slow_window.Destroy ();
                 }
-                
+
                 Gtk.Application.Init ();
-                
+
                 slow_window = new Gtk.Window (String.Empty);
                 slow_window.BorderWidth = 10;
                 slow_window.WindowPosition = Gtk.WindowPosition.Center;
                 slow_window.DeleteEvent += delegate (object o, Gtk.DeleteEventArgs args) {
                     args.RetVal = true;
                 };
-                
+
                 Gtk.VBox box = new Gtk.VBox ();
                 box.Spacing = 5;
-                
+
                 Gtk.Label title_label = new Gtk.Label ();
                 title_label.Xalign = 0.0f;
                 title_label.Markup = String.Format ("<b><big>{0}</big></b>",
                     GLib.Markup.EscapeText (title));
-                
+
                 Gtk.Label message_label = new Gtk.Label ();
                 message_label.Xalign = 0.0f;
                 message_label.Text = message;
                 message_label.Wrap = true;
-                
+
                 slow_progress = new Gtk.ProgressBar ();
-                
+
                 box.PackStart (title_label, false, false, 0);
                 box.PackStart (message_label, false, false, 0);
                 box.PackStart (slow_progress, false, false, 0);
-                
+
                 slow_window.Add (box);
                 slow_window.ShowAll ();
-                
+
                 IterateSlow ();
             }
         }
-        
+
         private void OnMigrationSlowPulse (object o, EventArgs args)
         {
             lock (this) {
@@ -118,7 +118,7 @@ namespace Banshee.Gui
                 IterateSlow ();
             }
         }
-        
+
         private void OnMigrationSlowFinished (object o, EventArgs args)
         {
             lock (this) {

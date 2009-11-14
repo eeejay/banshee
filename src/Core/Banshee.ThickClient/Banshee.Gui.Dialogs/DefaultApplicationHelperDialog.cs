@@ -63,7 +63,7 @@ namespace Banshee.Gui.Dialogs
                 }
             }
         }
-        
+
         private CheckButton remember;
         private DefaultApplicationHelperDialog () : base (null, DialogFlags.DestroyWithParent, MessageType.Question, ButtonsType.None,
                                                          Catalog.GetString ("Make Banshee the default media player?"),
@@ -79,9 +79,9 @@ namespace Banshee.Gui.Dialogs
             align.TopPadding = 6;
             align.Child = remember;
             align.Show ();
-            
+
             LabelVBox.PackEnd (align, false, false, 0);
-            
+
             AddButton (Gtk.Stock.Cancel, Gtk.ResponseType.No, false);
             AddCustomButton (Catalog.GetString ("Make Banshee the Default"), Gtk.ResponseType.Yes, true).HasFocus = true;
         }

@@ -1,4 +1,4 @@
-// 
+//
 // LibraryImportManager.cs
 //
 // Authors:
@@ -64,11 +64,11 @@ namespace Banshee.Library
             get {
                 if (base.PrimarySourceIds == null) {
                     base.PrimarySourceIds = new int [] {
-                        ServiceManager.SourceManager.VideoLibrary.DbId, 
+                        ServiceManager.SourceManager.VideoLibrary.DbId,
                         ServiceManager.SourceManager.MusicLibrary.DbId
                     };
                 }
-                
+
                 return base.PrimarySourceIds;
             }
         }
@@ -85,7 +85,7 @@ namespace Banshee.Library
                 return ServiceManager.SourceManager.MusicLibrary;
             }
         }
-        
+
         string IService.ServiceName {
             get { return "LibraryImportManager"; }
         }

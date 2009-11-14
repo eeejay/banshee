@@ -37,13 +37,13 @@ namespace Banshee.ServiceStack
         public Client ()
         {
         }
-        
+
         public virtual void Dispose ()
         {
         }
-        
+
         public abstract string ClientId {
-            get; 
+            get;
         }
 
         private bool is_started;

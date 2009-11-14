@@ -29,18 +29,18 @@ namespace MusicBrainz
 {
     public sealed class Query<T> : IEnumerable<T> where T : MusicBrainzObject
     {
-        
+
         #region Private
 
         const int default_limit = 100;
-        
+
         string parameters;
         string url_extension;
         int limit = default_limit;
-        
+
         int offset;
         int? count;
-        
+
         List<T> results;
         List<T> ResultsWindow {
             get {
@@ -74,21 +74,21 @@ namespace MusicBrainz
                 }
             }
         }
-        
+
         #endregion
 
         #region Constructors
-        
+
         internal Query (string url_extension, string parameters)
         {
             this.url_extension = url_extension;
             this.parameters = parameters;
         }
-        
+
         #endregion
 
         #region Public
-        
+
         public int Count {
             get {
                 if (count == null)
@@ -105,7 +105,7 @@ namespace MusicBrainz
                 return ResultsWindow[index - offset];
             }
         }
-        
+
         public T First ()
         {
             int tmp_limit = limit;
@@ -114,7 +114,7 @@ namespace MusicBrainz
             limit = tmp_limit;
             return result;
         }
-        
+
         public T PerfectMatch ()
         {
             int tmp_limit = limit;
@@ -122,16 +122,16 @@ namespace MusicBrainz
             T result1 = Count > 0 ? this [0] : null;
             T result2 = Count > 1 ? this [1] : null;
             limit = tmp_limit;
-            
+
             return (result1 != null && result1.Score == 100 && (result2 == null || result2.Score < 100))
                 ? result1 : null;
         }
-        
+
         public IEnumerable<T> Best ()
         {
             return Best (100);
         }
-        
+
         public IEnumerable<T> Best (int scoreThreshold)
         {
             foreach (T result in this) {
@@ -139,36 +139,36 @@ namespace MusicBrainz
                 yield return result;
             }
         }
-        
+
         public IEnumerator<T> GetEnumerator ()
         {
             for (int i = 0; i < Count; i++) yield return this [i];
         }
-        
+
         IEnumerator IEnumerable.GetEnumerator ()
         {
             return GetEnumerator ();
         }
-        
+
         public static implicit operator T (Query<T> query)
         {
             return query.First ();
         }
-        
+
         #endregion
-        
+
     }
 
     [AttributeUsage (AttributeTargets.Method | AttributeTargets.Property)]
     internal sealed class QueryableAttribute : Attribute
     {
         readonly string name;
-        
+
         public QueryableAttribute (string name)
         {
             this.name = name;
         }
-        
+
         public string Name {
             get { return name; }
         }
@@ -179,17 +179,17 @@ namespace MusicBrainz
     {
         readonly string member;
         readonly string name;
-        
+
         public QueryableMemberAttribute (string member, string name)
         {
             this.member = member;
             this.name = name;
         }
-        
+
         public string Member {
             get { return member; }
         }
-        
+
         public string Name {
             get { return name; }
         }

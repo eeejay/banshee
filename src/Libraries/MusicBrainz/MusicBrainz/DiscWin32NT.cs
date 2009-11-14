@@ -78,7 +78,7 @@ namespace MusicBrainz
             public byte FirstTrack;
             public byte LastTrack;
             public TRACK_DATA_Array TrackData = new TRACK_DATA_Array();
-            
+
             public CDROM_TOC ()
             {
                 Length = (ushort)Marshal.SizeOf (this);

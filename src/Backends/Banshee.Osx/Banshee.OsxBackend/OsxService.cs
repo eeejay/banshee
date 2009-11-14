@@ -44,37 +44,37 @@ namespace Banshee.OsxBackend
         private InterfaceActionService interface_action_service;
         private uint ui_manager_id;
         private bool disposed;
-        
+
         void IExtensionService.Initialize ()
         {
             elements_service = ServiceManager.Get<GtkElementsService> ();
             interface_action_service = ServiceManager.Get<InterfaceActionService> ();
-            
+
             if (!ServiceStartup ()) {
                 ServiceManager.ServiceStarted += OnServiceStarted;
             }
         }
 
-        private void OnServiceStarted (ServiceStartedArgs args) 
+        private void OnServiceStarted (ServiceStartedArgs args)
         {
             if (args.Service is Banshee.Gui.InterfaceActionService) {
                 interface_action_service = (InterfaceActionService)args.Service;
             } else if (args.Service is GtkElementsService) {
                 elements_service = (GtkElementsService)args.Service;
             }
-                    
+
             ServiceStartup ();
         }
-        
+
         private bool ServiceStartup ()
         {
             if (elements_service == null || interface_action_service == null) {
                 return false;
             }
-            
+
             Initialize ();
             ServiceManager.ServiceStarted -= OnServiceStarted;
-            
+
             return true;
         }
 
@@ -89,12 +89,12 @@ namespace Banshee.OsxBackend
             });
 
             // merge close menu item
-            ui_manager_id = interface_action_service.UIManager.AddUiFromResource ("osx-ui-actions-layout.xml");      
+            ui_manager_id = interface_action_service.UIManager.AddUiFromResource ("osx-ui-actions-layout.xml");
             RegisterCloseHandler ();
 
             elements_service.PrimaryWindow.WindowStateEvent += WindowStateHandler;
-            
-            // bind gtk menu to global osx menu 
+
+            // bind gtk menu to global osx menu
             BindMenuBar ();
 
             // make menu more osx-like
@@ -105,7 +105,7 @@ namespace Banshee.OsxBackend
             doc.Clicked += OnDockClicked;
             doc.QuitActivate += OnDockQuitActivated;
         }
-        
+
         public void Dispose ()
         {
             if (disposed) {
@@ -113,30 +113,30 @@ namespace Banshee.OsxBackend
             }
 
             elements_service.PrimaryWindowClose = null;
-            
+
             interface_action_service.GlobalActions.Remove ("CloseAction");
             interface_action_service.UIManager.RemoveUi (ui_manager_id);
-        
+
             disposed = true;
         }
-        
+
         string IService.ServiceName {
             get { return "OsxService"; }
         }
 
-        private void OnDockClicked (object o, System.EventArgs args) 
+        private void OnDockClicked (object o, System.EventArgs args)
         {
             SetWindowVisibility (true);
         }
 
-        private void OnDockQuitActivated (object o, System.EventArgs args) 
+        private void OnDockQuitActivated (object o, System.EventArgs args)
         {
-            // FIXME: disabled due to issue with intermitant throwing of exception 
+            // FIXME: disabled due to issue with intermitant throwing of exception
             // while quitting via the dock item.. need to figure out where exactly
             // the issue is..
             //Banshee.ServiceStack.Application.Shutdown ();
         }
-        
+
         private void BindMenuBar ()
         {
             UIManager ui = interface_action_service.UIManager;
@@ -144,8 +144,8 @@ namespace Banshee.OsxBackend
             // retreive and hide the gtk menu
             MenuShell menu = (MenuShell) ui.GetWidget ("/MainMenu");
             menu.Hide ();
-            
-            // bind menu 
+
+            // bind menu
             IgeMacMenu.MenuBar = menu;
         }
 
@@ -160,7 +160,7 @@ namespace Banshee.OsxBackend
             IgeMacMenuGroup prefs_group = IgeMacMenu.AddAppMenuGroup ();
 
             IgeMacMenu.QuitMenuItem = quit_item;
-            
+
             about_group.AddMenuItem (about_item, null);
             prefs_group.AddMenuItem (prefs_item, null);
         }
@@ -171,7 +171,7 @@ namespace Banshee.OsxBackend
                 elements_service.PrimaryWindowClose = OnPrimaryWindowClose;
             }
         }
-        
+
         private bool OnPrimaryWindowClose ()
         {
             CloseWindow (null, null);

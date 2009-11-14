@@ -35,17 +35,17 @@ namespace Banshee.I18n
     {
         private string domain;
         private string localedir;
-        
+
         public AssemblyCatalogAttribute (string domain, string localedir)
         {
             this.domain = domain;
             this.localedir = localedir;
         }
-        
+
         public string Domain {
             get { return domain; }
         }
-        
+
         public string LocaleDir {
             get { return localedir; }
         }

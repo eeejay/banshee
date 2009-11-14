@@ -1,4 +1,4 @@
-// 
+//
 // IPlaybackController.cs
 //
 // Author:

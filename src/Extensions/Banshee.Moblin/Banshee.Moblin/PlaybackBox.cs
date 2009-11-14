@@ -1,21 +1,21 @@
-// 
+//
 // PlaybackBox.cs
-//  
+//
 // Author:
 //   Aaron Bockover <abockover@novell.com>
-// 
+//
 // Copyright 2009 Novell, Inc.
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
 // in the Software without restriction, including without limitation the rights
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be included in
 // all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -39,11 +39,11 @@ namespace Banshee.Moblin
         public PlaybackBox ()
         {
             var action_service = ServiceManager.Get<InterfaceActionService> ();
-        
+
             PackStart (action_service.PlaybackActions["PreviousAction"].CreateToolItem (), false, false, 0);
             PackStart (action_service.PlaybackActions["PlayPauseAction"].CreateToolItem (), false, false, 0);
             PackStart (new NextButton (action_service), false, false, 0);
-            
+
             var seek_slider = new ConnectedSeekSlider ();
             seek_slider.Show ();
             PackStart (seek_slider, false, false, 0);

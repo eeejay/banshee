@@ -38,7 +38,7 @@ namespace Banshee.Sources
     [Interface("org.bansheeproject.Banshee.SourceManager")]
     public interface ISourceManager : IDBusExportable
     {
-        //event SourceEventHandler SourceUpdated; 
+        //event SourceEventHandler SourceUpdated;
         ISource ActiveSource { get; set; }
         ISource DefaultSource { get; }
         string [] Sources { get; }

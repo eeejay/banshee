@@ -36,7 +36,7 @@ using Mtp;
 
 using Banshee.Collection;
 using Banshee.Dap.Mtp;
-    
+
 namespace Banshee.Dap.Mtp
 {
     [TestFixture]

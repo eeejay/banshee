@@ -1,4 +1,4 @@
-// 
+//
 // UserJobTileHost.cs
 //
 // Author:
@@ -45,12 +45,12 @@ namespace Banshee.Gui.Widgets
         private AnimatedVBox box;
         private Dictionary<Job, UserJobTile> job_tiles = new Dictionary<Job, UserJobTile> ();
         private Dictionary<Job, DateTime> job_start_times = new Dictionary<Job, DateTime> ();
-        
+
         public UserJobTileHost () : base (0.0f, 0.0f, 1.0f, 1.0f)
         {
             Banshee.Base.ThreadAssist.AssertInMainThread ();
             LeftPadding = 4;
-            
+
             box = new AnimatedVBox ();
             box.StartPadding = 8;
             box.Spacing = 8;
@@ -74,12 +74,12 @@ namespace Banshee.Gui.Widgets
         }
 
         private void AddJob (Job job)
-        {                
-            lock (this) {    
+        {
+            lock (this) {
                 if (job == null || job.IsFinished) {
                     return;
                 }
-                
+
                 if ((job.DelayShow && job.Progress < 0.33) || !job.DelayShow) {
                     Banshee.Base.ThreadAssist.AssertInMainThread ();
                     UserJobTile tile = new UserJobTile (job);
@@ -90,7 +90,7 @@ namespace Banshee.Gui.Widgets
                 }
             }
         }
-        
+
         private void OnJobAdded (Job job)
         {
             if (job.IsBackground) {
@@ -109,7 +109,7 @@ namespace Banshee.Gui.Widgets
                 }
             });
         }
-        
+
         private void RemoveJob (Job job)
         {
             lock (this) {
@@ -122,7 +122,7 @@ namespace Banshee.Gui.Widgets
                 }
             }
         }
-        
+
         private void OnJobRemoved (Job job)
         {
             ThreadAssist.ProxyToMain (delegate {
@@ -138,7 +138,7 @@ namespace Banshee.Gui.Widgets
                             return;
                         }
                     }
-                    
+
                     RemoveJob (job);
                 }
             });

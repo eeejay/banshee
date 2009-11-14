@@ -40,7 +40,7 @@ namespace Hyena.Query
         Range,
         Term
     }
-    
+
     public class QueryToken
     {
         private TokenID id;

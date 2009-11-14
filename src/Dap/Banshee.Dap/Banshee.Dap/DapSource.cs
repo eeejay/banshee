@@ -56,23 +56,23 @@ namespace Banshee.Dap
         private DapInfoBar dap_info_bar;
         private Page page;
         // private DapPropertiesDisplay dap_properties_display;
-        
+
         private IDevice device;
         internal IDevice Device {
             get { return device; }
         }
-        
+
         private string addin_id;
         internal string AddinId {
             get { return addin_id; }
             set { addin_id = value; }
         }
-        
+
         private MediaGroupSource music_group_source;
         protected MediaGroupSource MusicGroupSource {
             get { return music_group_source; }
         }
-        
+
         private MediaGroupSource video_group_source;
         protected MediaGroupSource VideoGroupSource {
             get { return video_group_source; }
@@ -82,7 +82,7 @@ namespace Banshee.Dap
         protected MediaGroupSource PodcastGroupSource {
             get { return podcast_group_source; }
         }
-        
+
         protected DapSource ()
         {
         }
@@ -97,14 +97,14 @@ namespace Banshee.Dap
         {
             PurgeTemporaryPlaylists ();
             PurgeTracks ();
-            
+
             if (dap_info_bar != null) {
                 dap_info_bar.Destroy ();
                 dap_info_bar = null;
             }
-            
+
             Properties.Remove ("Nereid.SourceContents.FooterWidget");
-            
+
             /*Properties.Remove ("Nereid.SourceContents");
             dap_properties_display.Destroy ();
             dap_properties_display = null;*/
@@ -112,14 +112,14 @@ namespace Banshee.Dap
             if (sync != null)
                 sync.Dispose ();
         }
-        
+
         private void PurgeTemporaryPlaylists ()
         {
             ServiceManager.DbConnection.Execute (new HyenaSqliteCommand (@"
                 BEGIN TRANSACTION;
                     DELETE FROM CoreSmartPlaylistEntries WHERE SmartPlaylistID IN
                         (SELECT SmartPlaylistID FROM CoreSmartPlaylists WHERE PrimarySourceID = ?);
-                    DELETE FROM CoreSmartPlaylists WHERE PrimarySourceID = ?;   
+                    DELETE FROM CoreSmartPlaylists WHERE PrimarySourceID = ?;
                 COMMIT TRANSACTION",
                 DbId, DbId
             ));
@@ -128,12 +128,12 @@ namespace Banshee.Dap
                 BEGIN TRANSACTION;
                     DELETE FROM CorePlaylistEntries WHERE PlaylistID IN
                         (SELECT PlaylistID FROM CorePlaylists WHERE PrimarySourceID = ?);
-                    DELETE FROM CorePlaylists WHERE PrimarySourceID = ?;   
+                    DELETE FROM CorePlaylists WHERE PrimarySourceID = ?;
                 COMMIT TRANSACTION",
                 DbId, DbId
             ));
         }
-        
+
         internal void RaiseUpdated ()
         {
             OnUpdated ();
@@ -166,16 +166,16 @@ namespace Banshee.Dap
         protected override void Initialize ()
         {
             PurgeTemporaryPlaylists ();
-            
+
             base.Initialize ();
-            
+
             Expanded = true;
             Properties.SetStringList ("Icon.Name", GetIconNames ());
             Properties.Set<string> ("SourcePropertiesActionLabel", Catalog.GetString ("Device Properties"));
             Properties.Set<OpenPropertiesDelegate> ("SourceProperties.GuiHandler", delegate {
                 new DapPropertiesDialog (this).RunDialog ();
             });
-            
+
             Properties.Set<bool> ("Nereid.SourceContents.HeaderVisible", false);
             Properties.Set<System.Reflection.Assembly> ("ActiveSourceUIResource.Assembly", System.Reflection.Assembly.GetExecutingAssembly ());
             Properties.SetString ("ActiveSourceUIResource", "ActiveSourceUI.xml");
@@ -183,26 +183,26 @@ namespace Banshee.Dap
             sync = new DapSync (this);
             dap_info_bar = new DapInfoBar (this);
             Properties.Set<Gtk.Widget> ("Nereid.SourceContents.FooterWidget", dap_info_bar);
-            
+
             /*dap_properties_display = new DapPropertiesDisplay (this);
             Properties.Set<Banshee.Sources.Gui.ISourceContents> ("Nereid.SourceContents", dap_properties_display);*/
 
             if (String.IsNullOrEmpty (GenericName)) {
                 GenericName = Catalog.GetString ("Media Player");
             }
-            
+
             if (String.IsNullOrEmpty (Name)) {
                 Name = device.Name;
             }
 
             AddDapProperty (Catalog.GetString ("Product"), device.Product);
             AddDapProperty (Catalog.GetString ("Vendor"), device.Vendor);
-            
+
             if (acceptable_mimetypes == null) {
                 acceptable_mimetypes = HasMediaCapabilities ? MediaCapabilities.PlaybackMimeTypes : null;
                 acceptable_mimetypes = acceptable_mimetypes ?? new string [] { "taglib/mp3" };
             }
-            
+
             AddChildSource (music_group_source = new MusicGroupSource (this));
 
             if (SupportsVideo) {
@@ -225,7 +225,7 @@ namespace Banshee.Dap
             page = new Page ();
             Section main_section = new Section ();
             main_section.Order = -1;
-            
+
             space_for_data = CreateSchema<long> ("space_for_data", 0, "How much space, in bytes, to reserve for data on the device.", "");
             main_section.Add (space_for_data);
             page.Add (main_section);
@@ -234,12 +234,12 @@ namespace Banshee.Dap
                 page.Add (section);
             }
         }
-        
+
         // Force to zero so that count doesn't show up
         public override int Count {
             get { return 0; }
         }
-        
+
         public override bool HasProperties {
             get { return true; }
         }
@@ -261,14 +261,14 @@ namespace Banshee.Dap
         }
 
 #endregion
-        
-#region Track Management/Syncing   
- 
+
+#region Track Management/Syncing
+
         public void LoadDeviceContents ()
         {
             ThreadPool.QueueUserWorkItem (ThreadedLoadDeviceContents);
         }
-        
+
         private void ThreadedLoadDeviceContents (object state)
         {
             try {
@@ -324,13 +324,13 @@ namespace Banshee.Dap
                 }
             }
         }
-        
+
         protected abstract void AddTrackToDevice (DatabaseTrackInfo track, SafeUri fromUri);
 
         protected bool TrackNeedsTranscoding (TrackInfo track)
         {
             foreach (string mimetype in AcceptableMimeTypes) {
-                if (ServiceManager.MediaProfileManager.GetExtensionForMimeType (track.MimeType) == 
+                if (ServiceManager.MediaProfileManager.GetExtensionForMimeType (track.MimeType) ==
                     ServiceManager.MediaProfileManager.GetExtensionForMimeType (mimetype)) {
                     return false;
                 }
@@ -382,26 +382,26 @@ namespace Banshee.Dap
                 throw new ApplicationException (Catalog.GetString (
                     "File format conversion support is not available"));
             }
-            
+
             transcoder.Enqueue (track, PreferredConfiguration, OnTrackTranscoded, OnTrackTranscodeCancelled, OnTrackTranscodeError);
         }
-        
+
         private void OnTrackTranscoded (TrackInfo track, SafeUri outputUri)
         {
             AddTrackJob.Status = String.Format ("{0} - {1}", track.ArtistName, track.TrackTitle);
-            
+
             try {
                 AttemptToAddTrackToDevice ((DatabaseTrackInfo)track, outputUri);
             } catch (Exception e) {
                 Log.Exception (e);
             }
-            
+
             IncrementAddedTracks ();
         }
-        
+
         private void OnTrackTranscodeCancelled ()
         {
-            IncrementAddedTracks (); 
+            IncrementAddedTracks ();
         }
 
         private void OnTrackTranscodeError (TrackInfo track)
@@ -409,7 +409,7 @@ namespace Banshee.Dap
             ErrorSource.AddMessage (Catalog.GetString ("Error converting file"), track.Uri.ToString ());
             IncrementAddedTracks ();
         }
-        
+
 #endregion
 
 #region Device Properties
@@ -418,20 +418,20 @@ namespace Banshee.Dap
         {
             string vendor = device.Vendor;
             string product = device.Product;
-            
+
             vendor = vendor != null ? vendor.Trim () : null;
             product = product != null ? product.Trim () : null;
 
             if (!String.IsNullOrEmpty (vendor) && !String.IsNullOrEmpty (product)) {
-                return new string [] { 
-                    String.Format ("multimedia-player-{0}-{1}", vendor, product).Replace (' ', '-').ToLower (), 
+                return new string [] {
+                    String.Format ("multimedia-player-{0}-{1}", vendor, product).Replace (' ', '-').ToLower (),
                     FallbackIcon
                 };
             } else {
                 return new string [] { FallbackIcon };
             }
         }
-        
+
         public static string FallbackIcon {
             get { return "multimedia-player"; }
         }
@@ -458,17 +458,17 @@ namespace Banshee.Dap
                 if (preferred_config != null) {
                     return preferred_config;
                 }
-            
+
                 MediaProfileManager manager = ServiceManager.MediaProfileManager;
                 if (manager == null) {
                     return null;
                 }
-        
+
                 preferred_config = manager.GetActiveProfileConfiguration (UniqueId, acceptable_mimetypes);
                 return preferred_config;
             }
         }
-        
+
         internal protected virtual bool CanHandleDeviceCommand (DeviceCommand command)
         {
             return false;
@@ -479,24 +479,24 @@ namespace Banshee.Dap
             get { return acceptable_mimetypes; }
             protected set { acceptable_mimetypes = value; }
         }
-       
+
         public long BytesVideo {
             get { return VideoGroupSource == null ? 0 : VideoGroupSource.BytesUsed; }
         }
-        
+
         public long BytesMusic {
             get { return MusicGroupSource == null ? 0 : MusicGroupSource.BytesUsed; }
         }
-                    
+
         public long BytesData {
             get { return BytesUsed - BytesVideo - BytesMusic; }
         }
-                    
+
         public long BytesReserved {
             get { return space_for_data.Get (); }
             set { space_for_data.Set (value); }
         }
-                    
+
         public override long BytesAvailable {
             get { return BytesCapacity - BytesUsed - Math.Max (0, BytesReserved - BytesData); }
         }
@@ -516,9 +516,9 @@ namespace Banshee.Dap
         public override bool PlaylistsReadOnly {
             get { return Sync.Enabled || IsReadOnly; }
         }
-            
+
         private Banshee.Configuration.SchemaEntry<long> space_for_data;
 #endregion
-        
+
     }
 }

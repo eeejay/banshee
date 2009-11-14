@@ -71,14 +71,14 @@ namespace Banshee.PlayQueue
                     Catalog.GetString ("Remove all tracks from the play queue"),
                     OnClearPlayQueue)
             );
-            
+
             Add (new ToggleActionEntry [] {
                 new ToggleActionEntry ("ClearPlayQueueOnQuitAction", null,
-                    Catalog.GetString ("Clear on Quit"), null, 
-                    Catalog.GetString ("Clear the play queue when quitting"), 
+                    Catalog.GetString ("Clear on Quit"), null,
+                    Catalog.GetString ("Clear the play queue when quitting"),
                     OnClearPlayQueueOnQuit, PlayQueueSource.ClearOnQuitSchema.Get ())
             });
-            
+
             AddUiFromFile ("GlobalUI.xml");
 
             playqueue.Updated += OnUpdated;

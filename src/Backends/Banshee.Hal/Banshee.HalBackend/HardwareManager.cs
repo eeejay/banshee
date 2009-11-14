@@ -40,7 +40,7 @@ namespace Banshee.HalBackend
 
         public event DeviceAddedHandler DeviceAdded;
         public event DeviceRemovedHandler DeviceRemoved;
-        
+
         public HardwareManager ()
         {
             manager = new Hal.Manager ();
@@ -49,7 +49,7 @@ namespace Banshee.HalBackend
 
             Volume.HardwareManager = this;
         }
-        
+
         public void Dispose ()
         {
         }
@@ -64,7 +64,7 @@ namespace Banshee.HalBackend
                 }
             }
         }
-        
+
         private IEnumerable<T> GetAllBlockDevices<T> () where T : IBlockDevice
         {
             foreach (Hal.Device hal_device in manager.FindDeviceByCapabilityAsDevice ("block")) {
@@ -74,17 +74,17 @@ namespace Banshee.HalBackend
                 }
             }
         }
-        
+
         public IEnumerable<IBlockDevice> GetAllBlockDevices ()
         {
             return GetAllBlockDevices<IBlockDevice> ();
         }
-        
+
         public IEnumerable<ICdromDevice> GetAllCdromDevices ()
         {
             return GetAllBlockDevices<ICdromDevice> ();
         }
-        
+
         public IEnumerable<IDiskDevice> GetAllDiskDevices ()
         {
             return GetAllBlockDevices<IDiskDevice> ();
@@ -104,7 +104,7 @@ namespace Banshee.HalBackend
             if (!hal_device.QueryCapability ("block") && !hal_device.QueryCapability ("portable_audio_player")) {
                 return null;
             }
-            
+
             IDevice device = BlockDevice.Resolve<IBlockDevice> (manager, hal_device);
             if (device == null) {
                 device = Volume.Resolve (null, manager, hal_device);
@@ -112,7 +112,7 @@ namespace Banshee.HalBackend
                     device = new Device (manager, hal_device);
                 }
             }
-            
+
             return device;
         }
 
@@ -127,7 +127,7 @@ namespace Banshee.HalBackend
         {
             OnDeviceRemoved (args.Udi);
         }
-        
+
         private void OnDeviceAdded (IDevice device)
         {
             DeviceAddedHandler handler = DeviceAdded;
@@ -135,7 +135,7 @@ namespace Banshee.HalBackend
                 handler (this, new DeviceAddedArgs (device));
             }
         }
-        
+
         internal void OnDeviceRemoved (string uuid)
         {
             DeviceRemovedHandler handler = DeviceRemoved;

@@ -48,7 +48,7 @@ namespace Migo.Syndication
             get { return cache_model_id; }
             set { cache_model_id = value; }
         }
-        
+
         public abstract long DbId { get; protected set;}
     }
 }

@@ -1,4 +1,4 @@
-// 
+//
 // TestUserJob.cs
 //
 // Author:
@@ -38,32 +38,32 @@ namespace Banshee.ServiceStack
         private uint main_timeout_id = 0;
         private uint final_timeout_id = 0;
         private Random rand = new Random ();
-        
+
         private string [] icon_names_go = new string [] {
             "go-next", "go-down", "go-previous", "go-up"
         };
-        
+
         private string [] icon_names_rand = new string [] {
             "face-angel", "face-crying", "face-devilish", "face-glasses",
             "face-grin", "face-kiss", "face-monkey",  "face-plain",
             "face-sad", "face-smile-big", "face-smile", "face-surprise",
             "face-wink"
         };
-        
+
         public TestUserJob () : base ("UserJob Test Job", "Waiting for 7.5 seconds...")
         {
             CancelRequested += OnCancelRequested;
             DelayShow = true;
             Register ();
-            
+
             IconNames = new string [] { "media-eject" };
 
-            initial_timeout_id = Application.RunTimeout (7500, delegate {        
+            initial_timeout_id = Application.RunTimeout (7500, delegate {
                 Title = "New Title for Test Job";
-                
+
                 main_timeout_id = Application.RunTimeout (50, delegate {
                     Progress += 0.001;
-                    
+
                     if (Progress >= 0.45 && Progress <= 0.55) {
                         Status = null;
                     } else {
@@ -75,7 +75,7 @@ namespace Banshee.ServiceStack
                     } else if (Title == null) {
                         Title = "The final Title";
                     }
-                    
+
                     if (Progress >= 0.25 && Progress <= 0.35 && icon_timeout_id == 0) {
                         icon_timeout_id = Application.RunTimeout (100, delegate {
                             icon_index = (icon_index + 1) % icon_names_go.Length;
@@ -87,7 +87,7 @@ namespace Banshee.ServiceStack
                             return false;
                         });
                     }
-                    
+
                     if (Progress >= 0.45 && Progress <= 0.70 && icon_timeout_id == 0) {
                         icon_timeout_id = Application.RunTimeout (250, delegate {
                             icon_index = rand.Next (0, icon_names_rand.Length - 1);
@@ -99,9 +99,9 @@ namespace Banshee.ServiceStack
                             return false;
                         });
                     }
-                    
-                    CanCancel = (Progress >= 0.15 && Progress <= 0.30) || (Progress >= 0.65 && Progress <= 0.85); 
-                    
+
+                    CanCancel = (Progress >= 0.15 && Progress <= 0.30) || (Progress >= 0.65 && Progress <= 0.85);
+
                     if (Progress == 1.0) {
                         Progress = 0.0;
                         Title = "Bouncing";
@@ -110,43 +110,43 @@ namespace Banshee.ServiceStack
                             Finish ();
                             return false;
                         });
-                        
+
                         return false;
                     }
-                    
+
                     return true;
                 });
-                
+
                 return false;
             });
         }
-        
+
         private void OnCancelRequested (object o, EventArgs args)
         {
             if (initial_timeout_id > 0) {
                 Application.IdleTimeoutRemove (initial_timeout_id);
             }
-            
+
             if (main_timeout_id > 0) {
                 Application.IdleTimeoutRemove (main_timeout_id);
             }
-            
+
             if (icon_timeout_id > 0) {
                 Application.IdleTimeoutRemove (icon_timeout_id);
             }
-            
+
             if (final_timeout_id > 0) {
                 Application.IdleTimeoutRemove (final_timeout_id);
             }
-            
+
             OnFinished ();
         }
 
         public static void SpawnLikeFish (int count)
         {
             int i = 0;
-            Application.RunTimeout (2000, delegate { 
-                new TestUserJob (); 
+            Application.RunTimeout (2000, delegate {
+                new TestUserJob ();
                 return ++i < count;
             });
         }

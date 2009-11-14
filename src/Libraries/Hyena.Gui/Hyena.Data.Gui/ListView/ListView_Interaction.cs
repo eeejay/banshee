@@ -69,12 +69,12 @@ namespace Hyena.Data.Gui
         public Adjustment Vadjustment {
             get { return vadjustment; }
         }
-        
+
         private Adjustment hadjustment;
         public Adjustment Hadjustment {
             get { return hadjustment; }
         }
-        
+
         private SelectionProxy selection_proxy = new SelectionProxy ();
         public SelectionProxy SelectionProxy {
             get { return selection_proxy; }
@@ -83,17 +83,17 @@ namespace Hyena.Data.Gui
         public Selection Selection {
             get { return model.Selection; }
         }
-        
+
         private int HadjustmentValue {
             get { return hadjustment == null ? 0 : (int)hadjustment.Value; }
         }
-        
+
         private int VadjustmentValue {
             get { return vadjustment == null ? 0 : (int)vadjustment.Value; }
         }
-        
+
         public event RowActivatedHandler<T> RowActivated;
-        
+
 #region Row/Selection, Keyboard/Mouse Interaction
 
         private bool KeyboardScroll (Gdk.ModifierType modifier, int relative_row, bool align_y)
@@ -107,7 +107,7 @@ namespace Hyena.Data.Gui
                 if (Selection.FocusedIndex == -1) {
                     return false;
                 }
-                
+
                 row_limit = 0;
             } else {
                 row_limit = Model.Count - 1;
@@ -116,7 +116,7 @@ namespace Hyena.Data.Gui
             if (Selection.FocusedIndex == row_limit) {
                 return true;
             }
-            
+
             int row_index = Math.Min (Model.Count - 1, Math.Max (0, Selection.FocusedIndex + relative_row));
 
             if (Selection != null) {
@@ -139,7 +139,7 @@ namespace Hyena.Data.Gui
                     Selection.Select (row_index);
                 }
             }
-            
+
             // Scroll if needed
             double y_at_row = GetYAtRow (row_index);
             if (align_y) {
@@ -156,7 +156,7 @@ namespace Hyena.Data.Gui
             InvalidateList ();
             return true;
         }
-        
+
         protected override bool OnKeyPressEvent (Gdk.EventKey press)
         {
             bool handled = false;
@@ -277,10 +277,10 @@ namespace Hyena.Data.Gui
             if (handled) {
                 return true;
             }
-            
+
             return base.OnKeyPressEvent (press);
         }
-        
+
         protected bool ActivateSelection ()
         {
             if (Selection != null && Selection.FocusedIndex != -1) {
@@ -291,32 +291,32 @@ namespace Hyena.Data.Gui
             }
             return false;
         }
-        
-#region Cell Event Proxy        
-        
+
+#region Cell Event Proxy
+
         private IInteractiveCell last_icell;
         private Gdk.Rectangle last_icell_area = Gdk.Rectangle.Zero;
-        
+
         private void ProxyEventToCell (Gdk.Event evnt, bool press)
         {
             IInteractiveCell icell;
             Gdk.Rectangle icell_area;
             bool redraw = ProxyEventToCell (evnt, press, out icell, out icell_area);
-            
+
             int xoffset = HadjustmentValue;
             int yoffset = VadjustmentValue;
-            
+
             if (last_icell_area != icell_area) {
                 if (last_icell != null && last_icell.PointerLeaveEvent ()) {
-                    QueueDrawArea (last_icell_area.X - xoffset, last_icell_area.Y - yoffset, 
+                    QueueDrawArea (last_icell_area.X - xoffset, last_icell_area.Y - yoffset,
                         last_icell_area.Width, last_icell_area.Height);
                 }
                 last_icell = icell;
                 last_icell_area = icell_area;
             }
-            
+
             if (redraw) {
-                QueueDrawArea (icell_area.X - xoffset, icell_area.Y - yoffset, 
+                QueueDrawArea (icell_area.X - xoffset, icell_area.Y - yoffset,
                     icell_area.Width, icell_area.Height);
             }
         }
@@ -329,10 +329,10 @@ namespace Hyena.Data.Gui
             int evnt_x, evnt_y;
             int x, y, row_index;
             x = y = row_index = 0;
-            
+
             Gdk.EventButton evnt_button = evnt as Gdk.EventButton;
             Gdk.EventMotion evnt_motion = evnt as Gdk.EventMotion;
-            
+
             if (evnt_motion != null) {
                 evnt_x = (int)evnt_motion.X;
                 evnt_y = (int)evnt_motion.Y;
@@ -391,27 +391,27 @@ namespace Hyena.Data.Gui
             if (row_index < 0 || row_index >= Model.Count) {
                 return false;
             }
-            
+
             column = GetColumnAt (x);
             if (column == null) {
                 return false;
             }
-            
+
             ColumnCell cell = column.GetCell (0);
             icell = cell as G;
             if (icell == null) {
                 return false;
             }
-            
+
             // Bind the row to the cell
             cell.BindListItem (model[row_index]);
             return true;
         }
 
         #pragma warning restore 0169
-        
+
 #endregion
-        
+
 #region OnButtonPress
 
         protected override bool OnButtonPressEvent (Gdk.EventButton evnt)
@@ -426,12 +426,12 @@ namespace Hyena.Data.Gui
             }
             return true;
         }
-        
+
         private bool OnHeaderButtonPressEvent (Gdk.EventButton evnt)
         {
             int x = (int)evnt.X - header_interaction_alloc.X;
             int y = (int)evnt.Y - header_interaction_alloc.Y;
-            
+
             if (evnt.Button == 3 && ColumnController.EnableColumnMenu) {
                 Column menu_column = GetColumnAt (x);
                 if (menu_column != null) {
@@ -441,7 +441,7 @@ namespace Hyena.Data.Gui
             } else if (evnt.Button != 1) {
                 return true;
             }
-            
+
             Gtk.Drag.SourceUnset (this);
 
             Column column = GetColumnForResizeHandle (x);
@@ -457,29 +457,29 @@ namespace Hyena.Data.Gui
                     pressed_column_x_start_hadjustment = HadjustmentValue;
                 }
             }
-            
+
             return true;
         }
-        
+
         private bool OnListButtonPressEvent (Gdk.EventButton evnt)
         {
             if (Model == null) {
                 return true;
             }
-            
+
             int y = (int)evnt.Y - list_interaction_alloc.Y;
-            
+
             GrabFocus ();
-            
+
             int row_index = GetRowAtY (y);
 
             if (row_index < 0 || row_index >= Model.Count) {
                 Gtk.Drag.SourceUnset (this);
                 return true;
             }
-            
+
             ProxyEventToCell (evnt, true);
-            
+
             object item = model[row_index];
             if (item == null) {
                 return true;
@@ -527,20 +527,20 @@ namespace Hyena.Data.Gui
                     OnPopupMenu ();
                 }
             }
-            
+
             InvalidateList ();
             return true;
         }
-        
+
 #endregion
 
 #region OnButtonRelease
-        
+
         protected override bool OnButtonReleaseEvent (Gdk.EventButton evnt)
         {
             OnDragSourceSet ();
             StopDragScroll ();
-            
+
             if (resizing_column_index >= 0) {
                 pressed_column_index = -1;
                 resizing_column_index = -1;
@@ -553,7 +553,7 @@ namespace Hyena.Data.Gui
                 pressed_column_drag_started = false;
                 return true;
             }
-            
+
             if (header_visible && header_interaction_alloc.Contains ((int)evnt.X, (int)evnt.Y)) {
                 return OnHeaderButtonRelease (evnt);
             } else if (list_interaction_alloc.Contains ((int)evnt.X, (int)evnt.Y) && model != null &&
@@ -572,24 +572,24 @@ namespace Hyena.Data.Gui
                 ActiveColumn = pressed_column_index;
                 if (column != null)
                     OnColumnLeftClicked (column);
-                
+
                 pressed_column_index = -1;
                 return true;
             } else {
                 return false;
             }
         }
-        
+
         private bool OnListButtonRelease (Gdk.EventButton evnt)
         {
             if (Model == null) {
                 return true;
             }
-        
+
             int y = (int)evnt.Y - list_interaction_alloc.Y;
-            
+
             GrabFocus ();
-            
+
             int row_index = GetRowAtY (y);
 
             if (row_index >= Model.Count) {
@@ -600,81 +600,81 @@ namespace Hyena.Data.Gui
             if (item == null) {
                 return true;
             }
-            
+
             //if (Selection != null && Selection.Contains (row_index) && Selection.Count > 1) {
             if (Selection != null && evnt.Button == 1 && Hyena.Gui.GtkUtilities.NoImportantModifiersAreSet ()) {
                 if (Selection.Count > 1) {
                     Selection.Clear (false);
                     Selection.Select (row_index);
                     FocusRow (row_index);
-                    InvalidateList ();    
+                    InvalidateList ();
                 }
             }
-            
+
             return true;
         }
-        
+
 #endregion
-        
+
         protected override bool OnMotionNotifyEvent (Gdk.EventMotion evnt)
         {
             int x = (int)evnt.X - header_interaction_alloc.X;
-            
-            if (pressed_column_index >= 0 && !pressed_column_is_dragging && 
+
+            if (pressed_column_index >= 0 && !pressed_column_is_dragging &&
                 Gtk.Drag.CheckThreshold (this, pressed_column_x_start, 0, x, 0)) {
                 pressed_column_is_dragging = true;
                 pressed_column_drag_started = true;
                 InvalidateHeader ();
                 InvalidateList ();
             }
-            
+
             pressed_column_x = x;
-            
+
             if (OnMotionNotifyEvent (x)) {
                 return true;
             }
 
-            GdkWindow.Cursor = header_interaction_alloc.Contains ((int)evnt.X, (int)evnt.Y) && 
+            GdkWindow.Cursor = header_interaction_alloc.Contains ((int)evnt.X, (int)evnt.Y) &&
                 (resizing_column_index >= 0 || GetColumnForResizeHandle (x) != null)
-                ? resize_x_cursor 
+                ? resize_x_cursor
                 : null;
-            
+
             if (resizing_column_index >= 0) {
                 ResizeColumn (x);
             }
-            
+
             ProxyEventToCell (evnt, false);
-            
+
             return true;
         }
-        
+
         private bool OnMotionNotifyEvent (int x)
         {
             if (!pressed_column_is_dragging) {
                 return false;
             }
-            
+
             OnDragScroll (OnDragHScrollTimeout, header_interaction_alloc.Width * 0.1, header_interaction_alloc.Width, x);
-            
+
             GdkWindow.Cursor = drag_cursor;
-            
+
             Column swap_column = GetColumnAt (x);
-            
+
             if (swap_column != null) {
                 CachedColumn swap_column_c = GetCachedColumnForColumn (swap_column);
                 bool reorder = false;
-                
+
                 if (swap_column_c.Index < pressed_column_index) {
                     // Moving from right to left
                     reorder = pressed_column_x_drag <= swap_column_c.X1 + swap_column_c.Width / 2;
                 } else if (swap_column_c.Index > pressed_column_index) {
                     if (column_cache.Length > pressed_column_index && pressed_column_index >= 0) {
                         // Moving from left to right
-                        reorder = pressed_column_x_drag + column_cache[pressed_column_index].Width >= 
+                        reorder = pressed_column_x_drag + column_cache[pressed_column_index].Width >=
                             swap_column_c.X1 + swap_column_c.Width / 2;
                     }
                 }
-                
+
                 if (reorder) {
                     int actual_pressed_index = ColumnController.IndexOf (column_cache[pressed_column_index].Column);
                     int actual_swap_index = ColumnController.IndexOf (swap_column_c.Column);
@@ -683,20 +683,20 @@ namespace Hyena.Data.Gui
                     RegenerateColumnCache ();
                 }
             }
-            
+
             pressed_column_x_drag = x - pressed_column_x_offset - (pressed_column_x_start_hadjustment - HadjustmentValue);
-            
+
             QueueDraw ();
             return true;
         }
-        
+
         private bool OnDragHScrollTimeout ()
         {
             ScrollTo (hadjustment, HadjustmentValue + (drag_scroll_velocity * drag_scroll_velocity_max));
             OnMotionNotifyEvent (pressed_column_x);
             return true;
         }
-        
+
         protected override bool OnLeaveNotifyEvent (Gdk.EventCrossing evnt)
         {
             if (evnt.Mode == Gdk.CrossingMode.Normal) {
@@ -705,7 +705,7 @@ namespace Hyena.Data.Gui
             }
             return base.OnLeaveNotifyEvent (evnt);
         }
-        
+
         protected override bool OnFocused (Gtk.DirectionType directionType)
         {
             if (!HeaderVisible)
@@ -729,7 +729,7 @@ namespace Hyena.Data.Gui
                 return base.OnFocused (directionType);
             }
         }
-        
+
         protected virtual void OnRowActivated ()
         {
             if (Selection.FocusedIndex != -1) {
@@ -751,17 +751,17 @@ namespace Hyena.Data.Gui
             }
             return false;
         }
-        
+
         protected int GetRowAtY (int y)
         {
             if (y < 0) {
                 return -1;
             }
-            
+
             int page_offset = VadjustmentValue % RowHeight;
             int first_row = VadjustmentValue / RowHeight;
             int row_offset = (y + page_offset) / RowHeight;
-            
+
             return first_row + row_offset;
         }
 
@@ -779,22 +779,22 @@ namespace Hyena.Data.Gui
 #endregion
 
 #region Adjustments & Scrolling
-        
+
         private void UpdateAdjustments ()
         {
             UpdateAdjustments (null, null);
         }
-        
+
         private void UpdateAdjustments (Adjustment hadj, Adjustment vadj)
         {
             if (hadj != null) {
                 hadjustment = hadj;
             }
-            
+
             if (vadj != null) {
                 vadjustment = vadj;
             }
-            
+
             if (hadjustment != null) {
                 hadjustment.Upper = header_width;
                 hadjustment.StepIncrement = 10.0;
@@ -802,7 +802,7 @@ namespace Hyena.Data.Gui
                     hadjustment.Value = hadjustment.Upper - hadjustment.PageSize;
                 }
             }
-            
+
             if (vadjustment != null && model != null) {
                 vadjustment.Upper = (RowHeight * (model.Count));
                 vadjustment.StepIncrement = RowHeight;
@@ -810,7 +810,7 @@ namespace Hyena.Data.Gui
                     vadjustment.Value = vadjustment.Upper - vadjustment.PageSize;
                 }
             }
-            
+
             if (hadjustment != null) {
                 hadjustment.Change ();
             }
@@ -819,23 +819,23 @@ namespace Hyena.Data.Gui
                 vadjustment.Change ();
             }
         }
-        
+
         private void OnHadjustmentChanged (object o, EventArgs args)
         {
             InvalidateHeader ();
             InvalidateList ();
         }
-        
+
         private void OnVadjustmentChanged (object o, EventArgs args)
         {
             InvalidateList ();
         }
-        
+
         public void ScrollTo (double val)
         {
             ScrollTo (vadjustment, val);
         }
-        
+
         private void ScrollTo (Adjustment adjustment, double val)
         {
             if (adjustment != null) {
@@ -882,14 +882,14 @@ namespace Hyena.Data.Gui
             if (hadj == null || vadj == null) {
                 return;
             }
-            
+
             hadj.ValueChanged += OnHadjustmentChanged;
             vadj.ValueChanged += OnVadjustmentChanged;
-            
+
             UpdateAdjustments (hadj, vadj);
         }
 
 #endregion
-        
+
     }
 }

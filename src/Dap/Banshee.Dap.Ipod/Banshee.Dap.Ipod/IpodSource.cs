@@ -54,28 +54,28 @@ namespace Banshee.Dap.Ipod
         internal PodSleuthDevice IpodDevice {
             get { return ipod_device; }
         }
-        
+
         private Dictionary<int, IpodTrackInfo> tracks_map = new Dictionary<int, IpodTrackInfo> (); // FIXME: EPIC FAIL
         private bool database_loaded;
-        
+
         private string name_path;
         internal string NamePath {
             get { return name_path; }
         }
-        
+
         private bool database_supported;
         internal bool DatabaseSupported {
             get { return database_supported; }
         }
-        
+
         private UnsupportedDatabaseView unsupported_view;
-        
+
 #region Device Setup/Dispose
-        
+
         public override void DeviceInitialize (IDevice device)
         {
             base.DeviceInitialize (device);
-            
+
             ipod_device = device as PodSleuthDevice;
             if (ipod_device == null) {
                 throw new InvalidDeviceException ();
@@ -129,10 +129,10 @@ namespace Banshee.Dap.Ipod
             if (ipod_device.CanEject) {
                 ipod_device.Eject ();
             }
-            
+
             Dispose ();
         }
-        
+
         protected override bool CanHandleDeviceCommand (DeviceCommand command)
         {
             try {
@@ -142,11 +142,11 @@ namespace Banshee.Dap.Ipod
                 return false;
             }
         }
-        
+
         protected override IDeviceMediaCapabilities MediaCapabilities {
             get { return ipod_device.Parent.MediaCapabilities ?? base.MediaCapabilities; }
         }
-        
+
 #endregion
 
 #region Database Loading
@@ -162,9 +162,9 @@ namespace Banshee.Dap.Ipod
         private void LoadIpod ()
         {
             database_supported = false;
-            
+
             try {
-                if (File.Exists (ipod_device.TrackDatabasePath)) { 
+                if (File.Exists (ipod_device.TrackDatabasePath)) {
                     ipod_device.LoadTrackDatabase (false);
                 } else {
                     int count = CountMusicFiles ();
@@ -178,7 +178,7 @@ namespace Banshee.Dap.Ipod
             } catch (DatabaseReadException e) {
                 Log.Exception ("Could not read iPod database", e);
                 ipod_device.LoadTrackDatabase (true);
-                
+
                 ThreadAssist.ProxyToMain (delegate {
                     DestroyUnsupportedView ();
                     unsupported_view = new UnsupportedDatabaseView (this);
@@ -188,39 +188,39 @@ namespace Banshee.Dap.Ipod
             } catch (Exception e) {
                 Log.Exception (e);
             }
-            
+
             database_loaded = true;
 
             Name = GetDeviceName ();
         }
-        
+
         private int CountMusicFiles ()
         {
             try {
                 int file_count = 0;
-                
+
                 DirectoryInfo m_dir = new DirectoryInfo (Path.Combine (ipod_device.ControlPath, "Music"));
                 foreach (DirectoryInfo f_dir in m_dir.GetDirectories ()) {
                     file_count += f_dir.GetFiles().Length;
                 }
-                
+
                 return file_count;
             } catch {
                 return 0;
             }
         }
-        
+
         private void LoadFromDevice (bool refresh)
         {
             // bool previous_database_supported = database_supported;
-            
+
             if (refresh) {
                 ipod_device.TrackDatabase.Reload ();
             }
-            
+
             tracks_map.Clear ();
 
-            if (database_supported || (ipod_device.HasTrackDatabase && 
+            if (database_supported || (ipod_device.HasTrackDatabase &&
                 ipod_device.ModelInfo.DeviceClass == "shuffle")) {
                 foreach (Track ipod_track in ipod_device.TrackDatabase.Tracks) {
                     try {
@@ -251,22 +251,22 @@ namespace Banshee.Dap.Ipod
                     AddChildSource (pl_src);
                 }
             }
-            
+
             /*else {
                 BuildDatabaseUnsupportedWidget ();
             }*/
-            
+
             /*if(previous_database_supported != database_supported) {
                 OnPropertiesChanged();
             }*/
         }
-        
+
         private void OnRebuildDatabaseRefresh (object o, EventArgs args)
         {
             ServiceManager.SourceManager.SetActiveSource (MusicGroupSource);
             base.LoadDeviceContents ();
         }
-        
+
         private void DestroyUnsupportedView ()
         {
             if (unsupported_view != null) {
@@ -275,7 +275,7 @@ namespace Banshee.Dap.Ipod
                 unsupported_view = null;
             }
         }
-        
+
 #endregion
 
 #region Source Cosmetics
@@ -290,23 +290,23 @@ namespace Banshee.Dap.Ipod
             string [] names = new string[4];
             string prefix = "multimedia-player-";
             string shell_color = ipod_device.ModelInfo.ShellColor;
-            
+
             names[0] = ipod_device.ModelInfo.IconName;
             names[2] = "ipod-standard-color";
             names[3] = "multimedia-player";
-            
+
             switch (ipod_device.ModelInfo.DeviceClass) {
-                case "grayscale": 
+                case "grayscale":
                     names[1] = "ipod-standard-monochrome";
                     break;
-                case "color": 
-                    names[1] = "ipod-standard-color"; 
+                case "color":
+                    names[1] = "ipod-standard-color";
                     break;
-                case "mini": 
+                case "mini":
                     names[1] = String.Format ("ipod-mini-{0}", shell_color);
                     names[2] = "ipod-mini-silver";
                     break;
-                case "shuffle": 
+                case "shuffle":
                     names[1] = String.Format ("ipod-shuffle-{0}", shell_color);
                     names[2] = "ipod-shuffle";
                     break;
@@ -325,25 +325,25 @@ namespace Banshee.Dap.Ipod
                 default:
                     break;
             }
-            
+
             names[1] = names[1] ?? names[2];
             names[1] = prefix + names[1];
             names[2] = prefix + names[2];
-            
+
             return names;
         }
-        
+
         public override void Rename (string name)
         {
             if (!CanRename) {
                 return;
             }
-        
+
             try {
                 if (name_path != null) {
                     Directory.CreateDirectory (Path.GetDirectoryName (name_path));
-                
-                    using (StreamWriter writer = new StreamWriter (File.Open (name_path, FileMode.Create), 
+
+                    using (StreamWriter writer = new StreamWriter (File.Open (name_path, FileMode.Create),
                         System.Text.Encoding.Unicode)) {
                         writer.Write (name);
                     }
@@ -351,11 +351,11 @@ namespace Banshee.Dap.Ipod
             } catch (Exception e) {
                 Log.Exception (e);
             }
-            
+
             ipod_device.Name = name;
             base.Rename (name);
         }
-        
+
         private string GetDeviceName ()
         {
             string name = null;
@@ -364,11 +364,11 @@ namespace Banshee.Dap.Ipod
                     name = reader.ReadLine ();
                 }
             }
-            
+
             if (String.IsNullOrEmpty (name) && database_loaded && database_supported) {
                 name = ipod_device.Name;
             }
-                
+
             if (!String.IsNullOrEmpty (name)) {
                 return name;
             } else if (ipod_device.PropertyExists ("volume.label")) {
@@ -378,22 +378,22 @@ namespace Banshee.Dap.Ipod
             } else {
                 name = ((IDevice)ipod_device).Name ?? "iPod";
             }
-            
+
             return name;
         }
-        
+
         public override bool CanRename {
             get { return !(IsAdding || IsDeleting || IsReadOnly); }
         }
-        
+
         public override long BytesUsed {
             get { return (long)ipod_device.VolumeInfo.SpaceUsed; }
         }
-        
+
         public override long BytesCapacity {
             get { return (long)ipod_device.VolumeInfo.Size; }
         }
-        
+
 #endregion
 
 #region Syncing
@@ -413,10 +413,10 @@ namespace Banshee.Dap.Ipod
             }
             base.OnTracksDeleted ();
         }
-        
+
         private Queue<IpodTrackInfo> tracks_to_add = new Queue<IpodTrackInfo> ();
         private Queue<IpodTrackInfo> tracks_to_remove = new Queue<IpodTrackInfo> ();
-        
+
         private uint sync_timeout_id = 0;
         private object sync_timeout_mutex = new object ();
         private object sync_mutex = new object ();
@@ -427,7 +427,7 @@ namespace Banshee.Dap.Ipod
         public override bool IsReadOnly {
             get { return ipod_device.IsReadOnly || !database_supported; }
         }
-        
+
         public override void Import ()
         {
             Banshee.ServiceStack.ServiceManager.Get<LibraryImportManager> ().Enqueue (Path.Combine (ipod_device.ControlPath, "Music"));
@@ -444,28 +444,28 @@ namespace Banshee.Dap.Ipod
                 if (!tracks_map.ContainsKey (track.TrackId)) {
                     return true;
                 }
-                
+
                 IpodTrackInfo ipod_track = tracks_map[track.TrackId];
                 if (ipod_track != null) {
                     tracks_to_remove.Enqueue (ipod_track);
                 }
-                
+
                 return true;
             }
         }
-        
+
         protected override void AddTrackToDevice (DatabaseTrackInfo track, SafeUri fromUri)
         {
             lock (sync_mutex) {
                 if (track.PrimarySourceId == DbId) {
                     return;
                 }
-                
+
                 IpodTrackInfo ipod_track = new IpodTrackInfo (track);
                 ipod_track.Uri = fromUri;
                 ipod_track.PrimarySource = this;
                 ipod_track.Save (false);
-            
+
                 tracks_to_add.Enqueue (ipod_track);
             }
         }
@@ -484,11 +484,11 @@ namespace Banshee.Dap.Ipod
                 if (sync_timeout_id > 0) {
                     Application.IdleTimeoutRemove (sync_timeout_id);
                 }
-                
+
                 sync_timeout_id = Application.RunTimeout (150, PerformSync);
             }
         }
-        
+
         private void CancelSyncThread ()
         {
             Thread thread = sync_thread;
@@ -503,30 +503,30 @@ namespace Banshee.Dap.Ipod
                 thread.Join ();
             }
         }
-        
+
         private bool PerformSync ()
         {
             lock (sync_mutex) {
                 if (sync_thread == null) {
                     sync_thread_wait = new AutoResetEvent (false);
-                
+
                     sync_thread = new Thread (new ThreadStart (PerformSyncThread));
                     sync_thread.Name = "iPod Sync Thread";
                     sync_thread.IsBackground = false;
                     sync_thread.Priority = ThreadPriority.Lowest;
                     sync_thread.Start ();
                 }
-                
+
                 sync_thread_wait.Set ();
-                
+
                 lock (sync_timeout_mutex) {
                     sync_timeout_id = 0;
                 }
-                
+
                 return false;
             }
         }
-        
+
         private void PerformSyncThread ()
         {
             try {
@@ -535,10 +535,10 @@ namespace Banshee.Dap.Ipod
                     if (sync_thread_dispose) {
                         break;
                     }
-                    
+
                     PerformSyncThreadCycle ();
                 }
-                
+
                 lock (sync_mutex) {
                     sync_thread_dispose = false;
                     sync_thread_wait.Close ();
@@ -549,7 +549,7 @@ namespace Banshee.Dap.Ipod
                 Log.Exception (e);
             }
         }
-        
+
         private void PerformSyncThreadCycle ()
         {
             while (tracks_to_add.Count > 0) {
@@ -557,7 +557,7 @@ namespace Banshee.Dap.Ipod
                 lock (sync_mutex) {
                     track = tracks_to_add.Dequeue ();
                 }
-                
+
                 try {
                     track.CommitToIpod (ipod_device);
                     tracks_map[track.TrackId] = track;
@@ -567,17 +567,17 @@ namespace Banshee.Dap.Ipod
             }
 
             // TODO sync updated metadata to changed tracks
-            
+
             while (tracks_to_remove.Count > 0) {
                 IpodTrackInfo track = null;
                 lock (sync_mutex) {
                     track = tracks_to_remove.Dequeue ();
                 }
-                
+
                 if (tracks_map.ContainsKey (track.TrackId)) {
                     tracks_map.Remove (track.TrackId);
                 }
-                
+
                 try {
                     if (track.IpodTrack != null) {
                         ipod_device.TrackDatabase.RemoveTrack (track.IpodTrack);
@@ -595,7 +595,7 @@ namespace Banshee.Dap.Ipod
                 }
             }
             device_playlists.Clear ();
-            
+
             if (SupportsPlaylists) {
                 // Add playlists from Banshee to the device
                 foreach (Source child in Children) {
@@ -611,7 +611,7 @@ namespace Banshee.Dap.Ipod
                     }
                 }
             }
-    
+
             try {
                 ipod_device.TrackDatabase.SaveStarted += OnIpodDatabaseSaveStarted;
                 ipod_device.TrackDatabase.SaveEnded += OnIpodDatabaseSaveEnded;
@@ -629,21 +629,21 @@ namespace Banshee.Dap.Ipod
         }
 
         private UserJob sync_user_job;
-        
+
         private void OnIpodDatabaseSaveStarted (object o, EventArgs args)
         {
             DisposeSyncUserJob ();
-            
-            sync_user_job = new UserJob (Catalog.GetString ("Syncing iPod"), 
+
+            sync_user_job = new UserJob (Catalog.GetString ("Syncing iPod"),
                 Catalog.GetString ("Preparing to synchronize..."), GetIconNames ());
             sync_user_job.Register ();
         }
-        
+
         private void OnIpodDatabaseSaveEnded (object o, EventArgs args)
         {
             DisposeSyncUserJob ();
         }
-        
+
         private void DisposeSyncUserJob ()
         {
             if (sync_user_job != null) {
@@ -651,14 +651,14 @@ namespace Banshee.Dap.Ipod
                 sync_user_job = null;
             }
         }
-        
+
         private void OnIpodDatabaseSaveProgressChanged (object o, IPod.TrackSaveProgressArgs args)
         {
             double progress = args.CurrentTrack == null ? 0.0 : args.TotalProgress;
-            string message = args.CurrentTrack == null 
+            string message = args.CurrentTrack == null
                     ? Catalog.GetString ("Updating...")
                     : String.Format ("{0} - {1}", args.CurrentTrack.Artist, args.CurrentTrack.Title);
-             
+
              if (progress >= 0.99) {
                  sync_user_job.Status = Catalog.GetString ("Flushing to disk...");
                  sync_user_job.Progress = 0;
@@ -667,7 +667,7 @@ namespace Banshee.Dap.Ipod
                  sync_user_job.Progress = progress;
              }
         }
-        
+
         public bool SyncNeeded {
             get {
                 lock (sync_mutex) {
@@ -677,6 +677,6 @@ namespace Banshee.Dap.Ipod
         }
 
 #endregion
-        
+
     }
 }

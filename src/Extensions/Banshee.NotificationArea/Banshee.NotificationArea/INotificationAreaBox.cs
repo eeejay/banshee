@@ -38,12 +38,12 @@ namespace Banshee.NotificationArea
         event EventHandler Disconnected;
         event EventHandler Activated;
         event PopupMenuHandler PopupMenuEvent;
-        
+
         void PositionMenu (Menu menu, out int x, out int y, out bool push_in);
         void OnPlayerEvent (PlayerEventArgs args);
-        
+
         Widget Widget { get; }
-        
+
         void Show ();
         void Hide ();
     }

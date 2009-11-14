@@ -44,11 +44,11 @@ namespace Banshee.Database
             : base (connection, uuid, model, provider)
         {
         }
-        
+
         protected override string CacheModelsTableName {
             get { return "CoreCacheModels"; }
         }
-        
+
         protected override string CacheTableName {
             get { return "CoreCache"; }
         }

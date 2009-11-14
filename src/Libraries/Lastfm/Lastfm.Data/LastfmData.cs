@@ -105,7 +105,7 @@ namespace Lastfm.Data
 
             XmlReaderSettings settings = new XmlReaderSettings ();
             settings.CheckCharacters = false;
-            
+
             using (XmlReader reader = XmlReader.Create (cache_file, settings)) {
                 doc.Load (reader);
             }

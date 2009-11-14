@@ -1,4 +1,4 @@
-// 
+//
 // Token.cs
 //
 // Author:
@@ -29,19 +29,19 @@
 using System;
 
 namespace Hyena.Json
-{   
+{
     internal class Token
     {
         public Token (TokenType type) : this (type, null)
         {
         }
-        
+
         public Token (TokenType type, object value)
         {
             this.type = type;
             this.value = value;
         }
-        
+
         private TokenType type;
         public TokenType Type {
             get { return type; }
@@ -58,56 +58,56 @@ namespace Hyena.Json
             get { return source_line; }
             internal set { source_line = value; }
         }
-        
+
         private int source_column;
         public int SourceColumn {
             get { return source_column; }
             internal set { source_column = value; }
         }
-        
+
         internal static Token ObjectStart {
             get { return new Token (TokenType.ObjectStart); }
         }
-        
+
         internal static Token ObjectFinish {
             get { return new Token (TokenType.ObjectFinish); }
         }
-        
+
         internal static Token ArrayStart {
             get { return new Token (TokenType.ArrayStart); }
         }
-        
+
         internal static Token ArrayFinish {
             get { return new Token (TokenType.ArrayFinish); }
         }
-        
+
         internal static Token Null {
             get { return new Token (TokenType.Null); }
         }
-        
+
         internal static Token Comma {
             get { return new Token (TokenType.Comma); }
         }
-        
+
         internal static Token Colon {
             get { return new Token (TokenType.Colon); }
         }
-        
+
         internal static Token Number (double value)
         {
             return new Token (TokenType.Number, value);
         }
-        
+
         internal static Token Integer (int value)
         {
             return new Token (TokenType.Integer, value);
         }
-        
+
         internal static Token String (string value)
         {
             return new Token (TokenType.String, value);
         }
-        
+
         internal static Token Bool (bool value)
         {
             return new Token (TokenType.Boolean, value);

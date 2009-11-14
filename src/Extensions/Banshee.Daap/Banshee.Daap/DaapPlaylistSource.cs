@@ -1,4 +1,4 @@
-// 
+//
 // DaapPlaylistSource.cs
 //
 // Author:
@@ -47,20 +47,20 @@ namespace Banshee.Daap
     public class DaapPlaylistSource : PlaylistSource
     {
         private HyenaSqliteCommand insert_track_command = new HyenaSqliteCommand (@"
-            INSERT INTO CorePlaylistEntries (PlaylistID, TrackID) 
+            INSERT INTO CorePlaylistEntries (PlaylistID, TrackID)
                 SELECT ?, TrackID FROM CoreTracks WHERE PrimarySourceID = ? AND ExternalID IN (?)"
         );
-        
+
         private DaapSource parent;
         public DAAP.Database Database {
             get { return parent.Database; }
         }
-        
+
         public DaapPlaylistSource (DAAP.Playlist playlist, DaapSource parent) : base (playlist.Name, parent)
         {
             this.parent = parent;
             Save ();
-            
+
             int count = 0;
             if (playlist.Tracks.Count > 0) {
                 //IList<DAAP.Track> tracks = playlist.Tracks;
@@ -78,24 +78,24 @@ namespace Banshee.Daap
                 }
             }
             SavedCount = count;
-            
+
             ThreadAssist.ProxyToMain (delegate {
                 OnUpdated ();
             });
         }
-        
+
         public override bool CanDeleteTracks {
             get { return false; }
         }
-        
+
         public override bool CanAddTracks {
             get { return false; }
         }
-        
+
         public override bool CanRename {
             get { return false; }
         }
-        
+
         public override bool CanUnmap {
             get { return false; }
         }

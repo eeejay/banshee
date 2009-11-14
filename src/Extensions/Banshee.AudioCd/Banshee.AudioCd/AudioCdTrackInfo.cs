@@ -40,38 +40,38 @@ namespace Banshee.AudioCd
         {
             this.model = model;
             this.index_on_disc = index;
-            
-            Uri = new SafeUri (String.Format ("cdda://{0}#{1}", index_on_disc + 1, deviceNode)); 
+
+            Uri = new SafeUri (String.Format ("cdda://{0}#{1}", index_on_disc + 1, deviceNode));
         }
-        
+
         public override bool TrackEqual (TrackInfo track)
         {
             AudioCdTrackInfo cd_track = track as AudioCdTrackInfo;
             return cd_track == null ? false : (cd_track.Model == Model && cd_track.IndexOnDisc == IndexOnDisc);
         }
-        
+
         private AudioCdDiscModel model;
         public AudioCdDiscModel Model {
             get { return model; }
         }
-        
+
         private int index_on_disc;
         public int IndexOnDisc {
             get { return index_on_disc; }
         }
-        
+
         private DatabaseAlbumInfo album_info;
         public new DatabaseAlbumInfo Album {
             get { return album_info; }
             set { album_info = value; }
         }
-        
+
         public DatabaseArtistInfo artist_info;
         public new DatabaseArtistInfo Artist {
             get { return artist_info; }
             set { artist_info = value; }
         }
-        
+
         public override string AlbumMusicBrainzId {
             get { return Album == null ? null : Album.MusicBrainzId; }
         }
@@ -79,10 +79,10 @@ namespace Banshee.AudioCd
         public override string ArtistMusicBrainzId {
             get { return Artist == null ? null : Artist.MusicBrainzId; }
         }
-        
+
         public override DateTime ReleaseDate {
             get { return Album == null ? base.ReleaseDate : Album.ReleaseDate; }
-            set { 
+            set {
                 if (Album == null) {
                     base.ReleaseDate = value;
                 } else {
@@ -94,11 +94,11 @@ namespace Banshee.AudioCd
         private bool rip_enabled = true;
         public bool RipEnabled {
             get { return rip_enabled; }
-            set { 
+            set {
                 if (rip_enabled == value) {
                     return;
                 }
-                
+
                 rip_enabled = value;
                 model.EnabledCount += rip_enabled ? 1 : -1;
             }

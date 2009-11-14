@@ -43,12 +43,12 @@ namespace Hyena
         {
             return text == null || text.Length != 32 ? false : md5_regex.IsMatch (text);
         }
-        
+
         public static string Md5Encode (string text)
         {
             return Md5Encode (text, Encoding.ASCII);
         }
-        
+
         public static string Md5Encode (string text, Encoding encoding)
         {
             if (String.IsNullOrEmpty (text)) {

@@ -40,7 +40,7 @@ namespace Hyena.Collections.Tests
     {
         private IntervalHeap<int> heap;
         private static int [] heap_data = new int[2048];
-        
+
         [TestFixtureSetUp]
         public void Init()
         {
@@ -53,11 +53,11 @@ namespace Hyena.Collections.Tests
         private void PopulateHeap()
         {
             heap.Clear();
-            
+
             foreach(int i in heap_data) {
                 heap.Push(i, 0);
             }
-            
+
             Assert.AreEqual(heap.Count, heap_data.Length);
         }
 
@@ -65,7 +65,7 @@ namespace Hyena.Collections.Tests
         public void PopHeap()
         {
             PopulateHeap();
-            
+
             int i = 0;
             while(heap.Count > 0) {
                 heap.Pop();
@@ -118,7 +118,7 @@ namespace Hyena.Collections.Tests
             Assert.AreEqual(h.Pop(), 3);
             Assert.AreEqual(h.Pop(), 1);
 
-            Assert.AreEqual(h.Count, 0);        
+            Assert.AreEqual(h.Count, 0);
         }
     }
 }

@@ -48,7 +48,7 @@ namespace Hyena.Query.Gui
 
         public override QueryValue QueryValue {
             get { return query_value; }
-            set { 
+            set {
                 entry.Changed -= HandleChanged;
                 query_value = value as StringQueryValue;
                 entry.Text = (query_value.Value as string) ?? String.Empty;

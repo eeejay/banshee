@@ -35,7 +35,7 @@ using Mono.Unix;
 using Banshee.Base;
 using Banshee.Collection;
 using Banshee.Sources;
- 
+
 namespace Banshee.Playlists.Formats
 {
     public class M3uPlaylistFormat : PlaylistFormatBase
@@ -43,36 +43,36 @@ namespace Banshee.Playlists.Formats
         public static readonly PlaylistFormatDescription FormatDescription = new PlaylistFormatDescription(
             typeof(M3uPlaylistFormat), MagicHandler, Catalog.GetString("MPEG Version 3.0 Extended (*.m3u)"),
             "m3u", new string [] {"audio/x-mpegurl", "audio/m3u", "audio/mpeg-url"});
-        
+
         public static bool MagicHandler(StreamReader reader)
         {
             string line = reader.ReadLine();
             if(line == null) {
                 return false;
             }
-            
+
             line = line.Trim();
             return line == "#EXTM3U" || line.StartsWith("http");
         }
-        
+
         public M3uPlaylistFormat()
         {
         }
-        
+
         public override void Load(StreamReader reader, bool validateHeader)
         {
             string line;
             Dictionary<string, object> element = null;
-                
+
             while((line = reader.ReadLine()) != null) {
                 line = line.Trim();
-               
+
                 if(line.Length == 0) {
                     continue;
                 }
-                    
+
                 bool extinf = line.StartsWith("#EXTINF:");
-                
+
                 if(!extinf && line[0] == '#') {
                     continue;
                 } else if(extinf) {
@@ -85,22 +85,22 @@ namespace Banshee.Playlists.Formats
                 } else if(element == null) {
                     element = AddElement();
                 }
-                    
+
                 try {
                     element["uri"] = ResolveUri(line);
                 } catch {
                     Elements.Remove(element);
                 }
-                
+
                 element = null;
             }
         }
-        
+
         private void ParseExtended(Dictionary<string, object> element, string line)
         {
             string split = line.Substring(8).TrimStart(',');
             string [] parts = split.Split(new char [] { ',' }, 2);
-            
+
             if(parts.Length == 2) {
                 element["duration"] = SecondsStringToTimeSpan(parts[0]);
                 element["title"] = parts[1].Trim();
@@ -108,7 +108,7 @@ namespace Banshee.Playlists.Formats
                 element["title"] = split.Trim();
             }
         }
-        
+
         public override void Save(Stream stream, ITrackModelSource source)
         {
             using(StreamWriter writer = new StreamWriter(stream)) {
@@ -120,7 +120,7 @@ namespace Banshee.Playlists.Formats
                     if(duration <= 0) {
                         duration = -1;
                     }
-                    
+
                     writer.WriteLine("#EXTINF:{0},{1} - {2}", duration, track.DisplayArtistName, track.DisplayTrackTitle);
                     writer.WriteLine(ExportUri(track.Uri));
                 }

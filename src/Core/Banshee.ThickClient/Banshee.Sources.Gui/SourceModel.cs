@@ -34,9 +34,9 @@ using Banshee.Sources;
 using Banshee.ServiceStack;
 
 namespace Banshee.Sources.Gui
-{   
+{
     public delegate void SourceRowEventHandler (object o, SourceRowEventArgs args);
-    
+
     public sealed class SourceRowEventArgs : EventArgs
     {
         public SourceRowEventArgs (Source source, TreeIter iter, TreeIter parentIter)
@@ -45,17 +45,17 @@ namespace Banshee.Sources.Gui
             this.iter = iter;
             this.parent_iter = parentIter;
         }
-        
+
         private Source source;
         public Source Source {
             get { return source; }
         }
-        
+
         private TreeIter iter;
         public TreeIter Iter {
             get { return iter; }
         }
-        
+
         private TreeIter parent_iter;
         public TreeIter ParentIter {
             get { return parent_iter; }
@@ -68,37 +68,37 @@ namespace Banshee.Sources.Gui
 
         public event SourceRowEventHandler SourceRowInserted;
         public event SourceRowEventHandler SourceRowRemoved;
-        
+
         public SourceModel () : base (typeof (Source), typeof (int), typeof (bool))
         {
             SetSortColumnId (1, SortType.Ascending);
-            ChangeSortColumn ();   
-            
+            ChangeSortColumn ();
+
             ServiceManager.SourceManager.SourceAdded += OnSourceAdded;
             ServiceManager.SourceManager.SourceRemoved += OnSourceRemoved;
         }
-        
+
         public override void Dispose ()
         {
             ServiceManager.SourceManager.SourceAdded -= OnSourceAdded;
             ServiceManager.SourceManager.SourceRemoved -= OnSourceRemoved;
             base.Dispose ();
         }
-        
+
         private void OnSourceAdded (SourceAddedArgs args)
         {
             Banshee.Base.ThreadAssist.ProxyToMain (delegate {
                 AddSource (args.Source);
             });
         }
-        
+
         private void OnSourceRemoved (SourceEventArgs args)
         {
             Banshee.Base.ThreadAssist.ProxyToMain (delegate {
                 RemoveSource (args.Source);
             });
         }
-        
+
         protected virtual void OnSourceRowInserted (Source source, TreeIter iter, TreeIter parentIter)
         {
             SourceRowEventHandler handler = SourceRowInserted;
@@ -106,7 +106,7 @@ namespace Banshee.Sources.Gui
                 handler (this, new SourceRowEventArgs (source, iter, parentIter));
             }
         }
-        
+
         protected virtual void OnSourceRowRemoved (Source source, TreeIter iter)
         {
             SourceRowEventHandler handler = SourceRowRemoved;
@@ -121,7 +121,7 @@ namespace Banshee.Sources.Gui
         {
             return GetValue (iter, 0) as Source;
         }
-        
+
         public Source GetSource (TreePath path)
         {
             if (path == null)
@@ -131,7 +131,7 @@ namespace Banshee.Sources.Gui
             if (GetIter (out iter, path)) {
                 return GetSource (iter);
             }
-        
+
             return null;
         }
 
@@ -140,30 +140,30 @@ namespace Banshee.Sources.Gui
             foreach (TreeIter iter in FindInModel (0, source)) {
                 return iter;
             }
-            
+
             return TreeIter.Zero;
         }
-        
+
         public IEnumerable<TreeIter> FindInModel (int column, object match)
         {
             TreeIter iter = TreeIter.Zero;
             GetIterFirst (out iter);
             return FindInModel (column, match, iter);
         }
-        
+
         public IEnumerable<TreeIter> FindInModel (int column, object match, TreeIter iter)
         {
             if (!IterIsValid (iter)) {
                 yield break;
             }
-            
+
             do {
                 object result = GetValue (iter, column);
                 Type result_type = result != null ? result.GetType () : null;
                 if (result_type != null && ((result_type.IsValueType && result.Equals (match)) || result == match)) {
                     yield return iter;
                 }
-                
+
                 if (IterHasChild (iter)) {
                     TreeIter citer = TreeIter.Zero;
                     IterChildren (out citer, iter);
@@ -175,29 +175,29 @@ namespace Banshee.Sources.Gui
                 }
             } while (IterNext (ref iter));
         }
-        
+
         /*private void AddRowSeparator (int order)
         {
             TreeIter iter = InsertNode (order);
-            
+
             SetValue (iter, 0, null);
             SetValue (iter, 1, order);
             SetValue (iter, 2, true);
         }
-        
+
         private void ClearRowSeparators ()
         {
             Queue<TreeIter> to_remove = new Queue<TreeIter> ();
             foreach (TreeIter iter in FindInModel (2, true)) {
                 to_remove.Enqueue (iter);
             }
-            
+
             while (to_remove.Count > 0) {
                 TreeIter iter = to_remove.Dequeue ();
                 Remove (ref iter);
             }
         }*/
-        
+
 #endregion
 
 
@@ -215,18 +215,18 @@ namespace Banshee.Sources.Gui
                 if (!FindSource (source).Equals (TreeIter.Zero)) {
                     return;
                 }
-                
+
                 // Don't add a child source before its parent
                 if (parent.Equals (TreeIter.Zero) && source.Parent != null) {
                     return;
                 }
-                
+
                 int position = source.Order;
-                
+
                 TreeIter iter = parent.Equals (TreeIter.Zero)
-                    ? InsertNode (position) 
+                    ? InsertNode (position)
                     : InsertNode (parent, position);
-                
+
                 SetValue (iter, 0, source);
                 SetValue (iter, 1, source.Order);
                 SetValue (iter, 2, false);
@@ -236,14 +236,14 @@ namespace Banshee.Sources.Gui
                         AddSource (child, iter);
                     }
                 }
-                
-                source.ChildSourceAdded += OnSourceChildSourceAdded; 
+
+                source.ChildSourceAdded += OnSourceChildSourceAdded;
                 source.ChildSourceRemoved += OnSourceChildSourceRemoved;
-                
+
                 OnSourceRowInserted (source, iter, parent);
             }
         }
-        
+
         public void RemoveSource (Source source)
         {
             lock (sync) {
@@ -251,14 +251,14 @@ namespace Banshee.Sources.Gui
                 if (!iter.Equals (TreeIter.Zero)) {
                     Remove (ref iter);
                 }
-                
+
                 source.ChildSourceAdded -= OnSourceChildSourceAdded;
                 source.ChildSourceRemoved -= OnSourceChildSourceRemoved;
-              
+
                 OnSourceRowRemoved (source, iter);
             }
         }
-        
+
         public void Refresh ()
         {
             Clear ();
@@ -266,21 +266,21 @@ namespace Banshee.Sources.Gui
                 AddSource (source);
             }
         }
-        
+
         private void OnSourceChildSourceAdded (SourceEventArgs args)
         {
             Banshee.Base.ThreadAssist.ProxyToMain (delegate {
                 AddSource (args.Source, FindSource (args.Source.Parent));
             });
         }
-        
+
         private void OnSourceChildSourceRemoved (SourceEventArgs args)
         {
             Banshee.Base.ThreadAssist.ProxyToMain (delegate {
                 RemoveSource (args.Source);
             });
         }
-        
+
 #endregion
 
     }

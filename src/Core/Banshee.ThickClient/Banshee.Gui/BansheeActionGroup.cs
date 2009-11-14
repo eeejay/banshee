@@ -54,7 +54,7 @@ namespace Banshee.Gui
             : this (ServiceManager.Get<InterfaceActionService> (), name)
         {
         }
-        
+
         public BansheeActionGroup (InterfaceActionService action_service, string name) : base (name)
         {
             this.action_service = action_service;
@@ -104,11 +104,11 @@ namespace Banshee.Gui
                 base.Add (action_entries);
             }
         }
-        
+
         public void AddImportant (params ActionEntry [] action_entries)
         {
             base.Add (action_entries);
-            
+
             foreach (ActionEntry entry in action_entries) {
                 this[entry.name].IsImportant = true;
             }
@@ -117,12 +117,12 @@ namespace Banshee.Gui
         public void AddImportant (params ToggleActionEntry [] action_entries)
         {
             base.Add (action_entries);
-            
+
             foreach (ToggleActionEntry entry in action_entries) {
                 this[entry.name].IsImportant = true;
             }
         }
-        
+
         public void Remove (string actionName)
         {
             Gtk.Action action = this[actionName];
@@ -147,7 +147,7 @@ namespace Banshee.Gui
         {
             UpdateAction (action_name, visible_and_sensitive, visible_and_sensitive);
         }
-        
+
         public void UpdateAction (string action_name, bool visible, bool sensitive)
         {
             UpdateAction (action_name, visible, sensitive, null);
@@ -180,18 +180,18 @@ namespace Banshee.Gui
                 }
             }
         }
-        
+
         public static void UpdateAction (Gtk.Action action, bool visible_and_sensitive)
         {
             UpdateAction (action, visible_and_sensitive, visible_and_sensitive);
         }
-        
+
         public static void UpdateAction (Gtk.Action action, bool visible, bool sensitive)
         {
             action.Visible = visible;
             action.Sensitive = visible && sensitive;
         }
-        
+
         protected void ShowContextMenu (string menu_name)
         {
             Gtk.Menu menu = Actions.UIManager.GetWidget (menu_name) as Menu;
@@ -208,10 +208,10 @@ namespace Banshee.Gui
                 return;
             }
 
-            menu.Show (); 
+            menu.Show ();
             menu.Popup (null, null, null, 0, Gtk.Global.CurrentEventTime);
         }
-        
+
         public InterfaceActionService Actions {
             get { return action_service; }
         }

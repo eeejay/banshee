@@ -18,10 +18,10 @@
 // distribute, sublicense, and/or sell copies of the Software, and to
 // permit persons to whom the Software is furnished to do so, subject to
 // the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be
 // included in all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 // MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -34,7 +34,7 @@
 /********************************************************
  * ADO.NET 2.0 Data Provider for Sqlite Version 3.X
  * Written by Robert Simpson (robert@blackcastlesoft.com)
- * 
+ *
  * Released to the public domain, use at your own risk!
  ********************************************************/
 #if NET_2_0
@@ -132,7 +132,7 @@ namespace Mono.Data.Sqlite
     internal bool MapParameter(string s, SqliteParameter p)
     {
       if (_paramNames == null) return false;
-      
+
       int startAt = 0;
       if (s.Length > 0)
       {
@@ -159,7 +159,7 @@ namespace Mono.Data.Sqlite
     public void Dispose()
     {
       _sql.FinalizeStatement(this);
-      
+
       _paramNames = null;
       _paramValues = null;
       _sql = null;
@@ -168,7 +168,7 @@ namespace Mono.Data.Sqlite
       GC.SuppressFinalize(this);
     }
     #endregion
-    
+
     /// <summary>
     ///  Bind all parameters, making sure the caller didn't miss any
     /// </summary>

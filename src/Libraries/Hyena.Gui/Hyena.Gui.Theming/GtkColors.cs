@@ -32,7 +32,7 @@ using Gtk;
 
 namespace Hyena.Gui.Theming
 {
-    public enum GtkColorClass 
+    public enum GtkColorClass
     {
         Light,
         Mid,
@@ -53,7 +53,7 @@ namespace Hyena.Gui.Theming
 
         public Widget Widget {
             get { return widget; }
-            set { 
+            set {
                 if (widget == value) {
                     return;
                 } else if (widget != null) {
@@ -85,35 +85,35 @@ namespace Hyena.Gui.Theming
         {
             RefreshColors ();
         }
-        
+
         public Cairo.Color GetWidgetColor (GtkColorClass @class, StateType state)
         {
             if (gtk_colors == null) {
                 RefreshColors ();
             }
-            
+
             return gtk_colors[(int)@class * ((int)StateType.Insensitive + 1) + (int)state];
         }
-        
+
         public void RefreshColors ()
         {
             if (refreshing) {
                 return;
             }
-            
+
             refreshing = true;
-            
+
             int sn = (int)StateType.Insensitive + 1;
             int cn = (int)GtkColorClass.Foreground + 1;
-            
+
             if (gtk_colors == null) {
                 gtk_colors = new Cairo.Color[sn * cn];
             }
-                
+
             for (int c = 0, i = 0; c < cn; c++) {
                 for (int s = 0; s < sn; s++, i++) {
                     Gdk.Color color = Gdk.Color.Zero;
-                    
+
                     if (widget != null && widget.IsRealized) {
                         switch ((GtkColorClass)c) {
                             case GtkColorClass.Light:      color = widget.Style.LightColors[s]; break;
@@ -127,13 +127,13 @@ namespace Hyena.Gui.Theming
                     } else {
                         color = new Gdk.Color (0, 0, 0);
                     }
-                    
+
                     gtk_colors[c * sn + s] = CairoExtensions.GdkColorToCairoColor (color);
                 }
             }
 
             OnRefreshed ();
-            
+
             refreshing = false;
         }
 

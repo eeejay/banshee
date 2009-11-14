@@ -44,7 +44,7 @@ namespace Banshee.Metadata
     public class SaveTrackMetadataService : IService
     {
         public static SchemaPreference<bool> WriteEnabled = new SchemaPreference<bool> (
-                LibrarySchema.WriteMetadata, 
+                LibrarySchema.WriteMetadata,
                 Catalog.GetString ("Write _metadata to files"),
                 Catalog.GetString ("Save tags and other metadata inside supported media files")
         );

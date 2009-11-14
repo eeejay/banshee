@@ -44,11 +44,11 @@ namespace Banshee.Podcasting.Gui
         public ColumnCellPodcastStatusIndicator (string property) : base (property)
         {
         }
-        
+
         public ColumnCellPodcastStatusIndicator (string property, bool expand) : base (property, expand)
         {
         }
-        
+
         protected override int PixbufCount {
             get { return base.PixbufCount + 2; }
         }
@@ -56,32 +56,32 @@ namespace Banshee.Podcasting.Gui
         protected override void LoadPixbufs ()
         {
             base.LoadPixbufs ();
-            
+
             // Downloading
             Pixbufs[base.PixbufCount + 0] = IconThemeUtils.LoadIcon (PixbufSize, "document-save", "go-bottom");
             StatusNames[base.PixbufCount + 0] = Catalog.GetString ("Downloading");
-            
+
             // Podcast is Downloaded
             Pixbufs[base.PixbufCount + 1] = IconThemeUtils.LoadIcon (PixbufSize, "podcast-new");
             StatusNames[base.PixbufCount + 1] = Catalog.GetString ("New");
         }
-        
+
         protected override int GetIconIndex (TrackInfo track)
         {
             PodcastTrackInfo podcast = PodcastTrackInfo.From (track);
             if (track == null) {
                 return -1;
             }
-            
+
             switch (podcast.Activity) {
                 case PodcastItemActivity.Downloading:
-                case PodcastItemActivity.DownloadPending: 
+                case PodcastItemActivity.DownloadPending:
                     return base.PixbufCount + 0;
                 default:
                     return podcast.IsDownloaded ? base.PixbufCount + 1 : -1;
             }
         }
-        
+
         public override void Render (CellContext context, StateType state, double cellWidth, double cellHeight)
         {
             PodcastTrackInfo podcast = PodcastTrackInfo.From (BoundTrack);
@@ -90,7 +90,7 @@ namespace Banshee.Podcasting.Gui
                     context.Opaque = false;
                 }
             }
-            
+
             base.Render (context, state, cellWidth, cellHeight);
         }
     }

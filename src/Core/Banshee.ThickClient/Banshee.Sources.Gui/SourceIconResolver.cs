@@ -39,36 +39,36 @@ namespace Banshee.Sources.Gui
         {
             return ResolveIcon (source, 22, null);
         }
-        
+
         public static Gdk.Pixbuf ResolveIcon (Source source, string @namespace)
         {
             return ResolveIcon (source, 22, @namespace);
         }
-    
+
         public static Gdk.Pixbuf ResolveIcon (Source source, int size)
         {
             return ResolveIcon (source, size, null);
         }
-        
+
         public static Gdk.Pixbuf ResolveIcon (Source source, int size, string @namespace)
         {
-            string name_property = @namespace == null 
-                ? "Icon.Name" 
+            string name_property = @namespace == null
+                ? "Icon.Name"
                 : String.Format ("{0}.Icon.Name", @namespace);
-                
-            string pixbuf_property = @namespace == null 
+
+            string pixbuf_property = @namespace == null
                 ? String.Format ("Icon.Pixbuf_{0}", size)
                 : String.Format ("{0}.Icon.Pixbuf_{1}", @namespace, size);
-        
+
             Gdk.Pixbuf icon = source.Properties.Get<Gdk.Pixbuf> (pixbuf_property);
-            
+
             if (icon != null) {
                 return icon;
             }
-            
+
             Type icon_type = source.Properties.GetType (name_property);
             Assembly asm = source.Properties.Get<Assembly> ("ResourceAssembly");
-            
+
             if (icon_type == typeof (string)) {
                 icon = IconThemeUtils.LoadIcon (asm, size, source.Properties.Get<string> (name_property));
             } else if (icon_type == typeof (string [])) {
@@ -78,19 +78,19 @@ namespace Banshee.Sources.Gui
             if (icon == null) {
                 icon = Banshee.Gui.IconThemeUtils.LoadIcon (size, "image-missing");
             }
-                
+
             if (icon != null) {
                 source.Properties.Set<Gdk.Pixbuf> (pixbuf_property, icon);
             }
-            
+
             return icon;
         }
-        
+
         public static void InvalidatePixbufs (Source source)
         {
             InvalidatePixbufs (source, null);
         }
-        
+
         public static void InvalidatePixbufs (Source source, string @namespace)
         {
             string property = @namespace == null ? "Icon.Pixbuf" : String.Format ("{0}.Icon.Pixbuf", @namespace);

@@ -33,25 +33,25 @@ namespace Hyena.Gui.Theatrics
     public class Actor<T>
     {
         private T target;
-        
+
         private DateTime start_time;
         private uint duration;
         private double frames;
         private double percent;
         private bool can_expire = true;
-    
+
         public Actor (T target, uint duration)
         {
             this.target = target;
             this.duration = duration;
             Reset ();
         }
-        
+
         public void Reset ()
         {
             Reset (duration);
         }
-        
+
         public void Reset (uint duration)
         {
             start_time = DateTime.Now;
@@ -59,13 +59,13 @@ namespace Hyena.Gui.Theatrics
             percent = 0.0;
             this.duration = duration;
         }
-        
+
         public virtual void Step ()
         {
             if (!CanExpire && percent >= 1.0) {
                 Reset ();
             }
-            
+
             percent = (DateTime.Now - start_time).TotalMilliseconds / duration;
             frames++;
         }
@@ -73,32 +73,32 @@ namespace Hyena.Gui.Theatrics
         public bool Expired {
             get { return CanExpire && percent >= 1.0; }
         }
-        
+
         public bool CanExpire {
             get { return can_expire; }
             set { can_expire = value; }
         }
-        
+
         public T Target {
             get { return target; }
         }
-        
+
         public double Duration {
             get { return duration; }
         }
-        
+
         public DateTime StartTime {
             get { return start_time; }
         }
-        
+
         public double Frames {
             get { return frames; }
         }
-        
+
         public double FramesPerSecond {
             get { return frames / ((double)duration / 1000.0); }
         }
-        
+
         public double Percent {
             get { return Math.Max (0.0, Math.Min (1.0, percent)); }
         }

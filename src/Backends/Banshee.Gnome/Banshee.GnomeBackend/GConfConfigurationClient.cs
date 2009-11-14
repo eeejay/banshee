@@ -41,17 +41,17 @@ namespace Banshee.GnomeBackend
     {
         private GConf.Client client;
         private Dictionary<string, string> key_table = new Dictionary<string, string> ();
-        
+
         private static bool disable_gconf_checked = false;
         private static bool disable_gconf = false;
-        
+
         private static bool DisableGConf {
-            get { 
+            get {
                 if (!disable_gconf_checked) {
                     disable_gconf = ApplicationContext.EnvironmentIsSet ("BANSHEE_DISABLE_GCONF");
                     disable_gconf_checked = true;
                 }
-                
+
                 return disable_gconf;
             }
         }
@@ -90,36 +90,36 @@ namespace Banshee.GnomeBackend
 
                     key_table[hash_key] = key_table[hash_key].Replace (' ', '_');
                 }
-                
+
                 return key_table[hash_key];
             }
         }
-        
+
         public T Get<T> (SchemaEntry<T> entry)
         {
             return Get<T> (entry.Namespace, entry.Key, entry.DefaultValue);
         }
-        
+
         public T Get<T> (SchemaEntry<T> entry, T fallback)
         {
             return Get<T> (entry.Namespace, entry.Key, fallback);
         }
-        
+
         public T Get<T> (string key, T fallback)
         {
             return Get<T> (null, key, fallback);
         }
-        
+
         public T Get<T> (string @namespace, string key, T fallback)
         {
             if (DisableGConf || key == null) {
                 return fallback;
             }
-            
+
             if (client == null) {
                 client = new GConf.Client ();
             }
-            
+
             try {
                 return (T)client.Get (CreateKey (@namespace, key));
             } catch (GConf.NoSuchKeyException) {
@@ -129,27 +129,27 @@ namespace Banshee.GnomeBackend
                 return fallback;
             }
         }
-        
+
         public void Set<T> (SchemaEntry<T> entry, T value)
         {
             Set<T> (entry.Namespace, entry.Key, value);
         }
-        
+
         public void Set<T> (string key, T value)
         {
             Set<T> (null, key, value);
         }
-        
+
         public void Set<T> (string @namespace, string key, T value)
         {
             if (DisableGConf || key == null) {
                 return;
             }
-            
+
             if (client == null) {
                 client = new GConf.Client ();
             }
-            
+
             client.Set (CreateKey (@namespace, key), value);
         }
     }

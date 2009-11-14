@@ -105,21 +105,21 @@ namespace Banshee.Sources
 
             properties.PropertyChanged += OnPropertyChanged;
             read_only_children = new ReadOnlyCollection<Source> (child_sources);
-            
+
             if (ApplicationContext.Debugging && ApplicationContext.CommandLine.Contains ("test-source-messages")) {
                 TestMessages ();
             }
 
             LoadSortSchema ();
         }
-        
+
         protected void OnSetupComplete ()
         {
             /*ITrackModelSource tm_source = this as ITrackModelSource;
             if (tm_source != null) {
                 tm_source.TrackModel.Parent = this;
                 ServiceManager.DBusServiceManager.RegisterObject (tm_source.TrackModel);
-                
+
                 // TODO if/when browsable models can be added/removed on the fly, this would need to change to reflect that
                 foreach (IListModel model in tm_source.FilterModels) {
                     Banshee.Collection.ExportableModel exportable = model as Banshee.Collection.ExportableModel;
@@ -145,19 +145,19 @@ namespace Banshee.Sources
                 }
             }
         }
-        
+
         protected void PauseSorting ()
         {
             sort_children = false;
         }
-        
+
         protected void ResumeSorting ()
         {
             sort_children = true;
         }
 
 #region Public Methods
-        
+
         public virtual void Activate ()
         {
         }
@@ -170,7 +170,7 @@ namespace Banshee.Sources
         {
             properties.SetString ("Name", newName);
         }
-        
+
         public virtual bool AcceptsInputFromSource (Source source)
         {
             return false;
@@ -180,28 +180,28 @@ namespace Banshee.Sources
         {
             return AcceptsInputFromSource (source);
         }
-        
+
         public virtual void MergeSourceInput (Source source, SourceMergeType mergeType)
         {
             Log.ErrorFormat ("MergeSourceInput not implemented by {0}", this);
         }
-        
+
         public virtual SourceMergeType SupportedMergeTypes {
             get { return SourceMergeType.None; }
         }
-        
+
         public virtual void SetParentSource (Source parent)
         {
             this.parent = parent;
         }
-        
+
         public virtual bool ContainsChildSource (Source child)
         {
             lock (Children) {
                 return child_sources.Contains (child);
             }
         }
-        
+
         public virtual void AddChildSource (Source child)
         {
             lock (Children) {
@@ -219,19 +219,19 @@ namespace Banshee.Sources
                 if (child.Children.Count > 0) {
                     child.ClearChildSources ();
                 }
-                
+
                 child_sources.Remove (child);
-                
+
                 if (ServiceManager.SourceManager.ActiveSource == child) {
                     if (CanActivate) {
                         ServiceManager.SourceManager.SetActiveSource (this);
                     }
                 }
-                
+
                 OnChildSourceRemoved (child);
             }
         }
-        
+
         public virtual void ClearChildSources ()
         {
             lock (Children) {
@@ -264,7 +264,7 @@ namespace Banshee.Sources
                 }
                 sort_children = false;
             }
-            
+
             if (child_sort != null && child_sort.SortType != SortType.None) {
                 lock (Children) {
                     child_sort.Sort (child_sources, SeparateChildrenByType);
@@ -277,7 +277,7 @@ namespace Banshee.Sources
             }
             sort_children = true;
         }
-        
+
         private void LoadSortSchema ()
         {
             if (ChildSortTypes.Length == 0) {
@@ -288,7 +288,7 @@ namespace Banshee.Sources
                 Hyena.Log.WarningFormat ("Trying to LoadSortSchema, but source's id not set! {0}", UniqueId);
                 return;
             }
-            
+
             child_sort_schema = CreateSchema<string> ("child_sort_id", DefaultChildSort.Id, "", "");
             string child_sort_id = child_sort_schema.Get ();
             foreach (SourceSortType sort_type in ChildSortTypes) {
@@ -306,20 +306,20 @@ namespace Banshee.Sources
         {
             return propagate ? GetInheritedProperty<T> (name) : Properties.Get<T> (name);
         }
-        
+
         public T GetInheritedProperty<T> (string name)
         {
             return Properties.Contains (name)
                 ? Properties.Get<T> (name)
-                : Parent != null 
+                : Parent != null
                     ? Parent.GetInheritedProperty<T> (name)
                     : default (T);
         }
-        
+
 #endregion
-        
+
 #region Protected Methods
-        
+
         public virtual void SetStatus (string message, bool error)
         {
             SetStatus (message, !error, !error, error ? "dialog-error" : null);
@@ -332,9 +332,9 @@ namespace Banshee.Sources
                     status_message = new SourceMessage (this);
                     PushMessage (status_message);
                 }
-            
+
                 string status_name = String.Format ("<i>{0}</i>", GLib.Markup.EscapeText (Name));
-                
+
                 status_message.FreezeNotify ();
                 status_message.Text = String.Format (GLib.Markup.EscapeText (message), status_name);
                 status_message.CanClose = can_close;
@@ -343,7 +343,7 @@ namespace Banshee.Sources
                 status_message.IsHidden = false;
                 status_message.ClearActions ();
             }
-                
+
             status_message.ThawNotify ();
         }
 
@@ -364,10 +364,10 @@ namespace Banshee.Sources
                 messages.Insert (0, message);
                 message.Updated += HandleMessageUpdated;
             }
-            
+
             OnMessageNotify ();
         }
-        
+
         protected virtual SourceMessage PopMessage ()
         {
             try {
@@ -378,14 +378,14 @@ namespace Banshee.Sources
                         messages.RemoveAt (0);
                         return message;
                     }
-                    
+
                     return null;
                 }
             } finally {
                 OnMessageNotify ();
             }
         }
-        
+
         protected virtual void ClearMessages ()
         {
             lock (this) {
@@ -400,12 +400,12 @@ namespace Banshee.Sources
                 status_message = null;
             }
         }
-        
+
         private void TestMessages ()
         {
             int count = 0;
             SourceMessage message_3 = null;
-            
+
             Application.RunTimeout (5000, delegate {
                 if (count++ > 5) {
                     if (count == 7) {
@@ -416,7 +416,7 @@ namespace Banshee.Sources
                 } else if (count > 10) {
                     return false;
                 }
-                
+
                 SourceMessage message = new SourceMessage (this);
                 message.FreezeNotify ();
                 message.Text = String.Format ("Testing message {0}", count);
@@ -427,18 +427,18 @@ namespace Banshee.Sources
                         message.AddAction (new MessageAction (String.Format ("Button {0}", i)));
                     }
                 }
-                    
+
                 message.ThawNotify ();
                 PushMessage (message);
-                
+
                 if (count == 3) {
                     message_3 = message;
                 }
-                
+
                 return true;
             });
         }
-        
+
         protected virtual void RemoveMessage (SourceMessage message)
         {
             lock (this) {
@@ -446,14 +446,14 @@ namespace Banshee.Sources
                     message.Updated -= HandleMessageUpdated;
                     OnMessageNotify ();
                 }
-            }   
+            }
         }
 
         private void HandleMessageUpdated (object o, EventArgs args)
         {
             OnMessageNotify ();
         }
-        
+
         protected virtual void OnMessageNotify ()
         {
             EventHandler handler = MessageNotify;
@@ -461,7 +461,7 @@ namespace Banshee.Sources
                 handler (this, EventArgs.Empty);
             }
         }
-    
+
         protected virtual void OnChildSourceAdded (Source source)
         {
             SortChildSources ();
@@ -475,7 +475,7 @@ namespace Banshee.Sources
                 }
             });
         }
-        
+
         protected virtual void OnChildSourceRemoved (Source source)
         {
             source.Updated -= OnChildSourceUpdated;
@@ -488,7 +488,7 @@ namespace Banshee.Sources
                 }
             });
         }
-        
+
         protected virtual void OnUpdated ()
         {
             EventHandler handler = Updated;
@@ -496,7 +496,7 @@ namespace Banshee.Sources
                 handler (this, EventArgs.Empty);
             }
         }
-        
+
         protected virtual void OnChildSourceUpdated (object o, EventArgs args)
         {
             SortChildSources ();
@@ -516,24 +516,24 @@ namespace Banshee.Sources
                 }
             }
         }
-        
+
 #endregion
-        
+
 #region Private Methods
-        
+
         private void OnPropertyChanged (object o, PropertyChangeEventArgs args)
         {
             OnUpdated ();
         }
-        
+
 #endregion
-        
+
 #region Public Properties
-        
+
         public ReadOnlyCollection<Source> Children {
             get { return read_only_children; }
         }
-        
+
         string [] ISource.Children {
             get { return null; }
         }
@@ -545,7 +545,7 @@ namespace Banshee.Sources
         public virtual string TypeName {
             get { return GetType ().Name; }
         }
-        
+
         private string unique_id;
         public string UniqueId {
             get {
@@ -555,7 +555,7 @@ namespace Banshee.Sources
                 return unique_id ?? (unique_id = String.Format ("{0}-{1}", this.GetType ().Name, TypeUniqueId));
             }
         }
-        
+
         private string type_unique_id;
         protected string TypeUniqueId {
             get { return type_unique_id; }
@@ -569,11 +569,11 @@ namespace Banshee.Sources
         public virtual bool HasProperties {
             get { return false; }
         }
-        
+
         public virtual bool HasViewableTrackProperties {
             get { return false; }
         }
-        
+
         public virtual bool HasEditableTrackProperties {
             get { return false; }
         }
@@ -587,12 +587,12 @@ namespace Banshee.Sources
             get { return properties.Get<string> ("GenericName"); }
             set { properties.SetString ("GenericName", value); }
         }
-        
+
         public int Order {
             get { return properties.GetInteger ("Order"); }
             set { properties.SetInteger ("Order", value); }
         }
-        
+
         public SourceMessage CurrentMessage {
             get { lock (this) { return messages.Count > 0 ? messages[0] : null; } }
         }
@@ -600,38 +600,38 @@ namespace Banshee.Sources
         public virtual bool ImplementsCustomSearch {
             get { return false; }
         }
-        
+
         public virtual bool CanSearch {
             get { return false; }
         }
-                
+
         public virtual string FilterQuery {
             get { return properties.Get<string> ("FilterQuery"); }
             set { properties.SetString ("FilterQuery", value); }
         }
-        
+
         public TrackFilterType FilterType {
             get { return (TrackFilterType)properties.GetInteger ("FilterType"); }
             set { properties.SetInteger ("FilterType", (int)value); }
         }
-        
+
         public virtual bool Expanded {
             get { return properties.GetBoolean ("Expanded"); }
             set { properties.SetBoolean ("Expanded", value); }
         }
-        
+
         public virtual bool? AutoExpand {
             get { return true; }
         }
-        
+
         public virtual PropertyStore Properties {
             get { return properties; }
         }
-        
+
         public virtual bool CanActivate {
             get { return true; }
         }
-        
+
         public virtual int Count {
             get { return 0; }
         }
@@ -652,35 +652,35 @@ namespace Banshee.Sources
         }
 
         public virtual int FilteredCount { get { return Count; } }
-                
+
         public virtual string TrackModelPath {
             get { return null; }
         }
-        
+
         public static readonly SourceSortType SortNameAscending = new SourceSortType (
             "NameAsc",
             Catalog.GetString ("Name"),
             SortType.Ascending, null); // null comparer b/c we already fall back to sorting by name
-        
+
         public static readonly SourceSortType SortSizeAscending = new SourceSortType (
             "SizeAsc",
             Catalog.GetString ("Size Ascending"),
             SortType.Ascending, new SizeComparer ());
-        
+
         public static readonly SourceSortType SortSizeDescending = new SourceSortType (
             "SizeDesc",
             Catalog.GetString ("Size Descending"),
             SortType.Descending, new SizeComparer ());
-        
+
         private static SourceSortType[] sort_types = new SourceSortType[] {};
         public virtual SourceSortType[] ChildSortTypes {
             get { return sort_types; }
         }
-        
+
         public SourceSortType ActiveChildSort {
             get { return child_sort; }
         }
-        
+
         public virtual SourceSortType DefaultChildSort {
             get { return null; }
         }
@@ -692,38 +692,38 @@ namespace Banshee.Sources
                 SortChildSources ();
             }
         }
-        
+
 #endregion
 
-#region Status Message Stuff        
-        
+#region Status Message Stuff
+
         private static DurationStatusFormatters duration_status_formatters = new DurationStatusFormatters ();
         public static DurationStatusFormatters DurationStatusFormatters {
             get { return duration_status_formatters; }
         }
-        
+
         protected virtual int StatusFormatsCount {
             get { return duration_status_formatters.Count; }
         }
-        
+
         public virtual int CurrentStatusFormat {
             get { return ConfigurationClient.Get<int> (String.Format ("sources.{0}", ParentConfigurationId), "status_format", 0); }
             set { ConfigurationClient.Set<int> (String.Format ("sources.{0}", ParentConfigurationId), "status_format", value); }
         }
-        
+
         public SchemaEntry<T> CreateSchema<T> (string name)
         {
             return CreateSchema<T> (name, default(T), null, null);
         }
-        
+
         public SchemaEntry<T> CreateSchema<T> (string name, T defaultValue, string shortDescription, string longDescription)
         {
-            return new SchemaEntry<T> (String.Format ("sources.{0}", ParentConfigurationId), name, defaultValue, shortDescription, longDescription); 
+            return new SchemaEntry<T> (String.Format ("sources.{0}", ParentConfigurationId), name, defaultValue, shortDescription, longDescription);
         }
-        
+
         public SchemaEntry<T> CreateSchema<T> (string ns, string name, T defaultValue, string shortDescription, string longDescription)
         {
-            return new SchemaEntry<T> (String.Format ("sources.{0}.{1}", ParentConfigurationId, ns), name, defaultValue, shortDescription, longDescription); 
+            return new SchemaEntry<T> (String.Format ("sources.{0}.{1}", ParentConfigurationId, ns), name, defaultValue, shortDescription, longDescription);
         }
 
         public virtual string PreferencesPageId {
@@ -743,7 +743,7 @@ namespace Banshee.Sources
             if (new_status_format >= StatusFormatsCount) {
                 new_status_format = 0;
             }
-            
+
             CurrentStatusFormat = new_status_format;
         }
 
@@ -753,13 +753,13 @@ namespace Banshee.Sources
             StringBuilder builder = new StringBuilder ();
 
             int count = FilteredCount;
-            
+
             if (count == 0) {
                 return String.Empty;
             }
-            
+
             builder.AppendFormat (Catalog.GetPluralString ("{0} item", "{0} items", count), count);
-            
+
             if (this is IDurationAggregator && StatusFormatsCount > 0) {
                 var duration = ((IDurationAggregator)this).Duration;
                 if (duration > TimeSpan.Zero) {
@@ -775,21 +775,21 @@ namespace Banshee.Sources
                     builder.AppendFormat (new FileSizeQueryValue (bytes).ToUserQuery ());
                 }
             }
-            
+
             return builder.ToString ();
         }
-        
+
 #endregion
 
         public override string ToString ()
         {
             return Name;
         }
-        
+
         /*string IService.ServiceName {
             get { return String.Format ("{0}{1}", DBusServiceManager.MakeDBusSafeString (Name), "Source"); }
         }*/
-        
+
         // FIXME: Replace ISource with IDBusExportable when it's enabled again
         ISource ISource.Parent {
             get {

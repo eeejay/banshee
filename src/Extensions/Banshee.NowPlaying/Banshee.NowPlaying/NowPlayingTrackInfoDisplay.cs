@@ -41,15 +41,15 @@ namespace Banshee.NowPlaying
         private static Cairo.Color text_color = CairoExtensions.RgbToColor (0xffffff);
         private static Cairo.Color text_light_color = CairoExtensions.RgbToColor (0x777777);
         private static Gdk.Pixbuf idle_pixbuf;
-        
+
         public NowPlayingTrackInfoDisplay ()
         {
         }
-    
+
         protected NowPlayingTrackInfoDisplay (IntPtr native) : base (native)
         {
         }
-        
+
         protected override Cairo.Color BackgroundColor {
             get { return background_color; }
         }
@@ -61,23 +61,23 @@ namespace Banshee.NowPlaying
         protected override Cairo.Color TextLightColor {
             get { return text_light_color; }
         }
-        
+
         protected override bool CanRenderIdle {
             get { return true; }
         }
-        
+
         protected override void RenderIdle (Cairo.Context cr)
         {
             if (idle_pixbuf == null) {
                 idle_pixbuf = Gdk.Pixbuf.LoadFromResource ("idle-logo.png");
             }
-            
+
             if (idle_pixbuf == null) {
                 return;
             }
-            
+
             cr.Save ();
-            cr.Translate (Allocation.X + ((Allocation.Width - idle_pixbuf.Width) / 2), 
+            cr.Translate (Allocation.X + ((Allocation.Width - idle_pixbuf.Width) / 2),
                 Allocation.Y + ((Allocation.Height - idle_pixbuf.Height) / 2));
             Gdk.CairoHelper.SetSourcePixbuf (cr, idle_pixbuf, 0, 0);
             cr.Paint ();

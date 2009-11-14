@@ -31,12 +31,12 @@ using System;
 namespace Hyena.Data.Gui
 {
     public class ObjectListView : ListView<object>
-    {   
+    {
         public ObjectListView () : base ()
         {
             ColumnController = new ColumnController();
         }
-        
+
         protected override void OnModelReloaded ()
         {
             ColumnController.Clear ();
@@ -44,7 +44,7 @@ namespace Hyena.Data.Gui
                 ColumnController.Add (new Column (column_description));
             }
         }
-        
+
         public new IObjectListModel Model {
             get { return (IObjectListModel)base.Model; }
         }

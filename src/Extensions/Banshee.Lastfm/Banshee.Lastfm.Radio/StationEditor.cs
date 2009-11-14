@@ -63,7 +63,7 @@ namespace Banshee.Lastfm.Radio
             Initialize ();
             Dialog.Title = Catalog.GetString ("Edit Station");
         }
-    
+
         public StationEditor (LastfmSource lastfm) : base (dialog_name, new Glade.XML (
             System.Reflection.Assembly.GetExecutingAssembly (), dialog_resource, dialog_name, Banshee.ServiceStack.Application.InternalName))
         {

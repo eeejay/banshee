@@ -39,22 +39,22 @@ namespace Banshee.Preferences.Gui
         public Page Page {
             get { return page; }
         }
-        
+
         private Label tab_widget;
         public Widget TabWidget {
             get { return tab_widget; }
         }
-        
+
         public NotebookPage (Page page)
         {
             this.page = page;
-            
+
             BorderWidth = 5;
             Spacing = 10;
-            
+
             tab_widget = new Label (page.Name);
             tab_widget.Show ();
-            
+
             Widget page_widget = page.DisplayWidget as Widget;
             if (page_widget != null) {
                 page_widget.Show ();
@@ -88,15 +88,15 @@ namespace Banshee.Preferences.Gui
                 }
             }
         }
-        
+
         private void AddSection (Section section)
         {
             Frame frame = null;
-            
+
             if (section.Count == 0) {
                 return;
             }
-            
+
             if (section.ShowLabel) {
                 frame = new Frame ();
                 Label label = new Label ();
@@ -109,22 +109,22 @@ namespace Banshee.Preferences.Gui
                 frame.Shadow = ShadowType.None;
                 frame.Show ();
                 PackStart (frame, false, false, 0);
-            } 
-            
+            }
+
             Alignment alignment = new Alignment (0.0f, 0.0f, 1.0f, 1.0f);
             alignment.TopPadding = (uint)(frame == null ? 0 : 5);
             alignment.LeftPadding = section.ShowLabel ? (uint)12 : (uint)0;
             alignment.Show ();
-            
+
             if (frame != null) {
                 frame.Add (alignment);
             } else {
                 PackStart (alignment, false, false, 0);
             }
-            
+
             SectionBox box = new SectionBox (section);
             box.Show ();
-            
+
             alignment.Add (box);
         }
     }

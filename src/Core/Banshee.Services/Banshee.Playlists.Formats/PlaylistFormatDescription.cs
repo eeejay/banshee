@@ -31,7 +31,7 @@ using System;
 namespace Banshee.Playlists.Formats
 {
     public delegate bool PlaylistFormatMagicHandler(System.IO.StreamReader reader);
-    
+
     public class PlaylistFormatDescription
     {
         private Type type;
@@ -39,7 +39,7 @@ namespace Banshee.Playlists.Formats
         private string extension;
         private string [] mimetypes;
         private PlaylistFormatMagicHandler magic_handler;
-        
+
         public PlaylistFormatDescription(Type type, PlaylistFormatMagicHandler magic_handler, string name, string extension, string [] mimetypes)
         {
             this.type = type;
@@ -48,19 +48,19 @@ namespace Banshee.Playlists.Formats
             this.extension = extension;
             this.mimetypes = mimetypes;
         }
-        
+
         public Type Type {
             get { return type; }
         }
-        
+
         public PlaylistFormatMagicHandler MagicHandler {
             get { return magic_handler; }
         }
-        
+
         public string FormatName {
             get { return name; }
         }
-        
+
         public string FileExtension {
             get { return extension; }
         }

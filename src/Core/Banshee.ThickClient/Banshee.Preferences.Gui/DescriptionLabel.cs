@@ -36,7 +36,7 @@ namespace Banshee.Preferences.Gui
     {
         public delegate string DescriptionHandler ();
         private DescriptionHandler handler;
-        
+
         public DescriptionLabel (string text) : base ()
         {
             Set (text);
@@ -56,7 +56,7 @@ namespace Banshee.Preferences.Gui
                 Set (handler ());
             }
         }
-        
+
         public void PackInto (Box parent, bool expand)
         {
             parent.PackStart (this, expand, expand, 0);

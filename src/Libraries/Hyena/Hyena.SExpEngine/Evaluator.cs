@@ -36,17 +36,17 @@ namespace Hyena.SExpEngine
         {
             RegisterFunctions();
         }
-        
+
         public Evaluator(TreeNode expression) : base(expression)
         {
             RegisterFunctions();
         }
-        
+
         public Evaluator(string expression) : base(expression)
         {
             RegisterFunctions();
         }
-        
+
         private void RegisterFunctions()
         {
             RegisterFunctionSet(new ControlFunctionSet());

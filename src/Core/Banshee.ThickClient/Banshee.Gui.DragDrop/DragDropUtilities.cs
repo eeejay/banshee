@@ -59,11 +59,11 @@ namespace Banshee.Gui.DragDrop
         {
             return data == null ? new string [0] : data.Split (newline, StringSplitOptions.RemoveEmptyEntries);
         }
-        
+
         public static TreePath [] SelectionDataToTreePaths(Gtk.SelectionData data)
         {
             string rawData = String.Empty;
-            
+
             try {
                 rawData = SelectionDataToString(data);
                 return SelectionDataToTreePaths(rawData);
@@ -71,12 +71,12 @@ namespace Banshee.Gui.DragDrop
                 return null;
             }
         }
-        
+
         public static TreePath [] SelectionDataToTreePaths(string data)
         {
             ArrayList pathList = new ArrayList();
             string [] strPaths = SplitSelectionData(data);
-            
+
             foreach(string strPath in strPaths) {
                 try {
                     string finalStrPath = strPath.Trim();
@@ -85,22 +85,22 @@ namespace Banshee.Gui.DragDrop
                     }
                 } catch(Exception) { }
             }
-        
+
             return pathList.ToArray(typeof(TreePath)) as TreePath [];
         }
-        
+
         public static byte [] TreeViewSelectionPathsToBytes(TreeView view)
         {
             if(view.Selection.CountSelectedRows() <= 0) {
                 return null;
             }
-            
+
             string selData = null;
 
             foreach(TreePath p in view.Selection.GetSelectedRows()) {
                 selData += p.ToString() + "\r\n";
             }
-            
+
             return System.Text.Encoding.ASCII.GetBytes(selData);
         }
     }

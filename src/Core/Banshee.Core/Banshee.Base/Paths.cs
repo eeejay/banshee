@@ -31,7 +31,7 @@ using System.IO;
 using Mono.Unix;
 
 using Banshee.Configuration.Schema;
- 
+
 namespace Banshee.Base
 {
     public class Paths
@@ -40,16 +40,16 @@ namespace Banshee.Base
         {
             return GetTempFileName (dir, null);
         }
-        
+
         public static string GetTempFileName (string dir, string extension)
         {
             return GetTempFileName (new DirectoryInfo (dir), extension);
         }
-        
+
         public static string GetTempFileName (DirectoryInfo dir, string extension)
         {
             string path = null;
-            
+
             if (dir == null || !dir.Exists) {
                 throw new DirectoryNotFoundException ();
             }
@@ -59,10 +59,10 @@ namespace Banshee.Base
                 string file = extension == null ? guid : String.Format ("{0}.{1}", guid, extension);
                 path = Path.Combine (dir.FullName, file);
             } while (File.Exists (path));
-        
+
             return path;
         }
-        
+
         public static string Combine (string first, params string [] components)
         {
             if (String.IsNullOrEmpty (first)) {
@@ -70,13 +70,13 @@ namespace Banshee.Base
             } else if (components == null || components.Length < 1) {
                 throw new ArgumentException ("One or more path components must be provided", "components");
             }
-            
+
             string result = first;
-            
+
             foreach (string component in components) {
                 result = Path.Combine (result, component);
             }
-            
+
             return result;
         }
 
@@ -107,57 +107,57 @@ namespace Banshee.Base
             // this is super lame, should handle quoting/escaping
             return path.Split (':');
         }
-        
+
         public static string MakePathRelative (string path, string to)
         {
             if (String.IsNullOrEmpty (path) || String.IsNullOrEmpty (to)) {
                 return null;
             }
-            
+
             if (path == to) {
                 return String.Empty;
             }
-            
+
             if (to[to.Length - 1] != Path.DirectorySeparatorChar) {
                 to = to + Path.DirectorySeparatorChar;
             }
-            
+
             if (path.Length < to.Length) {
                 return null;
             }
-            
+
             return path.StartsWith (to)
                 ? path.Substring (to.Length)
                 : null;
         }
-        
+
         private static string legacy_application_data = Path.Combine (Environment.GetFolderPath (
             Environment.SpecialFolder.ApplicationData), "banshee");
-    
+
         public static string LegacyApplicationData {
             get { return legacy_application_data; }
         }
-        
+
         private static string application_data = Path.Combine (Environment.GetFolderPath (
             Environment.SpecialFolder.ApplicationData), "banshee-1");
-        
+
         public static string ApplicationData {
-            get { 
+            get {
                 if (!Directory.Exists (application_data)) {
                     Directory.CreateDirectory (application_data);
                 }
-                
-                return application_data; 
+
+                return application_data;
             }
         }
-        
+
         private static string application_cache = Path.Combine (XdgBaseDirectorySpec.GetUserDirectory (
             "XDG_CACHE_HOME", ".cache"), "banshee-1");
-        
+
         public static string ApplicationCache {
             get { return application_cache; }
         }
-        
+
         public static string ExtensionCacheRoot {
             get { return Path.Combine (ApplicationCache, "extensions"); }
         }
@@ -165,50 +165,50 @@ namespace Banshee.Base
         public static string SystemTempDir {
             get { return "/tmp/"; }
         }
-        
+
         public static string TempDir {
             get {
                 string dir = Path.Combine (ApplicationCache, "temp");
-        
+
                 if (File.Exists (dir)) {
                     File.Delete (dir);
                 }
-                
+
                 Directory.CreateDirectory (dir);
                 return dir;
             }
         }
-        
+
         private static string installed_application_prefix = null;
         public static string InstalledApplicationPrefix {
             get {
                 if (installed_application_prefix == null) {
                     installed_application_prefix = Path.GetDirectoryName (
                         System.Reflection.Assembly.GetExecutingAssembly ().Location);
-                    
+
                     if (Directory.Exists (Paths.Combine (installed_application_prefix, "share", "banshee-1"))) {
                         return installed_application_prefix;
                     }
-                        
+
                     DirectoryInfo entry_directory = new DirectoryInfo (installed_application_prefix);
-                    
+
                     if (entry_directory != null && entry_directory.Parent != null && entry_directory.Parent.Parent != null) {
                         installed_application_prefix = entry_directory.Parent.Parent.FullName;
                     }
                 }
-                
+
                 return installed_application_prefix;
             }
         }
-        
+
         public static string InstalledApplicationDataRoot {
             get { return Path.Combine (InstalledApplicationPrefix, "share"); }
         }
-        
+
         public static string InstalledApplicationData {
             get { return Path.Combine (InstalledApplicationDataRoot, "banshee-1"); }
         }
-        
+
         public static string GetInstalledDataDirectory (string path)
         {
             return Path.Combine (InstalledApplicationData, path);

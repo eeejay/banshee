@@ -45,16 +45,16 @@ namespace Hyena.Data
             lock (this) {
                 if (ContainsKey (index))
                     return this[index];
-                
+
                 FetchSet (index, model.FetchCount);
-                
+
                 if (ContainsKey (index))
                     return this[index];
-                
+
                 return default (T);
             }
         }
-        
+
         // Responsible for fetching a set of items and placing them in the cache
         protected abstract void FetchSet (long offset, long limit);
 

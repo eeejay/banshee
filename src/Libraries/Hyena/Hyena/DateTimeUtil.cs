@@ -61,13 +61,13 @@ namespace Hyena
         public static string FormatDuration (long time) {
             return FormatDuration (TimeSpan.FromSeconds (time));
         }
-        
+
         public static string FormatDuration (TimeSpan time) {
             return FormatDuration (time.Hours, time.Minutes, time.Seconds);
         }
-        
+
         public static string FormatDuration (int hours, int minutes, int seconds) {
-            return (hours > 0 ? 
+            return (hours > 0 ?
                     String.Format ("{0}:{1:00}:{2:00}", hours, minutes, seconds) :
                     String.Format ("{0}:{1:00}", minutes, seconds));
         }

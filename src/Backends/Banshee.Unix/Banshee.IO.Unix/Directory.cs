@@ -40,17 +40,17 @@ namespace Banshee.IO.Unix
     {
         [System.Runtime.InteropServices.DllImport ("libglib-2.0-0.dll")]
         private static extern int g_mkdir_with_parents (IntPtr path, int mode);
-    
+
         public void Create (string directory)
         {
             IntPtr path_ptr = IntPtr.Zero;
-            
+
             try {
                 path_ptr = GLib.Marshaller.StringToPtrGStrdup (directory);
                 if (path_ptr == IntPtr.Zero) {
                     throw new Exception ("Failed to allocate native directory string");
                 }
-            
+
                 // 493 == 0755 - C# doesn't do octal literals
                 if (g_mkdir_with_parents (path_ptr, 493) == -1) {
                     Mono.Unix.UnixMarshal.ThrowExceptionForLastError ();
@@ -64,18 +64,18 @@ namespace Banshee.IO.Unix
                 }
             }
         }
-        
+
         public void Delete (string directory)
         {
             Delete (directory, false);
         }
-        
+
         public void Delete (string directory, bool recursive)
         {
             UnixDirectoryInfo unix_dir = new UnixDirectoryInfo (directory);
             unix_dir.Delete (recursive);
         }
-        
+
         public bool Exists (string directory)
         {
             try {
@@ -85,7 +85,7 @@ namespace Banshee.IO.Unix
                 return false;
             }
         }
-        
+
         public IEnumerable<string> GetFiles (string directory)
         {
             UnixDirectoryInfo unix_dir = new UnixDirectoryInfo (directory);
@@ -95,7 +95,7 @@ namespace Banshee.IO.Unix
                 }
             }
         }
-        
+
         public IEnumerable<string> GetDirectories (string directory)
         {
             UnixDirectoryInfo unix_dir = new UnixDirectoryInfo (directory);
@@ -105,7 +105,7 @@ namespace Banshee.IO.Unix
                 }
             }
         }
-        
+
         public void Move (SafeUri from, SafeUri to)
         {
             Mono.Unix.Native.Stdlib.rename (from.LocalPath, to.LocalPath);

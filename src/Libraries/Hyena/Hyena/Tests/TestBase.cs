@@ -44,13 +44,13 @@ namespace Hyena.Tests
     {
         public F From;
         public T To;
-    
+
         public TransformPair (F from, T to)
         {
             From = from;
             To = to;
         }
-    
+
         public static TransformPair<F, T> [] GetFrom (params object [] objects)
         {
             TransformPair<F, T> [] pairs = new TransformPair<F, T> [objects.Length / 2];
@@ -59,27 +59,27 @@ namespace Hyena.Tests
             }
             return pairs;
         }
-    
+
         public override string ToString ()
         {
             return From.ToString ();
         }
     }
-    
+
     public delegate To Transform<F, To> (F from);
-    
+
     public abstract class TestBase
     {
         private string bin_dir;
         public string BinDir {
             get { return bin_dir ?? (bin_dir = Path.GetDirectoryName (Assembly.GetExecutingAssembly ().Location)); }
         }
-        
+
         private string tests_dir;
         public string TestsDir {
             get { return tests_dir ?? (tests_dir = Path.Combine (Path.GetDirectoryName (BinDir), "tests")); }
         }
-    
+
         public static void AssertForEach<T> (IEnumerable<T> objects, Action<T> runner)
         {
             System.Text.StringBuilder sb = new System.Text.StringBuilder ();
@@ -88,11 +88,11 @@ namespace Hyena.Tests
                 catch (AssertionException e) { sb.AppendFormat ("Failed assertion on {0}: {1}\n", o, e.Message); }
                 catch (Exception e) { sb.AppendFormat ("\nCaught exception on {0}: {1}\n", o, e.ToString ()); }
             }
-    
+
             if (sb.Length > 0)
                 Assert.Fail ("\n" + sb.ToString ());
         }
-    
+
         // Fails to compile, causes SIGABRT in gmcs; boo
         /*public static void AssertTransformsEach<A, B> (IEnumerable<TransformPair<A, B>> pairs, Transform<A, B> transform)
         {

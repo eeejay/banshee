@@ -33,7 +33,7 @@ using Mono.Unix;
 using Banshee.Collection;
 using Banshee.Sources;
 using Xspf = Media.Playlists.Xspf;
- 
+
 namespace Banshee.Playlists.Formats
 {
     public class XspfPlaylistFormat : PlaylistFormatBase
@@ -45,7 +45,7 @@ namespace Banshee.Playlists.Formats
             "xspf",
             new string [] {"application/xspf+xml"}
         );
-        
+
         public static bool MagicHandler (StreamReader stream)
         {
             try {
@@ -54,11 +54,11 @@ namespace Banshee.Playlists.Formats
                 return false;
             }
         }
-        
+
         public XspfPlaylistFormat ()
         {
         }
-        
+
         public override void Load (StreamReader stream, bool validateHeader)
         {
             Xspf.Playlist playlist = new Xspf.Playlist ();
@@ -70,7 +70,7 @@ namespace Banshee.Playlists.Formats
                 element["uri"] = track.GetLocationAt (0);
             }
         }
-        
+
         public override void Save (Stream stream, ITrackModelSource source)
         {
             Xspf.Playlist playlist = new Xspf.Playlist ();

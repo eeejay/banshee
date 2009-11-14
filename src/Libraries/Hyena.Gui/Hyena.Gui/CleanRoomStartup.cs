@@ -33,29 +33,29 @@ namespace Hyena.Gui
     public static class CleanRoomStartup
     {
         public delegate void StartupInvocationHandler();
-        
+
         public static void Startup(StartupInvocationHandler startup)
         {
             bool disable_clean_room = false;
-            
+
             foreach(string arg in Environment.GetCommandLineArgs ()) {
                 if(arg == "--disable-clean-room") {
                     disable_clean_room = true;
                     break;
                 }
             }
-            
+
             if(disable_clean_room) {
                 startup();
                 return;
             }
-            
+
             try {
                 startup();
             } catch(Exception e) {
                 Console.WriteLine(e.Message);
                 Console.WriteLine(e);
-            
+
                 Gtk.Application.Init();
                 Hyena.Gui.Dialogs.ExceptionDialog dialog = new Hyena.Gui.Dialogs.ExceptionDialog(e);
                 dialog.Run();

@@ -284,7 +284,7 @@ namespace Banshee.InternetArchive
                     // Translators: {0} is the unicode-stars-rating, {1} is the name of a person who reviewed this item, and {1} is a date/time string
                     sb.AppendFormat (Catalog.GetString ("{0} by {1} on {2}"),
                         stars[Math.Max (0, Math.Min (5, review.Stars))],
-                        GLib.Markup.EscapeText (review.Reviewer), 
+                        GLib.Markup.EscapeText (review.Reviewer),
                         GLib.Markup.EscapeText (review.DateReviewed.ToLocalTime ().ToShortDateString ())
                     );
 
@@ -512,7 +512,7 @@ namespace Banshee.InternetArchive
 
             vbox.PackStart (file_sw, true, true, 0);
             vbox.PackStart (format_list, false, false, 0);
-           
+
             file_list.SizeAllocated += (o, a) => {
                 int target_list_width = file_list.MaxWidth;
                 if (file_sw.VScrollbar != null && file_sw.VScrollbar.IsMapped) {

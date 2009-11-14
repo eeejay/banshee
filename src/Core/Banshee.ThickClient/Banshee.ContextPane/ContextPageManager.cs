@@ -45,10 +45,10 @@ namespace Banshee.ContextPane
             Mono.Addins.AddinManager.AddExtensionNodeHandler ("/Banshee/ThickClient/ContextPane", OnExtensionChanged);
         }
 
-        private void OnExtensionChanged (object o, ExtensionNodeEventArgs args) 
+        private void OnExtensionChanged (object o, ExtensionNodeEventArgs args)
         {
             TypeExtensionNode node = (TypeExtensionNode)args.ExtensionNode;
-            
+
             if (args.Change == ExtensionChange.Add) {
                 var page = (BaseContextPage) node.CreateInstance ();
                 pane.AddPage (page);

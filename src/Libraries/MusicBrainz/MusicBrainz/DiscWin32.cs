@@ -34,7 +34,7 @@ namespace MusicBrainz
 
         [DllImport ("winmm")]
         static extern Int32 mciGetErrorString (Int32 errorCode, [MarshalAs(UnmanagedType.LPTStr)] StringBuilder errorText, Int32 errorTextSize);
-        
+
         delegate void MciCall (string result);
 
         internal DiscWin32 (string device)
@@ -96,7 +96,7 @@ namespace MusicBrainz
                 string.Format ("close {0} wait", alias),
                 string.Format ("Could not close device {0}", device),
                 null);
-            
+
             Init ();
         }
 

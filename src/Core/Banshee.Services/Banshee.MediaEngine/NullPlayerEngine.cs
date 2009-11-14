@@ -38,7 +38,7 @@ namespace Banshee.MediaEngine
         protected override void OpenUri (SafeUri uri)
         {
         }
-        
+
         public override void Play ()
         {
             OnStateChanged (PlayerState.Playing);
@@ -48,50 +48,50 @@ namespace Banshee.MediaEngine
         {
             OnStateChanged (PlayerState.Paused);
         }
-        
+
         private ushort volume;
         public override ushort Volume {
             get { return volume; }
             set { volume = value; }
         }
-        
+
         public override uint Position {
             get { return 0; }
             set { return; }
         }
-        
+
         public override bool CanSeek {
             get { return false; }
         }
-        
+
         public override uint Length {
             get { return 0; }
         }
-        
+
         public override bool SupportsEqualizer {
             get { return false; }
         }
-        
+
         public override VideoDisplayContextType VideoDisplayContextType {
             get { return VideoDisplayContextType.Unsupported; }
         }
-        
+
         private static string [] source_capabilities = { "file", "http", "cdda" };
         public override IEnumerable SourceCapabilities {
             get { return source_capabilities; }
         }
-        
+
         public override IEnumerable ExplicitDecoderCapabilities {
             get { return new string[0]; }
         }
-        
+
         public override string Id {
             get { return "nullplayerengine"; }
         }
-        
+
         public override string Name {
             get { return "Null Player Engine"; }
         }
-        
+
     }
 }

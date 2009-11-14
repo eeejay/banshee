@@ -37,31 +37,31 @@ namespace Banshee.Lastfm.Recommendations
     public class SimilarArtistTile : Tile
     {
         private SimilarArtist artist;
-        
+
         public SimilarArtistTile (SimilarArtist artist)
         {
             Artist = artist;
         }
-        
+
         protected override void OnClicked ()
         {
             if (artist != null) {
                 Banshee.Web.Browser.Open (artist.Url);
             }
         }
-        
+
         public SimilarArtist Artist {
             set {
                 artist = value;
-                
+
                 PrimaryText = value.Name;
-                
+
                 try {
                     SecondaryText = String.Format (Catalog.GetString ("{0}% Similarity"), value.MatchAsInt);
                 } catch {
                     SecondaryText = Catalog.GetString ("Unknown Similarity");
                 }
-                
+
                 try {
                     Pixbuf = new Gdk.Pixbuf (DataCore.GetCachedPathFromUrl (value.SmallImageUrl));
                 } catch {

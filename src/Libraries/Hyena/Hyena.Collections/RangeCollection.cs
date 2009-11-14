@@ -42,11 +42,11 @@ namespace Hyena.Collections
 #if NET_1_1
     internal
 #else
-    public 
+    public
 #endif
 
     class RangeCollection :
-        ICloneable, 
+        ICloneable,
 #if NET_2_0
         ICollection<int>
 #else
@@ -57,7 +57,7 @@ namespace Hyena.Collections
         {
             private int start;
             private int end;
-            
+
             public Range (int start, int end)
             {
                 this.start = start;
@@ -73,12 +73,12 @@ namespace Hyena.Collections
                 get { return start; }
                 set { start = value; }
             }
-            
+
             public int End {
                 get { return end; }
                 set { end = value; }
             }
-            
+
             public int Count {
                 get { return End - Start + 1; }
             }
@@ -104,23 +104,23 @@ namespace Hyena.Collections
             if (delta < 0) {
                 start -= delta;
             }
-            
+
             if (start < range_count) {
                 Array.Copy (ranges, start, ranges, start + delta, range_count - start);
             }
-            
+
             range_count += delta;
         }
 
         private void EnsureCapacity (int growBy)
-        { 
+        {
             int new_capacity = ranges.Length == 0 ? 1 : ranges.Length;
             int min_capacity = ranges.Length == 0 ? MIN_CAPACITY : ranges.Length + growBy;
 
             while (new_capacity < min_capacity) {
                 new_capacity <<= 1;
             }
-            
+
 #if NET_2_0
             Array.Resize (ref ranges, new_capacity);
 #else
@@ -129,34 +129,34 @@ namespace Hyena.Collections
             ranges = new_ranges;
 #endif
         }
-        
+
         private void Insert (int position, Range range)
         {
             if (range_count == ranges.Length) {
                 EnsureCapacity (1);
             }
-            
+
             Shift (position, 1);
             ranges[position] = range;
         }
-       
+
         private void RemoveAt (int position)
         {
             Shift (position, -1);
             Array.Clear (ranges, range_count, 1);
         }
-        
+
 #endregion
 
 #region Private Range Logic
-        
+
         private bool RemoveIndexFromRange (int index)
         {
             int range_index = FindRangeIndexForValue (index);
             if (range_index < 0) {
                 return false;
             }
-            
+
             Range range = ranges[range_index];
             if (range.Start == index && range.End == index) {
                 RemoveAt (range_index);
@@ -169,7 +169,7 @@ namespace Hyena.Collections
                 ranges[range_index].End = index - 1;
                 Insert (range_index + 1, split_range);
             }
-            
+
             index_count--;
             return true;
         }
@@ -177,7 +177,7 @@ namespace Hyena.Collections
         private void InsertRange (Range range)
         {
             int position = FindInsertionPosition (range);
-            bool merged_left = MergeLeft (range, position); 
+            bool merged_left = MergeLeft (range, position);
             bool merged_right = MergeRight (range, position);
 
             if (!merged_left && !merged_right) {
@@ -208,7 +208,7 @@ namespace Hyena.Collections
 
             return false;
         }
-        
+
         private static int CompareRanges (Range a, Range b)
         {
             return (a.Start + (a.End - a.Start)).CompareTo (b.Start + (b.End - b.Start));
@@ -218,29 +218,29 @@ namespace Hyena.Collections
         {
             int min = 0;
             int max = range_count - 1;
-            
+
             while (min <= max) {
                 int mid = min + ((max - min) / 2);
                 int cmp = CompareRanges (ranges[mid], range);
-                 
+
                 if (cmp == 0) {
                     return mid;
                 } else if (cmp > 0) {
                     if (mid > 0 && CompareRanges (ranges[mid - 1], range) < 0) {
                         return mid;
                     }
-                    
+
                     max = mid - 1;
                 } else {
                     min = mid + 1;
                 }
             }
-            
+
             return min;
         }
-        
+
         public int FindRangeIndexForValue (int value)
-        {  
+        {
             int min = 0;
 			int max = range_count - 1;
 			
@@ -258,8 +258,8 @@ namespace Hyena.Collections
 
 			return ~min;
         }
-        
-#endregion 
+
+#endregion
 
 #region Public RangeCollection API
 
@@ -270,45 +270,45 @@ namespace Hyena.Collections
                 return ranges_copy;
             }
         }
-        
+
         public int RangeCount {
             get { return range_count; }
         }
-          
+
 #if NET_2_0
         [Obsolete ("Do not use the Indexes property in 2.0 profiles if enumerating only; Indexes allocates an array to avoid boxing in the 1.1 profile")]
 #endif
         public int [] Indexes {
-            get { 
+            get {
                 if (indexes_cache != null && generation == indexes_cache_generation) {
                     return indexes_cache;
                 }
-                
+
                 indexes_cache = new int[Count];
                 indexes_cache_generation = generation;
-                
+
                 for (int i = 0, j = 0; i < range_count; i++) {
                     for (int k = ranges[i].Start; k <= ranges[i].End; j++, k++) {
                         indexes_cache[j] = k;
                     }
                 }
-                
+
                 return indexes_cache;
             }
         }
-        
+
         public int IndexOf (int value)
         {
             int offset = 0;
-            
+
             foreach (Range range in ranges) {
                 if (value >= range.Start && value <= range.End) {
                     return offset + (value - range.Start);
                 }
-                
+
                 offset += range.End - range.Start + 1;
             }
-            
+
             return -1;
         }
 
@@ -319,7 +319,7 @@ namespace Hyena.Collections
                         return ranges[i].End - (cuml_count - index) + 1;
                     }
                 }
-                
+
                 throw new IndexOutOfRangeException (index.ToString ());
             }
         }
@@ -336,10 +336,10 @@ namespace Hyena.Collections
                 index_count++;
                 return true;
             }
-            
+
             return false;
         }
-        
+
         void
 #if NET_2_0
         ICollection<int>.
@@ -350,63 +350,63 @@ namespace Hyena.Collections
         {
             Add (value);
         }
-                
+
         public bool Remove (int value)
         {
             generation++;
             return RemoveIndexFromRange (value);
         }
-        
+
         public void Clear ()
         {
             range_count = 0;
             index_count = 0;
             generation++;
-            ranges = new Range[MIN_CAPACITY];   
+            ranges = new Range[MIN_CAPACITY];
         }
-        
+
         public bool Contains (int value)
         {
             return FindRangeIndexForValue (value) >= 0;
         }
-        
+
         public void CopyTo (int [] array, int index)
         {
             throw new NotImplementedException ();
         }
-        
+
         public void CopyTo (Array array, int index)
         {
             throw new NotImplementedException ();
         }
-        
+
         public int Count {
             get { return index_count; }
         }
-        
+
         public bool IsReadOnly {
             get { return false; }
         }
 
-#if !NET_2_0        
+#if !NET_2_0
         public bool IsSynchronized {
             get { return false; }
         }
-        
+
         public object SyncRoot {
             get { return this; }
         }
 #endif
 
 #endregion
-        
+
 #region ICloneable Implementation
 
         public object Clone ()
         {
             return MemberwiseClone ();
         }
-        
+
 #endregion
 
 #region IEnumerable Implementation
@@ -420,7 +420,7 @@ namespace Hyena.Collections
                 }
             }
         }
-        
+
         IEnumerator IEnumerable.GetEnumerator ()
         {
             return GetEnumerator ();

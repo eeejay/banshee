@@ -48,7 +48,7 @@ namespace Banshee.Library
             MediaTypes = TrackMediaAttributes.Music | TrackMediaAttributes.AudioStream;
             NotMediaTypes = TrackMediaAttributes.Podcast | TrackMediaAttributes.VideoStream | TrackMediaAttributes.AudioBook;
             Properties.SetStringList ("Icon.Name", "audio-x-generic", "source-library");
-            
+
             // Migrate the old library-location schema, if necessary
             if (DatabaseConfigurationClient.Client.Get<int> ("MusicLibraryLocationMigrated", 0) != 1) {
                 string old_location = OldLocationSchema.Get ();
@@ -58,13 +58,13 @@ namespace Banshee.Library
                 DatabaseConfigurationClient.Client.Set<int> ("MusicLibraryLocationMigrated", 1);
             }
 
-            Section file_system = PreferencesPage.Add (new Section ("file-system", 
+            Section file_system = PreferencesPage.Add (new Section ("file-system",
                 Catalog.GetString ("File System Organization"), 5));
 
-            file_system.Add (new SchemaPreference<string> (LibrarySchema.FolderPattern, 
+            file_system.Add (new SchemaPreference<string> (LibrarySchema.FolderPattern,
                 Catalog.GetString ("Folder hie_rarchy")));
-            
-            file_system.Add (new SchemaPreference<string> (LibrarySchema.FilePattern,     
+
+            file_system.Add (new SchemaPreference<string> (LibrarySchema.FilePattern,
                 Catalog.GetString ("File _name")));
 
             PreferencesPage.Add (new Section ("misc", Catalog.GetString ("Miscellaneous"), 10));
@@ -74,7 +74,7 @@ namespace Banshee.Library
         {
             return Banshee.Base.Paths.GetXdgDirectoryUnderHome ("XDG_MUSIC_DIR", "Music");
         }
-        
+
         public override string DefaultBaseDirectory {
             get { return GetDefaultBaseDirectory (); }
         }

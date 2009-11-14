@@ -36,23 +36,23 @@ namespace Banshee.Collection.Database
     public class FilterModelProvider<T> : SqliteModelProvider<T> where T : new()
     {
         private string table_name;
-        
+
         public FilterModelProvider (HyenaSqliteConnection conn, string table_name, string pk_column, PropertyInfo pk_info, string value_column, PropertyInfo value_info) : base (conn)
         {
             this.table_name = table_name;
             PrimaryKey = pk_column;
-            
+
             DatabaseColumnAttribute pk_attr = new DatabaseColumnAttribute ();
             pk_attr.Constraints = DatabaseColumnConstraints.PrimaryKey;
             AddColumn (new DatabaseColumn (pk_info, pk_attr), true);
 
             AddColumn (new DatabaseColumn (value_info, new DatabaseColumnAttribute ()), true);
-            
+
             select = String.Format ("{0} as Value", value_column);
         }
-        
+
         public override string TableName { get { return table_name; } }
-        
+
         private string select;
         public override string Select {
             get { return select; }

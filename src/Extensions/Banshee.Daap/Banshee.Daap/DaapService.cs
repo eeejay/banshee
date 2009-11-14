@@ -43,18 +43,18 @@ namespace Banshee.Daap
         private ServiceLocator locator;
         private DateTime locator_started;
         private static DaapProxyWebServer proxy_server;
-        
+
         private DaapContainerSource container;
         private Dictionary<string, DaapSource> source_map;
-        
+
         internal static DaapProxyWebServer ProxyServer {
             get { return proxy_server; }
         }
-        
+
         void IExtensionService.Initialize ()
         {
         }
-        
+
         public void Dispose ()
         {
             if (locator != null) {
@@ -63,12 +63,12 @@ namespace Banshee.Daap
                 locator.Removed -= OnServiceRemoved;
                 locator = null;
             }
-            
+
             if (proxy_server != null) {
                 proxy_server.Stop ();
                 proxy_server = null;
             }
-            
+
             // Dispose any remaining child sources
             if (source_map != null) {
                 foreach (KeyValuePair <string, DaapSource> kv in source_map) {
@@ -77,26 +77,26 @@ namespace Banshee.Daap
                         kv.Value.Dispose ();
                     }
                 }
-            
+
                 source_map.Clear ();
             }
-            
+
             if (container != null) {
                 ServiceManager.SourceManager.RemoveSource (container, true);
                 container = null;
             }
         }
-        
+
         private void OnServiceFound (object o, ServiceArgs args)
         {
             ThreadAssist.ProxyToMain (delegate {
                 DaapSource source = new DaapSource (args.Service);
                 string key = String.Format ("{0}:{1}", args.Service.Name, args.Service.Port);
-                
+
                 if (source_map.Count == 0) {
                     ServiceManager.SourceManager.AddSource (container);
                 }
-                
+
                 if (source_map.ContainsKey (key)) {
                     // Received new connection info for service
                     container.RemoveChildSource (source_map [key]);
@@ -105,26 +105,26 @@ namespace Banshee.Daap
                     // New service information
                     source_map.Add (key, source);
                 }
-                
+
                 container.AddChildSource (source);
-                
+
                 // Don't flash shares we find on startup (well, within 5s of startup)
                 if ((DateTime.Now - locator_started).TotalSeconds > 5) {
                     source.NotifyUser ();
                 }
             });
         }
-        
+
         private void OnServiceRemoved (object o, ServiceArgs args)
         {
             ThreadAssist.ProxyToMain (delegate {
                 string key = String.Format ("{0}:{1}", args.Service.Name, args.Service.Port);
                 DaapSource source = source_map [key];
-                
+
                 source.Disconnect (true);
                 container.RemoveChildSource (source);
                 source_map.Remove (key);
-                
+
                 if (source_map.Count == 0) {
                     ServiceManager.SourceManager.RemoveSource (container);
                 }
@@ -142,7 +142,7 @@ namespace Banshee.Daap
             // plugin is enabled, just no child sources yet.
             source_map = new Dictionary<string, DaapSource> ();
             container = new DaapContainerSource ();
-            
+
             try {
                 // Now start looking for services.
                 // We do this after creating the source because if we do it before
@@ -154,7 +154,7 @@ namespace Banshee.Daap
                 locator.ShowLocalServices = true;
                 locator_started = DateTime.Now;
                 locator.Start ();
-                
+
                 proxy_server = new DaapProxyWebServer ();
                 proxy_server.Start ();
             } catch (Exception e) {
@@ -162,7 +162,7 @@ namespace Banshee.Daap
             }
             return false;
         }
-        
+
         string IService.ServiceName {
             get { return "DaapService"; }
         }

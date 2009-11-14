@@ -51,7 +51,7 @@ namespace Hyena.Data.Gui
             public double ElasticWidth;
             public double ElasticPercent;
         }
-        
+
         private static Gdk.Cursor resize_x_cursor = new Gdk.Cursor (Gdk.CursorType.SbHDoubleArrow);
         private static Gdk.Cursor drag_cursor = new Gdk.Cursor (Gdk.CursorType.Fleur);
 
@@ -68,9 +68,9 @@ namespace Hyena.Data.Gui
         private int pressed_column_x_start_hadjustment = -1;
         private bool pressed_column_is_dragging = false;
         private bool pressed_column_drag_started = false;
-        
+
         private Pango.Layout column_layout;
-        
+
         private CachedColumn [] column_cache;
         private List<int> elastic_columns;
 
@@ -81,57 +81,57 @@ namespace Hyena.Data.Gui
         public int MaxWidth {
             get { return (int)max_width + Theme.TotalBorderWidth*2; }
         }
-        
+
 #region Columns
-        
+
         private void InvalidateColumnCache ()
         {
             column_cache = null;
         }
-        
+
         private void GenerateColumnCache ()
         {
             column_cache = new CachedColumn[column_controller.Count];
-            
+
             int i = 0;
             double total = 0.0;
-            
+
             foreach (Column column in column_controller) {
                 if (!column.Visible) {
                     continue;
                 }
-                
+
                 // If we don't already have a MinWidth set, use the width of our Title text
                 column.CalculateWidths (column_layout, HeaderVisible, HeaderHeight);
                 column_cache[i] = new CachedColumn ();
                 column_cache[i].Column = column;
                 column_cache[i].Index = i;
-                
+
                 total += column.Width;
                 i++;
             }
-            
+
             Array.Resize (ref column_cache, i);
-            
+
             double scale_factor = 1.0 / total;
-            
+
             for (i = 0; i < column_cache.Length; i++) {
                 column_cache[i].Column.Width *= scale_factor;
             }
-            
+
             RecalculateColumnSizes ();
         }
-        
+
         private void RegenerateColumnCache ()
         {
             if (column_controller == null) {
                 return;
             }
-            
+
             if (column_cache == null) {
                 GenerateColumnCache ();
             }
-            
+
             for (int i = 0; i < column_cache.Length; i++) {
                 // Calculate this column's proportional share of the width, and set positions (X1/X2)
                 column_cache[i].Width = (int)Math.Round (((double)header_width * column_cache[i].Column.Width));
@@ -140,7 +140,7 @@ namespace Hyena.Data.Gui
                 column_cache[i].ResizeX1 = column_cache[i].X2;
                 column_cache[i].ResizeX2 = column_cache[i].ResizeX1 + 2;
             }
-            
+
             // TODO handle max width
             int index = column_cache.Length - 1;
             if (index >= 0) {
@@ -148,13 +148,13 @@ namespace Hyena.Data.Gui
                 column_cache[index].Width = column_cache[index].X2 - column_cache[index].X1;
             }
         }
-        
+
         private void RecalculateColumnSizes ()
         {
             if (column_cache == null) {
                 return;
             }
-            
+
             ISortable sortable = Model as ISortable;
             sort_column_index = -1;
             int min_header_width = 0;
@@ -187,7 +187,7 @@ namespace Hyena.Data.Gui
             } else {
                 header_width = header_interaction_alloc.Width;
                 resizable = true;
-                
+
                 if (elastic_columns == null) {
                     elastic_columns = new List<int> (column_cache.Length);
                 }
@@ -197,9 +197,9 @@ namespace Hyena.Data.Gui
                     column_cache[i].ElasticWidth = 0.0;
                     column_cache[i].ElasticPercent = column_cache[i].Column.Width * header_width;
                 }
-                
+
                 double remaining_width = RecalculateColumnSizes (header_width, header_width);
-                
+
                 while (Math.Round (remaining_width) != 0.0 && elastic_columns.Count > 0) {
                     double total_elastic_width = 0.0;
                     foreach (int i in elastic_columns) {
@@ -207,7 +207,7 @@ namespace Hyena.Data.Gui
                     }
                     remaining_width = RecalculateColumnSizes (remaining_width, total_elastic_width);
                 }
-                
+
                 for (int i = 0; i < column_cache.Length; i++) {
                     column_cache[i].Column.Width = column_cache[i].ElasticWidth / (double)header_width;
                 }
@@ -222,16 +222,16 @@ namespace Hyena.Data.Gui
             list_width = tmp_width;
             max_width = tmp_max;
         }
-        
+
         private double RecalculateColumnSizes (double total_width, double total_elastic_width)
         {
             double remaining_width = total_width;
-            
+
             for (int index = 0; index < elastic_columns.Count; index++) {
                 int i = elastic_columns[index];
                 double percent = column_cache[i].ElasticPercent / total_elastic_width;
                 double delta = total_width * percent;
-                
+
                 // TODO handle max widths
                 double width = column_cache[i].ElasticWidth + delta;
                 if (width < column_cache[i].MinWidth) {
@@ -243,11 +243,11 @@ namespace Hyena.Data.Gui
                     elastic_columns.RemoveAt (index);
                     index--;
                 }
-                
+
                 remaining_width -= delta;
                 column_cache[i].ElasticWidth += delta;
             }
-            
+
             if (Math.Abs (total_width - remaining_width) < 1.0 || remaining_width == Double.NaN) {
                 Hyena.Log.Warning ("Forcefully breaking out of RCS loop b/c change in total_width less than 1.0");
                 return 0;
@@ -255,7 +255,7 @@ namespace Hyena.Data.Gui
 
             return Math.Round (remaining_width);
         }
-        
+
         protected virtual void OnColumnControllerUpdated ()
         {
             InvalidateColumnCache ();
@@ -294,7 +294,7 @@ namespace Hyena.Data.Gui
                 InvalidateHeader ();
             }
         }
-        
+
         protected virtual void OnColumnRightClicked (Column clickedColumn, int x, int y)
         {
             Column [] columns = ColumnController.ToArray ();
@@ -302,60 +302,60 @@ namespace Hyena.Data.Gui
                 // Fully qualified type name to avoid Mono 1.2.4 bug
                 return System.String.Compare (a.Title, b.Title);
             });
-            
+
             uint items = 0;
-            
+
             for (int i = 0; i < columns.Length; i++) {
                 if (columns[i].Id != null) {
                     items++;
                 }
             }
-            
+
             uint max_items_per_column = 15;
             if (items >= max_items_per_column * 2) {
                 max_items_per_column = (uint)Math.Ceiling (items / 3.0);
             } else if (items >= max_items_per_column) {
                 max_items_per_column = (uint)Math.Ceiling (items / 2.0);
             }
-            
+
             uint column_count = (uint)Math.Ceiling (items / (double)max_items_per_column);
-            
+
             Menu menu = new Menu ();
             uint row_offset = 2;
-            
+
             if (clickedColumn.Id != null) { // FIXME: Also restrict if the column vis can't be changed
                 menu.Attach (new ColumnHideMenuItem (clickedColumn), 0, column_count, 0, 1);
                 menu.Attach (new SeparatorMenuItem (), 0, column_count, 1, 2);
             }
-            
+
             items = 0;
-            
+
             for (uint i = 0, n = (uint)columns.Length, column = 0, row = 0; i < n; i++) {
                 if (columns[i].Id == null) {
                     continue;
                 }
-                
+
                 row = items++ % max_items_per_column;
-                
-                menu.Attach (new ColumnToggleMenuItem (columns[i]), 
+
+                menu.Attach (new ColumnToggleMenuItem (columns[i]),
                     column, column + 1, row + row_offset, row + 1 + row_offset);
-                
+
                 if (row == max_items_per_column - 1) {
                     column++;
                 }
             }
-            
+
             menu.ShowAll ();
             menu.Popup (null, null, delegate (Menu popup, out int pos_x, out int pos_y, out bool push_in) {
                 int win_x, win_y;
                 GdkWindow.GetOrigin (out win_x, out win_y);
-                
+
                 pos_x = win_x + x;
                 pos_y = win_y + y;
                 push_in = true;
             }, 3, Gtk.Global.CurrentEventTime);
         }
-        
+
         private void ResizeColumn (double x)
         {
             CachedColumn resizing_column = column_cache[resizing_column_index];
@@ -379,50 +379,50 @@ namespace Hyena.Data.Gui
             if (resizing_column.Width + resize_delta > resizing_column.MaxWidth) {
                 resize_delta = resizing_column.MaxWidth - resizing_column.Width;
             }
-            
+
             if (resize_delta == 0) {
                 return;
             }
-            
+
             int sign = Math.Sign (resize_delta);
             resize_delta = Math.Abs (resize_delta);
             double total_elastic_width = 0.0;
-            
+
             for (int i = real_resizing_column_index + 1; i < column_cache.Length; i++) {
                 total_elastic_width += column_cache[i].ElasticWidth = sign == 1
                     ? column_cache[i].Width - column_cache[i].MinWidth
                     : column_cache[i].MaxWidth - column_cache[i].Width;
             }
-            
+
             if (total_elastic_width == 0) {
                 return;
             }
-            
+
             if (resize_delta > total_elastic_width) {
                 resize_delta = total_elastic_width;
             }
 
             // Convert to a proprotional width
             resize_delta = sign * resize_delta / (double)header_width;
-            
+
             for (int i = real_resizing_column_index + 1; i < column_cache.Length; i++) {
                 column_cache[i].Column.Width += -resize_delta * (column_cache[i].ElasticWidth / total_elastic_width);
             }
-            
+
             resizing_column.Column.Width += resize_delta;
 
             RegenerateColumnCache ();
             QueueDraw ();
         }
-        
+
         private Column GetColumnForResizeHandle (int x)
         {
             if (column_cache == null || !resizable) {
                 return null;
             }
-            
+
             x += HadjustmentValue;
-            
+
             for (int i = 0; i < column_cache.Length - 1; i++) {
                 if (x < column_cache[i].ResizeX1 - 2) {
                     // No point in checking other columns since their ResizeX1 are even larger
@@ -465,24 +465,24 @@ namespace Hyena.Data.Gui
 
             return false;
         }
-        
+
         private Column GetColumnAt (int x)
         {
             if (column_cache == null) {
                 return null;
             }
-            
+
             x += HadjustmentValue;
-            
+
             foreach (CachedColumn column in column_cache) {
                 if (x >= column.X1 && x <= column.X2) {
                     return column.Column;
                 }
             }
-            
+
             return null;
         }
-        
+
         private CachedColumn GetCachedColumnForColumn (Column col)
         {
             foreach (CachedColumn ca_col in column_cache) {
@@ -490,10 +490,10 @@ namespace Hyena.Data.Gui
                     return ca_col;
                 }
             }
-            
+
             return CachedColumn.Zero;
         }
-                
+
         private ColumnController column_controller;
         public ColumnController ColumnController {
             get { return column_controller; }
@@ -505,17 +505,17 @@ namespace Hyena.Data.Gui
                 if (column_controller != null) {
                     column_controller.Updated -= OnColumnControllerUpdatedHandler;
                 }
-                
+
                 column_controller = value;
-                
+
                 OnColumnControllerUpdated ();
-                
+
                 if (column_controller != null) {
                     column_controller.Updated += OnColumnControllerUpdatedHandler;
                 }
             }
         }
-        
+
 #endregion
 
 #region Header
@@ -526,7 +526,7 @@ namespace Hyena.Data.Gui
                 if (!header_visible) {
                     return 0;
                 }
-                
+
                 if (header_height == 0) {
                     int w;
                     int h;
@@ -535,20 +535,20 @@ namespace Hyena.Data.Gui
                     header_height = h;
                     header_height += 10;
                 }
-                
+
                 return header_height;
             }
         }
-        
+
         private bool header_visible = true;
         public bool HeaderVisible {
             get { return header_visible; }
-            set { 
+            set {
                 header_visible = value;
                 MoveResize (Allocation);
             }
         }
-        
+
 #endregion
 
 #region Gtk.MenuItem Wrappers for the column context menu
@@ -558,64 +558,64 @@ namespace Hyena.Data.Gui
             private Column column;
             private bool ready = false;
             private Label label;
-            
+
             public ColumnToggleMenuItem (Column column) : base ()
             {
                 this.column = column;
-                Active = column.Visible; 
+                Active = column.Visible;
                 ready = true;
-                
+
                 label = new Label ();
                 label.Xalign = 0.0f;
                 label.Text = column.LongTitle ?? String.Empty;
                 label.Show ();
-                
+
                 Add (label);
             }
-                        
+
             protected override void OnStyleSet (Style previousStyle)
             {
                 base.OnStyleSet (previousStyle);
                 label.ModifyFg (StateType.Prelight, Style.Foreground (StateType.Selected));
             }
-            
+
             protected override void OnActivated ()
             {
                 base.OnActivated ();
-                
+
                 if (!ready) {
                     return;
                 }
-                
+
                 column.Visible = Active;
             }
         }
-        
+
         private class ColumnHideMenuItem : ImageMenuItem
         {
             private Column column;
             private Label label;
-            
+
             public ColumnHideMenuItem (Column column) : base ()
             {
                 this.column = column;
                 this.Image = new Image (Stock.Remove, IconSize.Menu);
-                
+
                 label = new Label ();
                 label.Xalign = 0.0f;
-                label.Markup = String.Format (Catalog.GetString ("Hide <i>{0}</i>"), 
+                label.Markup = String.Format (Catalog.GetString ("Hide <i>{0}</i>"),
                     GLib.Markup.EscapeText (column.LongTitle));
                 label.Show ();
-                
+
                 Add (label);
             }
-            
+
             protected override void OnStyleSet (Style previousStyle)
             {
                 base.OnStyleSet (previousStyle);
                 label.ModifyFg (StateType.Prelight, Style.Foreground (StateType.Selected));
             }
-            
+
             protected override void OnActivated ()
             {
                 column.Visible = false;

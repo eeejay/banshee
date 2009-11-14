@@ -30,25 +30,25 @@ using System;
 using Gtk;
 
 namespace Hyena.Data.Gui
-{    
+{
     public static class ListViewDragDropTarget
     {
         public enum TargetType
         {
             ModelSelection
         }
-        
+
         public static readonly TargetEntry ModelSelection =
             new TargetEntry ("application/x-hyena-data-model-selection", TargetFlags.App,
                 (uint)TargetType.ModelSelection);
     }
-    
+
     public partial class ListView<T> : ListViewBase
     {
         private static TargetEntry [] drag_drop_dest_entries = new TargetEntry [] {
             ListViewDragDropTarget.ModelSelection
         };
-        
+
         protected virtual TargetEntry [] DragDropDestEntries {
             get { return drag_drop_dest_entries; }
         }
@@ -56,7 +56,7 @@ namespace Hyena.Data.Gui
         protected virtual TargetEntry [] DragDropSourceEntries {
             get { return drag_drop_dest_entries; }
         }
-        
+
         private bool is_reorderable = false;
         public bool IsReorderable {
             get { return is_reorderable && IsEverReorderable; }
@@ -76,7 +76,7 @@ namespace Hyena.Data.Gui
                 OnDragDestSet ();
             }
         }
-        
+
         private bool force_drag_source_set = false;
         protected bool ForceDragSourceSet {
             get { return force_drag_source_set; }
@@ -85,7 +85,7 @@ namespace Hyena.Data.Gui
                 OnDragSourceSet ();
             }
         }
-        
+
         private bool force_drag_dest_set = false;
         protected bool ForceDragDestSet {
             get { return force_drag_dest_set; }
@@ -94,7 +94,7 @@ namespace Hyena.Data.Gui
                 OnDragDestSet ();
             }
         }
-        
+
         protected virtual void OnDragDestSet ()
         {
             if (ForceDragDestSet || IsReorderable) {
@@ -103,34 +103,34 @@ namespace Hyena.Data.Gui
                 Gtk.Drag.DestUnset (this);
             }
         }
-        
+
         protected virtual void OnDragSourceSet ()
         {
             if (ForceDragSourceSet || IsReorderable) {
-                Gtk.Drag.SourceSet (this, Gdk.ModifierType.Button1Mask | Gdk.ModifierType.Button3Mask, 
+                Gtk.Drag.SourceSet (this, Gdk.ModifierType.Button1Mask | Gdk.ModifierType.Button3Mask,
                     DragDropSourceEntries, Gdk.DragAction.Copy | Gdk.DragAction.Move);
             } else {
                 Gtk.Drag.SourceUnset (this);
             }
         }
-        
+
         private uint drag_scroll_timeout_id;
         private uint drag_scroll_timeout_duration = 50;
         private double drag_scroll_velocity;
         private double drag_scroll_velocity_max = 100.0;
         private int drag_reorder_row_index = -1;
         private int drag_reorder_motion_y = -1;
-        
+
         private void StopDragScroll ()
         {
             drag_scroll_velocity = 0.0;
-            
+
             if (drag_scroll_timeout_id > 0) {
                 GLib.Source.Remove (drag_scroll_timeout_id);
                 drag_scroll_timeout_id = 0;
             }
         }
-        
+
         private void OnDragScroll (GLib.TimeoutHandler handler, double threshold, int total, int position)
         {
             if (position < threshold) {
@@ -141,12 +141,12 @@ namespace Hyena.Data.Gui
                 StopDragScroll ();
                 return;
             }
-            
+
             if (drag_scroll_timeout_id == 0) {
                 drag_scroll_timeout_id = GLib.Timeout.Add (drag_scroll_timeout_duration, handler);
             }
         }
-        
+
         protected override bool OnDragMotion (Gdk.DragContext context, int x, int y, uint time)
         {
             if (!IsReorderable) {
@@ -156,20 +156,20 @@ namespace Hyena.Data.Gui
                 InvalidateList ();
                 return false;
             }
-            
+
             drag_reorder_motion_y = y;
             DragReorderUpdateRow ();
-            
+
             OnDragScroll (OnDragVScrollTimeout, Allocation.Height * 0.3, Allocation.Height, y);
-            
+
             return true;
         }
-        
+
         protected override void OnDragLeave (Gdk.DragContext context, uint time)
         {
             StopDragScroll ();
         }
-        
+
         protected override void OnDragEnd (Gdk.DragContext context)
         {
             StopDragScroll ();
@@ -177,28 +177,28 @@ namespace Hyena.Data.Gui
             drag_reorder_motion_y = -1;
             InvalidateList ();
         }
-        
+
         private bool OnDragVScrollTimeout ()
         {
             ScrollTo (VadjustmentValue + (drag_scroll_velocity * drag_scroll_velocity_max));
             DragReorderUpdateRow ();
             return true;
         }
-        
+
         private void DragReorderUpdateRow ()
         {
             int row = GetDragRow (drag_reorder_motion_y);
             if (row != drag_reorder_row_index) {
                 drag_reorder_row_index = row;
                 InvalidateList ();
-            }   
+            }
         }
-        
+
         protected int GetDragRow (int y)
         {
             y = TranslateToListY (y);
             int row = GetRowAtY (y);
-            
+
             if (row == -1) {
                 return -1;
             }

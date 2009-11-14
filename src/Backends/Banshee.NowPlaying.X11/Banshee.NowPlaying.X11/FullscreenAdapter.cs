@@ -41,44 +41,44 @@ namespace Banshee.NowPlaying.X11
         {
             [DllImport ("libbnpx11")]
             private static extern IntPtr bacon_resize_get_type ();
-    
+
             public static new GLib.GType GType {
                 get { return new GLib.GType (bacon_resize_get_type ()); }
             }
-        
+
             public BaconResize (Gtk.Window window) : base (IntPtr.Zero)
             {
                 this.window = window;
-                
+
                 GLib.Value window_val = new GLib.Value (window);
                 CreateNativeObject (
-                    new string [] { "video-widget" }, 
+                    new string [] { "video-widget" },
                     new GLib.Value [] { window_val }
                 );
                 window_val.Dispose ();
             }
-            
+
             private Window window;
             public Window Window {
                 get { return window; }
             }
-            
+
             [DllImport ("libbnpx11")]
             private static extern void bacon_resize_resize (IntPtr handle);
-            
+
             public void Resize ()
             {
                 bacon_resize_resize (Handle);
             }
-            
+
             [DllImport ("libbnpx11")]
             private static extern void bacon_resize_restore (IntPtr handle);
-            
+
             public void Restore ()
             {
                 bacon_resize_restore (Handle);
             }
-            
+
             [GLib.Property ("have-xvidmode")]
             public bool HaveXVidMode {
                 get {
@@ -89,9 +89,9 @@ namespace Banshee.NowPlaying.X11
                 }
             }
         }
-        
+
         private BaconResize resize;
-        
+
         public void Fullscreen (Window window, bool fullscreen)
         {
             // Create the Bacon X11 Resizer if we haven't before or the window changes
@@ -99,30 +99,30 @@ namespace Banshee.NowPlaying.X11
                 if (resize != null) {
                     resize.Dispose ();
                 }
-                
+
                 resize = new BaconResize (window);
                 Log.DebugFormat ("X11 Fullscreen Window Set (HaveXVidMode = {0})", resize.HaveXVidMode);
             }
-            
+
             // Do the default GTK fullscreen operation
             if (fullscreen) {
                 window.Fullscreen ();
             } else {
                 window.Unfullscreen ();
             }
-            
+
             // Skip if we don't support xvidmode, otherwise do the good resizing
             if (!resize.HaveXVidMode) {
                 return;
             }
-            
+
             if (fullscreen) {
                 resize.Resize ();
             } else {
                 resize.Restore ();
             }
         }
-        
+
         public void Dispose ()
         {
             if (resize != null) {

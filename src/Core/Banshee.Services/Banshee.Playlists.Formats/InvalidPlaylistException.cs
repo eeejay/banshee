@@ -35,7 +35,7 @@ namespace Banshee.Playlists.Formats
         public InvalidPlaylistException() : base()
         {
         }
-        
+
         public InvalidPlaylistException(string message) : base(message)
         {
         }

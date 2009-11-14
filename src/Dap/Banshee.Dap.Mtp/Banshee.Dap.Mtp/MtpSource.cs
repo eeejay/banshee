@@ -67,7 +67,7 @@ namespace Banshee.Dap.Mtp
         public override void DeviceInitialize (IDevice device)
         {
             base.DeviceInitialize (device);
-            
+
             if (MediaCapabilities == null || !MediaCapabilities.IsType ("mtp")) {
                 throw new InvalidDeviceException ();
             }
@@ -244,7 +244,7 @@ namespace Banshee.Dap.Mtp
                     playlist.Remove ();
                 }
                 device_playlists.Clear ();
-    
+
                 // Add playlists from Banshee to the device
                 foreach (Source child in Children) {
                     PlaylistSource from = child as PlaylistSource;
@@ -308,7 +308,7 @@ namespace Banshee.Dap.Mtp
                 return bytes_used;
             }
         }
-        
+
         private long bytes_capacity;
         public override long BytesCapacity {
             get {
@@ -412,7 +412,7 @@ namespace Banshee.Dap.Mtp
                         album_cache.Remove (key);
                     }
                 }
-                
+
                 return true;
             }
         }

@@ -41,7 +41,7 @@ namespace Lastfm
 
         // Only used during the authentication process
         private string authentication_token;
-        
+
         private string username;
         public string UserName {
             get { return username; }
@@ -74,21 +74,21 @@ namespace Lastfm
         {
             Browser.Open (SignUpUrl);
         }
-        
+
         public void VisitUserProfile (string username)
         {
             Browser.Open (String.Format ("http://last.fm/user/{0}", username));
         }
-        
+
         public string HomePageUrl {
             get { return "http://www.last.fm/"; }
         }
-        
+
         public void VisitHomePage ()
         {
             Browser.Open (HomePageUrl);
         }
-        
+
         public virtual void Save ()
         {
             OnUpdated ();
@@ -98,14 +98,14 @@ namespace Lastfm
         {
             LastfmRequest get_token = new LastfmRequest ("auth.getToken", RequestType.Read, ResponseFormat.Json);
             get_token.Send ();
-            
+
             var response = get_token.GetResponseObject ();
             object error_code;
             if (response.TryGetValue ("error", out error_code)) {
                 Log.WarningFormat ("Lastfm error {0} : {1}", (int)error_code, (string)response["message"]);
                 return (StationError) error_code;
             }
-            
+
             authentication_token = (string)response["token"];
             Browser.Open (String.Format ("http://www.last.fm/api/auth?api_key={0}&token={1}", LastfmCore.ApiKey, authentication_token));
 
@@ -117,7 +117,7 @@ namespace Lastfm
             if (authentication_token == null) {
                 throw new InvalidOperationException ("RequestAuthorization should be called before calling FetchSessionKey");
             }
-            
+
             LastfmRequest get_session = new LastfmRequest ("auth.getSession", RequestType.SessionRequest, ResponseFormat.Json);
             get_session.AddParameter ("token", authentication_token);
             get_session.Send ();
@@ -127,7 +127,7 @@ namespace Lastfm
                 Log.WarningFormat ("Lastfm error {0} : {1}", (int)error_code, (string)response["message"]);
                 return (StationError) error_code;
             }
-            
+
             var session = (Hyena.Json.JsonObject)response["session"];
             UserName = (string)session["name"];
             SessionKey = (string)session["key"];
@@ -135,10 +135,10 @@ namespace Lastfm
 
             // The authentication token is only valid once, and for a limited time
             authentication_token = null;
-            
+
             return StationError.None;
         }
-        
+
         protected void OnUpdated ()
         {
             EventHandler handler = Updated;

@@ -1,4 +1,4 @@
-// 
+//
 // ViewContainer.cs
 //
 // Author:
@@ -51,22 +51,22 @@ namespace Nereid
         private Label search_label;
         private Banshee.ContextPane.ContextPane context_pane;
         private VBox footer;
-        
+
         private ISourceContents content;
-        
+
         public ViewContainer ()
         {
-            BuildHeader ();           
-            
+            BuildHeader ();
+
             Spacing = 6;
             SearchSensitive = false;
         }
-        
+
         private void BuildHeader ()
         {
             header = new HBox ();
             footer = new VBox ();
-            
+
             EventBox title_box = new EventBox ();
             title_label = new Label ();
             title_label.Xalign = 0.0f;
@@ -86,17 +86,17 @@ namespace Nereid
             };
 
             header_box = new EventBox ();
-            
+
             BuildSearchEntry ();
-            
+
             search_label = new Label (Catalog.GetString ("_Search:"));
             search_label.MnemonicWidget = search_entry.InnerEntry;
-            
+
             header.PackStart (title_box, true, true, 0);
             header.PackStart (header_box, false, false, 0);
             header.PackStart (search_label, false, false, 5);
             header.PackStart (search_entry, false, false, 0);
-            
+
             InterfaceActionService uia = ServiceManager.Get<InterfaceActionService> ();
             if (uia != null) {
                 Gtk.Action action = uia.GlobalActions["WikiSearchHelpAction"];
@@ -104,17 +104,17 @@ namespace Nereid
                     MenuItem item = new SeparatorMenuItem ();
                     item.Show ();
                     search_entry.Menu.Append (item);
-                    
+
                     item = new ImageMenuItem (Stock.Help, null);
                     item.Activated += delegate { action.Activate (); };
                     item.Show ();
                     search_entry.Menu.Append (item);
                 }
             }
-            
+
             header.ShowAll ();
             search_entry.Show ();
-            
+
             PackStart (header, false, false, 0);
             PackEnd (footer, false, false, 0);
 
@@ -127,16 +127,16 @@ namespace Nereid
 
             PackEnd (new ConnectedMessageBar (), false, true, 0);
         }
-        
+
         private struct SearchFilter
         {
             public int Id;
             public string Field;
             public string Title;
         }
-        
+
         private Dictionary<int, SearchFilter> search_filters = new Dictionary<int, SearchFilter> ();
-        
+
         private void AddSearchFilter (TrackFilterType id, string field, string title)
         {
             SearchFilter filter = new SearchFilter ();
@@ -145,7 +145,7 @@ namespace Nereid
             filter.Title = title;
             search_filters.Add (filter.Id, filter);
         }
-        
+
         private void BuildSearchEntry ()
         {
             AddSearchFilter (TrackFilterType.None, String.Empty, Catalog.GetString ("Artist, Album, or Title"));
@@ -216,7 +216,7 @@ namespace Nereid
                 footer.Show ();
             }
         }
-        
+
         public void ClearFooter ()
         {
             footer.Hide ();
@@ -224,15 +224,15 @@ namespace Nereid
                 footer.Remove (child);
             }
         }
-        
+
         public HBox Header {
             get { return header; }
         }
-        
+
         public SearchEntry SearchEntry {
             get { return search_entry; }
         }
-        
+
         public ISourceContents Content {
             get { return content; }
             set {
@@ -250,23 +250,23 @@ namespace Nereid
                     PackStart (value.Widget, !context_pane.Large, true, 0);
                     value.Widget.Show ();
                 }
-                
+
                 // Remove the old one
                 if (content != null && content.Widget != null) {
                     Remove (content.Widget);
                 }
-                
+
                 content = value;
             }
         }
-        
+
         public string Title {
             set { title_label.Markup = String.Format ("<b>{0}</b>", GLib.Markup.EscapeText (value)); }
         }
-        
+
         public bool SearchSensitive {
             get { return search_entry.Sensitive; }
-            set { 
+            set {
                 search_entry.Sensitive = value;
                 search_label.Sensitive = value;
                 search_entry.Visible = value;

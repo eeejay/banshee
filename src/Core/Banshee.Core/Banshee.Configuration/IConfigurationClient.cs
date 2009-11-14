@@ -34,7 +34,7 @@ namespace Banshee.Configuration
         T Get<T> (SchemaEntry<T> entry, T fallback);
         T Get<T> (string key, T fallback);
         T Get<T> (string @namespace, string key, T fallback);
-        
+
         void Set<T> (SchemaEntry<T> entry, T value);
         void Set<T> (string key, T value);
         void Set<T> (string @namespace, string key, T value);

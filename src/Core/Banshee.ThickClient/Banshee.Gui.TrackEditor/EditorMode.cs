@@ -30,7 +30,7 @@ using System;
 
 namespace Banshee.Gui.TrackEditor
 {
-    public enum EditorMode 
+    public enum EditorMode
     {
         Edit,
         View

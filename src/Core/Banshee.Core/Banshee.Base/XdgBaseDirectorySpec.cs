@@ -37,7 +37,7 @@ namespace Banshee.Base
         {
             string home_dir = Environment.GetFolderPath (Environment.SpecialFolder.Personal);
             string config_dir = Environment.GetFolderPath (Environment.SpecialFolder.ApplicationData);
-            
+
             string env_path = Environment.GetEnvironmentVariable (key);
             if (!String.IsNullOrEmpty (env_path)) {
                 return env_path;
@@ -75,7 +75,7 @@ namespace Banshee.Base
                 }
             } catch (FileNotFoundException) {
             }
-            
+
             return Path.Combine (home_dir, fallback);
         }
     }

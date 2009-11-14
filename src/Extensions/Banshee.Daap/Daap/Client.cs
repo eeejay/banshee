@@ -1,17 +1,17 @@
 /*
  * daap-sharp
  * Copyright (C) 2005  James Willcox <snorp@snorp.net>
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2.1 of the License, or (at your option) any later version.
- * 
+ *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
@@ -32,7 +32,7 @@ namespace Daap {
 
     public class Client : IDisposable {
         private const int UpdateSleepInterval = 2 * 60 * 1000; // 2 minutes
-        
+
         private IPAddress address;
         private UInt16 port;
         private ContentCodeBag bag;
@@ -99,7 +99,7 @@ namespace Daap {
 
         public void Dispose () {
             updateRunning = false;
-            
+
             if (fetcher != null) {
                 fetcher.Dispose ();
                 fetcher = null;
@@ -128,7 +128,7 @@ namespace Daap {
 
                 FetchDatabases ();
                 Refresh ();
-                
+
                 if (serverInfo.SupportsUpdate) {
                     updateRunning = true;
                     Thread thread = new Thread (UpdateLoop);
@@ -154,7 +154,7 @@ namespace Daap {
             } catch (WebException) {
                 // some servers don't implement this, etc.
             }
-            
+
             fetcher.SessionId = 0;
         }
 
@@ -192,16 +192,16 @@ namespace Daap {
                     newrev = GetCurrentRevision ();
                 else
                     newrev = WaitForRevision (revision);
-            
+
                 if (newrev == revision)
                     return;
             }
-                
+
             // Console.WriteLine ("Got new revision: " + newrev);
             foreach (Database db in databases) {
                 db.Refresh (newrev);
             }
-            
+
             revision = newrev;
             if (Updated != null)
                 Updated (this, new EventArgs ());
@@ -212,19 +212,19 @@ namespace Daap {
                 try {
                     if (!updateRunning)
                         break;
-                    
+
                     Refresh ();
                 } catch (WebException) {
                     if (!updateRunning)
                         break;
-                    
+
                     // chill out for a while, maybe the server went down
                     // temporarily or something.
                     Thread.Sleep (UpdateSleepInterval);
                 } catch (Exception e) {
                     if (!updateRunning)
                         break;
-                    
+
                     Console.Error.WriteLine ("Exception in update loop: " + e);
                     Thread.Sleep (UpdateSleepInterval);
                 }

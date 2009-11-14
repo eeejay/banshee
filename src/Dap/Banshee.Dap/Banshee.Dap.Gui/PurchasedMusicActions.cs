@@ -45,7 +45,7 @@ namespace Banshee.Dap.Gui
                 instance = new PurchasedMusicActions ();
             }
         }
-    
+
         private PurchasedMusicActions () : base ("dap-purchased-music")
         {
             AddImportant (
@@ -53,9 +53,9 @@ namespace Banshee.Dap.Gui
                     Catalog.GetString ("Import Purchased Music"), null,
                     null, OnImportPurchasedMusic)
             );
-            
+
             this["PurchasedMusicImportAction"].IconName = Stock.Save;
-            
+
             Actions.SourceActions.Updated += OnUpdateActions;
             Register ();
         }
@@ -64,7 +64,7 @@ namespace Banshee.Dap.Gui
         {
             UpdateAction ("PurchasedMusicImportAction", source is IPurchasedMusicSource);
         }
-        
+
         private void OnImportPurchasedMusic (object o, EventArgs args)
         {
             IPurchasedMusicSource source = Actions.SourceActions.ActionSource as IPurchasedMusicSource;

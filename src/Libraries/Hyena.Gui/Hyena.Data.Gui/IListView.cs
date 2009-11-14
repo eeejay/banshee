@@ -32,13 +32,13 @@ namespace Hyena.Data.Gui
     {
         Hyena.Collections.SelectionProxy SelectionProxy { get; }
         Hyena.Collections.Selection Selection { get; }
-        
+
         void ScrollTo (int index);
         void CenterOn (int index);
         void GrabFocus ();
         ColumnController ColumnController { get; set; }
     }
-    
+
     public interface IListView<T> : IListView
     {
         void SetModel (IListModel<T> model);

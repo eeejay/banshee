@@ -65,7 +65,7 @@ namespace Hyena.Data.Sqlite
             this.connection = connection;
             this.model = model;
             this.provider = provider;
-            
+
             CheckCacheTable ();
 
             if (model.SelectAggregates != null) {
@@ -126,7 +126,7 @@ namespace Hyena.Data.Sqlite
                     @"SELECT OrderID, ItemID FROM {0} WHERE {0}.ModelID = {1}",
                     CacheTableName, uid
                 );
-                
+
                 reload_sql = String.Format (@"
                     DELETE FROM {0} WHERE ModelID = {1};
                     INSERT INTO {0} (ModelID, ItemID) SELECT DISTINCT {1}, {2} ",
@@ -135,7 +135,7 @@ namespace Hyena.Data.Sqlite
             } else {
                 select_str = String.Format (
                     @"SELECT {0}, {2}.ItemID FROM {1}
-                        INNER JOIN {2} 
+                        INNER JOIN {2}
                             ON {3} = {2}.ItemID
                         WHERE
                             {2}.ModelID = {4} {5} {6}",
@@ -177,7 +177,7 @@ namespace Hyena.Data.Sqlite
                 delete_selection_command = new HyenaSqliteCommand (String.Format (
                     "DELETE FROM {0} WHERE ModelID = {1}", CacheTableName, selection_uid
                 ));
-                
+
                 save_selection_command = new HyenaSqliteCommand (String.Format (
                     "INSERT INTO {0} (ModelID, ItemID) SELECT {1}, ItemID FROM {0} WHERE ModelID = {2} LIMIT ?, ?",
                     CacheTableName, selection_uid, uid
@@ -212,7 +212,7 @@ namespace Hyena.Data.Sqlite
         protected virtual string CacheModelsTableName {
             get { return "HyenaCacheModels"; }
         }
-        
+
         protected virtual string CacheTableName {
             get { return "HyenaCache"; }
         }
@@ -227,13 +227,13 @@ namespace Hyena.Data.Sqlite
                 }
              }
         }
-        
+
         public long IndexOf (ICacheableItem item)
         {
             if (item == null || item.CacheModelId != CacheId) {
                 return -1;
             }
-            
+
             return IndexOf (item.CacheEntryId);
         }
 
@@ -309,7 +309,7 @@ namespace Hyena.Data.Sqlite
             {
                 connection.Execute (delete_selection_command);
                 saved_selection = true;
-                
+
                 if (!has_select_all_item && model.Selection.FocusedIndex != -1) {
                     T item = GetValue (model.Selection.FocusedIndex);
                     if (item != null) {
@@ -384,7 +384,7 @@ namespace Hyena.Data.Sqlite
                 }
             }
         }
-        
+
         public void UpdateAggregates ()
         {
             using (IDataReader reader = connection.Query (count_command, uid)) {
@@ -398,7 +398,7 @@ namespace Hyena.Data.Sqlite
                 }
             }
         }
-        
+
         private long FindOrCreateCacheModelId (string id)
         {
             long model_id = connection.Query<long> (String.Format (

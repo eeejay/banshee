@@ -46,14 +46,14 @@ namespace Banshee.Collection.Database.Tests
             info.TitleSort = title_sort;
             Assert.AreEqual (expected, info.TitleSortKey);
         }
-        
+
         protected void AssertTitleLowered (string title, string expected)
         {
             DatabaseAlbumInfo info = new DatabaseAlbumInfo ();
             info.Title = title;
             Assert.AreEqual (expected, info.TitleLowered);
         }
-        
+
         protected void AssertArtistNameSort (string name, string name_sort, byte[] expected)
         {
             DatabaseAlbumInfo info = new DatabaseAlbumInfo ();
@@ -61,14 +61,14 @@ namespace Banshee.Collection.Database.Tests
             info.ArtistNameSort = name_sort;
             Assert.AreEqual (expected, info.ArtistNameSortKey);
         }
-        
+
         protected void AssertArtistNameLowered (string name, string expected)
         {
             DatabaseAlbumInfo info = new DatabaseAlbumInfo ();
             info.ArtistName = name;
             Assert.AreEqual (expected, info.ArtistNameLowered);
         }
-        
+
         [Test]
         public void TestWithoutTitleSortKey ()
         {
@@ -77,14 +77,14 @@ namespace Banshee.Collection.Database.Tests
             AssertTitleSort ("a", "",   new byte[] {14, 2, 1, 1, 1, 1, 0});
             AssertTitleSort ("A", null, new byte[] {14, 2, 1, 1, 1, 1, 0});
         }
-        
+
         [Test]
         public void TestTitleSortKey ()
         {
             AssertTitleSort ("Title", "a", new byte[] {14, 2, 1, 1, 1, 1, 0});
             AssertTitleSort ("Title", "A", new byte[] {14, 2, 1, 1, 1, 1, 0});
         }
-        
+
         [Test]
         public void TestTitleLowered ()
         {
@@ -92,7 +92,7 @@ namespace Banshee.Collection.Database.Tests
             AssertTitleLowered ("A", "a");
             AssertTitleLowered ("\u0104", "a");
         }
-        
+
         [Test]
         public void TestWithoutArtistNameSortKey ()
         {
@@ -102,14 +102,14 @@ namespace Banshee.Collection.Database.Tests
 
             AssertArtistNameSort ("a", "", new byte[] {14, 2, 1, 1, 1, 1, 0});
         }
-        
+
         [Test]
         public void TestArtistNameSortKey ()
         {
             AssertArtistNameSort ("Title", "a", new byte[] {14, 2, 1, 1, 1, 1, 0});
             AssertArtistNameSort ("Title", "A", new byte[] {14, 2, 1, 1, 1, 1, 0});
         }
-        
+
         [Test]
         public void TestArtistNameLowered ()
         {

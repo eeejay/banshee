@@ -34,12 +34,12 @@ namespace Banshee.Kernel
     {
         public delegate void JobDelegate ();
         private JobDelegate method;
-        
+
         public DelegateJob (JobDelegate method)
         {
             this.method = method;
         }
-        
+
         protected override void RunJob ()
         {
             method ();

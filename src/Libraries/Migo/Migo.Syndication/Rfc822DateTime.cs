@@ -8,21 +8,21 @@
 /*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW:
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
- *  copy of this software and associated documentation files (the "Software"),  
- *  to deal in the Software without restriction, including without limitation  
- *  the rights to use, copy, modify, merge, publish, distribute, sublicense,  
- *  and/or sell copies of the Software, and to permit persons to whom the  
+ *  copy of this software and associated documentation files (the "Software"),
+ *  to deal in the Software without restriction, including without limitation
+ *  the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ *  and/or sell copies of the Software, and to permit persons to whom the
  *  Software is furnished to do so, subject to the following conditions:
  *
- *  The above copyright notice and this permission notice shall be included in 
+ *  The above copyright notice and this permission notice shall be included in
  *  all copies or substantial portions of the Software.
  *
- *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
- *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
- *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
- *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
- *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
- *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  *  DEALINGS IN THE SOFTWARE.
  */
 
@@ -33,15 +33,15 @@ namespace Migo.Syndication
 {
     public static class Rfc822DateTime
     {
-        private const string monthsStr = 
+        private const string monthsStr =
             "Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec|" +
             "January|February|March|April|May|June|July|August|" +
             "September|October|November|December";
-        
-        private const string daysOfWeek = 
+
+        private const string daysOfWeek =
             "Mon|Tue|Wed|Thu|Fri|Sat|Sun|" +
             "Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday";
-        
+
         private const string rfc822DTExp =
             @"^(?<dayofweek>(" + daysOfWeek + "), )?" +
             @"(?<day>\d\d?) " +
@@ -56,7 +56,7 @@ namespace Migo.Syndication
         static Rfc822DateTime()
         {
             months = monthsStr.Split ('|');
-            rfc822DTRegex = new Regex (rfc822DTExp, 
+            rfc822DTRegex = new Regex (rfc822DTExp,
                 RegexOptions.Compiled | RegexOptions.IgnoreCase);
         }
 
@@ -92,7 +92,7 @@ namespace Migo.Syndication
                 }
 				
 				ret = new DateTime (year, month, day, hours, minutes, seconds);
-                                
+
                 if (timeZone != String.Empty) {
                     ret -= ParseGmtOffset (timeZone);
                 }
@@ -107,15 +107,15 @@ namespace Migo.Syndication
         {
             bool ret = false;
             result = DateTime.MinValue;
-            
+
             try {
                 result = Parse (dateTime);
                 ret = true;
             } catch {}
-                
+
             return ret;
         }
-        
+
         private static int MonthToInt32 (string month)
         {
             int i = 1;
@@ -124,7 +124,7 @@ namespace Migo.Syndication
                 if (month == s) {
                     break;
                 }
-                
+
                 if (++i % 13 == 0) {
                     i = 1;
                 }
@@ -167,12 +167,12 @@ namespace Migo.Syndication
                     case "G": offsetHours = -7; break;
                     case "H": offsetHours = -8; break;
                     case "I": offsetHours = -9; break;
-                    
+
                     // Q.  Why was 'J' left out of Z-Time?
-                    // A.  http://www.maybeck.com/ztime/  
-                    
+                    // A.  http://www.maybeck.com/ztime/
+
                     // That's what I like about this job, you learn stuff.
-                    
+
                     case "K": offsetHours = -10; break;
                     case "L": offsetHours = -11; break;
                     case "M": offsetHours = -12; break;				
@@ -188,7 +188,7 @@ namespace Migo.Syndication
                     case "W": offsetHours = 10; break;
                     case "X": offsetHours = 11; break;
                     case "Y": offsetHours = 12; break;
-                }   
+                }
             }
 
             return TimeSpan.FromTicks (

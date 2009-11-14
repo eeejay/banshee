@@ -41,44 +41,44 @@ namespace Banshee.NotificationArea
     public class GtkNotificationAreaBox : StatusIcon, INotificationAreaBox
     {
         public event EventHandler Disconnected;
-        
+
         public event EventHandler Activated {
             add { base.Activate += value; }
             remove { base.Activate -= value; }
         }
-        
+
         public event PopupMenuHandler PopupMenuEvent {
             add { base.PopupMenu += value; }
             remove { base.PopupMenu -= value; }
         }
-        
+
         public Widget Widget {
             get { return null; }
         }
-        
+
         public GtkNotificationAreaBox (BaseClientWindow window)
         {
             Visible = false;
             IconName = Banshee.ServiceStack.Application.IconName;
-            
+
             Tooltip = window.Title;
             window.TitleChanged += delegate { Tooltip = window.Title; };
         }
-        
+
         public void PositionMenu (Menu menu, out int x, out int y, out bool push_in)
         {
             StatusIcon.PositionMenu (menu, out x, out y, out push_in, Handle);
         }
-        
+
         public void OnPlayerEvent (PlayerEventArgs args)
         {
         }
-        
+
         public void Show ()
         {
             Visible = true;
         }
-        
+
         public void Hide ()
         {
             Visible = false;

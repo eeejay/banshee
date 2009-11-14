@@ -25,7 +25,7 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
- 
+
 using System;
 
 namespace Banshee.Streaming
@@ -33,10 +33,10 @@ namespace Banshee.Streaming
     public struct StreamTag
     {
         public static readonly StreamTag Zero;
-  
+
         public string Name;
         public object Value;
-        
+
         public override string ToString()
         {
             return String.Format("{0} = {1}", Name, Value);

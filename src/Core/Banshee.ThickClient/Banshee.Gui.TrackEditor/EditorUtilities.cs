@@ -35,14 +35,14 @@ namespace Banshee.Gui.TrackEditor
     public static class EditorUtilities
     {
         public const int RowSpacing = 5;
-                
+
         public static Label CreateLabel (string text)
         {
             Label label = new Label (text);
             label.Xalign = 0.0f;
             return label;
         }
-    
+
         public static VBox CreateVBox ()
         {
             VBox box = new VBox ();

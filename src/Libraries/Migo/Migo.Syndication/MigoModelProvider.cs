@@ -40,18 +40,18 @@ namespace Migo.Syndication
     public class MigoModelProvider<T> : SqliteModelProvider<T> where T : MigoItem<T>, ICacheableItem, new()
     {
         private Dictionary<long, T> full_cache = new Dictionary<long, T> ();
-        
+
         public MigoModelProvider (HyenaSqliteConnection connection, string table_name) : base (connection, table_name)
         {
         }
 
 #region Overrides
-                
+
         public override T FetchSingle (long id)
         {
             return GetCached (id) ?? CacheResult (base.FetchSingle (id));
         }
-        
+
         public override void Save (T target)
         {
             base.Save (target);
@@ -64,23 +64,23 @@ namespace Migo.Syndication
         {
             return GetCached (PrimaryKeyFor (reader)) ?? CacheResult (base.Load (reader));
         }
-        
+
         public override void Delete (long id)
         {
             full_cache.Remove (id);
             base.Delete (id);
         }
-        
+
         public override void Delete (IEnumerable<T> items)
         {
             foreach (T item in items) {
                 if (item != null)
                     full_cache.Remove (PrimaryKeyFor (item));
             }
-                
+
             base.Delete (items);
         }
-        
+
 #endregion
 
 #region Utility Methods
@@ -93,7 +93,7 @@ namespace Migo.Syndication
                 return null;
             }
         }
-        
+
         private T CacheResult (T item)
         {
             full_cache[item.DbId] = item;
@@ -101,6 +101,6 @@ namespace Migo.Syndication
         }
 
 #endregion
-        
+
     }
 }

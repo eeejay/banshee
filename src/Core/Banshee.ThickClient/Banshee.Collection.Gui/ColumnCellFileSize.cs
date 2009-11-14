@@ -1,4 +1,4 @@
-// 
+//
 // ColumnCellFileSize.cs
 //
 // Author:
@@ -40,7 +40,7 @@ namespace Banshee.Collection.Gui
             Alignment = Pango.Alignment.Right;
             SetMinMaxStrings ((long)1023, (long)(1024 * 1024 * 575.5));
         }
-        
+
         protected override string GetText (object obj)
         {
             if (obj == null) {

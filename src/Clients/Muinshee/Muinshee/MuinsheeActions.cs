@@ -37,7 +37,7 @@ namespace Muinshee
     public class MuinsheeActions : BansheeActionGroup
     {
         private Banshee.Playlist.PlaylistSource queue;
-        
+
         public MuinsheeActions (Banshee.Playlist.PlaylistSource queue) : base ("muinshee")
         {
             this.queue = queue;
@@ -58,7 +58,7 @@ namespace Muinshee
 
             // TODO disable certain actions
             // Actions.TrackActions.UpdateActions (false, false, "SearchMenu");
-            
+
             AddUiFromFile ("GlobalUI.xml");
         }
 

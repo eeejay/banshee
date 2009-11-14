@@ -41,56 +41,56 @@ namespace Banshee.Playlists.Formats
         private List<Dictionary<string, object>> elements = new List<Dictionary<string, object>>();
         private Uri base_uri = new Uri(Environment.CurrentDirectory);
         private string title = null;
-        
+
         public PlaylistFormatBase()
         {
             attributes = new Dictionary<string, object>();
             elements = new List<Dictionary<string, object>>();
         }
-        
+
         public virtual void Load(Stream stream, bool validateHeader)
         {
             using(StreamReader reader = new StreamReader(stream)) {
                 Load(reader, validateHeader);
             }
         }
-            
+
         public abstract void Load(StreamReader reader, bool validateHeader);
-        
+
         public abstract void Save(Stream stream, ITrackModelSource source);
-        
+
         protected virtual Dictionary<string, object> AddElement()
         {
             Dictionary<string, object> element = new Dictionary<string, object>();
             Elements.Add(element);
             return element;
         }
-        
+
         protected virtual Uri ResolveUri(string uri)
         {
             return BaseUri == null ? new Uri(uri) : new Uri(BaseUri, uri);
         }
-        
+
         protected virtual string ExportUri(SafeUri uri)
         {
             if(BaseUri == null) {
                 return uri.IsLocalPath ? uri.LocalPath : uri.AbsoluteUri;
             }
-            
+
             // TODO replace with call to Paths.MakeRelativeTo
             string base_uri = uri.IsLocalPath ? BaseUri.LocalPath : BaseUri.AbsoluteUri;
             string relative_uri = uri.IsLocalPath ? uri.LocalPath : uri.AbsoluteUri;
-            
+
             if(relative_uri.StartsWith(base_uri)) {
                 relative_uri = relative_uri.Substring(base_uri.Length);
                 if(relative_uri[0] == Path.DirectorySeparatorChar) {
                     relative_uri = relative_uri.Substring(1);
                 }
             }
-            
+
             return relative_uri;
         }
-        
+
         protected virtual TimeSpan SecondsStringToTimeSpan(string seconds)
         {
             try {
@@ -100,15 +100,15 @@ namespace Banshee.Playlists.Formats
                 return TimeSpan.Zero;
             }
         }
-        
-        public virtual Dictionary<string, object> Attributes { 
+
+        public virtual Dictionary<string, object> Attributes {
             get { return attributes; }
         }
-        
-        public virtual List<Dictionary<string, object>> Elements { 
+
+        public virtual List<Dictionary<string, object>> Elements {
             get { return elements; }
         }
-        
+
         public virtual Uri BaseUri {
             get { return base_uri; }
             set {
@@ -119,7 +119,7 @@ namespace Banshee.Playlists.Formats
                 base_uri = value;
             }
         }
-        
+
         public virtual string Title {
             get { return title; }
             set { title = value; }

@@ -53,7 +53,7 @@ namespace Banshee.Bpm
         private EditorEditableUndoAdapter<Entry> undo_adapter = new EditorEditableUndoAdapter<Entry> ();
 
         public event EventHandler Changed;
-        
+
         public BpmEntry ()
         {
             detector = BpmDetectJob.GetDetector ();
@@ -112,19 +112,19 @@ namespace Banshee.Bpm
 
             ShowAll ();
         }
-        
+
         public void DisconnectUndo ()
         {
             undo_adapter.DisconnectUndo ();
         }
-        
+
         public void ConnectUndo (EditorTrackInfo track)
         {
             this.track = track;
             tap_adapter.Reset ();
             undo_adapter.ConnectUndo (bpm_entry, track);
         }
-        
+
         public int Bpm {
             get { return bpm_entry.ValueAsInt; }
             set { bpm_entry.Value = value; }

@@ -56,7 +56,7 @@ namespace Banshee.RemoteAudio
         public ReadOnlyCollection<RemoteSpeaker> Speakers {
             get { lock (speakers) { return speakers.AsReadOnly (); } }
         }
-        
+
         void IExtensionService.Initialize ()
         {
             Network network = ServiceManager.Get<Network> ();
@@ -70,14 +70,14 @@ namespace Banshee.RemoteAudio
             RemoteAudioActions a = new RemoteAudioActions ();
             a.Register ();
         }
-  
+
         public void Dispose ()
         {
             if (browser != null) {
                 browser.Dispose ();
             }
         }
-        
+
         string Banshee.ServiceStack.IService.ServiceName {
             get { return "RemoteAudioService"; }
         }
@@ -89,7 +89,7 @@ namespace Banshee.RemoteAudio
             browser.ServiceRemoved += OnServiceRemoved;
             browser.Browse (0, AddressProtocol.Any, RAOP_MDNS_TYPE, "local");
         }
-        
+
         private void OnNetworkStateChanged (object o, NetworkStateChangedArgs args)
         {
             if (!args.Connected) {
@@ -119,7 +119,7 @@ namespace Banshee.RemoteAudio
             if (service == null) {
                 return;
             }
-    
+
             Log.DebugFormat ("Resolved RAOP service at {0}", service.HostEntry.AddressList[0]);
 
             ITxtRecord record = service.TxtRecord;

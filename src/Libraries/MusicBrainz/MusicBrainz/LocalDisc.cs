@@ -36,16 +36,16 @@ namespace MusicBrainz
                 submission_service_url = value;
             }
         }
-        
+
         internal byte first_track;
         internal byte last_track;
         internal int [] track_offsets = new int [100];
         TimeSpan [] track_durations;
-        
+
         internal LocalDisc()
         {
         }
-        
+
         internal void Init ()
         {
             track_durations = new TimeSpan [last_track];
@@ -55,14 +55,14 @@ namespace MusicBrainz
             }
             GenerateId ();
         }
-        
+
         void GenerateId ()
         {
             StringBuilder input_builder = new StringBuilder (804);
 
             input_builder.AppendFormat ("{0:X2}", first_track);
             input_builder.AppendFormat ("{0:X2}", last_track);
-            
+
             for (int i = 0; i < track_offsets.Length; i++)
                 input_builder.AppendFormat ("{0:X8}", track_offsets[i]);
 
@@ -70,7 +70,7 @@ namespace MusicBrainz
             string base64 = Convert.ToBase64String (SHA1.Create ().
                 ComputeHash (Encoding.ASCII.GetBytes (input_builder.ToString ())));
             StringBuilder hash_builder = new StringBuilder (base64.Length);
-            
+
             foreach (char c in base64)
                 switch (c) {
                 case '+':
@@ -86,15 +86,15 @@ namespace MusicBrainz
                     hash_builder.Append (c);
                     break;
                 }
-            
+
             Id = hash_builder.ToString ();
         }
-        
+
         public TimeSpan [] GetTrackDurations ()
         {
             return (TimeSpan []) track_durations.Clone ();
         }
-        
+
         Uri submission_url;
         public Uri SubmissionUrl {
             get {
@@ -103,7 +103,7 @@ namespace MusicBrainz
                 }
                 return submission_url; }
         }
-        
+
         Uri BuildSubmissionUrl ()
         {
             StringBuilder builder = new StringBuilder ();
@@ -124,7 +124,7 @@ namespace MusicBrainz
             }
             return new Uri(builder.ToString ());
         }
-        
+
         public static LocalDisc GetFromDevice (string device)
         {
             if (device == null) throw new ArgumentNullException ("device");
@@ -142,7 +142,7 @@ namespace MusicBrainz
             }
         }
     }
-    
+
     public class LocalDiscException : Exception
     {
         public LocalDiscException (string message) : base (message)

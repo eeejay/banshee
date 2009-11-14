@@ -44,7 +44,7 @@ namespace Banshee.Gui
     {
         private RadioAction active_action;
         private RadioAction saved_action;
-        
+
         public RadioAction Active {
             get { return active_action; }
             set {
@@ -52,7 +52,7 @@ namespace Banshee.Gui
                 ServiceManager.PlaybackController.RepeatMode = (PlaybackRepeatMode)active_action.Value;
             }
         }
-        
+
         public new bool Sensitive {
             get { return base.Sensitive; }
             set {
@@ -62,11 +62,11 @@ namespace Banshee.Gui
         }
 
         public event EventHandler Changed;
-        
+
         public PlaybackRepeatActions (InterfaceActionService actionService) : base (actionService, "PlaybackRepeat")
         {
             actionService.AddActionGroup (this);
-            
+
             Add (new ActionEntry [] {
                 new ActionEntry ("RepeatMenuAction", null,
                     Catalog.GetString ("Repeat"), null,
@@ -74,16 +74,16 @@ namespace Banshee.Gui
             });
 
             Add (new RadioActionEntry [] {
-                new RadioActionEntry ("RepeatNoneAction", null, 
+                new RadioActionEntry ("RepeatNoneAction", null,
                     Catalog.GetString ("Repeat _Off"), null,
                     Catalog.GetString ("Do not repeat playlist"),
                     (int)PlaybackRepeatMode.None),
-                    
+
                 new RadioActionEntry ("RepeatAllAction", null,
                     Catalog.GetString ("Repeat _All"), null,
                     Catalog.GetString ("Play all songs before repeating playlist"),
                     (int)PlaybackRepeatMode.RepeatAll),
-                    
+
                 new RadioActionEntry ("RepeatSingleAction", null,
                     Catalog.GetString ("Repeat Singl_e"), null,
                     Catalog.GetString ("Repeat the current playing song"),
@@ -103,7 +103,7 @@ namespace Banshee.Gui
             } else {
                 Active = (RadioAction)this["RepeatNoneAction"];
             }
-            
+
             Active.Activate ();
         }
 
@@ -145,7 +145,7 @@ namespace Banshee.Gui
         {
             Active = args.Current;
         }
-        
+
         private void OnChanged ()
         {
             EventHandler handler = Changed;
@@ -153,20 +153,20 @@ namespace Banshee.Gui
                 handler (this, EventArgs.Empty);
             }
         }
-        
+
         public void AttachSubmenu (string menuItemPath)
         {
             MenuItem parent = Actions.UIManager.GetWidget (menuItemPath) as MenuItem;
             parent.Submenu = CreateMenu ();
         }
-        
+
         public MenuItem CreateSubmenu ()
         {
             MenuItem parent = (MenuItem)this["RepeatMenuAction"].CreateMenuItem ();
             parent.Submenu = CreateMenu ();
             return parent;
         }
-            
+
         public Menu CreateMenu ()
         {
             Menu menu = new Gtk.Menu ();
@@ -201,7 +201,7 @@ namespace Banshee.Gui
 
         private static string ActionNameToConfigId (string actionName)
         {
-            return StringUtil.CamelCaseToUnderCase (actionName.Substring (0, 
+            return StringUtil.CamelCaseToUnderCase (actionName.Substring (0,
                 actionName.Length - (actionName.EndsWith ("Action") ? 6 : 0)));
         }
 

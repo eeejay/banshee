@@ -66,7 +66,7 @@ namespace Banshee.Hardware
             }
 
             DeviceCommand d_command = null;
-            
+
             switch (command) {
                 case "device-activate-play":
                     d_command = new DeviceCommand (DeviceCommandAction.Activate | DeviceCommandAction.Play);
@@ -84,7 +84,7 @@ namespace Banshee.Hardware
                     return null;
             }
 
-            // FIXME: Should use GIO here to resolve UNIX device nodes or 
+            // FIXME: Should use GIO here to resolve UNIX device nodes or
             // HAL UDIs from the GIO URI that we were likely given by Nautilus
 
             try {

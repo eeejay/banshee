@@ -39,19 +39,19 @@ namespace Banshee.I18n
     {
         private static Dictionary<Assembly, string> domain_assembly_map = new Dictionary<Assembly, string> ();
         private static List<Assembly> default_domain_assemblies = new List<Assembly> ();
-        
+
         public static void Init (string domain, string localeDir)
         {
             if (String.IsNullOrEmpty (domain)) {
                 throw new ArgumentException ("No text domain specified");
             }
-            
+
             IntPtr domain_ptr = UnixMarshal.StringToHeap (domain);
             IntPtr localedir_ptr = IntPtr.Zero;
-            
+
             try {
                 BindTextDomainCodeset (domain_ptr);
-            
+
                 if (localeDir != null && localeDir.Length > 0) {
                     localedir_ptr = UnixMarshal.StringToHeap (localeDir);
                     BindTextDomain (domain_ptr, localedir_ptr);
@@ -63,32 +63,32 @@ namespace Banshee.I18n
                 }
             }
         }
-        
+
         public static string GetString (string msgid)
         {
             return GetString (GetDomainForAssembly (Assembly.GetCallingAssembly ()), msgid);
         }
-        
+
         public static string GetString (string domain, string msgid)
         {
             IntPtr msgid_ptr = UnixMarshal.StringToHeap (msgid);
             IntPtr domain_ptr = domain == null ? IntPtr.Zero : UnixMarshal.StringToHeap (domain);
-            
+
             if (domain == null) {
                 // FIXME banshee-1?
                 IntPtr ptr = UnixMarshal.StringToHeap ("banshee");
                 UnixMarshal.FreeHeap (ptr);
             }
-            
+
             try {
-                IntPtr ret_ptr = domain_ptr == IntPtr.Zero ? 
+                IntPtr ret_ptr = domain_ptr == IntPtr.Zero ?
                     gettext (msgid_ptr) :
                     dgettext (domain_ptr, msgid_ptr);
-                
+
                 if (msgid_ptr != ret_ptr) {
                     return UnixMarshal.PtrToStringUnix (ret_ptr);
                 }
-                
+
                 return msgid;
             } finally {
                 UnixMarshal.FreeHeap (msgid_ptr);
@@ -97,34 +97,34 @@ namespace Banshee.I18n
                 }
             }
         }
-        
+
         public static string GetString (string msgid, string msgidPlural, int n)
         {
             return GetString (GetDomainForAssembly (Assembly.GetCallingAssembly ()), msgid, msgidPlural, n);
         }
-        
+
         public static string GetPluralString (string msgid, string msgidPlural, int n)
         {
             return GetString (msgid, msgidPlural, n);
         }
-        
+
         public static string GetString (string domain, string msgid, string msgidPlural, int n)
         {
             IntPtr msgid_ptr = UnixMarshal.StringToHeap (msgid);
             IntPtr msgid_plural_ptr = UnixMarshal.StringToHeap (msgidPlural);
             IntPtr domain_ptr = domain == null ? IntPtr.Zero : UnixMarshal.StringToHeap (domain);
-                
+
             try {
-                IntPtr ret_ptr = domain_ptr == IntPtr.Zero ? 
+                IntPtr ret_ptr = domain_ptr == IntPtr.Zero ?
                     ngettext (msgid_ptr, msgid_plural_ptr, n) :
                     dngettext (domain_ptr, msgid_ptr, msgid_plural_ptr, n);
-                
+
                 if (ret_ptr == msgid_ptr) {
                     return msgid;
                 } else if (ret_ptr == msgid_plural_ptr) {
                     return msgidPlural;
                 }
-                
+
                 return UnixMarshal.PtrToStringUnix (ret_ptr);
             } finally {
                 UnixMarshal.FreeHeap (msgid_ptr);
@@ -134,7 +134,7 @@ namespace Banshee.I18n
                 }
             }
         }
-        
+
         private static string GetDomainForAssembly (Assembly assembly)
         {
             if (default_domain_assemblies.Contains (assembly)) {
@@ -142,27 +142,27 @@ namespace Banshee.I18n
             } else if (domain_assembly_map.ContainsKey (assembly)) {
                 return domain_assembly_map[assembly];
             }
-            
+
             AssemblyCatalogAttribute [] attributes = assembly.GetCustomAttributes (
                 typeof(AssemblyCatalogAttribute), true) as AssemblyCatalogAttribute [];
-                
+
             if (attributes == null || attributes.Length == 0) {
                 default_domain_assemblies.Add (assembly);
                 return null;
             }
-            
+
             string domain = attributes[0].Domain;
-            
+
             Init (domain, attributes[0].LocaleDir);
             domain_assembly_map.Add (assembly, domain);
-            
+
             return domain;
         }
-        
+
         private static void BindTextDomainCodeset (IntPtr domain)
         {
             IntPtr codeset = UnixMarshal.StringToHeap("UTF-8");
-            
+
             try {
                 if (bind_textdomain_codeset (domain, codeset) == IntPtr.Zero) {
                     throw new UnixIOException (Mono.Unix.Native.Errno.ENOMEM);
@@ -178,22 +178,22 @@ namespace Banshee.I18n
                 throw new UnixIOException (Mono.Unix.Native.Errno.ENOMEM);
             }
         }
-        
+
         [DllImport ("intl")]
         private static extern IntPtr bind_textdomain_codeset (IntPtr domain, IntPtr codeset);
-        
+
         [DllImport ("intl")]
         private static extern IntPtr bindtextdomain (IntPtr domain, IntPtr locale_dir);
-        
+
         [DllImport ("intl")]
         private static extern IntPtr dgettext (IntPtr domain, IntPtr msgid);
-        
+
         [DllImport ("intl")]
         private static extern IntPtr dngettext (IntPtr domain, IntPtr msgid_singular, IntPtr msgid_plural, Int32 n);
 
         [DllImport ("intl")]
         private static extern IntPtr gettext (IntPtr msgid);
-        
+
         [DllImport ("intl")]
         private static extern IntPtr ngettext (IntPtr msgid_singular, IntPtr msgid_plural, Int32 n);
     }

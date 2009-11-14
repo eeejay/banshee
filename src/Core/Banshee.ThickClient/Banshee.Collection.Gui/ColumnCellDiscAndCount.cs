@@ -1,4 +1,4 @@
-// 
+//
 // ColumnCellDiscAndCount.cs
 //
 // Author:
@@ -45,7 +45,7 @@ namespace Banshee.Collection.Gui
             MaxString = String.Format (format, 55, 55);
             RestrictSize = true;
         }
-        
+
         protected override string GetText (object obj)
         {
             Banshee.Collection.TrackInfo track = BoundObjectParent as Banshee.Collection.TrackInfo;

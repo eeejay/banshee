@@ -52,34 +52,34 @@ namespace Lastfm
                 if (account == null) {
                     account = new Account ();
                 }
-                
+
                 return account;
             }
         }
-        
+
         private static string user_agent;
         public static string UserAgent {
             get { return user_agent; }
             set { user_agent = value; }
         }
-        
+
         private static RadioConnection radio;
         public static RadioConnection Radio {
             get {
                 if (radio == null) {
                     radio = new RadioConnection ();
                 }
-                
+
                 return radio;
             }
         }
-        
+
         private static IQueue queue;
         public static IQueue AudioscrobblerQueue {
             get { return queue; }
             set { queue = value; }
         }
-        
+
         private static AudioscrobblerConnection audioscrobbler;
         public static AudioscrobblerConnection Audioscrobbler {
             get {
@@ -88,10 +88,10 @@ namespace Lastfm
                         throw new ApplicationException
                             ("Queue instance must be defined before referencing Audioscrobbler.");
                     }
-                    
+
                     audioscrobbler = new AudioscrobblerConnection (queue);
                 }
-                
+
                 return audioscrobbler;
             }
         }

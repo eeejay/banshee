@@ -41,20 +41,20 @@ namespace Banshee.NotificationArea
     {
         private TrackInfoDisplay header;
         private ConnectedSeekSlider seek_slider;
-    
+
         public TrackInfoPopup () : base (Gtk.WindowType.Popup)
         {
             BorderWidth = 8;
             AppPaintable = true;
             Resizable = false;
             TypeHint = Gdk.WindowTypeHint.Notification;
-            
+
             VBox box = new VBox ();
             box.Spacing = 4;
 
             header = new ClassicTrackInfoDisplay ();
             header.SetSizeRequest (320, 64);
-            
+
             seek_slider = new ConnectedSeekSlider (SeekSliderLayout.Horizontal);
             seek_slider.StreamPositionLabel.FormatString = "<small>{0}</small>";
             seek_slider.LeftPadding = 0;
@@ -62,20 +62,20 @@ namespace Banshee.NotificationArea
 
             box.PackStart (header, true, true, 0);
             box.PackStart (seek_slider, false, false, 0);
-            
+
             Add (box);
             box.ShowAll ();
         }
-        
+
         public override void Dispose ()
         {
             header.Dispose ();
             base.Dispose ();
         }
-        
+
         protected override bool OnExposeEvent (Gdk.EventExpose evnt)
         {
-            Gtk.Style.PaintFlatBox (Style, GdkWindow, StateType.Normal, ShadowType.Out, evnt.Area, this, "tooltip", 
+            Gtk.Style.PaintFlatBox (Style, GdkWindow, StateType.Normal, ShadowType.Out, evnt.Area, this, "tooltip",
                 0, 0, Allocation.Width, Allocation.Height);
             return base.OnExposeEvent (evnt);
         }

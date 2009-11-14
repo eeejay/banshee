@@ -39,17 +39,17 @@ using Banshee.Sources;
 using Banshee.Base;
 
 namespace Banshee.ServiceStack
-{    
+{
     public delegate bool ShutdownRequestHandler ();
     public delegate bool TimeoutHandler ();
     public delegate bool IdleHandler ();
     public delegate bool IdleTimeoutRemoveHandler (uint id);
-    public delegate uint TimeoutImplementationHandler (uint milliseconds, TimeoutHandler handler); 
+    public delegate uint TimeoutImplementationHandler (uint milliseconds, TimeoutHandler handler);
     public delegate uint IdleImplementationHandler (IdleHandler handler);
     public delegate bool IdleTimeoutRemoveImplementationHandler (uint id);
-    
+
     public static class Application
-    {   
+    {
         public static event ShutdownRequestHandler ShutdownRequested;
         public static event Action<Client> ClientAdded;
 
@@ -79,10 +79,10 @@ namespace Banshee.ServiceStack
         public static void Run ()
         {
             Banshee.Base.PlatformHacks.TrapMonoJitSegv ();
-            
+
             Catalog.Init (Application.InternalName, System.IO.Path.Combine (
                 Banshee.Base.Paths.InstalledApplicationDataRoot, "locale"));
-                
+
             if (!DBusConnection.ConnectTried) {
                 DBusConnection.Connect ();
             }
@@ -92,14 +92,14 @@ namespace Banshee.ServiceStack
             ServiceManager.SourceManager.AddSource (new MusicLibrarySource (), true);
             ServiceManager.SourceManager.AddSource (new VideoLibrarySource (), false);
             ServiceManager.SourceManager.LoadExtensionSources ();
-            
+
             Banshee.Base.PlatformHacks.RestoreMonoJitSegv ();
         }
 
         public static bool ShuttingDown {
             get { return shutting_down; }
         }
-     
+
         public static void Shutdown ()
         {
             shutting_down = true;
@@ -111,13 +111,13 @@ namespace Banshee.ServiceStack
                     return;
                 }
             }
-            
+
             if (OnShutdownRequested ()) {
                 Dispose ();
             }
             shutting_down = false;
         }
-        
+
         public static void PushClient (Client client)
         {
             lock (running_clients) {
@@ -130,16 +130,16 @@ namespace Banshee.ServiceStack
                 handler (client);
             }
         }
-        
+
         public static Client PopClient ()
         {
             lock (running_clients) {
                 return running_clients.Pop ();
             }
         }
-        
+
         public static Client ActiveClient {
-            get { lock (running_clients) { return running_clients.Peek (); } } 
+            get { lock (running_clients) { return running_clients.Peek (); } }
         }
 
         private static void OnClientStarted (Client client)
@@ -150,7 +150,7 @@ namespace Banshee.ServiceStack
                 handler (client);
             }
         }
-        
+
         private static bool OnShutdownRequested ()
         {
             ShutdownRequestHandler handler = ShutdownRequested;
@@ -161,10 +161,10 @@ namespace Banshee.ServiceStack
                     }
                 }
             }
-            
+
             return true;
         }
-        
+
         public static void Invoke (InvokeHandler handler)
         {
             RunIdle (delegate { handler (); return false; });
@@ -175,161 +175,161 @@ namespace Banshee.ServiceStack
             if (idle_handler == null) {
                 throw new NotImplementedException ("The application client must provide an IdleImplementationHandler");
             }
-            
+
             return idle_handler (handler);
         }
-        
+
         public static uint RunTimeout (uint milliseconds, TimeoutHandler handler)
         {
             if (timeout_handler == null) {
                 throw new NotImplementedException ("The application client must provide a TimeoutImplementationHandler");
             }
-            
+
             return timeout_handler (milliseconds, handler);
         }
-        
+
         public static bool IdleTimeoutRemove (uint id)
         {
             if (idle_timeout_remove_handler == null) {
                 throw new NotImplementedException ("The application client must provide a IdleTimeoutRemoveImplementationHandler");
             }
-            
+
             return idle_timeout_remove_handler (id);
         }
-        
+
         private static void Dispose ()
         {
             ServiceManager.JobScheduler.CancelAll (true);
             ServiceManager.Shutdown ();
-            
+
             lock (running_clients) {
                 while (running_clients.Count > 0) {
                     running_clients.Pop ().Dispose ();
                 }
             }
         }
-        
+
         private static ShutdownRequestHandler shutdown_prompt_handler = null;
         public static ShutdownRequestHandler ShutdownPromptHandler {
             get { return shutdown_prompt_handler; }
             set { shutdown_prompt_handler = value; }
         }
-        
+
         private static TimeoutImplementationHandler timeout_handler = null;
         public static TimeoutImplementationHandler TimeoutHandler {
             get { return timeout_handler; }
             set { timeout_handler = value; }
         }
-        
+
         private static IdleImplementationHandler idle_handler = null;
         public static IdleImplementationHandler IdleHandler {
             get { return idle_handler; }
             set { idle_handler = value; }
         }
-        
+
         private static IdleTimeoutRemoveImplementationHandler idle_timeout_remove_handler = null;
         public static IdleTimeoutRemoveImplementationHandler IdleTimeoutRemoveHandler {
             get { return idle_timeout_remove_handler; }
             set { idle_timeout_remove_handler = value; }
         }
-        
+
         public static string InternalName {
             get { return "banshee-1"; }
         }
-        
+
         public static string IconName {
             get { return "media-player-banshee"; }
         }
-        
+
         private static string api_version;
         public static string ApiVersion {
-            get { 
+            get {
                 if (api_version != null) {
                     return api_version;
                 }
-                
+
                 try {
                     AssemblyName name = Assembly.GetEntryAssembly ().GetName ();
-                    api_version = String.Format ("{0}.{1}.{2}", name.Version.Major, 
+                    api_version = String.Format ("{0}.{1}.{2}", name.Version.Major,
                         name.Version.Minor, name.Version.Build);
                 } catch {
                     api_version = "unknown";
                 }
-                
+
                 return api_version;
             }
         }
-        
+
         private static string version;
         public static string Version {
             get { return version ?? (version = GetVersion ("ReleaseVersion")); }
         }
-        
+
         private static string display_version;
         public static string DisplayVersion {
             get { return display_version ?? (display_version = GetVersion ("DisplayVersion")); }
         }
-        
+
         private static string build_time;
         public static string BuildTime {
             get { return build_time ?? (build_time = GetBuildInfo ("BuildTime")); }
         }
-        
+
         private static string build_host_os;
         public static string BuildHostOperatingSystem {
             get { return build_host_os ?? (build_host_os = GetBuildInfo ("HostOperatingSystem")); }
         }
-        
+
         private static string build_host_cpu;
         public static string BuildHostCpu {
             get { return build_host_cpu ?? (build_host_cpu = GetBuildInfo ("HostCpu")); }
         }
-        
+
         private static string build_vendor;
         public static string BuildVendor {
             get { return build_vendor ?? (build_vendor = GetBuildInfo ("Vendor")); }
         }
-        
+
         private static string build_display_info;
         public static string BuildDisplayInfo {
             get {
                 if (build_display_info != null) {
                     return build_display_info;
                 }
-                
+
                 build_display_info = String.Format ("{0} ({1}, {2}) @ {3}",
                     BuildVendor, BuildHostOperatingSystem, BuildHostCpu, BuildTime);
                 return build_display_info;
             }
         }
-        
+
         private static string GetVersion (string versionName)
         {
-            return GetCustomAssemblyMetadata ("ApplicationVersionAttribute", versionName) 
+            return GetCustomAssemblyMetadata ("ApplicationVersionAttribute", versionName)
                 ?? Catalog.GetString ("Unknown");
         }
-        
+
         private static string GetBuildInfo (string buildField)
         {
             return GetCustomAssemblyMetadata ("ApplicationBuildInformationAttribute", buildField);
         }
-        
+
         private static string GetCustomAssemblyMetadata (string attrName, string field)
         {
             Assembly assembly = Assembly.GetEntryAssembly ();
             if (assembly == null) {
                 return null;
             }
-            
+
             foreach (Attribute attribute in assembly.GetCustomAttributes (false)) {
                 Type type = attribute.GetType ();
                 PropertyInfo property = type.GetProperty (field);
-                if (type.Name == attrName && property != null && 
+                if (type.Name == attrName && property != null &&
                     property.PropertyType == typeof (string)) {
-                    return (string)property.GetValue (attribute, null); 
+                    return (string)property.GetValue (attribute, null);
                 }
             }
-            
+
             return null;
         }
     }

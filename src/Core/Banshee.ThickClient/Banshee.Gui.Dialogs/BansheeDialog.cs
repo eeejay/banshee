@@ -40,18 +40,18 @@ namespace Banshee.Gui.Dialogs
         protected AccelGroup AccelGroup {
             get { return accel_group; }
         }
-        
+
         public BansheeDialog (string title) : this (title, null)
         {
         }
-        
+
         public BansheeDialog (string title, Window parent) : base ()
         {
             Title = title;
             BorderWidth = 5;
             Visible = false;
             HasSeparator = false;
-            
+
             if (parent == null) {
                 GtkElementsService service = ServiceManager.Get<GtkElementsService> ();
                 if (service != null) {
@@ -60,24 +60,24 @@ namespace Banshee.Gui.Dialogs
             } else {
                 TransientFor = parent;
             }
-            
+
             WindowPosition = WindowPosition.CenterOnParent;
             DestroyWithParent = true;
-            
+
             accel_group = new AccelGroup ();
             AddAccelGroup (accel_group);
         }
-        
+
         public Button AddDefaultCloseButton ()
         {
             return AddStockButton (Stock.Close, ResponseType.Close);
         }
-        
+
         public new Button AddButton (string message, ResponseType response)
         {
             return AddButton (message, response, false);
         }
-        
+
         public Button AddStockButton (string stock, ResponseType response)
         {
             return AddStockButton (stock, response, false);
@@ -92,7 +92,7 @@ namespace Banshee.Gui.Dialogs
         {
             return AddButton (stock, response, isDefault, true);
         }
-        
+
         public new Button AddButton (string message, ResponseType response, bool isDefault, bool isStock)
         {
             Button button = new Button (message);

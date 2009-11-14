@@ -30,7 +30,7 @@ using System;
 namespace Banshee.MediaEngine
 {
     public delegate void VisualizationDataHandler (float [][] pcm, float [][] spectrum);
-    
+
     public interface IVisualizationDataSource
     {
         event VisualizationDataHandler DataAvailable;

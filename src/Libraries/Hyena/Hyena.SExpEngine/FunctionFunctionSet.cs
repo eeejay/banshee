@@ -37,22 +37,22 @@ namespace Hyena.SExpEngine
         {
             return VariableSet(Evaluator, args, true);
         }
-        
+
         public static TreeNode VariableSet(EvaluatorBase evaluator, TreeNode var, TreeNode value)
         {
             return VariableSet(evaluator, new TreeNode[] { var, value }, true);
         }
-        
+
         public static TreeNode VariableSet(EvaluatorBase evaluator, TreeNode [] args, bool update)
         {
             if(args.Length != 2) {
                 throw new ArgumentException("must have two arguments");
             }
-            
+
             if(!(args[0] is FunctionNode)) {
                 throw new ArgumentException("first argument must be a variable");
             }
-            
+
             FunctionNode variable_node = evaluator.ResolveFunction(args[0] as FunctionNode);
             if(variable_node != null) {
                 variable_node.Body = evaluator.Evaluate(args[1]);
@@ -62,38 +62,38 @@ namespace Hyena.SExpEngine
 
                 parent.RegisterFunction((args[0] as FunctionNode).Function, evaluator.Evaluate(args[1]));
             }
-            
+
             return new VoidLiteral();
         }
-        
+
         [Function(false, "define")]
         public virtual TreeNode OnDefine(TreeNode [] args)
         {
             if(args.Length < 2 || args.Length > 3) {
                 throw new ArgumentException("define must have two or three arguments");
             }
-            
+
             if(!(args[0] is FunctionNode)) {
                 throw new ArgumentException("first define argument must be a variable");
             }
-            
+
             FunctionNode function = new FunctionNode((args[0] as FunctionNode).Function, args[args.Length - 1]);
-            
+
             if(args.Length == 3 && args[1].HasChildren) {
                 foreach(TreeNode function_arg in args[1].Children) {
                     if(!(function_arg is FunctionNode)) {
                         throw new ArgumentException("define function arguments must be variable tokens");
                     }
-                    
+
                     function.RegisterFunction((function_arg as FunctionNode).Function, new VoidLiteral());
                 }
             }
-            
+
             TreeNode parent = args[0].Parent;
             parent = parent.Parent ?? parent;
-            
+
             parent.RegisterFunction(function.Function, function);
-            
+
             return new VoidLiteral();
         }
     }

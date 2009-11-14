@@ -39,27 +39,27 @@ namespace Banshee.IO.SystemIO
         {
             System.IO.Directory.CreateDirectory (directory);
         }
-        
+
         public void Delete (string directory)
         {
             Delete (directory, false);
         }
-        
+
         public void Delete (string directory, bool recursive)
         {
             System.IO.Directory.Delete (directory, recursive);
         }
-        
+
         public bool Exists (string directory)
         {
             return System.IO.Directory.Exists (directory);
         }
-        
+
         public IEnumerable<string> GetFiles (string directory)
         {
             return System.IO.Directory.GetFiles (directory);
         }
-        
+
         public IEnumerable<string> GetDirectories (string directory)
         {
             return System.IO.Directory.GetDirectories (directory);

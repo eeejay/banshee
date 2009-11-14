@@ -47,7 +47,7 @@ namespace Hyena.SExpEngine
         {
             this.function = function;
         }
-        
+
         public FunctionNode(string function, object body)
         {
             this.function = function;
@@ -57,32 +57,32 @@ namespace Hyena.SExpEngine
         public TreeNode Evaluate(EvaluatorBase evaluator, TreeNode [] args)
         {
             if(args != null && args.Length != FunctionCount && RequiresArguments) {
-                throw new ArgumentException("Function " + function + " takes " 
+                throw new ArgumentException("Function " + function + " takes "
                     + FunctionCount + " arguments, not " + args.Length);
             }
-            
+
             if(args != null && RequiresArguments) {
                 int i = 0;
                 string [] names = new string[args.Length];
-                
+
                 foreach(KeyValuePair<string, FunctionNode> var in Functions) {
                     names[i++] = var.Key;
                 }
-                
+
                 for(i = 0; i < args.Length; i++) {
                     (body as TreeNode).RegisterFunction(names[i], evaluator.Evaluate(args[i]));
                 }
             }
-            
+
             return evaluator.Evaluate(ResolveBody(evaluator));
         }
-        
+
         private TreeNode ResolveBody(EvaluatorBase evaluator)
         {
             if(body == null) {
                 throw new UnknownVariableException(Function);
             }
-            
+
             if(body is string) {
                 return new StringLiteral((string)body);
             } else if(body is double) {
@@ -96,26 +96,26 @@ namespace Hyena.SExpEngine
             } else if(body is TreeNode) {
                 return evaluator.Evaluate((TreeNode)body);
             }
-            
+
             throw new UnknownVariableException(String.Format(
                 "Unknown function type `{0}' for function `{1}'",
                 body.GetType(), Function));
         }
-        
+
         public override string ToString()
         {
             return Function;
         }
-        
+
         internal object Body {
             get { return body; }
             set { body = value; }
         }
-        
+
         internal bool RequiresArguments {
             get { return FunctionCount > 0 && body is TreeNode; }
         }
-        
+
         public string Function {
             get { return function; }
         }

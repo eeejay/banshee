@@ -3,33 +3,33 @@
  *  HigMessageDialog.cs
  ****************************************************************************/
 
-/*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
+/*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW:
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
- *  copy of this software and associated documentation files (the "Software"),  
- *  to deal in the Software without restriction, including without limitation  
- *  the rights to use, copy, modify, merge, publish, distribute, sublicense,  
- *  and/or sell copies of the Software, and to permit persons to whom the  
+ *  copy of this software and associated documentation files (the "Software"),
+ *  to deal in the Software without restriction, including without limitation
+ *  the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ *  and/or sell copies of the Software, and to permit persons to whom the
  *  Software is furnished to do so, subject to the following conditions:
  *
- *  The above copyright notice and this permission notice shall be included in 
+ *  The above copyright notice and this permission notice shall be included in
  *  all copies or substantial portions of the Software.
  *
- *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
- *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
- *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
- *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
- *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
- *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  *  DEALINGS IN THE SOFTWARE.
  */
- 
+
 using System;
 
 namespace Banshee.Widgets
 {
     public class HigMessageDialog : Gtk.Dialog
-    {    
+    {
         private Gtk.Image image;
         private Gtk.VBox label_vbox;
         private Gtk.Label message_label;
@@ -76,7 +76,7 @@ namespace Banshee.Widgets
             image.Yalign = 0.1f;
             image.Show ();
             hbox.PackStart (image, false, false, 0);
-            
+
             label_vbox = new Gtk.VBox (false, 0);
             label_vbox.Show ();
             hbox.PackStart (label_vbox, true, true, 0);
@@ -103,7 +103,7 @@ namespace Banshee.Widgets
             label.SetAlignment (0.0f, 0.5f);
             label.Show ();
             label_vbox.PackStart (label, false, false, 0);
-            
+
             switch (buttons) {
             case Gtk.ButtonsType.None:
                 break;
@@ -157,7 +157,7 @@ namespace Banshee.Widgets
             AddButton (button, response, isDefault);
             return button;
         }
-        
+
         public void AddButton (string stock_id, Gtk.ResponseType response, bool isDefault)
         {
             Gtk.Button button = new Gtk.Button (stock_id);
@@ -190,7 +190,7 @@ namespace Banshee.Widgets
                  return (Gtk.ResponseType)hmd.Run();
              } finally {
                  hmd.Destroy();
-             }    
+             }
         }
 
         //Run and destroy a standard confirmation dialog
@@ -206,23 +206,23 @@ namespace Banshee.Widgets
                  return (Gtk.ResponseType)hmd.Run();
              } finally {
                  hmd.Destroy();
-             }    
+             }
          }
-         
+
          public Gdk.Pixbuf Image {
             set {
                 image.Pixbuf = value;
             }
-             
+
             get {
                 return image.Pixbuf;
             }
         }
-        
+
         public Gtk.Label MessageLabel {
             get { return message_label; }
         }
-        
+
         public Gtk.VBox LabelVBox {
             get { return label_vbox; }
         }

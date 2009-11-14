@@ -37,18 +37,18 @@ namespace Banshee.MediaEngine
     public delegate void TranscoderProgressHandler (object o, TranscoderProgressArgs args);
     public delegate void TranscoderTrackFinishedHandler (object o, TranscoderTrackFinishedArgs args);
     public delegate void TranscoderErrorHandler (object o, TranscoderErrorArgs args);
- 
+
     public interface ITranscoder
     {
         event TranscoderProgressHandler Progress;
         event TranscoderTrackFinishedHandler TrackFinished;
         event TranscoderErrorHandler Error;
-        
+
         void TranscodeTrack (TrackInfo track, SafeUri outputUri, ProfileConfiguration config);
         void Finish ();
         void Cancel ();
     }
-                             
+
     public sealed class TranscoderProgressArgs : EventArgs
     {
         public TranscoderProgressArgs (TrackInfo track, double fraction, TimeSpan totalTime)
@@ -57,7 +57,7 @@ namespace Banshee.MediaEngine
             this.fraction = fraction;
             this.total_time = totalTime;
         }
-        
+
         private double fraction;
         public double Fraction {
             get { return fraction; }
@@ -86,13 +86,13 @@ namespace Banshee.MediaEngine
         public TrackInfo Track {
             get { return track; }
         }
-        
+
         private SafeUri uri;
         public SafeUri Uri {
             get { return uri; }
         }
     }
-    
+
     public sealed class TranscoderErrorArgs : EventArgs
     {
         public TranscoderErrorArgs (TrackInfo track, string message)
@@ -100,12 +100,12 @@ namespace Banshee.MediaEngine
             this.track = track;
             this.message = message;
         }
-        
+
         private TrackInfo track;
         public TrackInfo Track {
             get { return track; }
         }
-        
+
         private string message;
         public string Message {
             get { return message; }

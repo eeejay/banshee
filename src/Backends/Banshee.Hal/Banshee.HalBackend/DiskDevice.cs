@@ -41,10 +41,10 @@ namespace Banshee.HalBackend
             if (device["storage.drive_type"] == "disk") {
                 return new DiskDevice (manager, device);
             }
-            
+
             return null;
         }
-        
+
         private DiskDevice (Hal.Manager manager, Hal.Device device) : base (manager, device)
         {
         }

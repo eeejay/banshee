@@ -40,13 +40,13 @@ namespace Hyena.Json.Tests
     public class DeserializerTests : Hyena.Tests.TestBase
     {
         private Deserializer deserializer;
-        
+
         [TestFixtureSetUp]
         public void Setup ()
         {
             deserializer = new Deserializer ();
         }
-        
+
         [Test]
         public void Literal ()
         {
@@ -56,39 +56,39 @@ namespace Hyena.Json.Tests
             Assert.AreEqual (true, (bool)deserializer.SetInput ("true").Deserialize ());
             Assert.AreEqual (false, (bool)deserializer.SetInput ("false").Deserialize ());
         }
-        
+
         [Test]
         public void Array ()
         {
             JsonArray array = (JsonArray)deserializer.SetInput ("[]").Deserialize ();
             Assert.AreEqual (0, array.Count);
-            
+
             array = (JsonArray)deserializer.SetInput ("[[]]").Deserialize ();
             Assert.AreEqual (1, array.Count);
             Assert.AreEqual (0, ((JsonArray)array[0]).Count);
-            
+
             array = (JsonArray)deserializer.SetInput ("[[true,[]]]").Deserialize ();
             Assert.AreEqual (1, array.Count);
             Assert.AreEqual (2, ((JsonArray)array[0]).Count);
             Assert.AreEqual (0, ((JsonArray)((JsonArray)array[0])[1]).Count);
-            
+
             array = (JsonArray)deserializer.SetInput ("[\"a\", 1.0, true]").Deserialize ();
             Assert.AreEqual (3, array.Count);
             Assert.AreEqual ("a", (string)array[0]);
             Assert.AreEqual (1, (double)array[1]);
             Assert.AreEqual (true, (bool)array[2]);
         }
-        
+
         [Test]
         public void Object ()
         {
             JsonObject obj = (JsonObject)deserializer.SetInput ("{}").Deserialize ();
             Assert.AreEqual (0, obj.Count);
-            
+
             obj = (JsonObject)deserializer.SetInput ("{\"a\":{}}").Deserialize ();
             Assert.AreEqual (1, obj.Count);
             Assert.AreEqual (0, ((JsonObject)obj["a"]).Count);
-            
+
             obj = (JsonObject)deserializer.SetInput ("{\"a\":[{\"b\":false},\"c\"]}").Deserialize ();
             Assert.AreEqual (1, obj.Count);
             JsonArray arr = (JsonArray)obj["a"];

@@ -1,4 +1,4 @@
-// 
+//
 // PlatformHacks.cs
 //
 // Author:
@@ -37,34 +37,34 @@ namespace Banshee.Base
         // For the SEGV trap hack (see below)
         [DllImport ("libc")]
         private static extern int sigaction (Mono.Unix.Native.Signum sig, IntPtr act, IntPtr oact);
-        
+
         private static IntPtr mono_jit_segv_handler = IntPtr.Zero;
-        
+
         public static void TrapMonoJitSegv ()
         {
             if (Environment.OSVersion.Platform != PlatformID.Unix) {
                 return;
             }
-        
-            // We must get a reference to the JIT's SEGV handler because 
+
+            // We must get a reference to the JIT's SEGV handler because
             // GStreamer will set its own and not restore the previous, which
             // will cause what should be NullReferenceExceptions to be unhandled
             // segfaults for the duration of the instance, as the JIT is powerless!
             // FIXME: http://bugzilla.gnome.org/show_bug.cgi?id=391777
-            
+
             try {
                 mono_jit_segv_handler = Marshal.AllocHGlobal (512);
                 sigaction (Mono.Unix.Native.Signum.SIGSEGV, IntPtr.Zero, mono_jit_segv_handler);
             } catch {
             }
         }
-        
+
         public static void RestoreMonoJitSegv ()
         {
             if (Environment.OSVersion.Platform != PlatformID.Unix || mono_jit_segv_handler.Equals (IntPtr.Zero)) {
                 return;
             }
-            
+
             // Reset the SEGV handle to that of the JIT again (SIGH!)
             try {
                 sigaction (Mono.Unix.Native.Signum.SIGSEGV, mono_jit_segv_handler, IntPtr.Zero);
@@ -72,10 +72,10 @@ namespace Banshee.Base
             } catch {
             }
         }
-        
+
         [DllImport ("libc")] // Linux
         private static extern int prctl (int option, byte [] arg2, IntPtr arg3, IntPtr arg4, IntPtr arg5);
-        
+
         [DllImport ("libc")] // BSD
         private static extern void setproctitle (byte [] fmt, byte [] str_arg);
 
@@ -84,19 +84,19 @@ namespace Banshee.Base
             if (Environment.OSVersion.Platform != PlatformID.Unix) {
                 return;
             }
-        
+
             try {
-                if (prctl (15 /* PR_SET_NAME */, Encoding.ASCII.GetBytes (name + "\0"), 
+                if (prctl (15 /* PR_SET_NAME */, Encoding.ASCII.GetBytes (name + "\0"),
                     IntPtr.Zero, IntPtr.Zero, IntPtr.Zero) != 0) {
-                    throw new ApplicationException ("Error setting process name: " + 
+                    throw new ApplicationException ("Error setting process name: " +
                         Mono.Unix.Native.Stdlib.GetLastError ());
                 }
             } catch (EntryPointNotFoundException) {
-                setproctitle (Encoding.ASCII.GetBytes ("%s\0"), 
+                setproctitle (Encoding.ASCII.GetBytes ("%s\0"),
                     Encoding.ASCII.GetBytes (name + "\0"));
             }
         }
-        
+
         public static void TrySetProcessName (string name)
         {
             try {

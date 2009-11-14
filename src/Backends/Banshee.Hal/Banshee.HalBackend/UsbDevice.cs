@@ -36,39 +36,39 @@ namespace Banshee.HalBackend
     {
         public static UsbDevice Resolve (Hal.Manager manager, Hal.Device device)
         {
-            if (device["info.subsystem"] == "usb_device" && 
-                device.PropertyExists ("usb_device.product_id") && 
+            if (device["info.subsystem"] == "usb_device" &&
+                device.PropertyExists ("usb_device.product_id") &&
                 device.PropertyExists ("usb_device.vendor_id")) {
                 return new UsbDevice (manager, device);
             }
-            
+
             return null;
         }
-        
+
         private UsbDevice (Hal.Manager manager, Hal.Device device) : base (manager, device)
         {
         }
-        
+
         public int VendorId {
             get { return HalDevice.GetPropertyInteger ("usb_device.vendor_id"); }
         }
-        
+
         public int ProductId {
             get { return HalDevice.GetPropertyInteger ("usb_device.product_id"); }
         }
-        
+
         public override string Serial {
-            get { return HalDevice.PropertyExists ("usb_device.serial") 
+            get { return HalDevice.PropertyExists ("usb_device.serial")
                 ? HalDevice["usb_device.serial"] : null; }
         }
-        
+
         public double Speed {
-            get { return HalDevice.PropertyExists ("usb_device.speed") 
+            get { return HalDevice.PropertyExists ("usb_device.speed")
                 ? HalDevice.GetPropertyDouble ("usb_device.speed") : 0.0; }
         }
-        
+
         public double Version {
-            get { return HalDevice.PropertyExists ("usb_device.version") 
+            get { return HalDevice.PropertyExists ("usb_device.version")
                 ? HalDevice.GetPropertyDouble ("usb_device.version") : 0.0; }
         }
     }

@@ -1,4 +1,4 @@
-// 
+//
 // TokenType.cs
 //
 // Author:
@@ -45,7 +45,7 @@ namespace Hyena.Json
         Integer = 1 << 8,
         Comma = 1 << 9,
         Colon = 1 << 10,
-        
+
         Literal = String | Number | Boolean | Null | Integer,
         Value = ObjectStart | ArrayStart | Literal
     }

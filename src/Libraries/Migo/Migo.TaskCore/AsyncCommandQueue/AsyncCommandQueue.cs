@@ -5,33 +5,33 @@
  *  Written by Mike Urbanski <michael.c.urbanski@gmail.com>
  ****************************************************************************/
 
-/*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
+/*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW:
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
- *  copy of this software and associated documentation files (the "Software"),  
- *  to deal in the Software without restriction, including without limitation  
- *  the rights to use, copy, modify, merge, publish, distribute, sublicense,  
- *  and/or sell copies of the Software, and to permit persons to whom the  
+ *  copy of this software and associated documentation files (the "Software"),
+ *  to deal in the Software without restriction, including without limitation
+ *  the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ *  and/or sell copies of the Software, and to permit persons to whom the
  *  Software is furnished to do so, subject to the following conditions:
  *
- *  The above copyright notice and this permission notice shall be included in 
+ *  The above copyright notice and this permission notice shall be included in
  *  all copies or substantial portions of the Software.
  *
- *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
- *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
- *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
- *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
- *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
- *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  *  DEALINGS IN THE SOFTWARE.
  */
- 
+
 using System;
 using System.Threading;
 using System.Collections.Generic;
 
 namespace Migo.TaskCore
-{        
+{
     delegate void ExecuteCommand (ICommand command);
 
     public class AsyncCommandQueue : IDisposable
@@ -43,15 +43,15 @@ namespace Migo.TaskCore
         private RegisteredWaitHandle registeredHandle;
         private AutoResetEvent are = new AutoResetEvent (false);
         private ManualResetEvent executingHandle = new ManualResetEvent (true);
-        
+
         private readonly ExecuteCommand execCommand;
-        
+
         private readonly object userSync;
         private readonly object sync = new object ();
-                
-        public EventHandler<EventArgs> QueueProcessed;        
-        public EventHandler<EventArgs> QueueProcessing; 
-        
+
+        public EventHandler<EventArgs> QueueProcessed;
+        public EventHandler<EventArgs> QueueProcessing;
+
         private bool IsProcessed {
             get {
                 bool ret = false;
@@ -59,13 +59,13 @@ namespace Migo.TaskCore
                 lock (sync) {
                     if (eventQueue.Count == 0) {
                         ret = true;
-                    }                
+                    }
                 }
-                
+
                 return ret;
             }
-        }        
-        
+        }
+
         public virtual WaitHandle WaitHandle {
             get { return executingHandle; }
         }
@@ -73,11 +73,11 @@ namespace Migo.TaskCore
         public AsyncCommandQueue () : this (null)
         {
         }
-        
+
         public AsyncCommandQueue (object sync)
         {
             userSync = sync;
-            
+
             if (userSync == null) {
                 execCommand = delegate (ICommand command) {
                     command.Execute ();
@@ -87,60 +87,60 @@ namespace Migo.TaskCore
                     lock (userSync) {
                         command.Execute ();
                     }
-                };                    
+                };
             }
-            
+
             eventQueue = new Queue<ICommand> ();
 
             registeredHandle = ThreadPool.RegisterWaitForSingleObject (
                 are, ProcessEventQueue, null, -1, false
             );
         }
-        
+
         public virtual void Dispose ()
         {
             if (SetDisposed ()) {
-                
+
                 executingHandle.WaitOne ();
-                
+
                 if (registeredHandle != null) {
                     registeredHandle.Unregister (null);
                     registeredHandle = null;
                 }
-                        
+
                 if (are != null) {
                     are.Close ();
                     are = null;
                 }
-                
+
                 if (executingHandle != null) {
                     executingHandle.Close ();
                     executingHandle = null;
-                }                
-                
+                }
+
                 eventQueue = null;
             }
         }
-    
+
         public virtual bool Register (ICommand command)
         {
-            lock (sync) {   
+            lock (sync) {
                 if (disposed) {
                     return false;
                 }
-            
+
                 return Register (command, true);
             }
         }
-        
+
         protected virtual bool Register (ICommand command, bool pumpQueue)
         {
             if (command == null) {
                 throw new ArgumentNullException ("command");
             }
-           
+
             eventQueue.Enqueue (command);
-            
+
             if (!executing && pumpQueue) {
                 SetExecuting (true);
             }
@@ -153,40 +153,40 @@ namespace Migo.TaskCore
             if (commands == null) {
                 throw new ArgumentNullException ("commands");
             }
-            
+
             lock (sync) {
                 if (disposed) {
                     return false;
                 }
-                
+
                 foreach (ICommand c in commands) {
                     Register (c, false);
                 }
-                
+
                 if (!executing) {
                     SetExecuting (true);
-                }                
+                }
             }
-            
+
             return true;
         }
 
-        protected virtual void SetExecuting (bool exec) 
+        protected virtual void SetExecuting (bool exec)
         {
             if (exec) {
                 executing = true;
-                are.Set ();                
+                are.Set ();
                 executingHandle.Reset ();
             } else {
                 executing = false;
                 executingHandle.Set ();
             }
         }
-        
+
         protected virtual bool SetDisposed ()
         {
             bool ret = false;
-            
+
             lock (sync) {
                 if (!disposed) {
                     ret = disposed = true;
@@ -194,12 +194,12 @@ namespace Migo.TaskCore
             }
             return ret;
         }
-        
+
         protected virtual void ProcessEventQueue (object state, bool timedOut)
-        {     
+        {
             ICommand e;
             bool done = false;
-           
+
             while (!done) {
                 RaiseEvent (QueueProcessing);
 
@@ -207,21 +207,21 @@ namespace Migo.TaskCore
                     lock (sync) {
                         e = eventQueue.Dequeue ();
                     }
-                    
+
                     if (e != null) {
                         try {
                             execCommand (e);
                         } catch (Exception ex) {
                             Hyena.Log.Exception (ex);
                         }
-                    } 
-                                       
+                    }
+
                     if (IsProcessed) {
                         RaiseEvent (QueueProcessed);
                         done = true;
-                    }                
+                    }
 
-                    if (done) {                
+                    if (done) {
                         lock (sync) {
                             if (eventQueue.Count == 0) {
                                 SetExecuting (false);
@@ -229,7 +229,7 @@ namespace Migo.TaskCore
                                 done = false;
                             }
                         }
-                        
+
                         break;
                     }
                 }
@@ -245,8 +245,8 @@ namespace Migo.TaskCore
                     handler (this, new EventArgs ());
                 } catch (Exception ex) {
                     Hyena.Log.Exception (ex);
-                }                
-            }            
+                }
+            }
         }
     }
 }

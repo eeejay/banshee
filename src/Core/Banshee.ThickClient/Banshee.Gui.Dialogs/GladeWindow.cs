@@ -25,36 +25,36 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
- 
+
 using System;
 using Gtk;
 using Glade;
 
 namespace Banshee.Gui.Dialogs
 {
-    public abstract class GladeWindow 
+    public abstract class GladeWindow
     {
         private string window_name;
         private Glade.XML glade;
         private Window window;
-        
+
         protected GladeWindow()
         {
         }
 
         public GladeWindow(string name) : this(name, new Glade.XML(
-            System.Reflection.Assembly.GetExecutingAssembly(), "banshee-dialogs.glade", name, 
+            System.Reflection.Assembly.GetExecutingAssembly(), "banshee-dialogs.glade", name,
             Banshee.ServiceStack.Application.InternalName))
         {
         }
 
         public GladeWindow(string name, Glade.XML glade)
         {
-            window_name = name;        
-            this.glade = glade; 
+            window_name = name;
+            this.glade = glade;
             this.glade.Autoconnect(this);
         }
-        
+
         public virtual void Destroy()
         {
             Window.Destroy();
@@ -67,13 +67,13 @@ namespace Banshee.Gui.Dialogs
         public string Name {
             get { return window_name; }
         }
-        
+
         public Window Window {
             get {
                 if(window == null) {
                     window = (Window)glade.GetWidget(window_name);
                 }
-                
+
                 return window;
             }
         }

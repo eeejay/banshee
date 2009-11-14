@@ -35,36 +35,36 @@ namespace Banshee.Collection
     public class ArtistInfo : CacheableItem
     {
         public static readonly string UnknownArtistName = Catalog.GetString ("Unknown Artist");
-        
+
         private string name;
         private string name_sort;
         private string musicbrainz_id;
-        
+
         public ArtistInfo ()
         {
         }
-        
+
         public ArtistInfo(string name, string name_sort)
         {
             this.name = name;
             this.name_sort = name_sort;
         }
-                
+
         public virtual string MusicBrainzId {
             get { return musicbrainz_id; }
             set { musicbrainz_id = value; }
         }
-        
+
         public virtual string Name {
             get { return name; }
             set { name = value; }
         }
-        
+
         public virtual string NameSort {
             get { return name_sort; }
             set { name_sort = String.IsNullOrEmpty (value) ? null : value; }
         }
-        
+
         public string DisplayName {
             get { return StringUtil.MaybeFallback (Name, UnknownArtistName); }
         }

@@ -36,41 +36,41 @@ namespace Hyena.Widgets
         private double value;
         private double target_value;
         private double velocity = 0;
-        
+
         private double Accelerate (double velocity)
         {
             return AccelerateCore (velocity);
         }
-        
+
         private double Decelerate (double velocity)
         {
             return Math.Max (DecelerateCore (velocity), 0);
         }
-        
+
         protected virtual double AccelerateCore (double velocity)
         {
             return velocity + 8;
         }
-        
+
         protected virtual double DecelerateCore (double velocity)
         {
             return velocity - Math.Max (3, 0.2 * velocity);
         }
-        
+
         private double TargetValue {
             get { return target_value; }
             set {
                 if (value == target_value) {
                     return;
                 }
-                
+
                 target_value = value;
                 if (timeout == 0) {
                     timeout = GLib.Timeout.Add (20, OnTimeout);
                 }
             }
         }
-        
+
         // Smoothly get us to the target value
         private bool OnTimeout ()
         {
@@ -80,17 +80,17 @@ namespace Hyena.Widgets
                 timeout = 0;
                 return false;
             }
-            
+
             int sign = Math.Sign (delta);
             delta = Math.Abs (delta);
-            
+
             double hypothetical = delta;
             double v = Accelerate (velocity);
             while (v > 0 && hypothetical > 0) {
                 hypothetical -= v;
                 v = Decelerate (v);
             }
-            
+
             velocity = hypothetical <= 0 ? Decelerate (velocity) : Accelerate (velocity);
 
             // Minimum speed: 2 px / 20 ms = 100px / second
@@ -102,10 +102,10 @@ namespace Hyena.Widgets
             ignore_value_changed = true;
             Vadjustment.Value = Math.Round (value);
             ignore_value_changed = false;
-            
+
             return true;
         }
-        
+
         protected override bool OnScrollEvent (Gdk.EventScroll evnt)
         {
             switch (evnt.Direction) {
@@ -120,19 +120,19 @@ namespace Hyena.Widgets
             }
             return true;
         }
-        
+
         protected override void OnRealized ()
         {
             base.OnRealized ();
             Vadjustment.ValueChanged += OnValueChanged;
         }
-        
+
         protected override void OnUnrealized ()
         {
             Vadjustment.ValueChanged -= OnValueChanged;
             base.OnUnrealized ();
         }
-        
+
         private void OnValueChanged (object o, EventArgs args)
         {
             if (!ignore_value_changed) {

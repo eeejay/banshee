@@ -39,7 +39,7 @@ namespace Banshee.Library.Gui
         public FileImportSource ()
         {
         }
-    
+
         public void Import()
         {
             var chooser = Banshee.Gui.Dialogs.FileChooserDialog.CreateForImport (Catalog.GetString ("Import Files to Library"), true);
@@ -47,14 +47,14 @@ namespace Banshee.Library.Gui
             chooser.AddFilter (Hyena.Gui.GtkUtilities.GetFileFilter (
                 Catalog.GetString ("Media Files"),
                 Banshee.Collection.Database.DatabaseImportManager.WhiteListFileExtensions.List));
-            
+
             if (chooser.Run () == (int)ResponseType.Ok) {
                 Banshee.ServiceStack.ServiceManager.Get<LibraryImportManager> ().Enqueue (chooser.Uris);
             }
-            
+
             chooser.Destroy ();
         }
-        
+
         public string Name {
             get { return Catalog.GetString ("Local Files"); }
         }
@@ -62,19 +62,19 @@ namespace Banshee.Library.Gui
         public string ImportLabel {
             get { return Catalog.GetString ("C_hoose Files"); }
         }
-        
+
         public string [] IconNames {
             get { return new string [] { "gtk-open" }; }
         }
-        
+
         public bool CanImport {
             get { return true; }
         }
-        
+
         public int SortOrder {
             get { return 5; }
         }
-        
+
         // Reserve strings in preparation for the forthcoming string freeze.
         public void ReservedStrings ()
         {

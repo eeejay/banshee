@@ -34,22 +34,22 @@ namespace MusicBrainz
             EnumToString (builder, str);
             return builder.ToString ();
         }
-        
+
         public static void EnumToString (StringBuilder builder, string str)
         {
             builder.Append (str [0]);
             for (int i = 1; i < str.Length; i++) {
                 if (str [i] >= 'A' && str [i] <= 'Z')
-                    builder.Append ('-'); 
+                    builder.Append ('-');
                 builder.Append (str [i]);
             }
         }
-        
+
         public static T StringToEnum<T> (string name) where T : struct
         {
             return StringToEnumOrNull<T> (name) ?? default (T);
         }
-        
+
         public static T? StringToEnumOrNull<T> (string name) where T : struct
         {
             if (name != null)
@@ -58,18 +58,18 @@ namespace MusicBrainz
                         return value;
             return null;
         }
-        
+
         public static void PercentEncode (StringBuilder builder, string value)
         {
             foreach (char c in value) {
-                if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || 
+                if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') ||
                     c == '-' || c == '_' || c == '.' || c == '~')
                     builder.Append (c);
                 else {
                     builder.Append ('%');
                     foreach (byte b in Encoding.UTF8.GetBytes (new char [] { c }))
                         builder.AppendFormat ("{0:X}", b);
-                } 
+                }
             }
         }
     }

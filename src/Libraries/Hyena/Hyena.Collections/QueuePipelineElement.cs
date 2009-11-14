@@ -55,14 +55,14 @@ namespace Hyena.Collections
         public int ProcessedCount {
             get { return processed_count; }
         }
-        
+
         private int total_count;
         public int TotalCount {
             get { return total_count; }
         }
-        
+
         protected abstract T ProcessItem (T item);
-        
+
         protected virtual void OnFinished ()
         {
             lock (this) {
@@ -73,7 +73,7 @@ namespace Hyena.Collections
                 total_count = 0;
                 processed_count = 0;
             }
-            
+
             EventHandler handler = Finished;
             if (handler != null) {
                 handler (this, EventArgs.Empty);
@@ -87,7 +87,7 @@ namespace Hyena.Collections
                 handler (this, EventArgs.Empty);
             }
         }
-        
+
         protected virtual void OnCanceled ()
         {
             lock (queue) {
@@ -96,24 +96,24 @@ namespace Hyena.Collections
                 processed_count = 0;
             }
         }
-        
+
         public virtual void Enqueue (T item)
         {
-            lock (this) {                
+            lock (this) {
                 lock (queue) {
                     queue.Enqueue (item);
                     total_count++;
                 }
-                
+
                 if (!threaded) {
                     Processor (null);
                     return;
                 }
-                
+
                 if (thread_wait == null) {
                     thread_wait = new AutoResetEvent (false);
                 }
-                
+
                 if (Monitor.TryEnter (monitor)) {
                     Monitor.Exit (monitor);
                     ThreadPool.QueueUserWorkItem (Processor);
@@ -121,35 +121,35 @@ namespace Hyena.Collections
                 }
             }
         }
-        
+
         protected virtual void EnqueueDownstream (T item)
         {
             if (NextElement != null && item != null) {
                 NextElement.Enqueue (item);
             }
         }
-        
+
         private void Processor (object state)
         {
             lock (monitor) {
                 if (threaded) {
                     thread_wait.Set ();
                 }
-            
+
                 lock (this) {
                     processing = true;
                 }
-                
+
                 try {
                     while (queue.Count > 0) {
                         CheckForCanceled ();
-                        
+
                         T item = null;
                         lock (queue) {
                             item = queue.Dequeue ();
                             processed_count++;
                         }
-                        
+
                         EnqueueDownstream (ProcessItem (item));
                         OnProcessedItem ();
                     }
@@ -165,11 +165,11 @@ namespace Hyena.Collections
                     thread_wait.Close ();
                     thread_wait = null;
                 }
-                
+
                 OnFinished ();
             }
         }
-        
+
         protected virtual void CheckForCanceled ()
         {
             lock (this) {
@@ -178,39 +178,39 @@ namespace Hyena.Collections
                 }
             }
         }
-        
+
         public void Cancel ()
         {
             lock (this) {
                 if (processing) {
                     canceled = true;
                 }
-                
+
                 if (NextElement != null) {
                     NextElement.Cancel ();
                 }
             }
         }
-        
+
         public bool Processing {
             get { lock (this) { return processing; } }
         }
-        
+
         public bool Threaded {
             get { return threaded; }
-            set { 
+            set {
                 if (processing) {
                     throw new InvalidOperationException ("Cannot change threading model while the element is processing");
                 }
-                
-                threaded = value; 
+
+                threaded = value;
             }
         }
-        
+
         protected Queue<T> Queue {
             get { return queue; }
         }
-        
+
         private QueuePipelineElement<T> next_element;
         internal QueuePipelineElement<T> NextElement {
             get { return next_element; }

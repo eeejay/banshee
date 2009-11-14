@@ -31,12 +31,12 @@ using System;
 namespace Hyena.Data.Gui
 {
     public delegate void RowActivatedHandler<T> (object o, RowActivatedArgs<T> args);
-    
+
     public class RowActivatedArgs<T> : EventArgs
     {
         private int row;
         private T row_value;
-        
+
         public RowActivatedArgs (int row, T rowValue)
         {
             this.row = row;

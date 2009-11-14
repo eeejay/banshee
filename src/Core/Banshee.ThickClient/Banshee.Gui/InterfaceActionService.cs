@@ -54,10 +54,10 @@ namespace Banshee.Gui
         private PlaybackActions playback_actions;
         private TrackActions    track_actions;
         private SourceActions   source_actions;
-        
+
         private BansheeActionGroup active_source_actions;
         private uint active_source_uiid = 0;
-        
+
         public InterfaceActionService ()
         {
             ui_manager = new UIManager ();
@@ -89,29 +89,29 @@ namespace Banshee.Gui
                 if (action_groups.ContainsKey (name)) {
                     throw new ApplicationException ("Group already exists");
                 }
-                
+
                 InnerAddActionGroup (new ActionGroup (name));
             }
         }
-        
+
         public void AddActionGroup (ActionGroup group)
         {
             lock (this) {
                 if (action_groups.ContainsKey (group.Name)) {
                     throw new ApplicationException ("Group already exists");
                 }
-                            
+
                 InnerAddActionGroup (group);
             }
         }
-        
+
         public void RemoveActionGroup (string name)
         {
             lock (this) {
                 if (action_groups.ContainsKey (name)) {
                     ActionGroup group = action_groups[name];
                     ui_manager.RemoveActionGroup (group);
-                    action_groups.Remove (name);                    
+                    action_groups.Remove (name);
                 }
             }
         }
@@ -120,7 +120,7 @@ namespace Banshee.Gui
         {
             RemoveActionGroup (group.Name);
         }
-        
+
         public ActionGroup FindActionGroup (string actionGroupId)
         {
             foreach (ActionGroup group in action_groups.Values) {
@@ -128,36 +128,36 @@ namespace Banshee.Gui
                     return group;
                 }
             }
-            
+
             return null;
         }
-        
+
         public Action FindAction (string actionId)
         {
             string [] parts = actionId.Split ('.');
-            
+
             if (parts == null || parts.Length < 2) {
                 return null;
             }
-            
+
             string group_name = parts[0];
             string action_name = parts[1];
-            
+
             ActionGroup group = FindActionGroup (group_name);
             return group == null ? null : group.GetAction (action_name);
         }
-        
+
         public void PopulateToolbarPlaceholder (Toolbar toolbar, string path, Widget item)
         {
             PopulateToolbarPlaceholder (toolbar, path, item, false);
         }
-        
+
         public void PopulateToolbarPlaceholder (Toolbar toolbar, string path, Widget item, bool expand)
         {
             ToolItem placeholder = (ToolItem)UIManager.GetWidget (path);
             int position = toolbar.GetItemIndex (placeholder);
             toolbar.Remove (placeholder);
-            
+
             if (item is ToolItem) {
                 ((ToolItem)item).Expand = expand;
                 toolbar.Insert ((ToolItem)item, position);
@@ -168,7 +168,7 @@ namespace Banshee.Gui
                 toolbar.Insert (container_item, position);
             }
         }
-        
+
         private void OnActiveSourceChanged (SourceEventArgs args)
         {
             // FIXME: Can't use an anonymous delegate here because of compiler
@@ -182,12 +182,12 @@ namespace Banshee.Gui
                 ui_manager.RemoveUi (active_source_uiid);
                 active_source_uiid = 0;
             }
-                
+
             if (active_source_actions != null) {
                 RemoveActionGroup (active_source_actions.Name);
                 active_source_actions = null;
             }
-            
+
             Source active_source = ServiceManager.SourceManager.ActiveSource;
             if (active_source == null) {
                 return;
@@ -199,19 +199,19 @@ namespace Banshee.Gui
             if (active_source_actions != null) {
                 AddActionGroup (active_source_actions);
             }
-                
-            Assembly assembly = 
+
+            Assembly assembly =
                 active_source.GetProperty<Assembly> ("ActiveSourceUIResource.Assembly", propagate) ??
                 Assembly.GetAssembly (active_source.GetType ());
 
             active_source_uiid = AddUiFromFile (active_source.GetProperty<string> ("ActiveSourceUIResource", propagate), assembly);
         }
 
-        private void OnExtensionChanged (object o, ExtensionNodeEventArgs args) 
+        private void OnExtensionChanged (object o, ExtensionNodeEventArgs args)
         {
             try {
                 TypeExtensionNode node = (TypeExtensionNode)args.ExtensionNode;
-                
+
                 if (args.Change == ExtensionChange.Add) {
                     if (!extension_actions.ContainsKey (node.Id)) {
                         ActionGroup group = (ActionGroup)node.CreateInstance (typeof (ActionGroup));
@@ -235,7 +235,7 @@ namespace Banshee.Gui
         {
             return AddUiFromFile (ui_file, Assembly.GetCallingAssembly ());
         }
-        
+
         public uint AddUiFromFile (string ui_file, Assembly assembly)
         {
             if (ui_file != null) {
@@ -245,19 +245,19 @@ namespace Banshee.Gui
             }
             return 0;
         }
-        
+
         public Action this[string actionId] {
             get { return FindAction (actionId); }
         }
-        
+
         public UIManager UIManager {
             get { return ui_manager; }
         }
-        
+
         public GlobalActions GlobalActions {
             get { return global_actions; }
         }
-        
+
         public PlaybackActions PlaybackActions {
             get { return playback_actions; }
         }
@@ -269,11 +269,11 @@ namespace Banshee.Gui
         public SourceActions SourceActions {
             get { return source_actions; }
         }
-        
+
         public ViewActions ViewActions {
             get { return view_actions; }
         }
-        
+
         string IService.ServiceName {
             get { return "InterfaceActionService"; }
         }

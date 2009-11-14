@@ -38,27 +38,27 @@ namespace Banshee.Gui.Widgets
     public class RepeatActionButton : HBox
     {
         private PlaybackRepeatActions actions = ServiceManager.Get<InterfaceActionService> ().PlaybackActions.RepeatActions;
-        
+
         private MenuButton button;
         private HBox box = new HBox ();
         private Image image = new Image ();
         private Label label = new Label ();
-        
+
         public RepeatActionButton () : this (false)
         {
         }
-        
+
         public RepeatActionButton (bool iconOnly)
         {
             box.Spacing = 4;
             label.UseUnderline = true;
             image.IconSize = (int)IconSize.Menu;
-            
+
             box.PackStart (image, false, false, (uint)(iconOnly ? 4 : 0));
             if (!iconOnly) {
                 box.PackStart (label, true, true, 0);
             }
-            
+
             button = new MenuButton (box, actions.CreateMenu (), false);
             Add (button);
 
@@ -67,7 +67,7 @@ namespace Banshee.Gui.Widgets
 
             ShowAll ();
         }
-        
+
         private void OnActionChanged (object o, EventArgs args)
         {
             button.Sensitive = image.Sensitive = label.Sensitive = actions.Sensitive;

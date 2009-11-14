@@ -48,35 +48,35 @@ namespace Banshee.Dap.MassStorage
             get { return source; }
             set { source = value; }
         }
-        
+
         public MassStorageDevice ()
         {
         }
-        
+
         public MassStorageDevice (MassStorageSource source)
         {
             Source = source;
         }
-        
+
         public virtual void SourceInitialize ()
         {
         }
-        
+
         public virtual bool DeleteTrackHook (DatabaseTrackInfo track)
         {
             return true;
         }
-        
+
         public virtual bool LoadDeviceConfiguration ()
         {
             string path = IsAudioPlayerPath;
             string path_rockbox = System.IO.Path.Combine (source.Volume.MountPoint, ".rockbox/config.cfg");
             StreamReader reader = null;
-            
+
             if (!File.Exists (path) && !File.Exists (path_rockbox) ) {
                 return false;
             }
-            
+
             if (File.Exists (path_rockbox) ) {
                 Hyena.Log.DebugFormat ("Found RockBox Device");
                 name = Catalog.GetString ("Rockbox Device");
@@ -106,14 +106,14 @@ namespace Banshee.Dap.MassStorage
                                 case "output_formats": playback_mime_types = item.Value; break;
                                 case "playlist_format": playlist_formats = item.Value; break;
                                 case "playlist_path": playlist_path = item.Value[0]; break;
-                                case "folder_depth": 
+                                case "folder_depth":
                                     if (!Int32.TryParse (item.Value[0], out folder_depth)) {
                                         folder_depth = -1;
                                     }
                                     Hyena.Log.DebugFormat ("MassStorageDevice.LoadDeviceConfiguration {0}", folder_depth);
                                     break;
                                 default:
-                                    throw new ApplicationException ("unsupported key");    
+                                    throw new ApplicationException ("unsupported key");
                             }
                         } catch (Exception e) {
                             Log.Exception ("Invalid .is_audio_player item " + item.Key, e);
@@ -129,21 +129,21 @@ namespace Banshee.Dap.MassStorage
             }
 
             has_is_audio_player_file = true;
-            
+
             return true;
         }
-        
+
         public virtual bool GetTrackPath (TrackInfo track, out string path)
         {
             path = null;
             return false;
         }
-        
+
         private bool has_is_audio_player_file;
         public bool HasIsAudioPlayerFile {
             get { return has_is_audio_player_file; }
         }
-        
+
         private string IsAudioPlayerPath {
             get { return System.IO.Path.Combine (source.Volume.MountPoint, ".is_audio_player"); }
         }
@@ -152,61 +152,61 @@ namespace Banshee.Dap.MassStorage
         public virtual string Name {
             get { return name ?? source.Volume.Name; }
         }
-        
+
         private int cover_art_size;
-        public virtual int CoverArtSize { 
-            get { return cover_art_size; } 
+        public virtual int CoverArtSize {
+            get { return cover_art_size; }
         }
-        
+
         private int folder_depth = -1;
-        public virtual int FolderDepth { 
-            get { return folder_depth; } 
+        public virtual int FolderDepth {
+            get { return folder_depth; }
         }
-        
+
         private string [] audio_folders = new string[0];
-        public virtual string [] AudioFolders { 
-            get { return audio_folders; } 
+        public virtual string [] AudioFolders {
+            get { return audio_folders; }
         }
 
         private string [] video_folders = new string[0];
-        public virtual string [] VideoFolders { 
-            get { return video_folders; } 
+        public virtual string [] VideoFolders {
+            get { return video_folders; }
         }
-        
+
         private string cover_art_file_type;
-        public virtual string CoverArtFileType { 
-            get { return cover_art_file_type; } 
+        public virtual string CoverArtFileType {
+            get { return cover_art_file_type; }
         }
-        
+
         private string cover_art_file_name;
-        public virtual string CoverArtFileName { 
-            get { return cover_art_file_name; } 
+        public virtual string CoverArtFileName {
+            get { return cover_art_file_name; }
         }
-        
+
         private string [] playlist_formats;
-        public virtual string [] PlaylistFormats { 
-            get { return playlist_formats; } 
+        public virtual string [] PlaylistFormats {
+            get { return playlist_formats; }
         }
-        
+
         private string playlist_path;
-        public virtual string PlaylistPath { 
-            get { return playlist_path; } 
+        public virtual string PlaylistPath {
+            get { return playlist_path; }
         }
-        
+
         private string [] playback_mime_types;
-        public virtual string [] PlaybackMimeTypes { 
-            get { return playback_mime_types; } 
+        public virtual string [] PlaybackMimeTypes {
+            get { return playback_mime_types; }
         }
-        
+
         public virtual string DeviceType {
             get { return "mass-storage"; }
         }
-        
+
         public virtual string [] GetIconNames ()
         {
             return null;
         }
-        
+
         public bool IsType (string type)
         {
             return type == DeviceType;

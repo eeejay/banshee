@@ -37,21 +37,21 @@ namespace Banshee.ServiceStack
     public class DBusCommandService : MarshalByRefObject, IDBusExportable
     {
         public event DBusCommandHandler ArgumentPushed;
-        
+
         public DBusCommandService ()
         {
         }
-        
+
         public void PushArgument (string argument, object value)
         {
             OnArgumentPushed (argument, value, false);
         }
-        
+
         public void PushFile (string file)
         {
             OnArgumentPushed (file, String.Empty, true);
         }
-        
+
         private void OnArgumentPushed (string argument, object value, bool isFile)
         {
             DBusCommandHandler handler = ArgumentPushed;
@@ -59,11 +59,11 @@ namespace Banshee.ServiceStack
                 handler (argument, value, isFile);
             }
         }
-        
+
         IDBusExportable IDBusExportable.Parent {
             get { return null; }
         }
-        
+
         string IService.ServiceName {
             get { return "DBusCommandService"; }
         }

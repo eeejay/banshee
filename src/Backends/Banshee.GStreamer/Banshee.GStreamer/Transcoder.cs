@@ -54,21 +54,21 @@ namespace Banshee.GStreamer
         private TrackInfo current_track;
         private string error_message;
         private SafeUri managed_output_uri;
-        
+
         public Transcoder ()
         {
             IntPtr ptr = gst_transcoder_new();
-            
+
             if(ptr == IntPtr.Zero) {
                 throw new NullReferenceException(Catalog.GetString("Could not create transcoder"));
             }
-            
+
             handle = new HandleRef(this, ptr);
-            
+
             ProgressCallback = new GstTranscoderProgressCallback(OnNativeProgress);
             FinishedCallback = new GstTranscoderFinishedCallback(OnNativeFinished);
             ErrorCallback = new GstTranscoderErrorCallback(OnNativeError);
-            
+
             gst_transcoder_set_progress_callback(handle, ProgressCallback);
             gst_transcoder_set_finished_callback(handle, FinishedCallback);
             gst_transcoder_set_error_callback(handle, ErrorCallback);
@@ -79,39 +79,39 @@ namespace Banshee.GStreamer
             gst_transcoder_free(handle);
             handle = new HandleRef (this, IntPtr.Zero);
         }
-        
+
         public void Cancel ()
         {
             gst_transcoder_cancel(handle);
             handle = new HandleRef (this, IntPtr.Zero);
         }
-        
+
         public void TranscodeTrack (TrackInfo track, SafeUri outputUri, ProfileConfiguration config)
         {
             if(IsTranscoding) {
                 throw new ApplicationException("Transcoder is busy");
             }
-        
+
             Log.DebugFormat ("Transcoding {0} to {1}", track.Uri, outputUri);
             SafeUri inputUri = track.Uri;
             managed_output_uri = outputUri;
             IntPtr input_uri = GLib.Marshaller.StringToPtrGStrdup(inputUri.LocalPath);
             IntPtr output_uri = GLib.Marshaller.StringToPtrGStrdup(outputUri.LocalPath);
-            
+
             error_message = null;
-            
+
             current_track = track;
             gst_transcoder_transcode(handle, input_uri, output_uri, config.Profile.Pipeline.GetProcessById("gstreamer"));
-            
+
             GLib.Marshaller.Free(input_uri);
             GLib.Marshaller.Free(output_uri);
         }
-        
+
         private void OnNativeProgress(IntPtr transcoder, double fraction)
         {
             OnProgress (current_track, fraction);
         }
-        
+
         private void OnNativeFinished(IntPtr transcoder)
         {
             OnTrackFinished (current_track, managed_output_uri);
@@ -120,18 +120,18 @@ namespace Banshee.GStreamer
         private void OnNativeError(IntPtr transcoder, IntPtr error, IntPtr debug)
         {
             error_message = GLib.Marshaller.Utf8PtrToString(error);
-            
+
             if(debug != IntPtr.Zero) {
                 string debug_string = GLib.Marshaller.Utf8PtrToString(debug);
                 if(!String.IsNullOrEmpty (debug_string)) {
                     error_message = String.Format ("{0}: {1}", error_message, debug_string);
                 }
             }
-            
+
             try {
                 Banshee.IO.File.Delete (managed_output_uri);
             } catch {}
-            
+
             OnError (current_track, error_message);
         }
 
@@ -142,7 +142,7 @@ namespace Banshee.GStreamer
                 handler (this, new TranscoderProgressArgs (track, fraction, track.Duration));
             }
         }
-        
+
         protected virtual void OnTrackFinished (TrackInfo track, SafeUri outputUri)
         {
             TranscoderTrackFinishedHandler handler = TrackFinished;
@@ -150,7 +150,7 @@ namespace Banshee.GStreamer
                 handler (this, new TranscoderTrackFinishedArgs (track, outputUri));
             }
         }
-        
+
         protected virtual void OnError (TrackInfo track, string message)
         {
             TranscoderErrorHandler handler = Error;
@@ -158,11 +158,11 @@ namespace Banshee.GStreamer
                 handler (this, new TranscoderErrorArgs (track, message));
             }
         }
-        
+
         public bool IsTranscoding {
             get { return gst_transcoder_get_is_transcoding(handle); }
         }
-        
+
         public string ErrorMessage {
             get { return error_message; }
         }
@@ -178,7 +178,7 @@ namespace Banshee.GStreamer
         private static extern void gst_transcoder_free(HandleRef handle);
 
         [DllImport("libbanshee.dll")]
-        private static extern void gst_transcoder_transcode(HandleRef handle, IntPtr input_uri, 
+        private static extern void gst_transcoder_transcode(HandleRef handle, IntPtr input_uri,
             IntPtr output_uri, string encoder_pipeline);
 
         [DllImport("libbanshee.dll")]
@@ -189,13 +189,13 @@ namespace Banshee.GStreamer
             GstTranscoderProgressCallback cb);
 
         [DllImport("libbanshee.dll")]
-        private static extern void gst_transcoder_set_finished_callback(HandleRef handle, 
+        private static extern void gst_transcoder_set_finished_callback(HandleRef handle,
             GstTranscoderFinishedCallback cb);
 
         [DllImport("libbanshee.dll")]
-        private static extern void gst_transcoder_set_error_callback(HandleRef handle, 
+        private static extern void gst_transcoder_set_error_callback(HandleRef handle,
             GstTranscoderErrorCallback cb);
-            
+
         [DllImport("libbanshee.dll")]
         private static extern bool gst_transcoder_get_is_transcoding(HandleRef handle);
     }

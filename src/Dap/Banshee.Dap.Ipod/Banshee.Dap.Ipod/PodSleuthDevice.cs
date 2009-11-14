@@ -51,72 +51,72 @@ namespace Banshee.Dap.Ipod
                 Year = volume.GetPropertyInteger (PodsleuthPrefix + "production.year");
             }
         }
-        
+
         private class _VolumeInfo : IPod.VolumeInfo
         {
             private IVolume volume;
-            
+
             public _VolumeInfo (IVolume volume)
             {
                 this.volume = volume;
-                
+
                 MountPoint = volume.GetPropertyString ("volume.mount_point");
                 Label = volume.GetPropertyString ("volume.label");
                 IsMountedReadOnly = volume.GetPropertyBoolean ("volume.is_mounted_read_only");
                 Uuid = volume.GetPropertyString ("volume.uuid");
             }
-            
+
             public override ulong Size {
                 get { return volume.Capacity; }
             }
-        
+
             public override ulong SpaceUsed {
                 get { return volume.Capacity - (ulong)volume.Available; }
             }
         }
-        
+
         private class _ModelInfo : IPod.ModelInfo
         {
             public _ModelInfo (IVolume volume)
             {
                 AdvertisedCapacity = GetVolumeSizeString (volume);
-                
+
                 IsUnknown = true;
                 if (volume.PropertyExists (PodsleuthPrefix + "is_unknown")) {
                     IsUnknown = volume.GetPropertyBoolean (PodsleuthPrefix + "is_unknown");
                 }
-                
+
                 if (volume.PropertyExists (PodsleuthPrefix + "images.album_art_supported")) {
                     AlbumArtSupported = volume.GetPropertyBoolean (PodsleuthPrefix + "images.album_art_supported");
                 }
-                
+
                 if (volume.PropertyExists (PodsleuthPrefix + "images.photos_supported")) {
                     PhotosSupported = volume.GetPropertyBoolean (PodsleuthPrefix + "images.photos_supported");
                 }
-                
+
                 if (volume.PropertyExists (PodsleuthPrefix + "model.device_class")) {
                     DeviceClass = volume.GetPropertyString (PodsleuthPrefix + "model.device_class");
                 }
-                
+
                 if (volume.PropertyExists (PodsleuthPrefix + "model.generation")) {
                     Generation = volume.GetPropertyDouble (PodsleuthPrefix + "model.generation");
                 }
-                
+
                 if (volume.PropertyExists (PodsleuthPrefix + "model.shell_color")) {
                     ShellColor = volume.GetPropertyString (PodsleuthPrefix + "model.shell_color");
                 }
-                
+
                 if (volume.PropertyExists ("info.icon_name")) {
                     IconName = volume.GetPropertyString ("info.icon_name");
                 }
-                
+
                 if (volume.PropertyExists (PodsleuthPrefix + "capabilities")) {
                     foreach (string capability in volume.GetPropertyStringList (PodsleuthPrefix + "capabilities")) {
                         AddCapability (capability);
                     }
                 }
             }
-            
+
             private static string GetVolumeSizeString (IVolume volume)
             {
                 string format = "GiB";
@@ -130,42 +130,42 @@ namespace Banshee.Dap.Ipod
                 return String.Format ("{0} {1}", (int)Math.Round (value), format);
             }
         }
-        
+
         private IVolume volume;
-        
+
         private IPod.ProductionInfo production_info;
         private IPod.VolumeInfo volume_info;
         private IPod.ModelInfo model_info;
-        
+
         public override IPod.ProductionInfo ProductionInfo {
             get { return production_info; }
         }
-        
+
         public override IPod.VolumeInfo VolumeInfo {
             get { return volume_info; }
         }
-        
+
         public override IPod.ModelInfo ModelInfo {
             get { return model_info; }
         }
 
-        internal PodSleuthDevice (IVolume volume) 
+        internal PodSleuthDevice (IVolume volume)
         {
             this.volume = volume;
 
             volume_info = new _VolumeInfo (volume);
             production_info = new _ProductionInfo (volume);
             model_info = new _ModelInfo (volume);
-            
+
             if (volume.PropertyExists (PodsleuthPrefix + "control_path")) {
                 string relative_control = volume.GetPropertyString (PodsleuthPrefix + "control_path");
                 if (relative_control[0] == Path.DirectorySeparatorChar) {
                     relative_control = relative_control.Substring (1);
                 }
-                
+
                 ControlPath = Path.Combine(VolumeInfo.MountPoint, relative_control);
             }
-            
+
             ArtworkFormats = new ReadOnlyCollection<ArtworkFormat> (LoadArtworkFormats ());
 
             if (volume.PropertyExists (PodsleuthPrefix + "firmware_version")) {
@@ -175,27 +175,27 @@ namespace Banshee.Dap.Ipod
             if (volume.PropertyExists (PodsleuthPrefix + "firewire_id")) {
                 FirewireId = volume.GetPropertyString (PodsleuthPrefix + "firewire_id");
             }
-            
+
             RescanDisk ();
         }
-        
+
         public override void Eject ()
         {
             volume.Eject ();
         }
-        
-        public override void RescanDisk () 
+
+        public override void RescanDisk ()
         {
         }
 
-        private List<ArtworkFormat> LoadArtworkFormats () 
+        private List<ArtworkFormat> LoadArtworkFormats ()
         {
             List<ArtworkFormat> formats = new List<ArtworkFormat> ();
 
             if (!ModelInfo.AlbumArtSupported) {
                 return formats;
             }
-            
+
             string [] formatList = volume.GetPropertyStringList (PodsleuthPrefix + "images.formats");
 
             foreach (string formatStr in formatList) {
@@ -210,13 +210,13 @@ namespace Banshee.Dap.Ipod
                 pformat = PixelFormat.Unknown;
 
                 string[] pairs = formatStr.Split(',');
-                
+
                 foreach (string pair in pairs) {
                     string[] splitPair = pair.Split('=');
                     if (splitPair.Length != 2) {
                         continue;
                     }
-                    
+
                     string value = splitPair[1];
                     switch (splitPair[0]) {
                         case "corr_id": correlationId = Int16.Parse (value); break;
@@ -261,7 +261,7 @@ namespace Banshee.Dap.Ipod
         {
             volume.Unmount ();
         }
-        
+
         public string Uuid {
             get { return volume.Uuid; }
         }
@@ -356,12 +356,12 @@ namespace Banshee.Dap.Ipod
         {
             return volume.GetPropertyStringList (key);
         }
-        
+
         public IUsbDevice ResolveRootUsbDevice ()
         {
             return volume.ResolveRootUsbDevice ();
         }
-        
+
 #endregion
 
     }

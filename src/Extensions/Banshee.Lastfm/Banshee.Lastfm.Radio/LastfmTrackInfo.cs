@@ -58,7 +58,7 @@ namespace Banshee.Lastfm.Radio
         public bool Hated {
             get { return hated; }
         }
-        
+
         public string TrackAuth {
             get { return trackauth; }
         }

@@ -47,7 +47,7 @@ namespace Banshee.Preferences
         {
             child_pages = new Collection<Page> ();
         }
-        
+
         public Page (string id, string name, int order) : this ()
         {
             Id = id;

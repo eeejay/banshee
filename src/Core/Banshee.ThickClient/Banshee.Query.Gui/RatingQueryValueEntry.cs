@@ -54,7 +54,7 @@ namespace Banshee.Query.Gui
 
         public override QueryValue QueryValue {
             get { return query_value; }
-            set { 
+            set {
                 entry.Changed -= HandleValueChanged;
                 query_value = value as RatingQueryValue;
                 entry.Value = (int) (query_value.IsEmpty ? query_value.DefaultValue : query_value.IntValue);

@@ -38,26 +38,26 @@ namespace Banshee.Dap.Ipod
         {
             IDiskDevice disk_device = device as IDiskDevice;
             IVolume volume = device as IVolume;
-            
+
             if (volume != null && CheckStorageCaps (volume.Parent) && CheckVolume (volume)) {
                 return AsPodSleuthDevice<T> (volume, device);
             } else if (disk_device == null || !CheckStorageCaps (device)) {
                 return device;
             }
-            
+
             foreach (IVolume child_volume in disk_device.Volumes) {
                 if (CheckVolume (child_volume)) {
                     return AsPodSleuthDevice<T> (child_volume, device);
                 }
             }
-            
+
             return device;
         }
-        
+
         public void Dispose ()
         {
         }
-        
+
         private T AsPodSleuthDevice<T> (IVolume volume, T original)
         {
             try {
@@ -67,12 +67,12 @@ namespace Banshee.Dap.Ipod
                 return original;
             }
         }
-        
+
         private bool CheckStorageCaps (IDevice device)
         {
             return device != null && device.MediaCapabilities != null && device.MediaCapabilities.IsType ("ipod");
         }
-        
+
         private bool CheckVolume (IVolume volume)
         {
             return volume.PropertyExists ("org.podsleuth.version");

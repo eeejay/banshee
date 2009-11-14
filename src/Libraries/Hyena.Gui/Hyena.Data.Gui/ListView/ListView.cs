@@ -48,7 +48,7 @@ namespace Hyena.Data.Gui
                 ITooltipCell cell;
                 Column column;
                 int row_index;
-                
+
                 if (GetEventCell<ITooltipCell> (args.X, args.Y, out cell, out column, out row_index)) {
                     CachedColumn cached_column = GetCachedColumnForColumn (column);
 
@@ -72,7 +72,7 @@ namespace Hyena.Data.Gui
 
                         // TODO not right - could be smaller if at the top/bottom and only partially showing
                         rect.Height = RowHeight;
-                        
+
                         args.Tooltip.Markup = markup;
                         args.Tooltip.TipArea = rect;
                         args.RetVal = true;

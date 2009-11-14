@@ -56,17 +56,17 @@ namespace Banshee.Podcasting.Gui
             Selection.Clear (false);
             Selection.QuietSelect (1);
         }
-        
+
         public override void Reload (bool notify)
         {
             if (notify)
                 OnReloaded ();
         }
-        
+
         public override void Clear ()
         {
         }
-        
+
         public override OldNewFilter this [int index] {
             get {
                 switch (index) {
@@ -77,7 +77,7 @@ namespace Banshee.Podcasting.Gui
                 }
             }
         }
-        
+
         public override int Count {
             get { return 3; }
         }

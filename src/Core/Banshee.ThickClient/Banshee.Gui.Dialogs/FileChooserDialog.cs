@@ -1,4 +1,4 @@
-// 
+//
 // FileChooserDialog.cs
 //
 // Author:
@@ -60,26 +60,26 @@ namespace Banshee.Gui.Dialogs
         }
 
         public FileChooserDialog (string title, FileChooserAction action) : this (title, null, action)
-        {            
+        {
         }
-        
-        public FileChooserDialog (string title, Window parent, FileChooserAction action) : 
+
+        public FileChooserDialog (string title, Window parent, FileChooserAction action) :
             base (title, parent, action)
         {
             LocalOnly = Banshee.IO.Provider.LocalOnly;
             SetCurrentFolderUri (LastFileChooserUri.Get (Environment.GetFolderPath (Environment.SpecialFolder.Personal)));
             WindowPosition = WindowPosition.Center;
         }
-        
+
         protected override void OnResponse (ResponseType response)
         {
             base.OnResponse (response);
-            
+
             if (CurrentFolderUri != null) {
                 LastFileChooserUri.Set (CurrentFolderUri);
             }
         }
-        
+
         public static readonly SchemaEntry<string> LastFileChooserUri = new SchemaEntry<string> (
             "player_window", "last_file_chooser_uri",
             String.Empty,

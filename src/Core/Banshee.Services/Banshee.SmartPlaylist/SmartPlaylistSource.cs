@@ -37,7 +37,7 @@ using Mono.Unix;
 using Hyena;
 using Hyena.Query;
 using Hyena.Data.Sqlite;
- 
+
 using Banshee.Base;
 using Banshee.Query;
 using Banshee.Sources;
@@ -55,7 +55,7 @@ namespace Banshee.SmartPlaylist
     {
         private static List<SmartPlaylistSource> playlists = new List<SmartPlaylistSource> ();
         private static uint timeout_id = 0;
-        
+
         static SmartPlaylistSource () {
             Migrator.MigrateAll ();
 
@@ -65,13 +65,13 @@ namespace Banshee.SmartPlaylist
 
         private static string generic_name = Catalog.GetString ("Smart Playlist");
         private static string properties_label = Catalog.GetString ("Edit Smart Playlist");
-    
+
         private QueryOrder query_order;
         private QueryLimit limit;
         private IntegerQueryValue limit_value;
-        
+
         private List<SmartPlaylistSource> dependencies = new List<SmartPlaylistSource>();
-        
+
 
 #region Properties
 
@@ -116,7 +116,7 @@ namespace Banshee.SmartPlaylist
                 if (condition != null) {
                     condition_sql = condition.ToSql (BansheeQuery.FieldSet);
                     condition_xml = condition.ToXml (BansheeQuery.FieldSet);
-                    
+
                     foreach (QueryTermNode term in condition.GetTerms ()) {
                         if (!relevant_fields.Contains (term.Field))
                             relevant_fields.Add (term.Field);
@@ -176,7 +176,7 @@ namespace Banshee.SmartPlaylist
                 return (Limit != null && LimitValue != null && !LimitValue.IsEmpty && QueryOrder != null);
             }
         }
-        
+
         public override bool HasDependencies {
             get { return dependencies.Count > 0; }
         }
@@ -244,17 +244,17 @@ namespace Banshee.SmartPlaylist
         }
 
 #endregion
-        
+
 #region Private Methods
-        
+
         private void UpdateDependencies ()
         {
             foreach (SmartPlaylistSource s in dependencies) {
                 s.Updated -= OnDependencyUpdated;
             }
-            
+
             dependencies.Clear ();
-            
+
             if (ConditionTree != null) {
                 foreach (SmartPlaylistQueryValue value in ConditionTree.SearchForValues<SmartPlaylistQueryValue> ()) {
                     SmartPlaylistSource playlist = value.ObjectValue;
@@ -265,12 +265,12 @@ namespace Banshee.SmartPlaylist
                 }
             }
         }
-        
+
         private void OnDependencyUpdated (object sender, EventArgs args)
         {
             Reload ();
         }
-        
+
 #endregion
 
 #region AbstractPlaylist overrides
@@ -357,7 +357,7 @@ namespace Banshee.SmartPlaylist
 
         public void Refresh ()
         {
-            // Wipe the member list clean and repopulate it 
+            // Wipe the member list clean and repopulate it
             string reload_str = String.Format (
                 @"DELETE FROM CoreSmartPlaylistEntries WHERE SmartPlaylistID = {0};
                   INSERT INTO CoreSmartPlaylistEntries
@@ -374,7 +374,7 @@ namespace Banshee.SmartPlaylist
             if (IsLimited && !Limit.RowBased) {
                 // Identify where the cut off mark is
                 HyenaSqliteCommand limit_command = new HyenaSqliteCommand (String.Format (
-                    @"SELECT EntryID, {0} 
+                    @"SELECT EntryID, {0}
                       FROM CoreTracks, CoreSmartPlaylistEntries
                       WHERE SmartPlaylistID = {1} AND CoreSmartPlaylistEntries.TrackID = CoreTracks.TrackID
                       ORDER BY EntryID",
@@ -501,7 +501,7 @@ namespace Banshee.SmartPlaylist
                     } catch (Exception e) {
                         Log.Warning ("Ignoring Smart Playlist", String.Format ("Caught error: {0}", e), false);
                     }
-                    
+
                     if (playlist != null) {
                         yield return playlist;
                     }

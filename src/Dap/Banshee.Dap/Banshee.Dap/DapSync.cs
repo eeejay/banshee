@@ -63,9 +63,9 @@ namespace Banshee.Dap
         internal string ConfigurationNamespace {
             get { return conf_ns; }
         }
-        
+
         #region Public Properites
-        
+
         public DapSource Dap {
             get { return dap; }
         }
@@ -73,11 +73,11 @@ namespace Banshee.Dap
         public IEnumerable<DapLibrarySync> LibrarySyncs {
             get { return library_syncs; }
         }
-        
+
         public bool Enabled {
             get { return !manually_manage.Get (); }
         }
-        
+
         public bool AutoSync {
             get { return Enabled && auto_sync.Get (); }
         }
@@ -85,9 +85,9 @@ namespace Banshee.Dap
         public IEnumerable<Section> PreferenceSections {
             get { return pref_sections; }
         }
-        
+
         #endregion
-        
+
         public DapSync (DapSource dapSource)
         {
             dap = dapSource;
@@ -116,7 +116,7 @@ namespace Banshee.Dap
                 Catalog.GetString ("Manually manage this device"),
                 Catalog.GetString ("Manually managing your device means you can drag and drop items onto the device, and manually remove them.")
             );
-            
+
             auto_sync = dap.CreateSchema<bool> (conf_ns, "auto_sync", false,
                 Catalog.GetString ("Automatically sync the device when plugged in or when the libraries change"),
                 Catalog.GetString ("Begin synchronizing the device as soon as the device is plugged in or the libraries change.")
@@ -129,10 +129,10 @@ namespace Banshee.Dap
             manually_manage_pref.ShowDescription = true;
             manually_manage_pref.ShowLabel = false;
             manually_manage_pref.ValueChanged += OnManuallyManageChanged;
-            
+
             auto_sync_pref = dap_prefs_section.Add (auto_sync);
             auto_sync_pref.ValueChanged += OnAutoSyncChanged;
-            
+
             //manually_manage_pref.Changed += OnEnabledChanged;
             //auto_sync_pref.Changed += delegate { OnUpdated (); };
             //OnEnabledChanged (null);
@@ -152,7 +152,7 @@ namespace Banshee.Dap
                 library_syncs.Add (library_sync);
                 pref_sections.Add (library_sync.PrefsSection);
                 library_sync.PrefsSection.Order = ++i;
-                
+
                 source.TracksAdded += OnLibraryChanged;
                 source.TracksDeleted += OnLibraryChanged;
             }
@@ -175,7 +175,7 @@ namespace Banshee.Dap
                 lib_sync.PrefsSection.Sensitive = sync_enabled;
             }
         }
-        
+
         private void OnAutoSyncChanged (Root preference)
         {
             OnUpdated ();
@@ -198,7 +198,7 @@ namespace Banshee.Dap
             if (!Enabled) {
                 return;
             }
-            
+
             foreach (DapLibrarySync lib_sync in library_syncs) {
                 if (lib_sync.Library == sender) {
                     if (AutoSync) {
@@ -218,7 +218,7 @@ namespace Banshee.Dap
                 sources.Sort (delegate (Source a, Source b) {
                     return a.Order.CompareTo (b.Order);
                 });
-    
+
                 if (!dap.SupportsVideo) {
                     sources.Remove (ServiceManager.SourceManager.VideoLibrary);
                 }
@@ -226,7 +226,7 @@ namespace Banshee.Dap
                 if (!dap.SupportsPodcasts) {
                     sources.RemoveAll (s => s.UniqueId == "PodcastSource-PodcastLibrary");
                 }
-                
+
                 foreach (Source source in sources) {
                     if (source is LibrarySource) {
                         yield return source as LibrarySource;
@@ -234,19 +234,19 @@ namespace Banshee.Dap
                 }
             }
         }
-        
+
         public int ItemCount {
             get { return 0; }
         }
-        
+
         public long FileSize {
             get { return 0; }
         }
-        
+
         public TimeSpan Duration {
             get { return TimeSpan.Zero; }
         }
-        
+
         public void CalculateSync ()
         {
             foreach (DapLibrarySync library_sync in library_syncs) {
@@ -298,7 +298,7 @@ namespace Banshee.Dap
                     }
                 }
             }
-            
+
             if (sync_playlists) {
                 dap.RemovePlaylists ();
             }

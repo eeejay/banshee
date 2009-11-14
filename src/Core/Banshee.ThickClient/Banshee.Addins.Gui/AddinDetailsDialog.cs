@@ -44,52 +44,52 @@ namespace Banshee.Addins.Gui
         public AddinDetailsDialog (Addin addin, Window parent) : base (String.Empty, parent)
         {
             SetDefaultSize (400, -1);
-            
+
             AddinHeader info = SetupService.GetAddinHeader (addin);
-            
+
             HBox box = new HBox ();
             box.BorderWidth = 10;
             box.Spacing = 10;
             VBox.PackStart (box, false, false, 0);
-            
+
             Image image = new Image ();
             image.IconName = "package-x-generic";
             image.IconSize = (int)IconSize.Dialog;
             image.Yalign = 0.0f;
-            
+
             box.PackStart (image, false, false, 0);
-            
+
             StringBuilder builder = new StringBuilder ();
-            
+
             builder.AppendFormat ("<b><big>{0}</big></b>\n\n", GLib.Markup.EscapeText (addin.Name));
             builder.AppendFormat (GLib.Markup.EscapeText (addin.Description.Description)).Append ("\n\n");
-            
+
             builder.Append ("<small>");
-            
-            builder.AppendFormat ("<b>{0}</b> {1}\n\n", Catalog.GetString ("Version:"), 
+
+            builder.AppendFormat ("<b>{0}</b> {1}\n\n", Catalog.GetString ("Version:"),
                 GLib.Markup.EscapeText (addin.Description.Version));
-            
-            builder.AppendFormat ("<b>{0}</b> {1}\n\n", Catalog.GetString ("Authors:"), 
+
+            builder.AppendFormat ("<b>{0}</b> {1}\n\n", Catalog.GetString ("Authors:"),
                 GLib.Markup.EscapeText (addin.Description.Author));
-            
-            builder.AppendFormat ("<b>{0}</b> {1}\n\n", Catalog.GetString ("Copyright/License:"), 
+
+            builder.AppendFormat ("<b>{0}</b> {1}\n\n", Catalog.GetString ("Copyright/License:"),
                 GLib.Markup.EscapeText (addin.Description.Copyright));
-            
+
             if (info.Dependencies.Count > 0) {
                 builder.AppendFormat ("<b>{0}</b>\n", Catalog.GetString ("Extension Dependencies:"));
                 foreach (AddinDependency dep in info.Dependencies) {
                     builder.Append (GLib.Markup.EscapeText (dep.Name)).Append ('\n');
                 }
             }
-            
+
             builder.Append ("</small>");
-            
+
             WrapLabel label = new WrapLabel ();
             label.Markup = builder.ToString ();
             box.PackStart (label, true, true, 0);
-            
+
             VBox.ShowAll ();
-        
+
             AddDefaultCloseButton ();
         }
     }

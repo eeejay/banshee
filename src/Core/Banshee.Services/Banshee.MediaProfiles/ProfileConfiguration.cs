@@ -25,7 +25,7 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
- 
+
 using System;
 using System.Text;
 using System.Xml;
@@ -41,7 +41,7 @@ namespace Banshee.MediaProfiles
         private Dictionary<string, string> variable_values = new Dictionary<string, string>();
         private string id;
         private Profile profile;
-        
+
         public static ProfileConfiguration Load(Profile profile, string id)
         {
             ProfileConfiguration configuration = new ProfileConfiguration(profile, id);
@@ -66,12 +66,12 @@ namespace Banshee.MediaProfiles
 
             return null;
         }
-        
+
         public static void SaveActiveProfile(Profile profile, string id)
         {
             ConfigurationClient.Set<string>(MakeConfNamespace(id), "active_profile", profile.Id);
         }
-        
+
         public ProfileConfiguration(Profile profile, string id)
         {
             this.profile = profile;
@@ -94,7 +94,7 @@ namespace Banshee.MediaProfiles
             }
             ConfigurationClient.Set<string[]>(ConfNamespace, "variables", variable_names.ToArray());
         }
-        
+
         public void Add(string variable, string value)
         {
             if(variable_values.ContainsKey(variable)) {
@@ -103,28 +103,28 @@ namespace Banshee.MediaProfiles
                 variable_values.Add(variable, value);
             }
         }
-        
+
         public void Remove(string variable)
         {
             if(variable_values.ContainsKey(variable)) {
                 variable_values.Remove(variable);
             }
         }
-        
+
         public IEnumerator<KeyValuePair<string, string>> GetEnumerator()
         {
             return variable_values.GetEnumerator();
         }
-        
+
         IEnumerator IEnumerable.GetEnumerator()
         {
             return variable_values.GetEnumerator();
         }
-        
+
         public string this[string variable] {
             get { return variable_values[variable]; }
         }
-        
+
         public string Id {
             get { return id; }
         }
@@ -132,7 +132,7 @@ namespace Banshee.MediaProfiles
         public int Count {
             get { return variable_values.Count; }
         }
-        
+
         public Profile Profile {
             get {
                 if (profile.Configuration != this)

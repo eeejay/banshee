@@ -54,9 +54,9 @@ namespace Banshee.Sources.Gui
         private SourceRowRenderer renderer;
         private Theme theme;
         private Cairo.Context cr;
-        
+
         private Stage<TreeIter> notify_stage = new Stage<TreeIter> (2000);
-        
+
         private TreeViewColumn focus_column;
         private TreePath highlight_path;
         private SourceModel store;
@@ -67,22 +67,22 @@ namespace Banshee.Sources.Gui
         public SourceView ()
         {
             BuildColumns ();
-            
+
             store = new SourceModel ();
             store.SourceRowInserted += OnSourceRowInserted;
             store.SourceRowRemoved += OnSourceRowRemoved;
             store.RowChanged += OnRowChanged;
             Model = store;
-            
+
             ConfigureDragAndDrop ();
             store.Refresh ();
             ConnectEvents ();
-            
+
             RowSeparatorFunc = RowSeparatorHandler;
         }
-        
-#region Setup Methods        
-        
+
+#region Setup Methods
+
         private void BuildColumns ()
         {
             // Hidden expander column
@@ -90,7 +90,7 @@ namespace Banshee.Sources.Gui
             col.Visible = false;
             AppendColumn (col);
             ExpanderColumn = col;
-        
+
             focus_column = new TreeViewColumn ();
             renderer = new SourceRowRenderer ();
             renderer.RowHeight = RowHeight.Get ();
@@ -98,16 +98,16 @@ namespace Banshee.Sources.Gui
             focus_column.PackStart (renderer, true);
             focus_column.SetCellDataFunc (renderer, new CellLayoutDataFunc (SourceRowRenderer.CellDataHandler));
             AppendColumn (focus_column);
-            
+
             HeadersVisible = false;
         }
-        
+
         private void ConnectEvents ()
         {
             ServiceManager.SourceManager.ActiveSourceChanged += delegate (SourceEventArgs args) {
                 Banshee.Base.ThreadAssist.ProxyToMain (ResetSelection);
             };
-            
+
             ServiceManager.SourceManager.SourceUpdated += delegate (SourceEventArgs args) {
                 Banshee.Base.ThreadAssist.ProxyToMain (delegate {
                     lock (args.Source) {
@@ -119,31 +119,31 @@ namespace Banshee.Sources.Gui
                     }
                 });
             };
-            
+
             ServiceManager.PlaybackController.NextSourceChanged += delegate {
                 Banshee.Base.ThreadAssist.ProxyToMain (QueueDraw);
             };
-            
+
             notify_stage.ActorStep += delegate (Actor<TreeIter> actor) {
                 Banshee.Base.ThreadAssist.AssertInMainThread ();
                 if (!store.IterIsValid (actor.Target)) {
                     return false;
                 }
-                
+
                 Gdk.Rectangle rect = GetBackgroundArea (store.GetPath (actor.Target), focus_column);
                 QueueDrawArea (rect.X, rect.Y, rect.Width, rect.Height);
                 return true;
             };
         }
-        
+
 #endregion
 
 #region Gtk.Widget Overrides
-        
+
         protected override void OnRealized ()
         {
             base.OnRealized ();
-            
+
             theme = new GtkTheme (this);
             // theme.RefreshColors ();
         }
@@ -152,11 +152,11 @@ namespace Banshee.Sources.Gui
         {
             TreePath path;
             TreeViewColumn column;
-                       
+
             if (press.Button == 1) {
                 ResetHighlight ();
             }
-            
+
             // If there is not a row at the click position let the base handler take care of the press
             if (!GetPathAtPos ((int)press.X, (int)press.Y, out path, out column)) {
                 return base.OnButtonPressEvent (press);
@@ -179,7 +179,7 @@ namespace Banshee.Sources.Gui
                 return ret;
             }
 
-            // For Sources that can't be activated, when they're clicked just 
+            // For Sources that can't be activated, when they're clicked just
             // expand or collapse them and return.
             if (press.Button == 1 && !source.CanActivate) {
                 if (!source.Expanded) {
@@ -195,25 +195,25 @@ namespace Banshee.Sources.Gui
                 OnPopupMenu ();
                 return true;
             }
-            
+
             if (!source.CanActivate) {
                 return false;
             }
-            
+
 
             if (press.Button == 1) {
                 if (ServiceManager.SourceManager.ActiveSource != source) {
                     ServiceManager.SourceManager.SetActiveSource (source);
                 }
             }
-            
+
             if ((press.State & Gdk.ModifierType.ControlMask) != 0) {
                 if (press.Type == Gdk.EventType.TwoButtonPress && press.Button == 1) {
                     ActivateRow (path, null);
                 }
                 return true;
             }
-            
+
             return base.OnButtonPressEvent (press);
         }
 
@@ -222,12 +222,12 @@ namespace Banshee.Sources.Gui
             ServiceManager.Get<InterfaceActionService> ().SourceActions["SourceContextMenuAction"].Activate ();
             return true;
         }
-        
+
         protected override bool OnExposeEvent (Gdk.EventExpose evnt)
         {
             if (need_resort) {
                 need_resort = false;
-                
+
                 // Resort the tree store. This is performed in an event handler
                 // known not to conflict with gtk_tree_view_bin_expose() to prevent
                 // errors about corrupting the TreeView's internal state.
@@ -239,7 +239,7 @@ namespace Banshee.Sources.Gui
                 }
                 QueueDraw ();
             }
-            
+
             try {
                 cr = Gdk.CairoHelper.Create (evnt.Window);
                 return base.OnExposeEvent (evnt);
@@ -253,54 +253,54 @@ namespace Banshee.Sources.Gui
 #endregion
 
 #region Gtk.TreeView Overrides
-        
+
         protected override void OnRowExpanded (TreeIter iter, TreePath path)
         {
             base.OnRowExpanded (iter, path);
             store.GetSource (iter).Expanded = true;
         }
-        
+
         protected override void OnRowCollapsed (TreeIter iter, TreePath path)
         {
             base.OnRowCollapsed (iter, path);
             store.GetSource (iter).Expanded = false;
         }
-        
+
         protected override void OnCursorChanged ()
         {
             if (current_timeout < 0) {
                 current_timeout = (int)GLib.Timeout.Add (200, OnCursorChangedTimeout);
             }
         }
-        
+
         private bool OnCursorChangedTimeout ()
         {
             TreeIter iter;
             TreeModel model;
-            
+
             current_timeout = -1;
-            
+
             if (!Selection.GetSelected (out model, out iter)) {
                 return false;
             }
-            
+
             Source new_source = store.GetValue (iter, 0) as Source;
             if (ServiceManager.SourceManager.ActiveSource == new_source) {
                 return false;
             }
-            
+
             ServiceManager.SourceManager.SetActiveSource (new_source);
-            
+
             QueueDraw ();
 
             return false;
         }
-        
+
         private bool RowSeparatorHandler (TreeModel model, TreeIter iter)
         {
             return (bool)store.GetValue (iter, 2);
         }
-        
+
 #endregion
 
 #region Add/Remove Sources / SourceManager interaction
@@ -308,7 +308,7 @@ namespace Banshee.Sources.Gui
         private void OnSourceRowInserted (object o, SourceRowEventArgs args)
         {
             args.Source.UserNotifyUpdated += OnSourceUserNotifyUpdated;
-            
+
             if (args.Source.Parent != null && args.Source.Parent.AutoExpand == true) {
                 Expand (args.ParentIter);
             }
@@ -319,13 +319,13 @@ namespace Banshee.Sources.Gui
 
             UpdateView ();
         }
-        
+
         private void OnSourceRowRemoved (object o, SourceRowEventArgs args)
         {
             args.Source.UserNotifyUpdated -= OnSourceUserNotifyUpdated;
             UpdateView ();
         }
-        
+
         private void OnRowChanged (object o, RowChangedArgs args)
         {
             QueueDraw ();
@@ -336,7 +336,7 @@ namespace Banshee.Sources.Gui
             TreePath path = store.GetPath (iter);
             ExpandRow (path, true);
         }
-        
+
         private void OnSourceUserNotifyUpdated (object o, EventArgs args)
         {
             Banshee.Base.ThreadAssist.ProxyToMain (delegate {
@@ -344,11 +344,11 @@ namespace Banshee.Sources.Gui
                 if (iter.Equals (TreeIter.Zero)) {
                     return;
                 }
-                
+
                 notify_stage.AddOrReset (iter);
             });
         }
-        
+
 #endregion
 
 #region List/View Utility Methods
@@ -360,115 +360,115 @@ namespace Banshee.Sources.Gui
                 if (!store.IterNthChild (out iter, i)) {
                     continue;
                 }
-                
+
                 if (store.IterNChildren (iter) > 0) {
                     ExpanderColumn = Columns[1];
                     return true;
                 }
             }
-        
+
             ExpanderColumn = Columns[0];
             return false;
         }
-        
+
         internal void UpdateRow (TreePath path, string text)
         {
             TreeIter iter;
-            
+
             if (!store.GetIter (out iter, path)) {
                 return;
             }
-            
+
             Source source = store.GetValue (iter, 0) as Source;
             source.Rename (text);
         }
-        
+
         public void BeginRenameSource (Source source)
         {
             TreeIter iter = store.FindSource (source);
             if (iter.Equals (TreeIter.Zero)) {
                 return;
             }
-            
+
             renderer.Editable = true;
             SetCursor (store.GetPath (iter), focus_column, true);
             renderer.Editable = false;
         }
-        
+
         private void ResetSelection ()
         {
             TreeIter iter = store.FindSource (ServiceManager.SourceManager.ActiveSource);
-            
+
             if (!iter.Equals (TreeIter.Zero)){
                 Selection.SelectIter (iter);
             }
         }
-        
+
         public void HighlightPath (TreePath path)
         {
             highlight_path = path;
             QueueDraw ();
         }
-        
+
         public void ResetHighlight ()
-        {   
+        {
             highlight_path = null;
             QueueDraw ();
         }
-        
+
 #endregion
 
 #region Public Properties
-                
+
         public Source HighlightedSource {
             get {
                 TreeIter iter;
-                
+
                 if (highlight_path == null || !store.GetIter (out iter, highlight_path)) {
                     return null;
                 }
-                    
+
                 return store.GetValue (iter, 0) as Source;
             }
         }
 
         public bool EditingRow {
             get { return editing_row; }
-            set { 
+            set {
                 editing_row = value;
-                QueueDraw (); 
+                QueueDraw ();
             }
         }
-        
+
 #endregion
 
 #region Internal Properties
-      
+
         internal TreePath HighlightedPath {
             get { return highlight_path; }
         }
-        
+
         internal Cairo.Context Cr {
             get { return cr; }
         }
-        
+
         internal Theme Theme {
             get { return theme; }
         }
-        
+
         internal Stage<TreeIter> NotifyStage {
             get { return notify_stage; }
         }
-        
+
         internal Source NewPlaylistSource {
             get {
                 return new_playlist_source ??
-                    (new_playlist_source = new PlaylistSource (Catalog.GetString ("New Playlist"), 
+                    (new_playlist_source = new PlaylistSource (Catalog.GetString ("New Playlist"),
                         ServiceManager.SourceManager.MusicLibrary));
             }
         }
 
-#endregion        
+#endregion
 
 #region Property Schemas
 

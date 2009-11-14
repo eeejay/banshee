@@ -84,7 +84,7 @@ namespace Banshee.SqlDebugConsole
             base.Dispose ();
         }
 
-#region Action Handlers 
+#region Action Handlers
 
         private void OnShowConsole (object sender, EventArgs args)
         {

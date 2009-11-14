@@ -36,18 +36,18 @@ using Hyena;
 namespace Banshee.Sources
 {
     public delegate void DurationStatusFormatHandler (StringBuilder builder, TimeSpan span);
-    
+
     public class DurationStatusFormatters : List<DurationStatusFormatHandler>
     {
         private static StringBuilder default_builder = new StringBuilder ();
-        
+
         public DurationStatusFormatters ()
         {
             Add (AwesomeConciseFormatter);
             Add (AnnoyingPreciseFormatter);
             Add (ConfusingPreciseFormatter);
         }
-        
+
         public static string AwesomeConciseFormatter (TimeSpan span)
         {
             lock (default_builder) {
@@ -56,24 +56,24 @@ namespace Banshee.Sources
                 return default_builder.ToString ();
             }
         }
-        
+
         public static void AwesomeConciseFormatter (StringBuilder builder, TimeSpan span)
         {
             if (span.Days > 0) {
                 double days = span.Days + (span.Hours / 24.0);
-                builder.AppendFormat (Catalog.GetPluralString ("{0} day", "{0} days", 
+                builder.AppendFormat (Catalog.GetPluralString ("{0} day", "{0} days",
                     StringUtil.DoubleToPluralInt (days)), StringUtil.DoubleToTenthsPrecision (days));
             } else if (span.Hours > 0) {
                 double hours = span.Hours + (span.Minutes / 60.0);
-                builder.AppendFormat (Catalog.GetPluralString ("{0} hour", "{0} hours", 
+                builder.AppendFormat (Catalog.GetPluralString ("{0} hour", "{0} hours",
                     StringUtil.DoubleToPluralInt (hours)), StringUtil.DoubleToTenthsPrecision (hours));
             } else {
                 double minutes = span.Minutes + (span.Seconds / 60.0);
-                builder.AppendFormat (Catalog.GetPluralString ("{0} minute", "{0} minutes", 
+                builder.AppendFormat (Catalog.GetPluralString ("{0} minute", "{0} minutes",
                     StringUtil.DoubleToPluralInt (minutes)), StringUtil.DoubleToTenthsPrecision (minutes));
             }
         }
-        
+
         public static string AnnoyingPreciseFormatter (TimeSpan span)
         {
             lock (default_builder) {
@@ -82,14 +82,14 @@ namespace Banshee.Sources
                 return default_builder.ToString ();
             }
         }
-        
+
         public static void AnnoyingPreciseFormatter (StringBuilder builder, TimeSpan span)
         {
             if (span.Days > 0) {
                 builder.AppendFormat (Catalog.GetPluralString ("{0} day", "{0} days", span.Days), span.Days);
                 builder.Append (", ");
             }
-            
+
             if (span.Hours > 0) {
                 builder.AppendFormat (Catalog.GetPluralString ("{0} hour", "{0} hours", span.Hours), span.Hours);
                 builder.Append (", ");
@@ -99,7 +99,7 @@ namespace Banshee.Sources
             builder.Append (", ");
             builder.AppendFormat (Catalog.GetPluralString ("{0} second", "{0} seconds", span.Seconds), span.Seconds);
         }
-        
+
         public static string ConfusingPreciseFormatter (TimeSpan span)
         {
             lock (default_builder) {
@@ -108,7 +108,7 @@ namespace Banshee.Sources
                 return default_builder.ToString ();
             }
         }
-        
+
         public static void ConfusingPreciseFormatter (StringBuilder builder, TimeSpan span)
         {
             if (span.Days > 0) {
@@ -116,14 +116,14 @@ namespace Banshee.Sources
             } else if (span.Hours > 0) {
                 builder.AppendFormat ("{0}:", span.Hours);
             }
-            
+
             if (span.TotalHours < 1 || span.TotalMinutes < 1) {
                 builder.AppendFormat ("{0}:{1:00}", span.Minutes, span.Seconds);
             } else {
                 builder.AppendFormat ("{0:00}:{1:00}", span.Minutes, span.Seconds);
             }
         }
-        
+
         public static string ApproximateVerboseFormatter (TimeSpan span)
         {
             lock (default_builder) {
@@ -132,7 +132,7 @@ namespace Banshee.Sources
                 return default_builder.ToString ();
             }
         }
-        
+
         public static void ApproximateVerboseFormatter (StringBuilder builder, TimeSpan span)
         {
             if (span.Days > 0) {

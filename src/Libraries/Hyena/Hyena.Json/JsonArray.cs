@@ -1,4 +1,4 @@
-// 
+//
 // JsonArray.cs
 //
 // Author:
@@ -37,14 +37,14 @@ namespace Hyena.Json
         {
             Dump (1);
         }
-        
+
         public void Dump (int levels)
         {
             if (Count == 0) {
                 Console.WriteLine ("[ ]");
                 return;
             }
-        
+
             Console.WriteLine ("[");
             foreach (object item in this) {
                 Console.Write (String.Empty.PadLeft (levels * 2, ' '));

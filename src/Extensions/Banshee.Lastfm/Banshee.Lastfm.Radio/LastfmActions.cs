@@ -59,7 +59,7 @@ namespace Banshee.Lastfm.Radio
         public LastfmActions (LastfmSource lastfm) : base (ServiceManager.Get<InterfaceActionService> (), "Lastfm")
         {
             this.lastfm = lastfm;
-            
+
             AddImportant (
                 new ActionEntry (
                     "LastfmAddAction", Stock.Add,
@@ -112,7 +112,7 @@ namespace Banshee.Lastfm.Radio
 
                 new ActionEntry ("LastfmArtistPlaySimilarRadioAction", StationType.Similar.IconName,
                     String.Format (listen_to, String.Format ("'{0}'", Catalog.GetString ("Similar to"))), null,
-                    String.Format (listen_to_long, String.Format ("'{0}'", Catalog.GetString ("Similar to"))), 
+                    String.Format (listen_to_long, String.Format ("'{0}'", Catalog.GetString ("Similar to"))),
                     OnArtistPlaySimilarRadio),
 
                 new ActionEntry ("LastfmArtistRecommendAction", "",
@@ -169,8 +169,8 @@ namespace Banshee.Lastfm.Radio
             lastfm.Connection.StateChanged += HandleConnectionStateChanged;
             Actions.SourceActions ["SourcePropertiesAction"].Activated += OnSourceProperties;
             ServiceManager.PlaybackController.SourceChanged += OnPlaybackSourceChanged;
-            ServiceManager.PlayerEngine.ConnectEvent (OnPlayerEvent, 
-                PlayerEvent.StartOfStream | 
+            ServiceManager.PlayerEngine.ConnectEvent (OnPlayerEvent,
+                PlayerEvent.StartOfStream |
                 PlayerEvent.EndOfStream);
             UpdateActions ();
         }
@@ -183,7 +183,7 @@ namespace Banshee.Lastfm.Radio
             base.Dispose ();
         }
 
-#region Action Handlers 
+#region Action Handlers
 
         private void OnAddStation (object sender, EventArgs args)
         {
@@ -219,7 +219,7 @@ namespace Banshee.Lastfm.Radio
         private void OnLoved (object sender, EventArgs args)
         {
             LastfmTrackInfo track = ServiceManager.PlayerEngine.CurrentTrack as LastfmTrackInfo;
-            if (track == null) 
+            if (track == null)
                 return;
 
             track.Love ();
@@ -301,7 +301,7 @@ namespace Banshee.Lastfm.Radio
                     break;
                 }
             }
-            
+
             if (fan_radio == null) {
                 fan_radio = new StationSource (lastfm,
                     String.Format (Catalog.GetString ("Fans of {0}"), CurrentArtist),
@@ -322,7 +322,7 @@ namespace Banshee.Lastfm.Radio
                     break;
                 }
             }
-            
+
             if (similar_radio == null) {
                 similar_radio = new StationSource (lastfm,
                     String.Format (Catalog.GetString ("Similar to {0}"), CurrentArtist),
@@ -345,7 +345,7 @@ namespace Banshee.Lastfm.Radio
         private void OnTrackRecommend (object sender, EventArgs args)
         {
         }
-        
+
 #endregion
 
         private string artist;
@@ -378,7 +378,7 @@ namespace Banshee.Lastfm.Radio
         }
 
         private void OnPlayerEvent (PlayerEventArgs args)
-        { 
+        {
             UpdateActions ();
         }
 

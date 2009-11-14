@@ -47,40 +47,40 @@ namespace Banshee.Collection.Indexer
         private List<LibrarySource> libraries = new List<LibrarySource> ();
         private string [] available_export_fields;
         private int open_indexers;
-        
+
         public event ActionHandler CollectionChanged;
         public event ActionHandler CleanupAndShutdown;
-        
+
         private ActionHandler shutdown_handler;
         public ActionHandler ShutdownHandler {
             get { return shutdown_handler; }
             set { shutdown_handler = value; }
         }
-        
+
         public CollectionIndexerService ()
         {
             DBusConnection.Connect ("CollectionIndexer");
-            
+
             ServiceManager.SourceManager.SourceAdded += OnSourceAdded;
             ServiceManager.SourceManager.SourceRemoved += OnSourceRemoved;
-        
+
             foreach (Source source in ServiceManager.SourceManager.Sources) {
                 MonitorLibrary (source as LibrarySource);
             }
         }
-        
+
         public void Dispose ()
         {
             while (libraries.Count > 0) {
                 UnmonitorLibrary (libraries[0]);
             }
         }
-        
+
         void ICollectionIndexerService.Hello ()
         {
             Hyena.Log.DebugFormat ("Hello called on {0}", GetType ());
         }
-        
+
         public void Shutdown ()
         {
             lock (this) {
@@ -89,7 +89,7 @@ namespace Banshee.Collection.Indexer
                 }
             }
         }
-        
+
         public void ForceShutdown ()
         {
             Dispose ();
@@ -97,14 +97,14 @@ namespace Banshee.Collection.Indexer
                 shutdown_handler ();
             }
         }
-        
+
         public ICollectionIndexer CreateIndexer ()
         {
             lock (this) {
                 return new CollectionIndexer (null);
             }
         }
-        
+
         internal void DisposeIndexer (CollectionIndexer indexer)
         {
             lock (this) {
@@ -112,7 +112,7 @@ namespace Banshee.Collection.Indexer
                 open_indexers--;
             }
         }
-        
+
         ObjectPath ICollectionIndexerService.CreateIndexer ()
         {
             lock (this) {
@@ -121,21 +121,21 @@ namespace Banshee.Collection.Indexer
                 return path;
             }
         }
-        
-        
+
+
         public bool HasCollectionCountChanged (int count)
         {
             lock (this) {
                 int total_count = 0;
-                
+
                 foreach (LibrarySource library in libraries) {
                     total_count += library.Count;
                 }
-                
+
                 return count != total_count;
             }
         }
-        
+
         public bool HasCollectionLastModifiedChanged (long time)
         {
             lock (this) {
@@ -146,73 +146,73 @@ namespace Banshee.Collection.Indexer
                         String.Format ("SELECT MAX(CoreTracks.DateUpdatedStamp) {0}",
                             library.DatabaseTrackModel.UnfilteredQuery)));
                 }
-                
+
                 return last_updated > time;
             }
         }
-        
+
         public string [] GetAvailableExportFields ()
         {
             lock (this) {
                 if (available_export_fields != null) {
                     return available_export_fields;
                 }
-                
+
                 List<string> fields = new List<string> ();
-                
+
                 foreach (KeyValuePair<string, System.Reflection.PropertyInfo> field in TrackInfo.GetExportableProperties (
                     typeof (Banshee.Collection.Database.DatabaseTrackInfo))) {
                     fields.Add (field.Key);
                 }
-                
+
                 available_export_fields = fields.ToArray ();
                 return available_export_fields;
             }
         }
-        
+
         private void MonitorLibrary (LibrarySource library)
         {
             if (library == null || !library.Indexable || libraries.Contains (library)) {
                 return;
             }
-            
+
             libraries.Add (library);
-            
+
             library.TracksAdded += OnLibraryChanged;
             library.TracksDeleted += OnLibraryChanged;
             library.TracksChanged += OnLibraryChanged;
         }
-        
+
         private void UnmonitorLibrary (LibrarySource library)
         {
             if (library == null || !libraries.Contains (library)) {
                 return;
             }
-            
+
             library.TracksAdded -= OnLibraryChanged;
             library.TracksDeleted -= OnLibraryChanged;
             library.TracksChanged -= OnLibraryChanged;
-            
+
             libraries.Remove (library);
         }
-        
+
         private void OnSourceAdded (SourceAddedArgs args)
         {
             MonitorLibrary (args.Source as LibrarySource);
         }
-        
+
         private void OnSourceRemoved (SourceEventArgs args)
         {
             UnmonitorLibrary (args.Source as LibrarySource);
         }
-        
+
         private void OnLibraryChanged (object o, TrackEventArgs args)
         {
             if (args.ChangedFields == null) {
                 OnCollectionChanged ();
                 return;
             }
-            
+
             foreach (Hyena.Query.QueryField field in args.ChangedFields) {
                 if (field != Banshee.Query.BansheeQuery.LastPlayedField &&
                     field != Banshee.Query.BansheeQuery.LastSkippedField &&
@@ -223,7 +223,7 @@ namespace Banshee.Collection.Indexer
                 }
             }
         }
-        
+
         public void RequestCleanupAndShutdown ()
         {
             ActionHandler handler = CleanupAndShutdown;
@@ -231,7 +231,7 @@ namespace Banshee.Collection.Indexer
                 handler ();
             }
         }
-        
+
         private void OnCollectionChanged ()
         {
             ActionHandler handler = CollectionChanged;
@@ -239,11 +239,11 @@ namespace Banshee.Collection.Indexer
                 handler ();
             }
         }
-        
-        IDBusExportable IDBusExportable.Parent { 
+
+        IDBusExportable IDBusExportable.Parent {
             get { return null; }
         }
-        
+
         string IService.ServiceName {
             get { return "CollectionIndexerService"; }
         }

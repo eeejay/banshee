@@ -38,56 +38,56 @@ namespace Hyena.SExpEngine
             if(args.Length != 1) {
                 throw new ArgumentException("not must have only one argument");
             }
-            
+
             TreeNode arg = Evaluate(args[0]);
-            
+
             if(!(arg is BooleanLiteral)) {
                 throw new ArgumentException("can only not a boolean");
             }
-            
+
             return new BooleanLiteral(!(arg as BooleanLiteral).Value);
         }
-        
+
         [Function("or", "|")]
         public virtual TreeNode OnOr(TreeNode [] args)
         {
             return OnAndOr(args, false);
         }
-        
+
         [Function("and", "|")]
         public virtual TreeNode OnAnd(TreeNode [] args)
         {
             return OnAndOr(args, true);
         }
-        
+
         private TreeNode OnAndOr(TreeNode [] args, bool and)
         {
             if(args.Length < 2) {
                 throw new ArgumentException("must have two or more boolean arguments");
             }
-            
+
             bool result = false;
-            
+
             for(int i = 0; i < args.Length; i++) {
                 TreeNode node = Evaluate(args[i]);
                 if(!(node is BooleanLiteral)) {
                     throw new ArgumentException("arguments must be boolean");
                 }
-                
+
                 BooleanLiteral arg = (BooleanLiteral)node;
-                
+
                 if(i == 0) {
                     result = arg.Value;
                     continue;
                 }
-                
+
                 if(and) {
                     result &= arg.Value;
                 } else {
                     result |= arg.Value;
                 }
             }
-            
+
             return new BooleanLiteral(result);
         }
     }

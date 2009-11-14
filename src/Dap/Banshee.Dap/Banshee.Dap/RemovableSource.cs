@@ -91,7 +91,7 @@ namespace Banshee.Dap
         string IImportSource.ImportLabel {
             get { return null; }
         }
-        
+
         int IImportSource.SortOrder {
             get { return 20; }
         }
@@ -104,9 +104,9 @@ namespace Banshee.Dap
             if (track != null && track.PrimarySourceId == this.DbId) {
                 ServiceManager.PlayerEngine.Close ();
             }
-            
+
             SetStatus (String.Format (Catalog.GetString ("Ejecting {0}..."), GenericName), false);
-        
+
             ThreadPool.QueueUserWorkItem (delegate {
                 try {
                     Eject ();
@@ -115,11 +115,11 @@ namespace Banshee.Dap
                         SetStatus (String.Format (Catalog.GetString ("Could not eject {0}: {1}"),
                             GenericName, e.Message), true);
                     });
-                    
+
                     Log.Exception (e);
                 }
             });
-            
+
             return true;
         }
 
@@ -146,7 +146,7 @@ namespace Banshee.Dap
         }
 
         public abstract bool IsReadOnly { get; }
-        
+
         public abstract long BytesUsed { get; }
         public abstract long BytesCapacity { get; }
         public virtual long BytesAvailable {

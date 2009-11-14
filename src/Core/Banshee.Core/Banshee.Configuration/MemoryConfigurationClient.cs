@@ -71,7 +71,7 @@ namespace Banshee.Configuration
             lock (this) {
                 string fq_key = MakeKey (namespce, key);
                 object value;
-                
+
                 if (config.TryGetValue (fq_key, out value)) {
                     if (value == null) {
                         return default (T);
@@ -79,7 +79,7 @@ namespace Banshee.Configuration
                         return (T)value;
                     }
                 }
-                
+
                 return fallback;
             }
         }
@@ -95,12 +95,12 @@ namespace Banshee.Configuration
                 }
             }
         }
-                
+
         public static string MakeKey (string namespce, string key)
         {
             return String.Format ("{0}{1}{2}", namespce, String.IsNullOrEmpty (namespce) ? String.Empty : ".", key);
         }
-        
+
 #endregion
 
     }

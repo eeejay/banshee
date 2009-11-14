@@ -31,7 +31,7 @@ using System;
 namespace Banshee.Preferences
 {
     public abstract class Root : IComparable
-    {    
+    {
         private string id;
         private string name;
         private string description;
@@ -42,20 +42,20 @@ namespace Banshee.Preferences
         private object mnemonic_widget;
 
         public event Action<Root> Changed;
-                
+
         public Root ()
         {
             sensitive = true;
             visible = true;
         }
-        
+
         public int CompareTo (object o)
         {
             Root r = o as Root;
             if (r == null) {
                 return -1;
             }
-            
+
             return Order.CompareTo (r.Order);
         }
 
@@ -63,7 +63,7 @@ namespace Banshee.Preferences
             get { return id; }
             set { id = value; }
         }
-        
+
         public string Name {
             get { return name; }
             set {
@@ -71,7 +71,7 @@ namespace Banshee.Preferences
                 OnChanged ();
             }
         }
-        
+
         public string Description {
             get { return description; }
             set {
@@ -79,12 +79,12 @@ namespace Banshee.Preferences
                 OnChanged ();
             }
         }
-        
+
         public int Order {
             get { return order; }
             set { order = value; }
         }
-        
+
         public virtual bool Sensitive {
             get { return sensitive; }
             set {
@@ -92,7 +92,7 @@ namespace Banshee.Preferences
                 OnChanged ();
             }
         }
-        
+
         public virtual bool Visible {
             get { return visible; }
             set {
@@ -100,7 +100,7 @@ namespace Banshee.Preferences
                 OnChanged ();
             }
         }
-        
+
         public virtual object DisplayWidget {
             get { return display_widget; }
             set { display_widget = value; }

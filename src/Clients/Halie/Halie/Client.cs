@@ -52,16 +52,16 @@ namespace Halie
             void Present ();
             void Hide ();
         }
-        
+
         private static bool hide_field;
         private static DBusCommandService command;
-    
+
         public static void Main ()
         {
             if (!DBusConnection.ConnectTried) {
                 DBusConnection.Connect ();
             }
-            
+
             if (!DBusConnection.Enabled) {
                 Error ("All commands ignored, DBus support is disabled");
                 return;
@@ -69,22 +69,22 @@ namespace Halie
                 Error ("Banshee does not seem to be running");
                 return;
             }
-            
+
             command = DBusServiceManager.FindInstance<DBusCommandService> ("/DBusCommandService");
             hide_field = ApplicationContext.CommandLine.Contains ("hide-field");
-            
+
             bool present = HandlePlayerCommands () && !ApplicationContext.CommandLine.Contains ("indexer");
             HandleWindowCommands (present);
             HandleFiles ();
         }
-        
+
         private static void HandleWindowCommands (bool present)
         {
             IClientWindow window = DBusServiceManager.FindInstance<IClientWindow> ("/ClientWindow");
             if (window == null) {
                 return;
             }
-            
+
             foreach (KeyValuePair<string, string> arg in ApplicationContext.CommandLine.Arguments) {
                 switch (arg.Key) {
                     case "show":
@@ -95,12 +95,12 @@ namespace Halie
                         break;
                 }
             }
-            
+
             if (present && !ApplicationContext.CommandLine.Contains ("no-present")) {
                 window.Present ();
             }
         }
-        
+
         private static void HandleFiles ()
         {
             foreach (string file in ApplicationContext.CommandLine.Files) {
@@ -112,14 +112,14 @@ namespace Halie
                 }
             }
         }
-        
+
         private static bool HandlePlayerCommands ()
         {
             IPlayerEngineService player = DBusServiceManager.FindInstance<IPlayerEngineService> ("/PlayerEngine");
             IPlaybackControllerService controller = DBusServiceManager.FindInstance<IPlaybackControllerService> ("/PlaybackController");
             IDictionary<string, object> track = null;
             int handled_count = 0;
-            
+
             foreach (KeyValuePair<string, string> arg in ApplicationContext.CommandLine.Arguments) {
                 handled_count++;
                 switch (arg.Key) {
@@ -128,12 +128,12 @@ namespace Halie
                     case "pause":          player.Pause ();         break;
                     case "stop":           player.Close ();         break;
                     case "toggle-playing": player.TogglePlaying (); break;
-                    
+
                     // For the playback controller
                     case "first":    controller.First ();                                    break;
                     case "next":     controller.Next (ParseBool (arg.Value, "restart"));     break;
                     case "previous": controller.Previous (ParseBool (arg.Value, "restart")); break;
-                    case "stop-when-finished": 
+                    case "stop-when-finished":
                         controller.StopWhenFinished = !ParseBool (arg.Value);
                         break;
                     case "set-position":
@@ -158,10 +158,10 @@ namespace Halie
                         break;
                 }
             }
-            
+
             return handled_count <= 0;
         }
-        
+
         private static void HandleQuery (IPlayerEngineService player, IDictionary<string, object> track, string query)
         {
             // Translate legacy query arguments into new ones
@@ -170,7 +170,7 @@ namespace Halie
                 case "duration": query = "length"; break;
                 case "uri":      query = "URI";    break;
             }
-            
+
             switch (query) {
                 case "all":
                     if (track != null) {
@@ -178,16 +178,16 @@ namespace Halie
                             DisplayTrackField (field.Key, field.Value);
                         }
                     }
-                    
+
                     HandleQuery (player, track, "position");
                     HandleQuery (player, track, "volume");
                     HandleQuery (player, track, "current-state");
                     HandleQuery (player, track, "last-state");
                     HandleQuery (player, track, "can-pause");
                     HandleQuery (player, track, "can-seek");
-                    break; 
-                case "position": 
-                    DisplayTrackField ("position", TimeSpan.FromMilliseconds (player.Position).TotalSeconds); 
+                    break;
+                case "position":
+                    DisplayTrackField ("position", TimeSpan.FromMilliseconds (player.Position).TotalSeconds);
                     break;
                 case "volume":
                     DisplayTrackField ("volume", player.Volume);
@@ -227,7 +227,7 @@ namespace Halie
                     break;
             }
         }
-        
+
         private static void DisplayTrackField (string field, object value)
         {
             if (field == String.Empty) {
@@ -237,43 +237,43 @@ namespace Halie
             } else if (field == "length") {
                 field = "duration";
             }
-            
+
             string result = null;
             if (value is bool) {
                 result = (bool)value ? "true" : "false";
             } else {
                 result = value.ToString ();
             }
-            
+
             if (hide_field) {
                 Console.WriteLine (result);
             } else {
                 Console.WriteLine ("{0}: {1}", field.ToLower (), result);
             }
         }
-        
+
         private static bool ParseBool (string value)
         {
             return ParseBool (value, "true", "yes");
         }
-        
+
         private static bool ParseBool (string value, params string [] trueValues)
         {
             if (String.IsNullOrEmpty (value)) {
                 return false;
             }
-            
+
             value = value.ToLower ();
-            
+
             foreach (string trueValue in trueValues) {
                 if (value == trueValue) {
                     return true;
                 }
             }
-            
+
             return false;
         }
-        
+
         private static void Error (string error, params object [] args)
         {
             Console.WriteLine ("Error: {0}", String.Format (error, args));

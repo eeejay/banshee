@@ -48,15 +48,15 @@ namespace Banshee.Database
             : base (connection, table_name, BansheeDatabaseSettings.CheckTables)
         {
         }
-        
+
         protected override sealed void CheckVersion ()
         {
             CheckVersion (TableName, "ModelVersion", ModelVersion, MigrateTable);
             CheckVersion ("Database", "Version", DatabaseVersion, MigrateDatabase);
         }
-        
+
         private delegate void MigrateDel (int version);
-        
+
         private static void CheckVersion (string namespce, string key, int new_version, MigrateDel func)
         {
             int old_version = DatabaseConfigurationClient.Client.Get <int> (

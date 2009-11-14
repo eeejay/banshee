@@ -35,15 +35,15 @@ namespace Banshee.Collection
     {
         public delegate string SingleIdFilterHandler<T>(T t);
         public delegate void IdFilterChangedHandler(string newFilter);
-        
+
         public static void BuildIdFilter<T>(IEnumerable<T> value, string field, string oldFilter,
             SingleIdFilterHandler<T> singleFilterHandler, IdFilterChangedHandler filterChangedHandler)
         {
             int count = 0;
-            string new_filter = null;    
-            
+            string new_filter = null;
+
             System.Text.StringBuilder builder = new System.Text.StringBuilder();
-                
+
             if(value != null) {
                 foreach(T t in value) {
                     string t_f = singleFilterHandler(t);
@@ -52,16 +52,16 @@ namespace Banshee.Collection
                         count++;
                     }
                 }
-                
+
                 if(count > 0) {
                     builder.Remove(builder.Length - 1, 1);
                     builder.Insert(0, String.Format(" {0} IN (", field));
                     builder.Append(") ");
-                
+
                     new_filter = builder.ToString();
-                } 
+                }
             }
-            
+
             if(new_filter != oldFilter) {
                 filterChangedHandler(new_filter);
             }

@@ -43,7 +43,7 @@ namespace Banshee.Collection.Gui
         public ColumnCellTrack () : base (null, true)
         {
         }
-        
+
         public int ComputeRowHeight (Widget widget)
         {
             int lw, lh;
@@ -53,37 +53,37 @@ namespace Banshee.Collection.Gui
             layout.Dispose ();
             return lh + 8;
         }
-        
+
         public override void Render (CellContext context, StateType state, double cellWidth, double cellHeight)
         {
             if (BoundObject == null) {
                 return;
             }
-            
+
             if (!(BoundObject is TrackInfo)) {
                 throw new InvalidCastException ("ColumnCellAlbum can only bind to AlbumInfo objects");
             }
-            
+
             TrackInfo track = (TrackInfo)BoundObject;
 
             context.Layout.Width = (int)((cellWidth - 8) * Pango.Scale.PangoScale);
             context.Layout.Ellipsize = Pango.EllipsizeMode.End;
             //context.Layout.FontDescription = context.Widget.PangoContext.FontDescription.Copy ();
             context.Layout.FontDescription.Weight = font_weight;
-            context.Layout.SetMarkup (String.Format ("<b>{0}</b>\n<small><i>{1}</i></small>", 
-                GLib.Markup.EscapeText (track.DisplayTrackTitle), 
+            context.Layout.SetMarkup (String.Format ("<b>{0}</b>\n<small><i>{1}</i></small>",
+                GLib.Markup.EscapeText (track.DisplayTrackTitle),
                 GLib.Markup.EscapeText (track.DisplayArtistName)));
 
             int text_width;
             int text_height;
             context.Layout.GetPixelSize (out text_width, out text_height);
-            
+
             context.Context.MoveTo (4, ((int)cellHeight - text_height) / 2);
             Cairo.Color color = context.Theme.Colors.GetWidgetColor (
                 context.TextAsForeground ? GtkColorClass.Foreground : GtkColorClass.Text, state);
             color.A = (!context.Opaque) ? 0.3 : 1.0;
             context.Context.Color = color;
-            
+
             PangoCairoHelper.ShowLayout (context.Context, context.Layout);
         }
 

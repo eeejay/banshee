@@ -1,4 +1,4 @@
-// 
+//
 // OverlayWindow.cs
 //
 // Authors:
@@ -37,50 +37,50 @@ namespace Banshee.NowPlaying
     public class OverlayWindow : Window
     {
         private Window toplevel;
-        
+
         private double x_align = 0.5;
         private double y_align = 1;
         private double width_scale;
         private bool composited;
-        
+
         public OverlayWindow (Window toplevel) : this (toplevel, 0.0)
         {
         }
-        
+
         public OverlayWindow (Window toplevel, double widthScale) : base (WindowType.Popup)
         {
             if (toplevel == null) {
                 throw new ArgumentNullException ("toplevel", "An overlay must have a parent window");
             }
-            
+
             if (width_scale < 0 || width_scale > 1) {
                 throw new ArgumentOutOfRangeException ("widthScale", "Must be between 0 and 1 inclusive");
             }
-        
+
             this.toplevel = toplevel;
             this.width_scale = widthScale;
-            
+
             Decorated = false;
             DestroyWithParent = true;
             AllowGrow = true;
             KeepAbove = true;
             TransientFor = toplevel;
-            
+
             toplevel.ConfigureEvent += OnToplevelConfigureEvent;
             toplevel.SizeAllocated += OnToplevelSizeAllocated;
         }
-        
+
         public bool CanHide {
             get { return false; }
         }
-        
+
         protected override void OnRealized ()
         {
             composited = CompositeUtils.IsComposited (Screen) && CompositeUtils.SetRgbaColormap (this);
             AppPaintable = composited;
-            
+
             base.OnRealized ();
-            
+
             ShapeWindow ();
             Relocate ();
         }
@@ -95,57 +95,57 @@ namespace Banshee.NowPlaying
         {
             return base.OnConfigureEvent (evnt);
         }
-        
+
         protected override void OnSizeRequested (ref Requisition requisition)
         {
             if (Child != null) {
                 requisition = Child.SizeRequest ();
             }
-            
+
             if (width_scale > 0 && width_scale <= 1 && TransientFor != null) {
                 requisition.Width = (int)(TransientFor.Allocation.Width * width_scale);
             }
         }
-        
+
         protected override void OnSizeAllocated (Gdk.Rectangle allocation)
         {
             base.OnSizeAllocated (allocation);
-            
+
             Relocate ();
             ShapeWindow ();
             QueueDraw ();
         }
-        
+
         private void OnToplevelConfigureEvent (object o, ConfigureEventArgs args)
         {
             Relocate ();
         }
-        
+
         private void OnToplevelSizeAllocated (object o, SizeAllocatedArgs args)
         {
             QueueResize ();
             Relocate ();
         }
-        
+
         protected override bool OnExposeEvent (Gdk.EventExpose evnt)
         {
             if (!composited || evnt.Window != GdkWindow) {
                 return base.OnExposeEvent (evnt);
             }
-            
+
             Cairo.Context cr = Gdk.CairoHelper.Create (evnt.Window);
-            
+
             Gdk.Color color = Style.Background (State);
-            
+
             ShapeSurface (cr, new Cairo.Color (color.Red / (double) ushort.MaxValue,
-                color.Blue / (double) ushort.MaxValue, 
+                color.Blue / (double) ushort.MaxValue,
                 color.Green / (double) ushort.MaxValue,
                 0.85));
-            
+
             ((IDisposable)cr).Dispose ();
             return base.OnExposeEvent (evnt);
         }
-        
+
         protected virtual void ShapeSurface (Cairo.Context cr, Cairo.Color color)
         {
             cr.Operator = Cairo.Operator.Source;
@@ -158,29 +158,29 @@ namespace Banshee.NowPlaying
         private void ShapeWindow ()
         {
         }
-        
+
         private void Relocate ()
         {
             if (!IsRealized || !toplevel.IsRealized) {
                 return;
             }
-            
+
             int x, y;
-            
+
             toplevel.GdkWindow.GetOrigin (out x, out y);
-            
+
             int x_origin = x;
             int y_origin = y;
-            
+
             x += (int)(toplevel.Allocation.Width * x_align);
             y += (int)(toplevel.Allocation.Height * y_align);
-            
+
             x -= (int)(Allocation.Width * 0.5);
             y -= (int)(Allocation.Height * 0.5);
-            
+
             x = Math.Max (0, Math.Min (x, x_origin + toplevel.Allocation.Width - Allocation.Width));
             y = Math.Max (0, Math.Min (y, y_origin + toplevel.Allocation.Height - Allocation.Height));
-            
+
             Move (x, y);
         }
     }

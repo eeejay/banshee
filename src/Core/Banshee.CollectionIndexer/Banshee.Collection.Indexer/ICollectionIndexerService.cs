@@ -38,7 +38,7 @@ namespace Banshee.Collection.Indexer
     {
         event ActionHandler CollectionChanged;
         event ActionHandler CleanupAndShutdown;
-        
+
         void Hello ();
         void Shutdown ();
         ObjectPath CreateIndexer ();

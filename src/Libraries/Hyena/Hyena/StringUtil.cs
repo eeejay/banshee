@@ -34,10 +34,10 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 
 namespace Hyena
-{    
+{
     public static class StringUtil
     {
-        private static CompareOptions compare_options = 
+        private static CompareOptions compare_options =
             CompareOptions.IgnoreCase | CompareOptions.IgnoreNonSpace |
             CompareOptions.IgnoreKanaType | CompareOptions.IgnoreWidth;
 
@@ -45,7 +45,7 @@ namespace Hyena
         {
             return CultureInfo.CurrentCulture.CompareInfo.IndexOf (haystack, needle, compare_options);
         }
-        
+
         public static int RelaxedCompare (string a, string b)
         {
             if (a == null && b == null) {
@@ -55,29 +55,29 @@ namespace Hyena
             } else if (a == null && b != null) {
                 return -1;
             }
-            
+
             int a_offset = a.StartsWith ("the ") ? 4 : 0;
             int b_offset = b.StartsWith ("the ") ? 4 : 0;
 
-            return CultureInfo.CurrentCulture.CompareInfo.Compare (a, a_offset, a.Length - a_offset, 
+            return CultureInfo.CurrentCulture.CompareInfo.Compare (a, a_offset, a.Length - a_offset,
                 b, b_offset, b.Length - b_offset, compare_options);
         }
-        
+
         public static string CamelCaseToUnderCase (string s)
         {
             return CamelCaseToUnderCase (s, '_');
         }
-        
+
         private static Regex camelcase = new Regex ("([A-Z]{1}[a-z]+)", RegexOptions.Compiled);
         public static string CamelCaseToUnderCase (string s, char underscore)
         {
             if (String.IsNullOrEmpty (s)) {
                 return null;
             }
-        
+
             StringBuilder undercase = new StringBuilder ();
             string [] tokens = camelcase.Split (s);
-            
+
             for (int i = 0; i < tokens.Length; i++) {
                 if (tokens[i] == String.Empty) {
                     continue;
@@ -88,7 +88,7 @@ namespace Hyena
                     undercase.Append (underscore);
                 }
             }
-            
+
             return undercase.ToString ();
         }
 
@@ -143,7 +143,7 @@ namespace Hyena
         {
             return DoubleToTenthsPrecision (num, false);
         }
-        
+
         public static string DoubleToTenthsPrecision (double num, bool always_decimal)
         {
             return DoubleToTenthsPrecision (num, always_decimal, NumberFormatInfo.CurrentInfo);
@@ -154,7 +154,7 @@ namespace Hyena
             num = Math.Round (num, 1, MidpointRounding.ToEven);
             return String.Format (provider, !always_decimal && num == (int)num ? "{0:N0}" : "{0:N1}", num);
         }
-        
+
         // This method helps us pluralize doubles. Probably a horrible i18n idea.
         public static int DoubleToPluralInt (double num)
         {
@@ -163,7 +163,7 @@ namespace Hyena
             else
                 return (int)num + 1;
         }
-        
+
         // A mapping of non-Latin characters to be considered the same as
         // a Latin equivalent.
         private static Dictionary<char, char> BuildSpecialCases ()
@@ -174,24 +174,24 @@ namespace Hyena
             return dict;
         }
         private static Dictionary<char, char> searchkey_special_cases = BuildSpecialCases ();
-        
+
         //  Removes accents from Latin characters, and some kinds of punctuation.
         public static string SearchKey (string val)
         {
             if (String.IsNullOrEmpty (val)) {
                 return val;
             }
-            
+
             val = val.ToLower ();
             StringBuilder sb = new StringBuilder ();
             UnicodeCategory category;
             bool previous_was_latin = false;
             bool got_space = false;
-            
+
             // Normalizing to KD splits into (base, combining) so we can check for Latin
             // characters and then strip off any NonSpacingMarks following them
             foreach (char orig_c in val.TrimStart ().Normalize (NormalizationForm.FormKD)) {
-                
+
                 // Check for a special case *before* whitespace. This way, if
                 // a special case is ever added that maps to ' ' or '\t', it
                 // won't cause a run of whitespace in the result.
@@ -199,12 +199,12 @@ namespace Hyena
                 if (searchkey_special_cases.ContainsKey (c)) {
                     c = searchkey_special_cases[c];
                 }
-                
+
                 if (c == ' ' || c == '\t') {
                     got_space = true;
                     continue;
                 }
-                
+
                 category = Char.GetUnicodeCategory (c);
                 if (category == UnicodeCategory.OtherPunctuation) {
                     // Skip punctuation
@@ -215,7 +215,7 @@ namespace Hyena
                     }
                     sb.Append (c);
                 }
-                
+
                 // Can ignore A-Z because we've already lowercased the char
                 previous_was_latin = (c >= 'a' && c <= 'z');
             }
@@ -229,7 +229,7 @@ namespace Hyena
             }
             return result;
         }
-        
+
         private static Regex invalid_path_regex = BuildInvalidPathRegex ();
 
         private static Regex BuildInvalidPathRegex ()
@@ -241,7 +241,7 @@ namespace Hyena
                 '\x08', '\x09', '\x0A', '\x0B', '\x0C', '\x0D', '\x0E', '\x0F',
                 '\x10', '\x11', '\x12', '\x13', '\x14', '\x15', '\x16', '\x17',
                 '\x18', '\x19', '\x1A', '\x1B', '\x1C', '\x1D', '\x1E', '\x1F',
-                
+
                 // Invalid in FAT32 / NTFS: " \ / : * | ? < >
                 // Invalid in HFS   :
                 // Invalid in ext3  /
@@ -253,10 +253,10 @@ namespace Hyena
                 regex_str += "\\" + invalid_path_characters[i];
             }
             regex_str += "]+";
-            
+
             return new Regex (regex_str, RegexOptions.Compiled);
         }
-        
+
         private static CompareInfo culture_compare_info = CultureInfo.CurrentCulture.CompareInfo;
         public static byte[] SortKey (string orig)
         {
@@ -269,7 +269,7 @@ namespace Hyena
         {
             if (input == null)
                 return "";
-            
+
             // Remove leading and trailing dots and spaces.
             input = input.Trim (escape_path_trim_chars);
 
@@ -304,19 +304,19 @@ namespace Hyena
 
             return builder.ToString ();
         }
-        
+
         public static string MaybeFallback (string input, string fallback)
         {
             string trimmed = input == null ? null : input.Trim ();
             return String.IsNullOrEmpty (trimmed) ? fallback : trimmed;
         }
-        
+
         public static uint SubstringCount (string haystack, string needle)
         {
             if (String.IsNullOrEmpty (haystack) || String.IsNullOrEmpty (needle)) {
                 return 0;
             }
-            
+
             int position = 0;
             uint count = 0;
             while (true) {

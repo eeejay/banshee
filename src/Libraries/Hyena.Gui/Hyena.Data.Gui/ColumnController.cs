@@ -31,28 +31,28 @@ using System.Collections;
 using System.Collections.Generic;
 
 namespace Hyena.Data.Gui
-{    
+{
     public class ColumnController : IEnumerable<Column>
     {
         private List<Column> columns = new List<Column> ();
         private ISortableColumn default_sort_column;
         private ISortableColumn sort_column;
-        
+
         protected List<Column> Columns {
             get { return columns; }
         }
-        
+
         public event EventHandler Updated;
-        
+
         protected virtual void OnVisibilitiesChanged ()
         {
             OnUpdated ();
         }
-        
+
         protected virtual void OnWidthsChanged ()
         {
         }
-        
+
         protected void OnUpdated ()
         {
             EventHandler handler = Updated;
@@ -60,7 +60,7 @@ namespace Hyena.Data.Gui
                 handler (this, EventArgs.Empty);
             }
         }
-        
+
         public void Clear ()
         {
             lock (this) {
@@ -70,7 +70,7 @@ namespace Hyena.Data.Gui
                 }
                 columns.Clear ();
             }
-            
+
             OnUpdated ();
         }
 
@@ -94,10 +94,10 @@ namespace Hyena.Data.Gui
                 column.WidthChanged += OnColumnWidthChanged;
                 columns.Add (column);
             }
-            
+
             OnUpdated ();
         }
-        
+
         public void Insert (Column column, int index)
         {
             lock (this) {
@@ -105,10 +105,10 @@ namespace Hyena.Data.Gui
                 column.WidthChanged += OnColumnWidthChanged;
                 columns.Insert (index, column);
             }
-            
+
             OnUpdated ();
         }
-        
+
         public void Remove (Column column)
         {
             lock (this) {
@@ -116,10 +116,10 @@ namespace Hyena.Data.Gui
                 column.WidthChanged -= OnColumnWidthChanged;
                 columns.Remove (column);
             }
-            
+
             OnUpdated ();
         }
-        
+
         public void Remove (int index)
         {
             lock (this) {
@@ -128,10 +128,10 @@ namespace Hyena.Data.Gui
                 column.WidthChanged -= OnColumnWidthChanged;
                 columns.RemoveAt (index);
             }
-            
+
             OnUpdated ();
         }
-        
+
         public void Reorder (int index, int newIndex)
         {
             lock (this) {
@@ -139,42 +139,42 @@ namespace Hyena.Data.Gui
                 columns.RemoveAt (index);
                 columns.Insert (newIndex, column);
             }
-            
+
             OnUpdated ();
         }
-        
+
         IEnumerator IEnumerable.GetEnumerator ()
         {
             return columns.GetEnumerator ();
         }
-        
+
         IEnumerator<Column> IEnumerable<Column>.GetEnumerator ()
         {
             return columns.GetEnumerator ();
         }
-        
+
         public int IndexOf (Column column)
         {
             lock (this) {
                 return columns.IndexOf (column);
             }
         }
-        
+
         public Column [] ToArray ()
         {
             return columns.ToArray ();
         }
-        
+
         private void OnColumnVisibilityChanged (object o, EventArgs args)
         {
             OnVisibilitiesChanged ();
         }
-        
+
         private void OnColumnWidthChanged (object o, EventArgs args)
         {
             OnWidthsChanged ();
         }
-        
+
         public Column this[int index] {
             get { return columns[index]; }
         }
@@ -188,11 +188,11 @@ namespace Hyena.Data.Gui
             get { return sort_column; }
             set { sort_column = value;}
         }
-        
+
         public int Count {
             get { return columns.Count; }
         }
-        
+
         public virtual bool EnableColumnMenu {
             get { return false; }
         }

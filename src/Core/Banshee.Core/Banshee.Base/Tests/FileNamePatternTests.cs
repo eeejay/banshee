@@ -54,18 +54,18 @@ namespace Banshee.Base.Tests
             Assert.AreEqual (null,  Paths.MakePathRelative ("/foo/bar/baz", "foo"));
             Assert.AreEqual (null,  Paths.MakePathRelative ("/fo", "/foo"));
         }
-    
+
         [Test]
         public void CreateFromTrackInfo()
         {
             SampleTrackInfo track = new SampleTrackInfo();
             string built = FileNamePattern.CreateFromTrackInfo(
-                "%artist%:%album%:%title%:%track_number%:" + 
+                "%artist%:%album%:%title%:%track_number%:" +
                 "%track_count%:%track_number_nz%:%track_count_nz%",
                 track);
-    
+
             Assert.AreEqual(String.Format("{0}:{1}:{2}:{3}:{4}:{5}:{6}",
-                track.ArtistName, track.AlbumTitle, track.TrackTitle, 
+                track.ArtistName, track.AlbumTitle, track.TrackTitle,
                 ZeroPad(track.TrackNumber), ZeroPad(track.TrackCount),
                 track.TrackNumber, track.TrackCount),
                 built);

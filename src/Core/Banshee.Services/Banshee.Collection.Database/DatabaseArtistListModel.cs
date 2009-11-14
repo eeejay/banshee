@@ -41,8 +41,8 @@ namespace Banshee.Collection.Database
 {
     public class DatabaseArtistListModel : DatabaseFilterListModel<DatabaseArtistInfo, ArtistInfo>
     {
-        public DatabaseArtistListModel (Banshee.Sources.DatabaseSource source, DatabaseTrackListModel trackModel, BansheeDbConnection connection, string uuid) 
-            : base (Banshee.Query.BansheeQuery.ArtistField.Name, Banshee.Query.BansheeQuery.ArtistField.Label, 
+        public DatabaseArtistListModel (Banshee.Sources.DatabaseSource source, DatabaseTrackListModel trackModel, BansheeDbConnection connection, string uuid)
+            : base (Banshee.Query.BansheeQuery.ArtistField.Name, Banshee.Query.BansheeQuery.ArtistField.Label,
                     source, trackModel, connection, DatabaseArtistInfo.Provider, new ArtistInfo (null, null), uuid)
         {
             ReloadFragmentFormat = @"
@@ -52,16 +52,16 @@ namespace Banshee.Collection.Database
                               CoreCache.ItemID = {2} {3})
                     ORDER BY NameSortKey";
         }
-        
+
         public override string FilterColumn {
             get { return "CoreTracks.ArtistID"; }
         }
-        
+
         protected override string ItemToFilterValue (object item)
         {
             return (item is DatabaseArtistInfo) ? (item as DatabaseArtistInfo).DbId.ToString () : null;
         }
-        
+
         public override void UpdateSelectAllItem (long count)
         {
             select_all_item.Name = String.Format (Catalog.GetString ("All Artists ({0})"), count);

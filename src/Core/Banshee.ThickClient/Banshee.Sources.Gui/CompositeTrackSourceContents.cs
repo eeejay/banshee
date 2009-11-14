@@ -66,17 +66,17 @@ namespace Banshee.Sources.Gui
             SetupFilterView (artist_view = new ArtistListView ());
             SetupFilterView (album_view = new AlbumListView ());
         }
-        
+
         protected override void ClearFilterSelections ()
         {
             // if (genre_view.Model != null) {
             //     genre_view.Selection.Clear ();
             // }
-            
+
             if (artist_view.Model != null) {
                 artist_view.Selection.Clear ();
             }
-            
+
             if (album_view.Model != null) {
                 album_view.Selection.Clear ();
             }
@@ -89,7 +89,7 @@ namespace Banshee.Sources.Gui
             SetModel (album);
             // SetModel (genre);
         }
-        
+
         IListView<TrackInfo> ITrackModelSourceContents.TrackView {
             get { return track_view; }
         }
@@ -107,7 +107,7 @@ namespace Banshee.Sources.Gui
                 if (!(ServiceManager.SourceManager.ActiveSource is ITrackModelSource)) {
                     return false;
                 }
-                
+
                 return ((ITrackModelSource)ServiceManager.SourceManager.ActiveSource).ShowBrowser;
             }
         }
@@ -121,11 +121,11 @@ namespace Banshee.Sources.Gui
             if (track_source == null) {
                 return false;
             }
-            
+
             this.source = source;
-            
+
             SetModel (track_view, track_source.TrackModel);
-            
+
             if (filterable_source != null && filterable_source.CurrentFilters != null) {
                 foreach (IListModel model in filterable_source.CurrentFilters) {
                     if (model is IListModel<ArtistInfo>)
@@ -138,7 +138,7 @@ namespace Banshee.Sources.Gui
                     //    Hyena.Log.DebugFormat ("CompositeTrackSourceContents got non-album/artist filter model: {0}", model);
                 }
             }
-            
+
             track_view.HeaderVisible = true;
             return true;
         }

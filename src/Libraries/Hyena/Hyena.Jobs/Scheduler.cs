@@ -182,7 +182,7 @@ namespace Hyena.Jobs
 
             if (job.Has (PriorityHints.SpeedSensitive))
                 return true;
-            
+
             // Run only one non-SpeedSensitive job that uses a given Resource
             if (job.Has (PriorityHints.LongRunning))
                 return jobs.Where (IsRunning)

@@ -45,12 +45,12 @@ namespace Banshee.Query
         QueryFieldSet FieldSet { get; }
         string GetSqlSort (string key, bool asc);
     }
-    
+
     public class QueryDefines : IQueryDefines
     {
-        
+
     }*/
-    
+
     public static class BansheeQuery
     {
         private static bool asc = true;
@@ -89,7 +89,7 @@ namespace Banshee.Query
             new QueryLimit ("MB",      Catalog.GetString ("MB"), "CoreTracks.FileSize", (int) FileSizeFactor.MB),
             new QueryLimit ("GB",      Catalog.GetString ("GB"), "CoreTracks.FileSize", (int) FileSizeFactor.GB)
         };
-        
+
 #region QueryField Definitions
 
         public static QueryField ArtistField = new QueryField (
@@ -133,7 +133,7 @@ namespace Banshee.Query
             Catalog.GetString ("discs"), Catalog.GetString ("cds"),
             "discs", "cds"
         );
-        
+
         public static QueryField TrackNumberField = new QueryField (
             "track", "TrackNumber",
             // Translators: noun
@@ -329,7 +329,7 @@ namespace Banshee.Query
             Catalog.GetString ("score"),
             "score"
         );
-        
+
         public static QueryField PlaybackErrorField = new QueryField (
             "playbackerror", "PlaybackError",
             Catalog.GetString ("Playback Error"), "CoreTracks.LastStreamError", typeof(PlaybackErrorQueryValue),
@@ -372,40 +372,40 @@ namespace Banshee.Query
                 case "track":
                 case "grouping":
                     sort_query = String.Format (@"
-                        CoreAlbums.ArtistNameSortKey ASC, 
-                        CoreAlbums.TitleSortKey ASC, 
+                        CoreAlbums.ArtistNameSortKey ASC,
+                        CoreAlbums.TitleSortKey ASC,
                         CoreTracks.Disc ASC,
-                        CoreTracks.TrackNumber {0}", ascDesc); 
+                        CoreTracks.TrackNumber {0}", ascDesc);
                     break;
 
                 case "albumartist":
                     sort_query = String.Format (@"
-                        CoreAlbums.ArtistNameSortKey {0}, 
-                        CoreAlbums.TitleSortKey ASC, 
+                        CoreAlbums.ArtistNameSortKey {0},
+                        CoreAlbums.TitleSortKey ASC,
                         CoreTracks.Disc ASC,
-                        CoreTracks.TrackNumber ASC", ascDesc); 
+                        CoreTracks.TrackNumber ASC", ascDesc);
                     break;
 
                 case "artist":
                     sort_query = String.Format (@"
-                        CoreArtists.NameSortKey {0}, 
+                        CoreArtists.NameSortKey {0},
                         CoreAlbums.TitleSortKey ASC,
                         CoreTracks.Disc ASC,
-                        CoreTracks.TrackNumber ASC", ascDesc); 
+                        CoreTracks.TrackNumber ASC", ascDesc);
                     break;
 
                 case "album":
                     sort_query = String.Format (@"
                         CoreAlbums.TitleSortKey {0},
                         CoreTracks.Disc ASC,
-                        CoreTracks.TrackNumber ASC", ascDesc); 
+                        CoreTracks.TrackNumber ASC", ascDesc);
                     break;
 
                 case "title":
                     sort_query = String.Format (@"
                         CoreTracks.TitleSortKey {0},
-                        CoreAlbums.ArtistNameSortKey ASC, 
-                        CoreAlbums.TitleSortKey ASC", ascDesc); 
+                        CoreAlbums.ArtistNameSortKey ASC,
+                        CoreAlbums.TitleSortKey ASC", ascDesc);
                     break;
 
                 case "random":
@@ -414,8 +414,8 @@ namespace Banshee.Query
 
                 case "disc":
                     sort_query = String.Format (@"
-                        CoreAlbums.ArtistNameSortKey ASC, 
-                        CoreAlbums.TitleSortKey ASC, 
+                        CoreAlbums.ArtistNameSortKey ASC,
+                        CoreAlbums.TitleSortKey ASC,
                         CoreTracks.Disc {0},
                         CoreTracks.TrackNumber ASC", ascDesc);
                     break;

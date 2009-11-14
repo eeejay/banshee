@@ -66,7 +66,7 @@ namespace Hyena.Query
         public bool IsNot {
             get { return is_not; }
         }
-        
+
         internal Operator (string name, string label, string sql_format, params string [] userOps) : this (name, label, sql_format, false, userOps)
         {
         }

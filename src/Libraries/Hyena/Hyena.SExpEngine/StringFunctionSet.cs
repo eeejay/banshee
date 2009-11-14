@@ -39,105 +39,105 @@ namespace Hyena.SExpEngine
         {
             return ConcatenateStrings(Evaluator, args);
         }
-        
+
         public static TreeNode ConcatenateStrings(EvaluatorBase evaluator, TreeNode [] args)
         {
             StringBuilder result = new StringBuilder();
-            
+
             foreach(TreeNode arg in args) {
                 TreeNode eval_arg = evaluator.Evaluate(arg);
                 if(!(eval_arg is VoidLiteral)) {
                     result.Append(eval_arg);
                 }
             }
-            
+
             return new StringLiteral(result.ToString());
         }
-        
+
         private void CheckArgumentCount(TreeNode [] args, int expected)
         {
             CheckArgumentCount(args, expected, expected);
         }
-        
+
         private void CheckArgumentCount(TreeNode [] args, int expected_min, int expected_max)
         {
             if(args.Length < expected_min || args.Length > expected_max) {
-                throw new ArgumentException("expects " + expected_min + " <= args <= " 
+                throw new ArgumentException("expects " + expected_min + " <= args <= "
                     + expected_max + " arguments");
             }
         }
-        
+
         private string GetArgumentString(TreeNode [] args, int index)
         {
             TreeNode node = Evaluate(args[index]);
             if(!(node is StringLiteral)) {
                 throw new ArgumentException("argument " + index + " must be a string");
             }
-            
+
             return (node as StringLiteral).Value;
         }
-                
+
         private int GetArgumentInteger(TreeNode [] args, int index)
         {
             TreeNode node = Evaluate(args[index]);
             if(!(node is IntLiteral)) {
                 throw new ArgumentException("argument " + index + " must be an integer");
             }
-            
+
             return (node as IntLiteral).Value;
         }
-        
+
         [Function("length")]
         public virtual TreeNode OnLength(TreeNode [] args)
         {
             CheckArgumentCount(args, 1);
-            
+
             TreeNode node = Evaluate(args[0]);
-            
+
             if(node is StringLiteral) {
                 return new IntLiteral((node as StringLiteral).Value.Length);
             } else if(!(node is LiteralNodeBase) && !(node is FunctionNode)) {
                 return new IntLiteral(node.ChildCount);
             }
-            
+
             return new IntLiteral(0);
-        } 
-        
+        }
+
         [Function("contains")]
         public virtual TreeNode OnContains(TreeNode [] args)
         {
             CheckArgumentCount(args, 2);
             return new BooleanLiteral(GetArgumentString(args, 0).Contains(GetArgumentString(args, 1)));
         }
-                
+
         [Function("index-of")]
         public virtual TreeNode OnIndexOf(TreeNode [] args)
         {
             CheckArgumentCount(args, 2);
             return new IntLiteral(GetArgumentString(args, 0).IndexOf(GetArgumentString(args, 1)));
         }
-                
+
         [Function("last-index-of")]
         public virtual TreeNode OnLastIndexOf(TreeNode [] args)
         {
             CheckArgumentCount(args, 2);
             return new IntLiteral(GetArgumentString(args, 0).LastIndexOf(GetArgumentString(args, 1)));
         }
-        
+
         [Function("starts-with")]
         public virtual TreeNode OnStartsWith(TreeNode [] args)
         {
             CheckArgumentCount(args, 2);
             return new BooleanLiteral(GetArgumentString(args, 0).StartsWith(GetArgumentString(args, 1)));
         }
-                
+
         [Function("ends-with")]
         public virtual TreeNode OnEndsWith(TreeNode [] args)
         {
             CheckArgumentCount(args, 2);
             return new BooleanLiteral(GetArgumentString(args, 0).EndsWith(GetArgumentString(args, 1)));
         }
-        
+
         [Function("substring")]
         public virtual TreeNode OnSubstring(TreeNode [] args)
         {
@@ -149,23 +149,23 @@ namespace Hyena.SExpEngine
                     GetArgumentInteger(args, 1), GetArgumentInteger(args, 2)));
             }
         }
-        
+
         [Function("split")]
         public virtual TreeNode OnSplit(TreeNode [] args)
         {
             CheckArgumentCount(args, 2);
-            
+
             TreeNode result = new TreeNode();
             string str = GetArgumentString(args, 0);
             string pattern = GetArgumentString(args, 1);
-            
+
             foreach(string item in Regex.Split(str, pattern)) {
                 result.AddChild(new StringLiteral(item));
             }
-            
+
             return result;
         }
-        
+
         [Function("trim")]
         public virtual TreeNode OnTrim(TreeNode [] args)
         {

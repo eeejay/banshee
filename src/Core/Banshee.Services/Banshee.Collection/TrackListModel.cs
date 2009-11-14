@@ -43,12 +43,12 @@ namespace Banshee.Collection
         {
             selection = new Selection ();
         }
-        
+
         public TrackListModel(IDBusExportable parent) : base(parent)
         {
             selection = new Selection ();
         }
-        
+
         public abstract int IndexOf (TrackInfo track);
 
         public abstract TrackInfo GetRandom (DateTime since);

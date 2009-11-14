@@ -41,21 +41,21 @@ namespace Hyena.Data.Sqlite
         PrimaryKey = 2,
         Unique = 4
     }
-    
+
     public abstract class AbstractDatabaseColumnAttribute : Attribute
     {
         private string column_name;
         private bool select = true;
-        
+
         public AbstractDatabaseColumnAttribute ()
         {
         }
-        
+
         public AbstractDatabaseColumnAttribute (string column_name)
         {
             this.column_name = column_name;
         }
-        
+
         public string ColumnName {
             get { return column_name; }
         }
@@ -65,45 +65,45 @@ namespace Hyena.Data.Sqlite
             set { select = value; }
         }
     }
-    
+
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
     public sealed class DatabaseColumnAttribute : AbstractDatabaseColumnAttribute
     {
         private DatabaseColumnConstraints contraints;
         private string default_value;
         private string index;
-        
+
         public DatabaseColumnAttribute ()
         {
         }
-        
+
         public DatabaseColumnAttribute (string column_name) : base (column_name)
         {
         }
-        
+
         public DatabaseColumnConstraints Constraints {
             get { return contraints; }
             set { contraints = value; }
         }
-        
+
         public string DefaultValue {
             get { return default_value; }
             set { default_value = value; }
         }
-        
+
         public string Index {
             get { return index; }
             set { index = value; }
         }
     }
-    
+
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
     public sealed class VirtualDatabaseColumnAttribute : AbstractDatabaseColumnAttribute
     {
         private string target_table;
         private string local_key;
         private string foreign_key;
-        
+
         public VirtualDatabaseColumnAttribute (string column_name, string target_table, string local_key, string foreign_key)
             : base (column_name)
         {
@@ -111,15 +111,15 @@ namespace Hyena.Data.Sqlite
             this.local_key = local_key;
             this.foreign_key = foreign_key;
         }
-        
+
         public string TargetTable {
             get { return target_table; }
         }
-        
+
         public string LocalKey {
             get { return local_key; }
         }
-        
+
         public string ForeignKey {
             get { return foreign_key; }
         }

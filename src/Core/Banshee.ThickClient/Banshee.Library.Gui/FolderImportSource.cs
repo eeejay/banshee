@@ -37,18 +37,18 @@ namespace Banshee.Library.Gui
         public FolderImportSource ()
         {
         }
-    
+
         public void Import()
         {
             var chooser = Banshee.Gui.Dialogs.FileChooserDialog.CreateForImport (Catalog.GetString ("Import Folders to Library"), false);
-            
+
             if (chooser.Run () == (int)ResponseType.Ok) {
                 Banshee.ServiceStack.ServiceManager.Get<LibraryImportManager> ().Enqueue (chooser.Uris);
             }
-            
+
             chooser.Destroy ();
         }
-        
+
         public string Name {
             get { return Catalog.GetString ("Local Folders"); }
         }
@@ -56,15 +56,15 @@ namespace Banshee.Library.Gui
         public string ImportLabel {
             get { return Catalog.GetString ("C_hoose Folders"); }
         }
-        
+
         public string [] IconNames {
             get { return new string [] { "gtk-open" }; }
         }
-        
+
         public bool CanImport {
             get { return true; }
         }
-        
+
         public int SortOrder {
             get { return 0; }
         }

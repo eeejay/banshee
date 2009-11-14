@@ -30,16 +30,16 @@ namespace MusicBrainz
 {
     public sealed class Track : MusicBrainzItem
     {
-        
+
         #region Private
-        
+
         const string EXTENSION = "track";
         TimeSpan? duration;
         ReadOnlyCollection<Release> releases;
         ReadOnlyCollection<string> puids;
-        
+
         #endregion
-        
+
         #region Constructors
 
         Track (string id) : base (id)
@@ -53,15 +53,15 @@ namespace MusicBrainz
         internal Track (XmlReader reader, Artist artist, bool all_rels_loaded) : base (reader, artist, all_rels_loaded)
         {
         }
-        
+
         #endregion
 
         #region Protected
-        
+
         internal override string UrlExtension {
             get { return EXTENSION; }
         }
-        
+
         internal override void CreateIncCore (StringBuilder builder)
         {
             if (releases == null) AppendIncParameters (builder, "releases");
@@ -105,7 +105,7 @@ namespace MusicBrainz
                 break;
             }
         }
-        
+
         #endregion
 
         #region Public
@@ -141,7 +141,7 @@ namespace MusicBrainz
         public int GetTrackNumber (Release release)
         {
             if (release == null) throw new ArgumentNullException ("release");
-            
+
             foreach (Release r in GetReleases ())
                 if (r.Equals (release))
                     return r.TrackNumber;
@@ -149,7 +149,7 @@ namespace MusicBrainz
         }
 
         #endregion
-        
+
         #region Static
 
         public static Track Get (string id)
@@ -161,7 +161,7 @@ namespace MusicBrainz
         public static Query<Track> Query (string title)
         {
             if (title == null) throw new ArgumentNullException ("title");
-            
+
             TrackQueryParameters parameters = new TrackQueryParameters ();
             parameters.Title = title;
             return Query (parameters);
@@ -171,19 +171,19 @@ namespace MusicBrainz
         {
             if (title == null) throw new ArgumentNullException ("title");
             if (artist == null) throw new ArgumentNullException ("artist");
-            
+
             TrackQueryParameters parameters = new TrackQueryParameters ();
             parameters.Title = title;
             parameters.Artist = artist;
             return Query (parameters);
         }
-        
+
         public static Query<Track> Query (string title, string artist, string release)
         {
             if (title == null) throw new ArgumentNullException ("title");
             if (artist == null) throw new ArgumentNullException ("artist");
             if (release == null) throw new ArgumentNullException ("release");
-            
+
             TrackQueryParameters parameters = new TrackQueryParameters ();
             parameters.Title = title;
             parameters.Artist = artist;
@@ -199,7 +199,7 @@ namespace MusicBrainz
 
         public static Query<Track> QueryLucene (string luceneQuery)
         {
-            if(luceneQuery == null) throw new ArgumentNullException ("luceneQuery"); 
+            if(luceneQuery == null) throw new ArgumentNullException ("luceneQuery");
             return new Query<Track> (EXTENSION, CreateLuceneParameter (luceneQuery));
         }
 
@@ -207,13 +207,13 @@ namespace MusicBrainz
         {
             return track.ToString ();
         }
-        
+
         #endregion
 
     }
-    
+
     #region Ancillary Types
-    
+
     public sealed class TrackQueryParameters : ItemQueryParameters
     {
         string release;
@@ -270,7 +270,7 @@ namespace MusicBrainz
             }
         }
     }
-    
+
     #endregion
-    
+
 }

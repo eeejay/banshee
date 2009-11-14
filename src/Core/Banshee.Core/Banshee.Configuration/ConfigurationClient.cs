@@ -44,7 +44,7 @@ namespace Banshee.Configuration
                 if (client != null) {
                     return;
                 }
-                
+
                 if (AddinManager.IsInitialized) {
                     foreach (TypeExtensionNode node in AddinManager.GetExtensionNodes (
                         "/Banshee/Platform/ConfigurationClient")) {
@@ -57,14 +57,14 @@ namespace Banshee.Configuration
                             Log.Warning ("Configuration client extension failed to load", e.Message);
                         }
                     }
-                    
+
                     if (client == null) {
                         client = new XmlConfigurationClient ();
                     }
                 } else {
                     client = new MemoryConfigurationClient ();
                 }
-                
+
                 Log.DebugFormat ("Configuration client extension loaded ({0})", client.GetType ().FullName);
             }
         }
@@ -77,37 +77,37 @@ namespace Banshee.Configuration
                 return client;
             }
         }
-        
+
         public static T Get<T> (SchemaEntry<T> entry)
         {
             return Client.Get<T> (entry);
         }
-        
+
         public static T Get<T> (SchemaEntry<T> entry, T fallback)
         {
             return Client.Get<T> (entry, fallback);
         }
-        
+
         public static T Get<T> (string key, T fallback)
         {
             return Client.Get<T> (key, fallback);
         }
-        
+
         public static T Get<T> (string @namespace, string key, T fallback)
         {
             return Client.Get<T> (@namespace, key, fallback);
         }
-        
+
         public static void Set<T> (SchemaEntry<T> entry, T value)
         {
             Client.Set<T> (entry, value);
         }
-        
+
         public static void Set<T> (string key, T value)
         {
             Client.Set<T> (key, value);
         }
-        
+
         public static void Set<T> (string @namespace, string key, T value)
         {
             Client.Set<T> (@namespace, key, value);

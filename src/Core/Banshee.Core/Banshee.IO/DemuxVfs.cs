@@ -35,12 +35,12 @@ namespace Banshee.IO
     {
         public static TagLib.File OpenFile (string file, string mimetype, TagLib.ReadStyle readStyle)
         {
-            return TagLib.File.Create (Provider.CreateDemuxVfs (file), mimetype, readStyle); 
+            return TagLib.File.Create (Provider.CreateDemuxVfs (file), mimetype, readStyle);
         }
-        
+
         public static TagLib.File OpenFile (string file)
         {
-            return TagLib.File.Create (Provider.CreateDemuxVfs (file)); 
+            return TagLib.File.Create (Provider.CreateDemuxVfs (file));
         }
     }
 }

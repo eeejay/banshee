@@ -72,7 +72,7 @@ namespace Banshee.Query.Gui
 
         public override QueryValue QueryValue {
             get { return query_value; }
-            set { 
+            set {
                 combo.Changed -= HandleValueChanged;
                 query_value = value as PlaylistQueryValue;
                 if (!query_value.IsEmpty) {

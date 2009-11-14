@@ -55,7 +55,7 @@ namespace Banshee.Podcasting.Gui
             ShadowType = ShadowType.None;
             HscrollbarPolicy = PolicyType.Never;
             VscrollbarPolicy = PolicyType.Automatic;
-            
+
             box = new VBox ();
             box.BorderWidth = 6;
             box.Spacing = 12;
@@ -64,15 +64,15 @@ namespace Banshee.Podcasting.Gui
             box.PackStart (author,      false, false, 0);
             box.PackStart (published,   false, false, 0);
             box.PackStart (description, true, true, 0);
-            
+
             AddWithViewport (box);
             ShowAll ();
         }
-        
+
         public void Initialize (TrackEditorDialog dialog)
         {
         }
-        
+
         public void LoadTrack (EditorTrackInfo track)
         {
             BorderWidth = 2;
@@ -100,23 +100,23 @@ namespace Banshee.Podcasting.Gui
                 GLib.Markup.EscapeText (info)
             );
         }
-        
+
         public int Order {
             get { return 40; }
         }
-        
+
         public string Title {
             get { return Catalog.GetString ("Episode Details"); }
         }
-        
-        public PageType PageType { 
+
+        public PageType PageType {
             get { return PageType.View; }
         }
-        
-        public Gtk.Widget TabWidget { 
+
+        public Gtk.Widget TabWidget {
             get { return null; }
         }
-        
+
         public Gtk.Widget Widget {
             get { return this; }
         }

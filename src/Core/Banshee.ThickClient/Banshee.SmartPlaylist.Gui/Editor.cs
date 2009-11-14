@@ -7,7 +7,7 @@ using Mono.Unix;
 
 using Hyena.Query;
 using Hyena.Query.Gui;
- 
+
 using Banshee.Base;
 using Banshee.Query;
 using Banshee.ServiceStack;
@@ -70,7 +70,7 @@ namespace Banshee.SmartPlaylist
                 currently_editing = playlist;
             }
         }
-    
+
         public Editor (PrimarySource primary_source) : base ("SmartPlaylistEditorDialog")
         {
             this.primary_source = primary_source;
@@ -119,7 +119,7 @@ namespace Banshee.SmartPlaylist
             }
 
             Update ();
-            
+
             name_entry.GrabFocus ();
         }
 
@@ -168,7 +168,7 @@ namespace Banshee.SmartPlaylist
                     if (c.Length > 0) {
                         if (i > 0)
                             condition += "OR";
-                        
+
                         condition += " (" + c  + ") ";
                     }
                 }

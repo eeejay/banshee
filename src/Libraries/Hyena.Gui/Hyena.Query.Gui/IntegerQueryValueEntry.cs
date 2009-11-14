@@ -50,7 +50,7 @@ namespace Hyena.Query.Gui
 
         public override QueryValue QueryValue {
             get { return query_value; }
-            set { 
+            set {
                 spin_button.ValueChanged -= HandleValueChanged;
                 query_value = value as IntegerQueryValue;
                 spin_button.SetRange (query_value.MinValue, query_value.MaxValue);

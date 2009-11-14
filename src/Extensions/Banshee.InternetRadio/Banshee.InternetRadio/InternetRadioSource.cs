@@ -51,15 +51,15 @@ namespace Banshee.InternetRadio
     {
         private InternetRadioSourceContents source_contents;
         private uint ui_id;
-        
+
         public InternetRadioSource () : base (Catalog.GetString ("Radio"), Catalog.GetString ("Radio"), "internet-radio", 220)
         {
             Properties.SetString ("Icon.Name", "radio");
             TypeUniqueId = "internet-radio";
             IsLocal = false;
-            
+
             AfterInitialized ();
-            
+
             InterfaceActionService uia_service = ServiceManager.Get<InterfaceActionService> ();
             uia_service.GlobalActions.AddImportant (
                 new ActionEntry ("AddRadioStationAction", Stock.Add,
@@ -67,19 +67,19 @@ namespace Banshee.InternetRadio
                     Catalog.GetString ("Add a new Internet Radio station or playlist"),
                     OnAddStation)
             );
-            
+
             ui_id = uia_service.UIManager.AddUiFromResource ("GlobalUI.xml");
-            
+
             Properties.SetString ("ActiveSourceUIResource", "ActiveSourceUI.xml");
             Properties.Set<bool> ("ActiveSourceUIResourcePropagate", true);
             Properties.Set<System.Reflection.Assembly> ("ActiveSourceUIResource.Assembly", typeof(InternetRadioSource).Assembly);
 
             Properties.SetString ("GtkActionPath", "/InternetRadioContextMenu");
-            
+
             source_contents = new InternetRadioSourceContents ();
             Properties.Set<bool> ("Nereid.SourceContentsPropagate", true);
             Properties.Set<ISourceContents> ("Nereid.SourceContents", source_contents);
-            
+
             Properties.SetString ("TrackEditorActionLabel", Catalog.GetString ("Edit Station"));
             Properties.Set<InvokeHandler> ("TrackEditorActionHandler", delegate {
                 ITrackModelSource active_track_model_source =
@@ -89,7 +89,7 @@ namespace Banshee.InternetRadio
                     active_track_model_source.TrackModel.SelectedItems.Count <= 0) {
                     return;
                 }
-                
+
                 foreach (TrackInfo track in active_track_model_source.TrackModel.SelectedItems) {
                     DatabaseTrackInfo station_track = track as DatabaseTrackInfo;
                     if (station_track != null) {
@@ -98,7 +98,7 @@ namespace Banshee.InternetRadio
                     }
                 }
             });
-            
+
             Properties.SetString ("TrackView.ColumnControllerXml", String.Format (@"
                 <column-controller>
                   <!--<column modify-default=""IndicatorColumn"">
@@ -136,16 +136,16 @@ namespace Banshee.InternetRadio
                 Catalog.GetString ("Creator"),
                 Catalog.GetString ("Description")
             ));
-            
+
             ServiceManager.PlayerEngine.TrackIntercept += OnPlayerEngineTrackIntercept;
             //ServiceManager.PlayerEngine.ConnectEvent (OnTrackInfoUpdated, Banshee.MediaEngine.PlayerEvent.TrackInfoUpdated);
-            
+
             TrackEqualHandler = delegate (DatabaseTrackInfo a, TrackInfo b) {
                 RadioTrackInfo radio_track = b as RadioTrackInfo;
                 return radio_track != null && DatabaseTrackInfo.TrackEqual (
                     radio_track.ParentTrack as DatabaseTrackInfo, a);
             };
-            
+
             if (new XspfMigrator (this).Migrate ()) {
                 Reload ();
             }
@@ -162,24 +162,24 @@ namespace Banshee.InternetRadio
 
             yield return genre_model;
         }
-        
+
         public override void Dispose ()
         {
             base.Dispose ();
 
             //ServiceManager.PlayerEngine.DisconnectEvent (OnTrackInfoUpdated);
-            
+
             InterfaceActionService uia_service = ServiceManager.Get<InterfaceActionService> ();
             if (uia_service == null) {
                 return;
             }
-            
+
             if (ui_id > 0) {
                 uia_service.UIManager.RemoveUi (ui_id);
                 uia_service.GlobalActions.Remove ("AddRadioStationAction");
-                ui_id = 0;    
+                ui_id = 0;
             }
-            
+
             ServiceManager.PlayerEngine.TrackIntercept -= OnPlayerEngineTrackIntercept;
         }
 
@@ -194,62 +194,62 @@ namespace Banshee.InternetRadio
                 Banshee.Metadata.MetadataService.Instance.Lookup (radio_track);
             }
         }*/
-        
+
         private bool OnPlayerEngineTrackIntercept (TrackInfo track)
         {
             DatabaseTrackInfo station = track as DatabaseTrackInfo;
             if (station == null || station.PrimarySource != this) {
                 return false;
             }
-            
+
             new RadioTrackInfo (station).Play ();
-            
+
             return true;
         }
-        
+
         private void OnAddStation (object o, EventArgs args)
         {
             EditStation (null);
         }
-        
+
         private void EditStation (DatabaseTrackInfo track)
         {
             StationEditor editor = new StationEditor (track);
             editor.Response += OnStationEditorResponse;
             editor.Show ();
         }
-        
+
         private void OnStationEditorResponse (object o, ResponseArgs args)
         {
             StationEditor editor = (StationEditor)o;
             bool destroy = true;
-            
+
             try {
                 if (args.ResponseId == ResponseType.Ok) {
                     DatabaseTrackInfo track = editor.Track ?? new DatabaseTrackInfo ();
                     track.PrimarySource = this;
                     track.IsLive = true;
-                
+
                     try {
                         track.Uri = new SafeUri (editor.StreamUri);
                     } catch {
                         destroy = false;
                         editor.ErrorMessage = Catalog.GetString ("Please provide a valid station URI");
                     }
-                    
+
                     if (!String.IsNullOrEmpty (editor.StationCreator)) {
                         track.ArtistName = editor.StationCreator;
-                    }    
-                    
+                    }
+
                     track.Comment = editor.Description;
-                    
+
                     if (!String.IsNullOrEmpty (editor.Genre)) {
                         track.Genre = editor.Genre;
                     } else {
                         destroy = false;
                         editor.ErrorMessage = Catalog.GetString ("Please provide a station genre");
                     }
-                    
+
                     if (!String.IsNullOrEmpty (editor.StationTitle)) {
                         track.TrackTitle = editor.StationTitle;
                         track.AlbumTitle = editor.StationTitle;
@@ -257,9 +257,9 @@ namespace Banshee.InternetRadio
                         destroy = false;
                         editor.ErrorMessage = Catalog.GetString ("Please provide a station title");
                     }
-                    
+
                     track.Rating = editor.Rating;
-                    
+
                     if (destroy) {
                         track.Save ();
                     }
@@ -272,13 +272,13 @@ namespace Banshee.InternetRadio
             }
         }
 
-        #region IBasicPlaybackController implementation 
-        
+        #region IBasicPlaybackController implementation
+
         public bool First ()
         {
             return false;
         }
-        
+
         public bool Next (bool restart)
         {
             RadioTrackInfo radio_track = ServiceManager.PlaybackController.CurrentTrack as RadioTrackInfo;
@@ -288,7 +288,7 @@ namespace Banshee.InternetRadio
                 return false;
             }
         }
-        
+
         public bool Previous (bool restart)
         {
             RadioTrackInfo radio_track = ServiceManager.PlaybackController.CurrentTrack as RadioTrackInfo;
@@ -298,14 +298,14 @@ namespace Banshee.InternetRadio
                 return false;
             }
         }
-        
-        #endregion 
+
+        #endregion
 
         public override bool AcceptsInputFromSource (Source source)
         {
             return false;
         }
-        
+
         public override bool CanDeleteTracks {
             get { return false; }
         }
@@ -313,15 +313,15 @@ namespace Banshee.InternetRadio
         public override bool ShowBrowser {
             get { return true; }
         }
-        
+
         public override bool CanRename {
             get { return false; }
         }
-        
+
         protected override bool HasArtistAlbum {
             get { return false; }
         }
-        
+
         public override bool HasViewableTrackProperties {
             get { return false; }
         }

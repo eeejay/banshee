@@ -91,11 +91,11 @@ namespace Lastfm
         NotEnoughMembers,
         NotEnoughFans,
         NotEnoughNeighbours,
-        
+
         Unknown // not an official code, just the fall back
     }
 
-    public class RadioConnection 
+    public class RadioConnection
     {
         public delegate void StateChangedHandler (RadioConnection connection, ConnectionStateChangedArgs args);
         public event StateChangedHandler StateChanged;
@@ -155,7 +155,7 @@ namespace Lastfm
                 State = ConnectionState.NoAccount;
                 return;
             }
-            
+
             if (LastfmCore.Account.SessionKey == null) {
                 State = ConnectionState.NotAuthorized;
                 return;
@@ -172,7 +172,7 @@ namespace Lastfm
 
         public bool Love    (string artist, string title) { return PostTrackRequest ("love", artist, title); }
         public bool Ban     (string artist, string title) { return PostTrackRequest ("ban", artist, title); }
-        
+
         public StationError ChangeStationTo (string station)
         {
             lock (this) {
@@ -180,7 +180,7 @@ namespace Lastfm
                     return StationError.None;
 
                 try {
-                    
+
                     LastfmRequest radio_tune = new LastfmRequest ("radio.tune", RequestType.Write, ResponseFormat.Json);
                     radio_tune.AddParameter ("station", station);
                     radio_tune.Send ();
@@ -198,7 +198,7 @@ namespace Lastfm
             }
         }
 
-        public Playlist LoadPlaylistFor (string station) 
+        public Playlist LoadPlaylistFor (string station)
         {
             lock (this) {
                 if (station != Station)

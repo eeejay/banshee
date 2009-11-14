@@ -47,15 +47,15 @@ namespace Banshee.Metadata
         private IBasicTrackInfo track;
         private List<StreamTag> tags = new List<StreamTag>();
         private IMetadataLookupJob current_job;
-        
+
         protected bool InternetConnected {
             get { return ServiceManager.Get<Network> ().Connected; }
         }
-        
+
         protected MetadataServiceJob()
         {
         }
-        
+
         public MetadataServiceJob(MetadataService service, IBasicTrackInfo track)
         {
             this.service = service;
@@ -71,7 +71,7 @@ namespace Banshee.Metadata
                 }
             }
         }
-    
+
         public virtual void Run()
         {
             foreach(IMetadataProvider provider in service.Providers) {
@@ -87,7 +87,7 @@ namespace Banshee.Metadata
 
                     if (cancelled)
                         break;;
-                    
+
                     foreach(StreamTag tag in current_job.ResultTags) {
                         AddTag(tag);
                     }
@@ -102,21 +102,21 @@ namespace Banshee.Metadata
                 }
             }
         }
-        
-        public virtual IBasicTrackInfo Track { 
+
+        public virtual IBasicTrackInfo Track {
             get { return track; }
             protected set { track = value; }
         }
-        
-        public virtual IList<StreamTag> ResultTags { 
+
+        public virtual IList<StreamTag> ResultTags {
             get { return tags; }
         }
-        
+
         protected void AddTag(StreamTag tag)
         {
             tags.Add(tag);
         }
-        
+
         protected HttpWebResponse GetHttpStream(Uri uri)
         {
             return GetHttpStream(uri, null);
@@ -127,15 +127,15 @@ namespace Banshee.Metadata
             if(!InternetConnected) {
                 throw new NetworkUnavailableException();
             }
-        
+
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri.AbsoluteUri);
             request.UserAgent = Banshee.Web.Browser.UserAgent;
             request.Timeout = 10 * 1000;
             request.KeepAlive = false;
             request.AllowAutoRedirect = true;
-            
+
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-            
+
             if(ignoreMimeTypes != null) {
                 string [] content_types = response.Headers.GetValues("Content-Type");
                 if(content_types != null) {
@@ -148,15 +148,15 @@ namespace Banshee.Metadata
                     }
                 }
             }
-            
+
             return response;
         }
-        
+
         protected bool SaveHttpStream(Uri uri, string path)
         {
             return SaveHttpStream(uri, path, null);
         }
-        
+
         protected bool SaveHttpStream(Uri uri, string path, string [] ignoreMimeTypes)
         {
             HttpWebResponse response = GetHttpStream(uri, ignoreMimeTypes);
@@ -169,12 +169,12 @@ namespace Banshee.Metadata
             }
 
             SaveAtomically (path, from_stream);
-            
+
             from_stream.Close ();
-                
+
             return true;
         }
-        
+
         protected bool SaveHttpStreamCover (Uri uri, string albumArtistId, string [] ignoreMimeTypes)
         {
             return SaveHttpStream (uri, CoverArtSpec.GetPath (albumArtistId), ignoreMimeTypes);
@@ -190,7 +190,7 @@ namespace Banshee.Metadata
             if (Banshee.IO.File.Exists (path_uri)) {
                 return;
             }
-            
+
             // Save the file to a temporary path while downloading/copying,
             // so that nobody sees it and thinks it's ready for use before it is
             SafeUri tmp_uri = new SafeUri (String.Format ("{0}.part", path));

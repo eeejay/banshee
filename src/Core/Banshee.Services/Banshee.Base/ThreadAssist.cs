@@ -38,20 +38,20 @@ namespace Banshee.Base
         public static Thread MainThread {
             get { return main_thread; }
         }
-        
+
         public static void InitializeMainThread ()
         {
             main_thread = Thread.CurrentThread;
             main_thread.Name = "Main Thread";
         }
-        
+
         public static bool InMainThread {
             get {
                 if (main_thread == null) {
                     throw new ApplicationException ("ThreadAssist.InitializeMainThread must be called first");
                 }
- 
-                return main_thread.Equals (Thread.CurrentThread); 
+
+                return main_thread.Equals (Thread.CurrentThread);
             }
         }
 
@@ -61,14 +61,14 @@ namespace Banshee.Base
                 Hyena.Log.Warning ("In GUI thread, will probably block it", System.Environment.StackTrace);
             }
         }
-        
+
         public static void AssertInMainThread ()
         {
             if (ApplicationContext.Debugging && !InMainThread) {
                 Hyena.Log.Warning ("Not in main thread!", System.Environment.StackTrace);
             }
         }
-        
+
         public static void ProxyToMain (InvokeHandler handler)
         {
             if (!InMainThread) {
@@ -86,7 +86,7 @@ namespace Banshee.Base
                 threadedMethod ();
             }
         }
-        
+
         public static Thread Spawn (ThreadStart threadedMethod, bool autoStart)
         {
             Thread thread = new Thread (threadedMethod);
@@ -97,7 +97,7 @@ namespace Banshee.Base
             }
             return thread;
         }
-        
+
         public static Thread Spawn (ThreadStart threadedMethod)
         {
             return Spawn (threadedMethod, true);

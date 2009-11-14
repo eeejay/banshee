@@ -38,7 +38,7 @@ namespace Banshee.Collection
     public class AlbumInfo : CacheableItem
     {
         public static readonly string UnknownAlbumTitle = Catalog.GetString ("Unknown Album");
-        
+
         private string title;
         private string title_sort;
         private string artist_name;
@@ -47,65 +47,65 @@ namespace Banshee.Collection
         private string artwork_id;
         private DateTime release_date = DateTime.MinValue;
         private string musicbrainz_id;
-        
+
         public AlbumInfo ()
         {
         }
-        
+
         public AlbumInfo (string title)
         {
             this.title = title;
         }
-        
+
         public virtual string ArtistName {
             get { return artist_name; }
             set { artist_name = value; }
         }
-        
+
         public virtual string ArtistNameSort {
             get { return artist_name_sort; }
             set { artist_name_sort = String.IsNullOrEmpty (value) ? null : value; }
         }
-        
+
         public virtual string Title {
             get { return title; }
             set { title = value; }
         }
-        
+
         public virtual string TitleSort {
             get { return title_sort; }
             set { title_sort = String.IsNullOrEmpty (value) ? null : value; }
         }
-        
+
         public virtual bool IsCompilation {
             get { return is_compilation; }
             set { is_compilation = value; }
         }
-        
+
         public virtual string MusicBrainzId {
             get { return musicbrainz_id; }
             set { musicbrainz_id = value; }
         }
-        
+
         public virtual DateTime ReleaseDate {
             get { return release_date; }
             set { release_date = value; }
         }
-        
+
         public virtual string ArtworkId {
-            get { 
+            get {
                 if (artwork_id == null) {
                     artwork_id = CoverArtSpec.CreateArtistAlbumId (ArtistName, Title);
                 }
-                
+
                 return artwork_id;
             }
         }
-        
+
         public string DisplayArtistName {
             get { return StringUtil.MaybeFallback (ArtistName, ArtistInfo.UnknownArtistName); }
         }
-        
+
         public string DisplayTitle {
             get { return StringUtil.MaybeFallback (Title, UnknownAlbumTitle); }
         }

@@ -38,16 +38,16 @@ namespace Hyena.Collections
         #pragma warning restore 0067
 
         private object sync = new object ();
-        
+
         private QueuePipelineElement<T> first_element;
         internal QueuePipelineElement<T> FirstElement {
             get { return first_element; }
         }
-        
+
         public QueuePipeline ()
         {
         }
-        
+
         public void AddElement (QueuePipelineElement<T> element)
         {
             element.Finished += OnElementFinished;
@@ -56,7 +56,7 @@ namespace Hyena.Collections
                     first_element = element;
                     return;
                 }
-            
+
                 QueuePipelineElement<T> current = first_element;
 
                 while (current != null) {
@@ -64,21 +64,21 @@ namespace Hyena.Collections
                         current.NextElement = element;
                         break;
                     }
-                    
+
                     current = current.NextElement;
                 }
             }
         }
-        
+
         public virtual void Enqueue (T item)
         {
             if (first_element == null) {
                 throw new InvalidOperationException ("There are no elements in this pipeline");
             }
-            
+
             first_element.Enqueue (item);
         }
-        
+
         public virtual void Cancel ()
         {
             if (first_element != null) {

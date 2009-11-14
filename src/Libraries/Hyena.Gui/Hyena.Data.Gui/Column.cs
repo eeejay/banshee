@@ -40,40 +40,40 @@ namespace Hyena.Data.Gui
     {
         private ColumnCell header_cell;
         private List<ColumnCell> cells = new List<ColumnCell> ();
-        
+
         private int min_width = 0;
         private int max_width = Int32.MaxValue;
-        
+
         public Column (ColumnDescription description) :
             this (description, new ColumnCellText (description.Property, true))
         {
         }
-        
+
         public Column (ColumnDescription description, ColumnCell cell) :
             this (description.Title, cell, description.Width, description.Visible)
         {
         }
-        
+
         public Column (string title, ColumnCell cell, double width)
             : this (title, cell, width, true)
         {
         }
-        
-        public Column (string title, ColumnCell cell, double width, bool visible) 
+
+        public Column (string title, ColumnCell cell, double width, bool visible)
             : this (null, title, cell, width, visible)
         {
         }
-        
+
         public Column (ColumnCell headerCell, string title, ColumnCell cell, double width)
             : this (headerCell, title, cell, width, true)
         {
         }
-        
+
         public Column (ColumnCell headerCell, string title, ColumnCell cell, double width, bool visible)
             : this (headerCell, title, cell, width, visible, 0, Int32.MaxValue)
         {
         }
-        
+
         public Column (ColumnCell headerCell, string title, ColumnCell cell, double width, bool visible, int minWidth, int maxWidth)
             : base (cell.Property, title, width, visible)
         {
@@ -89,47 +89,47 @@ namespace Hyena.Data.Gui
 
             PackStart (cell);
         }
-        
+
         private Column HeaderCellDataHandler ()
         {
             return this;
         }
-        
+
         public void PackStart (ColumnCell cell)
         {
             cells.Insert (0, cell);
         }
-        
+
         public void PackEnd (ColumnCell cell)
         {
             cells.Add (cell);
         }
-        
-        public ColumnCell GetCell (int index) 
+
+        public ColumnCell GetCell (int index)
         {
             return cells[index];
         }
-        
+
         public void RemoveCell (int index)
         {
             cells.RemoveAt (index);
         }
-        
+
         public void ClearCells ()
         {
             cells.Clear ();
         }
-        
+
         IEnumerator IEnumerable.GetEnumerator ()
         {
             return cells.GetEnumerator ();
         }
-        
+
         IEnumerator<ColumnCell> IEnumerable<ColumnCell>.GetEnumerator ()
         {
             return cells.GetEnumerator ();
         }
-        
+
         public ColumnCell HeaderCell {
             get { return header_cell; }
             set { header_cell = value; }
@@ -170,7 +170,7 @@ namespace Hyena.Data.Gui
                 }
             }
         }
-        
+
         public int MinWidth {
             get { return min_width; }
             set {
@@ -180,7 +180,7 @@ namespace Hyena.Data.Gui
                 }
             }
         }
-        
+
         public int MaxWidth {
             get { return max_width; }
             set {

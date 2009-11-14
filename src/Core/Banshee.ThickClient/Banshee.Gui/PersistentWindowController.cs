@@ -39,7 +39,7 @@ namespace Banshee.Gui
         Position = 2,
         All = Size | Position
     }
-    
+
     public class PersistentWindowController
     {
         private Gtk.Window window;
@@ -110,7 +110,7 @@ namespace Banshee.Gui
             if ((options & WindowPersistOptions.Size) != 0) {
                 int width = WidthSchema.Get ();
                 int height = HeightSchema.Get ();
-                
+
                 if (width != 0 && height != 0) {
                     window.Resize (width, height);
                 }
@@ -119,7 +119,7 @@ namespace Banshee.Gui
             if ((options & WindowPersistOptions.Position) != 0) {
                 int x = XPosSchema.Get ();
                 int y = YPosSchema.Get ();
-                
+
                 if (x == 0 && y == 0) {
                     window.SetPosition (Gtk.WindowPosition.Center);
                 } else {
@@ -155,7 +155,7 @@ namespace Banshee.Gui
                 pending_changes = true;
             }
         }
-        
+
         private bool OnTimeout ()
         {
             if (pending_changes) {
@@ -175,7 +175,7 @@ namespace Banshee.Gui
                 MaximizedSchema.Set (true);
                 return;
             }
-            
+
             if (x < 0 || y < 0 || width <= 0 || height <= 0) {
                  return;
             }

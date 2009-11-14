@@ -37,11 +37,11 @@ namespace Banshee.Preferences
     public class Collection<T> : Root, IList<T> where T : Root
     {
         private List<T> list = new List<T> ();
-        
+
         public Collection ()
         {
         }
-        
+
         public T Add (T item)
         {
             lock (this) {
@@ -53,18 +53,18 @@ namespace Banshee.Preferences
                 return item;
             }
         }
-        
+
         public T FindOrAdd (T item)
         {
             lock (this) {
                 return FindById (item.Id) ?? Add (item);
             }
         }
-        
+
         public T this[string id] {
             get { return FindById (id); }
         }
-        
+
         public T FindById (string id)
         {
             lock (this) {
@@ -73,7 +73,7 @@ namespace Banshee.Preferences
                         return item;
                     }
                 }
-                
+
                 return null;
             }
         }
@@ -99,16 +99,16 @@ namespace Banshee.Preferences
                 }
             }
         }
-        
+
 #endregion
-        
+
 #region IList
 
         void IList<T>.Insert (int index, T item)
         {
             list.Insert (index, item);
         }
-        
+
         void IList<T>.RemoveAt (int index)
         {
             list.RemoveAt (index);
@@ -125,31 +125,31 @@ namespace Banshee.Preferences
         }
 
 #endregion
-        
+
 #region ICollection
 
         void ICollection<T>.Add (T item)
         {
             list.Add (item);
         }
-        
+
         public bool Remove (T item)
         {
             lock (this) {
                 return list.Remove (item);
             }
         }
-        
+
         void ICollection<T>.Clear ()
         {
             list.Clear ();
         }
-        
+
         bool ICollection<T>.Contains (T item)
         {
             return list.Contains (item);
         }
-        
+
         void ICollection<T>.CopyTo (T [] array, int arrayIndex)
         {
             list.CopyTo (array, arrayIndex);
@@ -158,7 +158,7 @@ namespace Banshee.Preferences
         public int Count {
             get { lock (this) { return list.Count; } }
         }
-        
+
         bool ICollection<T>.IsReadOnly {
             get { return ((ICollection<T>)list).IsReadOnly; }
         }
@@ -171,7 +171,7 @@ namespace Banshee.Preferences
         {
             return list.GetEnumerator ();
         }
-        
+
         IEnumerator IEnumerable.GetEnumerator ()
         {
             return GetEnumerator ();

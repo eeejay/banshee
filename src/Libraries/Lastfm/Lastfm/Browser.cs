@@ -33,13 +33,13 @@ namespace Lastfm
     public static class Browser
     {
         public delegate bool OpenHandler (string uri);
-        
+
         private static OpenHandler open_handler = DefaultOpen;
         public static OpenHandler Open {
             get { return open_handler; }
             set { open_handler = value; }
         }
-        
+
         private static bool DefaultOpen (string uri)
         {
             return false;

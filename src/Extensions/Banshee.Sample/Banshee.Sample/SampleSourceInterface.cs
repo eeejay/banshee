@@ -41,38 +41,38 @@ using Banshee.Sources.Gui;
 namespace Banshee.Sample
 {
     public class SampleSourceInterface : VBox, ISourceContents
-    {   
+    {
         private SampleSource source;
-        
+
         public SampleSourceInterface (SampleSource source)
         {
             this.source = source;
-            
+
             Button button = new Button ("Waiting...");
             button.Show ();
-            
+
             PackStart (button, true, true, 0);
-            
+
             ServiceManager.PlayerEngine.TrackIntercept += delegate (TrackInfo track) {
                 if (System.IO.Path.GetExtension (track.Uri.LocalPath) != ".wmv") {
                     // We don't care about non wmv URIs, so let the engine take care of it
                     return false;
                 }
-                
+
                 // Stop the engine if playing
                 ServiceManager.PlayerEngine.Close ();
-                
+
                 // Update our UI and switch to our source
                 button.Label = track.ToString ();
                 ServiceManager.SourceManager.SetActiveSource (source);
-                
+
                 // Tell the engine that we've handled this track
                 return true;
             };
         }
-        
+
 #region ISourceContents
-        
+
         public bool SetSource (ISource src)
         {
             return source is SampleSource;
@@ -89,7 +89,7 @@ namespace Banshee.Sample
         public Widget Widget {
             get { return this; }
         }
-        
+
 #endregion
 
     }

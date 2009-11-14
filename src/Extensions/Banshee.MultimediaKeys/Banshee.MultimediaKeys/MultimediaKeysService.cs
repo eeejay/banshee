@@ -43,7 +43,7 @@ namespace Banshee.MultimediaKeys
     {
         private const string BusName = "org.gnome.SettingsDaemon";
         private const string ObjectPath = "/org/gnome/SettingsDaemon";
-        
+
         private delegate void MediaPlayerKeyPressedHandler (string application, string key);
 
         // GNOME 2.20
@@ -54,7 +54,7 @@ namespace Banshee.MultimediaKeys
             void ReleaseMediaPlayerKeys (string application);
             event MediaPlayerKeyPressedHandler MediaPlayerKeyPressed;
         }
-        
+
         // GNOME 2.22
         [Interface ("org.gnome.SettingsDaemon.MediaKeys")]
         private interface ISettingsDaemon222
@@ -63,23 +63,23 @@ namespace Banshee.MultimediaKeys
             void ReleaseMediaPlayerKeys (string application);
             event MediaPlayerKeyPressedHandler MediaPlayerKeyPressed;
         }
-        
+
         private ISettingsDaemon222 settings_daemon_222;
         private ISettingsDaemon220 settings_daemon_220;
-    
+
         public MultimediaKeysService ()
         {
         }
-        
+
         void IExtensionService.Initialize ()
         {
             // It's a common theme in GNOME for APIs to change every 6 months
-            // We are essentially an ISV, and actually care about backwards 
+            // We are essentially an ISV, and actually care about backwards
             // compatibility! Therefore, fall back to the interface for GNOME 2.20
             // if the GNOME 2.22 interface cannot be found.
             //
             // Additionally, there is a design limitation in Managed DBus that restricts
-            // it from flattening/following managed interfaces, therefore we must 
+            // it from flattening/following managed interfaces, therefore we must
             // explicitly handle two different GSD objects as if they had nothing in
             // common at this point. This at least will be fixed in Managed DBus.
             //
@@ -89,28 +89,28 @@ namespace Banshee.MultimediaKeys
             //    [Interface ("org.gnome.SettingsDaemon")] interface IGsd220 : IGsdBase { }
             //    [Interface ("org.gnome.SettingsDaemon.MediaKeys")] interface IGsd222 : IGsdBase { }
             //
-            //    IGsdBase gsd = bus.GetObject<IGsd222> (name, path_222) 
-            //    if (gsd == null) 
+            //    IGsdBase gsd = bus.GetObject<IGsd222> (name, path_222)
+            //    if (gsd == null)
             //        gsd = bus.GetObject<IGsd220> (name, path_220)
             //    gsd.Foo ();
             //
-            
+
             try {
-                settings_daemon_222 = Bus.Session.GetObject<ISettingsDaemon222> (BusName, 
+                settings_daemon_222 = Bus.Session.GetObject<ISettingsDaemon222> (BusName,
                     new ObjectPath (ObjectPath + "/MediaKeys"));
                 settings_daemon_222.GrabMediaPlayerKeys (Application.InternalName, 0);
                 settings_daemon_222.MediaPlayerKeyPressed += OnMediaPlayerKeyPressed;
-                
+
                 Log.Debug ("Using GNOME 2.22 API for Multimedia Keys");
             } catch {
                 settings_daemon_222 = null;
-                
+
                 try {
-                    settings_daemon_220 = Bus.Session.GetObject<ISettingsDaemon220> (BusName, 
+                    settings_daemon_220 = Bus.Session.GetObject<ISettingsDaemon220> (BusName,
                         new ObjectPath (ObjectPath));
                     settings_daemon_220.GrabMediaPlayerKeys (Application.InternalName, 0);
                     settings_daemon_220.MediaPlayerKeyPressed += OnMediaPlayerKeyPressed;
-                
+
                     Log.Debug ("Using GNOME 2.20 API for Multimedia keys");
                 } catch {
                     settings_daemon_220 = null;
@@ -118,7 +118,7 @@ namespace Banshee.MultimediaKeys
                 }
             }
         }
-  
+
         public void Dispose ()
         {
             if (settings_daemon_222 != null) {
@@ -126,20 +126,20 @@ namespace Banshee.MultimediaKeys
                 settings_daemon_222.ReleaseMediaPlayerKeys (Application.InternalName);
                 settings_daemon_222 = null;
             }
-            
+
             if (settings_daemon_220 != null) {
                 settings_daemon_220.MediaPlayerKeyPressed -= OnMediaPlayerKeyPressed;
                 settings_daemon_220.ReleaseMediaPlayerKeys (Application.InternalName);
                 settings_daemon_220 = null;
             }
         }
-        
+
         private void OnMediaPlayerKeyPressed (string application, string key)
         {
             if (application != Application.InternalName) {
                 return;
             }
-            
+
             switch (key) {
                 case "Play":
                     ServiceManager.PlayerEngine.TogglePlaying ();
@@ -155,7 +155,7 @@ namespace Banshee.MultimediaKeys
                     break;
             }
         }
-        
+
         string IService.ServiceName {
             get { return "MultimediaKeysService"; }
         }

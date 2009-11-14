@@ -75,7 +75,7 @@ namespace Hyena.Query.Gui
             Alignment matchesAlignment = new Alignment (0.0f, 0.0f, 1.0f, 1.0f);
             matchesAlignment.SetPadding (5, 5, 5, 5);
             matchesAlignment.Add (terms_box);
-        
+
             matchesFrame = new Frame (null);
             matchesFrame.Add (matchesAlignment);
             matchesFrame.LabelWidget = BuildMatchHeader ();
@@ -100,27 +100,27 @@ namespace Hyena.Query.Gui
         {
             HBox header = new HBox ();
             header.Show ();
-            
+
             terms_enabled_checkbox = new CheckButton (Catalog.GetString ("_Match"));
             terms_enabled_checkbox.Show ();
             terms_enabled_checkbox.Active = true;
             terms_enabled_checkbox.Toggled += OnMatchCheckBoxToggled;
             header.PackStart (terms_enabled_checkbox, false, false, 0);
-            
+
             terms_logic_combo = ComboBox.NewText ();
             terms_logic_combo.AppendText (Catalog.GetString ("all"));
             terms_logic_combo.AppendText (Catalog.GetString ("any"));
             terms_logic_combo.Show ();
             terms_logic_combo.Active = 0;
             header.PackStart (terms_logic_combo, false, false, 0);
-            
+
             terms_label = new Label (Catalog.GetString ("of the following:"));
             terms_label.Show ();
             terms_label.Xalign = 0.0f;
             header.PackStart (terms_label, true, true, 0);
-            
+
             header.Spacing = 5;
-            
+
             return header;
         }
 

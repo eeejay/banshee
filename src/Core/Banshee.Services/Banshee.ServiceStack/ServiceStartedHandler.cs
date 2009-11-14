@@ -1,4 +1,4 @@
-// 
+//
 // ServiceStartedHandler.cs
 //
 // Author:
@@ -31,16 +31,16 @@ using System;
 namespace Banshee.ServiceStack
 {
     public delegate void ServiceStartedHandler (ServiceStartedArgs args);
-    
+
     public class ServiceStartedArgs : EventArgs
     {
         private IService service;
-        
+
         public ServiceStartedArgs (IService service)
         {
             this.service = service;
         }
-        
+
         public IService Service {
             get { return service; }
         }

@@ -34,7 +34,7 @@ using Banshee.Web;
 namespace Banshee.Podcasting
 {
     public class ItmsPodcast
-    {  
+    {
         private string itms_uri;
         private string feed_url;
         private string xml;
@@ -44,7 +44,7 @@ namespace Banshee.Podcasting
             Fetch (itmsUri, 2);
 
             feed_url = GetString ("feedURL");
-            
+
             // <key>podcastName</key>
             // <string>This Week in Django - MP3 Edition</string>
         }

@@ -67,7 +67,7 @@ namespace Banshee.Metadata
         public bool RenameEnabled { get; set; }
 
         private HyenaSqliteCommand update_synced_at;
-    
+
         protected override void IterateCore (HyenaDataReader reader)
         {
             DatabaseTrackInfo track = DatabaseTrackInfo.Provider.Load (reader.Reader);

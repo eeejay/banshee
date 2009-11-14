@@ -50,26 +50,26 @@ namespace Migo.Syndication
         private bool disposed;
         private readonly object sync = new object ();
         private ManualResetEvent download_handle;
-        
-        public event EventHandler<TaskEventArgs<HttpFileDownloadTask>> EnclosureDownloadCompleted;   
-    
+
+        public event EventHandler<TaskEventArgs<HttpFileDownloadTask>> EnclosureDownloadCompleted;
+
         public EnclosureManager (DownloadManager downloadManager)
         {
             download_manager = downloadManager;
             download_manager.Tasks.TaskAdded += OnDownloadTaskAdded;
-            download_manager.Tasks.TaskRemoved += OnDownloadTaskRemoved;            
+            download_manager.Tasks.TaskRemoved += OnDownloadTaskRemoved;
             download_manager.Group.TaskStatusChanged += OnDownloadTaskStatusChangedHandler;
 
             queued_downloads = new Dictionary<FeedEnclosure, HttpFileDownloadTask> ();
-            
+
             download_handle = new ManualResetEvent (true);
         }
-        
+
         public void Dispose (AutoResetEvent disposeHandle)
         {
-            
+
             disposed = true;
-            
+
             List<HttpFileDownloadTask> tasks = null;
 
             lock (sync) {
@@ -85,124 +85,124 @@ namespace Migo.Syndication
 
                 download_handle.WaitOne ();
             }
-            
+
             if (download_handle != null) {
                 download_handle.Close ();
                 download_handle = null;
-            }                   
-            
+            }
+
             if (download_manager != null) {
                 download_manager.Tasks.TaskAdded -= OnDownloadTaskAdded;
-                download_manager.Tasks.TaskRemoved -= OnDownloadTaskRemoved; 
+                download_manager.Tasks.TaskRemoved -= OnDownloadTaskRemoved;
                 download_manager = null;
-            }  
+            }
         }
 
-        public HttpFileDownloadTask QueueDownload (FeedEnclosure enclosure) 
+        public HttpFileDownloadTask QueueDownload (FeedEnclosure enclosure)
         {
-            return QueueDownload (enclosure, true);         
+            return QueueDownload (enclosure, true);
         }
-           
+
         public HttpFileDownloadTask QueueDownload (FeedEnclosure enclosure, bool queue)
         {
             if (enclosure == null) {
                 throw new ArgumentNullException ("enc");
             }
-            
-            HttpFileDownloadTask task = null;       
-            
+
+            HttpFileDownloadTask task = null;
+
             lock (sync) {
                 if (disposed) {
                     return null;
                 }
-                
-                if (!queued_downloads.ContainsKey (enclosure)) {                    
-                    Feed parentFeed = enclosure.Item.Feed;                    
-                    
-                    if (parentFeed != null) {                        
+
+                if (!queued_downloads.ContainsKey (enclosure)) {
+                    Feed parentFeed = enclosure.Item.Feed;
+
+                    if (parentFeed != null) {
                         task = download_manager.CreateDownloadTask (enclosure.Url, enclosure);
                         //Console.WriteLine ("Task DL path:  {0}", task.LocalPath);
                         task.Name = String.Format ("{0} - {1}", parentFeed.Title, enclosure.Item.Title);
-                        
+
                         //task.StatusChanged
-                        task.Completed += OnDownloadTaskCompletedHandler;                    
-                        
+                        task.Completed += OnDownloadTaskCompletedHandler;
+
                         // Race condition...
-                        // Should only be added when the task is associated or 
+                        // Should only be added when the task is associated or
                         // it can be canceled before it is added to the progress manager.
-                        
-                        // Add a pre-association dict and move tasks to the 
+
+                        // Add a pre-association dict and move tasks to the
                         // queued dict once they've been offically added.
-                        
+
                         queued_downloads.Add (enclosure, task);
-                    }                    
+                    }
                 }
 
                 if (task != null && queue) {
                     download_manager.QueueDownload (task);
                 }
             }
-                       
-            return task;        
+
+            return task;
         }
-        
+
         public IEnumerable<HttpFileDownloadTask> QueueDownloads (IEnumerable<FeedEnclosure> encs)
         {
             if (encs == null) {
                 throw new ArgumentNullException ("encs");
             }
-            
+
             ICollection<HttpFileDownloadTask> encsCol = encs as ICollection<HttpFileDownloadTask>;
-            
+
             List<HttpFileDownloadTask> tasks = (encsCol == null) ?
-                new List<HttpFileDownloadTask> () : 
+                new List<HttpFileDownloadTask> () :
                 new List<HttpFileDownloadTask> (encsCol.Count);
-            
+
             HttpFileDownloadTask tmpTask = null;
-            
-            lock (sync) {   
+
+            lock (sync) {
                 if (disposed) {
                     return tasks;
                 }
-                
+
                 foreach (FeedEnclosure enc in encs) {
                     tmpTask = QueueDownload (enc, false);
                     if (tmpTask != null) {
                         tasks.Add (tmpTask);
-                    }    
+                    }
                 }
-                
+
                 if (tasks.Count > 0) {
                     download_manager.QueueDownload (tasks);
                 }
             }
-            
+
             return tasks;
         }
-       
+
         public void CancelDownload (FeedEnclosure enc)
         {
             lock (sync) {
-                HttpFileDownloadTask task = FindDownloadTask (enc);            
-                        
+                HttpFileDownloadTask task = FindDownloadTask (enc);
+
                 if (task != null) {
-                    // Look into multi-cancel later      
+                    // Look into multi-cancel later
                     task.CancelAsync ();
-                }            
+                }
             }
         }
-        
+
         public void StopDownload (FeedEnclosure enc)
-        {   
+        {
             lock (sync) {
-                HttpFileDownloadTask task = FindDownloadTask (enc);            
-                        
+                HttpFileDownloadTask task = FindDownloadTask (enc);
+
                 if (task != null) {
                     task.Stop ();
-                }   
+                }
             }
-        }  
-        
+        }
+
         /*private void OnFeedItemRemoved (Feed feed, FeedItem item)
         {
             if (feed == null) {
@@ -211,23 +211,23 @@ namespace Migo.Syndication
                 throw new ArgumentNullException ("item");
             }
 
-            EventHandler<FeedItemEventArgs> handler = FeedItemRemoved;            
-            
+            EventHandler<FeedItemEventArgs> handler = FeedItemRemoved;
+
             if (item.Enclosure != null) {
                 lock (sync) {
-                    HttpFileDownloadTask task;                
-                         
+                    HttpFileDownloadTask task;
+
                     if (queued_downloads.TryGetValue ((FeedEnclosure)item.Enclosure, out task)) {
                         task.CancelAsync ();
                     }
                 }
-            }            
-            
+            }
+
             if (handler != null) {
                 OnFeedItemEvent (handler, new FeedItemEventArgs (feed, item));
-            }                 
+            }
         }
-        
+
         private void OnFeedItemsRemoved (Feed feed, IEnumerable<FeedItem> items)
         {
             if (feed == null) {
@@ -235,94 +235,94 @@ namespace Migo.Syndication
             } else if (items == null) {
                 throw new ArgumentNullException ("items");
             }
-            
+
             EventHandler<FeedItemEventArgs> handler = FeedItemRemoved;
 
             lock (sync) {
-                HttpFileDownloadTask task;  
-                
-                foreach (FeedItem item in items) {                
-                    if (item.Enclosure != null) {                    
+                HttpFileDownloadTask task;
+
+                foreach (FeedItem item in items) {
+                    if (item.Enclosure != null) {
                         if (queued_downloads.TryGetValue ((FeedEnclosure)item.Enclosure, out task)) {
                             task.CancelAsync ();
                         }
                     }
                 }
             }
-            
+
             if (handler != null) {
                 OnFeedItemEvent (handler, new FeedItemEventArgs (feed, items));
-            }               
+            }
         } */
-        
+
         private HttpFileDownloadTask FindDownloadTask (FeedEnclosure enc)
         {
             if (enc == null) {
                 throw new ArgumentNullException ("enc");
             }
-            
+
             return FindDownloadTaskImpl ((FeedEnclosure)enc);
         }
-        
-        private HttpFileDownloadTask FindDownloadTaskImpl (FeedEnclosure enc) 
+
+        private HttpFileDownloadTask FindDownloadTaskImpl (FeedEnclosure enc)
         {
             HttpFileDownloadTask task = null;
-            Feed parentFeed = enc.Item.Feed as Feed;                               
-            
+            Feed parentFeed = enc.Item.Feed as Feed;
+
             if (parentFeed != null && queued_downloads.ContainsKey (enc)) {
                 task = queued_downloads[enc];
             }
-            
+
             return task;
-        }     
-        
+        }
+
         private void TaskAddedAction (HttpFileDownloadTask task)
         {
             Feed parentFeed = null;
             FeedEnclosure enc = task.UserState as FeedEnclosure;
-                    
+
             if (enc != null) {
-                lock (sync) { 
-                    parentFeed = enc.Item.Feed;                  
-                    
+                lock (sync) {
+                    parentFeed = enc.Item.Feed;
+
                     if (parentFeed != null && queued_downloads.ContainsKey (enc)) {
                         if (queued_downloads.Count == 0) {
                             download_handle.Reset ();
-                        }                        
+                        }
 
-                        enc.DownloadStatus = FeedDownloadStatus.Pending;                       
-                        //parentFeed.IncrementQueuedDownloadCount ();                    
+                        enc.DownloadStatus = FeedDownloadStatus.Pending;
+                        //parentFeed.IncrementQueuedDownloadCount ();
                     }
                 }
-            }        
+            }
         }
-        
+
         private void OnDownloadTaskAdded (object sender, TaskAddedEventArgs<HttpFileDownloadTask> e)
         {
             if (e.Task != null) {
                 TaskAddedAction (e.Task);
             } else if (e.Tasks != null) {
                 foreach (HttpFileDownloadTask task in e.Tasks) {
-                    TaskAddedAction (task);                                    
+                    TaskAddedAction (task);
                 }
             }
         }
-        
+
         private void OnDownloadTaskCompletedHandler (object sender, TaskCompletedEventArgs args)
         {
             HttpFileDownloadTask task = sender as HttpFileDownloadTask;
             FeedEnclosure enc = task.UserState as FeedEnclosure;
 
-            if (enc != null) {   
+            if (enc != null) {
                 if (args.Error != null || task.Status == TaskStatus.Failed) {
                     enc.DownloadStatus = FeedDownloadStatus.DownloadFailed;
                 } else if (!args.Cancelled) {
                     if (task.Status == TaskStatus.Succeeded) {
-                        try {                        
+                        try {
                             enc.SetFileImpl (
-                                task.RemoteUri.ToString (), 
-                                Path.GetDirectoryName (task.LocalPath), 
-                                task.MimeType, 
+                                task.RemoteUri.ToString (),
+                                Path.GetDirectoryName (task.LocalPath),
+                                task.MimeType,
                                 Path.GetFileName (task.LocalPath)
                             );
                         } catch (Exception e) {
@@ -334,35 +334,35 @@ namespace Migo.Syndication
                     }
                 }
             }
-            
-            OnEnclosureDownloadCompleted (task);            
+
+            OnEnclosureDownloadCompleted (task);
         }
-        
+
         private void OnEnclosureDownloadCompleted (HttpFileDownloadTask task)
         {
             /*EventHandler<TaskEventArgs<HttpFileDownloadTask>> handler = EnclosureDownloadCompleted;
-        
+
             if (handler != null) {
                 AsyncCommandQueue<ICommand> cmdQCpy = command_queue;
-                
+
                 if (cmdQCpy != null) {
                     cmdQCpy.Register (new EventWrapper<TaskEventArgs<HttpFileDownloadTask>> (
                 	    handler, this, new TaskEventArgs<HttpFileDownloadTask> (task))
                 	);
-                }        
-            }   */                      
-        }  
-        
+                }
+            }   */
+        }
+
         private void DownloadTaskRemoved (FeedEnclosure enc, HttpFileDownloadTask task, bool decQueuedCount)
         {
             if (queued_downloads.ContainsKey (enc)) {
-                queued_downloads.Remove (enc);    
-                task.Completed -= OnDownloadTaskCompletedHandler;                                            
-                
+                queued_downloads.Remove (enc);
+                task.Completed -= OnDownloadTaskCompletedHandler;
+
                 if (decQueuedCount) {
                     //enc.Item.Feed.DecrementQueuedDownloadCount ();
                 }
-                
+
                 if (queued_downloads.Count == 0) {
                 	if (download_handle != null) {
                 	    download_handle.Set ();
@@ -370,12 +370,12 @@ namespace Migo.Syndication
                 }
             }
         }
-        
+
         private void OnDownloadTaskRemoved (object sender, TaskRemovedEventArgs<HttpFileDownloadTask> e)
         {
             if (e.Task != null) {
                 FeedEnclosure enc = e.Task.UserState as FeedEnclosure;
-                    
+
                 if (enc != null) {
                     lock (sync) {
                         DownloadTaskRemoved (enc, e.Task, true);
@@ -385,48 +385,48 @@ namespace Migo.Syndication
                 Feed tmpParent = null;
                 FeedEnclosure tmpEnclosure = null;
                 List<FeedEnclosure> tmpList = null;
-                
+
                 Dictionary<Feed, List<FeedEnclosure>> feedDict =
                     new Dictionary<Feed,List<FeedEnclosure>> ();
-                
+
                 lock (sync) {
                     foreach (HttpFileDownloadTask t in e.Tasks) {
                         tmpEnclosure = t.UserState as FeedEnclosure;
-                        
+
                         if (tmpEnclosure != null) {
                             tmpParent = tmpEnclosure.Item.Feed;
-                            
+
                             if (!feedDict.TryGetValue (tmpParent, out tmpList)) {
                                 tmpList = new List<FeedEnclosure> ();
-                                feedDict.Add (tmpParent, tmpList);  
+                                feedDict.Add (tmpParent, tmpList);
                             }
-                            
+
                             tmpList.Add (tmpEnclosure);
                             DownloadTaskRemoved (tmpEnclosure, t, false);
                         }
                     }
-                    
+
                     //foreach (KeyValuePair<Feed,List<FeedEnclosure>> kvp in feedDict) {
                         //kvp.Key.DecrementQueuedDownloadCount (kvp.Value.Count);
                     //}
                 }
-            }                       
-        }        
+            }
+        }
 
         private void TaskStatusChanged (TaskStatusChangedInfo statusInfo)
         {
             HttpFileDownloadTask task = statusInfo.Task as HttpFileDownloadTask;
-            
+
             if (task == null) {
                 return;
             }
-            
+
             FeedEnclosure enc = task.UserState as FeedEnclosure;
-            
+
             if (enc == null) {
                 return;
             }
-               
+
             switch (statusInfo.NewStatus) {
             case TaskStatus.Stopped:
             case TaskStatus.Cancelled:
@@ -435,7 +435,7 @@ namespace Migo.Syndication
             case TaskStatus.Failed:
                 enc.DownloadStatus = FeedDownloadStatus.DownloadFailed;
                 break;
-            case TaskStatus.Paused: 
+            case TaskStatus.Paused:
                 enc.DownloadStatus = FeedDownloadStatus.Paused;
                 break;
             case TaskStatus.Ready:
@@ -443,16 +443,16 @@ namespace Migo.Syndication
                 break;
             case TaskStatus.Running:
                 enc.DownloadStatus = FeedDownloadStatus.Downloading;
-                //enc.Item.Feed.IncrementActiveDownloadCount ();                    
+                //enc.Item.Feed.IncrementActiveDownloadCount ();
                 break;
             case TaskStatus.Succeeded:
                 break;
             }
-            
+
             FeedsManager.Instance.FeedManager.OnItemChanged (enc.Item);
 
             if (statusInfo.OldStatus == TaskStatus.Running) {
-                //enc.Item.Feed.DecrementActiveDownloadCount ();                    
+                //enc.Item.Feed.DecrementActiveDownloadCount ();
             }
         }
 
@@ -465,9 +465,9 @@ namespace Migo.Syndication
             } else {
                 lock (sync) {
                     foreach (TaskStatusChangedInfo statusInfo in e.StatusesChanged) {
-                        TaskStatusChanged (statusInfo);                        
+                        TaskStatusChanged (statusInfo);
                     }
-                }                
+                }
             }
         }
     }

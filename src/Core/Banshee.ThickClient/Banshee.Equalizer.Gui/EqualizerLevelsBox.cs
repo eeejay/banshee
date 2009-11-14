@@ -40,7 +40,7 @@ namespace Banshee.Equalizer.Gui
             for (int i = 0; i < levels.Length && i < 3; i++) {
                 Label label = CreateLabel (levels[i]);
                 switch (i) {
-                    case 0: 
+                    case 0:
                         label.Yalign = 0.05f;
                          break;
                     case 1:
@@ -51,11 +51,11 @@ namespace Banshee.Equalizer.Gui
                         label.Yalign = 0.95f;
                         break;
                 }
-                
+
                 PackStart (label, true, true, 0);
             }
         }
-        
+
         private Label CreateLabel (string value)
         {
             Label label = new Label ();

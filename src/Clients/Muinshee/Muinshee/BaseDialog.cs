@@ -58,13 +58,13 @@ namespace Muinshee
         {
             this.queue = queue;
             VBox.Spacing = 6;
-            
+
             HBox filter_box = new HBox ();
             filter_box.Spacing = 6;
-            
+
             Label search_label = new Label ("_Search:");
             filter_box.PackStart (search_label, false, false, 0);
-            
+
             search_entry = new SearchEntry ();
             search_entry.Show ();
             search_entry.Changed += OnFilterChanged;
@@ -79,7 +79,7 @@ namespace Muinshee
             VBox.PackStart (sw, true, true, 0);
 
             AddDefaultCloseButton ();
-            
+
             Button queue_button = new ImageButton (Catalog.GetString ("En_queue"), "stock_timer");
             AddActionWidget (queue_button, Gtk.ResponseType.Apply);
 
@@ -123,7 +123,7 @@ namespace Muinshee
                 }
             }
         }
-        
+
         protected abstract void Queue ();
         protected abstract Widget GetItemWidget ();
         protected abstract TrackInfo FirstTrack { get; }
@@ -131,7 +131,7 @@ namespace Muinshee
         protected PlaylistSource QueueSource { get { return queue; } }
 
         protected static Banshee.Library.MusicLibrarySource Music { get { return ServiceManager.SourceManager.MusicLibrary; } }
-        
+
         public override void Destroy ()
         {
             OnFilterChanged (null, null);

@@ -69,7 +69,7 @@ namespace Banshee.Playlist
         protected override string TrackJoinTable {
             get { return "CorePlaylistEntries"; }
         }
-        
+
         protected long MaxViewOrder {
             get {
                 return ServiceManager.DbConnection.Query<long> (
@@ -77,7 +77,7 @@ namespace Banshee.Playlist
             }
         }
 
-        static PlaylistSource () 
+        static PlaylistSource ()
         {
             add_track_range_command = new HyenaSqliteCommand (@"
                 INSERT INTO CorePlaylistEntries
@@ -145,7 +145,7 @@ namespace Banshee.Playlist
                 //(source.Parent == Parent || Parent == null || (source.Parent == null && !(source is PrimarySource)))
             );
         }
-        
+
         public override SourceMergeType SupportedMergeTypes {
             get { return SourceMergeType.All; }
         }
@@ -238,12 +238,12 @@ namespace Banshee.Playlist
             ServiceManager.DbConnection.Execute (add_track_command, DbId, track_id, MaxViewOrder);
             OnTracksAdded ();
         }
-        
+
         protected override void AddTrack (DatabaseTrackInfo track)
         {
             AddTrack (track.TrackId);
         }
-        
+
         public override bool AddSelectedTracks (Source source)
         {
             if (Parent == null || source == Parent || source.Parent == Parent) {
@@ -257,28 +257,28 @@ namespace Banshee.Playlist
             }
             return false;
         }
-        
+
         public virtual void ReorderSelectedTracks (int drop_row)
         {
             if (TrackModel.Selection.Count == 0 || TrackModel.Selection.AllSelected) {
                 return;
             }
-            
+
             TrackInfo track = TrackModel[drop_row];
             long order = track == null
                 ? ServiceManager.DbConnection.Query<long> ("SELECT MAX(ViewOrder) + 1 FROM CorePlaylistEntries WHERE PlaylistID = ?", DbId)
                 : ServiceManager.DbConnection.Query<long> ("SELECT ViewOrder FROM CorePlaylistEntries WHERE PlaylistID = ? AND EntryID = ?", DbId, Convert.ToInt64 (track.CacheEntryId));
-            
+
             // Make room for our new items
             if (track != null) {
                 ServiceManager.DbConnection.Execute ("UPDATE CorePlaylistEntries SET ViewOrder = ViewOrder + ? WHERE PlaylistID = ? AND ViewOrder >= ?",
                     TrackModel.Selection.Count, DbId, order
                 );
             }
-            
+
             HyenaSqliteCommand update_command = new HyenaSqliteCommand (String.Format ("UPDATE CorePlaylistEntries SET ViewOrder = ? WHERE PlaylistID = {0} AND EntryID = ?", DbId));
             HyenaSqliteCommand select_command = new HyenaSqliteCommand (String.Format ("SELECT ItemID FROM CoreCache WHERE ModelID = {0} LIMIT ?, ?", DatabaseTrackModel.CacheId));
-            
+
             // Reorder the selected items
             ServiceManager.DbConnection.BeginTransaction ();
             foreach (RangeCollection.Range range in TrackModel.Selection.Ranges) {
@@ -287,7 +287,7 @@ namespace Banshee.Playlist
                 }
             }
             ServiceManager.DbConnection.CommitTransaction ();
-            
+
             Reload ();
         }
 
@@ -347,7 +347,7 @@ namespace Banshee.Playlist
         {
             ClearTemporary ();
             using (HyenaDataReader reader = new HyenaDataReader (ServiceManager.DbConnection.Query (
-                @"SELECT PlaylistID, Name, SortColumn, SortType, PrimarySourceID, CachedCount, IsTemporary FROM CorePlaylists 
+                @"SELECT PlaylistID, Name, SortColumn, SortType, PrimarySourceID, CachedCount, IsTemporary FROM CorePlaylists
                     WHERE Special = 0 AND PrimarySourceID = ?", parent.DbId))) {
                 while (reader.Read ()) {
                     yield return new PlaylistSource (
@@ -372,24 +372,24 @@ namespace Banshee.Playlist
                 ServiceManager.DbConnection.CommitTransaction ();
             }
         }
-        
+
         private static int GetPlaylistId (string name)
         {
             return ServiceManager.DbConnection.Query<int> (
                 "SELECT PlaylistID FROM Playlists WHERE Name = ? LIMIT 1", name
             );
         }
-        
+
         private static bool PlaylistExists (string name)
         {
             return GetPlaylistId (name) > 0;
         }
-        
-        public static string CreateUniqueName () 
+
+        public static string CreateUniqueName ()
         {
             return NamingUtil.PostfixDuplicate (Catalog.GetString ("New Playlist"), PlaylistExists);
         }
-        
+
         public static string CreateUniqueName (IEnumerable tracks)
         {
             return NamingUtil.PostfixDuplicate (NamingUtil.GenerateTrackCollectionName (

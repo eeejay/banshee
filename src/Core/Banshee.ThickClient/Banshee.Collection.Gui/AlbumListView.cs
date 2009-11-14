@@ -45,12 +45,12 @@ namespace Banshee.Collection.Gui
             ColumnCellAlbum renderer = new ColumnCellAlbum ();
             column_controller.Add (new Column ("Album", renderer, 1.0));
             ColumnController = column_controller;
-            
+
             RowHeightProvider = renderer.ComputeRowHeight;
 
             ServiceManager.PlayerEngine.ConnectEvent (OnPlayerEvent, PlayerEvent.TrackInfoUpdated);
         }
-        
+
         private void OnPlayerEvent (PlayerEventArgs args)
         {
             // TODO: a) Figure out if the track that changed is actually in view

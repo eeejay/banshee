@@ -87,7 +87,7 @@ namespace Hyena
         // License: MIT/X11
         // Authors: Gonzalo Paniagua Javier <gonzalo@ximian.com>
         // (C) 2005-2006 Novell, Inc <http://www.novell.com>
-        
+
         private static int TranslateColor (ConsoleColor desired, out bool light)
         {
             light = false;
@@ -113,7 +113,7 @@ namespace Hyena
                 case ConsoleColor.White: default: light = true; return 7;
             }
         }
-        
+
         private static string GetAnsiColorControlCode (ConsoleColor color, bool isForeground)
         {
             // lighter fg colours are 90 -> 97 rather than 30 -> 37
@@ -133,7 +133,7 @@ namespace Hyena
 #region xterm Detection
 
         private static bool? xterm_colors = null;
-        public static bool XtermColors { 
+        public static bool XtermColors {
             get {
                 if (xterm_colors == null) {
                     DetectXtermColors ();
@@ -145,7 +145,7 @@ namespace Hyena
 
         [System.Runtime.InteropServices.DllImport ("libc", EntryPoint="isatty")]
         private extern static int _isatty (int fd);
-            
+
         private static bool isatty (int fd)
         {
             try {
@@ -158,11 +158,11 @@ namespace Hyena
         private static void DetectXtermColors ()
         {
             bool _xterm_colors = false;
-                
+
             switch (Environment.GetEnvironmentVariable ("TERM")) {
                 case "xterm":
                 case "rxvt":
-                case "rxvt-unicode": 
+                case "rxvt-unicode":
                     if (Environment.GetEnvironmentVariable ("COLORTERM") != null) {
                         _xterm_colors = true;
                     }
@@ -181,7 +181,7 @@ namespace Hyena
 
         private static bool? runtime_is_mono;
         public static bool RuntimeIsMono {
-            get { 
+            get {
                 if (runtime_is_mono == null) {
                     runtime_is_mono = Type.GetType ("System.MonoType") != null;
                 }

@@ -18,10 +18,10 @@
 // distribute, sublicense, and/or sell copies of the Software, and to
 // permit persons to whom the Software is furnished to do so, subject to
 // the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be
 // included in all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 // MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -34,7 +34,7 @@
 /********************************************************
  * ADO.NET 2.0 Data Provider for Sqlite Version 3.X
  * Written by Robert Simpson (robert@blackcastlesoft.com)
- * 
+ *
  * Released to the public domain, use at your own risk!
  ********************************************************/
 #if NET_2_0
@@ -48,7 +48,7 @@ namespace Mono.Data.Sqlite
   using System.Globalization;
   using System.Text;
 
-#if !PLATFORM_COMPACTFRAMEWORK 
+#if !PLATFORM_COMPACTFRAMEWORK
   using System.ComponentModel.Design;
 #endif
 
@@ -136,7 +136,7 @@ namespace Mono.Data.Sqlite
     private static string[] _datetimeFormats = new string[] {
       "yyyy-MM-dd HH:mm:ss.fffffff",
       "yyyy-MM-dd HH:mm:ss",
-      "yyyy-MM-dd HH:mm",                               
+      "yyyy-MM-dd HH:mm",
       "yyyyMMddHHmmss",
       "yyyyMMddHHmm",
       "yyyyMMddTHHmmssfffffff",
@@ -225,7 +225,7 @@ namespace Mono.Data.Sqlite
     {
       if (nativestring == IntPtr.Zero)
         return null;
-    
+
       // This assumes a single byte terminates the string.
 
       int len = 0;
@@ -237,7 +237,7 @@ namespace Mono.Data.Sqlite
         len = s.Length;
         while (len > 0 && s [len-1] == 0)
           --len;
-        if (len == s.Length) 
+        if (len == s.Length)
           return s;
         return s.Substring (0, len);
       }

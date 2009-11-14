@@ -40,16 +40,16 @@ namespace Banshee.Collection.Gui
     public class TerseTrackListView : BaseTrackListView
     {
         private ColumnController column_controller;
-        
+
         public TerseTrackListView () : base ()
         {
             column_controller = new ColumnController ();
 
             ColumnCellTrack renderer = new ColumnCellTrack ();
             column_controller.Add (new Column ("Track", renderer, 1.0));
-            
+
             ColumnController = column_controller;
-            
+
             RowHeightProvider = renderer.ComputeRowHeight;
             HeaderVisible = false;
         }

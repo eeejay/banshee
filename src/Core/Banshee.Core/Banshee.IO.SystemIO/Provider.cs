@@ -32,7 +32,7 @@ namespace Banshee.IO.SystemIO
 {
     public class Provider : Banshee.IO.IProvider
     {
-    	public Type FileProvider { 
+    	public Type FileProvider {
     	    get { return typeof (File); }
     	}
 

@@ -35,17 +35,17 @@ using Mono.Unix;
 
 using Banshee.Base;
 using Banshee.Sources;
- 
+
 namespace Banshee.Playlists.Formats
 {
     // REFERENCE: http://msdn2.microsoft.com/en-us/library/ms925291.aspx
-    
+
     public class AsxPlaylistFormat : PlaylistFormatBase
     {
         public static readonly PlaylistFormatDescription FormatDescription = new PlaylistFormatDescription(
             typeof(AsxPlaylistFormat), MagicHandler, Catalog.GetString("Windows Media ASX (*.asx)"),
             "asx", new string [] {"video/x-ms-asx", "video/asx", "video/x-ms-asf"});
-        
+
         public static bool MagicHandler(StreamReader reader)
         {
             try {
@@ -56,51 +56,51 @@ namespace Banshee.Playlists.Formats
                 return false;
             }
         }
-        
+
         private static bool CheckAsxHeader(XmlTextReader xml_reader)
         {
             xml_reader.Read();
             if(xml_reader.NodeType == XmlNodeType.XmlDeclaration) {
                 xml_reader.Read();
             }
-                
-            return xml_reader.Depth == 0 && xml_reader.NodeType == XmlNodeType.Element 
+
+            return xml_reader.Depth == 0 && xml_reader.NodeType == XmlNodeType.Element
                 && String.Compare("asx", xml_reader.LocalName, true) == 0;
         }
-        
+
         public AsxPlaylistFormat()
         {
         }
-        
+
         public override void Load(StreamReader reader, bool validateHeader)
         {
             XmlTextReader xml_reader = new XmlTextReader(reader);
             xml_reader.WhitespaceHandling = WhitespaceHandling.None;
             xml_reader.EntityHandling = EntityHandling.ExpandCharEntities;
-            
+
             if(!CheckAsxHeader(xml_reader)) {
                 throw new InvalidPlaylistException();
             }
-            
+
             while(xml_reader.Read()) {
                 if(xml_reader.NodeType != XmlNodeType.Element || xml_reader.Depth != 1
                     || String.Compare(xml_reader.LocalName, "entry", true) != 0) {
                     continue;
                 }
-                
+
                 Dictionary<string, object> element = AddElement();
-                
+
                 do {
                     try {
                         xml_reader.Read();
                     } catch {
                         xml_reader.Skip();
                     }
-                    
+
                     if(xml_reader.NodeType != XmlNodeType.Element) {
                         continue;
                     }
-                    
+
                     switch(xml_reader.LocalName.ToLower()) {
                         case "title":
                             xml_reader.Read();
@@ -122,10 +122,10 @@ namespace Banshee.Playlists.Formats
                             }
                             break;
                     }
-                } while(!xml_reader.EOF && xml_reader.Depth > 1); 
+                } while(!xml_reader.EOF && xml_reader.Depth > 1);
             }
         }
-        
+
         public override void Save(Stream stream, ITrackModelSource source)
         {
             throw new NotImplementedException();

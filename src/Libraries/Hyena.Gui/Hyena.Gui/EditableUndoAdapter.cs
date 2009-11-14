@@ -50,7 +50,7 @@ namespace Hyena.Gui
                 populate_popup_handler = new PopulatePopupHandler (OnPopulatePopup);
             }
         }
-        
+
         public void Connect ()
         {
             editable.KeyPressEvent += OnKeyPressEvent;
@@ -58,7 +58,7 @@ namespace Hyena.Gui
             editable.TextInserted += OnTextInserted;
             TogglePopupConnection (true);
         }
-        
+
         public void Disconnect ()
         {
             editable.KeyPressEvent -= OnKeyPressEvent;
@@ -66,7 +66,7 @@ namespace Hyena.Gui
             editable.TextInserted -= OnTextInserted;
             TogglePopupConnection (false);
         }
-        
+
         private void TogglePopupConnection (bool connect)
         {
             // Ugh, stupid Gtk+/Gtk# and lack of interfaces
@@ -124,8 +124,8 @@ namespace Hyena.Gui
             item = new ImageMenuItem (Stock.Redo, null);
             item.Sensitive = undo_manager.CanRedo;
             item.Activated += delegate { undo_manager.Redo (); };
-            item.AddAccelerator ("activate", accel_group, (uint)Gdk.Key.z, 
-                Gdk.ModifierType.ControlMask | Gdk.ModifierType.ShiftMask, 
+            item.AddAccelerator ("activate", accel_group, (uint)Gdk.Key.z,
+                Gdk.ModifierType.ControlMask | Gdk.ModifierType.ShiftMask,
                 AccelFlags.Visible);
             item.Show ();
             menu.Prepend (item);
@@ -133,12 +133,12 @@ namespace Hyena.Gui
             item = new ImageMenuItem (Stock.Undo, null);
             item.Sensitive = undo_manager.CanUndo;
             item.Activated += delegate { undo_manager.Undo (); };
-            item.AddAccelerator ("activate", accel_group, (uint)Gdk.Key.z, 
+            item.AddAccelerator ("activate", accel_group, (uint)Gdk.Key.z,
                 Gdk.ModifierType.ControlMask, AccelFlags.Visible);
             item.Show ();
             menu.Prepend (item);
         }
-        
+
         public UndoManager UndoManager {
             get { return undo_manager; }
         }

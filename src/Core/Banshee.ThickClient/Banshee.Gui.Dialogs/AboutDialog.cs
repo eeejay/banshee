@@ -27,7 +27,7 @@
 //
 
 #pragma warning disable 0618
- 
+
 using System;
 using System.Text;
 using System.Collections.Generic;
@@ -50,27 +50,27 @@ namespace Banshee.Gui.Dialogs
         public AboutDialog() : base()
         {
             // build authors page
-            List<string> authors = new List<string> ();            
+            List<string> authors = new List<string> ();
             authors.Add (Catalog.GetString ("Primary Development"));
             authors.Add (String.Empty);
-            
+
             foreach (ProductAuthor author in ProductInformation.Authors) {
                 authors.Add (String.Format("    {0} ({1})", author.Name, author.Role));
             }
-            
+
             authors.Add (String.Empty);
             authors.Add (Catalog.GetString("Contributors"));
             authors.Add (String.Empty);
-            
+
             foreach (string author in ProductInformation.Contributors) {
                 authors.Add (String.Format("    {0}", author));
             }
-            
+
             authors.Add (String.Empty);
-            
+
             // build translators page
             StringBuilder translation_credits = new StringBuilder ();
-            
+
             foreach (ProductTranslation translation in ProductInformation.Translations) {
                 translation_credits.Append (String.Format ("{0}\n", translation.LanguageName));
                 foreach (string person in translation.Translators) {
@@ -78,35 +78,35 @@ namespace Banshee.Gui.Dialogs
                 }
                 translation_credits.Append ("\n");
             }
-            
+
             SetUrlHook (delegate (Gtk.AboutDialog dialog, string link) {
                 Banshee.Web.Browser.Open (link);
             });
-            
+
             // TODO: We should really use ProgramName in the future rather
             // than plain Name, since it's been depreciated. We can't do that
-            // yet though since it breaks stuff for other people. 
+            // yet though since it breaks stuff for other people.
             Name = "Banshee";
             Logo = Gdk.Pixbuf.LoadFromResource (ApplicationContext.Debugging ? /*"jcastro.png"*/ "banshee-logo.png" : "banshee-logo.png");
-            Version = Banshee.ServiceStack.Application.DisplayVersion == Banshee.ServiceStack.Application.Version 
+            Version = Banshee.ServiceStack.Application.DisplayVersion == Banshee.ServiceStack.Application.Version
                 ? Banshee.ServiceStack.Application.DisplayVersion
-                : String.Format ("{0} ({1})", 
-                    Banshee.ServiceStack.Application.DisplayVersion, 
+                : String.Format ("{0} ({1})",
+                    Banshee.ServiceStack.Application.DisplayVersion,
                     Banshee.ServiceStack.Application.Version);
             Comments = Catalog.GetString ("Extraordinary Multimedia Management and Playback");
             Copyright = String.Format (Catalog.GetString (
-                "Copyright \u00a9 2005\u2013{0} Novell, Inc.\n" + 
+                "Copyright \u00a9 2005\u2013{0} Novell, Inc.\n" +
                 "Copyright \u00a9 2005\u2013{0} Others\n" +
                 "Copyright \u00a9 2005 Aaron Bockover"
             ), "2009");
-            
+
             Website = "http://banshee-project.org/";
             WebsiteLabel = Catalog.GetString ("Banshee Website");
 
             Authors = authors.ToArray ();
             Artists = ProductInformation.Artists;
             TranslatorCredits = translation_credits.ToString ();
-            
+
             License = ProductInformation.License;
             WrapLicense = true;
             Response += OnResponse;

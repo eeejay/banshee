@@ -38,7 +38,7 @@ namespace Banshee.Base
         {
             return GetFileContents (Assembly.GetCallingAssembly (), name);
         }
-        
+
         public static string GetFileContents (Assembly assembly, string name)
         {
             using (StreamReader reader = new StreamReader (assembly.GetManifestResourceStream (name))) {

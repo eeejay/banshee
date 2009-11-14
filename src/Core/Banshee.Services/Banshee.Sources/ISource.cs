@@ -40,14 +40,14 @@ namespace Banshee.Sources
         void Activate();
         void Deactivate();
         void Rename(string name);
-        
+
         string Name { get; }
         string GenericName { get; }
         int Order { get; }
         int Count { get; }
-        
+
         string [] Children { get; }
-        
+
         // DBus Hack
         string TrackModelPath { get; }
 

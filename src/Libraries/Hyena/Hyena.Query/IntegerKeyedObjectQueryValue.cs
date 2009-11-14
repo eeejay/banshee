@@ -33,7 +33,7 @@ namespace Hyena.Query
     public abstract class IntegerKeyedObjectQueryValue<T> : IntegerQueryValue where T : class
     {
         private T object_value;
-        
+
         public override void SetValue (long value)
         {
             object_value = null;
@@ -48,7 +48,7 @@ namespace Hyena.Query
                 return object_value;
             }
         }
-        
+
         protected abstract T Resolve ();
     }
 }

@@ -44,7 +44,7 @@ using Banshee.SmartPlaylist;
 using Banshee.Query;
 
 namespace Banshee.Dap
-{ 
+{
     public sealed class DapLibrarySync
     {
         private DapSync sync;
@@ -55,13 +55,13 @@ namespace Banshee.Dap
         private SchemaPreference<bool> enabled_pref;
         private SmartPlaylistSource sync_src, to_add, to_remove;
         private Section library_prefs_section;
-        
+
         #region Public Properties
 
         public bool Enabled {
             get { return sync.Enabled && enabled.Get (); }
         }
-        
+
         public bool SyncEntireLibrary {
             get { return sync_entire_library.Get (); }
         }
@@ -73,13 +73,13 @@ namespace Banshee.Dap
         public LibrarySource Library {
             get { return library; }
         }
-        
+
         #endregion
-        
+
         public string [] SyncPlaylistIds {
             get { return playlist_ids.Get (); }
         }
-        
+
         private IList<AbstractPlaylistSource> GetSyncPlaylists ()
         {
             List<AbstractPlaylistSource> playlists = new List<AbstractPlaylistSource> ();
@@ -94,7 +94,7 @@ namespace Banshee.Dap
         internal string SmartPlaylistId {
             get { return sync_src.DbId.ToString (); }
         }
-        
+
         internal DapLibrarySync (DapSync sync, LibrarySource library)
         {
             this.sync = sync;
@@ -119,13 +119,13 @@ namespace Banshee.Dap
         private void BuildPreferences ()
         {
             conf_ns = String.Format ("{0}.{1}", sync.ConfigurationNamespace, library.ParentConfigurationId);
-            
+
             enabled = sync.Dap.CreateSchema<bool> (conf_ns, "enabled", true,
                 String.Format (Catalog.GetString ("Sync {0}"), library.Name), "");
-            
+
             sync_entire_library = sync.Dap.CreateSchema<bool> (conf_ns, "sync_entire_library", true,
                 "Whether to sync the entire library and all playlists.", "");
-            
+
             playlist_ids = sync.Dap.CreateSchema<string[]> (conf_ns, "playlist_ids", new string [0],
                 "If sync_entire_library is false, this contains a list of playlist ids specifically to sync", "");
 
@@ -160,13 +160,13 @@ namespace Banshee.Dap
             to_remove.Save ();
             to_remove.AddCondition (library.AttributesCondition);
             to_remove.AddCondition (String.Format (
-                @"MetadataHash NOT IN (SELECT MetadataHash FROM CoreTracks, CoreSmartPlaylistEntries 
+                @"MetadataHash NOT IN (SELECT MetadataHash FROM CoreTracks, CoreSmartPlaylistEntries
                     WHERE CoreSmartPlaylistEntries.SmartPlaylistID = {0} AND
                         CoreTracks.TrackID = CoreSmartPlaylistEntries.TrackID)",
                 sync_src.DbId
             ));
         }
-        
+
         internal void CalculateSync ()
         {
             if (SyncEntireLibrary) {
@@ -195,7 +195,7 @@ namespace Banshee.Dap
             return String.Format ("Sync calculated for {1}: to add: {0} items, remove {2} items; sync_src.cacheid = {5}, to_add.cacheid = {3}, to_remove.cacheid = {4}", to_add.Count, library.Name, to_remove.Count,
                                   to_add.DatabaseTrackModel.CacheId, to_remove.DatabaseTrackModel.CacheId, sync_src.DatabaseTrackModel.CacheId);
         }
-        
+
         internal void Sync ()
         {
             if (Enabled) {
@@ -220,7 +220,7 @@ namespace Banshee.Dap
                         ServiceManager.DbConnection.Execute (
                             String.Format (
                                 @"INSERT INTO CorePlaylistEntries (PlaylistID, TrackID)
-                                    SELECT ?, TrackID FROM CoreTracks WHERE PrimarySourceID = ? AND MetadataHash IN 
+                                    SELECT ?, TrackID FROM CoreTracks WHERE PrimarySourceID = ? AND MetadataHash IN
                                         (SELECT MetadataHash FROM {0} WHERE {1})",
                                 from.DatabaseTrackModel.ConditionFromFragment, from.DatabaseTrackModel.Condition),
                             to.DbId, sync.Dap.DbId

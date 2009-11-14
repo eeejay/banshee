@@ -1,4 +1,4 @@
-// 
+//
 // UserJobEventHandler.cs
 //
 // Author:
@@ -31,16 +31,16 @@ using System;
 namespace Banshee.ServiceStack
 {
     public delegate void UserJobEventHandler (object o, UserJobEventArgs args);
-    
+
     public class UserJobEventArgs : EventArgs
     {
         private IUserJob user_job;
-        
+
         public UserJobEventArgs (IUserJob job)
         {
             this.user_job = job;
         }
-        
+
         public IUserJob Job {
             get { return user_job; }
         }

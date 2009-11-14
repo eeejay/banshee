@@ -35,7 +35,7 @@ namespace Banshee.Hardware
     {
         event DeviceAddedHandler DeviceAdded;
         event DeviceRemovedHandler DeviceRemoved;
-    
+
         IEnumerable<IDevice> GetAllDevices ();
         IEnumerable<IBlockDevice> GetAllBlockDevices ();
         IEnumerable<ICdromDevice> GetAllCdromDevices ();
@@ -44,30 +44,30 @@ namespace Banshee.Hardware
 
     public delegate void DeviceAddedHandler (object o, DeviceAddedArgs args);
     public delegate void DeviceRemovedHandler (object o, DeviceRemovedArgs args);
-    
+
     public sealed class DeviceAddedArgs : EventArgs
     {
         private IDevice device;
-        
+
         public DeviceAddedArgs (IDevice device)
         {
             this.device = device;
         }
-        
+
         public IDevice Device {
             get { return device; }
         }
     }
-    
+
     public sealed class DeviceRemovedArgs : EventArgs
     {
         private string device_uuid;
-        
+
         public DeviceRemovedArgs (string deviceUuid)
         {
             this.device_uuid = deviceUuid;
         }
-        
+
         public string DeviceUuid {
             get { return device_uuid; }
         }

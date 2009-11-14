@@ -37,7 +37,7 @@ namespace Banshee.Gui.TrackEditor
             add { ValueChanged += value; }
             remove { ValueChanged -= value; }
         }
-        
+
         public SpinButtonEntry (double min, double max, double step) : base (min, max, step)
         {
         }

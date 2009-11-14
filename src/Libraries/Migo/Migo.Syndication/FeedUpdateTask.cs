@@ -5,27 +5,27 @@
  *  Written by Mike Urbanski <michael.c.urbanski@gmail.com>
  ****************************************************************************/
 
-/*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW: 
+/*  THIS FILE IS LICENSED UNDER THE MIT LICENSE AS OUTLINED IMMEDIATELY BELOW:
  *
  *  Permission is hereby granted, free of charge, to any person obtaining a
- *  copy of this software and associated documentation files (the "Software"),  
- *  to deal in the Software without restriction, including without limitation  
- *  the rights to use, copy, modify, merge, publish, distribute, sublicense,  
- *  and/or sell copies of the Software, and to permit persons to whom the  
+ *  copy of this software and associated documentation files (the "Software"),
+ *  to deal in the Software without restriction, including without limitation
+ *  the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ *  and/or sell copies of the Software, and to permit persons to whom the
  *  Software is furnished to do so, subject to the following conditions:
  *
- *  The above copyright notice and this permission notice shall be included in 
+ *  The above copyright notice and this permission notice shall be included in
  *  all copies or substantial portions of the Software.
  *
- *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
- *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
- *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
- *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
- *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
- *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+ *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ *  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  *  DEALINGS IN THE SOFTWARE.
  */
- 
+
 using System;
 using System.Threading;
 using System.ComponentModel;
@@ -71,7 +71,7 @@ namespace Migo.Syndication
 
             this.feed = feed;
             this.Name = feed.Link;
-            
+
             feed.DownloadStatus = FeedDownloadStatus.Pending;
         }
 
@@ -80,11 +80,11 @@ namespace Migo.Syndication
 #region Public Methods
 
         public override void CancelAsync ()
-        { 
+        {
             lock (SyncRoot) {
                 if (!completed) {
                     cancelled = true;
-    
+
                     if (wc != null) {
                         wc.CancelAsync ();
                     }
@@ -93,18 +93,18 @@ namespace Migo.Syndication
                 }
             }
         }
-    
+
         public void Dispose ()
         {
             lock (SyncRoot) {
                 if (!disposed) {
                     if (mre != null) {
                         mre.Close ();
-                        mre = null;                    
+                        mre = null;
                     }
-                    
+
                     disposed = true;
-                }   
+                }
             }
         }
 
@@ -112,35 +112,35 @@ namespace Migo.Syndication
         {
             lock (SyncRoot) {
                 SetStatus (TaskStatus.Running);
-                
+
                 if (mre != null) {
-                    mre.Reset ();                    
-                }          
+                    mre.Reset ();
+                }
             }
-            
-            try {                                                                       
-                wc = new AsyncWebClient ();                  
-                wc.Timeout = (30 * 1000); // 30 Seconds  
+
+            try {
+                wc = new AsyncWebClient ();
+                wc.Timeout = (30 * 1000); // 30 Seconds
                 if (feed.LastDownloadTime != DateTime.MinValue) {
                     wc.IfModifiedSince = feed.LastDownloadTime.ToUniversalTime ();
                 }
                 wc.DownloadStringCompleted += OnDownloadDataReceived;
-                
+
                 feed.DownloadStatus = FeedDownloadStatus.Downloading;
                 wc.DownloadStringAsync (new Uri (feed.Url));
             } catch (Exception e) {
                 if (wc != null) {
                     wc.DownloadStringCompleted -= OnDownloadDataReceived;
                 }
-                
+
                 EmitCompletionEvents (FeedDownloadError.DownloadFailed);
                 Log.Exception (e);
             }
         }
-        
+
 #endregion
 
-        private void OnDownloadDataReceived (object sender, Migo.Net.DownloadStringCompletedEventArgs args) 
+        private void OnDownloadDataReceived (object sender, Migo.Net.DownloadStringCompletedEventArgs args)
         {
             bool notify_on_save = true;
             lock (SyncRoot) {
@@ -149,7 +149,7 @@ namespace Migo.Syndication
 
                 wc.DownloadStringCompleted -= OnDownloadDataReceived;
                 FeedDownloadError error;
-                
+
                 WebException we = args.Error as WebException;
                 if (we == null) {
                      try {
@@ -171,36 +171,36 @@ namespace Migo.Syndication
                         case HttpStatusCode.NotFound:
                         case HttpStatusCode.Gone:
                             error = FeedDownloadError.DoesNotExist;
-                            break;                                
+                            break;
                         case HttpStatusCode.NotModified:
                             notify_on_save = false;
                             error = FeedDownloadError.None;
                             break;
                         case HttpStatusCode.Unauthorized:
                             error = FeedDownloadError.UnsupportedAuth;
-                            break;                                
+                            break;
                         default:
                             error = FeedDownloadError.DownloadFailed;
                             break;
                         }
                     }
                 }
-                
+
                 feed.LastDownloadError = error;
                 if (error == FeedDownloadError.None) {
                     feed.LastDownloadTime = DateTime.Now;
                 }
-                    
+
                 feed.Save (notify_on_save);
-                
+
                 EmitCompletionEvents (error);
                 completed = true;
             }
         }
-        
+
         private void EmitCompletionEvents (FeedDownloadError err)
         {
-            switch (err) {                
+            switch (err) {
                 case FeedDownloadError.None:
                     SetStatus (TaskStatus.Succeeded);
                     feed.DownloadStatus = FeedDownloadStatus.Downloaded;
@@ -218,8 +218,8 @@ namespace Migo.Syndication
             OnTaskCompleted (null, (Status == TaskStatus.Cancelled));
 
             if (mre != null) {
-                mre.Set ();   
-            }                 
+                mre.Set ();
+            }
         }
 	}
 }

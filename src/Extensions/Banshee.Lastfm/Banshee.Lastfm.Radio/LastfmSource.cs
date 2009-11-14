@@ -49,7 +49,7 @@ using Banshee.Sources.Gui;
 using Browser = Lastfm.Browser;
 
 namespace Banshee.Lastfm.Radio
-{   
+{
     public class LastfmSource : Source, IDisposable
     {
         private const string lastfm = "Last.fm";
@@ -84,9 +84,9 @@ namespace Banshee.Lastfm.Radio
             if (LastfmCore.UserAgent == null) {
                 LastfmCore.UserAgent = Banshee.Web.Browser.UserAgent;
             }
-            
+
             Browser.Open = Banshee.Web.Browser.Open;
-            
+
             connection = LastfmCore.Radio;
             Network network = ServiceManager.Get<Network> ();
             connection.UpdateNetworkState (network.Connected);
@@ -124,7 +124,7 @@ namespace Banshee.Lastfm.Radio
             Connection.Dispose ();
             UninstallPreferences ();
             actions.Dispose ();
-            
+
             actions = null;
             connection = null;
             account = null;
@@ -135,7 +135,7 @@ namespace Banshee.Lastfm.Radio
             if (!isFile || String.IsNullOrEmpty (uri)) {
                 return;
             }
-            
+
             // Handle lastfm:// URIs
             if (uri.StartsWith ("lastfm://")) {
                 StationSource.CreateFromUrl (this, uri);
@@ -160,15 +160,15 @@ namespace Banshee.Lastfm.Radio
                 Catalog.GetString ("Total Play Count"),
                 SortType.Descending, new PlayCountComparer ())
         };
-        
+
         public override SourceSortType[] ChildSortTypes {
             get { return sort_types; }
         }
-        
+
         public override SourceSortType DefaultChildSort {
             get { return SortNameAscending; }
         }
-        
+
         private string last_username;
         private bool last_was_subscriber = false;
         public void SetUserName (string username)
@@ -221,12 +221,12 @@ namespace Banshee.Lastfm.Radio
         {
             bool have_user = Account.UserName != null;
             bool have_session_key = Account.SessionKey != null;
-            
+
             if (have_session_key) {
                 LastSessionKeySchema.Set (Account.SessionKey);
                 LastIsSubscriberSchema.Set (Account.Subscriber);
             }
-            
+
             if (have_user) {
                 SetUserName (Account.UserName);
             } else {

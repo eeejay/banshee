@@ -23,48 +23,48 @@ namespace Banshee.Playlist
         public PlaylistImportCanceledException (string message) : base (message)
         {
         }
-        
+
         public PlaylistImportCanceledException () : base ()
         {
         }
     }
-    
+
     public static class PlaylistFileUtil
-    {        
+    {
         public static readonly SchemaEntry<string> DefaultExportFormat = new SchemaEntry<string> (
             "player_window", "default_export_format",
             String.Empty,
             "Export Format",
             "The default playlist export format"
         );
-        
+
         private static PlaylistFormatDescription [] export_formats = new PlaylistFormatDescription [] {
             M3uPlaylistFormat.FormatDescription,
             PlsPlaylistFormat.FormatDescription,
             XspfPlaylistFormat.FormatDescription
         };
-        
+
         public static readonly string [] PlaylistExtensions = new string [] {
             M3uPlaylistFormat.FormatDescription.FileExtension,
             PlsPlaylistFormat.FormatDescription.FileExtension,
             XspfPlaylistFormat.FormatDescription.FileExtension
         };
-        
+
         public static PlaylistFormatDescription [] ExportFormats {
             get { return export_formats; }
         }
-        
+
         public static bool IsSourceExportSupported (Source source)
         {
             bool supported = true;
-            
+
             if (source == null || !(source is AbstractPlaylistSource)) {
                 supported = false;
             }
-            
+
             return supported;
         }
-        
+
         public static PlaylistFormatDescription GetDefaultExportFormat ()
         {
             PlaylistFormatDescription default_format = null;
@@ -77,36 +77,36 @@ namespace Banshee.Playlist
                         break;
                     }
                 }
-            } catch {            
-                // Ignore errors, return our default if we encounter an error.                
+            } catch {
+                // Ignore errors, return our default if we encounter an error.
             } finally {
-                if (default_format == null) {                    
+                if (default_format == null) {
                     default_format = M3uPlaylistFormat.FormatDescription;
                 }
             }
             return default_format;
         }
-        
+
         public static void SetDefaultExportFormat (PlaylistFormatDescription format)
         {
             try {
-                DefaultExportFormat.Set (format.FileExtension);        
+                DefaultExportFormat.Set (format.FileExtension);
             } catch (Exception) {
-            }            
+            }
         }
-        
-        public static int GetFormatIndex (PlaylistFormatDescription [] formats, PlaylistFormatDescription playlist) 
+
+        public static int GetFormatIndex (PlaylistFormatDescription [] formats, PlaylistFormatDescription playlist)
         {
             int default_export_index = -1;
             foreach (PlaylistFormatDescription format in formats) {
                 default_export_index++;
-                if (format.FileExtension.Equals (playlist.FileExtension)) {                    
+                if (format.FileExtension.Equals (playlist.FileExtension)) {
                     break;
                 }
             }
             return default_export_index;
         }
-        
+
         public static string [] ImportPlaylist (string playlistUri)
         {
             return ImportPlaylist (playlistUri, null);
@@ -123,7 +123,7 @@ namespace Banshee.Playlist
             }
             return uris.ToArray ();
         }
-        
+
         public static bool PathHasPlaylistExtension (string playlistUri)
         {
             if (System.IO.Path.HasExtension (playlistUri)) {
@@ -134,28 +134,28 @@ namespace Banshee.Playlist
                     }
                 }
             }
-            
+
             return false;
         }
 
         public static IPlaylistFormat Load (string playlistUri, Uri baseUri)
         {
-            PlaylistFormatDescription [] formats = PlaylistFileUtil.ExportFormats;            
-            
-            // If the file has an extenstion, rearrange the format array so that the 
+            PlaylistFormatDescription [] formats = PlaylistFileUtil.ExportFormats;
+
+            // If the file has an extenstion, rearrange the format array so that the
             // appropriate format is tried first.
             if (System.IO.Path.HasExtension (playlistUri)) {
                 string extension = System.IO.Path.GetExtension (playlistUri);
                 extension = extension.ToLower ();
-                
+
                 int index = -1;
                 foreach (PlaylistFormatDescription format in formats) {
-                    index++;                    
-                    if (extension.Equals ("." + format.FileExtension)) {                        
+                    index++;
+                    if (extension.Equals ("." + format.FileExtension)) {
                         break;
-                    } 
+                    }
                 }
-                                
+
                 if (index != -1 && index != 0 && index < formats.Length) {
                     // Move to first position in array.
                     PlaylistFormatDescription preferredFormat = formats[index];
@@ -163,7 +163,7 @@ namespace Banshee.Playlist
                     formats[0] = preferredFormat;
                 }
             }
-            
+
             foreach (PlaylistFormatDescription format in formats) {
                 try {
                     IPlaylistFormat playlist = (IPlaylistFormat)Activator.CreateInstance (format.Type);
@@ -173,15 +173,15 @@ namespace Banshee.Playlist
                 } catch (InvalidPlaylistException) {
                 }
             }
-        
+
             return null;
         }
-        
+
         public static void ImportPlaylistToLibrary (string path)
         {
             ImportPlaylistToLibrary (path, ServiceManager.SourceManager.MusicLibrary, null);
         }
-        
+
         public static void ImportPlaylistToLibrary (string path, PrimarySource source, DatabaseImportManager importer)
         {
             try {
@@ -197,9 +197,9 @@ namespace Banshee.Playlist
                     foreach (Dictionary<string, object> element in parser.Elements) {
                         uris.Add (((Uri)element["uri"]).LocalPath);
                     }
-                    
+
                     ImportPlaylistWorker worker = new ImportPlaylistWorker (
-                        parser.Title, 
+                        parser.Title,
                         uris.ToArray (), source, importer);
                     worker.Import ();
                 }
@@ -208,16 +208,16 @@ namespace Banshee.Playlist
             }
         }
     }
-    
+
     public class ImportPlaylistWorker
     {
         private string [] uris;
         private string name;
-        
+
         private PrimarySource source;
         private DatabaseImportManager importer;
         private bool finished;
-        
+
         public ImportPlaylistWorker (string name, string [] uris, PrimarySource source, DatabaseImportManager importer)
         {
             this.name = name;
@@ -225,7 +225,7 @@ namespace Banshee.Playlist
             this.source = source;
             this.importer = importer;
         }
-        
+
         public void Import ()
         {
             try {
@@ -239,7 +239,7 @@ namespace Banshee.Playlist
                 Hyena.Log.Exception (e);
             }
         }
-        
+
         private void CreatePlaylist (object o, EventArgs args)
         {
             if (finished) {
@@ -264,7 +264,7 @@ namespace Banshee.Playlist
                         ServiceManager.DbConnection.Execute (insert_command, track_id);
                     }
                 }
-                
+
                 playlist.Reload ();
                 playlist.NotifyUser ();
             } catch (Exception e) {

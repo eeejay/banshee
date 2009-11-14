@@ -94,7 +94,7 @@ namespace Hyena.Query
                            .Replace ("%", "\\%")
                            .Replace ("_", "\\_");
             }
-            
+
             return orig;
         }
     }

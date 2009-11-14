@@ -37,23 +37,23 @@ namespace Banshee.Base
 
     public static class ApplicationContext
     {
-        static ApplicationContext () 
+        static ApplicationContext ()
         {
             Log.Debugging = Debugging;
         }
-    
+
         private static CommandLineParser command_line = new CommandLineParser ();
         public static CommandLineParser CommandLine {
             set { command_line = value; }
             get { return command_line; }
         }
-        
+
         private static Layout command_line_layout;
         public static Layout CommandLineLayout {
             get { return command_line_layout; }
             set { command_line_layout = value; }
         }
-        
+
         private static bool? debugging = null;
         public static bool Debugging {
             get {
@@ -62,16 +62,16 @@ namespace Banshee.Base
                     debugging |= CommandLine.Contains ("debug-sql");
                     debugging |= EnvironmentIsSet ("BANSHEE_DEBUG");
                 }
-                
+
                 return debugging.Value;
             }
         }
-        
+
         public static bool EnvironmentIsSet (string env)
         {
             return !String.IsNullOrEmpty (Environment.GetEnvironmentVariable (env));
         }
-        
+
         public static System.Globalization.CultureInfo InternalCultureInfo {
             get { return System.Globalization.CultureInfo.InvariantCulture; }
         }

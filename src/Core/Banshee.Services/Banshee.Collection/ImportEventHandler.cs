@@ -1,4 +1,4 @@
-// 
+//
 // ImportEventHandler.cs
 //
 // Author:
@@ -31,21 +31,21 @@ using System;
 namespace Banshee.Collection
 {
     public delegate void ImportEventHandler (object o, ImportEventArgs args);
-    
+
     public class ImportEventArgs : EventArgs
     {
         private string filename;
         private string return_message;
-        
+
         public ImportEventArgs (string filename)
         {
             this.filename = filename;
         }
-        
+
         public string FileName {
             get { return filename; }
         }
-        
+
         public string ReturnMessage {
             get { return return_message; }
             set { return_message = value; }

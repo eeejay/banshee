@@ -25,7 +25,7 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
- 
+
 using System;
 using Gtk;
 
@@ -40,12 +40,12 @@ namespace Banshee.Gui.Dialogs
         public GladeDialog(string name, Glade.XML resource) : base(name, resource)
         {
         }
-    
+
         public virtual ResponseType Run()
         {
             return (ResponseType)Dialog.Run();
         }
-        
+
         public Dialog Dialog {
             get { return (Dialog)Window; }
         }

@@ -1,4 +1,4 @@
-// 
+//
 // TagList.cs
 //
 // Author:
@@ -37,97 +37,97 @@ namespace Banshee.GStreamer
     public class TagList : IDisposable
     {
         private HandleRef handle;
-        
+
         public TagList ()
         {
             handle = new HandleRef (this, bt_tag_list_new ());
         }
-        
+
         public TagList (TrackInfo track) : this ()
         {
             Merge (track);
         }
-        
+
         public void Merge (TrackInfo track)
         {
             AddTag (CommonTags.Artist, track.ArtistName);
             AddTag (CommonTags.Album, track.AlbumTitle);
             AddTag (CommonTags.Title, track.TrackTitle);
             AddTag (CommonTags.Genre, track.Genre);
-            
+
             AddTag (CommonTags.TrackNumber, (uint)track.TrackNumber);
             AddTag (CommonTags.TrackCount, (uint)track.TrackCount);
             AddTag (CommonTags.AlbumDiscNumber, (uint)track.DiscNumber);
             AddTag (CommonTags.AlbumDiscCount, (uint)track.DiscCount);
-            
+
             AddYear (track.Year);
             AddDate (track.ReleaseDate);
-            
+
             AddTag (CommonTags.Composer, track.Composer);
             AddTag (CommonTags.Copyright, track.Copyright);
             AddTag (CommonTags.Comment, track.Comment);
-            
+
             AddTag (CommonTags.MusicBrainzTrackId, track.MusicBrainzId);
             AddTag (CommonTags.MusicBrainzArtistId, track.ArtistMusicBrainzId);
             AddTag (CommonTags.MusicBrainzAlbumId, track.AlbumMusicBrainzId);
-            
+
         }
-        
+
         public void AddTag (string tagName, string value)
         {
             if (!String.IsNullOrEmpty (value)) {
                 AddTag (tagName, (object)value);
             }
         }
-        
+
         public void AddTag (string tagName, uint value)
         {
             if (value > 0) {
                 AddTag (tagName, (object)value);
             }
         }
-        
+
         public void AddDate (DateTime date)
         {
             bt_tag_list_add_date (Handle, date.Year, date.Month, date.Day);
         }
-        
+
         public void AddYear (int year)
         {
             if (year > 1) {
                 bt_tag_list_add_date (Handle, year, 1, 1);
             }
         }
-        
+
         public void AddTag (string tagName, object value)
         {
             GLib.Value g_value = new GLib.Value (value);
             bt_tag_list_add_value (Handle, tagName, ref g_value);
         }
-        
+
         public void Dispose ()
         {
             if (handle.Handle != IntPtr.Zero) {
                 bt_tag_list_free (handle);
                 handle = new HandleRef (this, IntPtr.Zero);
-                
+
                 GC.SuppressFinalize (this);
             }
         }
-        
+
         public HandleRef Handle {
             get { return handle; }
         }
-                
+
         [DllImport ("libbanshee.dll")]
         private static extern IntPtr bt_tag_list_new ();
-        
+
         [DllImport ("libbanshee.dll")]
         private static extern void bt_tag_list_free (HandleRef tag_list);
-        
+
         [DllImport ("libbanshee.dll")]
         private static extern void bt_tag_list_add_value (HandleRef tag_list, string tag_name, ref GLib.Value value);
-        
+
         [DllImport ("libbanshee.dll")]
         private static extern void bt_tag_list_add_date (HandleRef tag_list, int year, int month, int day);
     }

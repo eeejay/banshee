@@ -52,11 +52,11 @@ namespace Banshee.Gui
         public PlaybackRepeatActions RepeatActions {
             get { return repeat_actions; }
         }
-        
+
         public PlaybackShuffleActions ShuffleActions {
             get { return shuffle_actions; }
         }
-        
+
         public PlaybackActions () : base ("Playback")
         {
             ImportantByDefault = false;
@@ -65,11 +65,11 @@ namespace Banshee.Gui
                 new ActionEntry ("PlayPauseAction", null,
                     Catalog.GetString ("_Play"), "space",
                     Catalog.GetString ("Play or pause the current item"), OnPlayPauseAction),
-                    
+
                 new ActionEntry ("NextAction", null,
                     Catalog.GetString ("_Next"), "N",
                     Catalog.GetString ("Play the next item"), OnNextAction),
-                    
+
                 new ActionEntry ("PreviousAction", null,
                     Catalog.GetString ("Pre_vious"), "B",
                     Catalog.GetString ("Play the previous item"), OnPreviousAction),
@@ -81,19 +81,19 @@ namespace Banshee.Gui
                 new ActionEntry ("JumpToPlayingTrackAction", null,
                     Catalog.GetString("_Jump to Playing Song"), "<control>J",
                     Catalog.GetString ("Jump to the currently playing item"), OnJumpToPlayingTrack),
-                
+
                 new ActionEntry ("RestartSongAction", null,
                     Catalog.GetString ("_Restart Song"), "R",
                     Catalog.GetString ("Restart the current item"), OnRestartSongAction)
             });
-            
+
             Add (new ToggleActionEntry [] {
                 new ToggleActionEntry ("StopWhenFinishedAction", null,
                     Catalog.GetString ("_Stop When Finished"), "<Shift>space",
-                    Catalog.GetString ("Stop playback after the current item finishes playing"), 
+                    Catalog.GetString ("Stop playback after the current item finishes playing"),
                     OnStopWhenFinishedAction, false)
             });
-            
+
             Actions.GlobalActions.Add (new ActionEntry [] {
                 new ActionEntry ("PlaybackMenuAction", null,
                     Catalog.GetString ("_Playback"), null, null, null),
@@ -102,20 +102,20 @@ namespace Banshee.Gui
             this["JumpToPlayingTrackAction"].Sensitive = false;
             this["RestartSongAction"].Sensitive = false;
             this["SeekToAction"].Sensitive = false;
-            
+
             this["PlayPauseAction"].StockId = Gtk.Stock.MediaPlay;
             this["NextAction"].StockId = Gtk.Stock.MediaNext;
             this["PreviousAction"].StockId = Gtk.Stock.MediaPrevious;
 
-            ServiceManager.PlayerEngine.ConnectEvent (OnPlayerEvent, 
-                PlayerEvent.Error | 
-                PlayerEvent.EndOfStream | 
+            ServiceManager.PlayerEngine.ConnectEvent (OnPlayerEvent,
+                PlayerEvent.Error |
+                PlayerEvent.EndOfStream |
                 PlayerEvent.StateChange);
-            
+
             repeat_actions = new PlaybackRepeatActions (Actions);
             shuffle_actions = new PlaybackShuffleActions (Actions, this);
         }
-        
+
         private void OnPlayerEvent (PlayerEventArgs args)
         {
             switch (args.Event) {
@@ -134,7 +134,7 @@ namespace Banshee.Gui
                     break;
             }
         }
-        
+
         private void OnPlayerStateChange (PlayerEventStateChangeArgs args)
         {
             if (play_pause_action == null) {
@@ -158,7 +158,7 @@ namespace Banshee.Gui
                     break;
             }
 
-            TrackInfo track = ServiceManager.PlayerEngine.CurrentTrack; 
+            TrackInfo track = ServiceManager.PlayerEngine.CurrentTrack;
             if (track != null) {
                 this["SeekToAction"].Sensitive = !track.IsLive;
                 this["RestartSongAction"].Sensitive = !track.IsLive;
@@ -175,7 +175,7 @@ namespace Banshee.Gui
             // Disable all actions while NotReady
             Sensitive = args.Current != PlayerState.NotReady;
         }
-        
+
         private void ShowStopAction ()
         {
             if (ServiceManager.PlayerEngine.CanPause) {
@@ -184,35 +184,35 @@ namespace Banshee.Gui
                 ShowStop ();
             }
         }
-        
+
         private void ShowPause ()
         {
             play_pause_action.Label = Catalog.GetString ("_Pause");
             play_pause_action.StockId = Gtk.Stock.MediaPause;
         }
-        
+
         private void ShowPlay ()
         {
             play_pause_action.Label = Catalog.GetString ("_Play");
             play_pause_action.StockId = Gtk.Stock.MediaPlay;
         }
-                
+
         private void ShowStop ()
         {
             play_pause_action.Label = Catalog.GetString ("Sto_p");
             play_pause_action.StockId = Gtk.Stock.MediaStop;
         }
-                
+
         private void OnPlayPauseAction (object o, EventArgs args)
         {
             ServiceManager.PlayerEngine.TogglePlaying ();
         }
-        
+
         private void OnNextAction (object o, EventArgs args)
         {
             ServiceManager.PlaybackController.Next ();
         }
-        
+
         private void OnPreviousAction (object o, EventArgs args)
         {
             const int delay = 4000; // ms
@@ -229,7 +229,7 @@ namespace Banshee.Gui
             dialog.Run ();
             dialog.Destroy ();
         }
-            
+
         private void OnRestartSongAction (object o, EventArgs args)
         {
             TrackInfo track = ServiceManager.PlayerEngine.CurrentTrack;
@@ -238,7 +238,7 @@ namespace Banshee.Gui
                 ServiceManager.PlayerEngine.OpenPlay (track);
             }
         }
-        
+
         private void OnStopWhenFinishedAction (object o, EventArgs args)
         {
             ServiceManager.PlaybackController.StopWhenFinished = ((ToggleAction)o).Active;

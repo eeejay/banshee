@@ -77,7 +77,7 @@ namespace Hyena.Gui
             }
         }
 
-        public bool CanMerge (IUndoAction action) 
+        public bool CanMerge (IUndoAction action)
         {
             EditableEraseAction erase = action as EditableEraseAction;
             if (erase == null) {

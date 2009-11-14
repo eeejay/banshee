@@ -30,17 +30,17 @@ namespace MusicBrainz
 {
     public sealed class Artist : MusicBrainzEntity
     {
-        
+
         #region Private
-        
+
         const string EXTENSION = "artist";
         ArtistReleaseType artist_release_type = DefaultArtistReleaseType;
         ArtistType? type;
         ReadOnlyCollection<Release> releases;
         bool have_all_releases;
-        
+
         #endregion
-        
+
         #region Constructors
 
         Artist (string id) : base (id, null)
@@ -57,11 +57,11 @@ namespace MusicBrainz
         internal Artist (XmlReader reader) : base (reader, false)
         {
         }
-        
+
         #endregion
-        
+
         #region Protected
-        
+
         internal override string UrlExtension {
             get { return EXTENSION; }
         }
@@ -107,11 +107,11 @@ namespace MusicBrainz
                 break;
             }
         }
-        
+
         #endregion
 
         #region Public
-        
+
         static ArtistReleaseType default_artist_release_type = new ArtistReleaseType (ReleaseStatus.Official, ReleaseArtistType.SingleArtist);
         public static ArtistReleaseType DefaultArtistReleaseType {
             get { return default_artist_release_type; }
@@ -120,7 +120,7 @@ namespace MusicBrainz
                 default_artist_release_type = value;
             }
         }
-        
+
         public ArtistReleaseType ArtistReleaseType {
             get { return artist_release_type; }
             set {
@@ -149,7 +149,7 @@ namespace MusicBrainz
         {
             return GetPropertyOrDefault (ref type, ArtistType.Unknown);
         }
-        
+
         public ReadOnlyCollection<Release> GetReleases ()
         {
             return releases ?? (have_all_releases
@@ -163,7 +163,7 @@ namespace MusicBrainz
         }
 
         #endregion
-        
+
         #region Static
 
         public static Artist Get (string id)
@@ -188,26 +188,26 @@ namespace MusicBrainz
         {
             return artist.ToString ();
         }
-        
+
         #endregion
-        
+
     }
-    
+
     #region Ancillary Types
-    
+
     public enum ArtistType
     {
         Unknown,
         Group,
         Person
     }
-    
+
     public enum ReleaseArtistType
     {
         VariousArtists,
         SingleArtist
     }
-    
+
     public sealed class ArtistReleaseType
     {
         string str;
@@ -219,7 +219,7 @@ namespace MusicBrainz
         public ArtistReleaseType (ReleaseStatus status, ReleaseArtistType artistType) : this ((Enum)status, artistType)
         {
         }
-        
+
         public ArtistReleaseType (ReleaseType type, ReleaseStatus status, ReleaseArtistType artistType)
         {
             StringBuilder builder = new StringBuilder ();
@@ -235,7 +235,7 @@ namespace MusicBrainz
             Format (builder, enumeration, artistType);
             str = builder.ToString ();
         }
-        
+
         static void Format (StringBuilder builder, Enum enumeration, ReleaseArtistType artistType)
         {
             builder.Append (artistType == ReleaseArtistType.VariousArtists ? "va-" : "sa-");
@@ -251,7 +251,7 @@ namespace MusicBrainz
         {
             return this == o as ArtistReleaseType;
         }
-        
+
         public static bool operator ==(ArtistReleaseType artistReleaseType1, ArtistReleaseType artistReleaseType2)
         {
             if (Object.ReferenceEquals (artistReleaseType1, null)) {
@@ -259,18 +259,18 @@ namespace MusicBrainz
             }
             return !Object.ReferenceEquals (artistReleaseType2, null) && artistReleaseType1.str == artistReleaseType2.str;
         }
-        
+
         public static bool operator !=(ArtistReleaseType artistReleaseType1, ArtistReleaseType artistReleaseType2)
         {
             return !(artistReleaseType1 == artistReleaseType2);
         }
-        
+
         public override int GetHashCode ()
         {
             return str.GetHashCode ();
         }
     }
-    
+
     #endregion
-    
+
 }

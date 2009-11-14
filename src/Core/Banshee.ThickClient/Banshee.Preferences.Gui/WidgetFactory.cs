@@ -44,10 +44,10 @@ namespace Banshee.Preferences.Gui
 
             Widget widget = preference.DisplayWidget as Widget;
             //OnPreferenceChanged (preference);
-            
+
             return widget ?? GetWidget (preference, preference.GetType ().GetProperty ("Value").PropertyType);
         }
-        
+
         private static Widget GetWidget (PreferenceBase preference, Type type)
         {
             Widget pref_widget = null;
@@ -94,7 +94,7 @@ namespace Banshee.Preferences.Gui
                     });
                 };
             }
-            
+
             return widget ?? pref_widget;
         }
 
@@ -103,15 +103,15 @@ namespace Banshee.Preferences.Gui
             if (preference == null) {
                 return null;
             }
-            
+
             return preference.MnemonicWidget as Widget;
         }
-        
+
         private class PreferenceCheckButton : CheckButton
         {
             private bool sync;
             private PreferenceBase preference;
-            
+
             public PreferenceCheckButton (PreferenceBase preference)
             {
                 this.preference = preference;
@@ -120,22 +120,22 @@ namespace Banshee.Preferences.Gui
                 Active = (bool)preference.BoxedValue;
                 sync = true;
             }
-            
+
             protected override void OnToggled ()
             {
                 base.OnToggled ();
-                
+
                 if (sync) {
                     preference.BoxedValue = Active;
                 }
             }
         }
-        
+
         private class PreferenceEntry : Entry
         {
             private bool sync;
             private PreferenceBase preference;
-            
+
             public PreferenceEntry (PreferenceBase preference)
             {
                 this.preference = preference;
@@ -143,11 +143,11 @@ namespace Banshee.Preferences.Gui
                 Text = value ?? String.Empty;
                 sync = true;
             }
-            
+
             protected override void OnChanged ()
             {
                 base.OnChanged ();
-                
+
                 if (sync) {
                     preference.BoxedValue = Text;
                 }

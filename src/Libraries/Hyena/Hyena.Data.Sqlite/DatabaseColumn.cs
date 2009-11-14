@@ -40,13 +40,13 @@ namespace Hyena.Data.Sqlite
         private readonly Type type;
         private readonly string column_type;
         private readonly string name;
-        
+
         protected AbstractDatabaseColumn (FieldInfo field_info, AbstractDatabaseColumnAttribute attribute)
             : this (attribute, field_info, field_info.FieldType)
         {
             this.field_info = field_info;
         }
-        
+
         protected AbstractDatabaseColumn (PropertyInfo property_info, AbstractDatabaseColumnAttribute attribute) :
             this (attribute, property_info, property_info.PropertyType)
         {
@@ -60,7 +60,7 @@ namespace Hyena.Data.Sqlite
             }
             this.property_info = property_info;
         }
-        
+
         private AbstractDatabaseColumn (AbstractDatabaseColumnAttribute attribute, MemberInfo member_info, Type type)
         {
             try {
@@ -77,7 +77,7 @@ namespace Hyena.Data.Sqlite
         {
             return field_info != null ? field_info.GetValue (target) : property_info.GetValue (target, null);
         }
-        
+
         public object GetValue (object target)
         {
             object result = field_info != null
@@ -85,14 +85,14 @@ namespace Hyena.Data.Sqlite
                 : property_info.GetValue (target, null);
             return SqliteUtils.ToDbFormat (type, result);
         }
-        
+
         public void SetValue (object target, IDataReader reader, int column)
         {
             // FIXME should we insist on nullable types?
             object value = reader.IsDBNull (column) ? null : reader.GetValue (column);
             SetValue (target, SqliteUtils.FromDbFormat(type, value));
         }
-        
+
         public void SetValue (object target, object value)
         {
             if (field_info != null) {
@@ -101,97 +101,97 @@ namespace Hyena.Data.Sqlite
                 property_info.SetValue (target, value, null);
             }
         }
-        
+
         public string Name {
             get { return name; }
         }
-        
+
         public string Type {
             get { return column_type; }
         }
     }
-    
+
     public sealed class DatabaseColumn : AbstractDatabaseColumn
     {
         private DatabaseColumnAttribute attribute;
-        
+
         public DatabaseColumn (FieldInfo field_info, DatabaseColumnAttribute attribute)
             : base (field_info, attribute)
         {
             this.attribute = attribute;
         }
-        
+
         public DatabaseColumn (PropertyInfo property_info, DatabaseColumnAttribute attribute)
             : base (property_info, attribute)
         {
             this.attribute = attribute;
         }
-        
+
         public DatabaseColumnConstraints Constraints {
             get { return attribute.Constraints; }
         }
-        
+
         public string DefaultValue {
             get { return attribute.DefaultValue; }
         }
-        
+
         public string Index {
             get { return attribute.Index; }
         }
-        
+
         public string Schema {
             get {
                 return SqliteUtils.BuildColumnSchema (Type, Name, attribute.DefaultValue, attribute.Constraints);
             }
         }
-        
+
         public override bool Equals (object o)
         {
             DatabaseColumn column = o as DatabaseColumn;
             return o != null && column.Name.Equals (Name);
         }
-        
+
         public override int GetHashCode ()
         {
             return Name.GetHashCode ();
         }
     }
-    
+
     internal sealed class VirtualDatabaseColumn : AbstractDatabaseColumn
     {
         private VirtualDatabaseColumnAttribute attribute;
-        
+
         public VirtualDatabaseColumn (FieldInfo field_info, VirtualDatabaseColumnAttribute attribute)
             : base (field_info, attribute)
         {
             this.attribute = attribute;
         }
-        
+
         public VirtualDatabaseColumn (PropertyInfo property_info, VirtualDatabaseColumnAttribute attribute)
             : base (property_info, attribute)
         {
             this.attribute = attribute;
         }
-        
+
         public string TargetTable {
             get { return attribute.TargetTable; }
         }
-        
+
         public string LocalKey {
             get { return attribute.LocalKey; }
         }
-        
+
         public string ForeignKey {
             get { return attribute.ForeignKey; }
         }
     }
-    
+
     public struct DbColumn
     {
         public readonly string Name;
         public readonly DatabaseColumnConstraints Constraints;
         public readonly string DefaultValue;
-        
+
         public DbColumn(string name, DatabaseColumnConstraints constraints, string default_value)
         {
             Name = name;

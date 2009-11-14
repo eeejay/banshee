@@ -1,4 +1,4 @@
-// 
+//
 // IPropertyStoreExpose.cs
 //
 // Author:
@@ -29,7 +29,7 @@
 using System;
 
 namespace Hyena.Data
-{   
+{
     public interface IPropertyStoreExpose
     {
         PropertyStore PropertyStore { get; }

@@ -57,7 +57,7 @@ namespace Banshee.MediaEngine
             public TranscodeCancelledHandler CancelledHandler;
             public TranscodeErrorHandler ErrorHandler;
 
-            public TranscodeContext (TrackInfo track, SafeUri out_uri, ProfileConfiguration config, 
+            public TranscodeContext (TrackInfo track, SafeUri out_uri, ProfileConfiguration config,
                 TrackTranscodedHandler handler, TranscodeCancelledHandler cancelledHandler, TranscodeErrorHandler errorHandler)
             {
                 Track = track;
@@ -72,7 +72,7 @@ namespace Banshee.MediaEngine
         private static bool transcoder_extension_queried = false;
         private static TypeExtensionNode transcoder_extension_node = null;
         private static TypeExtensionNode TranscoderExtensionNode {
-            get { 
+            get {
                 if (!transcoder_extension_queried) {
                     transcoder_extension_queried = true;
                     foreach (TypeExtensionNode node in AddinManager.GetExtensionNodes (
@@ -84,7 +84,7 @@ namespace Banshee.MediaEngine
                 return transcoder_extension_node;
             }
         }
-                
+
         public static bool Supported {
             get { return TranscoderExtensionNode != null; }
         }
@@ -106,7 +106,7 @@ namespace Banshee.MediaEngine
         }
 
         private static string cache_dir = Paths.Combine (Paths.ApplicationCache, "transcoder");
-        
+
         public static SafeUri GetTempUriFor (string extension)
         {
             return new SafeUri (Paths.GetTempFileName (cache_dir, extension));
@@ -144,7 +144,7 @@ namespace Banshee.MediaEngine
                 return user_job;
             }
         }
-        
+
         private void Reset ()
         {
             lock (queue) {
@@ -154,7 +154,7 @@ namespace Banshee.MediaEngine
                     user_job.Finish ();
                     user_job = null;
                 }
-                
+
                 if (transcoder != null) {
                     transcoder.Finish ();
                     transcoder = null;
@@ -173,13 +173,13 @@ namespace Banshee.MediaEngine
             }
         }
 
-        public void Enqueue (TrackInfo track, ProfileConfiguration config, 
+        public void Enqueue (TrackInfo track, ProfileConfiguration config,
             TrackTranscodedHandler handler, TranscodeCancelledHandler cancelledHandler, TranscodeErrorHandler errorHandler)
         {
             Enqueue (track, GetTempUriFor (config.Profile.OutputFileExtension), config, handler, cancelledHandler, errorHandler);
         }
 
-        public void Enqueue (TrackInfo track, SafeUri out_uri, ProfileConfiguration config, 
+        public void Enqueue (TrackInfo track, SafeUri out_uri, ProfileConfiguration config,
             TrackTranscodedHandler handler, TranscodeCancelledHandler cancelledHandler, TranscodeErrorHandler errorHandler)
         {
             bool start = false;
@@ -228,7 +228,7 @@ namespace Banshee.MediaEngine
 
             ProcessQueue ();
         }
-        
+
         private void OnProgress (object o, TranscoderProgressArgs args)
         {
             if (user_job == null) {
@@ -237,7 +237,7 @@ namespace Banshee.MediaEngine
 
             UserJob.DetailedProgress = args.Fraction;
         }
-        
+
         private void OnError (object o, TranscoderErrorArgs args)
         {
             transcoding = false;
@@ -253,19 +253,19 @@ namespace Banshee.MediaEngine
         }
 
 #endregion
-                                
-#region User Job Event Handlers        
-        
+
+#region User Job Event Handlers
+
         private void OnCancelRequested (object o, EventArgs args)
         {
             Reset ();
         }
-        
+
         private void OnFinished (object o, EventArgs args)
         {
             Reset ();
         }
-        
+
 #endregion
 
         string IService.ServiceName {

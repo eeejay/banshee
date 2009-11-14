@@ -1,4 +1,4 @@
-// 
+//
 // StreamPlaybackError.cs
 //
 // Author:
@@ -28,7 +28,7 @@
 
 namespace Banshee.Streaming
 {
-    public enum StreamPlaybackError 
+    public enum StreamPlaybackError
     {
         None,
         ResourceNotFound,

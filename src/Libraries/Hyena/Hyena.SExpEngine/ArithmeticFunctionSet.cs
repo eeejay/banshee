@@ -45,25 +45,25 @@ namespace Hyena.SExpEngine
         {
             double result = 0.0;
             bool as_int = true;
-            
+
             for(int i = 0; i < args.Length; i++) {
                 TreeNode arg = Evaluate(args[i]);
-                
+
                 if(arg is IntLiteral || arg is DoubleLiteral) {
                     double arg_value;
-                    
+
                     if(arg is DoubleLiteral) {
                         as_int = false;
                         arg_value = (arg as DoubleLiteral).Value;
                     } else {
                         arg_value = (int)(arg as IntLiteral).Value;
                     }
-                    
+
                     if(i == 0) {
                         result = arg_value;
                         continue;
                     }
-                    
+
                     switch(operation) {
                         case ArithmeticOperation.Add:
                             result += arg_value;
@@ -81,76 +81,76 @@ namespace Hyena.SExpEngine
                             if(!(arg is IntLiteral)) {
                                 throw new ArgumentException("Modulo requires int arguments");
                             }
-                            
+
                             result %= (int)arg_value;
                             break;
-                    }       
+                    }
                 } else {
                     throw new ArgumentException("arguments must be double or int");
                 }
             }
-            
-            return as_int ? 
-                ((TreeNode)new IntLiteral((int)result)) : 
+
+            return as_int ?
+                ((TreeNode)new IntLiteral((int)result)) :
                 ((TreeNode)new DoubleLiteral(result));
         }
-        
+
         [Function("add", "+")]
         public virtual TreeNode OnAdd(TreeNode [] args)
         {
             TreeNode first = Evaluate(args[0]);
-            
+
             if(first is StringLiteral) {
                 return StringFunctionSet.ConcatenateStrings(Evaluator, args);
             }
-        
+
             return OnPerformArithmetic(args, ArithmeticOperation.Add);
         }
-        
+
         [Function("sub", "-")]
         public virtual TreeNode OnSubtract(TreeNode [] args)
         {
             return OnPerformArithmetic(args, ArithmeticOperation.Subtract);
         }
-        
+
         [Function("mul", "*")]
         public virtual TreeNode OnMultiply(TreeNode [] args)
         {
             return OnPerformArithmetic(args, ArithmeticOperation.Multiply);
         }
-        
+
         [Function("div", "/")]
         public virtual TreeNode OnDivide(TreeNode [] args)
         {
             return OnPerformArithmetic(args, ArithmeticOperation.Divide);
         }
-        
+
         [Function("mod", "%")]
         public virtual TreeNode OnModulo(TreeNode [] args)
         {
             return OnPerformArithmetic(args, ArithmeticOperation.Modulo);
         }
-        
+
         [Function("++")]
         public virtual TreeNode OnIncrement(TreeNode [] args)
         {
             return IntegerUpdate(args, 1);
         }
-        
+
         [Function("--")]
         public virtual TreeNode OnDecrement(TreeNode [] args)
         {
             return IntegerUpdate(args, -1);
         }
-        
+
         private TreeNode IntegerUpdate(TreeNode [] args, int value)
         {
             TreeNode variable_node = (FunctionNode)args[0];
             TreeNode result = Evaluate(variable_node);
             TreeNode new_result = new IntLiteral(((IntLiteral)result).Value + value);
-            
+
             FunctionFunctionSet.VariableSet(Evaluator, args[0], new_result);
-            
+
             return new_result;
         }
     }

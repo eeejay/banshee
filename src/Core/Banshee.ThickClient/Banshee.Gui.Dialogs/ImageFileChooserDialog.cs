@@ -1,4 +1,4 @@
-// 
+//
 // ImageFileChooserDialog.cs
 //
 // Author:
@@ -35,41 +35,41 @@ namespace Banshee.Gui.Dialogs
     public class ImageFileChooserDialog : Banshee.Gui.Dialogs.FileChooserDialog
     {
         private Image preview = new Image ();
-    
+
         public ImageFileChooserDialog () : base (Catalog.GetString("Select album cover image"), FileChooserAction.Open)
         {
             AddButton (Stock.Cancel, ResponseType.Cancel);
             AddButton (Stock.Open, ResponseType.Ok);
-            
+
             DefaultResponse = ResponseType.Ok;
-            
+
             FileFilter filter = new FileFilter ();
             filter.Name = Catalog.GetString ("All image files");
             filter.AddMimeType ("image/jpeg");
             filter.AddMimeType ("image/png");
             AddFilter (filter);
             Filter = filter;
-            
+
             filter = new FileFilter ();
             filter.Name = Catalog.GetString ("JPEG image files");
             filter.AddMimeType ("image/jpeg");
             AddFilter (filter);
-            
+
             filter = new FileFilter ();
             filter.Name = Catalog.GetString ("PNG image files");
             filter.AddMimeType ("image/png");
             AddFilter (filter);
-            
+
             PreviewWidget = preview;
         }
-        
+
         protected override void OnUpdatePreview()
         {
             try {
                 if (String.IsNullOrEmpty (PreviewFilename)) {
                     throw new ApplicationException ();
                 }
-                
+
                 Gdk.Pixbuf pixbuf = new Gdk.Pixbuf (PreviewFilename);
                 preview.Pixbuf = pixbuf.ScaleSimple (100, 100, Gdk.InterpType.Bilinear);
                 preview.Show ();
@@ -77,5 +77,5 @@ namespace Banshee.Gui.Dialogs
                 preview.Hide ();
             }
         }
-    }        
+    }
 }

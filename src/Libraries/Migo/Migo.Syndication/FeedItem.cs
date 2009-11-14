@@ -49,7 +49,7 @@ namespace Migo.Syndication
         public static SqliteModelProvider<FeedItem> Provider {
             get { return provider; }
         }
-        
+
         public static bool Exists (long feed_id, string guid)
         {
             return Provider.Connection.Query<int> (
@@ -57,7 +57,7 @@ namespace Migo.Syndication
                 feed_id, guid
             ) != 0;
         }
-        
+
         public static void Init () {
             provider = new FeedItemProvider (FeedsManager.Instance.Connection);
         }
@@ -72,11 +72,11 @@ namespace Migo.Syndication
         private bool isRead;
         private string link;
         private long dbid;
-        private DateTime modified;     
+        private DateTime modified;
         private Feed feed;
-        private DateTime pubDate;       
-        private string title;        
-        
+        private DateTime pubDate;
+        private string title;
+
         public event Action<FeedItem> ItemAdded;
         public event Action<FeedItem> ItemChanged;
         public event Action<FeedItem> ItemRemoved;
@@ -98,25 +98,25 @@ namespace Migo.Syndication
         [DatabaseColumn]
         internal bool Active {
             get { return active;}
-            set {          
+            set {
                 if (value != active) {
                     active = value;
                 }
             }
         }
-        
+
         [DatabaseColumn]
         public string Author {
             get { return author; }
             set { author = value; }
         }
-        
+
         [DatabaseColumn]
         public string Comments {
-            get { return comments; } 
+            get { return comments; }
             set { comments = value; }
         }
-        
+
         [DatabaseColumn]
         public string Description {
             get { return description; }
@@ -130,7 +130,7 @@ namespace Migo.Syndication
             get { return stripped_description; }
             set { stripped_description = value; }
         }
-        
+
         [DatabaseColumn("Guid", Index = "PodcastItemsGuidIndex")]
         public string Guid {
             get {
@@ -149,31 +149,31 @@ namespace Migo.Syndication
             get { return isRead; }
             set { isRead = value; }
         }
-        
+
         [DatabaseColumn]
         public string Link {
             get { return link; }
             set { link = value; }
         }
-        
+
         [DatabaseColumn]
-        public DateTime Modified { 
-            get { return modified; } 
+        public DateTime Modified {
+            get { return modified; }
             set { modified = value; }
-        }      
-        
+        }
+
         [DatabaseColumn]
         public DateTime PubDate {
-            get { return pubDate; } 
+            get { return pubDate; }
             set { pubDate = value; }
-        }       
-        
+        }
+
         [DatabaseColumn]
         public string Title {
-            get { return title; } 
+            get { return title; }
             set { title = value; }
         }
-        
+
         [DatabaseColumn("LicenseUri")]
         protected string license_uri;
         public string LicenseUri {
@@ -209,15 +209,15 @@ namespace Migo.Syndication
                     enclosure.Item = this;
             }
         }
-        
+
 #endregion
 
 #region Constructor
- 
+
         public FeedItem ()
         {
         }
-        
+
 #endregion
 
         private static FeedManager Manager {
@@ -248,7 +248,7 @@ namespace Migo.Syndication
             else
                 Manager.OnItemChanged (this);
         }
-        
+
         public void Delete (bool delete_file)
         {
             if (enclosure != null) {
@@ -258,7 +258,7 @@ namespace Migo.Syndication
             Provider.Delete (this);
             Manager.OnItemRemoved (this);
         }
-        
+
 #endregion
 
         private bool enclosure_loaded;
@@ -268,12 +268,12 @@ namespace Migo.Syndication
                 FeedEnclosure enclosure = FeedEnclosure.Provider.FetchFirstMatching (String.Format (
                     "{0}.ItemID = {1}", FeedEnclosure.Provider.TableName, DbId
                 ));
-                
+
                 if (enclosure != null) {
                     enclosure.Item = this;
                     this.enclosure = enclosure;
                 }
-                enclosure_loaded = true; 
+                enclosure_loaded = true;
             }
         }
     }

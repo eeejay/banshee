@@ -18,10 +18,10 @@
 // distribute, sublicense, and/or sell copies of the Software, and to
 // permit persons to whom the Software is furnished to do so, subject to
 // the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be
 // included in all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
 // EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 // MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -34,7 +34,7 @@
 /********************************************************
  * ADO.NET 2.0 Data Provider for Sqlite Version 3.X
  * Written by Robert Simpson (robert@blackcastlesoft.com)
- * 
+ *
  * Released to the public domain, use at your own risk!
  ********************************************************/
 #if NET_2_0
@@ -102,7 +102,7 @@ namespace Mono.Data.Sqlite
     /// </summary>
     private SqliteKeyReader _keyInfo;
 #endif
-    
+
     /// <summary>
     /// Internal constructor, initializes the datareader and sets up to begin executing statements
     /// </summary>
@@ -236,7 +236,7 @@ namespace Mono.Data.Sqlite
     /// <summary>
     /// Sqlite is inherently un-typed.  All datatypes in Sqlite are natively strings.  The definition of the columns of a table
     /// and the affinity of returned types are all we have to go on to type-restrict data in the reader.
-    /// 
+    ///
     /// This function attempts to verify that the type of data being requested of a column matches the datatype of the column.  In
     /// the case of columns that are not backed into a table definition, we attempt to match up the affinity of a column (int, double, string or blob)
     /// to a set of known types that closely match that affinity.  It's not an exact science, but its the best we can do.
@@ -300,7 +300,7 @@ namespace Mono.Data.Sqlite
       if (i >= VisibleFieldCount && _keyInfo != null)
         return _keyInfo.GetBoolean(i - VisibleFieldCount);
 #endif
-      
+
       VerifyType(i, DbType.Boolean);
       return Convert.ToBoolean(GetValue(i), CultureInfo.CurrentCulture);
     }
@@ -316,7 +316,7 @@ namespace Mono.Data.Sqlite
       if (i >= VisibleFieldCount && _keyInfo != null)
         return _keyInfo.GetByte(i - VisibleFieldCount);
 #endif
-      
+
       VerifyType(i, DbType.Byte);
       return Convert.ToByte(_activeStatement._sql.GetInt32(_activeStatement, i));
     }
@@ -339,7 +339,7 @@ namespace Mono.Data.Sqlite
       if (i >= VisibleFieldCount && _keyInfo != null)
         return _keyInfo.GetBytes(i - VisibleFieldCount, fieldOffset, buffer, bufferoffset, length);
 #endif
-      
+
       VerifyType(i, DbType.Binary);
       return _activeStatement._sql.GetBytes(_activeStatement, i, (int)fieldOffset, buffer, bufferoffset, length);
     }
@@ -355,7 +355,7 @@ namespace Mono.Data.Sqlite
       if (i >= VisibleFieldCount && _keyInfo != null)
         return _keyInfo.GetChar(i - VisibleFieldCount);
 #endif
-      
+
       VerifyType(i, DbType.SByte);
       return Convert.ToChar(_activeStatement._sql.GetInt32(_activeStatement, i));
     }
@@ -378,7 +378,7 @@ namespace Mono.Data.Sqlite
       if (i >= VisibleFieldCount && _keyInfo != null)
         return _keyInfo.GetChars(i - VisibleFieldCount, fieldoffset, buffer, bufferoffset, length);
 #endif
-      
+
       VerifyType(i, DbType.String);
       return _activeStatement._sql.GetChars(_activeStatement, i, (int)fieldoffset, buffer, bufferoffset, length);
     }
@@ -396,7 +396,7 @@ namespace Mono.Data.Sqlite
       if (i >= VisibleFieldCount && _keyInfo != null)
         return _keyInfo.GetDataTypeName(i - VisibleFieldCount);
 #endif
-      
+
       SqliteType typ = GetSqliteType(i);
       if (typ.Type == DbType.Object) return SqliteConvert.SqliteTypeToType(typ).Name;
       return _activeStatement._sql.ColumnType(_activeStatement, i, out typ.Affinity);
@@ -413,7 +413,7 @@ namespace Mono.Data.Sqlite
       if (i >= VisibleFieldCount && _keyInfo != null)
         return _keyInfo.GetDateTime(i - VisibleFieldCount);
 #endif
-      
+
       VerifyType(i, DbType.DateTime);
       return _activeStatement._sql.GetDateTime(_activeStatement, i);
     }
@@ -429,7 +429,7 @@ namespace Mono.Data.Sqlite
       if (i >= VisibleFieldCount && _keyInfo != null)
         return _keyInfo.GetDecimal(i - VisibleFieldCount);
 #endif
-      
+
       VerifyType(i, DbType.Decimal);
       return Convert.ToDecimal(_activeStatement._sql.GetDouble(_activeStatement, i));
     }
@@ -445,7 +445,7 @@ namespace Mono.Data.Sqlite
       if (i >= VisibleFieldCount && _keyInfo != null)
         return _keyInfo.GetDouble(i - VisibleFieldCount);
 #endif
-      
+
       VerifyType(i, DbType.Double);
       return _activeStatement._sql.GetDouble(_activeStatement, i);
     }
@@ -463,7 +463,7 @@ namespace Mono.Data.Sqlite
       if (i >= VisibleFieldCount && _keyInfo != null)
         return _keyInfo.GetFieldType(i - VisibleFieldCount);
 #endif
-      
+
       return SqliteConvert.SqliteTypeToType(GetSqliteType(i));
     }
 
@@ -478,7 +478,7 @@ namespace Mono.Data.Sqlite
       if (i >= VisibleFieldCount && _keyInfo != null)
         return _keyInfo.GetFloat(i - VisibleFieldCount);
 #endif
-      
+
       VerifyType(i, DbType.Single);
       return Convert.ToSingle(_activeStatement._sql.GetDouble(_activeStatement, i));
     }
@@ -494,7 +494,7 @@ namespace Mono.Data.Sqlite
       if (i >= VisibleFieldCount && _keyInfo != null)
         return _keyInfo.GetGuid(i - VisibleFieldCount);
 #endif
-      
+
       TypeAffinity affinity = VerifyType(i, DbType.Guid);
       if (affinity == TypeAffinity.Blob)
       {
@@ -517,7 +517,7 @@ namespace Mono.Data.Sqlite
       if (i >= VisibleFieldCount && _keyInfo != null)
         return _keyInfo.GetInt16(i - VisibleFieldCount);
 #endif
-      
+
       VerifyType(i, DbType.Int16);
       return Convert.ToInt16(_activeStatement._sql.GetInt32(_activeStatement, i));
     }
@@ -533,7 +533,7 @@ namespace Mono.Data.Sqlite
       if (i >= VisibleFieldCount && _keyInfo != null)
         return _keyInfo.GetInt32(i - VisibleFieldCount);
 #endif
-      
+
       VerifyType(i, DbType.Int32);
       return _activeStatement._sql.GetInt32(_activeStatement, i);
     }
@@ -549,7 +549,7 @@ namespace Mono.Data.Sqlite
       if (i >= VisibleFieldCount && _keyInfo != null)
         return _keyInfo.GetInt64(i - VisibleFieldCount);
 #endif
-      
+
       VerifyType(i, DbType.Int64);
       return _activeStatement._sql.GetInt64(_activeStatement, i);
     }
@@ -566,7 +566,7 @@ namespace Mono.Data.Sqlite
       if (i >= VisibleFieldCount && _keyInfo != null)
         return _keyInfo.GetName(i - VisibleFieldCount);
 #endif
-      
+
       return _activeStatement._sql.ColumnName(_activeStatement, i);
     }
 
@@ -586,7 +586,7 @@ namespace Mono.Data.Sqlite
         if (r > -1) r += VisibleFieldCount;
       }
 #endif
-      
+
       return r;
     }
 
@@ -666,7 +666,7 @@ namespace Mono.Data.Sqlite
 
         strColumn = _command.Connection._sql.ColumnOriginalName(_activeStatement, n);
         if (String.IsNullOrEmpty(strColumn) == false) row[SchemaTableColumn.BaseColumnName] = strColumn;
-        
+
         row[SchemaTableColumn.IsExpression] = String.IsNullOrEmpty(strColumn);
         row[SchemaTableColumn.IsAliased] = (String.Compare(GetName(n), strColumn, true, CultureInfo.InvariantCulture) != 0);
 
@@ -781,7 +781,7 @@ namespace Mono.Data.Sqlite
             }
           }
         }
-        
+
         if (String.IsNullOrEmpty(dataType))
         {
           TypeAffinity affin;
@@ -798,7 +798,7 @@ namespace Mono.Data.Sqlite
       if (_keyInfo != null)
         _keyInfo.AppendSchemaTable(tbl);
 #endif
-      
+
       tbl.AcceptChanges();
       tbl.EndLoadData();
 
@@ -816,7 +816,7 @@ namespace Mono.Data.Sqlite
       if (i >= VisibleFieldCount && _keyInfo != null)
         return _keyInfo.GetString(i - VisibleFieldCount);
 #endif
-      
+
       VerifyType(i, DbType.String);
       return _activeStatement._sql.GetText(_activeStatement, i);
     }
@@ -909,7 +909,7 @@ namespace Mono.Data.Sqlite
         {
           // Reset the previously-executed statement
           _activeStatement._sql.Reset(_activeStatement);
-          
+
           // If we're only supposed to return a single rowset, step through all remaining statements once until
           // they are all done and return false to indicate no more resultsets exist.
           if ((_commandBehavior & CommandBehavior.SingleResult) != 0)
@@ -996,7 +996,7 @@ namespace Mono.Data.Sqlite
 
       typ = _fieldTypeArray[i];
 
-      // If not initialized, then fetch the declared column datatype and attempt to convert it 
+      // If not initialized, then fetch the declared column datatype and attempt to convert it
       // to a known DbType.
       if (typ.Affinity == TypeAffinity.Uninitialized)
         typ.Type = SqliteConvert.TypeNameToDbType(_activeStatement._sql.ColumnType(_activeStatement, i, out typ.Affinity));
@@ -1027,7 +1027,7 @@ namespace Mono.Data.Sqlite
           if (_keyInfo != null)
             _keyInfo.Reset();
 #endif
-	  
+	
           return true;
         }
 

@@ -69,19 +69,19 @@ namespace Banshee.Sources
             this.comparer.SeparateTypes = separateTypes;
             sources.Sort (comparer);
         }
-        
+
         public string Id {
             get { return id; }
         }
-        
+
         public string Label {
             get { return label; }
         }
-        
+
         public SortType SortType {
             get { return sort_type; }
         }
-        
+
         private class SourceComparer : IComparer<Source>
         {
             private IComparer name_comparer = new CaseInsensitiveComparer ();

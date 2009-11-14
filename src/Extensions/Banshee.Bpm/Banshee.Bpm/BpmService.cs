@@ -51,11 +51,11 @@ namespace Banshee.Bpm
         private BpmDetectJob job;
         private bool disposed;
         private object sync = new object ();
-        
+
         public BpmService ()
         {
         }
-        
+
         void IExtensionService.Initialize ()
         {
             Banshee.MediaEngine.IBpmDetector detector = BpmDetectJob.GetDetector ();
@@ -69,20 +69,20 @@ namespace Banshee.Bpm
                 ServiceManager.SourceManager.SourceAdded += OnSourceAdded;
             }
         }
-        
+
         private void OnSourceAdded (SourceAddedArgs args)
         {
             if (ServiceStartup ()) {
                 ServiceManager.SourceManager.SourceAdded -= OnSourceAdded;
             }
         }
-        
+
         private bool ServiceStartup ()
         {
             if (ServiceManager.SourceManager.MusicLibrary == null) {
                 return false;
             }
-            
+
             ServiceManager.SourceManager.MusicLibrary.TracksAdded += OnTracksAdded;
             InstallPreferences ();
 
@@ -90,10 +90,10 @@ namespace Banshee.Bpm
                 Detect ();
                 return false;
             });
-            
+
             return true;
         }
-        
+
         public void Dispose ()
         {
             if (disposed) {
@@ -102,10 +102,10 @@ namespace Banshee.Bpm
 
             ServiceManager.SourceManager.MusicLibrary.TracksAdded -= OnTracksAdded;
             UninstallPreferences ();
-        
+
             disposed = true;
         }
-        
+
         public void Detect ()
         {
             if (!Enabled) {
@@ -122,40 +122,40 @@ namespace Banshee.Bpm
 
             job.Finished += delegate { job = null; };
         }
-        
+
         private void OnTracksAdded (Source sender, TrackEventArgs args)
         {
             Detect ();
         }
-        
+
         string IService.ServiceName {
             get { return "BpmService"; }
         }
 
-#region Preferences        
+#region Preferences
 
         private PreferenceBase enabled_pref;
-        
+
         private void InstallPreferences ()
         {
             PreferenceService service = ServiceManager.Get<PreferenceService> ();
             if (service == null) {
                 return;
             }
-            
+
             enabled_pref = ServiceManager.SourceManager.MusicLibrary.PreferencesPage["misc"].Add (
-                new SchemaPreference<bool> (EnabledSchema, 
+                new SchemaPreference<bool> (EnabledSchema,
                     Catalog.GetString ("_Automatically detect BPM for all songs"),
                     Catalog.GetString ("Detect BPM for all songs that don't already have a value set"),
                     delegate { Enabled = EnabledSchema.Get (); })
             );
         }
-        
+
         private void UninstallPreferences ()
         {
             ServiceManager.SourceManager.MusicLibrary.PreferencesPage["misc"].Remove (enabled_pref);
         }
-        
+
 #endregion
 
         public bool Enabled {
@@ -171,7 +171,7 @@ namespace Banshee.Bpm
                 }
             }
         }
-        
+
         private static readonly SchemaEntry<bool> EnabledSchema = new SchemaEntry<bool> (
             "plugins.bpm", "auto_enabled",
             false,

@@ -1,21 +1,21 @@
-// 
+//
 // SearchEntry.cs
-//  
+//
 // Author:
 //   Aaron Bockover <abockover@novell.com>
-// 
+//
 // Copyright 2009 Aaron Bockover
-// 
+//
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
 // in the Software without restriction, including without limitation the rights
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be included in
 // all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -40,7 +40,7 @@ namespace Banshee.Moblin
         public SearchEntry ()
         {
             BuildSearchEntry ();
-            
+
             InterfaceActionService uia = ServiceManager.Get<InterfaceActionService> ();
             if (uia != null) {
                 Gtk.Action action = uia.GlobalActions["WikiSearchHelpAction"];
@@ -48,27 +48,27 @@ namespace Banshee.Moblin
                     MenuItem item = new SeparatorMenuItem ();
                     item.Show ();
                     Menu.Append (item);
-                    
+
                     item = new ImageMenuItem (Stock.Help, null);
                     item.Activated += delegate { action.Activate (); };
                     item.Show ();
                     Menu.Append (item);
                 }
             }
-            
+
             SearchSensitive = true;
             Show ();
         }
-        
+
         private struct SearchFilter
         {
             public int Id;
             public string Field;
             public string Title;
         }
-        
+
         private Dictionary<int, SearchFilter> search_filters = new Dictionary<int, SearchFilter> ();
-        
+
         private void AddSearchFilter (TrackFilterType id, string field, string title)
         {
             SearchFilter filter = new SearchFilter ();
@@ -77,7 +77,7 @@ namespace Banshee.Moblin
             filter.Title = title;
             search_filters.Add (filter.Id, filter);
         }
-        
+
         private void BuildSearchEntry ()
         {
             AddSearchFilter (TrackFilterType.None, String.Empty, Catalog.GetString ("Artist, Album, or Title"));
@@ -120,12 +120,12 @@ namespace Banshee.Moblin
                 editable.Position = Query.Length;
             }
         }
-               
+
         public bool SearchSensitive {
             get { return Sensitive; }
             set { Sensitive = value; }
         }
-        
+
         public Banshee.Widgets.SearchEntry Entry {
             get { return this; }
         }

@@ -43,7 +43,7 @@ namespace Hyena.Data
         public BaseListModel () : base ()
         {
         }
-        
+
         protected virtual void OnCleared ()
         {
             EventHandler handler = Cleared;
@@ -51,7 +51,7 @@ namespace Hyena.Data
                 handler(this, EventArgs.Empty);
             }
         }
-        
+
         protected virtual void OnReloaded ()
         {
             EventHandler handler = Reloaded;
@@ -64,11 +64,11 @@ namespace Hyena.Data
         {
             OnReloaded ();
         }
-        
+
         public abstract void Clear();
-        
+
         public abstract void Reload();
-    
+
         public abstract T this[int index] { get; }
 
         public abstract int Count { get; }
@@ -83,7 +83,7 @@ namespace Hyena.Data
                 return model_selection ?? (model_selection = new ModelSelection<T> (this, Selection));
             }
         }
-        
+
         public T FocusedItem {
             get { return Selection.FocusedIndex == -1 ? default(T) : this[Selection.FocusedIndex]; }
         }

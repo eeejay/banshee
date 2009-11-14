@@ -25,7 +25,7 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
- 
+
 using System;
 using Gtk;
 using Mono.Unix;
@@ -50,11 +50,11 @@ namespace Banshee.Gui.Dialogs
             Message = Catalog.GetString(
                 "Closing Banshee now will cancel any currently running tasks. They cannot " +
                 "be resumed automatically the next time Banshee is run.");
-                
+
             IconNameStock = Stock.DialogQuestion;
-            
+
             Dialog.DefaultResponse = ResponseType.Cancel;
-            
+
             AddButton(Catalog.GetString("Quit anyway"), ResponseType.Ok, false);
             AddButton(Catalog.GetString("Continue running"), ResponseType.Cancel, true);
 
@@ -62,11 +62,11 @@ namespace Banshee.Gui.Dialogs
             foreach (Job job in scheduler.Jobs) {
                 AddJob (job);
             }
-            
+
             scheduler.JobAdded += AddJob;
             scheduler.JobRemoved += RemoveJob;
         }
-        
+
         public void AddString(string message)
         {
             (ListView.Model as ListStore).AppendValues(message, null);
@@ -93,13 +93,13 @@ namespace Banshee.Gui.Dialogs
             if (ListView == null || ListView.Model == null) {
                 return;
             }
-            
+
             for(int i = 0, n = ListView.Model.IterNChildren(); i < n; i++) {
                 TreeIter iter;
                 if(!ListView.Model.IterNthChild(out iter, i)) {
                     break;
                 }
-                    
+
                 if(ListView.Model.GetValue(iter, 1) == job) {
                     Banshee.Base.ThreadAssist.ProxyToMain(delegate {
                         (ListView.Model as ListStore).Remove(ref iter);

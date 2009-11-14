@@ -52,25 +52,25 @@ namespace Banshee.Podcasting
     public class PodcastImageFetchJob : MetadataServiceJob
     {
         private Feed feed;
-        
+
         public PodcastImageFetchJob (Feed feed) : base ()
         {
             this.feed = feed;
         }
-        
+
         public override void Run()
         {
             Fetch ();
         }
-        
+
         public void Fetch ()
         {
             if (feed.ImageUrl == null) {
                 return;
             }
-            
+
             string cover_art_id = PodcastService.ArtworkIdFor (feed);
-            
+
             if (cover_art_id == null) {
                 return;
             } else if (CoverArtSpec.CoverExists (cover_art_id)) {
@@ -78,7 +78,7 @@ namespace Banshee.Podcasting
             } else if (!InternetConnected) {
                 return;
             }
-            
+
             if (SaveHttpStreamCover (new Uri (feed.ImageUrl), cover_art_id, null)) {
                 Banshee.Sources.Source src = ServiceManager.SourceManager.ActiveSource;
                 if (src != null && (src is PodcastSource || src.Parent is PodcastSource)) {

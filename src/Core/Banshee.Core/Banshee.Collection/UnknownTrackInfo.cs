@@ -34,7 +34,7 @@ namespace Banshee.Collection
 {
     public class UnknownTrackInfo : TrackInfo
     {
-        public UnknownTrackInfo(SafeUri uri) 
+        public UnknownTrackInfo(SafeUri uri)
         {
             Uri = uri;
             IsLive = true;
