@@ -258,11 +258,15 @@ namespace Banshee.Lastfm.Radio
         internal static void SetStatus (SourceMessage status_message, LastfmSource lastfm, bool error, ConnectionState state)
         {
             status_message.FreezeNotify ();
-            if (error && (state == ConnectionState.NoAccount || state == ConnectionState.InvalidAccount)) {
-                status_message.AddAction (new MessageAction (Catalog.GetString ("Account Settings"),
-                    delegate { lastfm.Actions.ShowLoginDialog (); }));
-                status_message.AddAction (new MessageAction (Catalog.GetString ("Join Last.fm"),
-                    delegate { lastfm.Account.SignUp (); }));
+            if (error) {
+                if (state == ConnectionState.NoAccount || state == ConnectionState.InvalidAccount || state == ConnectionState.NotAuthorized) {
+                    status_message.AddAction (new MessageAction (Catalog.GetString ("Account Settings"),
+                        delegate { lastfm.Actions.ShowLoginDialog (); }));
+                }
+                if (state == ConnectionState.NoAccount || state == ConnectionState.InvalidAccount) {
+                    status_message.AddAction (new MessageAction (Catalog.GetString ("Join Last.fm"),
+                        delegate { lastfm.Account.SignUp (); }));
+                }
             }
             status_message.ThawNotify ();
         }
