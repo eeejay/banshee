@@ -151,12 +151,12 @@ namespace Lastfm
             if (State == ConnectionState.Connecting || State == ConnectionState.Connected)
                 return;
 
-            if (LastfmCore.Account.UserName == null) {
+            if (String.IsNullOrEmpty (LastfmCore.Account.UserName)) {
                 State = ConnectionState.NoAccount;
                 return;
             }
 
-            if (LastfmCore.Account.SessionKey == null) {
+            if (String.IsNullOrEmpty (LastfmCore.Account.SessionKey)) {
                 State = ConnectionState.NotAuthorized;
                 return;
             }
