@@ -165,6 +165,3 @@ RESOURCES =  \
 
 include $(top_srcdir)/build/build.mk
 
-module_SCRIPTS += Banshee.ThickClient.dll.config
-EXTRA_DIST += Banshee.ThickClient.dll.config
-

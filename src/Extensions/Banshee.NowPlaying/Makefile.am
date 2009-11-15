@@ -24,6 +24,3 @@ RESOURCES =  \
 
 include $(top_srcdir)/build/build.mk
 
-module_SCRIPTS += Banshee.NowPlaying.dll.config
-EXTRA_DIST += Banshee.NowPlaying.dll.config
-
