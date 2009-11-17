@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Addin 
+    id="Banshee.eMusic"
+    version="0.1"
+    compatVersion="0.1"
+    copyright="© 2009 Eitan Isaacson"
+    name="eMusic Import Plugin"
+    category=""
+    description="Given an eMusic emx file, this extension downloads the tracks and imports them."
+    author="Eitan Isaacson"
+    url="http://banshee-project.org/"
+    defaultEnabled="true">
+
+  <Dependencies>
+    <Addin id="Banshee.Services" version="1.0"/>
+  </Dependencies>
+
+  <Extension path="/Banshee/Library/ImportSource">
+    <Service class="Banshee.eMusic.eMusicImport"/>
+  </Extension>
+
+
+</Addin>
