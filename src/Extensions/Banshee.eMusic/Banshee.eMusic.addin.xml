@@ -16,7 +16,7 @@
   </Dependencies>
 
   <Extension path="/Banshee/Library/ImportSource">
-    <Service class="Banshee.eMusic.eMusicImport"/>
+    <ImportSource class="Banshee.eMusic.eMusicImport"/>
   </Extension>
 
 

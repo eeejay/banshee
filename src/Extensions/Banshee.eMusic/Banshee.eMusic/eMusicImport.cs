@@ -47,8 +47,42 @@ namespace Banshee.eMusic
 {
     public sealed class eMusicImport : ThreadPoolImportSource
     {
+        private string [] files_to_import;
+        
+        protected override bool ConfirmImport ()
+        {
+            var chooser = Banshee.Gui.Dialogs.FileChooserDialog.CreateForImport (Catalog.GetString ("Import eMusic Downloads to Library"), true);
+            Gtk.FileFilter ff = new Gtk.FileFilter();
+            ff.Name = Catalog.GetString ("eMusic Files");
+            ff.AddPattern("*.emx");
+            chooser.AddFilter (ff);
+
+            int response = chooser.Run ();
+            files_to_import = chooser.Uris;
+            chooser.Destroy ();
+
+            return response == (int)Gtk.ResponseType.Ok;
+        }
+        
         protected override void ImportCore ()
         {
+            foreach (string uri in files_to_import)
+            {
+                using (var xml_reader = new XmlTextReader (uri))
+                {
+                    Console.WriteLine ("File: {0}", uri);
+                    while (xml_reader.Read())
+                    {
+                        if (xml_reader.NodeType == XmlNodeType.Element &&
+                            xml_reader.Name == "TRACKURL")
+                        {
+                            xml_reader.Read();
+                            Console.WriteLine("URL: {0}", xml_reader.Value);
+                        }
+                    }
+                  
+                }
+            }
         }
 
         public override bool CanImport {

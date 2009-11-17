@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="3.5" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -14,16 +14,10 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug</OutputPath>
+    <OutputPath>..\..\..\bin</OutputPath>
     <DefineConstants>DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CustomCommands>
-      <CustomCommands xmlns="">
-        <Command type="Build" command="make" workingdir="${SolutionDir}" />
-        <Command type="Execute" command="make run" workingdir="${SolutionDir}" />
-      </CustomCommands>
-    </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -34,20 +28,35 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
-    <Reference Include="Banshee.Core, Version=1.5.0.0, Culture=neutral">
-      <Package>banshee-1-core</Package>
-    </Reference>
-    <Reference Include="Banshee.Services, Version=1.5.0.0, Culture=neutral">
-      <Package>banshee-1-services</Package>
-    </Reference>
-    <Reference Include="Banshee.ThickClient, Version=1.5.0.0, Culture=neutral">
-      <Package>banshee-1-thickclient</Package>
-    </Reference>
-    <Reference Include="Banshee.Widgets, Version=1.5.0.0, Culture=neutral">
-      <Package>banshee-1-thickclient</Package>
-    </Reference>
     <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <Reference Include="System" />
+    <Reference Include="Banshee.Core, Version=1.5.0.0, Culture=neutral, PublicKeyToken=null">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\bin\Banshee.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Banshee.Services, Version=1.5.0.0, Culture=neutral, PublicKeyToken=null">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\bin\Banshee.Services.dll</HintPath>
+    </Reference>
+    <Reference Include="Banshee.ThickClient, Version=1.5.0.0, Culture=neutral, PublicKeyToken=null">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\bin\Banshee.ThickClient.dll</HintPath>
+    </Reference>
+    <Reference Include="Banshee.Widgets, Version=1.5.0.0, Culture=neutral, PublicKeyToken=null">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\bin\Banshee.Widgets.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Posix" />
+    <Reference Include="Hyena, Version=1.5.0.0, Culture=neutral, PublicKeyToken=null">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\bin\Hyena.dll</HintPath>
+    </Reference>
+    <Reference Include="Hyena.Gui, Version=1.5.0.0, Culture=neutral, PublicKeyToken=null">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\bin\Hyena.Gui.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Data" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Banshee.eMusic.addin.xml" />
