@@ -106,6 +106,7 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Banshee.Gio", "src\Backends\Banshee.Gio\Banshee.Gio.csproj", "{5F696A8F-B216-4ECE-9E35-907DDFC760BD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Banshee.GStreamer", "src\Backends\Banshee.GStreamer\Banshee.GStreamer.csproj", "{6171E5DE-5B36-4AE4-8707-F6BEE0AD945B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Banshee.eMusic", "src\Extensions\Banshee.eMusic\Banshee.eMusic.csproj", "{10A5B2EE-C9F0-4B7B-B79B-87B7DA9C1DC1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{48EA1A64-29EE-4555-9E79-49453EB51976}"
 	ProjectSection(SolutionItems) = postProject
