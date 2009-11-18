@@ -18,6 +18,11 @@
     <DefineConstants>DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="Build" command="make" />
+      </CustomCommands>
+    </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -30,31 +35,7 @@
     <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <Reference Include="System" />
-    <Reference Include="Banshee.Core, Version=1.5.0.0, Culture=neutral, PublicKeyToken=null">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\bin\Banshee.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Banshee.Services, Version=1.5.0.0, Culture=neutral, PublicKeyToken=null">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\bin\Banshee.Services.dll</HintPath>
-    </Reference>
-    <Reference Include="Banshee.ThickClient, Version=1.5.0.0, Culture=neutral, PublicKeyToken=null">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\bin\Banshee.ThickClient.dll</HintPath>
-    </Reference>
-    <Reference Include="Banshee.Widgets, Version=1.5.0.0, Culture=neutral, PublicKeyToken=null">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\bin\Banshee.Widgets.dll</HintPath>
-    </Reference>
     <Reference Include="Mono.Posix" />
-    <Reference Include="Hyena, Version=1.5.0.0, Culture=neutral, PublicKeyToken=null">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\bin\Hyena.dll</HintPath>
-    </Reference>
-    <Reference Include="Hyena.Gui, Version=1.5.0.0, Culture=neutral, PublicKeyToken=null">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\bin\Hyena.Gui.dll</HintPath>
-    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Data" />
   </ItemGroup>
@@ -69,4 +50,30 @@
     <Compile Include="Banshee.eMusic\eMusicImport.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\Banshee.Core\Banshee.Core.csproj">
+      <Project>{2ADB831A-A050-47D0-B6B9-9C19D60233BB}</Project>
+      <Name>Banshee.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core\Banshee.Services\Banshee.Services.csproj">
+      <Project>{B28354F0-BA87-44E8-989F-B864A3C7C09F}</Project>
+      <Name>Banshee.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Banshee.Wikipedia\Banshee.Wikipedia.csproj">
+      <Project>{BF5D1722-269B-452E-B577-AEBA0CB894BA}</Project>
+      <Name>Banshee.Wikipedia</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Hyena.Gui\Hyena.Gui.csproj">
+      <Project>{C856EFD8-E812-4E61-8B76-E3583D94C233}</Project>
+      <Name>Hyena.Gui</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\Migo\Migo.csproj">
+      <Project>{9C7B8E9C-A4E6-4459-A2C4-3D2D199EA919}</Project>
+      <Name>Migo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Banshee.Podcasting\Banshee.Podcasting.csproj">
+      <Project>{46AD1892-C5D3-4696-BA40-FBF7F4CE2B39}</Project>
+      <Name>Banshee.Podcasting</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>

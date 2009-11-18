@@ -1,12 +1,10 @@
 //
-// RhythmboxPlayerImportSource.cs
+// eMusicImport.cs
 //
 // Author:
-//   Sebastian Dröge <slomo@circular-chaos.org>
-//   Paul Lange <palango@gmx.de>
+//   Eitan Isaacson <eitan@monotonous.org>
 //
-// Copyright (C) 2006 Sebastian Dröge
-// Copyright (C) 2008 Paul Lange
+// Copyright (C) 2009 Eitan Isaacson
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -42,14 +40,38 @@ using Banshee.Collection.Database;
 using Banshee.Library;
 using Banshee.ServiceStack;
 using Banshee.Playlist;
+using Banshee.Podcasting.Gui;
+
+using Migo.DownloadCore;
+using Migo.TaskCore;
 
 namespace Banshee.eMusic
 {
-    public sealed class eMusicImport : ThreadPoolImportSource
+    public sealed class eMusicImport : IImportSource
     {
-        private string [] files_to_import;
+
+        private DownloadManager download_manager;
+        private DownloadManagerInterface download_manager_iface;
+        private LibraryImportManager import_manager;
+        private readonly string tmp_download_path = Paths.Combine (Paths.ExtensionCacheRoot, "emusic", "partial-downloads");
         
-        protected override bool ConfirmImport ()
+
+        public eMusicImport ()
+        {
+            download_manager = new DownloadManager (2, tmp_download_path);
+            download_manager_iface = new DownloadManagerInterface (download_manager);
+            download_manager_iface.Initialize ();
+            import_manager = ServiceManager.Get<LibraryImportManager> ();
+            import_manager.ImportResult += HandleImportResult;
+        }
+
+        void HandleImportResult(object o, DatabaseImportResultArgs args)
+        {
+            Console.WriteLine ("Done importing {0}", args.Path);
+            Console.WriteLine ("               {0}", args.Track.Uri);
+        }
+   
+        public void Import ()
         {
             var chooser = Banshee.Gui.Dialogs.FileChooserDialog.CreateForImport (Catalog.GetString ("Import eMusic Downloads to Library"), true);
             Gtk.FileFilter ff = new Gtk.FileFilter();
@@ -57,47 +79,59 @@ namespace Banshee.eMusic
             ff.AddPattern("*.emx");
             chooser.AddFilter (ff);
 
-            int response = chooser.Run ();
-            files_to_import = chooser.Uris;
-            chooser.Destroy ();
-
-            return response == (int)Gtk.ResponseType.Ok;
-        }
-        
-        protected override void ImportCore ()
-        {
-            foreach (string uri in files_to_import)
+            if (chooser.Run () == (int)Gtk.ResponseType.Ok)
             {
-                using (var xml_reader = new XmlTextReader (uri))
+                foreach (string uri in chooser.Uris)
                 {
-                    Console.WriteLine ("File: {0}", uri);
-                    while (xml_reader.Read())
+                    using (var xml_reader = new XmlTextReader (uri))
                     {
-                        if (xml_reader.NodeType == XmlNodeType.Element &&
-                            xml_reader.Name == "TRACKURL")
+                        Console.WriteLine ("File: {0}", uri);
+                        
+                        while (xml_reader.Read())
                         {
-                            xml_reader.Read();
-                            Console.WriteLine("URL: {0}", xml_reader.Value);
+                            if (xml_reader.NodeType == XmlNodeType.Element &&
+                                xml_reader.Name == "TRACKURL")
+                            {
+                                xml_reader.Read();
+                                Console.WriteLine("URL: {0}", xml_reader.Value);
+                                HttpFileDownloadTask task = download_manager.CreateDownloadTask (xml_reader.Value);
+                                task.Completed += OnDownloadCompleted;
+                                download_manager.QueueDownload (task);
+                            }
                         }
+                      
                     }
-                  
                 }
+
             }
+            
+            chooser.Destroy ();
         }
 
-        public override bool CanImport {
+        private void OnDownloadCompleted (object sender, TaskCompletedEventArgs args)
+        {
+            HttpFileDownloadTask task = sender as HttpFileDownloadTask;
+            Console.WriteLine ("Completed {0}", task.LocalPath);
+            Banshee.ServiceStack.ServiceManager.Get<LibraryImportManager> ().Enqueue (task.LocalPath);
+        }
+
+        public bool CanImport {
             get { return true;}
         }
 
-        public override string Name {
+        public string Name {
             get { return Catalog.GetString ("eMusic Album"); }
         }
 
-        public override string [] IconNames {
+        public string ImportLabel {
+            get { return Catalog.GetString ("C_hoose Files"); }
+        }
+
+        public string [] IconNames {
             get { return new string [] { "gtk-open" }; }
         }
 
-        public override int SortOrder {
+        public int SortOrder {
             get { return 50; }
         }
     }
