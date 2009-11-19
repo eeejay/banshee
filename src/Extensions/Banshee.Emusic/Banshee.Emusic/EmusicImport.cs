@@ -90,16 +90,14 @@ namespace Banshee.Emusic
             foreach (string uri in uris)
             {
                 using (var xml_reader = new XmlTextReader (uri))
-                {
-                    Console.WriteLine ("File: {0}", uri);
-                    
+                {   
                     while (xml_reader.Read())
                     {
                         if (xml_reader.NodeType == XmlNodeType.Element &&
                             xml_reader.Name == "TRACKURL")
                         {
                             xml_reader.Read();
-                            Console.WriteLine("URL: {0}", xml_reader.Value);
+                            Hyena.Log.DebugFormat ("Downloading: {0}", xml_reader.Value);
                             HttpFileDownloadTask task = download_manager.CreateDownloadTask (xml_reader.Value);
                             if (File.Exists (task.LocalPath))
                                 File.Delete (task.LocalPath); // FIXME: We go into a download loop if we don't.
@@ -115,7 +113,6 @@ namespace Banshee.Emusic
         private void OnDownloadCompleted (object sender, TaskCompletedEventArgs args)
         {
             HttpFileDownloadTask task = sender as HttpFileDownloadTask;
-            Console.WriteLine ("RESULT: {0}", task.Status.ToString());
             
             if (task.Status != TaskStatus.Succeeded)
             {
@@ -129,7 +126,8 @@ namespace Banshee.Emusic
                 
                 tasks.Remove (task.LocalPath);
                 
-              
+                Hyena.Log.ErrorFormat ("Could not download eMusic track: {0}",
+                                       task.Error.ToString());
             } else {
                 import_manager.Enqueue (task.LocalPath);
             }
@@ -152,6 +150,7 @@ namespace Banshee.Emusic
 
         private void PostImport ()
         {
+            Hyena.Log.DebugFormat ("Cleaning up {0}", this.ToString());
             download_manager.Dispose ();
             download_manager_iface.Dispose ();
             download_manager = null;
