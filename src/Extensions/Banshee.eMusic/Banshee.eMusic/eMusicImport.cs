@@ -41,7 +41,7 @@ using Banshee.Collection.Database;
 using Banshee.Library;
 using Banshee.ServiceStack;
 using Banshee.Playlist;
-using Banshee.Podcasting.Gui;
+using Banshee.eMusic;
 
 using Migo.DownloadCore;
 using Migo.TaskCore;
@@ -52,7 +52,7 @@ namespace Banshee.eMusic
     {
 
         private DownloadManager download_manager;
-        private DownloadManagerInterface download_manager_iface;
+        private Banshee.eMusic.DownloadManagerInterface download_manager_iface;
         private LibraryImportManager import_manager;
         private Dictionary<string,HttpFileDownloadTask> tasks;
         private readonly string tmp_download_path = Paths.Combine (Paths.ExtensionCacheRoot, "emusic", "partial-downloads");
@@ -76,9 +76,7 @@ namespace Banshee.eMusic
             chooser.AddFilter (ff);
 
             if (chooser.Run () == (int)Gtk.ResponseType.Ok)
-            {
                 DoImport (chooser.Uris);
-            }
             
             chooser.Destroy ();
         }
@@ -112,7 +110,6 @@ namespace Banshee.eMusic
                     }
                 }
             }
-
         }
 
         private void OnDownloadCompleted (object sender, TaskCompletedEventArgs args)

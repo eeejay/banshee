@@ -48,6 +48,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Banshee.eMusic\eMusicImport.cs" />
+    <Compile Include="Banshee.eMusic\DownloadManager\DownloadManagerInterface.cs" />
+    <Compile Include="Banshee.eMusic\DownloadManager\DownloadUserJob.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -70,10 +72,6 @@
     <ProjectReference Include="..\..\Libraries\Migo\Migo.csproj">
       <Project>{9C7B8E9C-A4E6-4459-A2C4-3D2D199EA919}</Project>
       <Name>Migo</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Banshee.Podcasting\Banshee.Podcasting.csproj">
-      <Project>{46AD1892-C5D3-4696-BA40-FBF7F4CE2B39}</Project>
-      <Name>Banshee.Podcasting</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>
