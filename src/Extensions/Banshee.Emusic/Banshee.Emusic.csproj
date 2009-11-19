@@ -7,7 +7,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{10A5B2EE-C9F0-4B7B-B79B-87B7DA9C1DC1}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <AssemblyName>Banshee.eMusic</AssemblyName>
+    <AssemblyName>Banshee.Emusic</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -40,16 +40,16 @@
     <Reference Include="System.Data" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Banshee.eMusic.addin.xml" />
+    <EmbeddedResource Include="Banshee.Emusic.addin.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Banshee.eMusic\" />
+    <Folder Include="Banshee.Emusic\" />
     <Folder Include="Resources\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Banshee.eMusic\eMusicImport.cs" />
-    <Compile Include="Banshee.eMusic\DownloadManager\DownloadManagerInterface.cs" />
-    <Compile Include="Banshee.eMusic\DownloadManager\DownloadUserJob.cs" />
+    <Compile Include="Banshee.Emusic\EmusicImport.cs" />
+    <Compile Include="Banshee.Emusic\DownloadManager\DownloadManagerInterface.cs" />
+    <Compile Include="Banshee.Emusic\DownloadManager\DownloadUserJob.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

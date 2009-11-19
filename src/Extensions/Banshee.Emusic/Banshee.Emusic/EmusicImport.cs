@@ -1,5 +1,5 @@
 //
-// eMusicImport.cs
+// EmusicImport.cs
 //
 // Author:
 //   Eitan Isaacson <eitan@monotonous.org>
@@ -41,24 +41,24 @@ using Banshee.Collection.Database;
 using Banshee.Library;
 using Banshee.ServiceStack;
 using Banshee.Playlist;
-using Banshee.eMusic;
+using Banshee.Emusic;
 
 using Migo.DownloadCore;
 using Migo.TaskCore;
 
-namespace Banshee.eMusic
+namespace Banshee.Emusic
 {
-    public sealed class eMusicImport : IImportSource
+    public sealed class EmusicImport : IImportSource
     {
 
         private DownloadManager download_manager;
-        private Banshee.eMusic.DownloadManagerInterface download_manager_iface;
+        private DownloadManagerInterface download_manager_iface;
         private LibraryImportManager import_manager;
         private Dictionary<string,HttpFileDownloadTask> tasks;
         private readonly string tmp_download_path = Paths.Combine (Paths.ExtensionCacheRoot, "emusic", "partial-downloads");
         
 
-        public eMusicImport ()
+        public EmusicImport ()
         {
             tasks = new Dictionary<string, HttpFileDownloadTask> ();
             

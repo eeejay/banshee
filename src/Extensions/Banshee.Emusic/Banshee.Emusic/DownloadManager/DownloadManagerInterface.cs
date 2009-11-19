@@ -36,7 +36,7 @@ using Migo.DownloadCore;
 
 using System.Threading;
 
-namespace Banshee.eMusic
+namespace Banshee.Emusic
 {
     public class DownloadManagerInterface : IDisposable
     {

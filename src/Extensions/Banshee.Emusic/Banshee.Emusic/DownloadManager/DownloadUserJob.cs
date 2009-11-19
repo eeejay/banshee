@@ -33,7 +33,7 @@ using Mono.Unix;
 
 using Banshee.ServiceStack;
 
-namespace Banshee.eMusic
+namespace Banshee.Emusic
 {
     public class DownloadUserJob : UserJob
     {

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Addin 
-    id="Banshee.eMusic"
+    id="Banshee.Emusic"
     version="0.1"
     compatVersion="0.1"
     copyright="© 2009 Eitan Isaacson"
@@ -16,7 +16,7 @@
   </Dependencies>
 
   <Extension path="/Banshee/Library/ImportSource">
-    <ImportSource class="Banshee.eMusic.eMusicImport"/>
+    <ImportSource class="Banshee.Emusic.EmusicImport"/>
   </Extension>
 
 
