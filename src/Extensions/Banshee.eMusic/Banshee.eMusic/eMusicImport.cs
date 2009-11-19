@@ -62,32 +62,13 @@ namespace Banshee.eMusic
         {
             tasks = new Dictionary<string, HttpFileDownloadTask> ();
             
-            download_manager = new DownloadManager (2, tmp_download_path);
-            download_manager_iface = new DownloadManagerInterface (download_manager);
-            download_manager_iface.Initialize ();
             import_manager = ServiceManager.Get<LibraryImportManager> ();
             import_manager.ImportResult += HandleImportResult;
         }
 
-        void HandleImportResult(object o, DatabaseImportResultArgs args)
-        {
-            Console.WriteLine ("Done importing {0}", args.Path);
-            Console.WriteLine ("               {0}", ServiceManager.DbConnection.ToString());
-
-            
-            if (tasks.ContainsKey (args.Path))
-            {
-                HttpFileDownloadTask task = tasks[args.Path];
-                task.Completed -= OnDownloadCompleted;
-                File.Delete (args.Path);
-                Directory.Delete (Path.GetDirectoryName (args.Path));
-                tasks.Remove (args.Path);
-                task.Dispose ();
-            }
-        }
-   
         public void Import ()
         {
+            
             var chooser = Banshee.Gui.Dialogs.FileChooserDialog.CreateForImport (Catalog.GetString ("Import eMusic Downloads to Library"), true);
             Gtk.FileFilter ff = new Gtk.FileFilter();
             ff.Name = Catalog.GetString ("eMusic Files");
@@ -96,48 +77,72 @@ namespace Banshee.eMusic
 
             if (chooser.Run () == (int)Gtk.ResponseType.Ok)
             {
-                foreach (string uri in chooser.Uris)
-                {
-                    using (var xml_reader = new XmlTextReader (uri))
-                    {
-                        Console.WriteLine ("File: {0}", uri);
-                        
-                        while (xml_reader.Read())
-                        {
-                            if (xml_reader.NodeType == XmlNodeType.Element &&
-                                xml_reader.Name == "TRACKURL")
-                            {
-                                xml_reader.Read();
-                                Console.WriteLine("URL: {0}", xml_reader.Value);
-                                HttpFileDownloadTask task = download_manager.CreateDownloadTask (xml_reader.Value);
-                                if (File.Exists (task.LocalPath))
-                                    File.Delete (task.LocalPath); // FIXME: We go into a download loop if we don't.
-                                task.Completed += OnDownloadCompleted;
-                                download_manager.QueueDownload (task);
-                                tasks.Add (task.LocalPath, task);
-                            }
-                        }
-                      
-                    }
-                }
-
+                DoImport (chooser.Uris);
             }
             
             chooser.Destroy ();
         }
 
+        private void DoImport (string[] uris)
+        {
+            download_manager = new DownloadManager (2, tmp_download_path);
+            download_manager_iface = new DownloadManagerInterface (download_manager);
+            download_manager_iface.Initialize ();
+            
+            foreach (string uri in uris)
+            {
+                using (var xml_reader = new XmlTextReader (uri))
+                {
+                    Console.WriteLine ("File: {0}", uri);
+                    
+                    while (xml_reader.Read())
+                    {
+                        if (xml_reader.NodeType == XmlNodeType.Element &&
+                            xml_reader.Name == "TRACKURL")
+                        {
+                            xml_reader.Read();
+                            Console.WriteLine("URL: {0}", xml_reader.Value);
+                            HttpFileDownloadTask task = download_manager.CreateDownloadTask (xml_reader.Value);
+                            if (File.Exists (task.LocalPath))
+                                File.Delete (task.LocalPath); // FIXME: We go into a download loop if we don't.
+                            task.Completed += OnDownloadCompleted;
+                            download_manager.QueueDownload (task);
+                            tasks.Add (task.LocalPath, task);
+                        }
+                    }
+                }
+            }
+
+        }
+
         private void OnDownloadCompleted (object sender, TaskCompletedEventArgs args)
         {
             HttpFileDownloadTask task = sender as HttpFileDownloadTask;
-            /*if (download_manager.Tasks.Count <= 0)
-            {
-                download_manager.Dispose ();
-                download_manager_iface.Dispose ();
-                download_manager = null;
-            }*/
             import_manager.Enqueue (task.LocalPath);
         }
 
+        void HandleImportResult(object o, DatabaseImportResultArgs args)
+        {
+            if (tasks.ContainsKey (args.Path))
+            {
+                HttpFileDownloadTask task = tasks[args.Path];
+                task.Completed -= OnDownloadCompleted;
+                File.Delete (args.Path);
+                Directory.Delete (Path.GetDirectoryName (args.Path));
+                tasks.Remove (args.Path);
+            }
+
+            if (download_manager.Tasks.Count == 0)
+                PostImport ();
+        }
+
+        private void PostImport ()
+        {
+            download_manager.Dispose ();
+            download_manager_iface.Dispose ();
+            download_manager = null;
+        }
+   
         public bool CanImport {
             get { return true;}
         }
