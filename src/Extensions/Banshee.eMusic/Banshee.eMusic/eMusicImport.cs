@@ -30,6 +30,7 @@ using System;
 using System.Data;
 using System.IO;
 using System.Xml;
+using System.Collections.Generic;
 
 using Mono.Unix;
 
@@ -53,11 +54,14 @@ namespace Banshee.eMusic
         private DownloadManager download_manager;
         private DownloadManagerInterface download_manager_iface;
         private LibraryImportManager import_manager;
+        private Dictionary<string,HttpFileDownloadTask> tasks;
         private readonly string tmp_download_path = Paths.Combine (Paths.ExtensionCacheRoot, "emusic", "partial-downloads");
         
 
         public eMusicImport ()
         {
+            tasks = new Dictionary<string, HttpFileDownloadTask> ();
+            
             download_manager = new DownloadManager (2, tmp_download_path);
             download_manager_iface = new DownloadManagerInterface (download_manager);
             download_manager_iface.Initialize ();
@@ -68,7 +72,18 @@ namespace Banshee.eMusic
         void HandleImportResult(object o, DatabaseImportResultArgs args)
         {
             Console.WriteLine ("Done importing {0}", args.Path);
-            Console.WriteLine ("               {0}", args.Track.Uri);
+            Console.WriteLine ("               {0}", ServiceManager.DbConnection.ToString());
+
+            
+            if (tasks.ContainsKey (args.Path))
+            {
+                HttpFileDownloadTask task = tasks[args.Path];
+                task.Completed -= OnDownloadCompleted;
+                File.Delete (args.Path);
+                Directory.Delete (Path.GetDirectoryName (args.Path));
+                tasks.Remove (args.Path);
+                task.Dispose ();
+            }
         }
    
         public void Import ()
@@ -95,8 +110,11 @@ namespace Banshee.eMusic
                                 xml_reader.Read();
                                 Console.WriteLine("URL: {0}", xml_reader.Value);
                                 HttpFileDownloadTask task = download_manager.CreateDownloadTask (xml_reader.Value);
+                                if (File.Exists (task.LocalPath))
+                                    File.Delete (task.LocalPath); // FIXME: We go into a download loop if we don't.
                                 task.Completed += OnDownloadCompleted;
                                 download_manager.QueueDownload (task);
+                                tasks.Add (task.LocalPath, task);
                             }
                         }
                       
@@ -111,8 +129,13 @@ namespace Banshee.eMusic
         private void OnDownloadCompleted (object sender, TaskCompletedEventArgs args)
         {
             HttpFileDownloadTask task = sender as HttpFileDownloadTask;
-            Console.WriteLine ("Completed {0}", task.LocalPath);
-            Banshee.ServiceStack.ServiceManager.Get<LibraryImportManager> ().Enqueue (task.LocalPath);
+            /*if (download_manager.Tasks.Count <= 0)
+            {
+                download_manager.Dispose ();
+                download_manager_iface.Dispose ();
+                download_manager = null;
+            }*/
+            import_manager.Enqueue (task.LocalPath);
         }
 
         public bool CanImport {
