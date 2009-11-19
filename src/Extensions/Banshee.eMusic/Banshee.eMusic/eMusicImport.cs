@@ -115,7 +115,24 @@ namespace Banshee.eMusic
         private void OnDownloadCompleted (object sender, TaskCompletedEventArgs args)
         {
             HttpFileDownloadTask task = sender as HttpFileDownloadTask;
-            import_manager.Enqueue (task.LocalPath);
+            Console.WriteLine ("RESULT: {0}", task.Status.ToString());
+            
+            if (task.Status != TaskStatus.Succeeded)
+            {
+                task.Completed -= OnDownloadCompleted;
+
+                if (File.Exists (task.LocalPath))
+                    File.Delete (task.LocalPath);
+
+                if (Directory.Exists (Path.GetDirectoryName (task.LocalPath)))
+                    Directory.Delete (Path.GetDirectoryName (task.LocalPath));
+                
+                tasks.Remove (task.LocalPath);
+                
+              
+            } else {
+                import_manager.Enqueue (task.LocalPath);
+            }
         }
 
         void HandleImportResult(object o, DatabaseImportResultArgs args)
