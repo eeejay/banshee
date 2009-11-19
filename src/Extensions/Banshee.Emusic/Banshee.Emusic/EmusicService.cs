@@ -24,7 +24,7 @@ namespace Banshee.Emusic
         private LibraryImportManager import_manager;
         private Dictionary<string,HttpFileDownloadTask> tasks;
         private readonly string tmp_download_path = Paths.Combine (Paths.ExtensionCacheRoot, "emusic", "partial-downloads");
-        
+
         public EmusicService ()
         {
             Log.DebugFormat ("{0} constructed.", this.ToString());
@@ -40,12 +40,12 @@ namespace Banshee.Emusic
 
             if (download_manager == null)
                 download_manager = new DownloadManager (2, tmp_download_path);
-            
+
             if (download_manager_iface == null) {
                 download_manager_iface = new DownloadManagerInterface (download_manager);
                 download_manager_iface.Initialize ();
             }
-            
+
             ServiceManager.Get<DBusCommandService> ().ArgumentPushed += OnCommandLineArgument;
         }
 
@@ -72,13 +72,13 @@ namespace Banshee.Emusic
         {
             ImportEmx (new string [] {uri});
         }
-        
+
         public void ImportEmx (string[] uris)
         {
             foreach (string uri in uris)
             {
                 using (var xml_reader = new XmlTextReader (uri))
-                {   
+                {
                     while (xml_reader.Read())
                     {
                         if (xml_reader.NodeType == XmlNodeType.Element &&
@@ -101,7 +101,7 @@ namespace Banshee.Emusic
         private void OnDownloadCompleted (object sender, TaskCompletedEventArgs args)
         {
             HttpFileDownloadTask task = sender as HttpFileDownloadTask;
-            
+
             if (task.Status != TaskStatus.Succeeded)
             {
                 task.Completed -= OnDownloadCompleted;
@@ -111,9 +111,9 @@ namespace Banshee.Emusic
 
                 if (Directory.Exists (Path.GetDirectoryName (task.LocalPath)))
                     Directory.Delete (Path.GetDirectoryName (task.LocalPath));
-                
+
                 tasks.Remove (task.LocalPath);
-                
+
                 Hyena.Log.ErrorFormat ("Could not download eMusic track: {0}",
                                        task.Error.ToString());
             } else {

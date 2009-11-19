@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Addin 
+<Addin
     id="Banshee.Emusic"
     version="0.1"
     compatVersion="0.1"
     copyright="© 2009 Eitan Isaacson"
-    name="eMusic Import Plugin"
+    name="eMusic Import"
     category=""
-    description="Given an eMusic emx file, this extension downloads the tracks and imports them."
+    description="Download and import music purchased from eMusic"
     author="Eitan Isaacson"
     url="http://banshee-project.org/"
     defaultEnabled="true">
@@ -24,3 +24,4 @@
   </Extension>
 
 </Addin>
+
