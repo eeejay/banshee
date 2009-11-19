@@ -19,5 +19,8 @@
     <ImportSource class="Banshee.Emusic.EmusicImport"/>
   </Extension>
 
+  <Extension path="/Banshee/ServiceManager/Service">
+    <Service class="Banshee.Emusic.EmusicService"/>
+  </Extension>
 
 </Addin>

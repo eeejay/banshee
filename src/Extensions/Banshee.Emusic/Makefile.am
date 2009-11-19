@@ -5,6 +5,7 @@ INSTALL_DIR = $(EXTENSIONS_INSTALL_DIR)
 
 SOURCES =  \
 	Banshee.Emusic/EmusicImport.cs \
+	Banshee.Emusic/EmusicService.cs \
 	Banshee.Emusic/DownloadManager/DownloadUserJob.cs \
 	Banshee.Emusic/DownloadManager/DownloadManagerInterface.cs
 

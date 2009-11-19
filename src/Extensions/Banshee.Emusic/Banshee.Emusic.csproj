@@ -50,6 +50,7 @@
     <Compile Include="Banshee.Emusic\EmusicImport.cs" />
     <Compile Include="Banshee.Emusic\DownloadManager\DownloadManagerInterface.cs" />
     <Compile Include="Banshee.Emusic\DownloadManager\DownloadUserJob.cs" />
+    <Compile Include="Banshee.Emusic\EmusicService.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
